@@ -1,0 +1,54 @@
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+  # This determines the build number
+name: $(MajorMinorVersion)$(Rev:.r)
+
+steps:
+- task: Npm@1
+  displayName: 'Set the version of @enigmatry/enigmatry-grid'
+  inputs:
+    command: custom
+    customCommand: version $(Build.Buildnumber) --no-git-tag-version
+    workingDir: '@enigmatry/enigmatry-grid'
+
+- task: Npm@1
+  displayName: 'Publish @enigmatry/enigmatry-grid'
+  inputs:
+    command: publish
+    publishRegistry: useFeed
+    publishFeed: 8f8fdedc-8dad-4678-a7ed-dbaa55d4b955/enigmatry-feed
+    workingDir: '@enigmatry/enigmatry-grid'
+
+- task: Npm@1
+  displayName: 'Set the version of @enigmatry/pagination'
+  inputs:
+    command: custom
+    customCommand: version $(Build.Buildnumber) --no-git-tag-version
+    workingDir: '@enigmatry/pagination'
+
+- task: Npm@1
+  displayName: 'Publish @enigmatry/pagination'
+  inputs:
+    command: publish
+    publishRegistry: useFeed
+    publishFeed: 8f8fdedc-8dad-4678-a7ed-dbaa55d4b955/enigmatry-feed
+    workingDir: '@enigmatry/pagination'
+
+- task: Npm@1
+  displayName: 'Set the version of @enigmatry/pipes'
+  inputs:
+    command: custom
+    customCommand: version $(Build.Buildnumber) --no-git-tag-version
+    workingDir: '@enigmatry/pipes'
+
+- task: Npm@1
+  displayName: 'Publish @enigmatry/pipes'
+  inputs:
+    command: publish
+    publishRegistry: useFeed
+    publishFeed: 8f8fdedc-8dad-4678-a7ed-dbaa55d4b955/enigmatry-feed
+    workingDir: '@enigmatry/pipes'
