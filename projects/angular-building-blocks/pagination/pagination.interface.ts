@@ -1,3 +1,5 @@
+import { Sort as SortEvent } from '@angular/material/sort';
+import { PageEvent } from '@angular/material/paginator';
 
 export { Sort as SortEvent, SortDirection } from '@angular/material/sort';
 export { PageEvent } from '@angular/material/paginator';
@@ -10,4 +12,12 @@ export interface PagedData<T> {
     totalPages?: number;
     hasPreviousPage?: boolean;
     hasNextPage?: boolean;
+}
+
+export interface OnSort {
+    sortChange(sort: SortEvent): void;
+}
+
+export interface OnPage {
+    pageChange(page: PageEvent): void;
 }

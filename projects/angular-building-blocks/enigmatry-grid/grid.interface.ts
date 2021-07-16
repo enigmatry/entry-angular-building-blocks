@@ -1,4 +1,6 @@
-import { TemplateRef } from '@angular/core';
+import { InjectionToken, TemplateRef } from '@angular/core';
+
+export const DEFAULT_DATE_FORMAT: InjectionToken<string> = new InjectionToken<string>('');
 
 export interface ColumnDef {
   field: string;

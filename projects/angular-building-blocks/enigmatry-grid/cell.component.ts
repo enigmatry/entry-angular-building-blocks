@@ -1,7 +1,6 @@
 import { Component, DEFAULT_CURRENCY_CODE, Inject, Input, ViewEncapsulation } from '@angular/core';
 
-import { ColumnDef } from './grid.interface';
-import { DEFAULT_DATE_FORMAT } from './grid.module';
+import { ColumnDef, DEFAULT_DATE_FORMAT } from './grid.interface';
 
 @Component({
   selector: 'enigmatry-grid-cell',

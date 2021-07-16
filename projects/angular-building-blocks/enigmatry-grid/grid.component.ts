@@ -31,7 +31,7 @@ import {
   ContextMenuItem,
   RowContextMenuFormatter,
 } from './grid.interface';
-import { PagedData } from '../pagination';
+import { PagedData } from '@enigmatry/angular-building-blocks/pagination';
 
 @Component({
   selector: 'enigmatry-grid',
