@@ -13,7 +13,7 @@ steps:
   inputs:
     command: custom
     customCommand: version $(Build.Buildnumber) --no-git-tag-version
-    workingDir: 'projects'
+    workingDir: 'projects/angular-building-blocks'
 
 - task: Npm@1
   displayName: 'npm install'
@@ -32,5 +32,5 @@ steps:
     command: publish
     publishRegistry: useFeed
     publishFeed: 8f8fdedc-8dad-4678-a7ed-dbaa55d4b955/enigmatry-feed
-    workingDir: 'projects'
+    workingDir: 'projects/angular-building-blocks'
 
