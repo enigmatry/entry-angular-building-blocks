@@ -1,0 +1,51 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "angular-building-blocks": {
+      "projectType": "library",
+      "root": "projects/angular-building-blocks",
+      "sourceRoot": "projects/angular-building-blocks",
+      "prefix": "enigmatry",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/angular-building-blocks/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/angular-building-blocks/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/angular-building-blocks/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/angular-building-blocks/test.ts",
+            "tsConfig": "projects/angular-building-blocks/tsconfig.spec.json",
+            "karmaConfig": "projects/angular-building-blocks/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/angular-building-blocks/**/*.ts",
+              "projects/angular-building-blocks/**/*.html"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "angular-building-blocks",
+  "cli": {
+    "defaultCollection": "@angular-eslint/schematics"
+  }
+}
