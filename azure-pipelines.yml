@@ -31,6 +31,6 @@ steps:
   inputs:
     command: publish
     publishRegistry: useFeed
-    publishFeed: 8f8fdedc-8dad-4678-a7ed-dbaa55d4b955/enigmatry-feed
+    publishFeed: enigmatry
     workingDir: 'dist/angular-building-blocks'
 
