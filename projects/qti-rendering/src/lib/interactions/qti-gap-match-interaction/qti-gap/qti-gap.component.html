@@ -1,0 +1,9 @@
+<div class="gap-list" 
+    cdkDropList 
+    [cdkDropListData]="gapTextList"
+    (cdkDropListDropped)="drop($event)"
+    id={{identifier}}>
+    <div *ngFor="let item of gapTextList" class="match-drag-box choice-box" cdkDrag>
+        {{item.innerHTML}}
+    </div>
+</div>

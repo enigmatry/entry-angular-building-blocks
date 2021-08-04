@@ -42,6 +42,46 @@
           }
         }
       }
+    },
+    "qti-rendering": {
+      "projectType": "library",
+      "root": "projects/qti-rendering",
+      "sourceRoot": "projects/qti-rendering/src",
+      "prefix": "enigmatry",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/qti-rendering/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/qti-rendering/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/qti-rendering/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/qti-rendering/src/test.ts",
+            "tsConfig": "projects/qti-rendering/tsconfig.spec.json",
+            "karmaConfig": "projects/qti-rendering/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/qti-rendering/**/*.ts",
+              "projects/qti-rendering/**/*.html"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "angular-building-blocks",

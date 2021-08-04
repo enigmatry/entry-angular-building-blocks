@@ -1,0 +1,18 @@
+<div class="qti-prompt" [innerHTML]="prompt.innerHTML"></div>
+<div cdkDropListGroup class="qti-match-wrap">
+    <div class="qti-match-item">
+        <div *ngFor="let items of firstList; index as i;"
+            class="match-drag-list choice-list"
+            cdkDropList
+            id={{allGapTexts[i].identifier}}
+            [cdkDropListData]="items"
+            (cdkDropListDropped)="drop($event)">
+                <div *ngFor="let dragItem of items" [cdkDragData]="dragItem" class="match-drag-box choice-box"
+                cdkDrag [innerHTML]="dragItem.innerHTML"></div>
+        </div>
+    </div>
+    <div class="qti-match-item">
+        <slot></slot>
+    </div>
+</div>
+

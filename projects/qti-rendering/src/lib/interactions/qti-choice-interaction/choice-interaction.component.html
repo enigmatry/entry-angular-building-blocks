@@ -1,0 +1,16 @@
+<div class="choice-interaction-wrap">
+    <div class="qti-prompt" [innerHTML]="prompt.innerHTML">
+    </div>
+    <div class="qti-simple-choice custom-simple-choice" *ngFor="let choice of simpleChoices" [ngClass]="getCorrectnessClasses(choice)">
+        <input [type]="inputType" 
+            [id]="choice.identifier" 
+            [name]="responseIdentifier" 
+            [value]="choice.identifier"
+            [checked]="choice.checked" 
+            (change)="onChecked(choice, $event.target.checked)"
+            (click)="onClick($event, $event.target.checked)"
+            class="qti-simple-choice-input custom-simple-choice-input"
+            [ngClass]="getCorrectnessClasses(choice)">
+        <label [for]="choice.identifier" [innerHTML]="choice.innerHTML" class="qti-simple-choice-label"></label>
+    </div>
+</div>

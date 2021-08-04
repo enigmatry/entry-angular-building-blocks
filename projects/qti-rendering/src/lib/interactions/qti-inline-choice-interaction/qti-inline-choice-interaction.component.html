@@ -1,0 +1,7 @@
+<div class="choice-wrap">
+	<select [name]="responseIdentifier" [(ngModel)]="selectedOption" class="inline-choice mx-10" [ngClass]="correctnessClasses">
+		<option value="">{{prompt}}</option>
+		<option *ngFor="let option of options" [ngValue]="option" [innerHTML]="option.innerHTML"></option>
+	</select> 
+	<span *ngIf="showCorrectAnswers" [innerHTML]="correctOption.innerHTML"></span>
+</div>
