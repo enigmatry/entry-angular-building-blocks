@@ -9,11 +9,18 @@ name: $(MajorMinorVersion)$(Rev:.r)
 
 steps:
 - task: Npm@1
-  displayName: 'Set the version'
+  displayName: 'Set the version angular-building-blocks'
   inputs:
     command: custom
     customCommand: version $(Build.Buildnumber) --no-git-tag-version
     workingDir: 'projects/angular-building-blocks'
+
+- task: Npm@1
+  displayName: 'Set the version qti-rendering'
+  inputs:
+    command: custom
+    customCommand: version $(Build.Buildnumber) --no-git-tag-version
+    workingDir: 'projects/qti-rendering'
 
 - task: Npm@1
   displayName: 'npm install'
@@ -21,16 +28,30 @@ steps:
     command: 'install'
 
 - task: Npm@1
-  displayName: 'Build the library'
+  displayName: 'Build the angular-building-blocks library'
   inputs:
     command: 'custom'
-    customCommand: 'run build'
+    customCommand: 'run build angular-building-blocks'
 
 - task: Npm@1
-  displayName: 'Publish the library'
+  displayName: 'Build the qti-rendering library'
+  inputs:
+    command: 'custom'
+    customCommand: 'run build qti-rendering'
+
+- task: Npm@1
+  displayName: 'Publish the angular-building-blocks library'
   inputs:
     command: publish
     publishRegistry: useFeed
     publishFeed: enigmatry
     workingDir: 'dist/angular-building-blocks'
+
+- task: Npm@1
+  displayName: 'Publish the qti-rendering library'
+  inputs:
+    command: publish
+    publishRegistry: useFeed
+    publishFeed: enigmatry
+    workingDir: 'dist/qti-rendering'
 
