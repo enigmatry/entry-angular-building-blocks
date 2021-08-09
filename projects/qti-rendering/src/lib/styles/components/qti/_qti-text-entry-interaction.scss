@@ -1,0 +1,32 @@
+@import '../../variables';
+@import '../../mixins';
+
+.text-entry {
+    margin: 8px 5px;
+    padding: 10px 14px;
+    border: 2px solid $gray-c;
+    border-radius: 5px;
+
+    &:focus {
+        outline: none !important;
+        border: 2px solid $primary-blue;
+    }
+
+    &-wrap {
+        display: inline-block;
+    }
+}
+
+::ng-deep {
+    // Fix for http://localhost:4200/start/sections/6608/questions/24720
+    qti-text-entry-interaction {
+        display: block;
+        margin: 15px 0 30px;
+    }
+
+    td qti-text-entry-interaction {
+        display: inline-block;
+        margin-bottom: 0;
+    }
+}
+// Added margin cause of 4788/questions/16735

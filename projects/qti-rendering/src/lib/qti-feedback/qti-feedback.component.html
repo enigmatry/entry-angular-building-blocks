@@ -1,0 +1,4 @@
+<div class="feedback">
+  <h3 [class.error]="incorrect" [class.correct]="correct" [innerText]="title"></h3>
+  <p [innerHTML]="content | safeHtml"></p>
+</div>

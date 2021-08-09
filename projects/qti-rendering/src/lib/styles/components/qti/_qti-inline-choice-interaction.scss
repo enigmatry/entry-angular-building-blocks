@@ -1,0 +1,39 @@
+@import '../../variables';
+@import '../../mixins';
+
+.choice-wrap {
+    position: relative;
+    display: inline-block;
+
+    select {
+        display: inline-block;
+        max-width: 172px;
+        width: auto;
+        height: 30px;
+        padding: 4px 12px;
+        // margin: 0 7px;
+        border: 2px solid $primary-blue;
+        border-radius: 10px;
+        font-size: 14px;
+        color: $primary-blue;
+        cursor: pointer;
+    }
+  
+    span {
+        @include position(absolute, 40px, unset, unset, 12px); 
+        @include cut-text();
+        font-size: 14px;
+        color: $success-darken;
+        line-height: 1;
+        transition: .3s;
+        
+        &:hover {
+            overflow: visible;
+            white-space: nowrap;
+        }
+    }
+}
+
+.choice-interaction-wrap {
+    margin-bottom: 25px;
+}

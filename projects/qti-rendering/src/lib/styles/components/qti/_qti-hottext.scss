@@ -1,0 +1,26 @@
+@import '../../variables';
+@import '../../mixins';
+
+.qti-answer-button {
+    color: $primary-blue;
+    margin: 0 4px;
+    padding: 6px 8px;
+    border: 2px solid $primary-blue;
+    background: $white;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    border-radius: 10px;
+    font-size: 15px;
+    line-height: 1.67;
+    cursor: pointer;
+  
+    &:focus {
+      outline: none;
+    }
+  
+    &.checked {
+      color: $white;
+      background: $primary-blue;
+    }
+}

@@ -1,0 +1,28 @@
+// Position
+@mixin position($position, $top: unset, $right: unset, $bottom: unset, $left: unset ) {
+    position: $position;
+    top: $top;
+    right: $right;
+    bottom: $bottom;
+    left: $left;
+}
+// @include position(absolute, 0, 0, 0, 0); 
+
+// Flex 
+@mixin flex($display, $align, $justify, $direction: row, $wrap: wrap ) {
+    display: $display;
+    align-items: $align;
+    justify-content: $justify;
+    flex-direction: $direction;
+    flex-wrap: $wrap;
+}
+// @include flex(flex, center, center);
+
+// Cut Text 
+@mixin cut-text($num-of-lines: 1) {
+    display: -webkit-box;
+    -webkit-line-clamp: $num-of-lines;
+    -webkit-box-orient: vertical;  
+    overflow: hidden;
+}
+// @include cut-text(3); 

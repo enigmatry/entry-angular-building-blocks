@@ -1,0 +1,610 @@
+@import '../variables';
+@import '../mixins';
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  font-family: Roboto, sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.mat-h2,
+.mat-title,
+.mat-typography h2 {
+  font-family: 'Intelo Bold', sans-serif!important;
+  font-style: normal;
+}
+
+h4 {
+
+  &.blue-color {
+    margin-top: 12px;
+    color: $midnight;
+  }
+
+  &.small {
+    margin-top: 12px;
+    font-size: 1.4375rem;
+    line-height: 1.34;
+  }
+}
+
+// Video fix for http://localhost:4200/start/sections/6362/questions/98509
+video,
+img {
+  max-width: 100%;
+}
+
+.mat-drawer-container,
+.mat-toolbar {
+  background-color: $white !important;
+}
+
+button:focus {
+  outline: none !important;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  color: $input-autofill-color !important;
+  -webkit-text-fill-color: $input-autofill-color !important;
+  box-shadow: 0 0 0 30px $input-autofill-bg inset !important;
+  -webkit-box-shadow: 0 0 0 30px $input-autofill-bg inset !important;
+}
+
+.list-inline,
+.list-unstyled {
+  padding-left: 0;
+  list-style: none;
+  margin: 0;
+
+  &>li {
+    display: inline-block;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+}
+
+.mat-card {
+  border-radius: 0 !important;
+}
+
+.theme-yellow {
+  background-color: $yellow-light;
+  color: $yellow;
+
+
+  &.mat-card {
+    box-shadow: 0 0 10px 0 $yellow !important;
+  }
+
+  h2 {
+    color: $yellow;
+  }
+
+  .sub-chapter-section::after {
+    background-color: $yellow-light;
+  }
+
+  .question-nav-link {
+    border-color: $yellow;
+  }
+
+  .question-toolbar {
+    background-color: $yellow;
+  }
+
+  .question-toolbar-icon {
+    &:disabled {
+      &::before {
+      background-color: rgba($yellow, .5);
+      }
+    }
+  }
+}
+
+
+.theme-orange {
+  background-color: $orange-light;
+  color: $orange;
+
+  &.mat-card {
+    box-shadow: 0 0 10px 0 $orange !important;
+  }
+
+  h2 {
+    color: $orange;
+  }
+
+  .sub-chapter-section::after {
+    background-color: $orange-light;
+  }
+
+  .question-nav-link {
+    border-color: $orange;
+  }
+
+  .question-toolbar {
+    background-color: $orange;
+  }
+  
+  .question-toolbar-icon {
+    &:disabled {
+      &::before {
+      background-color: rgba($orange, .5);
+      }
+    }
+  }
+}
+
+.theme-aqua {
+  background-color: $aqua-light;
+  color: $aqua;
+
+  &.mat-card {
+    box-shadow: 0 0 10px 0 $aqua !important;
+  }
+
+  h2 {
+    color: $aqua;
+  }
+
+  .sub-chapter-section::after {
+    background-color: $aqua-light;
+  }
+
+  .question-nav-link {
+    border-color: $aqua;
+  }
+
+  .question-toolbar {
+    background-color: $aqua;
+  }
+
+  .question-toolbar-icon {
+    &:disabled {
+      &::before {
+      background-color: rgba($aqua, .5);
+      }
+    }
+  }
+}
+
+.theme-violet {
+  background-color: $violet-light;
+  color: $violet;
+
+  &.mat-card {
+    box-shadow: 0 0 10px 0 $violet !important;
+  }
+
+  h2 {
+    color: $violet;
+  }
+
+  .sub-chapter-section::after {
+    background-color: $violet-light;
+  }
+
+  .question-nav-link {
+    border-color: $violet;
+  }
+
+  .question-toolbar {
+    background-color: $violet;
+  }
+
+  .question-toolbar-icon {
+    &:disabled {
+      &::before {
+      background-color: rgba($violet, .5);
+      }
+    }
+  }
+}
+
+.theme-gray {
+  background-color: $gray-light;
+  color: $gray;
+
+  &.mat-card {
+    box-shadow: 0 0 10px 0 $gray !important;
+  }
+
+  h2 {
+    color: $gray;
+  }
+
+  .sub-chapter-section::after {
+    background-color: $gray-light;
+  }
+
+  .question-nav-link {
+    border-color: $gray;
+  }
+
+  .question-toolbar {
+    background-color: $gray;
+  }
+
+  .question-toolbar-icon {
+    &:disabled {
+      &::before {
+      background-color: rgba($gray, .5);
+      }
+    }
+  }
+}
+
+.align-center {
+  align-items: center;
+}
+
+.default-box {
+  @include flex(flex, center, space-between);
+  @include cut-text(); 
+
+  top: -2px;
+  left: -2px;
+  height: 20px;
+  width: fit-content;
+  padding: 20px 10px;
+  border-bottom: solid 1px $gray-c;
+  color: rgba(0, 0, 0, 0.87);
+  box-sizing: border-box;
+  background: $white;
+  font-size: 15px;
+  text-align: center;
+  line-height: 18px;
+  background-color: $light-blue;
+  border: 2px solid $primary-blue;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.search-section {
+  .mat-form-field-flex  {
+    height: 40px;
+    align-items: center;
+    padding-bottom: 0!important;
+    padding: 0 15px;
+    border-radius: 5px;
+    border: 2px solid $gray-light;
+  }
+
+  .mat-form-field-underline {
+    display: none;
+  }
+
+  .mat-form-field-infix,
+  .mat-form-field-infix input {
+    padding: 0!important;
+    margin: 0;
+    border: none;
+  }
+
+  .mat-form-field-infix {
+    input {
+      position: relative;
+      bottom: 0;
+    }
+  }
+
+  .mat-form-field-label-wrapper {
+    top: -19px;
+    height: 22px;
+  }
+  .mat-icon {
+    font-size: 24px!important;
+    color: $primary-blue;
+  }
+}
+
+.drop-down {
+  width: 100%;
+  height: 40px;
+  padding: 10px 16px;
+  border-radius: 5px;
+  border: 2px solid $gray-light;
+  background-color: $white;
+  align-items: center;
+  line-height: 1;
+}
+
+.card {
+  @include flex(flex, center, space-between, column);
+
+  width: 100%;
+  height: 180px;
+  margin: 30px 15px 0;
+  padding: 15px 20px;
+  background-color: $white;
+  -webkit-box-shadow: 0 0 20px 0 rgb(0 0 0 / 20%);
+  -moz-box-shadow: 0 0 20px 0 rgba(0,0,0,.2);
+  -ms-box-shadow: 0 0 20px 0 rgba(0,0,0,.2);
+  box-shadow: 0 0 20px 0 rgb(0 0 0 / 20%);
+  font-weight: 500;
+  color: $midnight;
+  text-align: center;
+  cursor: pointer;
+
+  &:hover {
+    -webkit-box-shadow: 0 0 20px 0 #4098ff;
+    -moz-box-shadow: 0 0 20px 0 #4098ff;
+    -ms-box-shadow: 0 0 20px 0 #4098ff;
+    box-shadow: 0 0 20px 0 #4098ff;
+  }
+
+  &-wrap {
+      @media (min-width: 768px) {
+        margin-top: -30px;
+      }
+  }
+
+  &-text {
+    @include cut-text(3);
+  }
+
+  &-icon {
+    width: 45px;
+  }
+}
+
+.inner-header {
+  margin-bottom: 35px;
+
+  .mat-display-2 {
+    margin: 0;
+  }
+
+  .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+    padding-bottom: 0;
+  }
+}
+
+.vraaginhoud {
+  table {
+      tr {
+          display: flex;
+          align-items: baseline;
+          margin-top: 10px;
+      }
+  }
+
+  p {
+    margin-bottom: 0;
+    margin-bottom: 35px;
+  }
+}
+
+.multiple-questions-img.vraaginhoud {
+  > div {
+    margin: 10px 0 15px;
+  }
+
+  img {
+      width: 100%;
+      max-width: 250px;
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+.Meerkeuze.vraaginhoud {
+  
+  p {
+    margin-bottom: 5px;
+  }
+}
+
+// Style for https://nt2plus.test.enigmatry.com/start/sections/4759/questions/16587 
+[id^=MeerKeuzeItem] {
+  p {
+    margin-bottom: 5px;
+    line-height: 3; // style for 4790/questions/16752
+  }
+}
+
+// Style for http://localhost:4200/start/sections/4747/questions/16745
+[id^=KiesGoedeWoordItem] {
+  p {
+    display: flex;
+  }
+}
+
+.nav-submenu {
+  .mat-menu-item,
+  .mat-slide-toggle-content {
+    outline: 0;
+    font-size: 16px;
+    font-family: 'Intelo Bold', sans-serif!important;
+    color: $midnight;
+  }
+
+  .mat-slide-toggle-bar {
+    background-color: $gray-light;
+  }
+
+  .mat-slide-toggle-thumb {
+    background-color: $midnight;
+  }
+}
+
+.nav-language-menu {
+    outline: 0;
+    font-size: 16px;
+    font-family: 'Intelo Bold', sans-serif!important;
+    color: $midnight;
+    &.mat-option.mat-active {
+      color: $midnight;
+    }
+}
+
+// custom-simple-choice
+.custom-simple-choice {
+  .custom-simple-choice-input {
+    position: relative;
+    -webkit-appearance: none;
+    display: inline-block;
+    padding: 8px;
+    border: 2px solid $gray-7;
+    background-color: transparent;
+    cursor: pointer;
+  
+    &:checked:after {
+      @include position(absolute, 0, unset, unset, 0);
+      font-size: 16px;
+      font-weight: 600;
+    }
+  }
+
+  input[type=radio] {
+    padding: 7px;
+    border-radius: 50%;
+  }
+
+  &.checked {
+    color: $primary-blue;
+
+    .custom-simple-choice-input {
+      border-color: $primary-blue;
+    }
+
+    input[type=checkbox]:checked:after {
+      content: '\e5ca';
+      font-family: "Material Icons";
+      color: $primary-blue;
+    }
+
+    input[type=radio]:after {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      border: 4px solid $primary-blue;
+      transform: translate(-50%,-50%);
+    }
+  }
+
+  &.correct {
+    color: $success-darken;
+
+    .custom-simple-choice-input {
+      border-color: $success-darken;
+    }
+
+    input[type=checkbox]:checked:after {
+      content: '\e5ca';
+      font-family: "Material Icons";
+      color: $success-darken;
+    }
+
+    input[type=radio]:after {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      border: 4px solid $success-darken;
+      transform: translate(-50%,-50%);
+    }
+  }
+
+  &.incorrect {
+    color: $warning;
+
+    .custom-simple-choice-input {
+      border-color: $warning;
+    }
+
+    input[type=checkbox]:checked:after {
+      content: '\e5cd';
+      font-family: "Material Icons";
+      color: $warning;
+    }
+
+    input[type=radio]:after {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      border: 4px solid $warning;
+      transform: translate(-50%,-50%);
+    }
+  }
+}
+// Width
+.w-170 {
+  width: 170px;
+}
+
+// Alignment 
+.tac {
+  text-align: center;
+}
+
+// Margin
+.mt-20 {
+  margin-top: 20px;
+}
+
+.mt-30 {
+  margin-top: 30px;
+}
+
+.mx-10 {
+  margin: 0 10px;
+}
+
+// Outline
+button,
+select,
+input {
+  outline: none;
+}
+
+.choice-box.cdk-drag-preview {
+    opacity: .7;
+    background-color: $white;
+}
+
+.vraaginhoud {
+  table td:first-child {
+    min-width: 150px;
+    padding-right: 25px;
+    font-style: italic;
+    font-weight: 500;
+    color: $midnight;
+  }
+}
+
+.full-content-height {
+  height: 100%;
+
+  @media (min-width: 769px) {
+    height: calc(100vh - 160px);
+    max-height: 100vh;
+  }
+}

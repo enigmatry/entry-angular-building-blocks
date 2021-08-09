@@ -30,6 +30,18 @@ export class ChoiceInteractionComponent extends QtiInteractionElement implements
     return this.choiceType === ChoiceType.Single ? 'radio' : 'checkbox';
   }
 
+  get checkedCount(): number {
+    return this.simpleChoices?.filter(c => c.checked).length;
+  }
+
+  get isValid(): boolean {
+    return this.minChoices ? this.checkedCount >= Number(this.minChoices) : true;
+  }
+
+  get isAnswered(): boolean {
+    return this.checkedCount > 0;
+  }
+
   prompt: QtiPrompt;
   simpleChoices: QtiSimpleChoice[];
   correctnessClasses: string;
@@ -77,8 +89,7 @@ export class ChoiceInteractionComponent extends QtiInteractionElement implements
 
   isMaxCheckedLimitReached(): boolean {
     if (this.maxChoices === unlimited || this.maxChoices === single) { return false; }
-    const checkedCount = this.simpleChoices.filter(c => c.checked).length;
-    return checkedCount >= Number(this.maxChoices);
+    return this.checkedCount >= Number(this.maxChoices);
   }
 
   hasResult(): boolean {

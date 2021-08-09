@@ -20,6 +20,7 @@ import { MEDIA_SRC_PROVIDER } from './constants';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 import { QtiRendererComponent } from './qti-renderer/qti-renderer.component';
 import { QtiItemBodyComponent } from './qti-item-body/qti-item-body.component';
+import { QtiFeedbackComponent } from './qti-feedback/qti-feedback.component';
 
 export interface QtiModuleConfig {
   mediaSrcProvider?: Type<IMediaSrcProvider>;
@@ -41,7 +42,8 @@ export interface QtiModuleConfig {
     QtiMatchInteractionComponent,
     QtiCustomInteractionComponent,
     SafeHtmlPipe,
-    QtiItemBodyComponent
+    QtiItemBodyComponent,
+    QtiFeedbackComponent
   ],
   imports: [
     CommonModule,
@@ -49,13 +51,14 @@ export interface QtiModuleConfig {
     DragDropModule
   ],
   exports: [
-    QtiRendererComponent
+    QtiRendererComponent,
+    QtiFeedbackComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class QtiModule {
 
-  constructor(injector: Injector, @Optional() @SkipSelf() parentModule?: QtiModule) {
+  constructor(@Optional() injector: Injector, @Optional() @SkipSelf() parentModule?: QtiModule) {
     if (parentModule) {
       customElements.define('qti-item-body', createCustomElement(QtiItemBodyComponent, { injector }));
       customElements.define('qti-choice-interaction', createCustomElement(ChoiceInteractionComponent, { injector }));

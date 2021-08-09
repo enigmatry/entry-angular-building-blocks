@@ -1,0 +1,139 @@
+@import '../../variables';
+@import '../../mixins';
+
+.choice-box,
+.choice-list,
+.gap-text-box {
+    width: fit-content;
+    min-width: 90px;
+    height: 30px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    font-size: 15px;
+    text-align: center;
+    color: rgba($black, 0.87);
+    line-height: 1;
+}
+
+.choice-list-wrap {
+    display: flex;
+    align-items: flex-start;
+
+    .choice-list {
+        margin-top: 0
+    }
+}
+
+.choice-text {
+    margin-left: 5px;
+}
+
+.choice-box,
+.gap-text-box {
+    @include position(relative, -2px, unset, unset, -2px); 
+    @include cut-text(); 
+
+    margin-right: -4px;
+    padding: 5px 20px 5px 25px;
+    border: 2px solid $primary-blue;
+    background-color: $light-blue;
+    font-size: 15px;
+    color: rgba($black, 0.87);
+    line-height: 1;
+    text-align: center;
+    cursor: pointer;
+
+    &::before {
+        content: "\e5d2";
+        font-family: "Material Icons";
+        position: absolute;
+        top: 1px;
+        left: 6px;
+        width: 13px;
+        overflow: hidden;
+        font-size: 20px;
+        color: $primary-blue;
+    }
+}
+
+.choice-list {
+    position: relative;
+    margin-top: 20px;
+    border: solid 2px $gray-c;
+
+    // Not in use, delete after the test
+    // &--correct {
+    //     position: absolute;
+    //     bottom: -18px;
+    //     left: 0;
+    //     transform: translateX(-50%);
+    // }
+
+    &.cdk-drag-list-dragging {
+        margin-top: 0;
+    } 
+}
+
+.cdk-drag {
+    &-preview {
+        box-sizing: border-box;
+        border-radius: 4px;
+        box-shadow: 0 5px 5px -3px rgba($black, 0.2), 0 8px 10px 1px rgba($black, 0.14),
+            0 3px 14px 2px rgba($black, 0.12);
+    }
+
+    &-disabled {
+        background-color: $gray-light !important;
+    }
+
+    &-placeholder {
+        opacity: 0;
+    }
+
+    &-animating {
+        transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+    }
+}
+
+.choice-list.cdk-drop-list-dragging .choice-box:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.choice-custom-placeholder {
+    border: 2px dotted $primary-blue;
+}
+
+.order-interaction {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    &--list {
+        flex: 1 1 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+    }
+}
+
+::ng-deep {
+    .cdk-drag-preview {
+        padding: 5px 20px;
+        border-radius: 10px;
+        border: 2px solid $primary-blue;
+        background-color: $light-blue;
+        font-size: 15px;
+        text-align: center;
+        color: rgba($black, 0.87);
+        line-height: 1;
+        cursor: pointer;
+    }
+}
+
+.match-drop-box {
+    text-align: left;
+    height: auto;
+    -webkit-box-orient: unset;
+    overflow: visible;
+}

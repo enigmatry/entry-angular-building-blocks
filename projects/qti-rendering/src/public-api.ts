@@ -7,5 +7,6 @@ export * from './lib/services';
 export * from './lib/constants';
 export { QtiItemBodyComponent } from './lib/qti-item-body/qti-item-body.component';
 export { QtiRendererComponent } from './lib/qti-renderer/qti-renderer.component';
+export { QtiFeedbackComponent } from './lib/qti-feedback/qti-feedback.component';
 export { QtiElement } from './lib/qti-element';
 export { QtiModule, QtiModuleConfig } from './lib/qti.module';
