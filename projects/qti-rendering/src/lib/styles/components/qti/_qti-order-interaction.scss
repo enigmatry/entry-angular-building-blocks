@@ -31,7 +31,10 @@
 .choice-box,
 .gap-text-box {
     @include position(relative, -2px, unset, unset, -2px); 
-    @include cut-text(); 
+    
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 
     margin-right: -4px;
     padding: 5px 20px 5px 25px;
