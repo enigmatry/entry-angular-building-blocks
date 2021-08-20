@@ -55,3 +55,10 @@ steps:
     publishFeed: enigmatry
     workingDir: 'dist/qti-rendering'
 
+- task: Npm@1
+  displayName: 'Publish the eslint recommended rules'
+  inputs:
+    command: publish
+    publishRegistry: useFeed
+    publishFeed: enigmatry
+    workingDir: 'projects/eslint-config-enigmatry'
