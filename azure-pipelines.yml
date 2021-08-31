@@ -27,7 +27,7 @@ steps:
   inputs:
     command: custom
     customCommand: version $(Build.Buildnumber) --no-git-tag-version
-    workingDir: 'projects/eslint-config-enigmatry'
+    workingDir: 'projects/eslint-config'
 
 - task: Npm@1
   displayName: 'npm install'
@@ -68,4 +68,4 @@ steps:
     command: publish
     publishRegistry: useFeed
     publishFeed: enigmatry
-    workingDir: 'projects/eslint-config-enigmatry'
+    workingDir: 'projects/eslint-config'
