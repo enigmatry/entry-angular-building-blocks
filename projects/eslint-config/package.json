@@ -1,5 +1,5 @@
 {
-  "name": "@enigmatry/eslint-recommended",
+  "name": "@enigmatry/eslint-config",
   "version": "1.0.0",
   "author": "Enigmatry",
   "description": "ESLint shareable config for the Enigmatry style.",
@@ -27,6 +27,22 @@
     "@angular-eslint/template-parser": "12.3.1"
   },
   "peerDependencies": {
-    "eslint": ">=5.16.0"
+    "eslint": "7.31.0",
+	"@typescript-eslint/eslint-plugin": "4.28.4",
+    "@typescript-eslint/parser": "4.28.4",
+    "eslint-plugin-import": "2.23.4",
+    "eslint-plugin-jsdoc": "35.5.1",
+    "eslint-plugin-no-loops": "0.3.0",
+    "eslint-plugin-no-secrets": "0.8.9",
+    "eslint-plugin-no-unsanitized": "3.1.5",
+    "eslint-plugin-prefer-arrow": "1.2.3",
+    "eslint-plugin-promise": "5.1.0",
+    "eslint-plugin-unused-imports": "1.1.1",
+    "eslint-plugin-xss": "0.1.10",
+	"@angular-eslint/builder": "12.3.1",
+    "@angular-eslint/eslint-plugin": "12.3.1",
+    "@angular-eslint/eslint-plugin-template": "12.3.1",
+    "@angular-eslint/schematics": "12.3.1",
+    "@angular-eslint/template-parser": "12.3.1"
   }
 }
