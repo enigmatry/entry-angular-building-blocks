@@ -2,6 +2,7 @@ import { Component, ElementRef, HostListener, Inject, Input, OnDestroy, OnInit }
 import { BehaviorSubject } from 'rxjs';
 import { MEDIA_SRC_PROVIDER } from '../constants';
 import { QtiInteractionElement } from '../interactions/qti-interaction.component';
+import { MediaEmbed } from '../models/mediaEmbed';
 import { ResultDeclaration } from '../models/response-declaration';
 import { QtiElement } from '../qti-element';
 import { MediaSrcProvider } from '../services/media-src-provider.service';
@@ -20,6 +21,7 @@ export class QtiRendererComponent extends QtiElement implements OnInit, OnDestro
   set content(content: any) {
     if (content) {
      this._content.next(content);
+     setTimeout(() => this.mediaEmbedReplaceHtml(), 0);
     }
   }
 
@@ -66,6 +68,36 @@ export class QtiRendererComponent extends QtiElement implements OnInit, OnDestro
     this.interactions.forEach(interaction => {
       interaction.showAnswers();
     });
+  }
+
+  private accordionOnClickHandler(target: Element) {
+    if (target.matches('.accordion > .panel > h3')) {
+      const targetPanel = target.closest('.panel');
+
+      this.querySelectorAll('.accordion > .panel')
+        .filter(panel => panel !== targetPanel)
+        .forEach(panel => panel.classList.remove('expanded'));
+
+      targetPanel.classList.toggle('expanded');
+    }
+  }
+
+  private mediaEmbedReplaceHtml(): boolean {
+    const elements = this.elementRef.nativeElement
+      .querySelectorAll('figure.media > oembed[url]');
+
+    if (elements?.length) {
+      elements.forEach(media => {
+        const url = media.getAttribute('url');
+        const mediaElem = media.closest('figure.media');
+        const mediaHtml = new MediaEmbed().getMediaHtml(url);
+        mediaElem.insertAdjacentHTML('afterend', mediaHtml);
+      });
+
+      return true;
+    }
+
+    return false;
   }
 
   private accordionOnClickHandler(target: Element) {
