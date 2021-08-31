@@ -10,14 +10,14 @@ import { CorrectStatus } from '../models/correct-status.enum';
 })
 export class QtiFeedbackComponent implements OnInit {
 
+  @Input() correctStatus: CorrectStatus;
+
   @Input()
   get content(): string { return this._content.value; }
   set content(content: string) {
     this._content.next(content);
   }
   private _content = new BehaviorSubject<string>(null);
-
-  @Input() correctStatus: CorrectStatus;
 
   constructor(private elementRef: ElementRef<Element>) { }
 

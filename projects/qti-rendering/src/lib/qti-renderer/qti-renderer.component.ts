@@ -1,4 +1,4 @@
-import { Component, ElementRef, Inject, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { MEDIA_SRC_PROVIDER } from '../constants';
 import { QtiInteractionElement } from '../interactions/qti-interaction.component';
@@ -29,12 +29,20 @@ export class QtiRendererComponent extends QtiElement implements OnInit, OnDestro
     super(elementRef);
   }
 
+  @HostListener('click', ['$event.target']) onClick(target: Element) {
+    this.accordionOnClickHandler(target);
+  }
+
   ngOnInit(): void {
     super.ngOnInit();
   }
 
   private get interactions(): QtiInteractionElement[] {
     return this.getDescendantsOfType<QtiInteractionElement>(QtiInteractionElement);
+  }
+
+  get isReadonly(): boolean {
+    return this.interactions.every(interaction => interaction.isReadonly);
   }
 
   get isAnswered(): boolean {
@@ -58,6 +66,18 @@ export class QtiRendererComponent extends QtiElement implements OnInit, OnDestro
     this.interactions.forEach(interaction => {
       interaction.showAnswers();
     });
+  }
+
+  private accordionOnClickHandler(target: Element) {
+    if (target.matches('.accordion > .panel > h3')) {
+      const targetPanel = target.closest('.panel');
+
+      this.querySelectorAll('.accordion > .panel')
+        .filter(panel => panel !== targetPanel)
+        .forEach(panel => panel.classList.remove('expanded'));
+
+      targetPanel.classList.toggle('expanded');
+    }
   }
 }
 
