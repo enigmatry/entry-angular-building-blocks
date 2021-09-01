@@ -99,17 +99,5 @@ export class QtiRendererComponent extends QtiElement implements OnInit, OnDestro
 
     return false;
   }
-
-  private accordionOnClickHandler(target: Element) {
-    if (target.matches('.accordion > .panel > h3')) {
-      const targetPanel = target.closest('.panel');
-
-      this.querySelectorAll('.accordion > .panel')
-        .filter(panel => panel !== targetPanel)
-        .forEach(panel => panel.classList.remove('expanded'));
-
-      targetPanel.classList.toggle('expanded');
-    }
-  }
 }
 
