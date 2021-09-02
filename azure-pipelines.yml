@@ -28,6 +28,13 @@ steps:
     command: custom
     customCommand: version $(Build.Buildnumber) --no-git-tag-version
     workingDir: 'projects/eslint-config'
+    
+- task: Npm@1
+  displayName: 'Set the version stylelint recommended rules'
+  inputs:
+    command: custom
+    customCommand: version $(Build.Buildnumber) --no-git-tag-version
+    workingDir: 'projects/stylelint-config'
 
 - task: Npm@1
   displayName: 'npm install'
@@ -69,3 +76,11 @@ steps:
     publishRegistry: useFeed
     publishFeed: enigmatry
     workingDir: 'projects/eslint-config'
+
+- task: Npm@1
+  displayName: 'Publish the stylelint recommended rules'
+  inputs:
+    command: publish
+    publishRegistry: useFeed
+    publishFeed: enigmatry
+    workingDir: 'projects/stylelint-config'
