@@ -5,6 +5,7 @@ export class QtiGapText extends WebBase {
   identifier: string;
   matchMax: number;
   matchValue: string;
+  correctValue: string;
   innerHTML: string;
 
   constructor(element: Element) {
@@ -14,6 +15,7 @@ export class QtiGapText extends WebBase {
       this.identifier = element.getAttribute('identifier');  // required
       this.matchMax = Number(element.getAttribute('match-max')); // required
       this.matchValue = element.getAttribute('data-match');
+      this.correctValue = element.getAttribute('data-correct');
     }
   }
 }
