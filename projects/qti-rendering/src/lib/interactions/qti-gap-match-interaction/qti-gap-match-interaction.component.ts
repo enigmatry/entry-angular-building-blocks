@@ -42,8 +42,9 @@ export class QtiGapMatchInteractionComponent extends QtiInteractionElement  impl
         this.gapChildren.find(gap => {
           if (gap.identifier === gapText.matchValue){
             gap.gapTextList = [gapText];
-            gap.connectedLists = this.allListNames;
           }
+          gap.connectedLists = this.allListNames;
+          gap.setCorrectValue(this.allGapTexts);
           this.isInitialized = true;
         });
       });
@@ -100,6 +101,7 @@ export class QtiGapMatchInteractionComponent extends QtiInteractionElement  impl
 
   showAnswers(): void {
     this.showCorrectAnswers = true;
+    this.gapChildren.forEach(x => x.showCorrectAnswer());
   }
 
   private get gapChildren(): QtiGapComponent[] {

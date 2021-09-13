@@ -13,8 +13,9 @@ export class QtiGapComponent extends QtiElement implements OnInit, OnDestroy {
   @Input() identifier: string;
   @Input() gapTextList: QtiGapText[];
   @Input() connectedLists: string[];
+  @Input() correctValue: string = null;
 
-  showCorrectStatus = false;
+  showAnswer = false;
 
   constructor(elementRef: ElementRef<Element>) {
     super(elementRef);
@@ -36,14 +37,24 @@ export class QtiGapComponent extends QtiElement implements OnInit, OnDestroy {
 
   reset() {
     this.gapTextList = [];
+    this.correctValue = null;
+  }
+
+  showCorrectAnswer() {
+    this.showAnswer = true;
+  }
+
+  setCorrectValue(allGapTexts: QtiGapText[]) {
+    if (this.element.hasAttribute('data-correct')) {
+      this.correctValue = allGapTexts.find(gapText => gapText.identifier === this.element.getAttribute('data-correct')).innerHTML;
+    }
   }
 
   getCorrectnessClasses(): string {
-    // if (this.showCorrectStatus) {
-    //   return (this.gapTextList.length !== 0
-    //      && this.gapTextList[0].correctValue !== null
-    //      && this.gapTextList[0].correctValue === this.results[index][0].identifier) ? 'correct' : 'incorrect';
-    // }
+    if (this.correctValue) {
+      return (this.gapTextList.length !== 0
+         && this.gapTextList[0].innerHTML === this.correctValue) ? 'correct' : 'incorrect';
+    }
     return '';
   }
 }
