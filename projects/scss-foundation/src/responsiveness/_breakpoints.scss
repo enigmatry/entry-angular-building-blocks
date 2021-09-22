@@ -1,0 +1,56 @@
+$breakpoints: () !default;
+
+@use 'sass:list';
+@use 'sass:string';
+@use 'sass:map';
+@use '../text/modification' as text-modification;
+@use '../variables' as variables;
+
+// Had to be done this way due to current limitations of collection initialization in Sass.
+@if length($breakpoints) == 0 {
+	$breakpoints: variables.$default-breakpoints;
+}
+
+@function -get-size($size) {
+	@if (map-has-key($breakpoints, $size)) {
+		$gotten-size: map.get($breakpoints, $size);
+		@return map.get($gotten-size, size);
+	}
+
+	@error 'Size must be any of following values: ' + map-keys($breakpoints) + '. Given size: ' + $size;
+}
+
+@function -presentation($string, $with-capitalization) {
+	@if $with-capitalization == true {
+		@return text-modification.capitalize($string);
+	}
+
+	@return $string;
+}
+
+@mixin -set-content($breakpoint, $with-capitalization) {
+	content: string.quote(-presentation($breakpoint, $with-capitalization));
+}
+
+@mixin apply-on($given-size) {
+	/* stylelint-disable-next-line at-rule-allowed-list */
+	@media only screen and (min-width: -get-size($given-size)) {
+		@content;
+	}
+}
+
+@mixin set-up($with-capitalization: true) {
+	@each $breakpoint, $value in $breakpoints {
+		$currentIndex: list.index($breakpoints, ($breakpoint $value));
+
+		@if $currentIndex == 1 {
+			@include -set-content($breakpoint, $with-capitalization);
+			display: none;
+		}
+		@else {
+			@include apply-on($breakpoint) {
+				@include -set-content($breakpoint, $with-capitalization);
+			}
+		}
+	}
+}

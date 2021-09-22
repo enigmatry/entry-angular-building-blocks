@@ -1,0 +1,6 @@
+/* stylelint-disable-next-line value-keyword-case */
+$default-breakpoints: ( 
+	mobile: ( size: 480px, description: 'sm' ), 
+	tablet: ( size: 768px, description: 'md' ), 
+	desktop: ( size: 992px, description: 'lg'), 
+	largeDesktop: ( size: 1200px, description: 'xl'));

@@ -37,9 +37,23 @@ steps:
     workingDir: 'projects/stylelint-config'
 
 - task: Npm@1
+  displayName: 'Set the version scss foundation'
+  inputs:
+    command: custom
+    customCommand: version $(Build.Buildnumber) --no-git-tag-version
+    workingDir: 'projects/scss-foundation'
+
+- task: Npm@1
   displayName: 'npm install'
   inputs:
     command: 'install'
+
+- task: Npm@1
+  displayName: 'Lint the scss foundation library'
+  inputs:
+    command: 'custom'
+    customCommand: 'run lint'
+    workingDir: 'projects/scss-foundation'
 
 - task: Npm@1
   displayName: 'Build the angular-building-blocks library'
@@ -52,6 +66,13 @@ steps:
   inputs:
     command: 'custom'
     customCommand: 'run build qti-rendering'
+    
+- task: Npm@1
+  displayName: 'Build the scss foundation library'
+  inputs:
+    command: 'custom'
+    customCommand: 'run build'
+    workingDir: 'projects/scss-foundation'
 
 - task: Npm@1
   displayName: 'Publish the angular-building-blocks library'
@@ -84,3 +105,11 @@ steps:
     publishRegistry: useFeed
     publishFeed: enigmatry
     workingDir: 'projects/stylelint-config'
+    
+- task: Npm@1
+  displayName: 'Publish the scss foundation'
+  inputs:
+    command: publish
+    publishRegistry: useFeed
+    publishFeed: enigmatry
+    workingDir: 'projects/scss-foundation'

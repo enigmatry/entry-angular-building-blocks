@@ -1,0 +1,94 @@
+$breakpoints: () !default;
+
+@use 'sass:string';
+@use 'sass:map';
+@use 'sass:math';
+@use '../variables' as variables;
+@use '../responsiveness/breakpoints' with (
+	$breakpoints: $breakpoints
+);
+@use '../text/modification' as text-modification;
+
+@if length($breakpoints) == 0 {
+	$breakpoints: variables.$default-breakpoints;
+}
+
+$column-prefix: 'col-';
+$offset-prefix: 'offset-';
+
+@mixin generate-grid($divisions: 12) {
+	@if ($divisions < 1) {
+		@error 'Please provide positive number for divisions! Given value: ' + $divisions;
+	}
+
+	@include -grid-core();
+	@include -unresponsive-grid-from($divisions);
+	@include -responsive-grid-from($divisions);
+}
+
+@function -calculate-ratio($counter, $divisions) {
+	@return math.div(100% * $counter, $divisions);
+}
+
+@mixin -grid-core() {
+	.row {
+		display: flex;
+		flex-wrap: wrap;
+
+		/* stylelint-disable-next-line selector-max-attribute */
+		[class ^= #{$column-prefix}], [class ^= #{$offset-prefix}] {
+			flex-shrink: 0;
+			max-width: 100%;
+		}
+	}
+
+	#{'.' + $column-prefix}auto {
+		flex: 0 0 auto;
+		width: auto;
+	}
+}
+
+@mixin -unresponsive-grid-from($divisions) {
+	$division-limit: $divisions + 1;
+
+	@for $currentIndex from 1 to ($division-limit) {
+		$current-ratio: -calculate-ratio($currentIndex, $divisions);
+
+		#{'.' + $column-prefix + $currentIndex} {
+			flex: 0 0 auto;
+			width: $current-ratio;
+		}
+
+		#{'.' + $offset-prefix + $currentIndex} {
+			margin-left: $current-ratio;
+		}
+	}
+}
+
+@mixin -responsive-grid-from($divisions) {
+	$division-limit: $divisions + 1;
+	@each $item, $value in $breakpoints {
+		$size: map.get($value, description);
+
+		@include breakpoints.apply-on($item) {
+			#{'.' + $column-prefix + $size}-auto {
+				flex: 0 0 auto;
+				width: auto;
+			}
+
+			@for $currentIndex from 1 to $division-limit {
+				$current-ratio: -calculate-ratio($currentIndex, $divisions);
+				$size-index-suffix: $size + '-' + $currentIndex;
+
+				#{'.' + $column-prefix + $size-index-suffix} {
+					flex: 0 0 auto;
+					width: $current-ratio;
+				}
+
+				#{'.' + $offset-prefix + $size-index-suffix} {
+					margin-left: $current-ratio;
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,16 @@
+{
+  "name": "@enigmatry/scss-foundation",
+  "version": "1.0.0",
+  "author": "Enigmatry",
+  "description": "Collection of SCSS utilities useful for the most of projects.",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "sass --style=compressed --load-path=src src/main.scss dist/scss-foundation.css",
+    "lint": "stylelint --fix src/**/*.scss"
+  },
+  "devDependencies": {
+    "sass": "1.39.0",
+    "stylelint": "13.13.1",
+    "@enigmatry/stylelint-config": "^1.0.0"
+  }
+}
