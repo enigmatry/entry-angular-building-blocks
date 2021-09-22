@@ -55,13 +55,6 @@ steps:
     workingDir: 'projects/scss-foundation'
 
 - task: Npm@1
-  displayName: 'Lint the scss foundation library'
-  inputs:
-    command: 'custom'
-    customCommand: 'run lint'
-    workingDir: 'projects/scss-foundation'
-
-- task: Npm@1
   displayName: 'Build the angular-building-blocks library'
   inputs:
     command: 'custom'
