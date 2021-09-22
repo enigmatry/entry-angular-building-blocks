@@ -21,6 +21,7 @@ export class QtiInlineChoiceInteractionComponent extends QtiInteractionElement i
   correctOption: QtiInlineChoice;
   correctnessClasses: string;
   longestText = '';
+  disabled = false;
 
   public get prompt(): string {
     return this.element.getAttribute('data-prompt');
@@ -34,6 +35,7 @@ export class QtiInlineChoiceInteractionComponent extends QtiInteractionElement i
     this.options = this.querySelectorAll(Tags.QtiInlineChoice).map(el => new QtiInlineChoice(el));
     this.selectedOption = this.options.find(o => o.selected);  // pre-selected
     this.correctOption = this.options.find(o => o.isCorrect);
+    this.disabled = this.isReadonly;
     this.options.forEach(option => {
       if (this.longestText.length < option.innerHTML.length) {
         this.longestText = option.innerHTML;
@@ -65,6 +67,7 @@ export class QtiInlineChoiceInteractionComponent extends QtiInteractionElement i
     this.selectedOption = null;
     this.showCorrectAnswers = false;
     this.correctnessClasses = '';
+    this.disabled = false;
   }
 
   showAnswers(): void {

@@ -1,7 +1,7 @@
 <div class="choice-wrap">
 	<select [name]="responseIdentifier" [(ngModel)]="selectedOption" class="inline-choice mx-10" 
 		[style.width.px]="selectedOption?.innerHTML | calculateInputWidth:175:350:longestText"
-		[ngClass]="correctnessClasses" [disabled]="isReadonly">
+		[ngClass]="correctnessClasses" [disabled]="disabled">
 		<option value="">{{prompt}}</option>
 		<option *ngFor="let option of options" [ngValue]="option" [innerHTML]="option.innerHTML"></option>
 	</select> 
