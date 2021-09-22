@@ -4,7 +4,7 @@ $breakpoints: () !default;
 @use 'sass:map';
 @use 'sass:math';
 @use '../variables' as variables;
-@use '../responsiveness/breakpoints' with (
+@forward '../responsiveness/breakpoints' with (
 	$breakpoints: $breakpoints
 );
 @use '../text/modification' as text-modification;
@@ -16,7 +16,7 @@ $breakpoints: () !default;
 $column-prefix: 'col-';
 $offset-prefix: 'offset-';
 
-@mixin generate-grid($divisions: 12) {
+@mixin generate($divisions: 12) {
 	@if ($divisions < 1) {
 		@error 'Please provide positive number for divisions! Given value: ' + $divisions;
 	}
