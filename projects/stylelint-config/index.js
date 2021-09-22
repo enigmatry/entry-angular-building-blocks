@@ -12,7 +12,7 @@ module.exports = {
   ],
   rules: {
     "alpha-value-notation": "number",
-    "at-rule-allowed-list": [ "use", "for", "if", "else", "include", "extend", "return", "error", "each", "mixin", "function", "keyframes", "font-face" ],
+    "at-rule-allowed-list": [ "use", "for", "if", "else", "include", "extend", "return", "error", "each", "mixin", "function", "keyframes", "font-face", "forward", "at-root" ],
     "at-rule-name-case": "lower",
     "at-rule-name-space-after": "always",
     "at-rule-no-unknown": null,
