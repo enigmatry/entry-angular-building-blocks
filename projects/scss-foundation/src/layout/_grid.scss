@@ -7,6 +7,7 @@ $breakpoints: () !default;
 @forward '../responsiveness/breakpoints' with (
 	$breakpoints: $breakpoints
 );
+@use '../responsiveness/breakpoints';
 @use '../text/modification' as text-modification;
 
 @if length($breakpoints) == 0 {

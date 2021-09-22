@@ -9,8 +9,8 @@
     "lint": "stylelint --fix src/**/*.scss"
   },
   "devDependencies": {
+    "@enigmatry/stylelint-config": "^1.0.38",
     "sass": "1.39.0",
-    "stylelint": "13.13.1",
-    "@enigmatry/stylelint-config": "^1.0.0"
+    "stylelint": "13.13.1"
   }
 }
