@@ -21,6 +21,8 @@ import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 import { QtiRendererComponent } from './qti-renderer/qti-renderer.component';
 import { QtiItemBodyComponent } from './qti-item-body/qti-item-body.component';
 import { QtiFeedbackComponent } from './qti-feedback/qti-feedback.component';
+import { CalculateInputWidthPipe } from './pipes/calculate-input-width.pipe';
+import { CalculateTextEntryWidthPipe } from './pipes/calculate-text-entry-width.pipe';
 
 export interface QtiModuleConfig {
   mediaSrcProvider?: Type<IMediaSrcProvider>;
@@ -43,7 +45,9 @@ export interface QtiModuleConfig {
     QtiCustomInteractionComponent,
     SafeHtmlPipe,
     QtiItemBodyComponent,
-    QtiFeedbackComponent
+    QtiFeedbackComponent,
+    CalculateInputWidthPipe,
+    CalculateTextEntryWidthPipe
   ],
   imports: [
     CommonModule,
