@@ -1,0 +1,15 @@
+@mixin position($top: 0, $right: 0, $bottom: 0, $left: 0) {
+	@include -set($top, $right, $bottom, $left);
+}
+
+@mixin position-unset($top: unset, $right: unset, $bottom: unset, $left: unset) {
+	@include -set($top, $right, $bottom, $left);
+}
+
+@mixin -set($top, $right, $bottom, $left) {
+	position: absolute;
+	top: $top;
+	right: $right;
+	bottom: $bottom;
+	left: $left;
+}
