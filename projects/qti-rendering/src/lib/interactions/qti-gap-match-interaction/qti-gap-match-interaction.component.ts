@@ -4,6 +4,7 @@ import { Tags } from '../../models/constants';
 import { QtiGapText } from '../../models/qti-gap-text.model';
 import { QtiPrompt } from '../../models/qti-prompt.model';
 import { ResultDeclaration } from '../../models/response-declaration';
+import { shuffleWithFixedPositions, toBoolean } from '../../models/utils';
 import { QtiInteractionElement } from '../qti-interaction.component';
 import { QtiGapComponent } from './qti-gap/qti-gap.component';
 
@@ -15,6 +16,7 @@ import { QtiGapComponent } from './qti-gap/qti-gap.component';
 export class QtiGapMatchInteractionComponent extends QtiInteractionElement  implements OnInit, AfterViewChecked, OnDestroy {
 
   @Input() maxMatch = 1;         // optional, 0 (unlimited)
+  @Input() shuffle: string;     // optional
 
   prompt: QtiPrompt;
   allGapTexts: QtiGapText[];
@@ -30,6 +32,9 @@ export class QtiGapMatchInteractionComponent extends QtiInteractionElement  impl
     super.ngOnInit();
     this.prompt = new QtiPrompt(this.querySelector(Tags.QtiPrompt));
     this.allGapTexts = this.querySelectorAll(Tags.QtiGapText).map(el => new QtiGapText(el));
+    if (toBoolean(this.shuffle)) {
+      this.shuffleChoices();
+    }
     this.firstList = this.allGapTexts.map(text => text.matchValue == null ? [text] : []);
   }
 
@@ -91,6 +96,10 @@ export class QtiGapMatchInteractionComponent extends QtiInteractionElement  impl
     const gaps = this.gapChildren.filter(g => g.gapTextList.length > 0)
       .map(c => c.gapTextList[0]?.identifier + ' ' + c.identifier);
     return { identifier: this.responseIdentifier, values: gaps };
+  }
+
+  shuffleChoices() {
+    this.allGapTexts = shuffleWithFixedPositions(this.allGapTexts, []);
   }
 
   reset(): void {

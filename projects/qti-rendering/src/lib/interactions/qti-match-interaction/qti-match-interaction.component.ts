@@ -1,9 +1,10 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { Component, ElementRef, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Tags } from '../../models/constants';
 import { QtiPrompt } from '../../models/qti-prompt.model';
 import { QtiSimpleAssociableChoice } from '../../models/qti-simple-associable-choice.model';
 import { ResultDeclaration } from '../../models/response-declaration';
+import { shuffleWithFixedPositions, toBoolean } from '../../models/utils';
 import { QtiInteractionElement } from '../qti-interaction.component';
 
 @Component({
@@ -14,8 +15,8 @@ import { QtiInteractionElement } from '../qti-interaction.component';
 
 export class QtiMatchInteractionComponent extends QtiInteractionElement implements OnInit, OnDestroy {
 
+  @Input() shuffle: string;     // optional
   prompt: QtiPrompt;
-
   dragList: QtiSimpleAssociableChoice[];
   dropList: QtiSimpleAssociableChoice[];
   firstList: Array<QtiSimpleAssociableChoice[]> = new Array<QtiSimpleAssociableChoice[]>();
@@ -50,6 +51,9 @@ export class QtiMatchInteractionComponent extends QtiInteractionElement implemen
         this.firstList[index] = [element];
       }
     });
+    if (toBoolean(this.shuffle)) {
+      this.shuffleChoices();
+    }
   }
 
   drop(event: CdkDragDrop<QtiSimpleAssociableChoice[]>) {
@@ -128,6 +132,10 @@ export class QtiMatchInteractionComponent extends QtiInteractionElement implemen
     this.results = this.dropList.map(x => []);
     this.dropList.forEach(x => x.correctValue = null);
     this.showCorrectAnswers = false;
+  }
+
+  shuffleChoices() {
+    this.firstList = shuffleWithFixedPositions(this.firstList, []);
   }
 
   showAnswers(): void {
