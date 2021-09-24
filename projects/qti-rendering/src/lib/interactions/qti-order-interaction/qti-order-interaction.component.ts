@@ -31,10 +31,6 @@ export class QtiOrderInteractionComponent extends QtiInteractionElement  impleme
     this.prompt = new QtiPrompt(this.querySelector(Tags.QtiPrompt));
     this.simpleChoices = this.querySelectorAll(Tags.QtiSimpleChoice).map(el => new QtiSimpleChoice(el));
 
-    if (toBoolean(this.shuffle)) {
-      this.shuffleChoices();
-    }
-
     if (this.showCorrectStatus) {
       this.correctValues = this.simpleChoices.sort((a, b) => a.correctOrderNumber < b.correctOrderNumber ?  -1 : 1).map(c => c.innerHTML);
     }
@@ -56,6 +52,10 @@ export class QtiOrderInteractionComponent extends QtiInteractionElement  impleme
       else {
         this.notOrderedChoices[i] = [];
       }
+    }
+
+    if (toBoolean(this.shuffle)) {
+      this.shuffleChoices();
     }
   }
 
@@ -109,13 +109,16 @@ export class QtiOrderInteractionComponent extends QtiInteractionElement  impleme
 
   shuffleChoices() {
     const fixedOrNot = this.simpleChoices.map(c => c.fixed);
-    this.simpleChoices = shuffleWithFixedPositions(this.simpleChoices, fixedOrNot);
+    this.notOrderedChoices = shuffleWithFixedPositions(this.notOrderedChoices, []);
   }
 
   reset(): void {
     this.simpleChoices.forEach(c => c.correctOrderNumber = -1);
     this.orderedChoices = this.simpleChoices.map(x => x.fixed ? [x] : []);
     this.notOrderedChoices = this.simpleChoices.map(x => x.fixed ? [] : [x]);
+    if (toBoolean(this.shuffle)) {
+      this.shuffleChoices();
+    }
     this.showCorrectAnswers = false;
     this.correctValues = [];
   }

@@ -129,6 +129,9 @@ export class QtiMatchInteractionComponent extends QtiInteractionElement implemen
 
   reset(): void {
     this.firstList = this.dragList.map(x => [x]);
+    if (toBoolean(this.shuffle)) {
+      this.shuffleChoices();
+    }
     this.results = this.dropList.map(x => []);
     this.dropList.forEach(x => x.correctValue = null);
     this.showCorrectAnswers = false;

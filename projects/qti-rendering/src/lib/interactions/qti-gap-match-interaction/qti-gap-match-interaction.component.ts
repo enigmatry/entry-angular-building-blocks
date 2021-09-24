@@ -105,6 +105,9 @@ export class QtiGapMatchInteractionComponent extends QtiInteractionElement  impl
   reset(): void {
     this.isInitialized = true;
     this.firstList = this.allGapTexts.map(text => [text]);
+    if (toBoolean(this.shuffle)) {
+      this.shuffleChoices();
+    }
     this.gapChildren.forEach(x => x.reset());
   }
 
