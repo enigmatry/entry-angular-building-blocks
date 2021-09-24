@@ -1,0 +1,47 @@
+@use 'sass:map';
+@use '../responsiveness/breakpoints';
+
+@mixin generate($column-prefix, $offset-prefix) {
+	.row {
+		display: flex;
+		flex-wrap: wrap;
+
+		/* stylelint-disable-next-line selector-max-attribute */
+		[class ^= #{$column-prefix}], [class ^= #{$offset-prefix}] {
+			flex-shrink: 0;
+			max-width: 100%;
+		}
+	}
+
+	#{'.' + $column-prefix}auto {
+		flex: 0 0 auto;
+		width: auto;
+	}
+}
+
+@mixin generate-reverse-row($breakpoints) {
+	$reverse-prefix: '.reverse-row-';
+	$under: 'under-';
+
+	@each $item, $value in $breakpoints {
+		$size: map.get($value, description);
+
+		@include breakpoints.apply-on($item) {
+			#{$reverse-prefix + $size} {
+				flex-direction: row-reverse;
+			}
+		}
+	}
+
+	@each $item, $value in $breakpoints {
+		$size: map.get($value, description);
+
+		#{$reverse-prefix + $under + $size} {
+			flex-direction: row-reverse;
+		
+			@include breakpoints.apply-on($item) {
+				flex-direction: row;
+			}
+		}
+	}
+}

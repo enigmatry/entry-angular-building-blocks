@@ -9,6 +9,7 @@ $breakpoints: () !default;
 );
 @use '../responsiveness/breakpoints';
 @use '../text/modification' as text-modification;
+@use 'grid-core';
 
 @if length($breakpoints) == 0 {
 	$breakpoints: variables.$default-breakpoints;
@@ -22,31 +23,14 @@ $offset-prefix: 'offset-';
 		@error 'Please provide positive number for divisions! Given value: ' + $divisions;
 	}
 
-	@include -grid-core();
+	@include grid-core.generate($column-prefix, $offset-prefix);
+	@include grid-core.generate-reverse-row($breakpoints);
 	@include -unresponsive-grid-from($divisions);
 	@include -responsive-grid-from($divisions);
 }
 
 @function -calculate-ratio($counter, $divisions) {
 	@return math.div(100% * $counter, $divisions);
-}
-
-@mixin -grid-core() {
-	.row {
-		display: flex;
-		flex-wrap: wrap;
-
-		/* stylelint-disable-next-line selector-max-attribute */
-		[class ^= #{$column-prefix}], [class ^= #{$offset-prefix}] {
-			flex-shrink: 0;
-			max-width: 100%;
-		}
-	}
-
-	#{'.' + $column-prefix}auto {
-		flex: 0 0 auto;
-		width: auto;
-	}
 }
 
 @mixin -unresponsive-grid-from($divisions) {
