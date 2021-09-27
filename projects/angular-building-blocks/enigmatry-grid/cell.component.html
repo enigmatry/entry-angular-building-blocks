@@ -18,8 +18,9 @@
   </ng-container>
   <!-- Date -->
   <ng-container *ngSwitchCase="'date'">
-    {{value | date: colDef.typeParameter?.format ?? defaultDateFormat : colDef.typeParameter?.timezone :
-      colDef.typeParameter?.locale}}
+    {{value | date: colDef.typeParameter?.format ?? defaultDateFormat 
+      : colDef.typeParameter?.timezone ?? defaultTimezone 
+      : colDef.typeParameter?.locale}}
   </ng-container>
   <!-- Link -->
   <ng-container *ngSwitchCase="'link'">
