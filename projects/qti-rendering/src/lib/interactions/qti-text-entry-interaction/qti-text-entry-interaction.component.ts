@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { QtiInteractionElement } from '../qti-interaction.component';
 import { ResultDeclaration } from '../../models/response-declaration';
 
