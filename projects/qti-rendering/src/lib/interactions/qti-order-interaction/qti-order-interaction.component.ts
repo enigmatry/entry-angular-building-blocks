@@ -12,7 +12,7 @@ import { QtiInteractionElement } from '../qti-interaction.component';
   styleUrls: ['./qti-order-interaction.component.scss'],
   encapsulation: ViewEncapsulation.ShadowDom
 })
-export class QtiOrderInteractionComponent extends QtiInteractionElement  implements OnInit, OnDestroy {
+export class QtiOrderInteractionComponent extends QtiInteractionElement implements OnInit, OnDestroy {
 
   @Input() maxChoices = 1;         // optional, 0 (unlimited)
   @Input() minChoices = 0;      // optional, 0 (unlimited)
@@ -23,6 +23,7 @@ export class QtiOrderInteractionComponent extends QtiInteractionElement  impleme
   notOrderedChoices: Array<QtiSimpleChoice[]> = new Array<QtiSimpleChoice[]>();
   orderedChoices: Array<QtiSimpleChoice[]> = new Array<QtiSimpleChoice[]>();
   correctValues: string[] = [];
+  disabled = false;
 
   constructor(elementRef: ElementRef<Element>) { super(elementRef); }
 
@@ -32,7 +33,7 @@ export class QtiOrderInteractionComponent extends QtiInteractionElement  impleme
     this.simpleChoices = this.querySelectorAll(Tags.QtiSimpleChoice).map(el => new QtiSimpleChoice(el));
 
     if (this.showCorrectStatus) {
-      this.correctValues = this.simpleChoices.sort((a, b) => a.correctOrderNumber < b.correctOrderNumber ?  -1 : 1).map(c => c.innerHTML);
+      this.correctValues = this.simpleChoices.sort((a, b) => a.correctOrderNumber < b.correctOrderNumber ? -1 : 1).map(c => c.innerHTML);
     }
 
     for (let i = 0; i < this.simpleChoices.length; i++) {
@@ -57,11 +58,11 @@ export class QtiOrderInteractionComponent extends QtiInteractionElement  impleme
     if (toBoolean(this.shuffle)) {
       this.shuffleChoices();
     }
+    this.disabled = this.isReadonly;
   }
 
   drop(event: CdkDragDrop<QtiSimpleChoice[]>) {
-    if (event.container.data.length === 0 && !(event.container.id === event.previousContainer.id))
-    {
+    if (event.container.data.length === 0 && !(event.container.id === event.previousContainer.id)) {
       if (event.container.id.startsWith('not') && event.previousContainer.id.startsWith('not')) {
         // move inside same list
         this.notOrderedChoices[Number.parseInt(event.container.id.substr(17), 10)] = event.previousContainer.data;
@@ -71,13 +72,11 @@ export class QtiOrderInteractionComponent extends QtiInteractionElement  impleme
         this.orderedChoices[Number.parseInt(event.previousContainer.id.substr(14), 10)] = [];
       } else {
         // move between lists
-        if (event.container.id.startsWith('orderedChoices'))
-        {
+        if (event.container.id.startsWith('orderedChoices')) {
           this.orderedChoices[Number.parseInt(event.container.id.substr(14), 10)] = event.previousContainer.data;
           this.notOrderedChoices[Number.parseInt(event.previousContainer.id.substr(17), 10)] = [];
         }
-        else
-        {
+        else {
           this.notOrderedChoices[Number.parseInt(event.container.id.substr(17), 10)] = event.previousContainer.data;
           this.orderedChoices[Number.parseInt(event.previousContainer.id.substr(14), 10)] = [];
         }
@@ -121,6 +120,7 @@ export class QtiOrderInteractionComponent extends QtiInteractionElement  impleme
     }
     this.showCorrectAnswers = false;
     this.correctValues = [];
+    this.disabled = false;
   }
 
   showAnswers(): void {

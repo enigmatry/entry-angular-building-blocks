@@ -20,7 +20,7 @@ export class CalculateInputWidthPipe implements PipeTransform {
     if (!value) {
       return Math.min(measuredWidth + 50, defaultSize);
     } else {
-      return Math.min(measuredWidth + 50, maxSize)
+      return Math.min(measuredWidth + 50, maxSize);
     }
   }
 

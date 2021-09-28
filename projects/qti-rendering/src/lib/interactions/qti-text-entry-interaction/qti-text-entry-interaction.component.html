@@ -1,5 +1,5 @@
 <div class="text-entry-wrap">
-    <input type="text" [name]="responseIdentifier" [(ngModel)]="value" [placeholder]="placeholderText"  
+    <input type="text" [name]="responseIdentifier" [(ngModel)]="value" [placeholder]="placeholderText"  [disabled]="disabled"
     [style.width.px]="value | calculateTextEntryWidth:placeholderText:100"
     class="text-entry" [ngClass]="correctnessClasses"/>
     <slot></slot>

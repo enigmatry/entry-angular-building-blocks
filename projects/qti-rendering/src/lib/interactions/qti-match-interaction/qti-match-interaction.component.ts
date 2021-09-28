@@ -21,6 +21,7 @@ export class QtiMatchInteractionComponent extends QtiInteractionElement implemen
   dropList: QtiSimpleAssociableChoice[];
   firstList: Array<QtiSimpleAssociableChoice[]> = new Array<QtiSimpleAssociableChoice[]>();
   results: Array<QtiSimpleAssociableChoice[]> = new Array<QtiSimpleAssociableChoice[]>();
+  disabled = false;
 
   constructor(elementRef: ElementRef<Element>) {
     super(elementRef);
@@ -54,6 +55,7 @@ export class QtiMatchInteractionComponent extends QtiInteractionElement implemen
     if (toBoolean(this.shuffle)) {
       this.shuffleChoices();
     }
+    this.disabled = this.isReadonly;
   }
 
   drop(event: CdkDragDrop<QtiSimpleAssociableChoice[]>) {
@@ -135,6 +137,7 @@ export class QtiMatchInteractionComponent extends QtiInteractionElement implemen
     this.results = this.dropList.map(x => []);
     this.dropList.forEach(x => x.correctValue = null);
     this.showCorrectAnswers = false;
+    this.disabled = false;
   }
 
   shuffleChoices() {

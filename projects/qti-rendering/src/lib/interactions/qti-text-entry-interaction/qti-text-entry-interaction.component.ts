@@ -7,7 +7,7 @@ import { ResultDeclaration } from '../../models/response-declaration';
   styleUrls: ['./qti-text-entry-interaction.component.scss'],
   encapsulation: ViewEncapsulation.ShadowDom
 })
-export class QtiTextEntryInteractionComponent extends QtiInteractionElement {
+export class QtiTextEntryInteractionComponent extends QtiInteractionElement implements OnInit, OnDestroy {
 
   @Input() patternMask: string;
   @Input() placeholderText = '';
@@ -17,6 +17,7 @@ export class QtiTextEntryInteractionComponent extends QtiInteractionElement {
   correctValue: string;
   isCorrect: boolean;
   correctnessClasses: string;
+  disabled = false;
 
   constructor(elementRef: ElementRef<Element>) {
     super(elementRef);
@@ -27,6 +28,11 @@ export class QtiTextEntryInteractionComponent extends QtiInteractionElement {
       this.correctnessClasses = this.isCorrect ? 'correct' : 'incorrect';
     }
    }
+
+   ngOnInit(): void {
+    super.ngOnInit();
+    this.disabled = this.isReadonly;
+  }
 
   hasResult(): boolean {
     return Boolean(this.value);
@@ -41,9 +47,14 @@ export class QtiTextEntryInteractionComponent extends QtiInteractionElement {
     this.value = '';
     this.correctnessClasses = '';
     this.correctValue = '';
+    this.disabled = false;
   }
 
   showAnswers(): void {
     this.showCorrectAnswers = true;
+  }
+
+  ngOnDestroy(): void {
+    super.ngOnDestroy();
   }
 }

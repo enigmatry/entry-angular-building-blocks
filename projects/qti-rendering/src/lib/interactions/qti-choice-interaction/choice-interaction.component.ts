@@ -22,6 +22,8 @@ export class ChoiceInteractionComponent extends QtiInteractionElement implements
   @Input() minChoices = unlimited;      // optional, 0 (unlimited)
   @Input() shuffle: string;             // optional
 
+  disabled = false;
+
   get choiceType(): ChoiceType {
     return this.maxChoices === single ? ChoiceType.Single : ChoiceType.Multiple;
   }
@@ -33,11 +35,9 @@ export class ChoiceInteractionComponent extends QtiInteractionElement implements
   get checkedCount(): number {
     return this.simpleChoices?.filter(c => c.checked).length;
   }
-
   get isValid(): boolean {
     return this.minChoices ? this.checkedCount >= Number(this.minChoices) : true;
   }
-
   get isAnswered(): boolean {
     return this.checkedCount > 0;
   }
@@ -52,6 +52,7 @@ export class ChoiceInteractionComponent extends QtiInteractionElement implements
     super.ngOnInit();
     this.prompt = new QtiPrompt(this.querySelector(Tags.QtiPrompt));
     this.simpleChoices = this.querySelectorAll(Tags.QtiSimpleChoice).map(el => new QtiSimpleChoice(el));
+    this.disabled = this.isReadonly;
 
     if (toBoolean(this.shuffle)) {
       this.shuffleChoices();
@@ -76,8 +77,7 @@ export class ChoiceInteractionComponent extends QtiInteractionElement implements
   getCorrectnessClasses(choice: QtiSimpleChoice): string {
     const anyValueIsCorrect = !this.simpleChoices.some(x => x.correct);
 
-    if (choice.correct != null)
-    {
+    if (choice.correct != null) {
       if (choice.checked) {
         return (anyValueIsCorrect || choice.correct) ? 'checked correct' : 'checked incorrect';
       } else {
@@ -112,6 +112,7 @@ export class ChoiceInteractionComponent extends QtiInteractionElement implements
       c.checked = false;
       c.correct = null;
     });
+    this.disabled = false;
   }
 
   showAnswers(): void {
