@@ -20,7 +20,7 @@
 }
 
 @mixin generate-reverse-row($breakpoints) {
-	$reverse-prefix: '.reverse-row-';
+	$reverse-prefix: '.row.reverse-row-';
 	$under: 'under-';
 
 	@each $item, $value in $breakpoints {
