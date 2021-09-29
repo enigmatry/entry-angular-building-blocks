@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
-import { RowContextMenuFormatter } from '.';
-import { ContextMenuItem } from './grid.interface';
+import { ContextMenuItem, RowContextMenuFormatter } from './grid.interface';
 
 @Component({
     selector: 'enigmatry-grid-context-menu',
