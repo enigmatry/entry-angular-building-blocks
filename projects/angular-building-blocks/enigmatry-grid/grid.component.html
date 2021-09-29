@@ -48,7 +48,9 @@
               </ng-template>
               <ng-template #contextMenuTpl>
                 <enigmatry-grid-context-menu
-                  [items]="rowContextMenuFormatter?.items ? rowContextMenuFormatter.items(row) : contextMenuItems"
+                  [items]="contextMenuItems"
+                  [rowData]="row"
+                  [rowMenuFormatter]="rowContextMenuFormatter"
                   (selected)="contextMenuItemSelected.emit({itemId: $event, rowData: row})"
                 ></enigmatry-grid-context-menu>
               </ng-template>
