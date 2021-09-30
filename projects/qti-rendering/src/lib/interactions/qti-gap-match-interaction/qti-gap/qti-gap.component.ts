@@ -44,6 +44,10 @@ export class QtiGapComponent extends QtiElement implements OnInit, OnDestroy {
     this.showAnswer = true;
   }
 
+  isAnswered(): boolean {
+    return this.gapTextList.length > 0;
+  }
+
   setCorrectValue(allGapTexts: QtiGapText[]) {
     if (this.element.hasAttribute('data-correct')) {
       this.correctValue = allGapTexts.find(gapText => gapText.identifier === this.element.getAttribute('data-correct')).innerHTML;
