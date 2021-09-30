@@ -19,10 +19,8 @@ export class EnigmatryGridContextMenuComponent implements OnInit {
     constructor() { }
 
     ngOnInit(): void {
-        if (this.rowMenuFormatter.items) {
-            this.menuItems = this.rowMenuFormatter.items(this.rowData);
-        } else {
-            this.menuItems = this.items;
-        }
+        this.menuItems = this.rowMenuFormatter?.items
+            ? this.rowMenuFormatter.items(this.rowData)
+            : this.items;
     }
 }
