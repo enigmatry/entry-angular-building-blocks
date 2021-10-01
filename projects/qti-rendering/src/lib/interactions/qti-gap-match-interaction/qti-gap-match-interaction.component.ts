@@ -89,11 +89,11 @@ export class QtiGapMatchInteractionComponent extends QtiInteractionElement  impl
   }
 
   hasResult(): boolean {
-    return this.gapChildren.filter(g => g.isAnswered).length > 0;
+    return this.gapChildren.filter(g => g.isAnswered()).length > 0;
   }
 
   getResult(): ResultDeclaration {
-    const gaps = this.gapChildren.filter(g => g.isAnswered)
+    const gaps = this.gapChildren.filter(g => g.isAnswered())
       .map(c => c.gapTextList[0]?.identifier + ' ' + c.identifier);
     return { identifier: this.responseIdentifier, values: gaps };
   }

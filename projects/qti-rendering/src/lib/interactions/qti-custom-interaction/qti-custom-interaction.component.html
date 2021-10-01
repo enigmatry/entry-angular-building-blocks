@@ -1,14 +1,12 @@
 <div class="wrapper">
-
   <section class="main-controls">
-    <canvas class="visualizer" height="60px"></canvas>
-    <div id="buttons">
-      <button class="record">Record</button>
-      <button class="stop">Stop</button>
-    </div>
+    <button class="btn-record btn btn-primary btn-icon" [ngClass]="isRecording ? 'recording' : 'record'"
+    [innerText]="isRecording ? 'Recording' : 'Record'">
+    </button>
+      <button class="btn btn-primary btn-icon" [disabled]="!audioRecorded" (click)="playOrStopAudio()" 
+        [ngClass]="playingAudio ? 'stop' : 'play'" [innerText]="playingAudio ? 'Stop' : 'Play'">
+      </button>
   </section>
-
   <section class="sound-clips">
   </section>
-
 </div>
