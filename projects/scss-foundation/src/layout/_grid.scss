@@ -19,7 +19,11 @@ $column-prefix: 'col-';
 $offset-prefix: 'offset-';
 
 @mixin generate($divisions: 12) {
-	@if ($divisions < 1) {
+	@if type-of($divisions) != number {
+		@error 'Please provide number parameter for divisions! Given value: ' + $divisions;
+	}
+
+	@if ($divisions < 2 or $divisions > 1000) {
 		@error 'Please provide positive number for divisions! Given value: ' + $divisions;
 	}
 

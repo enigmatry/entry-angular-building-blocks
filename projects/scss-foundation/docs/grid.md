@@ -14,7 +14,7 @@ Breakpoints must be in the same format as variables inside src root folder.
 ```
 @include grid.generate(); // or @include grid.generate($divisions);
 ```
-Default grid (as in Bootstrap) has 12 columns, but you can change that by passing a positive number parameter.
+Default grid (as in Bootstrap) has 12 columns, but you can change that by passing a positive number parameter (between 2 and 1000).
 
 ## Grid core
 

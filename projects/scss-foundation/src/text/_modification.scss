@@ -1,6 +1,10 @@
 @use 'sass:string';
 
 @function capitalize($string) {
+	@if type-of($string) != string {
+		@error 'Please provide string parameter! Given value: ' + $string;
+	}
+
 	@return to-upper-case(str-slice($string, 1, 1)) + str-slice($string, 2);
 }
 
