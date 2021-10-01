@@ -1,11 +1,14 @@
 <div class="wrapper">
   <section class="main-controls">
-    <button class="btn-record btn btn-primary btn-icon" [ngClass]="isRecording ? 'recording' : 'record'"
-    [innerText]="isRecording ? 'Recording' : 'Record'">
-    </button>
-      <button class="btn btn-primary btn-icon" [disabled]="!audioRecorded" (click)="playOrStopAudio()" 
-        [ngClass]="playingAudio ? 'stop' : 'play'" [innerText]="playingAudio ? 'Stop' : 'Play'">
+    <div class="audio-btns">
+      <button class="btn-record btn btn-icon" [ngClass]="isRecording ? 'recording' : 'record'">
+        <span class="text" [innerText]="isRecording ? 'Recording' : 'Record'"></span>
       </button>
+      <button class="btn-play-stop" [disabled]="!audioRecorded" (click)="playOrStopAudio()" 
+        [ngClass]="playingAudio ? 'stop' : 'play'" >
+        <span class="text" [innerText]="playingAudio ? 'Stop' : 'Play'"></span>
+      </button>
+    </div>
   </section>
   <section class="sound-clips">
   </section>
