@@ -62,7 +62,6 @@ export class EnigmatryGridComponent<T> implements OnInit, OnChanges, AfterViewIn
 
   // Pagination
 
-  @Input() pageDatasetLocaly = false;
   @Input() showPaginator = true;
   @Input() pageDisabled = false;
   @Input() showFirstLastButtons = false;
@@ -70,24 +69,26 @@ export class EnigmatryGridComponent<T> implements OnInit, OnChanges, AfterViewIn
   @Input() pageSize = 10;
   @Input() pageSizeOptions = [10, 50, 100];
   @Input() hidePageSize = false;
+  @Input() pageDatasetLocally = false;
   @Output() pageChange = new EventEmitter<PageEvent>();
 
   @Input() paginationTemplate: TemplateRef<any>;
 
   // Sort
 
-  @Input() sortDatasetLocaly = false;
   @Input() sortActive: string;
   @Input() sortDirection: SortDirection;
   @Input() sortDisableClear = false;
   @Input() sortDisabled = false;
   @Input() sortStart: 'asc' | 'desc' = 'asc';
+  @Input() sortDatasetLocally = false;
   @Output() sortChange = new EventEmitter<Sort>();
 
   // Row
 
   @Input() rowHover = false;
   @Input() rowStriped = false;
+  @Input() rowFocusVisible = false;
   @Output() rowClick = new EventEmitter<T>();
 
   // Row selection
@@ -184,8 +185,8 @@ export class EnigmatryGridComponent<T> implements OnInit, OnChanges, AfterViewIn
 
     this.dataSource = new MatTableDataSource(this._data);
 
-    this.dataSource.paginator = this.pageDatasetLocaly ? this.paginator : null;
-    this.dataSource.sort = this.sortDatasetLocaly ? this.sort : null;
+    this.dataSource.paginator = this.pageDatasetLocally ? this.paginator : null;
+    this.dataSource.sort = this.sortDatasetLocally ? this.sort : null;
 
     // Only scroll top with data change
     if (changes.data) {
@@ -194,11 +195,11 @@ export class EnigmatryGridComponent<T> implements OnInit, OnChanges, AfterViewIn
   }
 
   ngAfterViewInit() {
-    if (this.pageDatasetLocaly) {
+    if (this.pageDatasetLocally) {
       this.dataSource.paginator = this.paginator;
     }
 
-    if (this.sortDatasetLocaly) {
+    if (this.sortDatasetLocally) {
       this.dataSource.sort = this.sort;
     }
   }
@@ -209,31 +210,9 @@ export class EnigmatryGridComponent<T> implements OnInit, OnChanges, AfterViewIn
     return typeof index === 'undefined' ? dataIndex : index;
   }
 
-  handleSortChange(sort: Sort) {
-    this.sortChange.emit(sort);
-  }
-
-  selectRow(event: MouseEvent, rowData: T, index: number) {
-    if (
-      this.rowSelectable &&
-      !this.rowSelectionFormatter.disabled?.(rowData) &&
-      !this.rowSelectionFormatter.hideCheckbox?.(rowData)
-    ) {
-      if (!this.multiSelectable) {
-        this.rowSelection.clear();
-      }
-
-      this.toggleCheckbox(rowData);
-    }
-
-    this.rowClick.emit(rowData);
-  }
-
   isAllSelected() {
     const numSelected = this.rowSelection.selected.length;
-    const numRows = this.dataSource.data.filter(
-      (row, index) => !this.rowSelectionFormatter.disabled?.(row)
-    ).length;
+    const numRows = this.dataSource.data.filter(row => !this.rowSelectionFormatter.disabled?.(row)).length;
     return numSelected === numRows;
   }
 
@@ -243,8 +222,7 @@ export class EnigmatryGridComponent<T> implements OnInit, OnChanges, AfterViewIn
       this.rowSelectionChange.emit(this.rowSelection.selected);
       return;
     }
-
-    this.dataSource.data.forEach((row, index) => {
+    this.dataSource.data.forEach(row => {
       if (!this.rowSelectionFormatter.disabled?.(row)) {
         this.rowSelection.select(row);
       }
@@ -258,7 +236,7 @@ export class EnigmatryGridComponent<T> implements OnInit, OnChanges, AfterViewIn
   }
 
   handlePage(e: PageEvent) {
-    if (this.pageDatasetLocaly) {
+    if (this.pageDatasetLocally) {
       this.scrollTop(0);
     }
     this.pageChange.emit(e);

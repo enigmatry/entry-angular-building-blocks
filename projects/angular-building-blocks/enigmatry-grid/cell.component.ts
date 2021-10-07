@@ -1,4 +1,4 @@
-import { Component, DEFAULT_CURRENCY_CODE, Inject, Input, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DEFAULT_CURRENCY_CODE, Inject, Input, ViewEncapsulation } from '@angular/core';
 
 import { ColumnDef, DEFAULT_DATE_FORMAT, DEFAULT_TIMEZONE } from './grid.interface';
 
@@ -6,7 +6,8 @@ import { ColumnDef, DEFAULT_DATE_FORMAT, DEFAULT_TIMEZONE } from './grid.interfa
   selector: 'enigmatry-grid-cell',
   templateUrl: './cell.component.html',
   styleUrls: ['./cell.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EnigmatryGridCellComponent<T> {
   @Input() rowData: T;

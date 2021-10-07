@@ -13,7 +13,7 @@
              [matSortDisableClear]="sortDisableClear"
              [matSortDisabled]="sortDisabled"
              [matSortStart]="sortStart"
-             (matSortChange)="handleSortChange($event)">
+             (matSortChange)="sortChange.emit($event)">
 
         <!-- Selection column -->
         <ng-container *ngIf="rowSelectable && !hideRowSelectionCheckbox"
@@ -26,11 +26,10 @@
             </mat-checkbox>
           </th>
           <td mat-cell *matCellDef="let row; let index = index; let dataIndex = dataIndex;"
-              class="enigmatry-grid-checkbox-cell">
+              class="enigmatry-grid-checkbox-cell" (click)="$event.stopPropagation()">
             <mat-checkbox *ngIf="!(rowSelectionFormatter.hideCheckbox && rowSelectionFormatter.hideCheckbox!(row))"
                           [disabled]="rowSelectionFormatter.disabled && rowSelectionFormatter.disabled!(row)"
                           [checked]="rowSelection.isSelected(row)"
-                          (click)="$event.stopPropagation()"
                           (change)="$event ? toggleCheckbox(row) : null">
             </mat-checkbox>
           </td>
@@ -123,7 +122,9 @@
         <tr mat-row
             *matRowDef="let row; let index = index; let dataIndex = dataIndex; columns: displayedColumns;"
             [ngClass]="getRowClassList(row, getIndex(index, dataIndex))"
-            (click)="selectRow($event, row, getIndex(index, dataIndex))">
+            [attr.tabindex]="rowFocusVisible ? 0 : -1"
+            (click)="rowClick.emit(row)"
+            (keyup.enter)="rowClick.emit(row)">
         </tr>
       </table>
     </div>
