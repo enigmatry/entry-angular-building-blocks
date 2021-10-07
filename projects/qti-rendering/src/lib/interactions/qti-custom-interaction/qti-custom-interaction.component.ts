@@ -105,7 +105,7 @@ export class QtiCustomInteractionComponent extends QtiInteractionElement impleme
     return false;
   }
   getResult(): ResultDeclaration {
-    return null;
+    return { identifier: this.responseIdentifier, values: [] };
   }
 
   reset(): void {
