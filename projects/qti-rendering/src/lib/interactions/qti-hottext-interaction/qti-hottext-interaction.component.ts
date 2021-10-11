@@ -32,6 +32,7 @@ export class QtiHottextInteractionComponent extends QtiInteractionElement implem
     this.hotTextChildren.forEach(c => {
       c.checked = false;
       c.correctnessClasses = '';
+      c.disabled = false;
     });
   }
 

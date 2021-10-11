@@ -23,6 +23,7 @@ export class QtiGapMatchInteractionComponent extends QtiInteractionElement  impl
   isInitialized = false;
   firstList: Array<QtiGapText[]> = new Array<QtiGapText[]>();
   allListNames: string[];
+  disabled = false;
 
   constructor(elementRef: ElementRef<Element>) {
     super(elementRef);
@@ -36,6 +37,7 @@ export class QtiGapMatchInteractionComponent extends QtiInteractionElement  impl
       this.shuffleChoices();
     }
     this.firstList = this.allGapTexts.map(text => text.matchValue == null ? [text] : []);
+    this.disabled = this.isReadonly;
   }
 
   ngAfterViewChecked(): void {
@@ -109,6 +111,7 @@ export class QtiGapMatchInteractionComponent extends QtiInteractionElement  impl
       this.shuffleChoices();
     }
     this.gapChildren.forEach(x => x.reset());
+    this.disabled = false;
   }
 
   showAnswers(): void {

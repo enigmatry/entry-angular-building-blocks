@@ -16,6 +16,7 @@ export class QtiGapComponent extends QtiElement implements OnInit, OnDestroy {
   @Input() correctValue: string = null;
 
   showAnswer = false;
+  disabled = false;
 
   constructor(elementRef: ElementRef<Element>) {
     super(elementRef);
@@ -38,6 +39,7 @@ export class QtiGapComponent extends QtiElement implements OnInit, OnDestroy {
   reset() {
     this.gapTextList = [];
     this.correctValue = null;
+    this.disabled = false;
   }
 
   showCorrectAnswer() {
@@ -50,6 +52,7 @@ export class QtiGapComponent extends QtiElement implements OnInit, OnDestroy {
 
   setCorrectValue(allGapTexts: QtiGapText[]) {
     if (this.element.hasAttribute('data-correct')) {
+      this.disabled = true;
       this.correctValue = allGapTexts.find(gapText => gapText.identifier === this.element.getAttribute('data-correct')).innerHTML;
     }
   }

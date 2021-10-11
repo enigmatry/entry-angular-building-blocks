@@ -14,12 +14,14 @@ export class QtiHottextComponent extends QtiElement implements OnInit, OnDestroy
   checked = false;
   isCorrect: boolean = null;
   correctnessClasses: string;
+  disabled = false;
 
   constructor(elementRef: ElementRef<Element>) {
     super(elementRef);
     this.checked = toBoolean(elementRef.nativeElement.getAttribute('data-selected'));  // pre-selected
     if (elementRef.nativeElement.getAttribute('data-correct'))
     {
+      this.disabled = true;
       this.isCorrect = toBoolean(elementRef.nativeElement.getAttribute('data-correct'));
       if (this.checked)
         {this.correctnessClasses = (this.isCorrect) ? 'correct' : 'incorrect';}
