@@ -15,6 +15,7 @@ export interface ColumnDef {
   typeParameter?: ColumnTypeParameter;
   cellTemplate?: TemplateRef<any> | null;
   class?: string;
+  customProperties?: { [key: string]: any };
 }
 
 export declare type ColumnType =
