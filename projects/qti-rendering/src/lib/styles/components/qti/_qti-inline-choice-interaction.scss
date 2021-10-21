@@ -6,8 +6,12 @@
     display: inline-block;
 
     select {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        min-width: 58px!important;
+        max-width: 300px!important;
         display: inline-block;
-        max-width: 350px;
         width: auto;
         height: 30px;
         padding: 4px 12px;
@@ -17,6 +21,10 @@
         font-size: 14px;
         color: $primary-blue;
         cursor: pointer;
+
+        @media (min-width: 768px) {
+            max-width: 350px!important;
+        }
     }
   
     span {
