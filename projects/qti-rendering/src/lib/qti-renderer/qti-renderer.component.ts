@@ -64,9 +64,14 @@ export class QtiRendererComponent extends QtiElement implements OnInit, OnDestro
     this.interactions.forEach(interaction => interaction.reset());
   }
 
-  showAnswers(): void {
+  showAnswers(value: boolean = true): void {
     this.interactions.forEach(interaction => {
-      interaction.showAnswers();
+      if (value) {
+        interaction.showAnswers();
+      }
+      else {
+        interaction.hideAnswers();
+      }
     });
   }
 

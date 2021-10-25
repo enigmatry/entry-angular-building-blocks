@@ -113,4 +113,7 @@ export class QtiCustomInteractionComponent extends QtiInteractionElement impleme
 
   showAnswers(): void {
   }
+
+  hideAnswers(): void {
+  }
 }

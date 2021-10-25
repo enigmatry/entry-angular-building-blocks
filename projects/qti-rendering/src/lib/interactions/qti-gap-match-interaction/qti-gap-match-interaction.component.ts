@@ -116,7 +116,12 @@ export class QtiGapMatchInteractionComponent extends QtiInteractionElement  impl
 
   showAnswers(): void {
     this.showCorrectAnswers = true;
-    this.gapChildren.forEach(x => x.showCorrectAnswer());
+    this.gapChildren.forEach(x => x.showCorrectAnswer(true));
+  }
+
+  hideAnswers(): void {
+    this.showCorrectAnswers = false;
+    this.gapChildren.forEach(x => x.showCorrectAnswer(false));
   }
 
   private get gapChildren(): QtiGapComponent[] {

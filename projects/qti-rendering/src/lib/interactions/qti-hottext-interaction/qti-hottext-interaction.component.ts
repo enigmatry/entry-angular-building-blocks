@@ -38,7 +38,12 @@ export class QtiHottextInteractionComponent extends QtiInteractionElement implem
 
   showAnswers(): void {
     this.showCorrectAnswers = true;
-    this.hotTextChildren.forEach(hotText => hotText.showAnswers());
+    this.hotTextChildren.forEach(hotText => hotText.showAnswers(true));
+  }
+
+  hideAnswers(): void {
+    this.showCorrectAnswers = false;
+    this.hotTextChildren.forEach(hotText => hotText.showAnswers(false));
   }
 
   private get hotTextChildren(): QtiHottextComponent[] {

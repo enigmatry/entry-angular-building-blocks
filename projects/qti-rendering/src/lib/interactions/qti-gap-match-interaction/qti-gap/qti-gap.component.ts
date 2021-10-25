@@ -42,8 +42,8 @@ export class QtiGapComponent extends QtiElement implements OnInit, OnDestroy {
     this.disabled = false;
   }
 
-  showCorrectAnswer() {
-    this.showAnswer = true;
+  showCorrectAnswer(value: boolean) {
+    this.showAnswer = value;
   }
 
   isAnswered(): boolean {

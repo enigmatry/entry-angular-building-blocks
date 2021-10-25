@@ -127,6 +127,10 @@ export class QtiOrderInteractionComponent extends QtiInteractionElement implemen
     this.showCorrectAnswers = true;
   }
 
+  hideAnswers(): void {
+    this.showCorrectAnswers = false;
+  }
+
   ngOnDestroy(): void {
     super.ngOnDestroy();
   }

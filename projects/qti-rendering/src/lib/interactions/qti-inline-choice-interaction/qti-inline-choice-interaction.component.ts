@@ -74,6 +74,10 @@ export class QtiInlineChoiceInteractionComponent extends QtiInteractionElement i
     this.showCorrectAnswers = true;
   }
 
+  hideAnswers(): void {
+    this.showCorrectAnswers = false;
+  }
+
   ngOnDestroy(): void {
     super.ngOnDestroy();
   }

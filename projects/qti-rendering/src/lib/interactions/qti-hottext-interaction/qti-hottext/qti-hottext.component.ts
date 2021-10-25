@@ -37,8 +37,13 @@ export class QtiHottextComponent extends QtiElement implements OnInit, OnDestroy
     this.checked = !this.checked;
   }
 
-  showAnswers(): void {
-    if (this.isCorrect && !this.checked)
-        {this.correctnessClasses = 'correct-answer';}
+  showAnswers(value: boolean): void {
+    if (!value) {
+      this.correctnessClasses = '';
+    }
+    else {
+      if (this.isCorrect && !this.checked)
+      {this.correctnessClasses = 'correct-answer';}
+    }
   }
 }

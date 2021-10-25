@@ -23,5 +23,6 @@ export abstract class QtiInteractionElement extends QtiElement {
   abstract getResult(): ResultDeclaration;
   abstract reset(): void;
   abstract showAnswers(): void;
+  abstract hideAnswers(): void;
 }
 

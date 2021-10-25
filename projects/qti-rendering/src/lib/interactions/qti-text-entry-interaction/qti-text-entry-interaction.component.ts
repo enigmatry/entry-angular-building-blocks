@@ -54,6 +54,10 @@ export class QtiTextEntryInteractionComponent extends QtiInteractionElement impl
     this.showCorrectAnswers = true;
   }
 
+  hideAnswers(): void {
+    this.showCorrectAnswers = false;
+  }
+
   ngOnDestroy(): void {
     super.ngOnDestroy();
   }

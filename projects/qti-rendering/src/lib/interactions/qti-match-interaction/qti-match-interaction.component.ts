@@ -147,4 +147,8 @@ export class QtiMatchInteractionComponent extends QtiInteractionElement implemen
   showAnswers(): void {
     this.showCorrectAnswers = true;
   }
+
+  hideAnswers(): void {
+    this.showCorrectAnswers = false;
+  }
 }

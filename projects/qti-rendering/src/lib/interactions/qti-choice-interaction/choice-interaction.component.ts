@@ -119,6 +119,10 @@ export class ChoiceInteractionComponent extends QtiInteractionElement implements
     this.showCorrectAnswers = true;
   }
 
+  hideAnswers(): void {
+    this.showCorrectAnswers = false;
+  }
+
   ngOnDestroy(): void {
     super.ngOnDestroy();
   }
