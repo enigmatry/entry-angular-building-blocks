@@ -12,7 +12,7 @@ export class CalculateInputWidthPipe implements PipeTransform {
     dummy.style.visibility = 'hidden';
     dummy.style.width = 'fit-content';
     document.body.insertBefore(dummy, document.body.firstChild);
-    const measuredWidth = dummy.clientWidth + 12;
+    const measuredWidth = dummy.clientWidth + 24;
     document.body.removeChild(dummy);
     return (!value) ? Math.min(measuredWidth, defaultMaxSize) :  Math.min(measuredWidth, maxSize);
   }
