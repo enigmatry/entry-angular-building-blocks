@@ -10,7 +10,6 @@ export class CalculateInputWidthPipe implements PipeTransform {
     dummy.innerText = (!value) ? longestText : value;
     dummy.style.position = 'absolute';
     dummy.style.visibility = 'hidden';
-    dummy.style.width = 'fit-content';
     document.body.insertBefore(dummy, document.body.firstChild);
     const measuredWidth = dummy.clientWidth + 24;
     document.body.removeChild(dummy);

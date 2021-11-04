@@ -5,11 +5,14 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class CalculateTextEntryWidthPipe implements PipeTransform {
 
-  transform(value: string, placeHolderText: string, minSize: number): number {
-    let text = value ?? '';
-    if (placeHolderText) {
-      text = placeHolderText.length > text.length ? placeHolderText : text;
-    }
+  transform(value: string, placeHolderText: string, correctValue: string, minSize: number): number {
+    const textWidth = this.measureWidth(value ?? '');
+    const placeholderWidth = this.measureWidth(placeHolderText);
+    const correctValueWidth = this.measureWidth(correctValue);
+    return Math.max(textWidth, placeholderWidth, correctValueWidth, minSize);
+  }
+
+  measureWidth(text: string) {
     const dummy = document.createElement('div');
     dummy.innerText = text;
     dummy.style.position = 'absolute';
@@ -17,7 +20,7 @@ export class CalculateTextEntryWidthPipe implements PipeTransform {
     document.body.insertBefore(dummy, document.body.firstChild);
     const measuredWidth = dummy.clientWidth;
     document.body.removeChild(dummy);
-    return measuredWidth < minSize ? minSize : measuredWidth;
+    return measuredWidth;
   }
 
 }
