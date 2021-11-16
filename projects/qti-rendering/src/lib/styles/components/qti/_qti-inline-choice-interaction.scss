@@ -15,6 +15,7 @@
         display: inline-block;
         width: auto;
         height: 30px;
+        margin-bottom: 20px;
         padding: 4px 12px;
         // margin: 0 7px;
         border: 2px solid $primary-blue;
@@ -29,7 +30,7 @@
     }
   
     span {
-        @include position(absolute, 40px, unset, unset, 12px); 
+        @include position(absolute, 47px, unset, unset, 12px); 
         @include cut-text();
         font-size: 14px;
         color: $success-darken;

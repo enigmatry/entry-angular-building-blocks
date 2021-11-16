@@ -57,20 +57,24 @@
         font-size: 20px;
         color: $primary-blue;
     }
+
+    &.cdk-drag-disabled {
+        box-shadow: inset 0 0 0 2px $gray-c;
+
+        &.choice-box:before {
+            color: $gray7;
+        }
+    }
+}
+
+.choice-box {
+    margin-right: 0;
 }
 
 .choice-list {
     position: relative;
     margin-top: 20px;
     border: solid 2px $gray-c;
-
-    // Not in use, delete after the test
-    // &--correct {
-    //     position: absolute;
-    //     bottom: -18px;
-    //     left: 0;
-    //     transform: translateX(-50%);
-    // }
 
     &.cdk-drag-list-dragging {
         margin-top: 0;
@@ -136,7 +140,6 @@
 
 .match-drop-box {
     text-align: left;
-    height: auto;
     -webkit-box-orient: unset;
     overflow: visible;
 }
