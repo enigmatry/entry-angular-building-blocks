@@ -63,7 +63,7 @@ export interface QtiModuleConfig {
 export class QtiModule {
 
   constructor(@Optional() injector: Injector, @Optional() @SkipSelf() parentModule?: QtiModule) {
-    if (parentModule) {
+    if (parentModule && customElements.get('qti-item-body') === undefined) {
       customElements.define('qti-item-body', createCustomElement(QtiItemBodyComponent, { injector }));
       customElements.define('qti-choice-interaction', createCustomElement(ChoiceInteractionComponent, { injector }));
       customElements.define('qti-inline-choice-interaction', createCustomElement(QtiInlineChoiceInteractionComponent, { injector }));
