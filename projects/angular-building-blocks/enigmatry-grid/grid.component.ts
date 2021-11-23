@@ -56,7 +56,7 @@ export class EnigmatryGridComponent<T> implements OnInit, OnChanges, AfterViewIn
 
   private _data: T[] = [];
   private _page: PagedData<T>;
-  @Input() data: T[] | PagedData<T> | null = [];
+  @Input() data: T[] | PagedData<T> | null | undefined = [];
   @Input() total = 0;
   @Input() loading = false;
 
