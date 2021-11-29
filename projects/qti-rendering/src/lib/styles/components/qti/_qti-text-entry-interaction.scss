@@ -6,6 +6,11 @@
 }
 
 .text-entry {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    opacity: 1;
+
     max-width: 100%;
     box-sizing: content-box;
     text-overflow: ellipsis;
@@ -13,6 +18,7 @@
     padding: 10px 14px;
     border: 2px solid $gray-c;
     border-radius: 5px;
+    outline: none;
 
     &:focus {
         outline: none !important;

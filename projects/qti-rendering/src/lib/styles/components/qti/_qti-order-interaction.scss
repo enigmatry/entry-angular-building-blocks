@@ -115,12 +115,20 @@
     justify-content: space-between;
     flex-wrap: wrap;
 
-    &--list {
+    .order-interaction--list {
         flex: 1 1 0;
         display: flex;
         flex-direction: column;
         align-items: center;
+        width: 100%;
         margin-top: 20px;
+    }
+
+    @media (min-width: 768px) {
+        width: 50%;
+    }
+    &:first-child {
+        align-items: flex-start;
     }
 }
 

@@ -44,6 +44,27 @@ button.qti-answer-button,
 }
 
 .choice-list {
+    overflow: hidden;
+    max-width: 100%;
+    border: none!important;
+    box-shadow: inset 0px 0px 0px 2px $gray-c;
+
+    .choice-box {
+        width: 100%;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        user-select: none;
+        padding: 7px 20px 5px 25px;
+        border: none;
+        box-shadow: inset 0px 0px 0px 2px $primary-blue;
+
+        &::before {
+            top: 4px;
+        }
+    }
+
     &.correct,
     &.correct .choice-box {
         color: $success-darken;
