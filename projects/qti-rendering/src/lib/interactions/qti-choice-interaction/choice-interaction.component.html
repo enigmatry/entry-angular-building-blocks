@@ -12,6 +12,6 @@
            (click)="onClick($event, $event.target.checked)"
            class="qti-simple-choice-input custom-simple-choice-input"
            [ngClass]="getCorrectnessClasses(choice)">
-    <label [for]="choice.identifier" [innerHTML]="choice.innerHTML" class="qti-simple-choice-label"></label>
+    <label [for]="choice.identifier" class="qti-simple-choice-label" [innerHTML]="choice.innerHTML | safeHtml"></label>
   </div>
 </div>
