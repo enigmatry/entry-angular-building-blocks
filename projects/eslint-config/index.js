@@ -448,14 +448,7 @@ module.exports = {
         "@typescript-eslint/semi": [ "error" ],
         "@typescript-eslint/space-before-function-paren": [ "error", "never" ],
         "@typescript-eslint/space-infix-ops": [ "error" ],
-        "@angular-eslint/component-selector": [
-          "error",
-          {
-            "type": "element",
-            "prefix": [ "app", "enigmatry", "appg" ],
-            "style": "kebab-case"
-          }
-        ],
+        "@angular-eslint/component-selector": "off",
         "@angular-eslint/directive-selector": [
           "error",
           {
