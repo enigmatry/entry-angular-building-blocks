@@ -1,5 +1,6 @@
 'use strict';
 module.exports = {
+  customSyntax: "postcss-scss",
   ignoreAtRules: [ "else" ],
   extends: "stylelint-config-property-sort-order-smacss",
   plugins: [
