@@ -1,6 +1,6 @@
 {
   "name": "@enigmatry/stylelint-config",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Enigmatry",
   "description": "Stylelint shareable config for the Enigmatry style.",
   "license": "Apache-2.0",
@@ -8,22 +8,22 @@
     "index.js"
   ],
   "dependencies": {
-    "stylelint": "13.13.1",
-    "stylelint-config-property-sort-order-smacss": "7.1.0",
-    "stylelint-declaration-block-no-ignored-properties": "2.4.0",
+    "stylelint": "14.1.0",
+    "stylelint-config-property-sort-order-smacss": "8.0.0",
+    "stylelint-declaration-block-no-ignored-properties": "2.5.0",
     "stylelint-group-selectors": "1.0.8",
     "stylelint-max-lines": "0.1.0",
-    "stylelint-scss": "3.20.1",
+    "stylelint-scss": "4.0.0",
     "stylelint-selector-no-empty": "1.0.8",
     "stylelint-use-nesting": "3.0.0"
   },
   "peerDependencies": {
-    "stylelint": "13.13.1",
-    "stylelint-config-property-sort-order-smacss": "7.1.0",
-    "stylelint-declaration-block-no-ignored-properties": "2.4.0",
+    "stylelint": "14.1.0",
+    "stylelint-config-property-sort-order-smacss": "8.0.0",
+    "stylelint-declaration-block-no-ignored-properties": "2.5.0",
     "stylelint-group-selectors": "1.0.8",
     "stylelint-max-lines": "0.1.0",
-    "stylelint-scss": "3.20.1",
+    "stylelint-scss": "4.0.0",
     "stylelint-selector-no-empty": "1.0.8",
     "stylelint-use-nesting": "3.0.0"
   }
