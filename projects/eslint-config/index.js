@@ -124,7 +124,7 @@ module.exports = {
         "no-proto": "error",
         "no-redeclare": "off",
         "no-restricted-properties": "off",
-        "no-return-assign": "error",
+        "no-return-assign": "off",
         "no-return-await": "off",
         "no-script-url": "error",
         "no-self-assign": "error",
@@ -186,9 +186,8 @@ module.exports = {
         "id-length": [
           "error",
           {
-            "min": 2,
-            "max": 24,
-            "exceptionPatterns": [ "_", "\\$[a-z]+" ]
+            "min": 1,
+            "max": 50
           }
         ],
         "id-match": "off",
@@ -218,18 +217,14 @@ module.exports = {
             "ignoreComments": true
           }
         ],
-        "max-lines": [ "error", 130 ],
-        "max-lines-per-function": [ "error", 35 ],
+        "max-lines": [ "error", 150 ],
+        "max-lines-per-function": [ "error", 40 ],
         "max-nested-callbacks": [ "error", 3 ],
-        "max-params": [ "error", 4 ],
+        "max-params": [ "error", 8 ],
         "max-statements": [ "error", 20 ],
         "max-statements-per-line": "error",
         "multiline-ternary": "off",
-        "new-cap": [
-          "error", 
-          { 
-            "capIsNewExceptionPattern": "(NgModule)|(Component)|(HostListener)|(Optional)|(SkipSelf)|(Injectable)|(Input)|(Output)|(ViewChild)" }
-          ],
+        "new-cap": "off",
         "new-parens": "error",
         "newline-per-chained-call": [
           "error",
@@ -300,7 +295,7 @@ module.exports = {
         "constructor-super": "error",
         "generator-star-spacing": "error",
         "no-class-assign": "error",
-        "no-confusing-arrow": "error",
+        "no-confusing-arrow": "off",
         "no-const-assign": "error",
         "no-dupe-class-members": "off",
         "no-duplicate-imports": "off",
@@ -448,7 +443,14 @@ module.exports = {
         "@typescript-eslint/semi": [ "error" ],
         "@typescript-eslint/space-before-function-paren": [ "error", "never" ],
         "@typescript-eslint/space-infix-ops": [ "error" ],
-        "@angular-eslint/component-selector": "off",
+        "@angular-eslint/component-selector": [
+          "error",
+          {
+            "type": "element",
+            "prefix": [ "app", "enigmatry", "appg" ],
+            "style": "kebab-case"
+          }
+        ],
         "@angular-eslint/directive-selector": [
           "error",
           {
