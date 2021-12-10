@@ -1,12 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DefaultEnigmatryFormConfig, ENIGMATRY_FORM_CONFIG } from './from-config';
+import { ENIGMATRY_FIELD_TYPE_RESOLVER, FieldTypeResolverService, fieldTypeResolverFactory } from './form-type.resolver';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule
   ],
-  providers: [{ provide: ENIGMATRY_FORM_CONFIG, useValue: new DefaultEnigmatryFormConfig() }]
+  providers: [
+    {
+      provide: ENIGMATRY_FIELD_TYPE_RESOLVER,
+      useFactory: fieldTypeResolverFactory,
+      deps: [FieldTypeResolverService]
+    }
+  ]
 })
 export class EnigmatryFormModule { }
