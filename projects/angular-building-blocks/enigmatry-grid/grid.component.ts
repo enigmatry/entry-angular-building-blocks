@@ -66,8 +66,8 @@ export class EnigmatryGridComponent<T> implements OnInit, OnChanges, AfterViewIn
   @Input() pageDisabled = false;
   @Input() showFirstLastButtons = false;
   @Input() pageIndex = 0;
-  @Input() pageSize = 10;
-  @Input() pageSizeOptions = [10, 50, 100];
+  @Input() pageSize = 20;
+  @Input() pageSizeOptions = [20, 50, 100];
   @Input() hidePageSize = false;
   @Input() pageDatasetLocally = false;
   @Output() pageChange = new EventEmitter<PageEvent>();
