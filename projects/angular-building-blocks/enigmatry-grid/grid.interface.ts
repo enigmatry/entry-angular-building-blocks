@@ -1,7 +1,4 @@
-import { InjectionToken, TemplateRef } from '@angular/core';
-
-export const DEFAULT_DATE_FORMAT: InjectionToken<string> = new InjectionToken<string>('');
-export const DEFAULT_TIMEZONE: InjectionToken<string> = new InjectionToken<string>('');
+import { TemplateRef } from '@angular/core';
 
 export interface ColumnDef {
   field: string;
@@ -27,6 +24,7 @@ export declare type ColumnType =
   | 'link';
 
 export interface ColumnTypeParameter {
+  name?: string;
   currencyCode?: string;
   display?: string | boolean;
   digitsInfo?: string;

@@ -11,8 +11,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { EnigmatryGridComponent } from './grid.component';
 import { EnigmatryGridCellComponent } from './cell.component';
 import { EnigmatryGridContextMenuComponent } from './context-menu.component';
-import { DEFAULT_DATE_FORMAT, DEFAULT_TIMEZONE } from './grid.interface';
-import { EnigmatryPipesModule } from '@enigmatry/angular-building-blocks/pipes';
+import { EnigmatryCommonModule } from '@enigmatry/angular-building-blocks/common';
 
 @NgModule({
   imports: [
@@ -24,7 +23,7 @@ import { EnigmatryPipesModule } from '@enigmatry/angular-building-blocks/pipes';
     MatCheckboxModule,
     MatIconModule,
     MatMenuModule,
-    EnigmatryPipesModule
+    EnigmatryCommonModule
   ],
   declarations: [
     EnigmatryGridComponent,
@@ -33,10 +32,6 @@ import { EnigmatryPipesModule } from '@enigmatry/angular-building-blocks/pipes';
   ],
   exports: [
     EnigmatryGridComponent
-  ],
-  providers: [
-    { provide: DEFAULT_DATE_FORMAT, useValue: 'mediumDate' },
-    { provide: DEFAULT_TIMEZONE, useValue: 'undefined' },
   ]
 })
 export class EnigmatryGridModule { }

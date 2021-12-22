@@ -9,7 +9,7 @@ export declare type FieldTypeResolverConfig = {
 };
 
 export declare type FormConfig = {
-  fieldTypesConfig?: FieldTypeResolverConfig
+  fieldTypesConfig?: FieldTypeResolverConfig;
 };
 
 export const ENIGMATRY_FORM_CONFIG = new InjectionToken<FormConfig>('ENIGMATRY_FORM_CONFIG');

@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, DEFAULT_CURRENCY_CODE, Inject, Input, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
 
-import { ColumnDef, DEFAULT_DATE_FORMAT, DEFAULT_TIMEZONE } from './grid.interface';
+import { ColumnDef } from './grid.interface';
 
 @Component({
   selector: 'enigmatry-grid-cell',
@@ -13,10 +13,7 @@ export class EnigmatryGridCellComponent<T> {
   @Input() rowData: T;
   @Input() colDef: ColumnDef;
 
-  constructor(
-    @Inject(DEFAULT_DATE_FORMAT) public defaultDateFormat: string,
-    @Inject(DEFAULT_TIMEZONE) public defaultTimezone: string,
-    @Inject(DEFAULT_CURRENCY_CODE) public defaultCurrencyCode: string) {
+  constructor() {
   }
 
   get value(): any {
