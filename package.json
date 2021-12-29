@@ -35,6 +35,8 @@
     "@angular-eslint/template-parser": "12.3.0",
     "@angular/cli": "~12.1.2",
     "@angular/compiler-cli": "~12.1.2",
+    "@ngx-formly/core": "^5.10.22",
+    "@ngx-formly/material": "^5.10.22",
     "@types/dom-mediacapture-record": "^1.0.10",
     "@types/jasmine": "~3.8.0",
     "@types/node": "^12.11.1",

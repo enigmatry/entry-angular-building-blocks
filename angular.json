@@ -82,6 +82,46 @@
           }
         }
       }
+    },
+    "formly-extensions": {
+      "projectType": "library",
+      "root": "projects/formly-extensions",
+      "sourceRoot": "projects/formly-extensions/src",
+      "prefix": "enigmatry",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/formly-extensions/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/formly-extensions/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/formly-extensions/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/formly-extensions/src/test.ts",
+            "tsConfig": "projects/formly-extensions/tsconfig.spec.json",
+            "karmaConfig": "projects/formly-extensions/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/formly-extensions/**/*.ts",
+              "projects/formly-extensions/**/*.html"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "angular-building-blocks",

@@ -21,6 +21,14 @@
       "@enigmatry/qti-rendering": [
         "dist/qti-rendering/*",
         "dist/qti-rendering"
+      ],
+      "@enigmatry/formly-extensions/*": [
+        "projects/formly-extensions/*",
+        "projects/formly-extensions"
+      ],
+      "@enigmatry/formly-extensions": [
+        "dist/formly-extensions/*",
+        "dist/formly-extensions"
       ]
     },
     "strict": false,
