@@ -10,7 +10,9 @@
     [errorStateMatcher]="errorStateMatcher"
     [options]="selectOptions"
     enigmatryCheckAutocompleteInput>
-  <mat-autocomplete #auto="matAutocomplete" [autoActiveFirstOption]="true" [displayWith]="selectOptions | displayWithAutocomplete">
+  <mat-autocomplete #auto="matAutocomplete"
+    [autoActiveFirstOption]="true"
+    [displayWith]="selectOptions | displayWithAutocomplete">
     <mat-option *ngFor="let option of selectOptions | filterWithAutocomplete: input.value" [value]="option.value">
     {{ option.label }}
     </mat-option>

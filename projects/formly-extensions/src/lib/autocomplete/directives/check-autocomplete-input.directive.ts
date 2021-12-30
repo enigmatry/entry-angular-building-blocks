@@ -1,21 +1,27 @@
-import { Directive, HostListener, Input } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { AbstractControl, NgControl } from '@angular/forms';
 import { SelectOption } from '../select-option';
 
 @Directive({
   selector: '[enigmatryCheckAutocompleteInput]'
 })
-export class CheckAutocompleteInputDirective {
+export class CheckAutocompleteInputDirective implements OnChanges {
   @Input() options: SelectOption[] = [];
 
   get control(): AbstractControl | null {
     return this.ngControl.control;
   }
 
-  constructor(private ngControl: NgControl) { }
+  constructor(private ngControl: NgControl, private elemRef: ElementRef) { }
 
   @HostListener('blur') onBlur() {
     this.checkControlValue();
+  }
+
+  ngOnChanges(_changes: SimpleChanges): void {
+    if (this.options?.length) {
+      this.applySelectedValue(this.control.value);
+    }
   }
 
   private checkControlValue(): void {
@@ -34,4 +40,9 @@ export class CheckAutocompleteInputDirective {
       this.control.patchValue('');
     }
   }
+
+  private applySelectedValue = (value: any) => {
+    const inputElement = this.elemRef.nativeElement as HTMLInputElement;
+    inputElement.value = this.options.find(option => option.value === value)?.label;
+  };
 }
