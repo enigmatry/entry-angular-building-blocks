@@ -43,6 +43,6 @@ export class CheckAutocompleteInputDirective implements OnChanges {
 
   private applySelectedValue = (value: any) => {
     const inputElement = this.elemRef.nativeElement as HTMLInputElement;
-    inputElement.value = this.options.find(option => option.value === value)?.label;
+    inputElement.value = this.options.find(option => option.value === value)?.label ?? '';
   };
 }
