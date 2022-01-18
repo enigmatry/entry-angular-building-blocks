@@ -312,6 +312,7 @@ module.exports = {
         "prefer-const": "error",
         "prefer-destructuring": "off",
         "prefer-numeric-literals": "warn",
+        "prefer-object-has-own": "off",
         "prefer-rest-params": "error",
         "prefer-spread": "error",
         "prefer-template": "error",
@@ -390,6 +391,13 @@ module.exports = {
         "@typescript-eslint/brace-style": [ "error" ],
         "@typescript-eslint/comma-dangle": [ "error", "never" ],
         "@typescript-eslint/comma-spacing": [ "error" ],
+        "@typescript-eslint/consistent-type-exports": [ 
+          "error", 
+          {
+            "fixMixedExportsWithInlineTypeSpecifier": true
+          }
+        ],
+        "@typescript-eslint/consistent-type-imports": [ "off" ],
         "@typescript-eslint/default-param-last": [ "error" ],
         "@typescript-eslint/dot-notation": [ "error" ],
         "@typescript-eslint/func-call-spacing": [ "error" ],
@@ -422,7 +430,15 @@ module.exports = {
             "enforceConst": true
           }
         ],
+        "@typescript-eslint/no-meaningless-void-operator": [
+          "error",
+          {
+            "checkNever": false
+          }
+        ],
+        "@typescript-eslint/no-non-null-assertion": [ "error" ],
         "@typescript-eslint/no-redeclare": [ "error" ],
+        "@typescript-eslint/no-restricted-imports": [ "off" ],
         "@typescript-eslint/no-shadow": [ "error" ],
         "@typescript-eslint/no-throw-literal": [ "error" ],
         "@typescript-eslint/no-unused-expressions": [ "error" ],
