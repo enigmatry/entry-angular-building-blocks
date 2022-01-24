@@ -11,6 +11,6 @@ export class FilterWithAutocompletePipe implements PipeTransform {
       return options;
     }
     const labelStartsWith = filterWith.toLowerCase();
-    return options.filter(option => option.label.toLowerCase().startsWith(labelStartsWith));
+    return options.filter(option => option.label.toLowerCase().includes(labelStartsWith));
   }
 }

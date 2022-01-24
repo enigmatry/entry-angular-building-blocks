@@ -33,7 +33,8 @@ export class CheckAutocompleteInputDirective implements OnChanges {
       return;
     }
 
-    const matchedOption = this.options.find(option => option.label === controlValue);
+    const matchedOption = this.options
+      .find(option => option.label.toLowerCase() === controlValue.toLowerCase());
     if (matchedOption) {
       this.control.patchValue(matchedOption.value);
     } else {
