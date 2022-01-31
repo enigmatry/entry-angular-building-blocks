@@ -15,7 +15,7 @@ import { ServerValidationMessagesComponent } from './server-validation-messages.
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        FormlyModule.forRoot({
+        FormlyModule.forChild({
             validationMessages: [
                 { name: 'fromServer', message: (error, _field) => error }
             ]

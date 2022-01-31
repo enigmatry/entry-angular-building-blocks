@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { FormlyAutocompleteModule } from './autocomplete/formly-autocomplete.module';
+import { ServerValidationMessagesComponent } from './server-validation/server-validation-messages.component';
 import { ServerValidationModule } from './server-validation/server-validation.module';
 
 @NgModule({
@@ -9,6 +10,7 @@ import { ServerValidationModule } from './server-validation/server-validation.mo
     ServerValidationModule
   ],
   exports: [
+    ServerValidationMessagesComponent
   ]
 })
 export class EnigmatryFormlyExtensionsModule { }

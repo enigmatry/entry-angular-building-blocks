@@ -16,15 +16,15 @@ const handleBadRequest = (form: FormGroup, error: IValidationDetails) => {
                 control.markAsTouched();
             } else {
                 console.log(`Control with key '${key}' not found in form. Message: ${validationErrors[key]}`);
-                formErrors[defaultKey] = formErrors[defaultKey].concat(validationErrors[key]);
+                formErrors[defaultKey] = validationErrors[key];
             }
         }
     }
+    form.setErrors(formErrors);
     // else {
     //     console.log('No validation errors found from server');
     //     formErrors[defaultKey] = ['An error occurred on the server.'];
     // }
-    form.setErrors(formErrors);
 };
 
-export default handleBadRequest;
+export { handleBadRequest };
