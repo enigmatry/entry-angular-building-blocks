@@ -1,22 +1,22 @@
 import { FormGroup } from '@angular/forms';
-import { IValidationDetails } from './validation-details.interface';
+import { formLevelErrorKey, IServerValidationDetails } from './server-validation.interface';
 
-const handleBadRequest = (form: FormGroup, error: IValidationDetails) => {
+const attachServerValidationToForm = (error: IServerValidationDetails, form: FormGroup) => {
     form.setErrors(null);
-    const defaultKey = 'general';
+
     const validationErrors = error?.errors;
     const formErrors: { [key: string]: string[] } = {};
 
     if (validationErrors) {
         for (const key in validationErrors) {
             if (form.controls[key]) {
-                console.log(`Setting error to control ${key}: ${validationErrors[key]}`);
                 const control = form.controls[key];
                 control.setErrors({ fromServer: validationErrors[key] });
                 control.markAsTouched();
             } else {
-                console.log(`Control with key '${key}' not found in form. Message: ${validationErrors[key]}`);
-                formErrors[defaultKey] = validationErrors[key];
+                formErrors[formLevelErrorKey] = formErrors[formLevelErrorKey]?.length > 0
+                    ? formErrors[formLevelErrorKey].concat(validationErrors[key])
+                    : validationErrors[key];
             }
         }
     }
@@ -27,4 +27,4 @@ const handleBadRequest = (form: FormGroup, error: IValidationDetails) => {
     // }
 };
 
-export { handleBadRequest };
+export { attachServerValidationToForm };

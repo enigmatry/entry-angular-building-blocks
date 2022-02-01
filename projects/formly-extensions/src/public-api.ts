@@ -4,6 +4,6 @@
 
 export * from './lib/formly-extensions.module';
 export * from './lib/server-validation/server-validation.module';
-export * from './lib/server-validation/bad-request-handler';
+export * from './lib/server-validation/attach-server-validation-to-form';
 export * from './lib/server-validation/server-validation-messages.component';
-export * from './lib/server-validation/validation-details.interface';
+export * from './lib/server-validation/server-validation.interface';

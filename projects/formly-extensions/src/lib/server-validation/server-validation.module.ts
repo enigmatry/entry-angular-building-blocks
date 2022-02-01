@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormlyModule } from '@ngx-formly/core';
 import { ServerValidationMessagesComponent } from './server-validation-messages.component';
+import { controlLevelErrorKey } from './server-validation.interface';
 
 @NgModule({
     declarations: [
@@ -17,7 +18,7 @@ import { ServerValidationMessagesComponent } from './server-validation-messages.
         ReactiveFormsModule,
         FormlyModule.forChild({
             validationMessages: [
-                { name: 'fromServer', message: (error, _field) => error }
+                { name: controlLevelErrorKey, message: (error, _field) => error }
             ]
         })
     ]

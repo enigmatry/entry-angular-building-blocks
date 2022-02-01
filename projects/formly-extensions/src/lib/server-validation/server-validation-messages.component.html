@@ -1,3 +1,5 @@
-<div *ngFor="let errorMessage of messages">
-    {{errorMessage}}
+<div *ngIf="messages?.length" class="form-level-validation">
+    <div  *ngFor="let errorMessage of messages">
+        {{errorMessage}}
+    </div>
 </div>
