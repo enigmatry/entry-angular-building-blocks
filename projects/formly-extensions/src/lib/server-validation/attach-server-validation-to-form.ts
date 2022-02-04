@@ -26,6 +26,7 @@ const attachServerValidationToForm = (error: IServerValidationDetails, form: For
         formErrors[formLevelErrorKey] = ['An error occurred on the server.'];
     }
     form.setErrors(formErrors);
+    form.markAllAsTouched();
 };
 
 export { attachServerValidationToForm };
