@@ -1,5 +1,8 @@
 import { FormGroup } from '@angular/forms';
-import { formLevelErrorKey, IServerValidationDetails } from './server-validation.interface';
+import {
+    formLevelErrorKey,
+    IServerValidationDetails
+} from './server-validation.interface';
 
 const attachServerValidationToForm = (error: IServerValidationDetails, form: FormGroup) => {
     form.setErrors(null);
@@ -11,7 +14,7 @@ const attachServerValidationToForm = (error: IServerValidationDetails, form: For
         for (const key in validationErrors) {
             if (form.controls[key]) {
                 const control = form.controls[key];
-                control.setErrors({ fromServer: validationErrors[key] });
+                control.setErrors({ controlFromServer: validationErrors[key] });
                 control.markAsTouched();
             } else {
                 formErrors[formLevelErrorKey] = formErrors[formLevelErrorKey]?.length > 0
@@ -19,12 +22,10 @@ const attachServerValidationToForm = (error: IServerValidationDetails, form: For
                     : validationErrors[key];
             }
         }
+    } else {
+        formErrors[formLevelErrorKey] = ['An error occurred on the server.'];
     }
     form.setErrors(formErrors);
-    // else {
-    //     console.log('No validation errors found from server');
-    //     formErrors[defaultKey] = ['An error occurred on the server.'];
-    // }
 };
 
 export { attachServerValidationToForm };

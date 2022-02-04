@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
+import { ValidationErrors } from '@angular/forms';
 
 @Component({
     selector: 'enigmatry-server-validation-messages',
@@ -8,5 +9,5 @@ import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@a
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ServerValidationMessagesComponent{
-    @Input() messages: string[];
+    @Input() errors: ValidationErrors | null;
 }
