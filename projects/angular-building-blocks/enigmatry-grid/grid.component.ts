@@ -98,7 +98,7 @@ export class EnigmatryGridComponent<T> implements OnInit, OnChanges, AfterViewIn
 
   @Input() rowSelected: T[] = [];
   @Input() rowSelectable = false;
-  @Input() hideRowSelectionCheckbox = false;
+  @Input() showSelectAllCheckbox = true;
   @Input() rowSelectionFormatter: RowSelectionFormatter = {};
   @Input() rowClassFormatter: RowClassFormatter;
   @Output() rowSelectionChange = new EventEmitter<T[]>();
@@ -153,7 +153,7 @@ export class EnigmatryGridComponent<T> implements OnInit, OnChanges, AfterViewIn
 
     this.displayedColumns = this.columns.filter(item => !item.hide).map(item => item.field);
 
-    if (this.rowSelectable && !this.hideRowSelectionCheckbox) {
+    if (this.rowSelectable && !this.displayedColumns.includes('CheckboxColumnDef')) {
       this.displayedColumns.unshift('CheckboxColumnDef');
     }
 
@@ -216,7 +216,7 @@ export class EnigmatryGridComponent<T> implements OnInit, OnChanges, AfterViewIn
     return numSelected === numRows;
   }
 
-  toggleMasterCheckbox(): void {
+  toggleSelectAllCheckbox(): void {
     if (this.isAllSelected()) {
       this.rowSelection.clear();
       this.rowSelectionChange.emit(this.rowSelection.selected);
