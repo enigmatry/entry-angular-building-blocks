@@ -17,6 +17,7 @@ export class EnigmatryFormattedValueComponent {
   constructor(
     @Inject(DEFAULT_DATE_FORMAT) public defaultDateFormat: string,
     @Inject(DEFAULT_TIMEZONE) public defaultTimezone: string,
-    @Inject(DEFAULT_CURRENCY_CODE) public defaultCurrencyCode: string) {
+    @Inject(DEFAULT_CURRENCY_CODE) public defaultCurrencyCode: string,
+    @Inject(DEFAULT_PERCENTAGE_MULTIPLIER) public defaultPercentageMultiplier: number) {
   }
 }
