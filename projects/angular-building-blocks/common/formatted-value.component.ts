@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, DEFAULT_CURRENCY_CODE, Inject, Input, ViewEncapsulation } from '@angular/core';
 
-import { DEFAULT_DATE_FORMAT, DEFAULT_TIMEZONE } from './common.interface';
+import { DEFAULT_DATE_FORMAT, DEFAULT_PERCENTAGE_MULTIPLIER, DEFAULT_TIMEZONE } from './common.interface';
 
 @Component({
   selector: 'enigmatry-formatted-value',
