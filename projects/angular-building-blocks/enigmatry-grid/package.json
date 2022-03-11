@@ -1,6 +1,9 @@
   
 {
   "ngPackage": {
+    "assets": [
+      "./styles/**/*.scss"
+    ],
     "lib": {
       "entryFile": "public-api.ts",
       "cssUrl": "inline"
