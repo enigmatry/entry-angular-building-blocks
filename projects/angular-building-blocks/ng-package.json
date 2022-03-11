@@ -1,6 +1,9 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../dist/angular-building-blocks",
+  "assets": [
+    "./styles/**/*.scss"
+  ],
   "lib": {
     "entryFile": "public-api.ts"
   }
