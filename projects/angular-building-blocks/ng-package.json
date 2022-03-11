@@ -5,6 +5,7 @@
     "./styles/**/*.scss"
   ],
   "lib": {
-    "entryFile": "public-api.ts"
+    "entryFile": "public-api.ts",
+    "styleIncludePaths": ["./styles/partials"]
   }
 }

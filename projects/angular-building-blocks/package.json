@@ -13,10 +13,5 @@
   },
   "dependencies": {
     "tslib": "^2.2.0"
-  },
-  "exports": {
-    "./theming": {
-      "sass": "./styles/main.scss"
-    }
   }
 }
