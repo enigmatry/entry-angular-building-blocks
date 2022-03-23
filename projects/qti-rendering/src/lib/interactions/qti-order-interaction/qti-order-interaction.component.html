@@ -1,16 +1,24 @@
 <div class="order-interaction" cdkDropListGroup>
   <div class="order-interaction--list">
-    <div cdkDropList *ngFor="let choices of notOrderedChoices; index as i;" cdkDropListSortingDisabled="true" [cdkDropListData]="choices" class="choice-list"
-         id="notOrderedChoices{{i}}" (cdkDropListDropped)="drop($event)">
-      <div *ngFor="let choice of choices" class="choice-box" cdkDrag [innerHTML]="choice.innerHTML" [cdkDragDisabled]="disabled"></div>
+    <div class="task-wrap" *ngFor="let choices of notOrderedChoices; index as i;">
+      <div cdkDropList cdkDropListSortingDisabled="true" [cdkDropListData]="choices" class="choice-list"
+          id="notOrderedChoices{{i}}" (cdkDropListDropped)="drop($event)">
+        <div *ngFor="let choice of choices" class="choice-box" cdkDrag [innerHTML]="choice.innerHTML" [cdkDragDisabled]="disabled"></div>
+      </div>
     </div>
   </div>
 
   <div class="order-interaction--list">
-    <div cdkDropList *ngFor="let choices of orderedChoices; index as i;" [ngClass]="getCorrectnessClasses(choices)"
-         cdkDropListSortingDisabled="true" class="choice-list" [cdkDropListData]="choices" id="orderedChoices{{i}}" (cdkDropListDropped)="drop($event)">
-      <div *ngFor="let item of choices" [cdkDragData]="item"
-           class="choice-box" cdkDrag [innerHTML]="item.innerHTML" [cdkDragDisabled]="disabled || item.fixed"></div>
+    <div *ngFor="let choices of orderedChoices; index as i;" class="task-wrap">
+      <div cdkDropList  [ngClass]="getCorrectnessClasses(choices)"
+          cdkDropListSortingDisabled="true" 
+          class="choice-list" 
+          [cdkDropListData]="choices" 
+          id="orderedChoices{{i}}" 
+          (cdkDropListDropped)="drop($event)">
+          <div *ngFor="let item of choices" [cdkDragData]="item"
+              class="choice-box" cdkDrag [innerHTML]="item.innerHTML" [cdkDragDisabled]="disabled || item.fixed"></div>
+      </div>
       <span *ngIf="showCorrectAnswers" [innerHTML]="correctValues[i]" class="correct-anwser"></span>
     </div>
   </div>

@@ -121,26 +121,37 @@ button.qti-answer-button,
 .choice-list-wrap,
 .choice-list {
     position: relative; 
-
-    .correct-anwser {
-        @include position(absolute, -20px, unset, unset, 7px);
-        @include cut-text();
-
-        font-size: 14px;
-        text-align: left;
-        color: $success-darken;
-        transition: .3s;
-        
-        &:hover {
-            overflow: visible;
-            white-space: nowrap;
-        }
-        
-    }
 }
 
 .text-entry-wrap {
     .correct-anwser {
         top: 0;
     }
+}
+
+.task-wrap {
+    height: 55px;
+    display: flex;
+    flex-direction: column-reverse;
+    padding: 0 5px;
+
+    .choice-list {
+        margin: 0;
+        position: static;
+    }
+}
+
+.correct-anwser {
+    @include cut-text();
+
+    font-size: 14px;
+    text-align: left;
+    color: $success-darken;
+    transition: .3s;
+    
+    &:hover {
+        overflow: visible;
+        white-space: nowrap;
+    }
+    
 }
