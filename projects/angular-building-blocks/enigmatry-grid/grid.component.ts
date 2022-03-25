@@ -134,8 +134,8 @@ export class EnigmatryGridComponent<T> implements OnInit, OnChanges, AfterViewIn
     return obj instanceof TemplateRef;
   }
 
-  getRowClassList(rowData: any, index: number) {
-    const classList: any = {
+  getRowClassList(rowData: T, index: number) {
+    const classList = {
       selected: this.rowSelection.isSelected(rowData),
       'mat-row-odd': index % 2,
     };
@@ -145,6 +145,10 @@ export class EnigmatryGridComponent<T> implements OnInit, OnChanges, AfterViewIn
       }
     }
     return classList;
+  }
+
+  getColumnClassList(colDef: ColumnDef): string {
+    return `${colDef.class ?? ''} ${colDef.type ?? ''}`;
   }
 
   ngOnInit() { }
