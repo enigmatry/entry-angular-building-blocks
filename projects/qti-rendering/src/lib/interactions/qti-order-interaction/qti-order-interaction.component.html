@@ -1,6 +1,6 @@
 <div class="order-interaction" cdkDropListGroup>
   <div class="order-interaction--list">
-    <div class="task-wrap" *ngFor="let choices of notOrderedChoices; index as i;">
+    <div class="choice-task-wrap" *ngFor="let choices of notOrderedChoices; index as i;">
       <div cdkDropList cdkDropListSortingDisabled="true" [cdkDropListData]="choices" class="choice-list"
           id="notOrderedChoices{{i}}" (cdkDropListDropped)="drop($event)">
         <div *ngFor="let choice of choices" class="choice-box" cdkDrag [innerHTML]="choice.innerHTML" [cdkDragDisabled]="disabled"></div>
@@ -9,7 +9,7 @@
   </div>
 
   <div class="order-interaction--list">
-    <div *ngFor="let choices of orderedChoices; index as i;" class="task-wrap">
+    <div *ngFor="let choices of orderedChoices; index as i;" class="choice-task-wrap">
       <div cdkDropList  [ngClass]="getCorrectnessClasses(choices)"
           cdkDropListSortingDisabled="true" 
           class="choice-list" 

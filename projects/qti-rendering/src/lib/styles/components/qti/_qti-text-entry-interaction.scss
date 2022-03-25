@@ -2,7 +2,12 @@
 @import '../../mixins';
 
 .text-entry-wrap {
+
     max-width: 98%;
+    height: 60px;
+    display: inline-flex;
+    flex-direction: column-reverse;
+    padding: 0 5px;
 }
 
 .text-entry {
@@ -14,7 +19,7 @@
     max-width: 100%;
     box-sizing: content-box;
     text-overflow: ellipsis;
-    margin: 20px 5px 8px;
+    // margin: 20px 5px 8px;
     padding: 10px 14px;
     border: 2px solid $gray-c;
     border-radius: 5px;
@@ -23,10 +28,6 @@
     &:focus {
         outline: none !important;
         border: 2px solid $primary-blue;
-    }
-
-    &-wrap {
-        display: inline-block;
     }
 }
 

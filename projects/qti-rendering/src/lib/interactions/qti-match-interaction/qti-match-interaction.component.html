@@ -1,7 +1,7 @@
 <div class="qti-prompt" [innerHTML]="prompt.innerHTML"></div>
 <div cdkDropListGroup class="qti-match-wrap">
     <div class="qti-match-item">
-        <div class="task-wrap" *ngFor="let items of firstList; index as i;">
+        <div class="choice-task-wrap" *ngFor="let items of firstList; index as i;">
             <div class="match-drag-list choice-list"
                 cdkDropList
                 id={{dragList[i].identifier}}
@@ -14,7 +14,7 @@
     </div>
 
     <div class="qti-match-item">
-        <div *ngFor="let resultList of results; index as i;" class="choice-list-wrap mt-20 task-wrap">
+        <div *ngFor="let resultList of results; index as i;" class="choice-list-wrap mt-20 choice-task-wrap">
             <div class="flex">
                 <div  [ngClass]="getCorrectnessClasses(i)" 
                     class="match-drop-list choice-list"
