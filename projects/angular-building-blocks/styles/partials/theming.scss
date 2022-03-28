@@ -53,6 +53,14 @@
 		align-items: center;
 	}
 
+	.currency {
+		text-align: right;
+
+		.mat-header-cell-inner {
+			justify-content: right;
+		}
+	}
+
 	.mat-paginator-hidden {
 		display: none;
 	}
