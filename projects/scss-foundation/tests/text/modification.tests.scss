@@ -1,0 +1,21 @@
+@use '../../node_modules/sass-true/sass/true';
+@use '../../src/variables';
+@use '../../src/text/modification';
+
+variables.$testing: true;
+
+@include true.describe('capitalize(word)') {
+	@include true.it('should throw if word is not a string') {
+		$expected-message: 'Please provide string parameter! Given value: ';
+		@include true.assert-equal(modification.capitalize(5), $expected-message + '5');
+		@include true.assert-equal(modification.capitalize(null), $expected-message);
+		@include true.assert-equal(modification.capitalize(#FFEEAA), $expected-message + '#FFEEAA');
+	}
+
+	@include true.it('should return string with first letter capitalized') {
+		@include true.assert-equal(modification.capitalize('house'), 'House');
+		@include true.assert-equal(modification.capitalize('dOg'),'DOg');
+		@include true.assert-equal(modification.capitalize('Dang'), 'Dang');
+		@include true.assert-equal(modification.capitalize('4pple'), '4pple');
+	}
+}

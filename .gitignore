@@ -5,6 +5,8 @@
 /dist
 /tmp
 /out-tsc
+/projects/scss-foundation/coverage
+
 # Only exists if Bazel was run
 /bazel-out
 
