@@ -24,8 +24,8 @@ export class QtiTextEntryInteractionComponent extends QtiInteractionElement impl
     this.value = elementRef.nativeElement.getAttribute('data-entered');
     if (elementRef.nativeElement.hasAttribute('data-correct')) {
       this.correctValue = elementRef.nativeElement.getAttribute('data-correct');
-      this.isCorrect = this.correctValue &&
-        (this.correctValue === '' || (this.correctValue.split('/').map(x => x.trim()).filter(x => x === this.value).length > 0));
+      this.isCorrect = this.correctValue === ''
+        || (this.correctValue.split('/').map(x => x.trim()).filter(x => x === this.value).length > 0);
       this.correctnessClasses = this.isCorrect ? 'correct' : 'incorrect';
     }
    }

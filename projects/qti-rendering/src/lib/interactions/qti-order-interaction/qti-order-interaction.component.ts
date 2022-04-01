@@ -98,7 +98,7 @@ export class QtiOrderInteractionComponent extends QtiInteractionElement implemen
   }
 
   hasResult(): boolean {
-    return this.orderedChoices.some(choices => choices.length > 0);
+    return this.orderedChoices.some(choices => choices.filter(x => !x.fixed).length > 0);
   }
 
   getResult(): ResultDeclaration {
