@@ -7,8 +7,8 @@
   "peerDependencies": {
     "@angular/common": ">=12.1.0",
     "@angular/core": ">=12.1.0",
-    "@ngx-formly/core": "^5.10.20",
-    "@ngx-formly/material": "^5.10.20"
+    "@ngx-formly/core": "^5.12.0",
+    "@ngx-formly/material": "^5.12.0"
   },
   "dependencies": {
     "tslib": "^2.2.0"
