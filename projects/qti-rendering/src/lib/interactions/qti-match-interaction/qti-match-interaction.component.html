@@ -14,7 +14,7 @@
     </div>
 
     <div class="qti-match-item">
-        <div *ngFor="let resultList of results; index as i;" class="choice-list-wrap mt-20 choice-task-wrap">
+        <div *ngFor="let resultList of results; index as i;" class="choice-list-wrap choice-task-wrap">
             <div class="flex">
                 <div  [ngClass]="getCorrectnessClasses(i)" 
                     class="match-drop-list choice-list"
