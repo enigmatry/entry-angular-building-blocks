@@ -15,7 +15,7 @@
 
     <div class="qti-match-item">
         <div *ngFor="let resultList of results; index as i;" class="choice-list-wrap choice-task-wrap">
-            <div class="flex">
+            <div class="qti-match-item-wrap">
                 <div  [ngClass]="getCorrectnessClasses(i)" 
                     class="match-drop-list choice-list"
                     cdkDropList

@@ -5,3 +5,10 @@
 .flex {
     display: flex;
 }
+
+.qti-match-item-wrap {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+}

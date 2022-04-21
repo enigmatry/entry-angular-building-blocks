@@ -130,7 +130,8 @@ button.qti-answer-button,
 }
 
 .choice-task-wrap {
-    height: 55px;
+    min-height: 55px;
+    height: unset;
     display: flex;
     flex-direction: column-reverse;
     padding: 0 5px;
