@@ -6,8 +6,10 @@ parameters:
   type: string
   default: ''
 
+name: $(MajorMinorVersion)$(Rev:.r)
+
 stages:
-- stage: Preparation of version $(MajorMinorVersion)$(Rev:.r)
+- stage: Preparation
   pool:
     vmImage: ubuntu-latest
 
