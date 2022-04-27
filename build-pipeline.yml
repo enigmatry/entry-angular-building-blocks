@@ -15,7 +15,7 @@ stages:
   - job: NPM
     steps:
     - task: Npm@1
-      displayName: 'npm install scss foundation ${{ MajorMinorVersion }} $(Rev:.r)'
+      displayName: 'npm install scss foundation $(MajorMinorVersion)$(Rev:.r)'
       inputs:
         command: 'install'
         workingDir: 'projects/scss-foundation'    
