@@ -4,5 +4,12 @@ trigger:
 extends:
   template: build-pipeline.yml
   parameters:
-    optionalStep: true
+    optionalStep: false
     description: 'blah'
+    extraSteps:
+      - task: Npm@1
+        displayName: 'Test the scss foundation library'
+        inputs:
+          command: 'custom'
+          customCommand: 'run test'
+          workingDir: 'projects/scss-foundation'

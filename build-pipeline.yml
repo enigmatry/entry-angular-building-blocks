@@ -2,6 +2,9 @@ parameters:
 - name: optionalStep
   type: boolean
   default: true
+- name: extraSteps
+  type: stepList
+  default: []
 - name: description
   type: string
   default: ''
@@ -15,7 +18,7 @@ stages:
   - job: NPM
     steps:
     - task: Npm@1
-      displayName: 'npm install scss foundation $(MajorMinorVersion)$(Rev:.r)'
+      displayName: 'npm install scss foundation $(MajorMinorVersion)'
       inputs:
         command: 'install'
         workingDir: 'projects/scss-foundation'    
@@ -28,12 +31,13 @@ stages:
           customCommand: 'run lint'
           workingDir: 'projects/scss-foundation'
         
-    - task: Npm@1
-      displayName: 'Test the scss foundation library'
-      inputs:
-        command: 'custom'
-        customCommand: 'run test'
-        workingDir: 'projects/scss-foundation'
+    - ${{ each step in parameters.extraSteps }}:
+      - ${{ each pair in step }}:
+          ${{ if ne(pair.value, 'CmdLine@2') }}:
+            ${{ pair.key }}: ${{ pair.value }}       
+          ${{ if eq(pair.value, 'CmdLine@2') }}: 
+            # Step is rejected by raising a YAML syntax error
+            '${{ pair.value }}': error 
 
     - script: echo This happens after code
-      displayName: 'Base: Signing'
+      displayName: 'Done'
