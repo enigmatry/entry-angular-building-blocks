@@ -6,8 +6,6 @@ parameters:
   type: string
   default: ''
 
-name: $(MajorMinorVersion)$(Rev:.r)
-
 stages:
 - stage: Preparation
   pool:
@@ -17,7 +15,7 @@ stages:
   - job: NPM
     steps:
     - task: Npm@1
-      displayName: 'npm install scss foundation'
+      displayName: 'npm install scss foundation $(MajorMinorVersion)$(Rev:.r)'
       inputs:
         command: 'install'
         workingDir: 'projects/scss-foundation'    
