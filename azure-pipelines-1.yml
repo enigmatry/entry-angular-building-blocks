@@ -4,5 +4,5 @@ trigger:
 extends:
   template: build-pipeline.yml
   parameters:
-    optionalStep: false
+    optionalStep: true
     description: 'blah'
