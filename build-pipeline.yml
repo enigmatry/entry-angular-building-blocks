@@ -1,0 +1,39 @@
+parameters:
+- name: optionalStep
+  type: boolean
+  default: true
+- name: description
+  type: string
+  default: ''
+
+stages:
+- stage: Preparation of version $(MajorMinorVersion)$(Rev:.r)
+  pool:
+    vmImage: ubuntu-latest
+
+  jobs:
+  - job: NPM
+    steps:
+    - task: Npm@1
+      displayName: 'npm install scss foundation'
+      inputs:
+        command: 'install'
+        workingDir: 'projects/scss-foundation'    
+
+    - ${{ if eq(parameters.optionalStep, true) }}:
+      - task: Npm@1
+        displayName: 'Lint the scss foundation library ${{ parameters.description }}'
+        inputs:
+          command: 'custom'
+          customCommand: 'run lint'
+          workingDir: 'projects/scss-foundation'
+        
+    - task: Npm@1
+      displayName: 'Test the scss foundation library'
+      inputs:
+        command: 'custom'
+        customCommand: 'run test'
+        workingDir: 'projects/scss-foundation'
+
+    - script: echo This happens after code
+      displayName: 'Base: Signing'
