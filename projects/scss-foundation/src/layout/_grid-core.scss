@@ -1,7 +1,7 @@
 @use 'sass:map';
 @use '../responsiveness/breakpoints';
 
-@mixin generate($column-prefix, $offset-prefix) {
+@mixin generate($column-prefix, $offset-prefix, $spacing: 0) {
 	.row {
 		display: flex;
 		flex-wrap: wrap;
@@ -16,6 +16,7 @@
 	#{'.' + $column-prefix}auto {
 		flex: 0 0 auto;
 		width: auto;
+		padding: 0 $spacing;
 	}
 }
 

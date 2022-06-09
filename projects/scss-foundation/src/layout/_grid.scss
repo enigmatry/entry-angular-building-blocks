@@ -18,7 +18,7 @@ $breakpoints: () !default;
 $column-prefix: 'col-';
 $offset-prefix: 'offset-';
 
-@mixin generate($divisions: 12) {
+@mixin generate($spacing:0, $divisions: 12) {
 	@if type-of($divisions) != number {
 		@error 'Please provide number parameter for divisions! Given value: ' + $divisions;
 	}
@@ -27,17 +27,17 @@ $offset-prefix: 'offset-';
 		@error 'Please provide positive number for divisions! Given value: ' + $divisions;
 	}
 
-	@include grid-core.generate($column-prefix, $offset-prefix);
+	@include grid-core.generate($column-prefix, $offset-prefix, $spacing);
 	@include grid-core.generate-reverse-row($breakpoints);
-	@include -unresponsive-grid-from($divisions);
-	@include -responsive-grid-from($divisions);
+	@include -unresponsive-grid-from($spacing, $divisions);
+	@include -responsive-grid-from($spacing, $divisions);
 }
 
 @function -calculate-ratio($counter, $divisions) {
 	@return math.div(100% * $counter, $divisions);
 }
 
-@mixin -unresponsive-grid-from($divisions) {
+@mixin -unresponsive-grid-from($spacing, $divisions) {
 	$division-limit: $divisions + 1;
 
 	@for $currentIndex from 1 to ($division-limit) {
@@ -46,6 +46,7 @@ $offset-prefix: 'offset-';
 		#{'.' + $column-prefix + $currentIndex} {
 			flex: 0 0 auto;
 			width: $current-ratio;
+			padding: 0 $spacing;
 		}
 
 		#{'.' + $offset-prefix + $currentIndex} {
@@ -54,7 +55,7 @@ $offset-prefix: 'offset-';
 	}
 }
 
-@mixin -responsive-grid-from($divisions) {
+@mixin -responsive-grid-from($spacing, $divisions) {
 	$division-limit: $divisions + 1;
 	@each $item, $value in $breakpoints {
 		$size: map.get($value, description);
@@ -63,6 +64,7 @@ $offset-prefix: 'offset-';
 			#{'.' + $column-prefix + $size}-auto {
 				flex: 0 0 auto;
 				width: auto;
+				padding: 0 $spacing;
 			}
 
 			@for $currentIndex from 1 to $division-limit {
