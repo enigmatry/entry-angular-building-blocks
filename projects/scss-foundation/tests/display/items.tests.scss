@@ -1,0 +1,100 @@
+@use '../../node_modules/sass-true/sass/true';
+@use '../../src/display/items';
+
+@include true.describe('align($align)') {
+	@include true.it('should be centered. if direction not provided then it should be flex-start') {
+		@include true.assert() {
+			@include true.output() {
+				@include items.align(center);
+			}
+
+			@include true.expect() {
+				display: flex;
+				flex: {
+					direction: row;
+					wrap: wrap;
+				}
+				align-items: center;
+				justify-content: flex-start;
+			}
+		}
+	}
+}
+
+@include true.describe('align-absolute-center()') {
+	@include true.it('should be centered') {
+		@include true.assert() {
+			@include true.output() {
+				@include items.align-absolute-center();
+			}
+
+			@include true.expect() {
+				display: flex;
+				flex: {
+					direction: row;
+					wrap: wrap;
+				}
+				align-items: center;
+				justify-content: center;
+			}
+		}
+	}
+}
+
+@include true.describe('align-center()') {
+	@include true.it('should set default values and align centered') {
+		@include true.assert() {
+			@include true.output() {
+				@include items.align-center();
+			}
+
+			@include true.expect() {
+				display: flex;
+				flex: {
+					direction: row;
+					wrap: wrap;
+				}
+				align-items: center;
+				justify-content: flex-start;
+			}
+		}
+	}
+}
+
+@include true.describe('fully-align($align, $justify, $direction $wrap)') {
+	@include true.it('should set default values and align baseline') {
+		@include true.assert() {
+			@include true.output() {
+				@include items.fully-align(baseline);
+			}
+
+			@include true.expect() {
+				display: flex;
+				flex: {
+					direction: row;
+					wrap: wrap;
+				}
+				align-items: baseline;
+				justify-content: flex-start;
+			}
+		}
+	}
+
+	@include true.it('should set properties in given order') {
+		@include true.assert() {
+			@include true.output() {
+				@include items.fully-align(flex-end, space-between, column, nowrap);
+			}
+
+			@include true.expect() {
+				display: flex;
+				flex: {
+					direction: column;
+					wrap: nowrap;
+				}
+				align-items: flex-end;
+				justify-content: space-between;
+			}
+		}
+	}
+}
