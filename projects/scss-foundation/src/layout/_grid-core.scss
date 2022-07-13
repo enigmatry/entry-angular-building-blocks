@@ -6,6 +6,10 @@
 		display: flex;
 		flex-wrap: wrap;
 
+		@if $spacing != 0 {
+			margin: 0 -#{$spacing};
+		}
+
 		/* stylelint-disable-next-line selector-max-attribute */
 		[class ^= #{$column-prefix}], [class ^= #{$offset-prefix}] {
 			flex-shrink: 0;
