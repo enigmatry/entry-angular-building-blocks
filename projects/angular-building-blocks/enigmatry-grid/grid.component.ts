@@ -17,6 +17,7 @@ import {
   ElementRef,
   SimpleChanges,
   HostBinding,
+  Inject,
 } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material/table';
@@ -32,6 +33,7 @@ import {
   RowContextMenuFormatter,
 } from './grid.interface';
 import { PagedData } from '@enigmatry/angular-building-blocks/pagination';
+import { ENIGMATRY_GRID_CONFIG, GridConfig } from './grid-config';
 
 @Component({
   selector: 'enigmatry-grid',
@@ -62,13 +64,13 @@ export class EnigmatryGridComponent<T> implements OnInit, OnChanges, AfterViewIn
 
   // Pagination
 
-  @Input() showPaginator = true;
+  @Input() showPaginator: boolean;
   @Input() pageDisabled = false;
-  @Input() showFirstLastButtons = false;
+  @Input() showFirstLastButtons: boolean;
   @Input() pageIndex = 0;
-  @Input() pageSize = 20;
-  @Input() pageSizeOptions = [20, 50, 100];
-  @Input() hidePageSize = false;
+  @Input() pageSize: number;
+  @Input() pageSizeOptions: number[];
+  @Input() hidePageSize: boolean;
   @Input() pageDatasetLocally = false;
   @Output() pageChange = new EventEmitter<PageEvent>();
 
@@ -113,7 +115,7 @@ export class EnigmatryGridComponent<T> implements OnInit, OnChanges, AfterViewIn
 
   // No Result
 
-  @Input() noResultText = 'No results found';
+  @Input() noResultText: string;
   @Input() noResultTemplate: TemplateRef<any> | null;
 
   get hasNoResult() {
@@ -124,7 +126,9 @@ export class EnigmatryGridComponent<T> implements OnInit, OnChanges, AfterViewIn
 
   @Input() cellTemplate: TemplateRef<any> | CellTemplate | any;
 
-  constructor(private _changeDetectorRef: ChangeDetectorRef) { }
+  constructor(
+    @Inject(ENIGMATRY_GRID_CONFIG) private _config: GridConfig,
+    private _changeDetectorRef: ChangeDetectorRef) { }
 
   detectChanges() {
     this._changeDetectorRef.detectChanges();
@@ -154,6 +158,11 @@ export class EnigmatryGridComponent<T> implements OnInit, OnChanges, AfterViewIn
   ngOnInit() { }
 
   ngOnChanges(changes: SimpleChanges) {
+    this.showPaginator = this.showPaginator ?? this._config.showPaginator;
+    this.showFirstLastButtons = this.showFirstLastButtons ?? this._config.showFirstLastButtons;
+    this.pageSizeOptions = this.pageSizeOptions ?? this._config.pageSizeOptions;
+    this.hidePageSize = this.hidePageSize ?? this._config.hidePageSize;
+    this.noResultText = this.noResultText ?? this._config.noResultsText;
 
     this.displayedColumns = this.columns.filter(item => !item.hide).map(item => item.field);
 
@@ -179,7 +188,7 @@ export class EnigmatryGridComponent<T> implements OnInit, OnChanges, AfterViewIn
       this._page = this.data as PagedData<T>;
       this._data = this._page.items ?? [];
       this.total = this._page.totalCount ?? 0;
-      this.pageSize = this._page.pageSize ?? this.pageSize;
+      this.pageSize = this._page.pageSize ?? this.pageSize ?? this._config.pageSize;
       this.pageIndex = this._page.pageNumber ? this._page.pageNumber - 1 : this.pageIndex;
     }
 
