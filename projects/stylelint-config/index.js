@@ -173,7 +173,10 @@ module.exports = {
     "scss/dollar-variable-colon-space-before": "never",
     "scss/double-slash-comment-whitespace-inside": "always",
     "scss/comment-no-empty": true,
-    "scss/function-no-unknown": true,
+    "scss/function-no-unknown": [
+      true,
+      { "ignoreFunctions": ["/^-/"] }
+    ],
     "scss/function-quote-no-quoted-strings-inside": true,
     "scss/function-unquote-no-unquoted-strings-inside": true,
     "scss/operator-no-newline-after": true,
