@@ -243,7 +243,7 @@ export class EnigmatryGridComponent<T> implements OnInit, OnChanges, AfterViewIn
     this.rowSelectionChange.emit(this.rowSelection.selected);
   }
 
-  toggleCheckbox(row: any) {
+  toggleRowSelection(row: any) {
     this.rowSelection.toggle(row);
     this.rowSelectionChange.emit(this.rowSelection.selected);
   }

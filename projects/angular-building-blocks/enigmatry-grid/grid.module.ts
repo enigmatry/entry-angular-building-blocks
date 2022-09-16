@@ -7,6 +7,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatRadioModule } from '@angular/material/radio';
 
 import { EnigmatryGridComponent } from './grid.component';
 import { EnigmatryGridCellComponent } from './cell.component';
@@ -23,7 +24,9 @@ import { EnigmatryCommonModule } from '@enigmatry/angular-building-blocks/common
     MatCheckboxModule,
     MatIconModule,
     MatMenuModule,
-    EnigmatryCommonModule
+    EnigmatryCommonModule,
+    MatRadioModule,
+    CommonModule
   ],
   declarations: [
     EnigmatryGridComponent,
