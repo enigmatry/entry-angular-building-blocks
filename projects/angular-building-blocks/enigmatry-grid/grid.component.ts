@@ -2,7 +2,6 @@
 
 import {
   Component,
-  OnInit,
   Input,
   Output,
   EventEmitter,
@@ -11,8 +10,6 @@ import {
   ViewChild,
   OnChanges,
   TemplateRef,
-  OnDestroy,
-  AfterViewInit,
   ChangeDetectorRef,
   ElementRef,
   SimpleChanges,
@@ -21,8 +18,8 @@ import {
 } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { Sort, MatSort, SortDirection } from '@angular/material/sort';
+import { PageEvent } from '@angular/material/paginator';
+import { Sort, SortDirection } from '@angular/material/sort';
 
 import {
   ColumnDef,
@@ -43,10 +40,8 @@ import { ENIGMATRY_GRID_CONFIG, GridConfig } from './grid-config';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EnigmatryGridComponent<T> implements OnInit, OnChanges, AfterViewInit, OnDestroy {
+export class EnigmatryGridComponent<T> implements OnChanges {
   @HostBinding('class') className = 'enigmatry-grid';
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
   @ViewChild('tableContainer') tableContainer: ElementRef<HTMLDivElement>;
 
   dataSource = new MatTableDataSource<T>([]);
@@ -71,7 +66,6 @@ export class EnigmatryGridComponent<T> implements OnInit, OnChanges, AfterViewIn
   @Input() pageSize: number;
   @Input() pageSizeOptions: number[];
   @Input() hidePageSize: boolean;
-  @Input() pageDatasetLocally = false;
   @Output() pageChange = new EventEmitter<PageEvent>();
 
   @Input() paginationTemplate: TemplateRef<any>;
@@ -83,7 +77,6 @@ export class EnigmatryGridComponent<T> implements OnInit, OnChanges, AfterViewIn
   @Input() sortDisableClear = false;
   @Input() sortDisabled = false;
   @Input() sortStart: 'asc' | 'desc' = 'asc';
-  @Input() sortDatasetLocally = false;
   @Output() sortChange = new EventEmitter<Sort>();
 
   // Row
@@ -152,10 +145,12 @@ export class EnigmatryGridComponent<T> implements OnInit, OnChanges, AfterViewIn
   }
 
   getColumnClassList(colDef: ColumnDef): string {
-    return `${colDef.class ?? ''} ${colDef.type ?? ''}`;
-  }
+    const customClasses = colDef.class ?? '';
+    const columnType = colDef.type ?? '';
+    const columnField = `cell-${this.convertToKebabCase(colDef.field)}`;
 
-  ngOnInit() { }
+    return `${customClasses} ${columnType} ${columnField}`;
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     this.showPaginator = this.showPaginator ?? this._config.showPaginator;
@@ -198,26 +193,10 @@ export class EnigmatryGridComponent<T> implements OnInit, OnChanges, AfterViewIn
 
     this.dataSource = new MatTableDataSource(this._data);
 
-    this.dataSource.paginator = this.pageDatasetLocally ? this.paginator : null;
-    this.dataSource.sort = this.sortDatasetLocally ? this.sort : null;
-
-    // Only scroll top with data change
     if (changes.data) {
       this.scrollTop(0);
     }
   }
-
-  ngAfterViewInit() {
-    if (this.pageDatasetLocally) {
-      this.dataSource.paginator = this.paginator;
-    }
-
-    if (this.sortDatasetLocally) {
-      this.dataSource.sort = this.sort;
-    }
-  }
-
-  ngOnDestroy() { }
 
   getIndex(index: number, dataIndex: number) {
     return typeof index === 'undefined' ? dataIndex : index;
@@ -249,18 +228,16 @@ export class EnigmatryGridComponent<T> implements OnInit, OnChanges, AfterViewIn
   }
 
   handlePage(e: PageEvent) {
-    if (this.pageDatasetLocally) {
-      this.scrollTop(0);
-    }
     this.pageChange.emit(e);
   }
 
-  scrollTop(value?: number): number | void {
-    if (value == null) {
-      return this.tableContainer?.nativeElement.scrollTop;
-    }
-    if (this.tableContainer && !this.loading) {
+  scrollTop(value?: number): void {
+    if (value != null && this.tableContainer && !this.loading) {
       this.tableContainer.nativeElement.scrollTop = value;
     }
+  }
+
+  private convertToKebabCase(value: string): string {
+    return value?.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
   }
 }
