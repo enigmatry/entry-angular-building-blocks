@@ -36,6 +36,7 @@
             <mat-radio-button
               *ngIf="!multiSelectable && !(rowSelectionFormatter.hideCheckbox && rowSelectionFormatter.hideCheckbox!(row))"
               [disabled]="rowSelectionFormatter.disabled && rowSelectionFormatter.disabled!(row)"
+              [checked]="rowSelection.isSelected(row)"
               [value]="rowSelection.isSelected(row)"
               (change)="$event ? toggleRowSelection(row) : null">
             </mat-radio-button>

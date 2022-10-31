@@ -1,27 +1,8 @@
-# EnigmatryAngularBuildingBlocks
+# Enigmatry Angular Building Blocks
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.1.2.
+## Local Development Setup Procedure
 
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+1. Build BuildingBlocks (BB) project with `ng build --watch --configuration development` command (or just run `watch` npm script).
+2. Install BB project in destination project with `npm install [bb_project_dist_path]` (copy `bb_project_dist_path` from previous command console output).
+3. In destination project `angual.json` file set "architect > build > options > preserveSimulinks" property to `true`.
+4. Run destination project.
