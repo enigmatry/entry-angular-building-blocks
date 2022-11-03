@@ -1,0 +1,13 @@
+@mixin odd-row-coloring($color) {
+	@include row-coloring($color, odd);
+}
+
+@mixin even-row-coloring($color) {
+	@include row-coloring($color, even);
+}
+
+@mixin row-coloring($color, $rows) {
+	&:nth-child(#{$rows}) {
+		background-color: $color;
+	}
+}

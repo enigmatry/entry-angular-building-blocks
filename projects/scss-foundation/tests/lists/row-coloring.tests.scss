@@ -1,0 +1,52 @@
+@use 'sass:color';
+@use '../../node_modules/sass-true/sass/true';
+@use '../../src/lists/row-coloring' as lists;
+
+@include true.describe('row-coloring($color, $rows)') {
+	@include true.it('should set background #EBEBEB color to third element') {
+		@include true.assert() {
+			@include true.output() {
+				@include lists.row-coloring(#EBEBEB, 3);
+			}
+
+			@include true.expect() {
+				&:nth-child(3) {
+					background-color: #EBEBEB;
+				}
+			}
+		}
+	}
+}
+
+@include true.describe('even-row-coloring($color)') {
+	@include true.it('should set background #000, $alpha: -1 color to all even element') {
+		@include true.assert() {
+			@include true.output() {
+				@include lists.even-row-coloring(color.adjust(#000, $alpha: -1));
+			}
+
+			@include true.expect() {
+				&:nth-child(even) {
+					background-color: color.adjust(#000, $alpha: -1);
+				}
+			}
+		}
+	}
+}
+
+@include true.describe('odd-row-coloring($color)') {
+	@include true.it('should set background color of variable $background-color to all odd element') {
+		$background-color: #EBEBEB;
+		@include true.assert() {
+			@include true.output() {
+				@include lists.odd-row-coloring($background-color);
+			}
+
+			@include true.expect() {
+				&:nth-child(odd) {
+					background-color: $background-color;
+				}
+			}
+		}
+	}
+}
