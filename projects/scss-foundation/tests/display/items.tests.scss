@@ -1,5 +1,5 @@
 @use '../../node_modules/sass-true/sass/true';
-@use '../../src/display/items';
+@use '../../src/modules/display/items';
 
 @include true.describe('align($align)') {
 	@include true.it('should be centered. if direction not provided then it should be flex-start') {

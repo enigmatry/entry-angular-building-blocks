@@ -1,6 +1,6 @@
 @use 'sass:color';
 @use '../../node_modules/sass-true/sass/true';
-@use '../../src/lists/row-coloring' as lists;
+@use '../../src/modules/lists/row-coloring' as lists;
 
 @include true.describe('row-coloring($color, $rows)') {
 	@include true.it('should set background #EBEBEB color to third element') {
