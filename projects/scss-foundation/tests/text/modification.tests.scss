@@ -1,5 +1,5 @@
 @use '../../node_modules/sass-true/sass/true';
-@use '../../src/variables';
+@use '../../src/modules/variables';
 @use '../../src/modules/text/modification';
 
 variables.$testing: true;
