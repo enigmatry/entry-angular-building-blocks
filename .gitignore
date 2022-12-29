@@ -6,6 +6,7 @@
 /tmp
 /out-tsc
 /projects/scss-foundation/coverage
+/projects/scss-foundation/dist/scss-foundation-modules.css
 
 # Only exists if Bazel was run
 /bazel-out
