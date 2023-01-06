@@ -1,1 +1,1 @@
-{"version":3,"sourceRoot":"","sources":[],"names":[],"mappings":"","file":"scss-foundation.css"}
+{"version":3,"sourceRoot":"","sources":["../src/partials/core/fonts/_typography.scss"],"names":[],"mappings":"AAAA,0BACC,qBAEA,wCACC,0BAIF,aACC","file":"scss-foundation.css"}

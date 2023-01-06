@@ -3,12 +3,12 @@ $breakpoints: () !default;
 @use 'sass:string';
 @use 'sass:map';
 @use 'sass:math';
-@use '../variables' as variables;
-@forward '../responsiveness/breakpoints' with (
+@use '../../modules/variables' as variables;
+@forward '../../modules/responsiveness/breakpoints' with (
 	$breakpoints: $breakpoints
 );
-@use '../responsiveness/breakpoints';
-@use '../text/modification' as text-modification;
+@use '../../modules/responsiveness/breakpoints';
+@use '../../modules/text/modification' as text-modification;
 @use 'grid-core';
 
 @if length($breakpoints) == 0 {
