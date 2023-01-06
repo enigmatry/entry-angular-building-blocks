@@ -7,6 +7,7 @@
 /out-tsc
 /projects/scss-foundation/coverage
 /projects/scss-foundation/dist/scss-foundation-modules.css
+/projects/scss-foundation/dist/scss-foundation.css.map
 
 # Only exists if Bazel was run
 /bazel-out
