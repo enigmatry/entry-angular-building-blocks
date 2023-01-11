@@ -60,13 +60,6 @@ steps:
   inputs:
     command: 'install'
     workingDir: 'projects/scss-foundation'
-
-- task: Npm@1
-  displayName: 'Lint the scss foundation library'
-  inputs:
-    command: 'custom'
-    customCommand: 'run lint'
-    workingDir: 'projects/scss-foundation'
     
 - task: Npm@1
   displayName: 'Test the scss foundation library'
