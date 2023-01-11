@@ -1,0 +1,98 @@
+@use '../../node_modules/sass-true/sass/true';
+@use '../../src/layout/grid';
+@use '../../src/variables' as breakpoints;
+@use 'sass:map';
+
+@include true.describe('generate($spacing:0, $divisions: 12)') {
+	@include true.it('should have 12 columns if division not specified. If spacing not specified, padding should be 0') {
+		@include true.assert() {
+			@include true.output() {
+				@include grid.generate($spacing:8, $divisions: 2);
+			}
+
+			@include true.expect() {
+				.row {
+					display: flex;
+					flex-wrap: wrap;
+					margin: 0 -8;
+					/* stylelint-disable-next-line selector-max-attribute */
+					[class ^= 'col-'], [class ^= 'offset-'] {
+						flex-shrink: 0;
+						max-width: 100%;
+						padding: 0 8;
+					}
+				}
+                    
+				.col-auto {
+					flex: 0 0 auto;
+					width: auto;
+					padding: 0 8;
+				}
+
+				@each $key,$val in breakpoints.$default-breakpoints {
+					@media only screen and (min-width: map-get($val, size)) {
+						.row.reverse-row-#{map-get($val, description)} {
+							flex-direction: row-reverse;
+						}
+					}
+				}
+				@each $key,$val in breakpoints.$default-breakpoints {
+					.row.reverse-row-under-#{map-get($val, description)} {
+						flex-direction: row-reverse;
+
+						@media only screen and (min-width: map-get($val, size)) {
+							flex-direction: row;
+						}
+					}
+				}
+                    
+				.col-1 {
+					flex: 0 0 auto;
+					width: 50%;
+					padding: 0 8;
+				}
+                    
+				.offset-1 {
+					margin-left: 50%;
+				}
+                    
+				.col-2 {
+					flex: 0 0 auto;
+					width: 100%;
+					padding: 0 8;
+				}
+                    
+				.offset-2 {
+					margin-left: 100%;
+				}
+
+				@each $key,$val in breakpoints.$default-breakpoints {
+					@media only screen and (min-width: map-get($val, size)) {
+						.col-#{map-get($val, description)}-auto {
+							flex: 0 0 auto;
+							width: auto;
+							padding: 0 8;
+						}
+
+						.col-#{map-get($val, description)}-1 {
+							flex: 0 0 auto;
+							width: 50%;
+						}
+
+						.offset-#{map-get($val, description)}-1 {
+							margin-left: 50%;
+						}
+						.col-#{map-get($val, description)}-2 {
+							flex: 0 0 auto;
+							width: 100%;
+						}
+                    
+						.offset-#{map-get($val, description)}-2 {
+							margin-left: 100%;
+						}
+					}
+				}
+			}
+		}
+	}
+}

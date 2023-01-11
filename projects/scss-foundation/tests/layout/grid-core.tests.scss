@@ -1,0 +1,34 @@
+@use '../../node_modules/sass-true/sass/true';
+@use '../../src/layout/grid-core';
+@use '../../src/variables';
+
+@include true.describe('generate($column-prefix, $offset-prefix, $spacing: 0)') {
+	@include true.it('should generate column and offset classes. If spacing not provided, padding should be 0.') {
+		@include true.assert() {
+			@include true.output() {
+				@include grid-core.generate('col-', 'offset-', 16px);
+			}
+
+			@include true.expect() {
+				.row {
+					display: flex;
+					flex-wrap: wrap;
+					margin: 0 -16px;
+
+					/* stylelint-disable-next-line selector-max-attribute */
+					[class ^= 'col-'], [class ^= 'offset-'] {
+						flex-shrink: 0;
+						max-width: 100%;
+						padding: 0 16px;
+					}
+				}
+
+				.col-auto {
+					flex: 0 0 auto;
+					width: auto;
+					padding: 0 16px;
+				}
+			}
+		}
+	}
+}

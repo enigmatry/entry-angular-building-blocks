@@ -33,7 +33,6 @@ $breakpoints: () !default;
 }
 
 @mixin apply-on($given-size) {
-	/* stylelint-disable-next-line at-rule-allowed-list */
 	@media only screen and (min-width: -get-size($given-size)) {
 		@content;
 	}
