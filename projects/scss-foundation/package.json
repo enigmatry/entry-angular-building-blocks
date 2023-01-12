@@ -5,7 +5,7 @@
   "description": "Collection of SCSS utilities useful for the most of projects.",
   "license": "Apache-2.0",
   "scripts": {
-    "build": "sass --style=compressed --load-path=src src/main.scss dist/scss-foundation.css",
+    "build": "sass --style=compressed --load-path=src src/partials/main.scss dist/scss-foundation.css",
     "lint": "stylelint --fix src/**/*.scss",
     "test": "jest --coverage --colors"
   },
