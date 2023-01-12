@@ -10,5 +10,5 @@ describe('Scss unit tests', () => {
     const paths = path.resolve(process.cwd(), 'tests/**/*.tests.scss');
     const sassTestFiles = glob.sync(paths);
 
-    sassTestFiles.forEach(file => sassTrue.runSass({ file }, { describe, it }));
+    sassTestFiles.forEach(file => sassTrue.runSass({ file:file }, { describe, it }));
 });
