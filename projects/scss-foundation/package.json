@@ -11,9 +11,14 @@
   },
   "devDependencies": {
     "@enigmatry/stylelint-config": "^1.0.85",
-    "sass": "1.44.0",
-    "sass-true": "6.1.0",
     "jest": "27.5.1",
-    "stylelint": "14.1.0"
+    "sass": "^1.57.1",
+    "sass-loader": "^13.2.0",
+    "sass-true": "6.1.0",
+    "stylelint": "14.1.0",
+    "webpack": "^5.75.0"
+  },
+  "dependencies": {
+    "sass-alias": "^1.0.5"
   }
 }
