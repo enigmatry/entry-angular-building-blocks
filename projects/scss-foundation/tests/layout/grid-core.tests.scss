@@ -1,5 +1,6 @@
 @use '../../node_modules/sass-true/sass/true';
 @use '../../src/modules/layout/grid-core';
+@use '../../src/modules/variables' as vars;
 
 @include true.describe('generate($column-prefix, $offset-prefix, $spacing: 0)') {
 	@include true.it('should generate column and offset classes. If spacing not provided, padding should be 0.') {
@@ -26,6 +27,34 @@
 					flex: 0 0 auto;
 					width: auto;
 					padding: 0 16px;
+				}
+			}
+		}
+	}
+}
+
+@include true.describe('generate-reverse-row($breakpoints)') {
+	@include true.it('should generate revert row classes for a given breakpoint') {
+		@include true.assert() {
+			@include true.output() {
+				@include grid-core.generate-reverse-row(vars.$default-breakpoints);
+			}
+
+			@include true.expect() {
+				@each $key, $val in vars.$default-breakpoints {
+					@media only screen and (min-width: map-get($val, size)) {
+						.row.reverse-row-#{map-get($val, description)} {
+							flex-direction: row-reverse;
+						}
+					}
+				}
+				@each $key, $val in vars.$default-breakpoints {
+					.row.reverse-row-under-#{map-get($val, description)} {
+						flex-direction: row-reverse;
+						@media only screen and (min-width: map-get($val, size)) {
+							flex-direction: row;
+						}
+					}
 				}
 			}
 		}

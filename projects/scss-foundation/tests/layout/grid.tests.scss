@@ -7,7 +7,7 @@
 	@include true.it('should have 12 columns if division not specified. If spacing not specified, padding should be 0') {
 		@include true.assert() {
 			@include true.output() {
-				@include grid.generate($spacing:8, $divisions: 2);
+				@include grid.generate($spacing: 8, $divisions: 2);
 			}
 
 			@include true.expect() {
@@ -29,14 +29,14 @@
 					padding: 0 8;
 				}
 
-				@each $key,$val in breakpoints.$default-breakpoints {
+				@each $key, $val in breakpoints.$default-breakpoints {
 					@media only screen and (min-width: map-get($val, size)) {
 						.row.reverse-row-#{map-get($val, description)} {
 							flex-direction: row-reverse;
 						}
 					}
 				}
-				@each $key,$val in breakpoints.$default-breakpoints {
+				@each $key, $val in breakpoints.$default-breakpoints {
 					.row.reverse-row-under-#{map-get($val, description)} {
 						flex-direction: row-reverse;
 
