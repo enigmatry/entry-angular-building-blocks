@@ -1,6 +1,6 @@
 @use '../../node_modules/sass-true/sass/true';
-@use '../../src/layout/grid';
-@use '../../src/variables' as breakpoints;
+@use '../../src/modules/layout/grid';
+@use '../../src//modules/variables' as breakpoints;
 @use 'sass:map';
 
 @include true.describe('generate($spacing:0, $divisions: 12)') {

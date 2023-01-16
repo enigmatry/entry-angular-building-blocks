@@ -1,6 +1,5 @@
 @use '../../node_modules/sass-true/sass/true';
-@use '../../src/layout/grid-core';
-@use '../../src/variables';
+@use '../../src/modules/layout/grid-core';
 
 @include true.describe('generate($column-prefix, $offset-prefix, $spacing: 0)') {
 	@include true.it('should generate column and offset classes. If spacing not provided, padding should be 0.') {
