@@ -1,5 +1,5 @@
 @use '../../node_modules/sass-true/sass/true';
-@use '../../src/position/absolute';
+@use '../../src/modules/position/absolute';
 
 @include true.describe('position($top, $right, $bottom, $left)') {
 	@include true.it('should default to zero-based if position not provided') {
