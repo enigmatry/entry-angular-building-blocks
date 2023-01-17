@@ -1,3 +1,6 @@
+/* stylelint-disable selector-max-attribute */
+/* stylelint-disable max-nesting-depth */
+/* stylelint-disable at-rule-allowed-list */
 @use '../../node_modules/sass-true/sass/true';
 @use '../../src/modules/layout/grid-core';
 @use '../../src/modules/variables' as vars;
@@ -15,7 +18,6 @@
 					flex-wrap: wrap;
 					margin: 0 -16px;
 
-					/* stylelint-disable-next-line selector-max-attribute */
 					[class ^= 'col-'], [class ^= 'offset-'] {
 						flex-shrink: 0;
 						max-width: 100%;
@@ -33,30 +35,47 @@
 	}
 }
 
+$custom-breakpoints: (
+	mobile: ( size: 576px, description: 'sm' ), 
+	tablet: ( size: 768px, description: 'md' ), 
+);
+
 @include true.describe('generate-reverse-row($breakpoints)') {
 	@include true.it('should generate revert row classes for a given breakpoint') {
 		@include true.assert() {
 			@include true.output() {
-				@include grid-core.generate-reverse-row(vars.$default-breakpoints);
+				@include grid-core.generate-reverse-row($custom-breakpoints);
 			}
 
 			@include true.expect() {
-				@each $key, $val in vars.$default-breakpoints {
-					@media only screen and (min-width: map-get($val, size)) {
-						.row.reverse-row-#{map-get($val, description)} {
-							flex-direction: row-reverse;
-						}
+				@media only screen and (min-width: 576px) {
+					.row.reverse-row-sm {
+						flex-direction: row-reverse;
 					}
 				}
-				@each $key, $val in vars.$default-breakpoints {
-					.row.reverse-row-under-#{map-get($val, description)} {
+				@media only screen and (min-width: 768px) {
+					.row.reverse-row-md {
 						flex-direction: row-reverse;
-						@media only screen and (min-width: map-get($val, size)) {
-							flex-direction: row;
-						}
+					}
+				}
+			
+				.row.reverse-row-under-sm {
+					flex-direction: row-reverse;
+					@media only screen and (min-width: 576px) {
+						flex-direction: row;
+					}
+				}
+				  
+				.row.reverse-row-under-md {
+					flex-direction: row-reverse;
+					@media only screen and (min-width: 768px) {
+						flex-direction: row;
 					}
 				}
 			}
 		}
 	}
 }
+
+/* stylelint-enable max-nesting-depth */
+/* stylelint-enable at-rule-allowed-list */

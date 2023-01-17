@@ -1,3 +1,5 @@
+/* stylelint-disable max-nesting-depth */
+/* stylelint-disable at-rule-allowed-list */
 @use 'sass:map';
 @use '../responsiveness/breakpoints';
 
@@ -10,7 +12,6 @@
 			margin: 0 -#{$spacing};
 		}
 
-		/* stylelint-disable-next-line selector-max-attribute */
 		[class ^= #{$column-prefix}], [class ^= #{$offset-prefix}] {
 			flex-shrink: 0;
 			max-width: 100%;
@@ -51,3 +52,6 @@
 		}
 	}
 }
+
+/* stylelint-enable max-nesting-depth */
+/* stylelint-enable at-rule-allowed-list */
