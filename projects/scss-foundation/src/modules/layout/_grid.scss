@@ -22,6 +22,7 @@ $offset-prefix: 'offset-';
 @mixin generate($spacing:0, $divisions: 12) {
 	@if type-of($divisions) != number {
 		@error 'Please provide number parameter for divisions! Given value: ' + $divisions;
+		// see text modification, add variable true
 	}
 
 	@if ($divisions < 2 or $divisions > 1000) {

@@ -26,7 +26,7 @@
 	}
 }
 
-@mixin generate-reverse-row($breakpoints) {
+@mixin generate-reverse-row($breakpoints) { // see EBO
 	$reverse-prefix: '.row.reverse-row-';
 	$under: 'under-';
 

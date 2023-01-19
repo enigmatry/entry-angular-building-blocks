@@ -1,17 +1,16 @@
 /* stylelint-disable pitcher/max-lines */
+/* stylelint-disable selector-max-attribute */
 /* stylelint-disable at-rule-allowed-list */
 /* stylelint-disable max-nesting-depth */
-/* stylelint-disable selector-max-attribute */
 @use '../../node_modules/sass-true/sass/true';
 @use '../../src/modules/layout/grid';
 @use '../../src//modules/variables' as breakpoints;
-@use 'sass:map';
 
-@include true.describe('generate($spacing:0, $divisions: 12)') {
-	@include true.it('should have 12 columns if division not specified. If spacing not specified, padding should be 0') {
+@include true.describe('generate($spacing, $divisions)') {
+	@include true.it('should have 12 columns if division not specified. If spacing not specified, padding should be 0') { // change according to the test
 		@include true.assert() {
 			@include true.output() {
-				@include grid.generate($spacing: 8, $divisions: 2);
+				@include grid.generate($spacing: 8, $divisions: 2); // test also without values
 			}
 
 			@include true.expect() {
@@ -247,6 +246,3 @@
 		}
 	}
 }
-
-/* stylelint-enable max-nesting-depth */
-/* stylelint-enable at-rule-allowed-list */

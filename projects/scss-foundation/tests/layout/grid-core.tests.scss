@@ -5,11 +5,11 @@
 @use '../../src/modules/layout/grid-core';
 @use '../../src/modules/variables' as vars;
 
-@include true.describe('generate($column-prefix, $offset-prefix, $spacing: 0)') {
+@include true.describe('generate($column-prefix, $offset-prefix, $spacing: 0)') { // remove default values, write one with default values
 	@include true.it('should generate column and offset classes. If spacing not provided, padding should be 0.') {
 		@include true.assert() {
 			@include true.output() {
-				@include grid-core.generate('col-', 'offset-', 16px);
+				@include grid-core.generate('col-', 'offset-', 16px); // pera- column-
 			}
 
 			@include true.expect() {
@@ -37,7 +37,7 @@
 
 $custom-breakpoints: (
 	mobile: ( size: 576px, description: 'sm' ), 
-	tablet: ( size: 768px, description: 'md' ), 
+	tablet: ( size: 768px, description: 'md' ), // see EBO
 );
 
 @include true.describe('generate-reverse-row($breakpoints)') {
