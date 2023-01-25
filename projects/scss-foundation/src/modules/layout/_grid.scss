@@ -21,12 +21,23 @@ $offset-prefix: 'offset-';
 
 @mixin generate($spacing:0, $divisions: 12) {
 	@if type-of($divisions) != number {
-		@error 'Please provide number parameter for divisions! Given value: ' + $divisions;
-		// see text modification, add variable true
+		$error-message: 'Please provide number parameter for divisions! Given value: ' + $divisions;
+
+		@if variables.$testing == true {
+			@error $error-message;
+		}
+
+		@error $error-message;
 	}
 
 	@if ($divisions < 2 or $divisions > 1000) {
-		@error 'Please provide positive number for divisions! Given value: ' + $divisions;
+		$error-message: 'Please provide positive number for divisions! Given value: ' + $divisions;
+
+		@if variables.$testing == true {
+			@error $error-message;
+		}
+
+		@error $error-message;
 	}
 
 	@include grid-core.generate($column-prefix, $offset-prefix, $spacing);
