@@ -1,15 +1,25 @@
+/* stylelint-disable pitcher/max-lines */
+/* stylelint-disable shorthand-property-no-redundant-values */
+/* stylelint-disable scss/selector-no-redundant-nesting-selector */
 /* stylelint-disable selector-max-attribute */
 /* stylelint-disable max-nesting-depth */
 /* stylelint-disable at-rule-allowed-list */
+$custom-breakpoints: () !default;
+
 @use '../../node_modules/sass-true/sass/true';
-@use '../../src/modules/layout/grid-core';
 @use '../../src/modules/variables' as vars;
 
-@include true.describe('generate($column-prefix, $offset-prefix, $spacing: 0)') { // remove default values, write one with default values
-	@include true.it('should generate column and offset classes. If spacing not provided, padding should be 0.') {
+@forward '../../src/modules/layout/grid' with (
+	$breakpoints: vars.$custom-breakpoints
+);
+@use '../../src/modules/responsiveness/breakpoints' as custom-breakpoints;
+@use '../../src/modules/layout/grid-core';
+
+@include true.describe('generate($column-prefix, $offset-prefix, $spacing: 0)') {
+	@include true.it('should generate column and offset classes with prefixes col- and offset-. Spacing should be 16px.') {
 		@include true.assert() {
 			@include true.output() {
-				@include grid-core.generate('col-', 'offset-', 16px); // pera- column-
+				@include grid-core.generate('col-', 'offset-', 16px);
 			}
 
 			@include true.expect() {
@@ -35,40 +45,97 @@
 	}
 }
 
-$custom-breakpoints: (
-	mobile: ( size: 576px, description: 'sm' ), 
-	tablet: ( size: 768px, description: 'md' ), // see EBO
-);
+@include true.describe('generate($column-prefix, $offset-prefix, $spacing)') {
+	@include true.it('should generate column and offset classes. If spacing not provided, padding should be 0.') {
+		@include true.assert() {
+			@include true.output() {
+				@include grid-core.generate();
+			}
+
+			@include true.expect() {
+				.row {
+					display: flex;
+					flex-wrap: wrap;
+
+					& [class ^= 'col-'], & [class ^= 'offset-'] {
+						flex-shrink: 0;
+						max-width: 100%;
+						padding: 0 0;
+					}
+				}
+
+				.col-auto {
+					flex: 0 0 auto;
+					width: auto;
+					padding: 0 0;
+				}
+			}
+		}
+	}
+}
+
+@include true.describe('generate($column-prefix, $offset-prefix, $spacing)') {
+	@include true.it('should generate column and offset classes with prefixes column- and gap-. Spacing should be 8px.') {
+		@include true.assert() {
+			@include true.output() {
+				@include grid-core.generate('column-', 'gap-', 8px);
+			}
+
+			@include true.expect() {
+				.row {
+					display: flex;
+					flex-wrap: wrap;
+					margin: 0 -8px;
+
+					& [class ^= 'column-'], & [class ^= 'gap-'] {
+						flex-shrink: 0;
+						max-width: 100%;
+						padding: 0 8px;
+					}
+				}
+
+				.column-auto {
+					flex: 0 0 auto;
+					width: auto;
+					padding: 0 8px;
+				}
+			}
+		}
+	}
+}
 
 @include true.describe('generate-reverse-row($breakpoints)') {
 	@include true.it('should generate revert row classes for a given breakpoint') {
 		@include true.assert() {
 			@include true.output() {
-				@include grid-core.generate-reverse-row($custom-breakpoints);
+				@include grid-core.generate-reverse-row(custom-breakpoints.$breakpoints);
 			}
 
 			@include true.expect() {
-				@media only screen and (min-width: 576px) {
+				@media only screen and (min-width: 540px) {
 					.row.reverse-row-sm {
 						flex-direction: row-reverse;
 					}
 				}
-				@media only screen and (min-width: 768px) {
+					
+				@media only screen and (min-width: 800px) {
 					.row.reverse-row-md {
 						flex-direction: row-reverse;
 					}
 				}
-			
+					
 				.row.reverse-row-under-sm {
 					flex-direction: row-reverse;
-					@media only screen and (min-width: 576px) {
+					
+					@media only screen and (min-width: 540px) {
 						flex-direction: row;
 					}
 				}
-				  
+					
 				.row.reverse-row-under-md {
 					flex-direction: row-reverse;
-					@media only screen and (min-width: 768px) {
+					
+					@media only screen and (min-width: 800px) {
 						flex-direction: row;
 					}
 				}
@@ -76,6 +143,3 @@ $custom-breakpoints: (
 		}
 	}
 }
-
-/* stylelint-enable max-nesting-depth */
-/* stylelint-enable at-rule-allowed-list */

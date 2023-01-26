@@ -6,3 +6,8 @@ $default-breakpoints: (
 	desktop: ( size: 992px, description: 'lg'), 
 	largeDesktop: ( size: 1200px, description: 'xl'),
 	extraLargeDesktop: ( size: 1400px, description: 'xxl'));
+
+$custom-breakpoints: (
+	mobile: ( size: 540px, description: 'sm' ), 
+	tablet: ( size: 800px, description: 'md' ),
+);

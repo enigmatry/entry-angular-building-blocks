@@ -1,9 +1,10 @@
 /* stylelint-disable max-nesting-depth */
 /* stylelint-disable at-rule-allowed-list */
+$breakpoints: () !default;
 @use 'sass:map';
-@use '../responsiveness/breakpoints';
+@use '../../modules/responsiveness/breakpoints' as breakpoints;
 
-@mixin generate($column-prefix, $offset-prefix, $spacing: 0) {
+@mixin generate($column-prefix: 'col-', $offset-prefix: 'offset-', $spacing: 0) {
 	.row {
 		display: flex;
 		flex-wrap: wrap;
@@ -26,7 +27,7 @@
 	}
 }
 
-@mixin generate-reverse-row($breakpoints) { // see EBO
+@mixin generate-reverse-row($breakpoints) {
 	$reverse-prefix: '.row.reverse-row-';
 	$under: 'under-';
 
