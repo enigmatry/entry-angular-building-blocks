@@ -15,8 +15,11 @@
 	@return to-upper-case(str-slice($string, 1, 1)) + str-slice($string, 2);
 }
 
-@mixin ellipsis() {
+@mixin ellipsis($num: 1) {
+	display: inline-block;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+	-webkit-line-clamp: $num;
+	-webkit-box-orient: vertical;
 }
