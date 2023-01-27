@@ -1,0 +1,66 @@
+@use '../../node_modules/sass-true/sass/true';
+@use '../../src/modules/position/fixed';
+
+@include true.describe('position($top, $right, $bottom, $left)') {
+	@include true.it('should default to zero-based if position not provided') {
+		@include true.assert() {
+			@include true.output() {
+				@include fixed.position();
+			}
+			@include true.expect() {
+				position: fixed;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+			}
+		}
+	}
+
+	@include true.it('should set position to given in right order') {
+		@include true.assert() {
+			@include true.output() {
+				@include fixed.position(5px, 15px, 20px, 1px);
+			}
+			@include true.expect() {
+				position: fixed;
+				top: 5px;
+				right: 15px;
+				bottom: 20px;
+				left: 1px;
+			}
+		}
+	}
+}
+
+@include true.describe('position-unset($top, $right, $bottom, $left)') {
+	@include true.it('should default to unset-based if position not provided') {
+		@include true.assert() {
+			@include true.output() {
+				@include fixed.position-unset();
+			}
+			@include true.expect() {
+				position: fixed;
+				top: unset;
+				right: unset;
+				bottom: unset;
+				left: unset;
+			}
+		}
+	}
+
+	@include true.it('should set position to given in right order') {
+		@include true.assert() {
+			@include true.output() {
+				@include fixed.position-unset(5px, 15px, 20px);
+			}
+			@include true.expect() {
+				position: fixed;
+				top: 5px;
+				right: 15px;
+				bottom: 20px;
+				left: unset;
+			}
+		}
+	}
+}

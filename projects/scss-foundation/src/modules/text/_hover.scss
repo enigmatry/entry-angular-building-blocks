@@ -1,0 +1,7 @@
+@mixin font-hover($regular-state, $hover-state) {
+	color: $regular-state;
+ 
+	&:hover, &:hover::before {
+		color: $hover-state;
+	}
+}

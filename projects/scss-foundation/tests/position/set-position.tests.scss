@@ -1,0 +1,64 @@
+@use '../../node_modules/sass-true/sass/true';
+@use '../../src/modules/position/set-position' as position;
+
+@include true.describe('set-position($top, $right, $bottom, $left, $position)') {
+	@include true.it('should set the type of positioning and the four positions.') {
+		@include true.assert() {
+			@include true.output() {
+				@include position.set-position(absolute, 5px, 3em, 14rem, -8px);
+			}
+			@include true.expect() {
+				position: absolute;
+				top: 5px;
+				right: 3em;
+				bottom: 14rem;
+				left: -8px;
+			}
+		}
+	}
+
+	@include true.it('should set the type of positioning and the four positions.') {
+		@include true.assert() {
+			@include true.output() {
+				@include position.set-position(fixed, 5px, 1px, 1em, 100px);
+			}
+			@include true.expect() {
+				position: fixed;
+				top: 5px;
+				right: 1px;
+				bottom: 1em;
+				left: 100px;
+			}
+		}
+	}
+
+	@include true.it('should set the type of positioning and the four positions.') {
+		@include true.assert() {
+			@include true.output() {
+				@include position.set-position(static, 5px, 1px, 1em, 100px);
+			}
+			@include true.expect() {
+				position: static;
+				top: 5px;
+				right: 1px;
+				bottom: 1em;
+				left: 100px;
+			}
+		}
+	}
+
+	@include true.it('should set the type of positioning and the four positions.') {
+		@include true.assert() {
+			@include true.output() {
+				@include position.set-position(relative, 5px, 1px, 1em, 100px);
+			}
+			@include true.expect() {
+				position: relative;
+				top: 5px;
+				right: 1px;
+				bottom: 1em;
+				left: 100px;
+			}
+		}
+	}
+}
