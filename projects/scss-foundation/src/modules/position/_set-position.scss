@@ -1,3 +1,4 @@
+/* stylelint-disable max-line-length */
 @mixin set-position($position, $top, $right, $bottom, $left) {
 
 	$positions: (
@@ -8,7 +9,7 @@
 	);
 
 	@each $position in $positions {
-		@if (($position != 'unset') and (type-of($position) != number)) {
+		@if (($position != 'unset') and (type-of($position) != number)) and (type-of($position) != number) and ($position == ('-' + $position)) {
 			@error 'Please provide the right parameters for position (number or 'unset')! Given value: ' + $position;
 		}
 	}
