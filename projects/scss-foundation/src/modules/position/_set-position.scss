@@ -1,0 +1,20 @@
+@mixin set-position($position, $top, $right, $bottom, $left) {
+
+	$positions: (
+		$top,
+		$right,
+		$bottom,
+		$left
+	);
+
+	@each $position in $positions {
+		@if (($position != 'unset') and (type-of($position) != number)) {
+			@error 'Please provide the right parameters for position (number or 'unset')! Given value: ' + $position;
+		}
+	}
+	position: $position;
+	top: $top;
+	right: $right;
+	bottom: $bottom;
+	left: $left;
+}

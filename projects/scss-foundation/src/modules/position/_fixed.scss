@@ -1,9 +1,9 @@
 @use 'set-position' as set;
 
 @mixin position($top: 0, $right: 0, $bottom: 0, $left: 0) {
-	@include set.set-position(absolute, $top, $right, $bottom, $left);
+	@include set.set-position(fixed, $top, $right, $bottom, $left);
 }
 
 @mixin position-unset($top: unset, $right: unset, $bottom: unset, $left: unset) {
-	@include set.set-position(absolute, $top, $right, $bottom, $left);
+	@include set.set-position(fixed, $top, $right, $bottom, $left);
 }

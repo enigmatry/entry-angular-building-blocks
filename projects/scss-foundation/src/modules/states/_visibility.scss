@@ -1,0 +1,15 @@
+@mixin show-on-mobile($mobile-state: block) {
+	@include -toggle-state($mobile-state, none);
+}
+
+@mixin show-on-tablet($tablet-state: block) {
+	@include -toggle-state(none, $tablet-state);
+}
+
+@mixin -toggle-state($mobile-state, $tablet-state) {
+	display: $mobile-state;
+
+	@include breakpoints.apply-on-tablet() {
+		display: $tablet-state;
+	}
+}
