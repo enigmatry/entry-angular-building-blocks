@@ -8,7 +8,7 @@
 		@return sass-true.error(
 			$message: 'Please provide string parameter! Given value: ' + $string,
 			$source: 'capitalize()',
-			$catch: true
+			$catch: vars.$testing
 		);
 	}
 

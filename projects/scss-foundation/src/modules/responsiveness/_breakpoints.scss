@@ -17,9 +17,13 @@ $breakpoints: () !default;
 	@if (map-has-key($breakpoints, $size)) {
 		$gotten-size: map.get($breakpoints, $size);
 		@return map.get($gotten-size, size);
+		
+		@return throw.error(
+			$message:  'Size must be any of following values: ' + map-keys($breakpoints) + '. Given size: ' + $size,
+			$source: '-get-size($size)',
+			$catch: vars.$testing
+		);
 	}
-
-	@error 'Size must be any of following values: ' + map-keys($breakpoints) + '. Given size: ' + $size;
 }
 
 @function -presentation($string, $with-capitalization) {

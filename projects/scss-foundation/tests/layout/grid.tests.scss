@@ -5,19 +5,21 @@
 /* stylelint-disable selector-max-attribute */
 /* stylelint-disable at-rule-allowed-list */
 /* stylelint-disable max-nesting-depth */
-@use '../../node_modules/sass-true/sass/true';
 @use '../../src/modules/layout/grid';
-@use '../../src/modules/variables' as variables;
+@use '../../src/modules/variables' as vars;
+@use '../../../node_modules/sass-true';
 
-@include true.describe('generate($spacing, $divisions)') {
-	
-	@include true.it('should have 12 columns if division not specified. If spacing not specified, padding should be 0') {
-		@include true.assert() {
-			@include true.output() {
+vars.$testing: true;
+
+@include sass-true.describe('generate($spacing, $divisions)') {
+	@include sass-true.it('should have 12 columns if division not specified. If spacing not specified, padding should be 0') {
+		@include sass-true.assert() {
+			$expected-message: 'Please provide number parameter! Given value: ';
+			@include sass-true.output() {
 				@include grid.generate();
 			}
 
-			@include true.expect() {
+			@include sass-true.expect() {
 				.row {
 					display: flex;
 					flex-wrap: wrap;
@@ -808,13 +810,13 @@
 		}
 	}
 
-	@include true.it('should have 2 columns. padding should be 8px') {
-		@include true.assert() {
-			@include true.output() {
+	@include sass-true.it('should have 2 columns. padding should be 8px') {
+		@include sass-true.assert() {
+			@include sass-true.output() {
 				@include grid.generate($spacing: 8, $divisions: 2);
 			}
 
-			@include true.expect() {
+			@include sass-true.expect() {
 				.row {
 					display: flex;
 					flex-wrap: wrap;
