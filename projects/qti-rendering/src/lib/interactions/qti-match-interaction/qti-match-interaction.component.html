@@ -16,6 +16,7 @@
     <div class="qti-match-item">
         <div *ngFor="let resultList of results; index as i;" class="choice-list-wrap choice-task-wrap">
             <div class="qti-match-item-wrap">
+                <span class="choice-text">{{dropList[i].innerHTML}}</span>
                 <div  [ngClass]="getCorrectnessClasses(i)" 
                     class="match-drop-list choice-list"
                     cdkDropList
@@ -25,7 +26,6 @@
                     <div *ngFor="let result of resultList" class="match-drop-box choice-box" cdkDrag [innerHTML]="result.innerHTML" [cdkDragDisabled]="disabled">
                     </div>
                 </div>
-                <span class="choice-text">{{dropList[i].innerHTML}}</span>
             </div>
             <span *ngIf="showCorrectAnswers" class="correct-anwser">{{getCorrectAnswer(dropList[i].correctValue)}}</span>
         </div>
