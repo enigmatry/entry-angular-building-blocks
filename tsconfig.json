@@ -14,14 +14,6 @@
         "projects/angular-building-blocks/*",
         "projects/angular-building-blocks"
       ],
-      "@enigmatry/qti-rendering/*": [
-        "projects/qti-rendering/*",
-        "projects/qti-rendering"
-      ],
-      "@enigmatry/qti-rendering": [
-        "dist/qti-rendering/*",
-        "dist/qti-rendering"
-      ],
       "@enigmatry/formly-extensions/*": [
         "projects/formly-extensions/*",
         "projects/formly-extensions"
