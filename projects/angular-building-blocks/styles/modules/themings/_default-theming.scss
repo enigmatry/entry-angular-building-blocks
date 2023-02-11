@@ -1,0 +1,67 @@
+@use 'sass:list';
+
+$theme: (
+    table: (
+        cell: (
+            font-size: 14px,
+            color: #333,
+            first-cell-padding-left: 4px,
+            last-cell-padding-right: 4px,
+        ),
+        row: (
+            selected-background-color: #06C,
+            selected-color: #FFF,
+            odd-even-row: even,
+            odd-even-background: #F0F0F0,
+            disabled: #F5F5F5,
+        ),
+        column: (
+            sorted: (
+                font-size: 14px,
+                font-weight: 700,
+                color: #2C2C2C,
+                content-align: center,
+            )
+        ),
+        content: (
+            no-result: (
+                font-size: 13px,
+                font-weight: 500,
+                text-transform: none,
+            )
+        )
+    ),
+
+    form: (
+        field: (
+            infix-padding-top: .4375em,
+            infix-padding-bottom: .4375em,
+            label-color: #0000008a,
+            underline-display: block,
+            outline: (
+                border: 1px solid #EBEBEB,
+                border-hover: 1px solid #EBEBEB,
+                border-right: none,
+                border-left: none,
+                disabled-background: #F5F5F5,
+                disabled-hover: 1px solid #EBEBEB, 
+            )
+        ),
+    ),
+    checkbox: (
+        width: 20px,
+        height: 20px,
+        background-color: #fff,
+        checkmark-color: #000, // not necessary
+        checkmark-color-selected: #000,
+        border: 2px solid #0000008a,
+        border-hover: 2px solid #0000008a,
+        border-radius: 0,
+        label-breaking: nowrap,
+    ),
+    
+    radio-button: (
+        align: flex-start,
+        white-space: nowrap,
+    ),
+);

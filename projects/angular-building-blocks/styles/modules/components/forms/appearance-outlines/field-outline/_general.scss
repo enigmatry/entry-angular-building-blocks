@@ -1,0 +1,36 @@
+@use '../../../../configuration' as config;
+
+@mixin -generate($border-value, $theme) {
+    .mat-form-field-outline-start, .mat-form-field-outline-gap, .mat-form-field-outline-end {
+        border: $border-value;
+    }
+
+    .mat-form-field-outline-start, .mat-form-field-outline-gap {
+        border-right-style: config.value-from($theme, 'form.field.outline.border-right');
+    }
+
+    .mat-form-field-outline-end, .mat-form-field-outline-gap {
+        border-left-style: config.value-from($theme, 'form.field.outline.border-left');
+    }
+}
+
+@mixin generate-field-outline-from($theme) {
+
+    @include -generate(config.value-from($theme, 'form.field.outline.border'), $theme);
+
+    &.mat-focused, &:hover {
+        @include -generate(config.value-from($theme, 'form.field.outline.border-hover'), $theme);
+    } 
+
+    &.mat-form-field-disabled {
+        .mat-form-field-outline {
+            background-color: config.value-from($theme, 'form.field.outline.disabled-background');
+        }
+
+        &:hover {
+            .mat-form-field-outline-start, .mat-form-field-outline-gap, .mat-form-field-outline-end {
+                border-color: config.value-from($theme, 'form.field.outline.disabled-hover');
+            }
+        }
+    }
+}

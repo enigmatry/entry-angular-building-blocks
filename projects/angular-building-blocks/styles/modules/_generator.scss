@@ -1,0 +1,13 @@
+@use 'sass:map';
+
+@use 'themings/default-theming' as default;
+@use 'components/tables/general' as tables;
+@use 'components/forms/general' as forms;
+
+$theme: default.$theme;
+
+@mixin generate($custom-theme: ()) {
+    $theme: map.merge($theme, $custom-theme);
+    @include tables.generate-table-from($theme);
+    @include forms.generate-form-from($theme);
+}

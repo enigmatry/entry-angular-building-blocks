@@ -1,0 +1,10 @@
+@use '../../../configuration' as config;
+
+@mixin generate-radio-buttons-from($theme) {
+    .mat-radio-button {
+        .mat-radio-label {
+            align-items: config.value-from($theme, 'radio-button.align');
+            white-space: config.value-from($theme, 'radio-button.white-space');
+        }
+    }
+}

@@ -1,12 +1,12 @@
 @use '~@angular/material/theming';
 
-@mixin enigmatry-grid-theme($theme) {
+@mixin entry-table-theme($theme) {
 	$is-dark-theme: map.get($theme, is-dark);
 	$accent: map.get($theme, accent);
 	$background: map.get($theme, background);
 	$foreground: map.get($theme, foreground);
 
-	.enigmatry-grid {
+	.entry-table {
 		border: 1px solid rgb(mat-color($foreground, secondary-text) .2);
 
 		.mat-table-sticky-left {

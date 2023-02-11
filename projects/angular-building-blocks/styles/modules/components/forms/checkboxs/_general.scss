@@ -1,0 +1,30 @@
+@use '../../../configuration' as config;
+
+@mixin generate-checkboxs-from($theme) {
+    .mat-checkbox {
+        .mat-checkbox-inner-container {
+            width: config.value-from($theme, 'checkbox.width');
+            height: config.value-from($theme, 'checkbox.height');
+            background-color: config.value-from($theme, 'checkbox.background-color');
+        }
+
+        .mat-checkbox-label {
+            white-space: config.value-from($theme, 'checkbox.label-breaking');
+        }
+
+        .mat-checkbox-frame {
+            border: config.value-from($theme, 'checkbox.border');
+            border-radius: config.value-from($theme, 'checkbox.border-radius');
+        }
+
+        .mat-checkbox-checkmark-path {
+            stroke: config.value-from($theme, 'checkbox.checkmark-color')!important;
+        }
+
+        &:hover {
+            .mat-checkbox-frame {
+                border: config.value-from($theme, 'checkbox.border-hover');
+            }
+        }
+    }
+}

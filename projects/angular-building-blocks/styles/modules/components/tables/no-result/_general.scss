@@ -1,0 +1,15 @@
+@use '../../../../../node_modules/@enigmatry/scss-foundation/src/display/items';
+@use '../../../configuration' as config;
+
+@mixin generate-no-result-from($theme) {
+    .entry-table-no-result {
+        @include items.align-absolute-center();
+        min-height: 50px;
+        flex: 1;
+        font: {
+            size: config.value-from($theme, 'table.content.no-result.font-size');
+            weight: config.value-from($theme, 'table.content.no-result.font-weight');
+        }
+        text-transform: config.value-from($theme, 'table.content.no-result.text-transform');
+    }
+}

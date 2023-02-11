@@ -4,6 +4,11 @@
   "author": "Enigmatry",
   "description": "Enigmatry angular building blocks",
   "license": "Apache-2.0",
+  "scripts": {
+    "compile-scss": "sass --style=compressed --load-path=styles styles/partials/theming.scss styles/dist/main.css",
+    "lint": "stylelint --fix styles/**/*.scss",
+    "test": "jest --coverage --colors"
+  },
   "peerDependencies": {
     "@angular/animations": ">=12.0.0",
     "@angular/cdk": ">=12.0.0",
@@ -13,5 +18,13 @@
   },
   "dependencies": {
     "tslib": "^2.2.0"
+  },
+  "devDependencies": {
+    "@enigmatry/scss-foundation": "1.0.133",
+    "@enigmatry/stylelint-config": "^1.0.129",
+    "jest": "^29.3.1",
+    "sass": "^1.44.0",
+    "sass-true": "^6.1.0",
+    "stylelint": "14.14.1"
   }
 }
