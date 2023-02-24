@@ -1,6 +1,8 @@
 @use '../../../../configuration' as config;
 @use '@enigmatry/scss-foundation/src/modules/lists/row-coloring' as list;
 
+// use this path when developing ../../../../../../node_modules/@enigmatry/
+
 @mixin generate-rows-from($theme) {
 
     .mat-row {
@@ -14,7 +16,7 @@
             }
     
             .mat-checkbox-checked .mat-checkbox-background {
-                background-color: config.value-from($theme, 'checkbox.background-color');
+                background-color: config.value-from($theme, 'checkbox.background-color-selected');
     
                 .mat-checkbox-checkmark-path {
                     stroke: config.value-from($theme, 'checkbox.checkmark-color-selected')!important;

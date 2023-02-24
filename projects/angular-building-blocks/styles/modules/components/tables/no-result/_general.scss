@@ -1,6 +1,8 @@
 @use '@enigmatry/scss-foundation/src/modules/display/items';
 @use '../../../configuration' as config;
 
+// use this path when developing ../../../../../../node_modules/@enigmatry/
+
 @mixin generate-no-result-from($theme) {
     .entry-table-no-result {
         @include items.align-absolute-center();
