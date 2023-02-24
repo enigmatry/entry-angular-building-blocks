@@ -1,4 +1,4 @@
-@use '../../../../../node_modules/@enigmatry/scss-foundation/src/modules/display/items';
+@use '@enigmatry/scss-foundation/src/modules/display/items';
 @use '../../../configuration' as config;
 
 @mixin generate-no-result-from($theme) {
