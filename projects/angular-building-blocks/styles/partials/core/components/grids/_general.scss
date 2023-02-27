@@ -15,6 +15,14 @@
 	.mat-table {
 		min-width: 100%;
 		border-collapse: separate;
+
+        .mat-header-cell,
+		.mat-footer-cell,
+		.mat-cell {
+			&:not(.entry-grid-checkbox-cell) {
+				min-width: 80px;
+			}
+		}
 	}
 
 	.mat-paginator-hidden {
