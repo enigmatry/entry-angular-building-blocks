@@ -4,10 +4,10 @@
 @use 'components/tables/general' as tables;
 @use 'components/forms/general' as forms;
 
-$theme: default.$theme;
+$default-theme: default.$theme;
 
 @mixin generate($custom-theme: ()) {
-    $theme: map.merge($theme, $custom-theme);
-    @include tables.generate-table-from($theme);
-    @include forms.generate-form-from($theme);
+    $merged-theme: map.deep-merge($default-theme, $custom-theme);
+    @include tables.generate-table-from($merged-theme);
+    @include forms.generate-form-from($merged-theme);
 }
