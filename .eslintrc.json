@@ -25,7 +25,7 @@
           "error",
           {
             "type": "element",
-            "prefix": ["app", "enigmatry"],
+            "prefix": ["app", "enigmatry", "entry"],
             "style": "kebab-case"
           }
         ],
@@ -33,7 +33,7 @@
           "error",
           {
             "type": "attribute",
-            "prefix": ["app", "enigmatry"],
+            "prefix": ["app", "enigmatry", "entry"],
             "style": "camelCase"
           }
         ],

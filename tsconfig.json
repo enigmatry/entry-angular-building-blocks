@@ -14,6 +14,10 @@
         "projects/angular-building-blocks/*",
         "projects/angular-building-blocks"
       ],
+      "@enigmatry/entry-table": [
+        "dist/enigmatry/entry-table/enigmatry-entry-table",
+        "dist/enigmatry/entry-table"
+      ],
       "@enigmatry/formly-extensions/*": [
         "projects/formly-extensions/*",
         "projects/formly-extensions"
