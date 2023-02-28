@@ -122,6 +122,46 @@
           }
         }
       }
+    },
+    "@enigmatry/entry-form": {
+      "projectType": "library",
+      "root": "projects/entry-form",
+      "sourceRoot": "projects/entry-form/src",
+      "prefix": "entry",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/entry-form/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/entry-form/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/entry-form/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/entry-form/src/test.ts",
+            "tsConfig": "projects/entry-form/tsconfig.spec.json",
+            "karmaConfig": "projects/entry-form/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/entry-form/**/*.ts",
+              "projects/entry-form/**/*.html"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "angular-building-blocks",

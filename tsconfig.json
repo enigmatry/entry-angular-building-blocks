@@ -14,6 +14,10 @@
         "projects/angular-building-blocks/*",
         "projects/angular-building-blocks"
       ],
+      "@enigmatry/entry-form": [
+        "dist/enigmatry/entry-form/enigmatry-entry-form",
+        "dist/enigmatry/entry-form"
+      ],
       "@enigmatry/entry-table": [
         "dist/enigmatry/entry-table/enigmatry-entry-table",
         "dist/enigmatry/entry-table"
