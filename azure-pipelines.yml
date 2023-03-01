@@ -119,22 +119,22 @@ steps:
   displayName: 'Publish the eslint recommended rules'
   inputs:
     command: publish
-    publishRegistry: useFeed
-    publishFeed: enigmatry
+    publishRegistry: useExternalRegistry
+    publishEndpoint: npm
     workingDir: 'projects/eslint-config'
 
 - task: Npm@1
   displayName: 'Publish the stylelint recommended rules'
   inputs:
     command: publish
-    publishRegistry: useFeed
-    publishFeed: enigmatry
+    publishRegistry: useExternalRegistry
+    publishEndpoint: npm
     workingDir: 'projects/stylelint-config'
     
 - task: Npm@1
   displayName: 'Publish the scss foundation'
   inputs:
     command: publish
-    publishRegistry: useFeed
-    publishFeed: enigmatry
+    publishRegistry: useExternalRegistry
+    publishEndpoint: npm
     workingDir: 'projects/scss-foundation'
