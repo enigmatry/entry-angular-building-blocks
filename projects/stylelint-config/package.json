@@ -28,5 +28,8 @@
     "stylelint-scss": "4.3.0",
     "stylelint-selector-no-empty": "1.0.9",
     "stylelint-use-nesting": "4.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
