@@ -101,7 +101,6 @@ steps:
 
 - task: Npm@1
   displayName: 'Publish entry table'
-  condition: false
   inputs:
     command: publish
     publishRegistry: useExternalRegistry
@@ -110,7 +109,6 @@ steps:
 
 - task: Npm@1
   displayName: 'Publish entry form'
-  condition: false
   inputs:
     command: publish
     publishRegistry: useExternalRegistry
