@@ -37,13 +37,6 @@ steps:
     workingDir: 'projects/scss-foundation'
 
 - task: Npm@1
-  displayName: 'Set the version formly-extensions'
-  inputs:
-    command: custom
-    customCommand: version $(Build.Buildnumber) --no-git-tag-version
-    workingDir: 'projects/formly-extensions'
-
-- task: Npm@1
   displayName: 'npm install'
   inputs:
     command: 'install'
@@ -82,12 +75,6 @@ steps:
     workingDir: 'projects/scss-foundation'
 
 - task: Npm@1
-  displayName: 'Build the formly-extensions library'
-  inputs:
-    command: 'custom'
-    customCommand: 'run build formly-extensions'
-
-- task: Npm@1
   displayName: 'Publish the angular-building-blocks library'
   inputs:
     command: publish
@@ -118,11 +105,3 @@ steps:
     publishRegistry: useFeed
     publishFeed: enigmatry
     workingDir: 'projects/scss-foundation'
-
-- task: Npm@1
-  displayName: 'Publish the formly-extensions library'
-  inputs:
-    command: publish
-    publishRegistry: useFeed
-    publishFeed: enigmatry
-    workingDir: 'dist/formly-extensions'
