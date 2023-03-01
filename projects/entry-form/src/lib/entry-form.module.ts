@@ -1,8 +1,12 @@
 import { NgModule } from '@angular/core';
+import { FormlyComponentsModule } from './components';
 import { ENTRY_FIELD_TYPE_RESOLVER, fieldTypeResolverFactory, FieldTypeResolverService } from './services/form-type.resolver';
 
 @NgModule({
   declarations: [
+  ],
+  imports: [
+    FormlyComponentsModule
   ],
   providers: [
     {
