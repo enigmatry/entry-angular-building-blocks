@@ -9,11 +9,18 @@ name: $(MajorMinorVersion)$(Rev:.r)
 
 steps:
 - task: Npm@1
-  displayName: 'Set the version angular-building-blocks'
+  displayName: 'Set the version entry table'
   inputs:
     command: custom
     customCommand: version $(Build.Buildnumber) --no-git-tag-version
-    workingDir: 'projects/angular-building-blocks'
+    workingDir: 'projects/entry-table'
+
+- task: Npm@1
+  displayName: 'Set the version entry form'
+  inputs:
+    command: custom
+    customCommand: version $(Build.Buildnumber) --no-git-tag-version
+    workingDir: 'projects/entry-form'
 
 - task: Npm@1
   displayName: 'Set the version eslint recommended rules'
@@ -40,7 +47,19 @@ steps:
   displayName: 'npm install'
   inputs:
     command: 'install'
-    
+
+- task: Npm@1
+  displayName: 'Lint entry table'
+  inputs:
+    command: 'custom'
+    customCommand: 'run lint @enigmatry/entry-table'
+
+- task: Npm@1
+  displayName: 'Lint entry form'
+  inputs:
+    command: 'custom'
+    customCommand: 'run lint @enigmatry/entry-form'
+
 - task: Npm@1
   displayName: 'npm install scss foundation'
   inputs:
@@ -62,11 +81,17 @@ steps:
     workingDir: 'projects/scss-foundation'
 
 - task: Npm@1
-  displayName: 'Build the angular-building-blocks library'
+  displayName: 'Build entry table'
   inputs:
     command: 'custom'
-    customCommand: 'run build angular-building-blocks'
-    
+    customCommand: 'run build @enigmatry/entry-table'
+
+- task: Npm@1
+  displayName: 'Build entry form'
+  inputs:
+    command: 'custom'
+    customCommand: 'run build @enigmatry/entry-form'
+
 - task: Npm@1
   displayName: 'Build the scss foundation library'
   inputs:
@@ -75,12 +100,22 @@ steps:
     workingDir: 'projects/scss-foundation'
 
 - task: Npm@1
-  displayName: 'Publish the angular-building-blocks library'
+  displayName: 'Publish entry table'
   inputs:
     command: publish
-    publishRegistry: useFeed
-    publishFeed: enigmatry
-    workingDir: 'dist/angular-building-blocks'
+    publishRegistry: useExternalRegistry
+    publishEndpoint: npm
+    workingDir: 'dist/enigmatry/entry-table',
+    condition: false
+
+- task: Npm@1
+  displayName: 'Publish entry form'
+  inputs:
+    command: publish
+    publishRegistry: useExternalRegistry
+    publishEndpoint: npm
+    workingDir: 'dist/enigmatry/entry-form',
+    condition: false
 
 - task: Npm@1
   displayName: 'Publish the eslint recommended rules'
