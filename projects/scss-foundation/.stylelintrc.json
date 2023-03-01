@@ -4,6 +4,10 @@
       "value-keyword-case": [
         "lower",
         { "ignoreKeywords": ["largeDesktop", "extraLargeDesktop"] }
+      ],
+      "scss/no-duplicate-dollar-variables": [
+        true,
+        { "ignoreInsideAtRules": ["each", "while"] }
       ]
     }
   }
