@@ -101,21 +101,21 @@ steps:
 
 - task: Npm@1
   displayName: 'Publish entry table'
+  condition: false
   inputs:
     command: publish
     publishRegistry: useExternalRegistry
     publishEndpoint: npm
-    workingDir: 'dist/enigmatry/entry-table',
-    condition: false
+    workingDir: 'dist/enigmatry/entry-table'
 
 - task: Npm@1
   displayName: 'Publish entry form'
+  condition: false
   inputs:
     command: publish
     publishRegistry: useExternalRegistry
     publishEndpoint: npm
-    workingDir: 'dist/enigmatry/entry-form',
-    condition: false
+    workingDir: 'dist/enigmatry/entry-form'
 
 - task: Npm@1
   displayName: 'Publish the eslint recommended rules'
