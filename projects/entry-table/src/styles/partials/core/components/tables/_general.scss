@@ -1,0 +1,47 @@
+.entry-table {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+
+	.mat-table-container {
+		overflow: auto;
+
+		&.mat-table-with-data {
+			flex: 1;
+		}
+	}
+
+	.mat-table {
+		min-width: 100%;
+		border-collapse: separate;
+
+        .mat-header-cell,
+		.mat-footer-cell,
+		.mat-cell {
+			&:not(.entry-table-checkbox-cell) {
+				min-width: 80px;
+			}
+		}
+	}
+
+	.mat-paginator-hidden {
+		display: none;
+	}
+}
+
+.entry-table-layout {
+	display: flex;
+	flex: 1 1 auto;
+	overflow: auto;
+}
+
+.entry-table-content {
+	flex-direction: column;
+	width: 0;
+}
+
+.entry-table-footer {
+	position: relative;
+	z-index: 1;
+}

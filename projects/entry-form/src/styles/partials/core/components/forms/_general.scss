@@ -1,0 +1,13 @@
+.entry-form {
+    .action-buttons {
+        margin-top: 25px;
+
+        .button {
+            margin-left: 10px;
+
+            &:first-child {
+                margin-left: 0;
+            }
+        }
+    }
+}

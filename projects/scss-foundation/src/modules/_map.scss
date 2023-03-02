@@ -31,7 +31,6 @@
 @function -split($string, $separator: '.') {
 	$result: ();
 	$current-index: string.index($string, $separator);
-	/* stylelint-disable-next-line at-rule-allowed-list */
 	@while $current-index != null {
 		$key: string.slice($string, 1, $current-index - 1);
 		$result: list.append($result, $key);
