@@ -14,7 +14,7 @@
     "jest": "27.5.1",
     "sass": "1.44.0",
     "sass-true": "6.1.0",
-    "stylelint": "14.1.0"
+    "stylelint": "14.11.0"
   },
   "publishConfig": {
     "access": "public"
