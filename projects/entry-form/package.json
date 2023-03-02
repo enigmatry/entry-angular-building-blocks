@@ -18,8 +18,8 @@
     "tslib": "^2.3.0"
   },
   "devDependencies": {
-    "@enigmatry/scss-foundation": "^1.0.182",
-    "@enigmatry/stylelint-config": "1.0.173",
+    "@enigmatry/scss-foundation": "1.1.4",
+    "@enigmatry/stylelint-config": "1.1.4",
     "sass": "^1.44.0",
     "stylelint": "14.14.1"
   },
