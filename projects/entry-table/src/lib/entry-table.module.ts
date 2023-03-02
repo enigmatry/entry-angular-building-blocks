@@ -35,7 +35,10 @@ import { DEFAULT_DATE_FORMAT, DEFAULT_TIMEZONE, DEFAULT_PERCENTAGE_MULTIPLIER } 
     EntryCellFormattedValueComponent
   ],
   exports: [
-    EntryTableComponent
+    EntryTableComponent,
+    EntryCellComponent,
+    EntryCellContextMenuComponent,
+    EntryCellFormattedValueComponent
   ],
   providers: [
     { provide: DEFAULT_DATE_FORMAT, useValue: 'mediumDate' },
