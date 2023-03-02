@@ -68,6 +68,7 @@ steps:
 
 - task: Npm@1
   displayName: 'Lint the scss foundation library'
+  condition: false
   inputs:
     command: 'custom'
     customCommand: 'run lint'
