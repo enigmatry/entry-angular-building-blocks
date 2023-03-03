@@ -175,7 +175,7 @@ module.exports = {
     "scss/comment-no-empty": true,
     "scss/function-no-unknown": [
       true,
-      { "ignoreFunctions": ["/^-/", "/^theming\\.mat/"] }
+      { "ignoreFunctions": ["/^-/", "/^mat\\./", "/^theming\\.mat/"] }
     ],
     "scss/function-quote-no-quoted-strings-inside": true,
     "scss/function-unquote-no-unquoted-strings-inside": true,
