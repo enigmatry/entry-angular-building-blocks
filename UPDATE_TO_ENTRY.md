@@ -1,6 +1,6 @@
 # Update to Entry
 
-Npm packages `@enigmatry/entry-table` and `@enigmatry/entry-form` will replace `@enigmatry/angular-building-blocks` package. Components and modules are renamed to have "Entry" instead of "Enigmatry" in module name.
+Npm packages `@enigmatry/entry-table` and `@enigmatry/entry-form` will replace `@enigmatry/angular-building-blocks` package. Components and modules are renamed with "Entry" instead of "Enigmatry" in module name.
 
 # What has changed?
 
