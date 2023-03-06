@@ -2,13 +2,17 @@
 
 ## Projects
 
-| Project name | NPM package | Description
-|-|-|-|
-| [Entry table](./projects/entry-table/README.md) | @enigmatry/entry-table | Angular table component |
-| [Entry form](./projects/entry-form/README.md) | @enigmatry/entry-form | Angular form components |
-| [Eslint config](./projects/eslint-config/README.md) | @enigmatry/eslint-config | ESLint config for the Enigmatry style guide |
-| [Scss foundation](./projects/scss-foundation/README.md) | @enigmatry/scss-foundation | SCSS Foundation |
-| [Stylelint config](./projects/stylelint-config/README.md) | @enigmatry/stylelint-config | Stylelint config for the Enigmatry style guide |
+| Project | Description |
+|-|-|
+| [@enigmatry/entry-table](./projects/entry-table/README.md) | Angular table component |
+| [@enigmatry/entry-form](./projects/entry-form/README.md) | Angular form components |
+| [@enigmatry/eslint-config](./projects/eslint-config/README.md) | ESLint config for the Enigmatry style guide |
+| [@enigmatry/scss-foundation ](./projects/scss-foundation/README.md) | SCSS Foundation |
+| [@enigmatry/stylelint-config](./projects/stylelint-config/README.md) | Stylelint config for the Enigmatry style guide |
+
+## Update to Entry
+
+See [How to update.](./UPDATE_TO_ENTRY.md)
 
 ## License
 

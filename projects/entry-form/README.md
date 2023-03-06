@@ -1,4 +1,4 @@
-# Entry form
+# @enigmatry/entry-form
 
 Reusable form components for Angular.
 
@@ -10,7 +10,7 @@ npm install @enigmatry/entry-form
 
 ## Basic usage
 
-Import the `EntryFormModule` in your `feature.module` or `shared.module`.
+Import the `EntryFormModule` in your `feature.module` or `shared.module`
 
 ```typescript
 import { EntryTableModule } from '@enigmatry/entry-table';

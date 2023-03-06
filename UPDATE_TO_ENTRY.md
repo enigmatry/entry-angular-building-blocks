@@ -1,6 +1,6 @@
 # Update to Entry
 
-Npm packages @enigmatry/entry-table and @enigmatry/entry-form will replace @enigmatry/angular-building-blocks package. Components and modules are renamed to have "Entry" instead of "Enigmatry" in module name.
+Npm packages `@enigmatry/entry-table` and `@enigmatry/entry-form` will replace `@enigmatry/angular-building-blocks` package. Components and modules are renamed to have "Entry" instead of "Enigmatry" in module name.
 
 # What has changed?
 
@@ -55,8 +55,8 @@ npm i @enigmatry/scss-foundation
 
 ## Update renamed modules and fix imports
 
-See changes: [What has changed?](#what-has-changed)
+See [What has changed?](#what-has-changed)
 
 ## Run the code generation
 
-Re-generate all components. Components and import paths will be adjusted to use new entry-table and entry-form modules in the generated code.
+Re-generate all components. Components and import paths will be adjusted to use new `entry-table` and `entry-form` modules in the generated code.

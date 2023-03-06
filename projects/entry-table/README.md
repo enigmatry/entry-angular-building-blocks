@@ -1,4 +1,4 @@
-# Entry table
+# @enigmatry/entry-table
 
 Reusable table component for Angular.
 
@@ -10,7 +10,7 @@ npm install @enigmatry/entry-table
 
 ## Basic Usage
 
-Import the `EntryTableModule` in your `feature.module` or `shared.module`.
+Import the `EntryTableModule` in your `feature.module` or `shared.module`
 
 ```typescript
 import { EntryTableModule } from '@enigmatry/entry-table';
