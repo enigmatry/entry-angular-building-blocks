@@ -13,7 +13,7 @@ npm install @enigmatry/entry-form
 Import the `EntryFormModule` in your `feature.module` or `shared.module`
 
 ```typescript
-import { EntryTableModule } from '@enigmatry/entry-table';
+import { EntryTableModule } from '@enigmatry/entry-form';
 ```
 
 ## Compatibility with Angular Versions
