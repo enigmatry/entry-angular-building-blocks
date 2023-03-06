@@ -1,8 +1,19 @@
-# Enigmatry Angular Building Blocks
+# Entry Angular Building Blocks
 
-## Local Development Setup Procedure
+## Projects
 
-1. Build BuildingBlocks (BB) project with `ng build --watch --configuration development` command (or just run `watch` npm script).
-2. Install BB project in destination project with `npm install [bb_project_dist_path]` (copy `bb_project_dist_path` from previous command console output).
-3. In destination project `angual.json` file set "architect > build > options > preserveSimulinks" property to `true`.
-4. Run destination project.
+| Project | Description |
+|-|-|
+| [@enigmatry/entry-table](./projects/entry-table/README.md) | Angular table component |
+| [@enigmatry/entry-form](./projects/entry-form/README.md) | Angular form components |
+| [@enigmatry/eslint-config](./projects/eslint-config/README.md) | ESLint config for the Enigmatry style guide |
+| [@enigmatry/scss-foundation ](./projects/scss-foundation/README.md) | SCSS Foundation |
+| [@enigmatry/stylelint-config](./projects/stylelint-config/README.md) | Stylelint config for the Enigmatry style guide |
+
+## Update to Entry
+
+See [How to update](./UPDATE_TO_ENTRY.md)
+
+## License
+
+Apache-2 © Enigmatry

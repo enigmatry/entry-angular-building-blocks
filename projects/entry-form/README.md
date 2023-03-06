@@ -1,24 +1,27 @@
-# EntryForm
+# @enigmatry/entry-form
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.0.
+Reusable form components for Angular.
 
-## Code scaffolding
+## Installation
 
-Run `ng generate component component-name --project entry-form` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project entry-form`.
-> Note: Don't forget to add `--project entry-form` or else it will be added to the default project in your `angular.json` file. 
+```
+npm install @enigmatry/entry-form
+```
 
-## Build
+## Basic usage
 
-Run `ng build entry-form` to build the project. The build artifacts will be stored in the `dist/` directory.
+Import the `EntryFormModule` in your `feature.module` or `shared.module`
 
-## Publishing
+```typescript
+import { EntryFormModule } from '@enigmatry/entry-form';
+```
 
-After building your library with `ng build entry-form`, go to the dist folder `cd dist/entry-form` and run `npm publish`.
+## Compatibility with Angular Versions
 
-## Running unit tests
+| @enigmatry/entry-form | Angular version
+|-|-|
+|1.x| >= 13
 
-Run `ng test entry-form` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## License
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Apache-2 © Enigmatry

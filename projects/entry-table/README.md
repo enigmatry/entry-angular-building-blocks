@@ -1,24 +1,75 @@
-# EntryTable
+# @enigmatry/entry-table
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.0.
+Reusable table component for Angular.
 
-## Code scaffolding
+## Installation
 
-Run `ng generate component component-name --project entry-table` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project entry-table`.
-> Note: Don't forget to add `--project entry-table` or else it will be added to the default project in your `angular.json` file. 
+```
+npm install @enigmatry/entry-table
+```
 
-## Build
+## Basic Usage
 
-Run `ng build entry-table` to build the project. The build artifacts will be stored in the `dist/` directory.
+Import the `EntryTableModule` in your `feature.module` or `shared.module`
 
-## Publishing
+```typescript
+import { EntryTableModule } from '@enigmatry/entry-table';
+```
 
-After building your library with `ng build entry-table`, go to the dist folder `cd dist/entry-table` and run `npm publish`.
+`component.ts`
 
-## Running unit tests
+```typescript
+import { PagedData, ContextMenuItem, ColumnDef } from '@enigmatry/entry-table';
 
-Run `ng test entry-table` to execute the unit tests via [Karma](https://karma-runner.github.io).
+@Component({
+...
+})
+export class UserListComponent implements OnInit {
 
-## Further help
+  @Input() data: PagedData<GetUsersResponseItem> | null;
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+  @Input() columns: ColumnDef[] = [];
+  @Input() contextMenuItems: ContextMenuItem[] = [];
+
+  constructor() { }
+
+  ngOnInit(): void {
+    this.columns = [
+      { field: 'id', hide: true, sortable: true },
+      { field: 'userName', header: `E-mail`, hide: false, sortable: true },
+      { field: 'name', header: `Name`, hide: false, sortable: true },
+      { field: 'createdOn', header: `Created on`, hide: false, sortable: true, type: 'date' },
+      { field: 'updatedOn', header: `Updated on`, hide: false, sortable: true, type: 'date' }
+    ];
+    this.contextMenuItems = [
+      { id: 'edit', name: `Edit`, icon: 'edit' }
+    ];
+  }
+}
+```
+
+`component.html`
+
+```html
+<entry-table
+    [columns]="columns"
+    [data]="data"
+    [showPaginator]="true"
+    [showContextMenu]="true"
+    [contextMenuItems]="contextMenuItems"
+    (pageChange)="pageChange.emit($event)"
+    (sortChange)="sortChange.emit($event)"
+    (rowSelectionChange)="selectionChange.emit($event)"
+    (contextMenuItemSelected)="contextMenuItemSelected.emit($event)">
+</entry-table>
+```
+
+## Compatibility with Angular Versions
+
+| @enigmatry/entry-table | Angular version
+|-|-|
+|1.x| >= 13
+
+## License
+
+Apache-2 © Enigmatry
