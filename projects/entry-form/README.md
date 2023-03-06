@@ -18,7 +18,7 @@ import { EntryFormModule } from '@enigmatry/entry-form';
 
 ## Compatibility with Angular Versions
 
-| @enigmatry/entry-table | Angular version
+| @enigmatry/entry-form | Angular version
 |-|-|
 |1.x| >= 13
 
