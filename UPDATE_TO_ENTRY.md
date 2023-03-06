@@ -1,6 +1,6 @@
 # Update to Entry
 
-Npm packages `@enigmatry/entry-table` and `@enigmatry/entry-form` will replace `@enigmatry/angular-building-blocks` package. Components and modules are renamed with "Entry" instead of "Enigmatry" in module name.
+Npm package `@enigmatry/angular-building-blocks` is replaced with `@enigmatry/entry-table` and `@enigmatry/entry-form` packages.
 
 # What has changed?
 
@@ -20,7 +20,7 @@ Npm packages `@enigmatry/entry-table` and `@enigmatry/entry-form` will replace `
 # How to Migrate
 ## Prerequisites
 
-Backend solution should be migrated to Entry and Enigmatry.Entry.CodeGeneration nuget packages updated to latest version v1.1.xxx.
+Enigmatry.Entry.CodeGeneration nuget packages should be updated to latest version v1.1.xxx.
 
 ## Remove packages 
 
