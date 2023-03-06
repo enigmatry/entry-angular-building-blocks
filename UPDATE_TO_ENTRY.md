@@ -17,7 +17,7 @@ Npm packages @enigmatry/entry-table and @enigmatry/entry-form will replace @enig
 | ENIGMATRY_FORM_CONFIG | Renamed to ENTRY_FORM_CONFIG |
 | ENIGMATRY_FIELD_TYPE_RESOLVER | Renamed to ENTRY_FIELD_TYPE_RESOLVER |
 
-#  How to Migrate
+# How to Migrate
 ## Prerequisites
 
 Backend solution should be migrated to Entry and Enigmatry.Entry.CodeGeneration nuget packages updated to latest version v1.1.xxx.
@@ -43,13 +43,13 @@ Remove file ```.npmrc```
 
 ```npm i @enigmatry/stylelint-config```
 
-```npm i @enigmatry//scss-foundation```
+```npm i @enigmatry/scss-foundation```
 
 @enigmatry packages will be resolved from public repository npmjs.org
 
 ## Update renamed modules and fix imports
 
-See changes: [What has changed?](#what-has-changed?)
+See changes: [What has changed?](#what-has-changed)
 
 ## Run the code generation
 
