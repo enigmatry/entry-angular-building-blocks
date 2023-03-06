@@ -11,7 +11,7 @@ Npm packages @enigmatry/entry-table and @enigmatry/entry-form will replace @enig
 | @enigmatry/angular-building-blocks/enigmatry-grid | Replaced by @enigmatry/entry-table |
 | @enigmatry/formly-extensions | Replaced by @enigmatry/entry-form |
 | @enigmatry/angular-building-blocks/form | Replaced by @enigmatry/entry-form |
-| EnigmatryGridComponent: \<enigmatry-grid\> | Renamed to EntryTableComponent: \<entry-table\> |
+| EnigmatryGridComponent `<enigmatry-grid>` | Renamed to EntryTableComponent `<entry-table>` |
 | EnigmatryGridModule | Renamed to EntryTableModule |
 | EnigmatryFormlyExtensionsModule | Renamed to EntryFormModule |
 | ENIGMATRY_FORM_CONFIG | Renamed to ENTRY_FORM_CONFIG |
@@ -24,28 +24,34 @@ Backend solution should be migrated to Entry and Enigmatry.Entry.CodeGeneration 
 
 ## Remove packages 
 
-```npm uninstall @enigmatry/angular-building-blocks```
+```
+npm uninstall @enigmatry/angular-building-blocks
 
-```npm uninstall @enigmatry/formly-extensions```
+npm uninstall @enigmatry/formly-extensions
+```
 
-Remove file ```.npmrc```
+Remove `.npmrc` file.
 
 
 ## Install packages
 
-```npm i @enigmatry/entry-table``` 
+```
+npm i @enigmatry/entry-table
 
-```npm i @enigmatry/entry-form```
+npm i @enigmatry/entry-form
+```
 
 ### Update to latest version
 
-```npm i @enigmatry/eslint-config``` 
+```
+npm i @enigmatry/eslint-config
 
-```npm i @enigmatry/stylelint-config```
+npm i @enigmatry/stylelint-config
 
-```npm i @enigmatry/scss-foundation```
+npm i @enigmatry/scss-foundation
+```
 
-@enigmatry packages will be resolved from public repository npmjs.org
+`@enigmatry` packages will be resolved from public repository.
 
 ## Update renamed modules and fix imports
 
