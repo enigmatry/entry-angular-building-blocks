@@ -56,6 +56,7 @@ export class UserListComponent implements OnInit {
     [data]="data"
     [showPaginator]="true"
     [showContextMenu]="true"
+    [contextMenuItems]="contextMenuItems"
     (pageChange)="pageChange.emit($event)"
     (sortChange)="sortChange.emit($event)"
     (rowSelectionChange)="selectionChange.emit($event)"
