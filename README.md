@@ -12,7 +12,7 @@
 
 ## Update to Entry
 
-See [How to update.](./UPDATE_TO_ENTRY.md)
+See [How to update](./UPDATE_TO_ENTRY.md)
 
 ## License
 
