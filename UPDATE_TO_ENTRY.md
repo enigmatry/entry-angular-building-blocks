@@ -12,7 +12,7 @@ Make sure to uninstall the old `enigmatry.codegeneration` tool and install the n
 ```
 dotnet tool uninstall enigmatry.codegeneration.console -g
 
-dotnet tool update enigmatry.entry.codegeneration.tools -g
+dotnet tool update -g --add-source https://api.nuget.org/v3/index.json --ignore-failed-sources Enigmatry.Entry.CodeGeneration.Tools
 ```
 
 ## Remove packages 
