@@ -1,26 +1,19 @@
 # Update to Entry
 
-Npm package `@enigmatry/angular-building-blocks` is replaced with `@enigmatry/entry-table` and `@enigmatry/entry-form` packages.
-
-# What has changed?
-
-| Import path | Summary of changes
-|-|-|
-| @enigmatry/angular-building-blocks | Replaced by @enigmatry/entry-table or @enigmatry/entry-form |
-| @enigmatry/angular-building-blocks/pagination | Replaced by @enigmatry/entry-table |
-| @enigmatry/angular-building-blocks/enigmatry-grid | Replaced by @enigmatry/entry-table |
-| @enigmatry/formly-extensions | Replaced by @enigmatry/entry-form |
-| @enigmatry/angular-building-blocks/form | Replaced by @enigmatry/entry-form |
-| EnigmatryGridComponent `<enigmatry-grid>` | Renamed to EntryTableComponent `<entry-table>` |
-| EnigmatryGridModule | Renamed to EntryTableModule |
-| EnigmatryFormlyExtensionsModule | Renamed to EntryFormModule |
-| ENIGMATRY_FORM_CONFIG | Renamed to ENTRY_FORM_CONFIG |
-| ENIGMATRY_FIELD_TYPE_RESOLVER | Renamed to ENTRY_FIELD_TYPE_RESOLVER |
+NPM package `@enigmatry/angular-building-blocks` will be removed. It is replaced with `@enigmatry/entry-table` and `@enigmatry/entry-form` packages.
 
 # How to Migrate
 ## Prerequisites
 
-Enigmatry.Entry.CodeGeneration nuget packages should be updated to latest version v1.1.xxx.
+Project backend is migrated to use Enigmatry.Entry nuget packages and CodeGeneration package is updated to the latest version.
+
+Make sure to uninstall the old `enigmatry.codegeneration` tool and install the new one
+
+```
+dotnet tool uninstall enigmatry.codegeneration.console -g
+
+dotnet tool update enigmatry.entry.codegeneration.tools -g
+```
 
 ## Remove packages 
 
@@ -53,9 +46,22 @@ npm i @enigmatry/scss-foundation
 
 `@enigmatry` packages will be resolved from public repository.
 
-## Update renamed modules and fix imports
+## Fix imports and update renamed modules
 
-See [What has changed?](#what-has-changed)
+### What has changed?
+
+| Import path | Summary of changes
+|-|-|
+| @enigmatry/angular-building-blocks | Replaced by @enigmatry/entry-table or @enigmatry/entry-form |
+| @enigmatry/angular-building-blocks/pagination | Replaced by @enigmatry/entry-table |
+| @enigmatry/angular-building-blocks/enigmatry-grid | Replaced by @enigmatry/entry-table |
+| @enigmatry/formly-extensions | Replaced by @enigmatry/entry-form |
+| @enigmatry/angular-building-blocks/form | Replaced by @enigmatry/entry-form |
+| EnigmatryGridComponent `<enigmatry-grid>` | Renamed to EntryTableComponent `<entry-table>` |
+| EnigmatryGridModule | Renamed to EntryTableModule |
+| EnigmatryFormlyExtensionsModule | Renamed to EntryFormModule |
+| ENIGMATRY_FORM_CONFIG | Renamed to ENTRY_FORM_CONFIG |
+| ENIGMATRY_FIELD_TYPE_RESOLVER | Renamed to ENTRY_FIELD_TYPE_RESOLVER |
 
 ## Run the code generation
 
