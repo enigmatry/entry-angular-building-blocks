@@ -63,6 +63,9 @@ npm i @enigmatry/scss-foundation
 | EnigmatryFormlyExtensionsModule | Renamed to EntryFormModule |
 | ENIGMATRY_FORM_CONFIG | Renamed to ENTRY_FORM_CONFIG |
 | ENIGMATRY_FIELD_TYPE_RESOLVER | Renamed to ENTRY_FIELD_TYPE_RESOLVER |
+| SCSS using `scss-foundation/src/display/items` | Replaced by `scss-foundation/src/modules/display/items` |
+| SCSS using `scss-foundation/src/layout/grid` | Replaced by `scss-foundation/src/modules/layout/grid` |
+| SCSS using `angular-building-blocks/styles/partials/theming` | Replaced by 2 usings `entry-table/src/styles/partials/theming` & `entry-form/src/styles/partials/theming` |
 
 ### Run the code generation
 
