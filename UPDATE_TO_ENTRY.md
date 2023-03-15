@@ -59,7 +59,10 @@ npm i @enigmatry/scss-foundation
 | @enigmatry/angular-building-blocks/form | Replaced by @enigmatry/entry-form |
 | EnigmatryGridComponent `<enigmatry-grid>` | Renamed to EntryTableComponent `<entry-table>` |
 | EnigmatryGridComponent `<enigmatry-formatted-value>` | Renamed to EntryTableComponent `<entry-cell-formatted-value>` |
+| EnigmatryCommonModule | Removed |
 | EnigmatryGridModule | Renamed to EntryTableModule |
+| EnigmatryFormModule | Renamed to EntryFormModule |
+| FormConfig | Renamed to EntryFormConfig |
 | EnigmatryFormlyExtensionsModule | Renamed to EntryFormModule |
 | ENIGMATRY_FORM_CONFIG | Renamed to ENTRY_FORM_CONFIG |
 | ENIGMATRY_FIELD_TYPE_RESOLVER | Renamed to ENTRY_FIELD_TYPE_RESOLVER |
