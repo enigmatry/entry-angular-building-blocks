@@ -3,6 +3,11 @@
   "version": "1.0.1",
   "author": "Enigmatry",
   "description": "Stylelint shareable config for the Enigmatry style.",
+  "homepage": "https://github.com/enigmatry/entry-angular-building-blocks/tree/master/projects/stylelint-config#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/enigmatry/entry-angular-building-blocks.git"
+  },
   "license": "Apache-2.0",
   "files": [
     "index.js"

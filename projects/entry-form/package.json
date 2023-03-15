@@ -3,6 +3,11 @@
   "version": "0.0.1",
   "author": "Enigmatry",
   "description": "Entry form components and types",
+  "homepage": "https://github.com/enigmatry/entry-angular-building-blocks/tree/master/projects/entry-form#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/enigmatry/entry-angular-building-blocks.git"
+  },
   "license": "Apache-2.0",
   "peerDependencies": {
     "@angular/common": ">=13.2.0",
