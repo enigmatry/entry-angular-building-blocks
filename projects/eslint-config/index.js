@@ -9,7 +9,7 @@ module.exports = {
 	overrides: [
     {
       files: [ "*.ts" ],
-      plugins: [ "@typescript-eslint", "@angular-eslint", "no-loops", "no-secrets", "no-unsanitized", "promise", "unused-imports", "xss" ],
+      plugins: [ "@typescript-eslint", "@angular-eslint", "no-loops", "no-secrets", "no-unsanitized", "promise", "unused-imports", "xss", "deprecation" ],
       parser: "@typescript-eslint/parser",
       parserOptions: {
         project: [
@@ -474,7 +474,8 @@ module.exports = {
             "prefix": [ "app", "enigmatry", "appg" ],
             "style": "camelCase"
           }
-        ]
+      ],
+        "deprecation/deprecation": "error"
       }
 	},
     {
