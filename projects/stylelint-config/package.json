@@ -13,26 +13,26 @@
     "index.js"
   ],
   "dependencies": {
-    "stylelint": "14.11.0",
+    "stylelint": "15.3.0",
     "postcss-scss": "4.0.6",
-    "stylelint-config-property-sort-order-smacss": "9.0.0",
-    "stylelint-declaration-block-no-ignored-properties": "2.5.0",
-    "stylelint-group-selectors": "1.0.9",
+    "stylelint-config-property-sort-order-smacss": "9.1.0",
+    "stylelint-declaration-block-no-ignored-properties": "2.7.0",
     "stylelint-max-lines": "0.1.0",
-    "stylelint-scss": "4.3.0",
-    "stylelint-selector-no-empty": "1.0.9",
-    "stylelint-use-nesting": "4.0.0"
+    "stylelint-scss": "4.6.0",
+    "stylelint-use-nesting": "4.1.0"
   },
   "peerDependencies": {
-    "stylelint": "14.11.0",
+    "stylelint": "15.3.0",
     "postcss-scss": "4.0.6",
-    "stylelint-config-property-sort-order-smacss": "9.0.0",
-    "stylelint-declaration-block-no-ignored-properties": "2.5.0",
-    "stylelint-group-selectors": "1.0.9",
+    "stylelint-config-property-sort-order-smacss": "9.1.0",
+    "stylelint-declaration-block-no-ignored-properties": "2.7.0",
     "stylelint-max-lines": "0.1.0",
-    "stylelint-scss": "4.3.0",
-    "stylelint-selector-no-empty": "1.0.9",
-    "stylelint-use-nesting": "4.0.0"
+    "stylelint-scss": "4.6.0",
+    "stylelint-use-nesting": "4.1.0"
+  },
+  "deprecatedDependencies": {
+    "stylelint-group-selectors": "1.0.9 is out of support. Add it back to the list if support for Stylelint v15+ is added",
+    "stylelint-selector-no-empty": "1.0.9 is out of support. Add it back to the list if support for Stylelint v15+ is added"
   },
   "publishConfig": {
     "access": "public"
