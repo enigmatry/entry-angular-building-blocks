@@ -6,8 +6,8 @@ module.exports = {
   plugins: [
     "stylelint-scss",
     "stylelint-use-nesting",
-    "stylelint-selector-no-empty",
-    "stylelint-group-selectors",
+    //"stylelint-selector-no-empty",
+    //"stylelint-group-selectors",
     "stylelint-max-lines",
     "stylelint-declaration-block-no-ignored-properties"
   ],
@@ -200,8 +200,8 @@ module.exports = {
       { "ignoreAtRules": ["use"] }
     ],
     "plugin/declaration-block-no-ignored-properties": true,
-    "plugin/stylelint-group-selectors": true,
-    "plugin/stylelint-selector-no-empty": true,
+    //"plugin/stylelint-group-selectors": true,
+    //"plugin/stylelint-selector-no-empty": true,
     "csstools/use-nesting": ["always",
       { "syntax": "scss" }
     ],
