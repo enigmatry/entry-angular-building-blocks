@@ -1,20 +1,20 @@
 'use strict';
 module.exports = {
   customSyntax: "postcss-scss",
-  ignoreAtRules: [ "else" ],
+  ignoreAtRules: ["else"],
   extends: "stylelint-config-property-sort-order-smacss",
   plugins: [
     "stylelint-scss",
     "stylelint-use-nesting",
-    "stylelint-selector-no-empty",
-    "stylelint-group-selectors",
+    //"stylelint-selector-no-empty",  => uncomment this line once this library is again compatible with stylelint v15+
+    //"stylelint-group-selectors",    => uncomment this line once this library is again compatible with stylelint v15+
     "stylelint-max-lines",
     "stylelint-declaration-block-no-ignored-properties"
   ],
   rules: {
     "alpha-value-notation": "number",
     "annotation-no-unknown": true,
-    "at-rule-allowed-list": [ "use", "for", "if", "else", "include", "extend", "return", "error", "each", "mixin", "function", "keyframes", "font-face", "forward", "at-root" ],
+    "at-rule-allowed-list": ["use", "for", "if", "else", "include", "extend", "return", "error", "each", "mixin", "function", "keyframes", "font-face", "forward", "at-root", "while"],
     "at-rule-name-case": "lower",
     "at-rule-name-space-after": "always",
     "at-rule-no-unknown": null,
@@ -51,6 +51,7 @@ module.exports = {
     "declaration-block-single-line-max-declarations": 1,
     "declaration-no-important": true,
     "declaration-property-max-values": {},
+    "declaration-property-value-no-unknown": null,
     "font-family-name-quotes": "always-unless-keyword",
     "font-family-no-duplicate-names": true,
     "font-family-no-missing-generic-family-keyword": true,
@@ -77,15 +78,16 @@ module.exports = {
     "max-empty-lines": 1,
     "max-line-length": [
       135,
-      { "ignore": [ "comments" ] }
+      { "ignore": ["comments"] }
     ],
     "max-nesting-depth": 3,
     "media-feature-colon-space-after": "always",
     "media-feature-colon-space-before": "never",
-    "media-feature-name-allowed-list": [ "min-width", "-ms-high-contrast" ],
+    "media-feature-name-allowed-list": ["min-width", "-ms-high-contrast"],
     "media-feature-name-case": "lower",
     "media-feature-name-no-unknown": true,
     "media-feature-parentheses-space-inside": "never",
+    "media-feature-range-notation": "context",
     "media-feature-range-operator-space-after": "always",
     "media-feature-range-operator-space-before": "always",
     "media-query-list-comma-newline-after": "never-multi-line",
@@ -107,8 +109,9 @@ module.exports = {
     "property-no-vendor-prefix": true,
     "rule-empty-line-before": [
       "always",
-      { "except": [ "after-single-line-comment", "first-nested" ] }
+      { "except": ["after-single-line-comment", "first-nested"] }
     ],
+    "selector-anb-no-unmatchable": true,
     "selector-attribute-brackets-space-inside": "never",
     "selector-attribute-operator-space-after": "always",
     "selector-attribute-operator-space-before": "always",
@@ -135,7 +138,7 @@ module.exports = {
     "selector-pseudo-element-colon-notation": "double",
     "selector-pseudo-element-no-unknown": [
       true,
-      { "ignorePseudoElements": [ "host", "ng-deep" ] }
+      { "ignorePseudoElements": ["host", "ng-deep"] }
     ],
     "selector-type-case": "lower",
     "selector-type-no-unknown": true,
@@ -143,7 +146,7 @@ module.exports = {
     "string-no-newline": true,
     "string-quotes": "single",
     "time-min-milliseconds": 100,
-    "unit-allowed-list": [ "px", "%", "em", "rem", "vw", "deg", "ms", "s" ],
+    "unit-allowed-list": ["px", "%", "em", "rem", "vw", "deg", "ms", "s"],
     "unit-case": "lower",
     "unit-no-unknown": true,
     "value-keyword-case": "lower",
@@ -160,7 +163,7 @@ module.exports = {
     "scss/at-function-parentheses-space-before": "never",
     "scss/at-function-named-arguments": [
       "never",
-      { "ignoreFunctions": [ "color.adjust" ] }
+      { "ignoreFunctions": ["color.adjust"] }
     ],
     "scss/at-if-closing-brace-newline-after": null,
     "scss/at-if-closing-brace-space-after": null,
@@ -175,7 +178,7 @@ module.exports = {
     "scss/comment-no-empty": true,
     "scss/function-no-unknown": [
       true,
-      { "ignoreFunctions": ["/^-/"] }
+      { "ignoreFunctions": ["/^-/", "/^mat\\./", "/^theming\\.mat/"] }
     ],
     "scss/function-quote-no-quoted-strings-inside": true,
     "scss/function-unquote-no-unquoted-strings-inside": true,
@@ -190,16 +193,18 @@ module.exports = {
     "scss/no-global-function-names": true,
     "scss/declaration-nested-properties": [
       "always",
-      { "except": [ "only-of-namespace" ] }
+      { "except": ["only-of-namespace"] }
     ],
     "scss/at-rule-no-unknown": [
       true,
-      { "ignoreAtRules": [ "use" ] }
+      { "ignoreAtRules": ["use"] }
     ],
     "plugin/declaration-block-no-ignored-properties": true,
-    "plugin/stylelint-group-selectors": true,
-    "plugin/stylelint-selector-no-empty": true,
-    "csstools/use-nesting": "always",
+    //"plugin/stylelint-group-selectors": true,   => uncomment this line once this library is again compatible with stylelint v15+
+    //"plugin/stylelint-selector-no-empty": true, => uncomment this line once this library is again compatible with stylelint v15+
+    "csstools/use-nesting": ["always",
+      { "syntax": "scss" }
+    ],
     "pitcher/max-lines": 135
   }
 };

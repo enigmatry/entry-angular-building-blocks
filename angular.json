@@ -3,23 +3,23 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-building-blocks": {
+    "@enigmatry/entry-table": {
       "projectType": "library",
-      "root": "projects/angular-building-blocks",
-      "sourceRoot": "projects/angular-building-blocks",
-      "prefix": "enigmatry",
+      "root": "projects/entry-table",
+      "sourceRoot": "projects/entry-table/src",
+      "prefix": "entry",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "project": "projects/angular-building-blocks/ng-package.json"
+            "project": "projects/entry-table/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/angular-building-blocks/tsconfig.lib.prod.json"
+              "tsConfig": "projects/entry-table/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/angular-building-blocks/tsconfig.lib.json"
+              "tsConfig": "projects/entry-table/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -27,39 +27,39 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/angular-building-blocks/test.ts",
-            "tsConfig": "projects/angular-building-blocks/tsconfig.spec.json",
-            "karmaConfig": "projects/angular-building-blocks/karma.conf.js"
+            "main": "projects/entry-table/src/test.ts",
+            "tsConfig": "projects/entry-table/tsconfig.spec.json",
+            "karmaConfig": "projects/entry-table/karma.conf.js"
           }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "lintFilePatterns": [
-              "projects/angular-building-blocks/**/*.ts",
-              "projects/angular-building-blocks/**/*.html"
+              "projects/entry-table/**/*.ts",
+              "projects/entry-table/**/*.html"
             ]
           }
         }
       }
     },
-    "qti-rendering": {
+    "@enigmatry/entry-form": {
       "projectType": "library",
-      "root": "projects/qti-rendering",
-      "sourceRoot": "projects/qti-rendering/src",
-      "prefix": "enigmatry",
+      "root": "projects/entry-form",
+      "sourceRoot": "projects/entry-form/src",
+      "prefix": "entry",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "project": "projects/qti-rendering/ng-package.json"
+            "project": "projects/entry-form/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/qti-rendering/tsconfig.lib.prod.json"
+              "tsConfig": "projects/entry-form/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/qti-rendering/tsconfig.lib.json"
+              "tsConfig": "projects/entry-form/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -67,64 +67,23 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/qti-rendering/src/test.ts",
-            "tsConfig": "projects/qti-rendering/tsconfig.spec.json",
-            "karmaConfig": "projects/qti-rendering/karma.conf.js"
+            "main": "projects/entry-form/src/test.ts",
+            "tsConfig": "projects/entry-form/tsconfig.spec.json",
+            "karmaConfig": "projects/entry-form/karma.conf.js"
           }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "lintFilePatterns": [
-              "projects/qti-rendering/**/*.ts",
-              "projects/qti-rendering/**/*.html"
-            ]
-          }
-        }
-      }
-    },
-    "formly-extensions": {
-      "projectType": "library",
-      "root": "projects/formly-extensions",
-      "sourceRoot": "projects/formly-extensions/src",
-      "prefix": "enigmatry",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "project": "projects/formly-extensions/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/formly-extensions/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "projects/formly-extensions/tsconfig.lib.json"
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/formly-extensions/src/test.ts",
-            "tsConfig": "projects/formly-extensions/tsconfig.spec.json",
-            "karmaConfig": "projects/formly-extensions/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "projects/formly-extensions/**/*.ts",
-              "projects/formly-extensions/**/*.html"
+              "projects/entry-form/**/*.ts",
+              "projects/entry-form/**/*.html"
             ]
           }
         }
       }
     }
   },
-  "defaultProject": "angular-building-blocks",
   "cli": {
     "defaultCollection": "@angular-eslint/schematics"
   }

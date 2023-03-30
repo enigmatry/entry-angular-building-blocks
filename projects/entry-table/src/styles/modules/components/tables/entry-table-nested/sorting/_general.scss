@@ -1,0 +1,19 @@
+@use '@enigmatry/scss-foundation/src/modules/map';
+
+@mixin generate-sorting-from($theme) {
+    .mat-sort-header-sorted {
+        font: {
+            size: map.value-from($theme, 'column.sorted.font-size');
+            weight: map.value-from($theme, 'column.sorted.font-weight');
+        }
+        color: map.value-from($theme, 'column.sorted.color');
+    }
+
+    .mat-sort-header-arrow {
+        color: map.value-from($theme, 'column.sorted.color');
+    }
+
+    .mat-sort-header-content {
+        text-align: map.value-from($theme, 'column.sorted.content-align');
+    }
+}

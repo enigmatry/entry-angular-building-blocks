@@ -1,9 +1,32 @@
 {
-    "extends": "@enigmatry/stylelint-config",
-    "rules": {
-      "value-keyword-case": [
-        "lower",
-        { "ignoreKeywords": ["largeDesktop", "extraLargeDesktop"] }
-      ]
-    }
+  "extends": "@enigmatry/stylelint-config",
+  "rules": {
+    "value-keyword-case": [
+      "lower",
+      {
+        "ignoreKeywords": [
+          "largeDesktop",
+          "extraLargeDesktop"
+        ]
+      }
+    ],
+    "annotation-no-unknown": [
+      true,
+      {
+        "ignoreAnnotations": [
+          "default"
+        ]
+      }
+    ],
+    "media-feature-name-allowed-list": ["width"],
+    "scss/no-duplicate-dollar-variables": [
+      true,
+      {
+        "ignoreInsideAtRules": [
+          "each",
+          "while"
+        ]
+      }
+    ]
   }
+}

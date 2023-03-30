@@ -6,29 +6,13 @@
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "paths": {
-      "@enigmatry/angular-building-blocks": [
-        "dist/angular-building-blocks/*",
-        "dist/angular-building-blocks"
+      "@enigmatry/entry-form": [
+        "dist/enigmatry/entry-form/enigmatry-entry-form",
+        "dist/enigmatry/entry-form"
       ],
-      "@enigmatry/angular-building-blocks/*": [
-        "projects/angular-building-blocks/*",
-        "projects/angular-building-blocks"
-      ],
-      "@enigmatry/qti-rendering/*": [
-        "projects/qti-rendering/*",
-        "projects/qti-rendering"
-      ],
-      "@enigmatry/qti-rendering": [
-        "dist/qti-rendering/*",
-        "dist/qti-rendering"
-      ],
-      "@enigmatry/formly-extensions/*": [
-        "projects/formly-extensions/*",
-        "projects/formly-extensions"
-      ],
-      "@enigmatry/formly-extensions": [
-        "dist/formly-extensions/*",
-        "dist/formly-extensions"
+      "@enigmatry/entry-table": [
+        "dist/enigmatry/entry-table/enigmatry-entry-table",
+        "dist/enigmatry/entry-table"
       ]
     },
     "strict": false,

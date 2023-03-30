@@ -1,0 +1,34 @@
+{
+  "name": "@enigmatry/entry-form",
+  "version": "0.0.1",
+  "author": "Enigmatry",
+  "description": "Entry form components and types",
+  "homepage": "https://github.com/enigmatry/entry-angular-building-blocks/tree/master/projects/entry-form#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/enigmatry/entry-angular-building-blocks.git"
+  },
+  "license": "Apache-2.0",
+  "peerDependencies": {
+    "@angular/common": ">=13.2.0",
+    "@angular/core": ">=13.2.0",
+    "@ngx-formly/core": "^5.12.0",
+    "@ngx-formly/material": "^5.12.0"
+  },
+  "scripts": {
+    "compile-scss": "sass --style=compressed --load-path=styles src/styles/partials/theming.scss src/styles/dist/main.css",
+    "lint": "stylelint --fix styles/**/*.scss"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@enigmatry/scss-foundation": "1.1.4",
+    "@enigmatry/stylelint-config": "1.1.4",
+    "sass": "^1.44.0",
+    "stylelint": "14.14.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

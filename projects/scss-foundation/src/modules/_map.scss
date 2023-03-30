@@ -1,0 +1,53 @@
+@use 'sass:list';
+@use 'sass:string';
+@use 'sass:map';
+@use 'variables' as vars;
+
+@function value-from($object, $path) {
+
+	@if type-of($object) != map {
+		@return -error('Please provide valid object! Given value: ' + $object);
+	}
+
+	@if type-of($path) != string {
+		@return -error('Please provide valid path! Given value: ' + $path);
+	}
+
+	$keys: -split($path);
+
+	$result: $object;
+
+	@each $key in $keys {
+		@if (map.has-key($result, $key) == false) {
+			@return -error('Path segment must be any of following values: ' + map.keys($result) + '. Given path segment: ' + $key);
+		}
+        
+		$result: map.get($result, $key);
+	}
+
+	@return $result;
+}
+
+@function -split($string, $separator: '.') {
+	$result: ();
+	$current-index: string.index($string, $separator);
+	@while $current-index != null {
+		$key: string.slice($string, 1, $current-index - 1);
+		$result: list.append($result, $key);
+		$string: string.slice($string, $current-index + 1);
+		$current-index: string.index($string, $separator);
+	}
+
+	/* stylelint-disable-next-line scss/no-duplicate-dollar-variables */
+	$result: list.append($result, $string);
+
+	@return $result;
+}
+
+@function -error($error-message) {
+	@if vars.$testing == true {
+		@return $error-message;
+	}
+
+	@error $error-message;
+}

@@ -1,0 +1,29 @@
+@use '@enigmatry/scss-foundation/src/modules/map';
+@use '@enigmatry/scss-foundation/src/modules/lists/row-coloring' as list;
+
+@mixin generate-rows-from($theme) {
+
+    .mat-row {
+        @include list.row-coloring(map.value-from($theme, 'row.odd-even-background'), map.value-from($theme, 'row.odd-even-row'));
+
+        &.selected {
+            background-color: map.value-from($theme, 'row.selected-background-color');
+    
+            .mat-cell, a {
+                color: map.value-from($theme, 'row.selected-color');
+            }
+    
+            .mat-checkbox-checked .mat-checkbox-background {
+                background-color: map.value-from($theme, 'checkbox.background-color-selected');
+    
+                .mat-checkbox-checkmark-path {
+                    stroke: map.value-from($theme, 'checkbox.checkmark-color-selected')!important;
+                }
+            }
+        }
+    }
+
+    .mat-row-disabled {
+        background-color: map.value-from($theme, 'row.disabled');
+    }
+}

@@ -1,0 +1,7 @@
+@use 'entry-table-nested/children' as children;
+@use 'no-result/general' as no-result;
+
+@mixin generate-table-from($theme) {
+    @include children.generate-children-from($theme);
+    @include no-result.generate-no-result-from($theme);
+}

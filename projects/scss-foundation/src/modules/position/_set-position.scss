@@ -13,8 +13,5 @@
 		}
 	}
 	position: $position;
-	top: $top;
-	right: $right;
-	bottom: $bottom;
-	left: $left;
+	inset: $top $right $bottom $left;
 }
