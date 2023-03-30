@@ -1,3 +1,4 @@
+/* stylelint-disable shorthand-property-no-redundant-values */
 @use '../../node_modules/sass-true/sass/true';
 @use '../../src/modules/position/fixed';
 
@@ -9,10 +10,7 @@
 			}
 			@include true.expect() {
 				position: fixed;
-				top: 0;
-				right: 0;
-				bottom: 0;
-				left: 0;
+				inset: 0 0 0 0;
 			}
 		}
 	}
@@ -24,10 +22,7 @@
 			}
 			@include true.expect() {
 				position: fixed;
-				top: 5px;
-				right: 15px;
-				bottom: 20px;
-				left: 1px;
+				inset: 5px 15px 20px 1px;
 			}
 		}
 	}
@@ -41,10 +36,7 @@
 			}
 			@include true.expect() {
 				position: fixed;
-				top: unset;
-				right: unset;
-				bottom: unset;
-				left: unset;
+				inset: unset unset unset unset;
 			}
 		}
 	}
@@ -56,10 +48,7 @@
 			}
 			@include true.expect() {
 				position: fixed;
-				top: 5px;
-				right: 15px;
-				bottom: 20px;
-				left: unset;
+				inset: 5px 15px 20px unset;
 			}
 		}
 	}

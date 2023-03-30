@@ -13,10 +13,7 @@ Alignment utilities for absolute positioning of content.
 All arguments are optional and default to 0. Sets following properties:
 ```
 	position: absolute;
-	top: $top;
-	right: $right;
-	bottom: $bottom;
-	left: $left;
+	inset: $top, $right, $bottom, $left;
 ```
 
 - Replaces the several most common lines in absolute positioning for unset values with just one liner.
