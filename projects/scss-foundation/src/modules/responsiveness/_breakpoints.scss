@@ -1,4 +1,3 @@
-/* stylelint-disable-next-line annotation-no-unknown */
 $breakpoints: () !default;
 
 @use 'sass:list';
@@ -35,7 +34,7 @@ $breakpoints: () !default;
 
 @mixin apply-on($given-size) {
 	/* stylelint-disable-next-line at-rule-allowed-list */
-	@media only screen and (min-width: -get-size($given-size)) {
+	@media only screen and (width >= -get-size($given-size)) {
 		@content;
 	}
 }
