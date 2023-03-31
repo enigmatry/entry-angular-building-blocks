@@ -1,21 +1,21 @@
-@use '../../node_modules/sass-true/sass/true';
-@use '../../src/modules/variables';
+@use '../../src/modules/variables' as vars;
 @use '../../src/modules/text/modification';
+@use '../../../node_modules/sass-true';
 
-variables.$testing: true;
+vars.$testing: true;
 
-@include true.describe('capitalize(word)') {
-	@include true.it('should throw if word is not a string') {
-		$expected-message: 'Please provide string parameter! Given value: ';
-		@include true.assert-equal(modification.capitalize(5), $expected-message + '5');
-		@include true.assert-equal(modification.capitalize(null), $expected-message);
-		@include true.assert-equal(modification.capitalize(#FFEEAA), $expected-message + '#FFEEAA');
+@include sass-true.describe('capitalize(word)') {
+	@include sass-true.it('should throw if word is not a string') {
+		$expected-message: 'ERROR [capitalize()]: Please provide string parameter! Given value: ';
+		@include sass-true.assert-equal(modification.capitalize(5), $expected-message + '5');
+		@include sass-true.assert-equal(modification.capitalize(null), $expected-message);
+		@include sass-true.assert-equal(modification.capitalize(#FFEEAA), $expected-message + '#FFEEAA');
 	}
 
-	@include true.it('should return string with first letter capitalized') {
-		@include true.assert-equal(modification.capitalize('house'), 'House');
-		@include true.assert-equal(modification.capitalize('dOg'),'DOg');
-		@include true.assert-equal(modification.capitalize('Dang'), 'Dang');
-		@include true.assert-equal(modification.capitalize('4pple'), '4pple');
+	@include sass-true.it('should return string with first letter capitalized') {
+		@include sass-true.assert-equal(modification.capitalize('house'), 'House');
+		@include sass-true.assert-equal(modification.capitalize('dOg'),'DOg');
+		@include sass-true.assert-equal(modification.capitalize('Dang'), 'Dang');
+		@include sass-true.assert-equal(modification.capitalize('4pple'), '4pple');
 	}
 }

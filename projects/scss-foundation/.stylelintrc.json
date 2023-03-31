@@ -18,7 +18,7 @@
         ]
       }
     ],
-    "media-feature-name-allowed-list": ["width"],
+    "media-feature-name-allowed-list": ["min-width", "width"],
     "scss/no-duplicate-dollar-variables": [
       true,
       {

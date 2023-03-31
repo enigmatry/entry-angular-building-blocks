@@ -3,34 +3,47 @@ $breakpoints: () !default;
 @use 'sass:string';
 @use 'sass:map';
 @use 'sass:math';
-@use '../../modules/variables' as variables;
+@use 'sass:meta';
+@use '../../../node_modules/sass-true';
+@use '../../../node_modules/sass-true/sass/throw';
+@use '../../modules/variables' as vars;
 @forward '../../modules/responsiveness/breakpoints' with (
 	$breakpoints: $breakpoints
 );
 @use '../../modules/responsiveness/breakpoints';
-@use '../../modules/text/modification' as text-modification;
 @use 'grid-core';
 
 @if length($breakpoints) == 0 {
-	$breakpoints: variables.$default-breakpoints;
+	$breakpoints: vars.$default-breakpoints;
 }
 
 $column-prefix: 'col-';
 $offset-prefix: 'offset-';
 
 @mixin generate($spacing:0, $divisions: 12) {
-	@if type-of($divisions) != number {
-		@error 'Please provide number parameter for divisions! Given value: ' + $divisions;
+	@if meta.type-of($spacing) != number {
+		@include throw.error(
+			$message: 'Please provide number parameter! Given value: ' + $spacing,
+			$source: 'generate($spacing, $divisions)',
+			$catch: vars.$testing
+		);
 	}
-
-	@if ($divisions < 2 or $divisions > 1000) {
-		@error 'Please provide positive number for divisions! Given value: ' + $divisions;
+	@else {
+		@if ((meta.type-of($divisions) != number) or (($divisions < 2) or ($divisions > 1000))) {
+			@include throw.error(
+				$message: 'Please provide positive number for divisions, between 2 and 1000! Given value: ' + $divisions,
+				$source: 'generate($spacing, $divisions)',
+				$catch: vars.$testing
+			);
+		}
+		
+		@else {
+			@include grid-core.generate($column-prefix, $offset-prefix, $spacing);
+			@include grid-core.generate-reverse-row($breakpoints);
+			@include -unresponsive-grid-from($spacing, $divisions);
+			@include -responsive-grid-from($spacing, $divisions);
+		}
 	}
-
-	@include grid-core.generate($column-prefix, $offset-prefix, $spacing);
-	@include grid-core.generate-reverse-row($breakpoints);
-	@include -unresponsive-grid-from($spacing, $divisions);
-	@include -responsive-grid-from($spacing, $divisions);
 }
 
 @function -calculate-ratio($counter, $divisions) {
