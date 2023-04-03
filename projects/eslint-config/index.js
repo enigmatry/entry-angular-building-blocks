@@ -1,15 +1,16 @@
 'use strict';
 module.exports = {
-	root: true,
-	env: {
-		browser: true,
-		jest: true,
-		node: true
-	},
-	overrides: [
+  root: true,
+  env: {
+    browser: true,
+    jest: true,
+    node: true
+  },
+  overrides: [
     {
-      files: [ "*.ts" ],
-      plugins: [ "@typescript-eslint", "@angular-eslint", "no-loops", "no-secrets", "no-unsanitized", "promise", "unused-imports", "xss", "deprecation" ],
+      files: ["*.ts"],
+      plugins: ["@typescript-eslint", "@angular-eslint", "no-loops", "no-secrets", 
+      "import", "no-unsanitized", "promise", "unused-imports", "xss", "deprecation"],
       parser: "@typescript-eslint/parser",
       parserOptions: {
         project: [
@@ -22,11 +23,11 @@ module.exports = {
         "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
-	  rules: {
-	    // The rules below are listed in the order they appear on the eslint
-		// rules page. All rules are listed to make it easier to keep in sync
-		// as new ESLint rules are added.
-		// http://eslint.org/docs/rules/ 
+      rules: {
+        // The rules below are listed in the order they appear on the eslint
+        // rules page. All rules are listed to make it easier to keep in sync
+        // as new ESLint rules are added.
+        // http://eslint.org/docs/rules/ 
         "for-direction": "error",
         "getter-return": "error",
         "no-async-promise-executor": "error",
@@ -71,7 +72,6 @@ module.exports = {
         "require-atomic-updates": "error",
         "use-isnan": "error",
         "valid-typeof": "error",
-        "accessor-pairs": "error",
         "array-callback-return": "error",
         "block-scoped-var": "error",
         "class-methods-use-this": "off",
@@ -81,12 +81,12 @@ module.exports = {
         "default-case": "warn",
         "default-case-last": "error",
         "default-param-last": "off",
-        "dot-location": [ "error", "property" ],
+        "dot-location": ["error", "property"],
         "dot-notation": "off",
         "eqeqeq": "error",
         "grouped-accessor-pairs": "warn",
         "guard-for-in": "warn",
-        "max-classes-per-file": [ "error", 1 ],
+        "max-classes-per-file": ["error", 1],
         "no-alert": "error",
         "no-caller": "error",
         "no-case-declarations": "error",
@@ -134,9 +134,11 @@ module.exports = {
         "no-unmodified-loop-condition": "error",
         "no-unused-expressions": "off",
         "no-unused-labels": "error",
+        "no-unused-private-class-members": "error",
         "no-useless-call": "error",
         "no-useless-catch": "error",
         "no-useless-concat": "error",
+        "no-useless-empty-export": "off",
         "no-useless-escape": "error",
         "no-useless-return": "error",
         "no-void": "error",
@@ -164,7 +166,7 @@ module.exports = {
         "no-unused-vars": "off",
         "no-use-before-define": "off",
         "array-bracket-newline": "off",
-        "array-bracket-spacing": [ "error", "never" ],
+        "array-bracket-spacing": ["error", "never"],
         "array-element-newline": "off",
         "block-spacing": "error",
         "brace-style": "off",
@@ -192,24 +194,17 @@ module.exports = {
         ],
         "id-match": "off",
         "implicit-arrow-linebreak": "off",
-        "indent": [ "off", "tab" ],
+        "import/no-duplicates": "off",
+        "indent": ["off", "tab"],
         "jsx-quotes": "error",
         "key-spacing": "error",
         "keyword-spacing": "off",
-        "line-comment-position": "error",
-        "linebreak-style": "off",
-        "lines-around-comment": [
-          "error",
-          {
-            "allowClassStart": true
-          }
-        ],
         "lines-between-class-members": [
           "off",
           "always",
           { "exceptAfterSingleLine": true }
         ],
-        "max-depth": [ "error", 3 ],
+        "max-depth": ["error", 3],
         "max-len": [
           "error",
           {
@@ -217,11 +212,11 @@ module.exports = {
             "ignoreComments": true
           }
         ],
-        "max-lines": [ "error", 150 ],
-        "max-lines-per-function": [ "error", 40 ],
-        "max-nested-callbacks": [ "error", 3 ],
-        "max-params": [ "error", 8 ],
-        "max-statements": [ "error", 20 ],
+        "max-lines": ["error", 150],
+        "max-lines-per-function": ["error", 40],
+        "max-nested-callbacks": ["error", 3],
+        "max-params": ["error", 8],
+        "max-statements": ["error", 20],
         "max-statements-per-line": "error",
         "multiline-ternary": "off",
         "new-cap": "off",
@@ -249,7 +244,7 @@ module.exports = {
         "no-underscore-dangle": "off",
         "no-unneeded-ternary": "error",
         "no-whitespace-before-property": "error",
-        "nonblock-statement-body-position": [ "error", "below" ],
+        "nonblock-statement-body-position": ["error", "below"],
         "object-curly-newline": "off",
         "object-curly-spacing": "off",
         "object-property-newline": [
@@ -260,11 +255,11 @@ module.exports = {
         "one-var-declaration-per-line": "off",
         "operator-assignment": "error",
         "operator-linebreak": "off",
-        "padded-blocks": [ "error", "never" ],
+        "padded-blocks": ["error", "never"],
         "padding-line-between-statements": "off",
         "prefer-exponentiation-operator": "off",
         "prefer-object-spread": "off",
-        "quote-props": [ "error", "as-needed" ],
+        "quote-props": ["error", "as-needed"],
         "quotes": "off",
         "semi": "off",
         "semi-spacing": "error",
@@ -298,7 +293,8 @@ module.exports = {
         "no-confusing-arrow": "off",
         "no-const-assign": "error",
         "no-dupe-class-members": "off",
-        "no-duplicate-imports": "off",
+        "no-empty-static-block": "off",
+        "no-new-native-nonconstructor": "error",
         "no-new-symbol": "error",
         "no-restricted-exports": "off",
         "no-restricted-imports": "off",
@@ -324,21 +320,25 @@ module.exports = {
         "no-loops/no-loops": 2,
         "no-secrets/no-secrets": [
           "error",
-          { "ignoreContent": [ "__zone_symbol__UNPATCHED_EVENTS" ] }
+          { "ignoreContent": ["__zone_symbol__UNPATCHED_EVENTS"] }
         ],
         "no-unsanitized/method": "error",
         "no-unsanitized/property": "error",
-        "promise/always-return": "error",
+        "promise/always-return": [
+          "error",
+          { "ignoreLastCallback": true }
+        ],
         "promise/no-return-wrap": [
           "error",
           { "allowReject": true }
         ],
+        "promise/no-multiple-resolved": "error",
         "promise/param-names": "error",
         "promise/catch-or-return": [
           "error",
           {
             "allowThen": true,
-            "terminationMethod": [ "catch", "finally" ]
+            "terminationMethod": ["catch", "finally"]
           }
         ],
         "promise/no-native": "off",
@@ -362,12 +362,12 @@ module.exports = {
         "xss/no-mixed-html": [
           2,
           {
-            "htmlVariableRules": [ "AsHtml", "HtmlEncoded/i", "^html$" ],
-            "htmlFunctionRules": [ ".asHtml/i", "toHtml" ],
+            "htmlVariableRules": ["AsHtml", "HtmlEncoded/i", "^html$"],
+            "htmlFunctionRules": [".asHtml/i", "toHtml"],
             "functions": {
               "$": {
                 "htmlInput": true,
-                "safe": [ "document", "this" ]
+                "safe": ["document", "this"]
               },
               ".html": {
                 "htmlInput": true,
@@ -388,46 +388,95 @@ module.exports = {
             "escapeFunc": "escapeHref"
           }
         ],
-        "@typescript-eslint/brace-style": [ "error" ],
-        "@typescript-eslint/comma-dangle": [ "error", "never" ],
-        "@typescript-eslint/comma-spacing": [ "error" ],
-        "@typescript-eslint/consistent-type-exports": [ 
-          "error", 
+        "import/export": ["error"],
+        "import/no-deprecated": ["error"],
+        "import/no-empty-named-blocks": ["error"],
+        "import/no-extraneous-dependencies": ["error"],
+        "import/no-mutable-exports": ["error"],
+        "import/no-named-as-default": ["error"],
+        "import/no-named-as-default-member": ["error"],
+        "import/no-unused-modules": ["off"],
+        "import/no-amd": ["error"],
+        "import/no-commonjs": ["error"],
+        "import/no-import-module-exports": ["error"],
+        "import/no-nodejs-modules": ["off"],
+        "import/unambiguous": ["error"],
+        "import/default": ["error"],
+        "import/named": ["off"],
+        "import/namespace": ["error"],
+        "import/no-absolute-path": ["off"],
+        "import/no-cycle": ["error"],
+        "import/no-dynamic-require": ["off"],
+        "import/no-internal-modules": ["off"],
+        "import/no-relative-packages": ["off"],
+        "import/no-relative-parent-imports": ["off"],
+        "import/no-restricted-paths": ["off"],
+        "import/no-self-import": ["error"],
+        "import/no-unresolved": ["off"],
+        "import/no-useless-path-segments": ["error"],
+        "import/no-webpack-loader-syntax": ["error"],
+        "import/consistent-type-specifier-style": ["off"],
+        "import/dynamic-import-chunkname": ["off"],
+        "import/exports-last": ["off"],
+        "import/extensions": ["off", "never"],
+        "import/first": ["error"],
+        "import/max-dependencies": ["error", {
+          "max": 20,
+          "ignoreTypeImports": false,
+        }],
+        "import/newline-after-import": ["error"],
+        "import/no-anonymous-default-export": ["error"],
+        "import/no-default-export": ["off"],
+        "import/no-duplicates": ["error"],
+        "import/no-named-default": ["error"],
+        "import/no-named-export": ["off"],
+        "import/no-namespace": ["off"],
+        "import/no-unassigned-import": ["off"],
+        "import/order": ["error", { "alphabetize": { "order": "asc", "caseInsensitive": true } }],
+        "import/prefer-default-export": ["off"],
+        "@typescript-eslint/brace-style": ["error"],
+        "@typescript-eslint/comma-dangle": ["error", "never"],
+        "@typescript-eslint/comma-spacing": ["error"],
+        "@typescript-eslint/consistent-type-exports": [
+          "error",
           {
             "fixMixedExportsWithInlineTypeSpecifier": true
           }
         ],
-        "@typescript-eslint/consistent-type-imports": [ "off" ],
-        "@typescript-eslint/default-param-last": [ "error" ],
-        "@typescript-eslint/dot-notation": [ "error" ],
-        "@typescript-eslint/func-call-spacing": [ "error" ],
-        "@typescript-eslint/indent": [ "off", "tab" ],
-        "@typescript-eslint/init-declarations": [ "off" ],
-        "@typescript-eslint/keyword-spacing": [ "error" ],
+        "@typescript-eslint/consistent-type-imports": ["off"],
+        "@typescript-eslint/default-param-last": ["error"],
+        "@typescript-eslint/dot-notation": ["error"],
+        "@typescript-eslint/func-call-spacing": ["error"],
+        "@typescript-eslint/indent": ["off", "tab"],
+        "@typescript-eslint/init-declarations": ["off"],
+        "@typescript-eslint/keyword-spacing": ["error"],
         "@typescript-eslint/lines-between-class-members": [
           "error",
           "always",
           { "exceptAfterSingleLine": true }
         ],
-        "@typescript-eslint/no-array-constructor": [ "error" ],
-        "@typescript-eslint/no-dupe-class-members": [ "error" ],
-        "@typescript-eslint/no-duplicate-imports": [ "error" ],
-        "@typescript-eslint/no-empty-function": [ "error" ],
-        "@typescript-eslint/no-extra-parens": [ "error" ],
-        "@typescript-eslint/no-extra-semi": [ "error" ],
-        "@typescript-eslint/no-implied-eval": [ "error" ],
-        "@typescript-eslint/no-invalid-this": [ "error" ],
-        "@typescript-eslint/no-loop-func": [ "error" ],
-        "@typescript-eslint/no-loss-of-precision": [ "error" ],
+        "@typescript-eslint/no-array-constructor": ["error"],
+        "@typescript-eslint/no-dupe-class-members": ["error"],
+        "@typescript-eslint/no-empty-function": ["error"],
+        "@typescript-eslint/no-extra-parens": ["error"],
+        "@typescript-eslint/no-extra-semi": ["error"],
+        "@typescript-eslint/no-implied-eval": ["error"],
+        "@typescript-eslint/no-import-type-side-effects": "error",
+        "@typescript-eslint/no-invalid-this": ["error"],
+        "@typescript-eslint/no-loop-func": ["error"],
+        "@typescript-eslint/no-loss-of-precision": ["error"],
         "@typescript-eslint/no-magic-numbers": [
           "error",
           {
-            "ignore": [ 0, 1 ],
+            "ignore": [0, 1],
+            "enforceConst": true,
             "ignoreArrayIndexes": true,
+            "ignoreClassFieldInitialValues": true,
             "ignoreDefaultValues": true,
             "ignoreEnums": true,
+            "ignoreNumericLiteralTypes": true,
             "ignoreReadonlyClassProperties": true,
-            "enforceConst": true
+            "ignoreTypeIndexes": true
           }
         ],
         "@typescript-eslint/no-meaningless-void-operator": [
@@ -436,34 +485,38 @@ module.exports = {
             "checkNever": false
           }
         ],
-        "@typescript-eslint/no-non-null-assertion": [ "error" ],
-        "@typescript-eslint/no-redeclare": [ "error" ],
-        "@typescript-eslint/no-restricted-imports": [ "off" ],
-        "@typescript-eslint/no-shadow": [ "error" ],
-        "@typescript-eslint/no-throw-literal": [ "error" ],
-        "@typescript-eslint/no-unused-expressions": [ "error" ],
+        "@typescript-eslint/no-mixed-enums": "error",
+        "@typescript-eslint/no-non-null-assertion": ["error"],
+        "@typescript-eslint/no-redeclare": ["error"],
+        "@typescript-eslint/no-redundant-type-constituents": ["error"],
+        "@typescript-eslint/no-restricted-imports": ["off"],
+        "@typescript-eslint/no-shadow": ["error"],
+        "@typescript-eslint/no-throw-literal": ["error"],
+        "@typescript-eslint/no-unsafe-declaration-merging": ["error"],
+        "@typescript-eslint/no-unused-expressions": ["error"],
         "@typescript-eslint/no-unused-vars": [
           "error",
           { "argsIgnorePattern": "^_" }
         ],
-        "@typescript-eslint/no-use-before-define": [ "error" ],
-        "@typescript-eslint/no-useless-constructor": [ "error" ],
-        "@typescript-eslint/object-curly-spacing": [ "error", "always" ],
+        "@typescript-eslint/no-use-before-define": ["error"],
+        "@typescript-eslint/no-useless-constructor": ["error"],
+        "@typescript-eslint/object-curly-spacing": ["error", "always"],
+        "@typescript-eslint/parameter-properties": "off",
         "@typescript-eslint/quotes": [
           "error",
           "single",
           { "allowTemplateLiterals": true }
         ],
-        "@typescript-eslint/require-await": [ "error" ],
-        "@typescript-eslint/return-await": [ "error" ],
-        "@typescript-eslint/semi": [ "error" ],
-        "@typescript-eslint/space-before-function-paren": [ "error", "never" ],
-        "@typescript-eslint/space-infix-ops": [ "error" ],
+        "@typescript-eslint/require-await": ["error"],
+        "@typescript-eslint/return-await": ["error"],
+        "@typescript-eslint/semi": ["error"],
+        "@typescript-eslint/space-before-function-paren": ["error", "never"],
+        "@typescript-eslint/space-infix-ops": ["error"],
         "@angular-eslint/component-selector": [
           "error",
           {
             "type": "element",
-            "prefix": [ "app", "enigmatry", "appg" ],
+            "prefix": ["app", "enigmatry", "appg"],
             "style": "kebab-case"
           }
         ],
@@ -471,18 +524,18 @@ module.exports = {
           "error",
           {
             "type": "attribute",
-            "prefix": [ "app", "enigmatry", "appg" ],
+            "prefix": ["app", "enigmatry", "appg"],
             "style": "camelCase"
           }
-      ],
+        ],
         "deprecation/deprecation": "error"
       }
-	},
+    },
     {
-      files: [ "*.html" ],
-      extends: [ "plugin:@angular-eslint/template/recommended" ],
+      files: ["*.html"],
+      extends: ["plugin:@angular-eslint/template/recommended"],
       parser: "@angular-eslint/template-parser",
-      plugins: [ "@angular-eslint/template" ]
+      plugins: ["@angular-eslint/template"]
     }
   ]
 };
