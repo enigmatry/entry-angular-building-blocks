@@ -12,6 +12,10 @@
 			@error 'Please provide the right parameters for position (number or 'unset')! Given value: ' + $position;
 		}
 	}
+
 	position: $position;
-	inset: $top $right $bottom $left;
+	top: $top;
+	right: $right;
+	bottom: $bottom;
+	left: $left;
 }
