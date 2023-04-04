@@ -13,7 +13,14 @@ module.exports = {
   ],
   rules: {
     "alpha-value-notation": "number",
-    "annotation-no-unknown": true,
+    "annotation-no-unknown": [
+      true,
+      {
+        "ignoreAnnotations": [
+          "default"
+        ]
+      }
+    ],
     "at-rule-allowed-list": ["use", "for", "if", "else", "include", "extend", "return", "error", "each", "mixin", "function", "keyframes", "font-face", "forward", "at-root", "while"],
     "at-rule-name-case": "lower",
     "at-rule-name-space-after": "always",
@@ -83,7 +90,7 @@ module.exports = {
     "max-nesting-depth": 3,
     "media-feature-colon-space-after": "always",
     "media-feature-colon-space-before": "never",
-    "media-feature-name-allowed-list": ["min-width", "-ms-high-contrast"],
+    "media-feature-name-allowed-list": ["min-width", "width", "-ms-high-contrast"],
     "media-feature-name-case": "lower",
     "media-feature-name-no-unknown": true,
     "media-feature-parentheses-space-inside": "never",
@@ -188,7 +195,15 @@ module.exports = {
     "scss/partial-no-import": true,
     "scss/selector-no-redundant-nesting-selector": true,
     "scss/selector-no-union-class-name": true,
-    "scss/no-duplicate-dollar-variables": true,
+    "scss/no-duplicate-dollar-variables": [
+      true,
+      {
+        "ignoreInsideAtRules": [
+          "each",
+          "while"
+        ]
+      }
+    ],
     "scss/no-duplicate-mixins": true,
     "scss/no-global-function-names": true,
     "scss/declaration-nested-properties": [
