@@ -1,3 +1,4 @@
+/* stylelint-disable declaration-block-no-redundant-longhand-properties */
 @use '../../node_modules/sass-true/sass/true';
 @use '../../src/modules/position/set-position' as position;
 
@@ -9,7 +10,10 @@
 			}
 			@include true.expect() {
 				position: absolute;
-				inset: 5px 3em 14rem -8px;
+				top: 5px;
+				right: 3em;
+				bottom: 14rem;
+				left: -8px;
 			}
 		}
 	}
@@ -21,7 +25,10 @@
 			}
 			@include true.expect() {
 				position: fixed;
-				inset: 5px 1px 1em 100px;
+				top: 5px;
+				right: 1px;
+				bottom: 1em;
+				left: 100px;
 			}
 		}
 	}
@@ -33,7 +40,10 @@
 			}
 			@include true.expect() {
 				position: static;
-				inset: 5px 1px 1em 100px;
+				top: 5px;
+				right: 1px;
+				bottom: 1em;
+				left: 100px;
 			}
 		}
 	}
@@ -45,7 +55,10 @@
 			}
 			@include true.expect() {
 				position: relative;
-				inset: 5px 1px 1em 100px;
+				top: 5px;
+				right: 1px;
+				bottom: 1em;
+				left: 100px;
 			}
 		}
 	}
