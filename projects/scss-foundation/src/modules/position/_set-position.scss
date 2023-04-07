@@ -1,3 +1,5 @@
+/* stylelint-disable declaration-block-no-redundant-longhand-properties */
+/* stylelint-disable declaration-empty-line-before */
 @mixin set-position($position, $top, $right, $bottom, $left) {
 
 	$positions: (
