@@ -1,5 +1,6 @@
+$breakpoints: () !default;
 @use 'sass:map';
-@use '../responsiveness/breakpoints';
+@use '../../modules/responsiveness/breakpoints' as breakpoints;
 
 @mixin generate($column-prefix, $offset-prefix, $spacing: 0) {
 	.row {
@@ -10,7 +11,6 @@
 			margin: 0 -#{$spacing};
 		}
 
-		/* stylelint-disable-next-line selector-max-attribute */
 		[class ^= #{$column-prefix}], [class ^= #{$offset-prefix}] {
 			flex-shrink: 0;
 			max-width: 100%;

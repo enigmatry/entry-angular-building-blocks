@@ -1,0 +1,114 @@
+/* stylelint-disable selector-max-attribute */
+/* stylelint-disable csstools/use-nesting */
+/* stylelint-disable shorthand-property-no-redundant-values */
+/* stylelint-disable max-nesting-depth */
+/* stylelint-disable at-rule-allowed-list */
+$custom-breakpoints: () !default;
+
+@use '../../node_modules/sass-true/sass/true';
+@use '../../src/modules/variables' as vars;
+
+@forward '../../src/modules/layout/grid' with (
+	$breakpoints: vars.$custom-breakpoints
+);
+@use '../../src/modules/responsiveness/breakpoints' as custom-breakpoints;
+@use '../../src/modules/layout/grid-core';
+
+@include true.describe('generate($column-prefix, $offset-prefix, $spacing)') {
+	@include true.it('should generate column and offset classes. If spacing not provided, padding should be 0.') {
+		@include true.assert() {
+			@include true.output() {
+				@include grid-core.generate('col-', 'offset-');
+			}
+
+			@include true.expect() {
+				.row {
+					display: flex;
+					flex-wrap: wrap;
+				}
+
+				.row [class ^= 'col-'], .row [class ^= 'offset-'] {
+					flex-shrink: 0;
+					max-width: 100%;
+					padding: 0 0;
+				}
+
+				.col-auto {
+					flex: 0 0 auto;
+					width: auto;
+					padding: 0 0;
+				}
+			}
+		}
+	}
+}
+
+@include true.describe('generate($column-prefix, $offset-prefix, $spacing)') {
+	@include true.it('should generate column and offset classes with prefixes column- and gap-. Spacing should be 8px.') {
+		@include true.assert() {
+			@include true.output() {
+				@include grid-core.generate('column-', 'gap-', 8px);
+			}
+
+			@include true.expect() {
+				.row {
+					display: flex;
+					flex-wrap: wrap;
+					margin: 0 -8px;
+				}
+
+				.row [class ^= 'column-'], .row [class ^= 'gap-'] {
+					flex-shrink: 0;
+					max-width: 100%;
+					padding: 0 8px;
+				}
+
+				.column-auto {
+					flex: 0 0 auto;
+					width: auto;
+					padding: 0 8px;
+				}
+			}
+		}
+	}
+}
+
+@include true.describe('generate-reverse-row($breakpoints)') {
+	@include true.it('should generate revert row classes for a given breakpoint') {
+		@include true.assert() {
+			@include true.output() {
+				@include grid-core.generate-reverse-row(custom-breakpoints.$breakpoints);
+			}
+
+			@include true.expect() {
+				@media only screen and (width >= 540px) {
+					.row.reverse-row-sm {
+						flex-direction: row-reverse;
+					}
+				}
+					
+				@media only screen and (width >= 800px) {
+					.row.reverse-row-md {
+						flex-direction: row-reverse;
+					}
+				}
+					
+				.row.reverse-row-under-sm {
+					flex-direction: row-reverse;
+					
+					@media only screen and (width >= 540px) {
+						flex-direction: row;
+					}
+				}
+					
+				.row.reverse-row-under-md {
+					flex-direction: row-reverse;
+					
+					@media only screen and (width >= 800px) {
+						flex-direction: row;
+					}
+				}
+			}
+		}
+	}
+}
