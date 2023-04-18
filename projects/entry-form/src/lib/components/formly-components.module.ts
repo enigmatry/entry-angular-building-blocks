@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormlyAutocompleteModule } from './autocomplete/formly-autocomplete.module';
+import { FormlyCkeditorModule } from './ckeditor/formly-ckeditor.module';
 
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule,
-    FormlyAutocompleteModule
+    FormlyAutocompleteModule,
+    FormlyCkeditorModule
   ]
 })
 export class FormlyComponentsModule { }
