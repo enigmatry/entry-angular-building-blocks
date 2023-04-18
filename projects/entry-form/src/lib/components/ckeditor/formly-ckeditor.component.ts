@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { FieldType } from '@ngx-formly/core';
 import { CKEditor5 } from '@ckeditor/ckeditor5-angular';
-import { ENTRY_CKEDITOR_BUILD } from '../../interfaces/ckeditor-build-token';
+import { ENTRY_CKEDITOR_BUILD } from '../../interfaces';
 
 @Component({
   selector: 'entry-formly-ckeditor',
