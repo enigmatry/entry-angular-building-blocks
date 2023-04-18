@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { FieldType } from '@ngx-formly/core';
+import { CKEditor5 } from '@ckeditor/ckeditor5-angular';
+import { ENTRY_CKEDITOR_BUILD } from '../../interfaces/ckeditor-build-token';
 
 @Component({
   selector: 'entry-formly-ckeditor',
@@ -9,9 +11,13 @@ import { FieldType } from '@ngx-formly/core';
 export class FormlyCkeditorComponent extends FieldType {
 
   formControl: FormControl;
-  editor: any;
+
+  constructor(@Inject(ENTRY_CKEDITOR_BUILD) public editor: CKEditor5.EditorConstructor) {
+    super();
+  }
 
   public onReady(editor: any) {
+
     // https://ckeditor.com/docs/ckeditor5/latest/features/read-only.html#hiding-toolbar-in-read-only-mode
 
     const toolbarElement = editor.ui.view.toolbar.element;
