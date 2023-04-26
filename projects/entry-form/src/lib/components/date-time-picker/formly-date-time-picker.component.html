@@ -1,0 +1,7 @@
+<div class="datetime-picker-wrapper">
+  <input matInput [ngxMatDatetimePicker]="picker" [formControl]="formControl" class="datetime-picker">
+  <mat-datepicker-toggle matSuffix [for]="$any(picker)">
+  </mat-datepicker-toggle>
+  <ngx-mat-datetime-picker #picker color="primary" [showSeconds]="true">
+  </ngx-mat-datetime-picker>
+</div>
