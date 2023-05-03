@@ -1,11 +1,15 @@
 @use 'sass:list';
 
+$default-cell-padding: 4px;
+$default-font-size: 14px;
+
 $theme: (
     cell: (
-        font-size: 14px,
+        font-size: $default-font-size,
         color: #333,
-        first-cell-padding-left: 4px,
-        last-cell-padding-right: 4px
+        first-cell-padding-left: $default-cell-padding,
+        last-cell-padding-right: $default-cell-padding,
+        min-width: unset
     ),
     row: (
         selected-background-color: #06C,
@@ -16,7 +20,7 @@ $theme: (
     ),
     column: (
         sorted: (
-            font-size: 14px,
+            font-size: $default-font-size,
             font-weight: 700,
             color: #2C2C2C,
             content-align: center
