@@ -12,14 +12,6 @@
             .mat-cell, a {
                 color: map.value-from($theme, 'row.selected-color');
             }
-    
-            .mat-checkbox-checked .mat-checkbox-background {
-                background-color: map.value-from($theme, 'checkbox.background-color-selected');
-    
-                .mat-checkbox-checkmark-path {
-                    stroke: map.value-from($theme, 'checkbox.checkmark-color-selected')!important;
-                }
-            }
         }
     }
 

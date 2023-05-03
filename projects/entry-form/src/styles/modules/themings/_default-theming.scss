@@ -20,7 +20,9 @@ $theme: (
         height: 20px,
         background-color: #fff,
         checkmark-color: #000, // not necessary
-        checkmark-color-selected: #000,
+        selected-checkmark-color: #000,
+        selected-background-color: #fff,
+        selected-border-color: #000,
         border: 2px solid #0000008a,
         border-hover: 2px solid #0000008a,
         border-radius: 0,
