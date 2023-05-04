@@ -26,5 +26,19 @@
                 border: map.value-from($theme, 'checkbox.border-hover');
             }
         }
+
+        &.mat-checkbox-checked {
+            .mat-checkbox-background {
+                background-color: map.value-from($theme, 'checkbox.selected-background-color');
+    
+                .mat-checkbox-checkmark-path {
+                    stroke: map.value-from($theme, 'checkbox.selected-checkmark-color')!important;
+                }
+            }
+    
+            .mat-checkbox-frame {
+                border-color: map.value-from($theme, 'checkbox.selected-border-color');
+            }
+        }
     }
 }
