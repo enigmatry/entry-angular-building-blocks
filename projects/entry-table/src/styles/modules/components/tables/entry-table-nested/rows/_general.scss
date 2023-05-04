@@ -6,11 +6,29 @@
     .mat-row {
         @include list.row-coloring(map.value-from($theme, 'row.odd-even-background'), map.value-from($theme, 'row.odd-even-row'));
 
+        .mat-checkbox-inner-container {
+            background-color: map.value-from($theme, 'checkbox.background-color');
+        }
+
         &.selected {
             background-color: map.value-from($theme, 'row.selected-background-color');
     
             .mat-cell, a {
                 color: map.value-from($theme, 'row.selected-color');
+            }
+
+            &.mat-checkbox-checked {
+                .mat-checkbox-background {
+                    background-color: map.value-from($theme, 'checkbox.selected-background-color');
+        
+                    .mat-checkbox-checkmark-path {
+                        stroke: map.value-from($theme, 'checkbox.selected-checkmark-color')!important;
+                    }
+                }
+        
+                .mat-checkbox-frame {
+                    border-color: map.value-from($theme, 'checkbox.selected-border-color');
+                }
             }
         }
     }

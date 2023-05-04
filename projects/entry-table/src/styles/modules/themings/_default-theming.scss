@@ -28,5 +28,13 @@ $theme: (
             font-weight: 500,
             text-transform: none
         )
-    )
+    ),
+    // TODO this is duplication from entry forms, brainstorm the idea for a fix https://jira.enigmatry.com/browse/ETL-478
+    checkbox: (
+        background-color: #fff,
+        checkmark-color: #000,
+        selected-checkmark-color: #000,
+        selected-background-color: #fff,
+        selected-border-color: #000,
+    ),
 );
