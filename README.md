@@ -10,9 +10,9 @@
 | [@enigmatry/scss-foundation ](./projects/scss-foundation/README.md) | SCSS Foundation |
 | [@enigmatry/stylelint-config](./projects/stylelint-config/README.md) | Stylelint config for the Enigmatry style guide |
 
-## Update to Entry
+## Migrate project to entry
 
-See [How to update](./UPDATE_TO_ENTRY.md)
+See [How to migrate project to entry](./wiki/Migrate-project-to-Entry)
 
 ## License
 
