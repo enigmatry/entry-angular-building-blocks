@@ -12,7 +12,7 @@
 
 ## Migrate project to entry
 
-See [How to migrate project to entry](./wiki/Migrate-project-to-Entry)
+[How to migrate project to entry](./wiki/Migrate-project-to-Entry)
 
 ## License
 
