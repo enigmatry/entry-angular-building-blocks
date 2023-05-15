@@ -15,7 +15,7 @@
     "@ngx-formly/core": "^5.12.0",
     "@ngx-formly/material": "^5.12.0",
     "@ckeditor/ckeditor5-angular": "^4.0.0",
-    "@angular-material-components/datetime-picker": "^7.0.1",
+    "@angular-material-components/datetime-picker": ">=7.0.0",
     "@angular/material-date-fns-adapter": ">=13.0.0"
   },
   "scripts": {
