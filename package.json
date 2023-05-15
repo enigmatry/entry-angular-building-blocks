@@ -35,6 +35,7 @@
     "@angular-material-components/datetime-picker": "^7.0.1",
     "@angular/cli": "~13.3.10",
     "@angular/compiler-cli": "~13.3.12",
+    "@angular/material-date-fns-adapter": "13.3.9",
     "@ckeditor/ckeditor5-angular": "^5.2.0",
     "@ngx-formly/core": "^5.12.0",
     "@ngx-formly/material": "^5.12.0",
