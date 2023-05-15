@@ -1,27 +1,47 @@
-import { Directive, ElementRef, HostListener, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, Host, Input, OnChanges, OnDestroy, Self, SimpleChanges } from '@angular/core';
 import { AbstractControl, NgControl } from '@angular/forms';
 import { SelectOption } from '../../../interfaces';
+import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Directive({
   selector: '[entryCheckAutocompleteInput]'
 })
-export class CheckAutocompleteInputDirective implements OnChanges {
-  @Input() options: SelectOption[] = [];
+export class CheckAutocompleteInputDirective implements OnChanges, AfterViewInit, OnDestroy {
 
-  constructor(private ngControl: NgControl, private elemRef: ElementRef) { }
+  @Input() options: SelectOption[] = [];
+  private destroy$ = new Subject<void>();
+
+  constructor(
+    @Host() @Self() private matAutocomplete: MatAutocompleteTrigger,
+    private ngControl: NgControl,
+    private elemRef: ElementRef) {
+  }
 
   get control(): AbstractControl | null {
     return this.ngControl.control;
-  }
-
-  @HostListener('blur') onBlur() {
-    this.checkControlValue();
   }
 
   ngOnChanges(_changes: SimpleChanges): void {
     if (this.options?.length) {
       this.applySelectedValue(this.control.value);
     }
+  }
+
+  ngAfterViewInit(): void {
+    this.matAutocomplete.panelClosingActions
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((event) => {
+        if (!event || !event.source) {
+          this.checkControlValue();
+        }
+      });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   private checkControlValue(): void {
@@ -35,10 +55,11 @@ export class CheckAutocompleteInputDirective implements OnChanges {
 
     const matchedOption = this.options
       .find(option => option.label.toLowerCase() === controlValue.toLowerCase());
+
     if (matchedOption) {
       this.control.patchValue(matchedOption.value);
     } else {
-      this.control.patchValue('');
+      this.control.reset();
     }
   }
 

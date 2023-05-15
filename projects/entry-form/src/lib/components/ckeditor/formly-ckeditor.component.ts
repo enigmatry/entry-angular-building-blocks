@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { FieldType } from '@ngx-formly/core';
 import { CKEditor5 } from '@ckeditor/ckeditor5-angular';
-import { ENTRY_CKEDITOR_BUILD } from '../../interfaces';
+import { ENTRY_CKEDITOR_OPTIONS, EntryCkeditorOptions } from './ckeditor-options';
 
 @Component({
   selector: 'entry-formly-ckeditor',
@@ -12,8 +12,13 @@ export class FormlyCkeditorComponent extends FieldType {
 
   formControl: FormControl;
 
-  constructor(@Inject(ENTRY_CKEDITOR_BUILD) public editor: CKEditor5.EditorConstructor) {
+  editorBuild: CKEditor5.EditorConstructor;
+  editorConfig: CKEditor5.Config = {};
+
+  constructor(@Inject(ENTRY_CKEDITOR_OPTIONS) options: EntryCkeditorOptions) {
     super();
+    this.editorBuild = options.build;
+    this.editorConfig = {...this.editorConfig, ...options.config };
   }
 
   public onReady(editor: any) {
