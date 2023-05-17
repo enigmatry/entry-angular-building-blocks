@@ -1,3 +1,5 @@
+import { FormControl } from '@angular/forms';
+
 export class SearchFilterBase<T> {
   key: string;
   value: T | undefined;
@@ -7,6 +9,7 @@ export class SearchFilterBase<T> {
   order: number;
   controlType: string;
   maxLength: number;
+  formControl: FormControl;
 
   constructor(options: Partial<SearchFilterBase<T>> = {}) {
     this.value = options.value;
@@ -17,5 +20,12 @@ export class SearchFilterBase<T> {
     this.controlType = options.controlType || '';
     this.type = options.type || '';
     this.maxLength = options.maxLength || 256;
+  }
+
+  setValue(value: T | undefined) {
+    this.value = value;
+    if (this.formControl) {
+      this.formControl.patchValue(value);
+    }
   }
 }
