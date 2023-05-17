@@ -1,6 +1,8 @@
 
 export * from './pagination';
 export * from './entry-table-config';
+export * from './paged-query';
+export * from './search-filter-paged-query';
 
 export * from './cell-template';
 export * from './column-def';
