@@ -9,13 +9,13 @@ export class SearchFilterPagedQuery extends PagedQuery {
   }
 
   searchFilterChange(searchParams: SearchFilterParams): void {
-    this.filters.forEach(filter => filter.value = searchParams[filter.key]);
+    this.filters.forEach(filter => filter.setValue(searchParams[filter.key]));
     this.pageNumber = 1;
   }
 
   applyRouteChanges(queryParams: Params): void {
     super.applyRouteChanges(queryParams);
-    this.filters.forEach(filter => filter.value = queryParams[filter.key]);
+    this.filters.forEach(filter => filter.setValue(queryParams[filter.key]));
   }
 
   override getRouteQueryParams(): Params {

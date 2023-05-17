@@ -31,7 +31,9 @@ export class EntrySearchFilterComponent implements OnInit {
     const group: any = {};
 
     searchFilters.forEach(searchFilter => {
-      group[searchFilter.key] = new FormControl(searchFilter.value || '');
+      const formControl = new FormControl(searchFilter.value || '');
+      group[searchFilter.key] = formControl;
+      searchFilter.formControl = formControl;
     });
     return new FormGroup(group);
   }
