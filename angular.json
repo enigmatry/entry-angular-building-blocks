@@ -86,7 +86,7 @@
     "@enigmatry/entry-components": {
       "projectType": "library",
       "root": "projects/entry-components",
-      "sourceRoot": "projects/entry-components/src",
+      "sourceRoot": "projects/entry-components",
       "prefix": "entry",
       "architect": {
         "build": {
@@ -107,7 +107,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/entry-components/src/test.ts",
+            "main": "projects/entry-components/test.ts",
             "tsConfig": "projects/entry-components/tsconfig.spec.json",
             "karmaConfig": "projects/entry-components/karma.conf.js"
           }
