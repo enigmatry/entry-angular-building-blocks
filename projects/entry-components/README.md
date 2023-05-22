@@ -1,24 +1,21 @@
-# EntryComponents
+# @enigmatry/entry-components
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.0.
+Reusable entry components for Angular material.
 
-## Code scaffolding
+## Installation
 
-Run `ng generate component component-name --project entry-components` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project entry-components`.
-> Note: Don't forget to add `--project entry-components` or else it will be added to the default project in your `angular.json` file. 
+```
+npm install @enigmatry/entry-components
+```
 
-## Build
+## Basic Usage
 
-Run `ng build entry-components` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Compatibility with Angular Versions
 
-## Publishing
+| @enigmatry/entry-components | Angular version
+|-|-|
+|1.x| >= 13
 
-After building your library with `ng build entry-components`, go to the dist folder `cd dist/entry-components` and run `npm publish`.
+## License
 
-## Running unit tests
-
-Run `ng test entry-components` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Apache-2 © Enigmatry
