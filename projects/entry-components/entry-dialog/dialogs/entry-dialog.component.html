@@ -1,0 +1,36 @@
+<div class="dialog-form">
+    <div class="dialog-header">
+        <h1 class="dialog-title">
+            {{ title }}
+        </h1>
+
+        <button type="button" class="dialog-close-button" (click)="cancel()">
+            <span class="icon-close dialog-close-icon"></span>
+        </button>
+    </div>
+
+    <mat-dialog-content
+        class="dialog-content"
+        [ngClass]="{'with-actions': buttons.visible}">
+        <ng-content></ng-content>
+    </mat-dialog-content>
+
+    <ng-template [ngIf]="buttonsTemplate" [ngIfElse]="defaultButtonsTemplate">
+        <ng-template [ngTemplateOutlet]="buttonsTemplate"></ng-template>
+    </ng-template>
+
+    <ng-template #defaultButtonsTemplate>
+        <div *ngIf="buttons.visible" class="dialog-footer {{ buttons.buttonsAlignment }}">
+            <button
+                type="button"
+                class="button button-accent dialog-footer-button"
+                cdkFocusInitial
+                (click)="onSubmit()">{{buttons.confirmButtonText}}</button>
+            <button
+                type="button"
+                class="button button-primary dialog-footer-button"
+                *ngIf="buttons.cancelButtonText !== ''"
+                (click)="cancel()">{{buttons.cancelButtonText}}</button>
+        </div>
+    </ng-template>
+</div>

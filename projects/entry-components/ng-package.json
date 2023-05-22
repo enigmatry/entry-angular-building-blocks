@@ -1,0 +1,7 @@
+{
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../dist/enigmatry/entry-components",
+  "lib": {
+    "entryFile": "./public-api.ts"
+  }
+}

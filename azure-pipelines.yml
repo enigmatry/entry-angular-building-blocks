@@ -12,18 +12,25 @@ name: $(MajorMinorVersion)$(Rev:.r)
 
 steps:
 - task: Npm@1
-  displayName: 'Set the version entry table'
+  displayName: 'Set the version for entry table'
   inputs:
     command: custom
     customCommand: version $(Build.Buildnumber) --no-git-tag-version
     workingDir: 'projects/entry-table'
 
 - task: Npm@1
-  displayName: 'Set the version entry form'
+  displayName: 'Set the version for entry form'
   inputs:
     command: custom
     customCommand: version $(Build.Buildnumber) --no-git-tag-version
     workingDir: 'projects/entry-form'
+
+- task: Npm@1
+  displayName: 'Set the version for entry components'
+  inputs:
+    command: custom
+    customCommand: version $(Build.Buildnumber) --no-git-tag-version
+    workingDir: 'projects/entry-components'
 
 - task: Npm@1
   displayName: 'Set the version eslint recommended rules'
@@ -64,6 +71,12 @@ steps:
     customCommand: 'run lint @enigmatry/entry-form'
 
 - task: Npm@1
+  displayName: 'Lint entry components'
+  inputs:
+    command: 'custom'
+    customCommand: 'run lint @enigmatry/entry-components'
+
+- task: Npm@1
   displayName: 'npm install scss foundation'
   inputs:
     command: 'install'
@@ -96,6 +109,12 @@ steps:
     customCommand: 'run build @enigmatry/entry-form'
 
 - task: Npm@1
+  displayName: 'Build entry components'
+  inputs:
+    command: 'custom'
+    customCommand: 'run build @enigmatry/entry-components'
+
+- task: Npm@1
   displayName: 'Build the scss foundation library'
   inputs:
     command: 'custom'
@@ -117,6 +136,14 @@ steps:
     publishRegistry: useExternalRegistry
     publishEndpoint: npm
     workingDir: 'dist/enigmatry/entry-form'
+
+- task: Npm@1
+  displayName: 'Publish entry components'
+  inputs:
+    command: publish
+    publishRegistry: useExternalRegistry
+    publishEndpoint: npm
+    workingDir: 'dist/enigmatry/entry-components'
 
 - task: Npm@1
   displayName: 'Publish the eslint recommended rules'
