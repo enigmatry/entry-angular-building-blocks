@@ -1,5 +1,5 @@
 {
-  "extends": "../../.eslintrc.json",
+  "extends": "../.eslintrc.json",
   "ignorePatterns": [
     "!**/*"
   ],
@@ -10,8 +10,8 @@
       ],
       "parserOptions": {
         "project": [
-          "docs/entry-components-docs/tsconfig.app.json",
-          "docs/entry-components-docs/tsconfig.spec.json"
+          "docs/tsconfig.app.json",
+          "docs/tsconfig.spec.json"
         ],
         "createDefaultProgram": true
       },
