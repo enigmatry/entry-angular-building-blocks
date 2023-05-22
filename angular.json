@@ -87,7 +87,7 @@
       "projectType": "library",
       "root": "projects/entry-components",
       "sourceRoot": "projects/entry-components/src",
-      "prefix": "lib",
+      "prefix": "entry",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
