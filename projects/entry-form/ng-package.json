@@ -2,9 +2,9 @@
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../dist/enigmatry/entry-form",
   "assets": [
-    "./styles/**/*.scss"
+    "src/styles/**/*.scss"
   ],
   "lib": {
-    "entryFile": "./public-api.ts"
+    "entryFile": "src/public-api.ts"
   }
 }
