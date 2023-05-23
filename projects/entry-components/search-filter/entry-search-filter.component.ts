@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { SearchFilterBase } from './search-filter-base';
 import { SearchFilterParams } from './search-filter-params';
+import { ENTRY_SEARCH_FILTER_CONFIG, EntrySearchFilterConfig } from './search-filter-config.model';
 
 @Component({
   selector: 'entry-search-filter',
@@ -16,7 +17,7 @@ export class EntrySearchFilterComponent implements OnInit {
 
   searchFilterForm!: FormGroup;
 
-  constructor() { }
+  constructor(@Inject(ENTRY_SEARCH_FILTER_CONFIG) public config: EntrySearchFilterConfig) { }
 
   ngOnInit() {
     this.searchFilterForm = this.toFormGroup(this.searchFilters);
