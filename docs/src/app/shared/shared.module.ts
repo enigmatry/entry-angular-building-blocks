@@ -4,12 +4,14 @@ import { MaterialModule } from './material/material.module';
 import { DocsContentComponent } from './docs-content/docs-content.component';
 import { CodeSnippetComponent } from './code-snippet/code-snippet.component';
 import { LandingComponent } from './landing/landing.component';
+import { ExampleViewerComponent } from './example-viewer/example-viewer.component';
 
 @NgModule({
   declarations: [
     DocsContentComponent,
     CodeSnippetComponent,
-    LandingComponent
+    LandingComponent,
+    ExampleViewerComponent,
   ],
   imports: [
     CommonModule,
@@ -18,7 +20,8 @@ import { LandingComponent } from './landing/landing.component';
   exports: [
     MaterialModule,
     DocsContentComponent,
-    CodeSnippetComponent
+    CodeSnippetComponent,
+    ExampleViewerComponent,
   ]
 })
 export class SharedModule { }

@@ -1,0 +1,3 @@
+class ConfirmExample {
+    title ='Confirm';
+}
