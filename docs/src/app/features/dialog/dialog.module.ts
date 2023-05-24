@@ -3,10 +3,14 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../shared/shared.module';
 import { DialogDocsComponent } from './dialog-docs.component';
 import { DialogDocsRoutingModule } from './dialog-docts-routing.module';
+import { AlertComponent } from './alert/alert.component';
+import { ConfirmComponent } from './confirm/confirm.component';
 
 @NgModule({
   declarations: [
-    DialogDocsComponent
+    DialogDocsComponent,
+    AlertComponent,
+    ConfirmComponent
   ],
   imports: [
     CommonModule,

@@ -148,7 +148,17 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "docs/src/favicon.ico",
-              "docs/src/assets"
+              "docs/src/assets",
+              {
+                "glob": "**/*",
+                "input": "docs/src/app/features/dialog/alert",
+                "output": "assets/examples/dialog/alert"
+              },
+              {
+                "glob": "**/*",
+                "input": "docs/src/app/features/dialog/confirm",
+                "output": "assets/examples/dialog/confirm"
+              }
             ],
             "styles": [
               "docs/src/styles.scss"
