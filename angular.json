@@ -151,13 +151,8 @@
               "docs/src/assets",
               {
                 "glob": "**/*",
-                "input": "docs/src/app/features/dialog/alert",
-                "output": "assets/examples/dialog/alert"
-              },
-              {
-                "glob": "**/*",
-                "input": "docs/src/app/features/dialog/confirm",
-                "output": "assets/examples/dialog/confirm"
+                "input": "docs/src/app/examples",
+                "output": "assets/examples"
               }
             ],
             "styles": [
