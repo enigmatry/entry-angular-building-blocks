@@ -9,6 +9,7 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [],
@@ -23,7 +24,8 @@ import { MatMenuModule } from '@angular/material/menu';
     ClipboardModule,
     MatSnackBarModule,
     MatIconModule,
-    MatMenuModule
+    MatMenuModule,
+    MatDialogModule // ?
   ],
   providers: [
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2500 } }

@@ -13,20 +13,20 @@ export class LandingComponent implements OnInit {
   menuItems = COMPONENT_DEFINITIONS;
 
   constructor(
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private clipboard: Clipboard,
-    private snackBar: MatSnackBar) { }
+    private _router: Router,
+    private _activatedRoute: ActivatedRoute,
+    private _clipboard: Clipboard,
+    private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
   }
 
   redirect = (item: IComponentDefinition) => {
-    this.router.navigate([item.route], { relativeTo: this.activatedRoute });
+    this._router.navigate([item.route], { relativeTo: this._activatedRoute });
   };
 
   share = (item: IComponentDefinition) => {
-    this.snackBar.open(`Link copied to clipboard!`);
-    this.clipboard.copy(`${location.href}${item.route}`);
+    this._snackBar.open(`Link copied to clipboard!`);
+    this._clipboard.copy(`${location.href}${item.route}`);
   };
 }

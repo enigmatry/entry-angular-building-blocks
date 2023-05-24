@@ -1,1 +1,4 @@
-<pre class="code-snippet"><ng-content></ng-content></pre>
+<div class="code-snippet">
+    <pre #codeContent><ng-content></ng-content></pre>
+    <button *ngIf="!hideCopy" mat-flat-button (click)="copy()">Copy</button>
+</div>
