@@ -1,1 +1,11 @@
-<p>confirm works!</p>
+<button
+    mat-raised-button
+    color="primary"
+    (click)="openConfirm()">
+    Open Confirm Dialog
+</button>
+
+<div style="padding-top: 20px;">
+    Selected response:
+    <span>{{confirmResponse}}</span>
+</div>
