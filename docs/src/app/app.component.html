@@ -5,15 +5,16 @@
   </mat-toolbar>
 
   <mat-sidenav-container class="docs-container">
-    <mat-sidenav #sidenav mode="side" opened class="docs-sidenav">
-      <mat-selection-list #components *ngFor="let item of menuItems">
-        <mat-list-item
+    <mat-sidenav mode="side" opened class="docs-sidenav">
+      <mat-nav-list class="docs-menu-items">
+        <a *ngFor="let item of menuItems"
+          mat-list-item
           [routerLink]="item.route"
           routerLinkActive="active"
           class="docs-menu-item">
           {{item.label}}
-        </mat-list-item>
-      </mat-selection-list>
+        </a>
+      </mat-nav-list>
     </mat-sidenav>
 
     <mat-sidenav-content>

@@ -2,7 +2,9 @@
     <mat-toolbar-row>
         <span>{{title}}</span>
         <!-- <span flex style="display: flex;"></span> -->
-        <button mat-button (click)="toggleCodeView()" color="accent" style="float: right;">Code</button>
+        <button mat-button (click)="toggleCodeView()" color="primary">
+            {{viewCode ? 'Hide' : 'View'}} Code
+        </button>
     </mat-toolbar-row>
     <mat-tab-group  animationDuration="0ms" *ngIf="viewCode">
         <mat-tab label="HTML">

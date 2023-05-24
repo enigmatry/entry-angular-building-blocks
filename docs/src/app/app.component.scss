@@ -14,8 +14,12 @@
         justify-content: center;
         width: 200px;
 
-        .docs-menu-item {
-            cursor: pointer;
+        .docs-menu-items {
+            padding-top: 0;
+
+            .docs-menu-item {
+                cursor: pointer;
+            }
         }
     }
     
