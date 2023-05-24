@@ -2,11 +2,19 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnDestroy } from '@angular/core';
 import { Observable, Subject, Subscriber, forkJoin } from 'rxjs';
 import { catchError, takeUntil } from 'rxjs/operators';
+import { ICodeTabDefinition } from './code-tab-definition.interface';
+import { FileExtension } from '../models/file-extension.type';
 
 interface IExampleDocuments {
   typescript: string;
   html: string;
   styles: string;
+  additionalTabs: string[];
+}
+
+interface IAdditionalCodeFile {
+  content: string;
+  definition: ICodeTabDefinition;
 }
 
 @Component({
@@ -17,11 +25,13 @@ interface IExampleDocuments {
 export class ExampleViewerComponent implements OnDestroy {
   @Input() path: string;
   @Input() title = 'Example';
+  @Input() additionalTabs: ICodeTabDefinition[] = [];
 
   viewCode = false;
   typescriptFile!: string;
   htmlFile!: string;
   stylesFile!: string;
+  additionalCodeFiles: IAdditionalCodeFile[] = [];
 
   private _destroy$ = new Subject<void>();
 
@@ -62,6 +72,6 @@ export class ExampleViewerComponent implements OnDestroy {
       this.viewCode = true;
     });
 
-  private loadCode = (type: 'scss' | 'ts' | 'html'): Observable<string> =>
+  private loadCode = (type: FileExtension): Observable<string> =>
     this._http.get(`assets/examples/${this.path}.${type}`, { responseType: 'text' });
 }

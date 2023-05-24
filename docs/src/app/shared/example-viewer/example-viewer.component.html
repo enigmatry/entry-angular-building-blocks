@@ -16,6 +16,9 @@
         <mat-tab label="SCSS" *ngIf="stylesFile">
             <app-code-snippet>{{stylesFile}}</app-code-snippet>
         </mat-tab>
+        <mat-tab *ngFor="let file of additionalCodeFiles" [label]="file.definition.name">
+            <app-code-snippet>{{file.content}}</app-code-snippet>
+        </mat-tab>
     </mat-tab-group>
     <mat-divider></mat-divider>
     <mat-card-content>
