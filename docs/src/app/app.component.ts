@@ -9,7 +9,6 @@ import { filter } from 'rxjs/operators';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = '@enigmatry/entry-components-docs';
   menuItems = COMPONENT_DEFINITIONS;
   selectedMenuItem: IComponentDefinition | undefined = undefined;
 
