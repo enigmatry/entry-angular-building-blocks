@@ -10,13 +10,13 @@
             margin-right: 0;
         }
     }
+
+    mat-card-content {
+        padding: 16px;
+    }
 }
 
 :host {
     display: block;
     margin-bottom: 2em;
-}
-
-mat-card-content {
-    padding: 16px;
 }

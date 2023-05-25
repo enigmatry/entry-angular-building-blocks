@@ -32,5 +32,15 @@
         top: 0;
         left: 0;
         right: 0;
+        padding: 0;
+
+        img {
+            width: 200px;
+        }
+
+        button {
+            margin-right: 20px;
+            margin-left: 20px;
+        }
     }
 }

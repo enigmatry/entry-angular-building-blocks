@@ -9,7 +9,7 @@ interface IComponentDefinition {
 const COMPONENT_DEFINITIONS: IComponentDefinition[] = [
     {
         label: 'Dialog',
-        shortDescription: `Enables alert & confirm dialogs`,
+        shortDescription: `Enables built in dialogs and adds support for building custom ones.`,
         route: RouteSegments.dialog
     },
     {

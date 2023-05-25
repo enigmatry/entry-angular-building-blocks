@@ -1,7 +1,10 @@
 <div class="docs-main">
   <mat-toolbar class="docs-header">
-    <a [routerLink]="''">ENTRY Components</a>
-    <span *ngIf="selectedMenuItem">: {{selectedMenuItem.label}}</span>
+    <img src="../assets/images/entry_logo_bw_small.png">
+    <button mat-flat-button color="primary" [routerLink]="''">
+      Components
+    </button>
+    <span *ngIf="selectedMenuItem"> {{selectedMenuItem.label}}</span>
   </mat-toolbar>
 
   <mat-sidenav-container class="docs-container">
