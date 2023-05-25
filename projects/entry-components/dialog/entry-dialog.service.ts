@@ -20,7 +20,10 @@ export class EntryDialogService {
   readonly openConfirm = (data: IEntryConfirmDialogData): Observable<boolean | undefined> =>
     this.open(EntryConfirmDialogComponent, data);
 
-  readonly open = (component: Type<EntryDialogComponent>, data: unknown = undefined, cssClass: string = '') => {
+  readonly open = (
+    component: Type<EntryDialogComponent>,
+    data: unknown = undefined,
+    cssClass: string = ''): Observable<any> => {
     const configuration = new MatDialogConfig<unknown>();
     configuration.data = data;
     this.setPanelClassFor(configuration, cssClass);
