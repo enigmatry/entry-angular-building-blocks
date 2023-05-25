@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ICodeTabDefinition } from '../../shared/example-viewer/code-tab-definition.interface';
+import { ICodeFileDefinition } from '../../shared/example-viewer/code-file-definition.interface';
 
 @Component({
   selector: 'app-dialog-docs',
@@ -7,10 +7,10 @@ import { ICodeTabDefinition } from '../../shared/example-viewer/code-tab-definit
   styleUrls: ['./dialog-docs.component.scss']
 })
 export class DialogDocsComponent {
-  additionalTabs: ICodeTabDefinition[] = [
+  extraFiles: ICodeFileDefinition[] = [
     {
       name: `alert-with-image.component.html`,
-      path: `dialog\custom\alert-with-image.component`,
+      path: `dialog\\custom\\alert-with-image.component`,
       type: 'html'
     }
   ];
