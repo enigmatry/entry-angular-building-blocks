@@ -10,6 +10,7 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule } from '@angular/mater
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatInputModule } from '@angular/material/input';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
@@ -27,6 +28,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatIconModule,
     MatMenuModule,
     MatInputModule,
+    MatTooltipModule,
     MatDialogModule // ?
   ],
   providers: [

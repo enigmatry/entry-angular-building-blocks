@@ -1,4 +1,6 @@
-<div class="code-snippet">
+<div class="code-snippet"
+    matTooltip="Click to copy code to clipboard"
+    matTooltipPositionAtOrigin
+    (click)="copy()">
     <pre #codeContent><ng-content></ng-content></pre>
-    <button *ngIf="!hideCopy" mat-flat-button (click)="copy()">Copy</button>
 </div>

@@ -1,4 +1,4 @@
-import { Component, ContentChild, Input, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -8,8 +8,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./code-snippet.component.scss']
 })
 export class CodeSnippetComponent {
-  @Input() hideCopy = false;
-
   @ViewChild('codeContent', { static: false }) codeContent;
 
   constructor(
@@ -17,7 +15,7 @@ export class CodeSnippetComponent {
     private _snackBar: MatSnackBar) {}
 
   copy = () => {
-    this._snackBar.open(`Link copied to clipboard!`);
+    this._snackBar.open(`Code copied to clipboard!`);
     this._clipboard.copy(this.codeContent.nativeElement.innerHTML);
   };
 }
