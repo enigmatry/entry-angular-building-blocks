@@ -63,37 +63,37 @@ Returns `true` if confirmed, `false` if canceled or closed, and `undefined` if c
 
 `open(component: Type<EntryDialogComponent>, data: unknown = undefined, cssClass: string = ''): Observable<any>`
 
-Opens custom dialog component defined by `component` parameter. Optionally, can receive input `data` or `cssClass`.
+Opens custom dialog component defined by `component` parameter. Optionally, it can receive input `data` or `cssClass`.
 
 ## Classes and Interfaces
 
-| `IEntryAlertDialogData` | Description |
+| `IEntryAlertDialogData` |  |
 | - | - |
 | title: `string` | Dialog header title |
 | message: `string` | Dialog content message |
 | confirmText?: `string` | Optional confirm button text |
 
-| `IEntryConfirmDialogData` | Description |
+| `IEntryConfirmDialogData` |  |
 | - | - |
 | title: `string` | Dialog header title |
 | message: `string` | Dialog content message |
 | confirmText?: `string` | Optional confirm button text |
 | cancelText?: `string` | Optional cancel button text |
 
-| `EntryDialogConfig` | Description |
+| `EntryDialogConfig` |  |
 | - | - |
 | confirmButtonText: `string` | Confirm button text (default 'Ok') |
 | cancelButtonText: `string` | Cancel button text (default 'Cancel') |
 | buttonsAlignment: `string` | Buttons alignment values: `'align-right'`, `'align-center'` or `''` (default `'align-right'`) |
 
-| `IEntryDialogButtonsConfig` | Description |
+| `IEntryDialogButtonsConfig` |  |
 | - | - |
 | confirmButtonText: `string` | Confirm button text |
 | cancelButtonText: `string` | Cancel button text |
 | buttonsAlignment: `string` | Buttons alignment values: `'align-right'`, `'align-center'` or `''` |
 | visible: `bool` | Hides or shows dialog buttons |
 
-| `EntryDialogComponent` | Description |
+| `EntryDialogComponent` |  |
 | - | - |
 | title: `string` | Dialog header title |
 | buttons: `IEntryDialogButtonsConfig` | Dialog buttons configuration |
