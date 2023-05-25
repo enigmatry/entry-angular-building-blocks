@@ -9,7 +9,7 @@ import { RouteSegments } from '../../shared/models/route-segments';
   styleUrls: ['./dialog.component.scss']
 })
 export class DialogComponent {
-  dialogComponentDefinition = COMPONENT_DEFINITIONS.find(c => c.route === RouteSegments.dialog)[0];
+  dialogComponentDefinition = COMPONENT_DEFINITIONS.find(c => c.route === RouteSegments.dialog);
   extraFiles: ICodeFileDefinition[] = [
     {
       name: 'custom-dialog.component.ts',

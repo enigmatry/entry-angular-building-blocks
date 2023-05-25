@@ -4,7 +4,7 @@
 
 Create new feature module (with routing) and root component named as new entry component (e.g. `features/dialog`).
 
-Use `app-docs-content` shared component to define documentation tabs (e.g. `features/dialog/dialog.component.html`).
+Use `app-documentation-content` shared component to define API/Examples tabs (e.g. `features/dialog/dialog.component.html`). Don't forget to provide `componentDefinition` input parameter!
 
 Update `shared/models/route-segments.ts` with new route to the feature and add new entry to `shared/models/component-definitions.ts`. Don't forget to update `app-routing.module.ts` with routing to the new feature.
 

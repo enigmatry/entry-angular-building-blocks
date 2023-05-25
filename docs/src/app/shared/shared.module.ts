@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from './material/material.module';
-import { DocsContentComponent } from './docs-content/docs-content.component';
+import { DocumentationContentComponent } from './documentation-content/documentation-content.component';
 import { CodeSnippetComponent } from './code-snippet/code-snippet.component';
 import { LandingComponent } from './landing/landing.component';
 import { ExampleViewerComponent } from './example-viewer/example-viewer.component';
@@ -9,7 +9,7 @@ import { MarkdownViewerComponent } from './markdown-viewer/markdown-viewer.compo
 
 @NgModule({
   declarations: [
-    DocsContentComponent,
+    DocumentationContentComponent,
     CodeSnippetComponent,
     LandingComponent,
     ExampleViewerComponent,
@@ -21,7 +21,7 @@ import { MarkdownViewerComponent } from './markdown-viewer/markdown-viewer.compo
   ],
   exports: [
     MaterialModule,
-    DocsContentComponent,
+    DocumentationContentComponent,
     CodeSnippetComponent,
     ExampleViewerComponent,
     MarkdownViewerComponent

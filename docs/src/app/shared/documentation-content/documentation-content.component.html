@@ -2,8 +2,11 @@
     <mat-tab-group animationDuration="0ms">
         <mat-tab label="API">
             <div class="doc-content-wrapper">
-                <!-- <app-code-snippet>import {{'{'}} EntryDialogModule {{'}'}} from '@enigmatry/entry-components/entry-dialog';</app-code-snippet> -->
-                <app-markdown-viewer [componentDefinition]="componentDefinition"></app-markdown-viewer>
+                <div *ngIf="componentDefinition.requiredImports.length">
+                    Required imports:
+                    <app-code-snippet *ngFor="let import of componentDefinition.requiredImports">{{import}}</app-code-snippet>
+                </div>
+                <!-- <app-markdown-viewer [componentDefinition]="componentDefinition"></app-markdown-viewer> -->
             </div>
         </mat-tab>
         <mat-tab label="Examples">
