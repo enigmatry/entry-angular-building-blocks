@@ -1,4 +1,8 @@
 <entry-dialog title="Custom Alert" [buttons]="buttons">
-    <p>Isn't this logo cute?</p>
+    <p>{{data.message}}</p>
     <img src="./../../../../assets/images/examples/dialog/entry_logo.png">
+
+    <ul>
+        <li *ngFor="let item of data.items">{{item}}</li>
+    </ul>
 </entry-dialog>

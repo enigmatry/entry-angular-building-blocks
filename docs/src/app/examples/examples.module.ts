@@ -5,6 +5,7 @@ import { ConfirmDialogComponent } from './dialog/confirm/confirm-dialog.componen
 import { SharedModule } from '../shared/shared.module';
 import { AlertWithImageComponent, CustomDialogComponent } from './dialog/custom/custom-dialog.component';
 import { EntryDialogModule } from 'projects/entry-components/dialog/entry-dialog.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,8 @@ import { EntryDialogModule } from 'projects/entry-components/dialog/entry-dialog
   ],
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     SharedModule,
     EntryDialogModule
   ],
