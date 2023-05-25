@@ -12,7 +12,7 @@ const COMPONENT_DEFINITIONS: IComponentDefinition[] = [
         label: 'Dialog',
         shortDescription: `Enables built in dialogs and adds support for building custom ones.`,
         route: RouteSegments.dialog,
-        documentationPath: 'entry-components/README.md',
+        documentationPath: '/entry-components/dialog/README.md',
     },
     {
         label: 'Header',

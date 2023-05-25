@@ -9,13 +9,6 @@ import { EntryDialogModule } from '@enigmatry/entry-components/entry-dialog';
 import { MatDialogModule } from '@angular/material/dialog';
 ```
 
-## Index
-
-* [Basic usage](#basic-usage)
-* [Configuration](#configuration)
-* [EntryDialogService Methods](#entrydialogservice-methods)
-* [Classes and Interfaces](#classes-and-interfaces)
-
 ## Basic usage
 
 `EntryDialogService` is used to open dialogs:
