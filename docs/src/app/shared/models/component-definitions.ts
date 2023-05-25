@@ -16,7 +16,7 @@ const COMPONENT_DEFINITIONS: IComponentDefinition[] = [
         label: 'Header',
         shortDescription: `???`,
         route: RouteSegments.header
-    }
+    },
 ];
 
 export {

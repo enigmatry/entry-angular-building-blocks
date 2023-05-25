@@ -13,7 +13,7 @@ import { MarkdownBoxComponent } from './markdown-box/markdown-box.component';
     CodeSnippetComponent,
     LandingComponent,
     ExampleViewerComponent,
-    MarkdownBoxComponent,
+    MarkdownBoxComponent
   ],
   imports: [
     CommonModule,
@@ -24,7 +24,7 @@ import { MarkdownBoxComponent } from './markdown-box/markdown-box.component';
     DocsContentComponent,
     CodeSnippetComponent,
     ExampleViewerComponent,
-    MarkdownBoxComponent,
+    MarkdownBoxComponent
   ]
 })
 export class SharedModule { }
