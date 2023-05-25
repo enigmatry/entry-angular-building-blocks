@@ -16,9 +16,9 @@ const COMPONENT_DEFINITIONS: IComponentDefinition[] = [
     },
     {
         label: 'Header',
-        shortDescription: '',
+        shortDescription: `Simple way of standard header layout and styling.`,
         route: RouteSegments.header,
-        documentationPath: ''
+        documentationPath: 'entry-components/README.md'
     },
 ];
 
