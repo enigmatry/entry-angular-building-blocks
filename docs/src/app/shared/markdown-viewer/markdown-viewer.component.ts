@@ -14,27 +14,9 @@ export class MarkdownViewerComponent implements OnInit {
   markdownContent: string | undefined;
   outHtml: string;
 
-  private _markdown = md();
+  private _markdown = md('commonmark');
 
-  constructor(private _httpClient: HttpClient) {
-    // const data = `---
-    //     title: My First Blog
-    //     date: "2021-02-01 9:00:00 +0900"
-    //     type: news
-    //     draft: false
-    //     ---
-
-    //     # Blog
-
-    //     I love Angular !!
-
-    //     _fffff_
-    // `;
-
-    // // var content = fm(data);
-
-    // this.outHtml = this._markdown.render(data);
-  }
+  constructor(private _httpClient: HttpClient) {}
 
   ngOnInit(): void {
     if (this.componentDefinition.documentationPath) {
