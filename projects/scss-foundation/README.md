@@ -20,6 +20,9 @@ Utilities are nothing more than just sass mixins that won't be included in your 
 - [Absolute Positioning utilities](../scss-foundation/docs/absolute-positioning.md)
 - [Fixed Positioning utilities](../scss-foundation/docs/fixed-positioning.md)
 - [Text Modification utilities](../scss-foundation/docs/text-modification.md)
+- [Text Hover utilities](../scss-foundation/docs/text-hover.md)
+- [Border Radius utilities](../scss-foundation/docs/border-radius.md)
+- [Row Coloring utilities](../scss-foundation/docs/row-coloring.md)
 
 ## License
 
