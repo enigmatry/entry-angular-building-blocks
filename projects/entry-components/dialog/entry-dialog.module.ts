@@ -16,7 +16,6 @@ import { EntryDialogComponent } from './dialogs/entry-dialog.component';
     MatDialogModule
   ],
   exports: [
-    // MatDialogModule,
     EntryDialogComponent,
     EntryAlertDialogComponent,
     EntryConfirmDialogComponent
