@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DialogDocsComponent } from './dialog-docs.component';
+import { DialogComponent } from './dialog.component';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: DialogDocsComponent
+		component: DialogComponent
 	}
 ];
 
@@ -13,4 +13,4 @@ const routes: Routes = [
 	imports: [RouterModule.forChild(routes)],
 	exports: [RouterModule]
 })
-export class DialogDocsRoutingModule { }
+export class DialogRoutingModule { }

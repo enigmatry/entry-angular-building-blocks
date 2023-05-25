@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { ICodeFileDefinition } from '../../shared/example-viewer/code-file-definition.interface';
 
 @Component({
-  selector: 'app-dialog-docs',
-  templateUrl: './dialog-docs.component.html',
-  styleUrls: ['./dialog-docs.component.scss']
+  selector: 'app-dialog',
+  templateUrl: './dialog.component.html',
+  styleUrls: ['./dialog.component.scss']
 })
-export class DialogDocsComponent {
+export class DialogComponent {
   extraFiles: ICodeFileDefinition[] = [
     {
       name: 'alert-with-image.component.html',
