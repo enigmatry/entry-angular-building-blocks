@@ -1,15 +1,16 @@
 <div class="docs-main">
   <mat-toolbar class="docs-header">
-    <img src="../assets/images/entry_logo_bw_small.png">
+    <img class="logo" src="../assets/images/entry_logo_bw_small.png">
     <button mat-flat-button color="primary" [routerLink]="''">
       Components
     </button>
     <span *ngIf="selectedMenuItem"> {{selectedMenuItem.label}}</span>
     <span class="spacer"></span>
-    <a mat-flat-button color="accent"
+    <a mat-flat-button color="primary"
       target="_blank"
       href="https://github.com/enigmatry/entry-angular-building-blocks">
-      GitHub
+      <img src="../assets/images/github-circle-white-transparent.svg" />
+       <span> GitHub</span>
     </a>
   </mat-toolbar>
 
