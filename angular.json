@@ -156,7 +156,7 @@
               }
             ],
             "styles": [
-              "docs/src/styles.scss"
+              "docs/src/styles/partial/main.scss"
             ],
             "scripts": []
           },
@@ -224,7 +224,7 @@
               "docs/src/assets"
             ],
             "styles": [
-              "docs/src/styles.scss"
+              "docs/src/styles/partial/mail.scss"
             ],
             "scripts": []
           }
