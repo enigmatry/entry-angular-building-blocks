@@ -5,7 +5,7 @@ import { DocsContentComponent } from './docs-content/docs-content.component';
 import { CodeSnippetComponent } from './code-snippet/code-snippet.component';
 import { LandingComponent } from './landing/landing.component';
 import { ExampleViewerComponent } from './example-viewer/example-viewer.component';
-import { MarkdownBoxComponent } from './markdown-box/markdown-box.component';
+import { MarkdownViewerComponent } from './markdown-viewer/markdown-viewer.component';
 
 @NgModule({
   declarations: [
@@ -13,7 +13,7 @@ import { MarkdownBoxComponent } from './markdown-box/markdown-box.component';
     CodeSnippetComponent,
     LandingComponent,
     ExampleViewerComponent,
-    MarkdownBoxComponent
+    MarkdownViewerComponent
   ],
   imports: [
     CommonModule,
@@ -24,7 +24,7 @@ import { MarkdownBoxComponent } from './markdown-box/markdown-box.component';
     DocsContentComponent,
     CodeSnippetComponent,
     ExampleViewerComponent,
-    MarkdownBoxComponent
+    MarkdownViewerComponent
   ]
 })
 export class SharedModule { }

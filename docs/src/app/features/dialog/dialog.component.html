@@ -1,30 +1,24 @@
-<app-docs-content>
-    <div api>
-        <app-code-snippet>import {{'{'}} EntryDialogModule {{'}'}} from '@enigmatry/entry-components/entry-dialog';</app-code-snippet>
-
-    </div>
-    <div examples>
-        <app-example-viewer
-            title="Alert dialog example"
-            path="dialog\alert\alert-example.component">
-            <div>
-                <app-alert-example></app-alert-example>
-            </div>
-        </app-example-viewer>
-        <app-example-viewer
-            title="Confirm dialog example"
-            path="dialog\confirm\confirm-example.component">
-            <div>
-                <app-confirm-example></app-confirm-example>
-            </div>
-        </app-example-viewer>
-        <app-example-viewer
-            title="Custom dialog example"
-            path="dialog\custom\custom-dialog-example.component"
-            [extraFileDefinitions]="extraFiles">
-            <div>
-                <app-custom-dialog-example></app-custom-dialog-example>
-            </div>
-        </app-example-viewer>
-    </div>
+<app-docs-content [componentDefinition]="dialogComponentDefinition">
+    <app-example-viewer
+        title="Alert dialog example"
+        path="dialog\alert\alert-example.component">
+        <div>
+            <app-alert-example></app-alert-example>
+        </div>
+    </app-example-viewer>
+    <app-example-viewer
+        title="Confirm dialog example"
+        path="dialog\confirm\confirm-example.component">
+        <div>
+            <app-confirm-example></app-confirm-example>
+        </div>
+    </app-example-viewer>
+    <app-example-viewer
+        title="Custom dialog example"
+        path="dialog\custom\custom-dialog-example.component"
+        [extraFileDefinitions]="extraFiles">
+        <div>
+            <app-custom-dialog-example></app-custom-dialog-example>
+        </div>
+    </app-example-viewer>
 </app-docs-content>

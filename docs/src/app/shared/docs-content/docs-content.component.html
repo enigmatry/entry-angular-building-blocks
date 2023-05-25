@@ -2,12 +2,13 @@
     <mat-tab-group animationDuration="0ms">
         <mat-tab label="API">
             <div class="doc-content-wrapper">
-                <ng-content #api select="[api]"></ng-content>
+                <!-- <app-code-snippet>import {{'{'}} EntryDialogModule {{'}'}} from '@enigmatry/entry-components/entry-dialog';</app-code-snippet> -->
+                <app-markdown-viewer [componentDefinition]="componentDefinition"></app-markdown-viewer>
             </div>
         </mat-tab>
         <mat-tab label="Examples">
             <div class="doc-content-wrapper">
-                <ng-content select="[examples]"></ng-content>
+                <ng-content></ng-content>
             </div>
         </mat-tab>
     </mat-tab-group>

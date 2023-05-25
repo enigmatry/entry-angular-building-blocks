@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { IComponentDefinition } from '../models/component-definitions';
 import * as md from 'markdown-it';
 
 @Component({
-  selector: 'app-markdown-box',
-  templateUrl: './markdown-box.component.html',
-  styleUrls: ['./markdown-box.component.scss']
+  selector: 'app-markdown-viewer',
+  templateUrl: './markdown-viewer.component.html',
+  styleUrls: ['./markdown-viewer.component.scss']
 })
-export class MarkdownBoxComponent implements OnInit {
+export class MarkdownViewerComponent implements OnInit {
+  @Input() componentDefinition: IComponentDefinition;
   outHtml: string;
 
   constructor() {
