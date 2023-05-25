@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { EntryDialogService } from 'projects/entry-components/entry-dialog/entry-dialog.service';
+import { EntryDialogService } from 'projects/entry-components/dialog/entry-dialog.service';
 
 @Component({
   selector: 'app-alert-dialog',

@@ -1,9 +1,9 @@
 import { AfterViewInit, Directive, ElementRef, Host, Input, OnChanges, OnDestroy, Self, SimpleChanges } from '@angular/core';
 import { AbstractControl, NgControl } from '@angular/forms';
-import { SelectOption } from '../../../interfaces';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { SelectOption } from './select-configuration.interface';
 
 @Directive({
   selector: '[entryCheckAutocompleteInput]'

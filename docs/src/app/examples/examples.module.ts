@@ -4,7 +4,7 @@ import { AlertDialogComponent } from './dialog/alert/alert-dialog.component';
 import { ConfirmDialogComponent } from './dialog/confirm/confirm-dialog.component';
 import { SharedModule } from '../shared/shared.module';
 import { AlertWithImageComponent, CustomDialogComponent } from './dialog/custom/custom-dialog.component';
-import { EntryDialogModule } from 'projects/entry-components/entry-dialog/entry-dialog.module';
+import { EntryDialogModule } from 'projects/entry-components/dialog/entry-dialog.module';
 
 @NgModule({
   declarations: [

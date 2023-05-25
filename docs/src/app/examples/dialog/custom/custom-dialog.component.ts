@@ -1,8 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { ENTRY_DIALOG_CONFIG, EntryDialogConfig } from 'projects/entry-components/entry-dialog/entry-dialog-config.model';
-import { EntryDialogService } from 'projects/entry-components/entry-dialog/entry-dialog.service';
-import { EntryDialogComponent, IEntryDialogButtonsConfig } from 'projects/entry-components/entry-dialog/public-api';
+import { ENTRY_DIALOG_CONFIG, EntryDialogConfig } from 'projects/entry-components/dialog/entry-dialog-config.model';
+import { EntryDialogService } from 'projects/entry-components/dialog/entry-dialog.service';
+import { EntryDialogComponent, IEntryDialogButtonsConfig } from 'projects/entry-components/dialog/public-api';
 
 @Component({
   selector: 'app-custom-dialog',
