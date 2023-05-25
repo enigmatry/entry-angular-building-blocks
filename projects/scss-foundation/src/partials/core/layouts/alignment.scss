@@ -1,0 +1,17 @@
+@use '../../../modules/display/items';
+
+.space-between {
+	@include items.fully-align(center, space-between);
+}
+
+.align-center {
+	@include items.align-absolute-center();
+}
+
+.align-right {
+	@include items.fully-align(center, flex-end);
+}
+
+.align-vertical {
+	@include items.align(center);
+}

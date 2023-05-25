@@ -1,0 +1,10 @@
+<mat-form-field [formGroup]="form">
+  <mat-label [attr.for]="searchFilter.key">{{searchFilter.label}}</mat-label>
+
+  <div [ngSwitch]="searchFilter.controlType">
+
+    <input *ngSwitchCase="'textbox'" [formControlName]="searchFilter.key" [id]="searchFilter.key"
+      [type]="searchFilter.type" matInput [placeholder]="searchFilter.placeholder" [maxlength]="searchFilter.maxLength">
+
+  </div>
+</mat-form-field>

@@ -1,0 +1,13 @@
+<div class="search-form-container">
+    <form (ngSubmit)="onSubmit()" [formGroup]="searchFilterForm">
+        <div class="search-form-fields">
+            <div *ngFor="let searchFilter of searchFilters" class="search-form-field">
+                <entry-search-filter-input [searchFilter]="searchFilter"
+                    [form]="searchFilterForm"></entry-search-filter-input>
+            </div>
+            <div>
+                <button type="button" class="mat-raised-button mat-accent" type="submit">{{config.applyButtonText}}</button>
+            </div>
+        </div>
+    </form>
+</div>
