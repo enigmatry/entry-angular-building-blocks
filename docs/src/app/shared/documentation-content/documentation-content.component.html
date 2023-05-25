@@ -2,11 +2,7 @@
     <mat-tab-group animationDuration="0ms">
         <mat-tab label="API">
             <div class="doc-content-wrapper">
-                <div *ngIf="componentDefinition.requiredImports.length">
-                    Required imports:
-                    <app-code-snippet *ngFor="let import of componentDefinition.requiredImports">{{import}}</app-code-snippet>
-                </div>
-                <!-- <app-markdown-viewer [componentDefinition]="componentDefinition"></app-markdown-viewer> -->
+                <app-markdown-viewer [componentDefinition]="componentDefinition"></app-markdown-viewer>
             </div>
         </mat-tab>
         <mat-tab label="Examples">

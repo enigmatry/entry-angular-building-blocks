@@ -1,5 +1,2 @@
-<pre>
-    {{componentDefinition | json}}
-</pre>
-
-<span [innerHTML]="outHtml" ></span>
+<span *ngIf="!markdownContent">NO DOCUMENTATION :'(</span>
+<span *ngIf="markdownContent" [innerHTML]="markdownContent"></span>

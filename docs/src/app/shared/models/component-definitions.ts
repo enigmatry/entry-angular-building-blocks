@@ -5,7 +5,6 @@ interface IComponentDefinition {
     shortDescription: string;
     route: string;
     documentationPath: string;
-    requiredImports: string[];
 }
 
 const COMPONENT_DEFINITIONS: IComponentDefinition[] = [
@@ -13,18 +12,14 @@ const COMPONENT_DEFINITIONS: IComponentDefinition[] = [
         label: 'Dialog',
         shortDescription: `Enables built in dialogs and adds support for building custom ones.`,
         route: RouteSegments.dialog,
-        documentationPath: '',
-        requiredImports: [
-            `import { EntryDialogModule } from '@enigmatry/entry-components/entry-dialog';`,
-            `import { MatDialogModule } from '@angular/material/dialog';`
-        ]
+        // documentationPath: 'entry-components/dialog/README.md',
+        documentationPath: 'D:\\Projects\\entry-angular-building-blocks\\projects\\entry-components\\dialog\\README.md'
     },
     {
         label: 'Header',
         shortDescription: '',
         route: RouteSegments.header,
-        documentationPath: '',
-        requiredImports: []
+        documentationPath: ''
     },
 ];
 
