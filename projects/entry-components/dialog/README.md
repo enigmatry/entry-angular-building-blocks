@@ -37,7 +37,8 @@ constructor (entryDialogService: EntryDialogService) {
 
 @NgModule({
   imports: [
-    EntryDialogModule
+    EntryDialogModule,
+    MatDialogModule
   ],
   providers: [
     {
