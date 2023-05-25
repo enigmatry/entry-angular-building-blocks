@@ -8,10 +8,6 @@ Use `app-docs-content` shared component to define documentation tabs (e.g. `feat
 
 Update `shared/models/route-segments.ts` with new route to the feature and add new entry to `shared/models/component-definitions.ts`. Don't forget to update `app-routing.module.ts` with routing to the new feature.
 
-## Documenting Overview
-
-TODO
-
 ## Documenting API
 
 TODO
