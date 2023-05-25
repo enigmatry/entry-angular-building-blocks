@@ -14,7 +14,7 @@ export class MarkdownViewerComponent implements OnInit {
   markdownContent: string | undefined;
   outHtml: string;
 
-  private _markdown = md('commonmark');
+  private _markdown = md('default');
 
   constructor(private _httpClient: HttpClient) {}
 
