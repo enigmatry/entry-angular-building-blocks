@@ -10,17 +10,17 @@ interface ICustomDialogData {
 }
 
 @Component({
-  selector: 'app-custom-dialog',
-  templateUrl: './custom-dialog.component.html',
-  styleUrls: ['./custom-dialog.component.scss']
+  selector: 'app-custom-dialog-example',
+  templateUrl: './custom-dialog-example.component.html',
+  styleUrls: ['./custom-dialog-example.component.scss']
 })
-export class CustomDialogComponent {
+export class CustomDialogExampleComponent {
   customMessage = 'Isn\'t this logo cute?';
 
   constructor(private _entryDialog: EntryDialogService) { }
 
   openCustom = () => this._entryDialog.open(
-      AlertWithImageComponent,
+      CustomDialogComponent,
       {
         items: [ 'Item 1', 'Item 2', 'Item 3' ],
         message: this.customMessage
@@ -30,11 +30,10 @@ export class CustomDialogComponent {
 
 
 @Component({
-  selector: 'app-alert-with-image',
-  templateUrl: './alert-with-image.component.html',
-  styleUrls: ['./alert-with-image.component.scss']
+  selector: 'app-custom-dialog',
+  templateUrl: './custom-dialog.component.html'
 })
-export class AlertWithImageComponent extends EntryDialogComponent {
+export class CustomDialogComponent extends EntryDialogComponent {
   readonly buttons: IEntryDialogButtonsConfig = {
     confirmButtonText: 'Yes it is',
     cancelButtonText: '',

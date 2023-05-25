@@ -3,16 +3,16 @@ import { CommonModule } from '@angular/common';
 import { EntryDialogModule } from 'projects/entry-components/dialog/entry-dialog.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
-import { AlertDialogComponent } from './alert/alert-dialog.component';
-import { ConfirmDialogComponent } from './confirm/confirm-dialog.component';
-import { CustomDialogComponent, AlertWithImageComponent } from './custom/custom-dialog.component';
+import { AlertExampleComponent } from './alert/alert-example.component';
+import { ConfirmExampleComponent } from './confirm/confirm-example.component';
+import { CustomDialogExampleComponent, CustomDialogComponent } from './custom/custom-dialog-example.component';
 
 @NgModule({
   declarations: [
-    AlertDialogComponent,
-    ConfirmDialogComponent,
-    CustomDialogComponent,
-    AlertWithImageComponent
+    AlertExampleComponent,
+    ConfirmExampleComponent,
+    CustomDialogExampleComponent,
+    CustomDialogComponent
   ],
   imports: [
     CommonModule,
@@ -22,9 +22,9 @@ import { CustomDialogComponent, AlertWithImageComponent } from './custom/custom-
     EntryDialogModule
   ],
   exports: [
-    AlertDialogComponent,
-    ConfirmDialogComponent,
-    CustomDialogComponent,
+    AlertExampleComponent,
+    ConfirmExampleComponent,
+    CustomDialogExampleComponent,
   ]
 })
 export class DialogExamplesModule { }

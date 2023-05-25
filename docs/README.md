@@ -16,14 +16,14 @@ TODO
 
 Examples are documented with `example-viewer` shared component. We use it to present entry component logic and the code behind it.
 
-All of the components containing working entry components examples should be placed in `Examples` module (`examples/`). This way, it will be possible for `example-viewer` to load their code in layout.
+All of the components containing working entry components examples should be placed in `Examples` module (`examples/`). This way, it will be possible for `example-viewer` to load their code in layout. Convention is that the example components name ends with `-example` suffix.
 
 Use example components in `example-viewer` like this:
 
 ```html
 <app-example-viewer
     title="Alert dialog example"
-    path="dialog\alert\alert-dialog.component">
+    path="dialog\alert\alert-example.component">
     <div>
         <app-alert-dialog></app-alert-dialog>
     </div>

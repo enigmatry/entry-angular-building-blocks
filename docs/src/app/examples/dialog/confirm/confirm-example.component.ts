@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { EntryDialogService } from 'projects/entry-components/dialog/entry-dialog.service';
 
 @Component({
-  selector: 'app-confirm-dialog',
-  templateUrl: './confirm-dialog.component.html',
-  styleUrls: ['./confirm-dialog.component.scss']
+  selector: 'app-confirm-example',
+  templateUrl: './confirm-example.component.html',
+  styleUrls: ['./confirm-example.component.scss']
 })
-export class ConfirmDialogComponent {
+export class ConfirmExampleComponent {
   confirmResponse: boolean | undefined;
 
   constructor(private _entryDialog: EntryDialogService) { }

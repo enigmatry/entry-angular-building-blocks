@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { EntryDialogService } from 'projects/entry-components/dialog/entry-dialog.service';
 
 @Component({
-  selector: 'app-alert-dialog',
-  templateUrl: './alert-dialog.component.html',
-  styleUrls: ['./alert-dialog.component.scss']
+  selector: 'app-alert-example',
+  templateUrl: './alert-example.component.html',
+  styleUrls: ['./alert-example.component.scss']
 })
-export class AlertDialogComponent {
+export class AlertExampleComponent {
 
   constructor(private _entryDialog: EntryDialogService) { }
 
