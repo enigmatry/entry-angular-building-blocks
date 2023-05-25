@@ -1,7 +1,6 @@
 <mat-card class="example-card">
     <mat-toolbar-row>
         <span>{{title}}</span>
-        <!-- <span flex style="display: flex;"></span> -->
         <button mat-button (click)="toggleCodeView()" color="primary">
             {{viewCode ? 'Hide' : 'View'}} Code
         </button>
@@ -16,7 +15,7 @@
         <mat-tab label="SCSS" *ngIf="stylesFile">
             <app-code-snippet>{{stylesFile}}</app-code-snippet>
         </mat-tab>
-        <mat-tab *ngFor="let file of additionalCodeFiles" [label]="file.definition.name">
+        <mat-tab *ngFor="let file of extraFiles" [label]="file.definition.name">
             <app-code-snippet>{{file.content}}</app-code-snippet>
         </mat-tab>
     </mat-tab-group>

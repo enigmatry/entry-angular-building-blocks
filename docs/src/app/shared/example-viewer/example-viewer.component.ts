@@ -51,9 +51,9 @@ export class ExampleViewerComponent implements OnDestroy {
 
   private loadExampleDocuments = () => {
     forkJoin({
-      typescript: this.loadCode('ts'),
-      html: this.loadCode('html'),
-      styles: this.loadCode('scss')
+      typescript: this.loadFile(this.path, 'ts'),
+      html: this.loadFile(this.path, 'html'),
+      styles: this.loadFile(this.path, 'scss')
     })
       .pipe(
         catchError((error: Response) => this.handleError(error)),
@@ -74,9 +74,6 @@ export class ExampleViewerComponent implements OnDestroy {
       .subscribe((files: IExtraFile[]) => this.extraFiles = files);
   };
 
-  private loadCode = (type: FileExtension): Observable<string> =>
-    this._http.get(`assets/examples/${this.path}.${type}`, { responseType: 'text' });
-
   private handleError = (error: Response) =>
     new Observable<any>((subscriber: Subscriber<any>) => {
       try {
@@ -88,11 +85,14 @@ export class ExampleViewerComponent implements OnDestroy {
 
   private mapFileCalls = (definitions: ICodeFileDefinition[]): Observable<IExtraFile>[] =>
     definitions
-      .map(fileDefinition => this._http
-        .get(`assets/examples/${fileDefinition.path}.${fileDefinition.type}`, { responseType: 'text' })
-        .pipe(map(fileContent => ({
-          content: fileContent,
-          definition: fileDefinition
-        } as IExtraFile)))
+      .map(fileDefinition =>
+        this.loadFile(fileDefinition.path, fileDefinition.type)
+          .pipe(map(fileContent => ({
+            content: fileContent,
+            definition: fileDefinition
+          } as IExtraFile)))
       );
+
+  private loadFile = (path: string, type: FileExtension): Observable<string> =>
+    this._http.get(`assets/examples/${path}.${type}`, { responseType: 'text' });
 }

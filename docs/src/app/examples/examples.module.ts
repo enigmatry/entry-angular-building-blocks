@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AlertComponent } from './dialog/alert/alert.component';
-import { ConfirmComponent } from './dialog/confirm/confirm.component';
+import { AlertDialogComponent } from './dialog/alert/alert-dialog.component';
+import { ConfirmDialogComponent } from './dialog/confirm/confirm-dialog.component';
 import { SharedModule } from '../shared/shared.module';
 import { AlertWithImageComponent, CustomDialogComponent } from './dialog/custom/custom-dialog.component';
 import { EntryDialogModule } from 'projects/entry-components/entry-dialog/entry-dialog.module';
 
 @NgModule({
   declarations: [
-    AlertComponent,
-    ConfirmComponent,
+    AlertDialogComponent,
+    ConfirmDialogComponent,
     CustomDialogComponent,
     AlertWithImageComponent
   ],
@@ -19,8 +19,8 @@ import { EntryDialogModule } from 'projects/entry-components/entry-dialog/entry-
     EntryDialogModule
   ],
   exports: [
-    AlertComponent,
-    ConfirmComponent,
+    AlertDialogComponent,
+    ConfirmDialogComponent,
     CustomDialogComponent,
   ]
 })

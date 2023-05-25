@@ -9,8 +9,8 @@ import { ICodeFileDefinition } from '../../shared/example-viewer/code-file-defin
 export class DialogDocsComponent {
   extraFiles: ICodeFileDefinition[] = [
     {
-      name: `alert-with-image.component.html`,
-      path: `dialog\\custom\\alert-with-image.component`,
+      name: 'alert-with-image.component.html',
+      path: 'dialog\\custom\\alert-with-image.component',
       type: 'html'
     }
   ];
