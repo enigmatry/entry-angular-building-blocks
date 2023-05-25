@@ -30,7 +30,7 @@ constructor (entryDialogService: EntryDialogService) {
 
 ## Configuration
 
-`ENTRY_DIALOG_CONFIG`: `InjectionToken<EntryDialogConfig>` - Used to override defaults
+`ENTRY_DIALOG_CONFIG`: `InjectionToken<EntryDialogConfig>` - Optional configuration used to override defaults.
 
 ```ts
 // ...
