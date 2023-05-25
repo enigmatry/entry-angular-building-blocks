@@ -12,8 +12,7 @@ const COMPONENT_DEFINITIONS: IComponentDefinition[] = [
         label: 'Dialog',
         shortDescription: `Enables built in dialogs and adds support for building custom ones.`,
         route: RouteSegments.dialog,
-        // documentationPath: 'entry-components/dialog/README.md',
-        documentationPath: 'D:\\Projects\\entry-angular-building-blocks\\projects\\entry-components\\dialog\\README.md'
+        documentationPath: 'entry-components/README.md',
     },
     {
         label: 'Header',

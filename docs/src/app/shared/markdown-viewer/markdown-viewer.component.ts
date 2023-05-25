@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IComponentDefinition } from '../models/component-definitions';
-import * as md from 'markdown-it';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'docs/src/environments/environment';
+import * as md from 'markdown-it';
 
 @Component({
   selector: 'app-markdown-viewer',
@@ -24,9 +24,9 @@ export class MarkdownViewerComponent implements OnInit {
     //     draft: false
     //     ---
 
-    //     # Blog 
+    //     # Blog
 
-    //     I love Angular !!   
+    //     I love Angular !!
 
     //     _fffff_
     // `;
@@ -39,8 +39,7 @@ export class MarkdownViewerComponent implements OnInit {
   ngOnInit(): void {
     if (this.componentDefinition.documentationPath) {
       this._httpClient.get(
-        `https://github.com/enigmatry/entry-angular-building-blocks/blob/master/README.md`,
-        // `${environment.documentationUri}${this.componentDefinition.documentationPath}`,
+        `${environment.documentationUri}${this.componentDefinition.documentationPath}`,
         { responseType: 'text' }
       )
       .subscribe(response => this.markdownContent = this._markdown.render(response));
