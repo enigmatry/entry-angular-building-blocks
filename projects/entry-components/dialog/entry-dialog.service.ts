@@ -14,13 +14,37 @@ import { IEntryConfirmDialogData } from './dialogs/confirm/entry-confirm-dialog-
 export class EntryDialogService {
   constructor(private readonly matDialog: MatDialog) { }
 
+  /**
+   * Opens alert dialog
+   *
+   * @param data - Contains title, message and optional confirm button text of IEntryAlertDialogData type
+   * @returns Observable of any
+   */
   openAlert = (data: IEntryAlertDialogData): Observable<any> =>
     this.open(EntryAlertDialogComponent, data);
 
-  readonly openConfirm = (data: IEntryConfirmDialogData): Observable<boolean | undefined> =>
+  /**
+   * Opens confirm dialog
+   *
+   * @param data - Contains title, message and optional confirm/cancel buttons text of IEntryConfirmDialogData type
+   * @returns Observable of bool or undefined, `true` if confirmed, `false` if canceled or closed
+   * , `undefined` if closed by clicking outside of the dialog
+   */
+  openConfirm = (data: IEntryConfirmDialogData): Observable<boolean | undefined> =>
     this.open(EntryConfirmDialogComponent, data);
 
-  readonly open = (component: Type<EntryDialogComponent>, data: unknown = undefined, cssClass: string = '') => {
+  /**
+   * Opens dialog with custom component
+   *
+   * @param component - Dialog custom component implementation
+   * @param data - Optional parameter used to supply component with input parameters
+   * @param cssClass - Optional parameter used to set custom class to Material overlay pane
+   * @returns Observable of any containing result of dialog with custom component
+   */
+  open = (
+    component: Type<EntryDialogComponent>,
+    data: unknown = undefined,
+    cssClass: string = ''): Observable<any> => {
     const configuration = new MatDialogConfig<unknown>();
     configuration.data = data;
     this.setPanelClassFor(configuration, cssClass);

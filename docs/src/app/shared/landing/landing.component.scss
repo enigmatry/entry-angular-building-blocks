@@ -1,0 +1,14 @@
+.landing {
+    margin: 20px;
+    display: flex;
+
+    .component-card {
+        margin: 10px;
+        max-width: 400px;
+        flex: 1 1 auto;
+
+        mat-card-content {
+            margin-left: 17px;
+        }
+    }
+}

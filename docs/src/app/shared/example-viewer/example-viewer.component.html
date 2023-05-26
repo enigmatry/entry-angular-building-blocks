@@ -1,0 +1,26 @@
+<mat-card class="example-card">
+    <mat-toolbar-row>
+        <span>{{title}}</span>
+        <button mat-button (click)="toggleCodeView()" color="primary">
+            {{viewCode ? 'Hide' : 'View'}} Code
+        </button>
+    </mat-toolbar-row>
+    <mat-tab-group  animationDuration="0ms" *ngIf="viewCode">
+        <mat-tab label="HTML">
+            <app-code-snippet>{{htmlFile}}</app-code-snippet>
+        </mat-tab>
+        <mat-tab label="TS">
+            <app-code-snippet>{{typescriptFile}}</app-code-snippet>
+        </mat-tab>
+        <mat-tab label="SCSS" *ngIf="stylesFile">
+            <app-code-snippet>{{stylesFile}}</app-code-snippet>
+        </mat-tab>
+        <mat-tab *ngFor="let file of extraFiles" [label]="file.definition.name">
+            <app-code-snippet>{{file.content}}</app-code-snippet>
+        </mat-tab>
+    </mat-tab-group>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+        <ng-content></ng-content>
+    </mat-card-content>
+</mat-card>
