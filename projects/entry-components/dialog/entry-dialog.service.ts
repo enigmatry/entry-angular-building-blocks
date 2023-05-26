@@ -18,8 +18,7 @@ export class EntryDialogService {
    * Opens alert dialog
    *
    * @param data - Contains title, message and optional confirm button text of IEntryAlertDialogData type
-   *
-   * @returns nothing
+   * @returns Observable of any
    */
   openAlert = (data: IEntryAlertDialogData): Observable<any> =>
     this.open(EntryAlertDialogComponent, data);
@@ -28,8 +27,7 @@ export class EntryDialogService {
    * Opens confirm dialog
    *
    * @param data - Contains title, message and optional confirm/cancel buttons text of IEntryConfirmDialogData type
-   *
-   * @returns Observable<bool | undefined>, `true` if confirmed, `false` if canceled or closed, 
+   * @returns Observable of bool or undefined, `true` if confirmed, `false` if canceled or closed, 
    * `undefined` if closed by clicking outside of the dialog
    */
   openConfirm = (data: IEntryConfirmDialogData): Observable<boolean | undefined> =>
@@ -41,8 +39,7 @@ export class EntryDialogService {
    * @param component - Dialog custom component implementation
    * @param data - Optional parameter used to supply component with input parameters
    * @param cssClass - Optional parameter used to set custom class to Material overlay pane
-   *
-   * @returns Observable<any> containing result of dialog with custom component
+   * @returns Observable of any containing result of dialog with custom component
    */
   open = (
     component: Type<EntryDialogComponent>,
