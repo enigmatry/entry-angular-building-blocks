@@ -8,6 +8,7 @@ import { EntryDialogService } from 'projects/entry-components/dialog/entry-dialo
 })
 export class ConfirmExampleComponent {
   confirmResponse: boolean | undefined;
+  disableClose = true;
 
   constructor(private _entryDialog: EntryDialogService) { }
 
@@ -15,6 +16,6 @@ export class ConfirmExampleComponent {
     .openConfirm({
       title: `CONFIRM`,
       message: `Lorem Ipsum is simply dummy text of the printing and typesetting industry.`
-    })
+    }, this.disableClose)
     .subscribe((response: boolean | undefined) => this.confirmResponse = response);
 }
