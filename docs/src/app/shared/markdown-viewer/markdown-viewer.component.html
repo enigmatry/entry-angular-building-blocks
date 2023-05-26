@@ -1,0 +1,2 @@
+<span *ngIf="!markdownContent">No documentation found :'(</span>
+<span *ngIf="markdownContent" innerHTML="{{markdownContent | markdown}}"></span>
