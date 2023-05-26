@@ -3,8 +3,6 @@ import { DialogExamplesModule } from './dialog/dialog-examples.module';
 import { HeaderExamplesModule } from './header/header-examples.module';
 
 @NgModule({
-  declarations: [],
-  imports: [],
   exports: [
     DialogExamplesModule,
     HeaderExamplesModule
