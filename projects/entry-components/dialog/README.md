@@ -26,8 +26,6 @@ constructor (entryDialogService: EntryDialogService) {
 `ENTRY_DIALOG_CONFIG`: `InjectionToken<EntryDialogConfig>` - Optional configuration used to override defaults.
 
 ```ts
-// ...
-
 @NgModule({
   imports: [
     EntryDialogModule,

@@ -4,15 +4,15 @@ import { InjectionToken } from '@angular/core';
  * Used to provide default configurations on module level
  */
 export class EntryDialogConfig {
-    /** @property confirmButtonText - Confirm button label (default 'Ok') */
+    /** @property {string} confirmButtonText - Confirm button label (default 'Ok') */
     confirmButtonText: string;
-    /** @property cancelButtonText - Cancel button label (default 'Cancel') */
+    /** @property {string} cancelButtonText - Cancel button label (default 'Cancel') */
     cancelButtonText: string;
-    /** @property buttonsAlignment - Buttons alignment on dialog (default 'align-right') */
+    /** @property {string} buttonsAlignment - Buttons alignment on dialog (default 'align-right') */
     buttonsAlignment: 'align-right' | 'align-center' | '';
-    /** @property hideClose - Determines if close button is visible (default is false) */
+    /** @property {boolean} hideClose - Determines if close button is visible (default is false) */
     hideClose: boolean;
-    /** @property disableClose - Disable closing dialog when pressing escape or clicking on backdrop (default false) */
+    /** @property {boolean} disableClose - Disable closing dialog when pressing escape or clicking on backdrop (default false) */
     disableClose: boolean;
 
     constructor(config: Partial<EntryDialogConfig> = {}) {
