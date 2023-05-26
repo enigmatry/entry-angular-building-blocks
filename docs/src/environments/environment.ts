@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  documentationUri: 'https://raw.githubusercontent.com/enigmatry/entry-angular-building-blocks/features/entry-components-docs/projects'
+  documentationUri: 'https://raw.githubusercontent.com/enigmatry/entry-angular-building-blocks/master/projects/'
 };
 
 /*
