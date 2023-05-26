@@ -1,4 +1,9 @@
-<entry-dialog title="Custom Dialog" [buttons]="buttons">
+<entry-dialog
+    title="Custom Dialog"
+    confirmButtonText="Yest it is"
+    cancelButtonText=""
+    buttonsAlignment=""
+    hideCancel="true">
     <ul>
         <li *ngFor="let item of data.items">{{item}}</li>
     </ul>

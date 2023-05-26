@@ -36,7 +36,13 @@ constructor (entryDialogService: EntryDialogService) {
   providers: [
     {
         provide: ENTRY_DIALOG_CONFIG,
-        useFactory: () => new EntryDialogConfig('Yes', 'No', 'align-center')
+        useFactory: () => new EntryDialogConfig({
+          confirmButtonText: 'Yes',
+          cancelButtonText: 'No',
+          buttonsAlignment: 'align-center',
+          hideClose: true,
+          disableClose: true
+        })
     }
   ]
 })
@@ -79,13 +85,6 @@ Opens custom dialog component defined by `component` parameter. Optionally, it c
 | confirmButtonText: `string` | Confirm button text (default 'Ok') |
 | cancelButtonText: `string` | Cancel button text (default 'Cancel') |
 | buttonsAlignment: `string` | Buttons alignment values: `'align-right'`, `'align-center'` or `''` (default `'align-right'`) |
-
-| `IEntryDialogButtonsConfig` |  |
-| - | - |
-| confirmButtonText: `string` | Confirm button text |
-| cancelButtonText: `string` | Cancel button text |
-| buttonsAlignment: `string` | Buttons alignment values: `'align-right'`, `'align-center'` or `''` |
-| visible: `bool` | Hides or shows dialog buttons |
 
 | `EntryDialogComponent` |  |
 | - | - |
