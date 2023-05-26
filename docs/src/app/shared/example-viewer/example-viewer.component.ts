@@ -4,6 +4,7 @@ import { Observable, Subject, Subscriber, forkJoin } from 'rxjs';
 import { catchError, map, takeUntil } from 'rxjs/operators';
 import { ICodeFileDefinition } from './code-file-definition.interface';
 import { FileExtension } from '../models/file-extension.type';
+import { FileLoadService } from '../services/file-load.service';
 
 interface IExampleDocuments {
   typescript: string;
@@ -35,7 +36,7 @@ export class ExampleViewerComponent implements OnDestroy {
 
   private _destroy$ = new Subject<void>();
 
-  constructor(private _http: HttpClient) { }
+  constructor(private _fileLoad: FileLoadService) { }
 
   ngOnDestroy(): void {
     this._destroy$.next();
@@ -94,5 +95,5 @@ export class ExampleViewerComponent implements OnDestroy {
       );
 
   private loadFile = (path: string, type: FileExtension): Observable<string> =>
-    this._http.get(`assets/examples/${path}.${type}`, { responseType: 'text' });
+    this._fileLoad.loadCodeFile(path, type);
 }

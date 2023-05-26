@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IComponentDefinition } from '../models/component-definitions';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'docs/src/environments/environment';
+import { FileLoadService } from '../services/file-load.service';
 import * as md from 'markdown-it';
 
 @Component({
@@ -16,15 +15,13 @@ export class MarkdownViewerComponent implements OnInit {
 
   private _markdown = md('default');
 
-  constructor(private _httpClient: HttpClient) {}
+  constructor(private _fileLoad: FileLoadService) {}
 
   ngOnInit(): void {
     if (this.componentDefinition.documentationPath) {
-      this._httpClient.get(
-        `${environment.documentationUri}${this.componentDefinition.documentationPath}`,
-        { responseType: 'text' }
-      )
-      .subscribe(response => this.markdownContent = this._markdown.render(response));
+      this._fileLoad
+        .loadDocumentationFile(this.componentDefinition.documentationPath)
+        .subscribe(response => this.markdownContent = this._markdown.render(response));
     }
   }
 }
