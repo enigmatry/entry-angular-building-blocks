@@ -5,7 +5,11 @@ pool:
 
 steps:
 - task: Npm@1
-  displayName: 'Build entry table'
+  displayName: 'npm install'
+  inputs:
+    command: 'install'
+- task: Npm@1
+  displayName: 'Build docs application'
   inputs:
     command: 'custom'
     customCommand: 'run build @enigmatry/docs-app'
@@ -15,4 +19,4 @@ steps:
     app_location: '/dist/enigmatry/docs'
     output_location: '/'
     azure_static_web_apps_api_token: $(deployment_token)
-  displayName: Deploy Statuc website
+  displayName: 'Deploy docs application'
