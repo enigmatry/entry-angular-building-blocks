@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../shared/shared.module';
 import { DialogComponent } from './dialog.component';
 import { DialogRoutingModule } from './dialog-routing.module';
-import { ExamplesModule } from '../../examples/examples.module';
+import { DialogExamplesModule } from '../../examples/dialog/dialog-examples.module';
 
 @NgModule({
   declarations: [
@@ -13,7 +13,7 @@ import { ExamplesModule } from '../../examples/examples.module';
     CommonModule,
     SharedModule,
     DialogRoutingModule,
-    ExamplesModule
+    DialogExamplesModule
   ]
 })
 export class DialogModule { }
