@@ -23,7 +23,8 @@ export class EntryDialogConfig {
         this.disableClose = config.disableClose ?? false;
     }
 }
-export const ENTRY_DIALOG_CONFIG = new InjectionToken<EntryDialogConfig>('EntryDialogConfig',
+export const ENTRY_DIALOG_CONFIG = new InjectionToken<EntryDialogConfig>(
+    'EntryDialogConfig',
     {
         providedIn: 'root',
         factory: () => new EntryDialogConfig()

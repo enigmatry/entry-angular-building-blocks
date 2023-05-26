@@ -1,6 +1,6 @@
 # Entry Dialog
 
-Enables working with built-in (alert and confirm) and custom dialogs. Supports dialog configuration on module level.
+Enables working with built-in (alert and confirm) and custom dialogs. Supports dialog configuration on application level.
 
 ## Imports
 
