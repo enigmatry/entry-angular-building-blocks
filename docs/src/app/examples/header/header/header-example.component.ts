@@ -14,9 +14,9 @@ export class HeaderExampleComponent implements OnInit {
 
   addNew = () => {
     alert('Add new clicked  ');
-  }
+  };
 
   otherAction = () => {
     alert('Other action clicked  ');
-  }
+  };
 }

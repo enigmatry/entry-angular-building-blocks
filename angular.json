@@ -123,7 +123,7 @@
         }
       }
     },
-    "@enigmatry/docs": {
+    "@enigmatry/docs-app": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -197,10 +197,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "@enigmatry/docs:build:production"
+              "browserTarget": "@enigmatry/docs-app:build:production"
             },
             "development": {
-              "browserTarget": "@enigmatry/docs:build:development"
+              "browserTarget": "@enigmatry/docs-app:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -208,7 +208,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "@enigmatry/docs:build"
+            "browserTarget": "@enigmatry/docs-app:build"
           }
         },
         "test": {
