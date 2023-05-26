@@ -1,3 +1,8 @@
-<entry-dialog [title]='data.title' [buttons]="buttons">
+<entry-dialog
+    [title]="data.title"
+    [confirmButtonText]="data.confirmText ?? config.confirmButtonText"
+    [cancelButtonText]="data.cancelText ?? config.cancelButtonText"
+    [buttonsAlignment]="'align-right'"
+    [hideClose]="true">
     <p>{{data.message}}</p>
 </entry-dialog>
