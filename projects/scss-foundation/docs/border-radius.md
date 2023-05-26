@@ -1,6 +1,6 @@
 # Border-radius method
 
-Border-radius utility for set different border radius values for each corner of an element.
+Border radius utility for set different border radius values for each corner of an element.
 
 ## Border Radius
 
