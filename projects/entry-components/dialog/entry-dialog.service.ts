@@ -27,8 +27,8 @@ export class EntryDialogService {
    * Opens confirm dialog
    *
    * @param data - Contains title, message and optional confirm/cancel buttons text of IEntryConfirmDialogData type
-   * @returns Observable of bool or undefined, `true` if confirmed, `false` if canceled or closed, 
-   * `undefined` if closed by clicking outside of the dialog
+   * @returns Observable of bool or undefined, `true` if confirmed, `false` if canceled or closed
+   * , `undefined` if closed by clicking outside of the dialog
    */
   openConfirm = (data: IEntryConfirmDialogData): Observable<boolean | undefined> =>
     this.open(EntryConfirmDialogComponent, data);
