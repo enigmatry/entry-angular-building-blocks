@@ -1,6 +1,6 @@
 # Entry Dialog
 
-Enables working with built-in (alert and confirm) and custom dialogs. Supports dialog configuration on application level.
+Enables working with built-in (alert and confirm) and custom dialogs. Supports dialog configuration on module level.
 
 ## Imports
 
@@ -16,7 +16,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 ```ts
 constructor (entryDialogService: EntryDialogService) {
     entryDialogService.openAlert({
-        title: 'ALERT', message: 'ALERT_MESSAGE_CONTENT'
+        title: 'ALERT!', message: 'I want to tell you that I love you :)'
     })
 }
 ```
