@@ -16,6 +16,10 @@ const routes: Routes = [
     path: RouteSegments.header,
     loadChildren: () => import('./features/header/header.module').then(module => module.HeaderModule)
   },
+  {
+    path: RouteSegments.search_filter,
+    loadChildren: () => import('./features/search-filter/search-filter.module').then(module => module.SearchFilterModule)
+  }
 ];
 
 @NgModule({
