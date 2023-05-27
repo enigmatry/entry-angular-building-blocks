@@ -61,9 +61,9 @@ export class ExampleViewerComponent implements OnDestroy {
         takeUntil(this._destroy$)
       )
       .subscribe((documents: IExampleDocuments) => {
-        this.typescriptFile = documents.typescript;
-        this.htmlFile = documents.html;
-        this.stylesFile = documents.styles;
+        this.typescriptFile = this.addMarkdown(documents.typescript, 'ts');
+        this.htmlFile = this.addMarkdown(documents.html, 'html');
+        this.stylesFile = this.addMarkdown(documents.styles, 'scss');
         this.viewCode = true;
       });
     // Load extra files if any
@@ -89,11 +89,14 @@ export class ExampleViewerComponent implements OnDestroy {
       .map(fileDefinition =>
         this.loadFile(fileDefinition.path, fileDefinition.type)
           .pipe(map(fileContent => ({
-            content: fileContent,
+            content: this.addMarkdown(fileContent, fileDefinition.type),
             definition: fileDefinition
           } as IExtraFile)))
       );
 
   private loadFile = (path: string, type: FileExtension): Observable<string> =>
     this._fileLoad.loadCodeFile(path, type);
+
+  private addMarkdown = (value: string, type: FileExtension): string =>
+    value ? `\`\`\`${type} ${value}\`\`\`` : '';
 }
