@@ -38,7 +38,6 @@ Inputs:
 |`hideButtons`|`boolean`|Show or hide dialog buttons|
 |`hideCancel`|`boolean`|Show or hide dialog cancel button|
 |`hideClose`|`boolean`|Show or hide dialog close button|
-|`disableClose`|`boolean`|Disable closing dialog when pressing escape or clicking on backdrop|
 |`disableConfirm`|`boolean`|Enable or disable dialog confirm button|
 |`buttonsTemplate`|`TemplateRef<any>` \| `null` \| `undefined`|Provide custom buttons template|
 
@@ -59,7 +58,7 @@ Inputs:
           confirmButtonText: 'Yes',
           cancelButtonText: 'No',
           buttonsAlignment: 'align-center',
-          hideClose: true,
+          hideClose: false,
           disableClose: true
         })
     }
