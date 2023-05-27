@@ -20,7 +20,8 @@ export class CustomDialogExampleComponent {
     openCustom = () =>
         this._entryDialog.open(
             CustomDialogComponent,
-            { question: this.question } as ICustomDialogData
+            { question: this.question } as ICustomDialogData,
+            true
         )
         .subscribe(result => this.result = result);
 }

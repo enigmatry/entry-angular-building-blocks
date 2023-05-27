@@ -81,7 +81,7 @@ Fields:
 |`confirmButtonText`|`string`|'Ok'|Confirm button label|
 |`cancelButtonText`|`string`|'Cancel'|Cancel button label|
 |`buttonsAlignment`|`EntryDialogButtonsAlignment`|'align-right'|Dialog buttons horizontal alignment|
-|`hideClose`|`boolean`|false|Determines if close button is visible|
+|`hideClose`|`boolean`|true|Determines if close button is visible|
 |`disableClose`|`boolean`|false|Disable closing dialog when pressing escape or clicking on backdrop|
 
 ## EntryDialogService Methods
