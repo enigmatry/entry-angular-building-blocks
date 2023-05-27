@@ -17,7 +17,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 constructor (entryDialogService: EntryDialogService) {
     entryDialogService.openAlert({
         title: 'ALERT!', message: 'I want to tell you that I love you :)'
-    })
+    });
 }
 ```
 

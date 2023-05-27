@@ -1,14 +1,25 @@
 <entry-dialog
     title="Custom Dialog"
-    confirmButtonText="Yest it is"
-    cancelButtonText=""
-    buttonsAlignment=""
-    hideCancel="true"
-    
-    >
-    <ul>
-        <li *ngFor="let item of data.items">{{item}}</li>
-    </ul>
-    <p>{{data.message}}</p>
+    [buttonsTemplate]="customButtonsTemplate"
+    hideClose="true">
+    <p>{{data.question}}</p>
     <img src="./../../../../assets/images/entry_logo_small.png">
+    <p>
+        <mat-form-field>
+            <mat-label>Write your comment</mat-label>
+            <input matInput type="text" [(ngModel)]="comment">
+        </mat-form-field>
+    </p>
 </entry-dialog>
+
+<ng-template #customButtonsTemplate>
+    <button cdkFocusInitial mat-raised-button color="primary" (click)="onClick('Yeas it is')">
+        Yeas it is
+    </button>
+    <button mat-raised-button (click)="onClick('So-so')">
+        So-so
+    </button>
+    <button mat-raised-button (click)="onClick('Nope')">
+        Nope
+    </button>
+</ng-template>
