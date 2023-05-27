@@ -8,13 +8,13 @@ import { EntryDialogService } from 'projects/entry-components/dialog/entry-dialo
   styleUrls: ['./alert-example.component.scss']
 })
 export class AlertExampleComponent {
-  alertData: IEntryAlertDialogData = {
+  alertData: Partial<IEntryAlertDialogData> = {
     title: `ALERT`,
     message: `Lorem Ipsum is simply dummy text of the printing and typesetting industry.`,
     // Optional properties:
-    confirmText: 'Ok',
-    buttonsAlignment: 'align-center',
-    hideClose: false,
+    // confirmText: 'Ok',
+    // buttonsAlignment: 'align-center',
+    // hideClose: false,
     disableClose: false
   };
 

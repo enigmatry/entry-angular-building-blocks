@@ -26,7 +26,7 @@ export class EntryDialogService {
    * @param data - Contains title, message and optional confirm button text
    * @returns `true` if confirmed, `undefined` if closed by clicking on backdrop or pressing escape
    */
-  openAlert = (data: IEntryAlertDialogData): Observable<true | undefined> => {
+  openAlert = (data: Partial<IEntryAlertDialogData>): Observable<true | undefined> => {
     data.disableClose = data.disableClose === undefined ? this.config.disableClose : data.disableClose;
     return this.open(EntryAlertDialogComponent, data, data.disableClose);
   };
@@ -37,7 +37,7 @@ export class EntryDialogService {
    * @param data - Contains title, message and optional confirm/cancel buttons text
    * @returns `true` if confirmed, `false` if canceled or closed, `undefined` if closed by clicking on backdrop or pressing escape
    */
-  openConfirm = (data: IEntryConfirmDialogData): Observable<boolean | undefined> => {
+  openConfirm = (data: Partial<IEntryConfirmDialogData>): Observable<boolean | undefined> => {
     data.disableClose = data.disableClose === undefined ? this.config.disableClose : data.disableClose;
     return this.open(EntryConfirmDialogComponent, data, data.disableClose);
   };

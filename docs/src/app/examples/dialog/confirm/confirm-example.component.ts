@@ -8,14 +8,14 @@ import { EntryDialogService } from 'projects/entry-components/dialog/entry-dialo
   styleUrls: ['./confirm-example.component.scss']
 })
 export class ConfirmExampleComponent {
-  confirmData: IEntryConfirmDialogData = {
+  confirmData: Partial<IEntryConfirmDialogData> = {
     title: `CONFIRM`,
     message: `Lorem Ipsum is simply dummy text of the printing and typesetting industry.`,
     // Optional properties:
-    confirmText: 'Ok',
-    cancelText: 'Cancel',
-    buttonsAlignment: 'align-right',
-    hideClose: true,
+    // confirmText: 'Ok',
+    // cancelText: 'Cancel',
+    // buttonsAlignment: 'align-right',
+    // hideClose: true,
     disableClose: true
   };
   confirmResponse: boolean | undefined;
