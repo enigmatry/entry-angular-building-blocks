@@ -21,6 +21,27 @@ constructor (entryDialogService: EntryDialogService) {
 }
 ```
 
+## Components
+
+### **EntryDialogComponent**
+
+Base entry dialog component. Must be extended when building custom dialogs.
+
+Inputs:
+
+|Name|Type|Description|
+|:------|:------|:------|
+|`title`|`string`|Dialog header title|
+|`buttonsAlignment`|`EntryDialogButtonsAlignment`|Dialog buttons horizontal alignment|
+|`confirmButtonText`|`string`|Confirm button label|
+|`cancelButtonText`|`string`|Cancel button label|
+|`hideButtons`|`boolean`|Show or hide dialog buttons|
+|`hideCancel`|`boolean`|Show or hide dialog cancel button|
+|`hideClose`|`boolean`|Show or hide dialog close button|
+|`disableClose`|`boolean`|Disable closing dialog when pressing escape or clicking on backdrop|
+|`disableConfirm`|`boolean`|Enable or disable dialog confirm button|
+|`buttonsTemplate`|`TemplateRef<any>` \| `null` \| `undefined`|Provide custom buttons template|
+
 ## Configuration
 
 `ENTRY_DIALOG_CONFIG`: `InjectionToken<EntryDialogConfig>` - Optional configuration used to override defaults.
@@ -46,6 +67,22 @@ constructor (entryDialogService: EntryDialogService) {
 })
 export class AppModule { }
 ```
+
+## Classes
+
+### **EntryDialogConfig**
+
+Used to provide default configurations on module level.
+
+Fields:
+
+|Name|Type|Default value|Description|
+|:------|:------|:------|:------|
+|`confirmButtonText`|`string`|'Ok'|Confirm button label|
+|`cancelButtonText`|`string`|'Cancel'|Cancel button label|
+|`buttonsAlignment`|`EntryDialogButtonsAlignment`|'align-right'|Dialog buttons horizontal alignment|
+|`hideClose`|`boolean`|false|Determines if close button is visible|
+|`disableClose`|`boolean`|false|Disable closing dialog when pressing escape or clicking on backdrop|
 
 ## EntryDialogService Methods
 
@@ -154,19 +191,3 @@ Fields:
 |`cancelText`|`string` \| `undefined`|Optional dialog cancel text label|
 |`hideClose`|`boolean` \| `undefined`|Optionally show or hide dialog close button|
 |`disableClose`|`boolean` \| `undefined`|Optionally disable closing dialog when pressing escape or clicking on backdrop|
-
-## Classes
-
-### **EntryDialogConfig**
-
-Used to provide default configurations on module level.
-
-Fields:
-
-|Name|Type|Description|
-|:------|:------|:------|
-|`confirmButtonText`|`string`|Confirm button label (default 'Ok')|
-|`cancelButtonText`|`string`|Cancel button label (default 'Cancel')|
-|`buttonsAlignment`|`EntryDialogButtonsAlignment`|Dialog buttons horizontal alignment (default 'align-right')|
-|`hideClose`|`boolean`|Determines if close button is visible (default is false)|
-|`disableClose`|`boolean`|Disable closing dialog when pressing escape or clicking on backdrop (default false)|
