@@ -2,13 +2,6 @@ import { EntryDialogButtonsAlignment } from '../../entry-dialog-buttons-alignmen
 
 /**
  * Alert dialog data.
- *
- * @property title - Dialog header title
- * @property message - Dialog content message
- * @property buttonsAlignment - Optional dialog buttons horizontal alignment
- * @property confirmText - Optional dialog confirm text label
- * @property hideClose - Optionally show or hide dialog close button
- * @property disableClose - Optionally disable closing dialog when pressing escape or clicking on backdrop
  */
 export interface IEntryAlertDialogData {
     /** Dialog header title */

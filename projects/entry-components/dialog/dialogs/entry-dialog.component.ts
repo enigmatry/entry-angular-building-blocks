@@ -6,17 +6,6 @@ import { EntryDialogButtonsAlignment } from '../entry-dialog-buttons-alignment.t
 
 /**
  * Base Entry dialog component. Must be extended when building custom dialogs.
- *
- * @property title - Dialog header title
- * @property buttonsAlignment - Dialog buttons horizontal alignment
- * @property confirmButtonText - Confirm button label
- * @property cancelButtonText - Cancel button label
- * @property hideButtons - Show or hide dialog buttons
- * @property hideCancel - Show or hide dialog cancel button
- * @property hideClose - Show or hide dialog close button
- * @property disableClose - Disable closing dialog when pressing escape or clicking on backdrop
- * @property disableConfirm - Enable or disable dialog confirm button
- * @property buttonsTemplate - Provide custom buttons template
  */
 @Component({
     selector: 'entry-dialog',

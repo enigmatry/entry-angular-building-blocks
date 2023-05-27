@@ -3,12 +3,6 @@ import { EntryDialogButtonsAlignment } from './entry-dialog-buttons-alignment.ty
 
 /**
  * Used to provide default configurations on module level.
- *
- * @property confirmButtonText - Confirm button label (default 'Ok')
- * @property cancelButtonText - Cancel button label (default 'Cancel')
- * @property buttonsAlignment - Dialog buttons horizontal alignment (default 'align-right')
- * @property hideClose - Determines if close button is visible (default is false)
- * @property disableClose - Disable closing dialog when pressing escape or clicking on backdrop (default false)
  */
 export class EntryDialogConfig {
     /** Confirm button label (default 'Ok') */
