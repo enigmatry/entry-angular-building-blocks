@@ -49,19 +49,76 @@ export class AppModule { }
 
 ## EntryDialogService Methods
 
-`openAlert(data: IEntryAlertDialogData): Observable<any>`
+▸ **closeAll**(): `void`
 
-Opens alert dialog containing title and message defined in `data` parameter.
+Closes all opened dialogs.
 
-`openConfirm(data: IEntryConfirmDialogData): Observable<bool | undefined>`
+#### Returns
 
-Opens confirm dialog containing title and message defined in `data` parameter.
+`void`
 
-Returns `true` if confirmed, `false` if canceled or closed, and `undefined` if closed by clicking outside of dialog.
+___
 
-`open(component: Type<EntryDialogComponent>, data: unknown = undefined, cssClass: string = ''): Observable<any>`
+### open
 
-Opens custom dialog component defined by `component` parameter. Optionally, it can receive input `data` or `cssClass`.
+▸ **open**(`component`, `data?`, `disableClose?`, `cssClass?`): `Observable`<`any`\>
+
+Opens dialog with custom component.
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `component` | `Type`<`EntryDialogComponent`\> | | Dialog custom component implementation |
+| `data` | `unknown` | `undefined` | Optional parameter used to supply component with input parameters |
+| `disableClose` | `undefined` \| `boolean` | `undefined` | Optional parameter that disable closing dialog when pressing escape or clicking on backdrop |
+| `cssClass` | `string` | `''` | Optional parameter used to set custom class to Material overlay pane |
+
+#### Returns
+
+`Observable`<`any`\>
+
+Any result custom implementation provides
+
+___
+
+### openAlert
+
+▸ **openAlert**(`data`): `Observable`<`undefined` \| ``true``\>
+
+Opens alert dialog.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `data` | `Partial`<`IEntryAlertDialogData`\> | Contains title, message and optional confirm button text |
+
+#### Returns
+
+`Observable`<`undefined` \| ``true``\>
+
+`true` if confirmed, `undefined` if closed by clicking on backdrop or pressing escape
+
+___
+
+### openConfirm
+
+▸ **openConfirm**(`data`): `Observable`<`undefined` \| `boolean`\>
+
+Opens confirm dialog.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `data` | `Partial`<`IEntryConfirmDialogData`\> | Contains title, message and optional confirm/cancel buttons text |
+
+#### Returns
+
+`Observable`<`undefined` \| `boolean`\>
+
+`true` if confirmed, `false` if canceled or closed, `undefined` if closed by clicking on backdrop or pressing escape
 
 ## Classes and Interfaces
 
