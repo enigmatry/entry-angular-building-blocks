@@ -120,30 +120,53 @@ Opens confirm dialog.
 
 `true` if confirmed, `false` if canceled or closed, `undefined` if closed by clicking on backdrop or pressing escape
 
-## Classes and Interfaces
+## Interfaces
 
-| `IEntryAlertDialogData` |  |
-| - | - |
-| title: `string` | Dialog header title |
-| message: `string` | Dialog content message |
-| confirmText?: `string` | Optional confirm button text |
+### **IEntryAlertDialogData**
 
-| `IEntryConfirmDialogData` |  |
-| - | - |
-| title: `string` | Dialog header title |
-| message: `string` | Dialog content message |
-| confirmText?: `string` | Optional confirm button text |
-| cancelText?: `string` | Optional cancel button text |
+Alert dialog data.
 
-| `EntryDialogConfig` |  |
-| - | - |
-| confirmButtonText: `string` | Confirm button text (default 'Ok') |
-| cancelButtonText: `string` | Cancel button text (default 'Cancel') |
-| buttonsAlignment: `string` | Buttons alignment values: `'align-right'`, `'align-center'` or `''` (default `'align-right'`) |
+Fields:
 
-| `EntryDialogComponent` |  |
-| - | - |
-| title: `string` | Dialog header title |
-| buttons: `IEntryDialogButtonsConfig` | Dialog buttons configuration |
-| disableConfirm: `bool` | Disables confirm button  |
-| buttonsTemplate?: `TemplateRef<>` | Optional dialog buttons custom template |
+|Name|Type|Description|
+|:------|:------|:------|
+|`title`|`string`|Dialog header title|
+|`message`|`string`|Dialog content message|
+|`buttonsAlignment`|`EntryDialogButtonsAlignment` \| `undefined`|Optional dialog buttons horizontal alignment|
+|`confirmText`|`string` \| `undefined`|Optional dialog confirm text label|
+|`hideClose`|`boolean` \| `undefined`|Optionally show or hide dialog close button|
+|`disableClose`|`boolean` \| `undefined`|Optionally disable closing dialog when pressing escape or clicking on backdrop|
+
+___
+
+### **IEntryConfirmDialogData**
+
+Confirm dialog data. Extends `IEntryAlertDialogData`.
+
+Fields:
+
+|Name|Type|Description|
+|:------|:------|:------|
+|`title`|`string`|Dialog header title|
+|`message`|`string`|Dialog content message|
+|`buttonsAlignment`|`EntryDialogButtonsAlignment` \| `undefined`|Optional dialog buttons horizontal alignment|
+|`confirmText`|`string` \| `undefined`|Optional dialog confirm text label|
+|`cancelText`|`string` \| `undefined`|Optional dialog cancel text label|
+|`hideClose`|`boolean` \| `undefined`|Optionally show or hide dialog close button|
+|`disableClose`|`boolean` \| `undefined`|Optionally disable closing dialog when pressing escape or clicking on backdrop|
+
+## Classes
+
+### **EntryDialogConfig**
+
+Used to provide default configurations on module level.
+
+Fields:
+
+|Name|Type|Description|
+|:------|:------|:------|
+|`confirmButtonText`|`string`|Confirm button label (default 'Ok')|
+|`cancelButtonText`|`string`|Cancel button label (default 'Cancel')|
+|`buttonsAlignment`|`EntryDialogButtonsAlignment`|Dialog buttons horizontal alignment (default 'align-right')|
+|`hideClose`|`boolean`|Determines if close button is visible (default is false)|
+|`disableClose`|`boolean`|Disable closing dialog when pressing escape or clicking on backdrop (default false)|
