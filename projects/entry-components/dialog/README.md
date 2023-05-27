@@ -106,14 +106,14 @@ Opens dialog with custom component.
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
-| `component` | `Type`<`EntryDialogComponent`\> | | Dialog custom component implementation |
+| `component` | `Type<EntryDialogComponent>` | | Dialog custom component implementation |
 | `data` | `unknown` | `undefined` | Optional parameter used to supply component with input parameters |
 | `disableClose` | `undefined` \| `boolean` | `undefined` | Optional parameter that disable closing dialog when pressing escape or clicking on backdrop |
 | `cssClass` | `string` | `''` | Optional parameter used to set custom class to Material overlay pane |
 
 #### Returns
 
-`Observable`<`any`\>
+`Observable<any>`
 
 Any result custom implementation provides
 
@@ -129,11 +129,11 @@ Opens alert dialog.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `data` | `Partial`<`IEntryAlertDialogData`\> | Contains title, message and optional confirm button text |
+| `data` | `Partial<IEntryAlertDialogData>` | Contains title, message and other optional parameters |
 
 #### Returns
 
-`Observable`<`undefined` \| ``true``\>
+`Observable<undefined | true>`
 
 `true` if confirmed, `undefined` if closed by clicking on backdrop or pressing escape
 
@@ -149,11 +149,11 @@ Opens confirm dialog.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `data` | `Partial`<`IEntryConfirmDialogData`\> | Contains title, message and optional confirm/cancel buttons text |
+| `data` | `Partial<IEntryConfirmDialogData>` | Contains title, message and other optional parameters |
 
 #### Returns
 
-`Observable`<`undefined` \| `boolean`\>
+`Observable<undefined | boolean>`
 
 `true` if confirmed, `false` if canceled or closed, `undefined` if closed by clicking on backdrop or pressing escape
 
