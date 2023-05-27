@@ -14,8 +14,8 @@ export class AlertExampleComponent {
     // Optional properties:
     // confirmText: 'Ok',
     // buttonsAlignment: 'align-center',
-    // hideClose: false,
-    disableClose: false
+    // hideClose: true,
+    // disableClose: false
   };
 
   constructor(private _entryDialog: EntryDialogService) { }
