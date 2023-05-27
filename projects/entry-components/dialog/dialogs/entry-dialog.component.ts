@@ -1,4 +1,4 @@
-import { Component, HostListener, Inject, Input, TemplateRef } from '@angular/core';
+import { Component, Inject, Input, TemplateRef } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Observable, of } from 'rxjs';
 import { ENTRY_DIALOG_CONFIG, EntryDialogConfig } from '../entry-dialog-config.model';
@@ -27,8 +27,6 @@ export class EntryDialogComponent {
     @Input() hideCancel: boolean;
     /** Show or hide dialog close button */
     @Input() hideClose: boolean = this.config.hideClose;
-    /** Disable closing dialog when pressing escape or clicking on backdrop */
-    @Input() disableClose: boolean = this.config.disableClose;
     /** Enable or disable dialog confirm button */
     @Input() disableConfirm: boolean;
     /** Provide custom buttons template */
@@ -41,12 +39,12 @@ export class EntryDialogComponent {
     @Input() confirm: () => Observable<unknown> = () => of(true);
     @Input() cancel = () => this.close(false);
 
-    @HostListener('keydown.esc')
-    onEsc = () => {
-        if (!this.disableClose) {
-            this.cancel();
-        }
-    };
+    // @HostListener('keydown.esc')
+    // onEsc = () => {
+    //     if (!this.disableClose) {
+    //         this.cancel();
+    //     }
+    // };
 
     onSubmit = () =>
         this.confirm().subscribe({
