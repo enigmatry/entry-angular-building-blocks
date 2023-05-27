@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnDestroy } from '@angular/core';
 import { Observable, Subject, Subscriber, forkJoin } from 'rxjs';
 import { catchError, map, takeUntil } from 'rxjs/operators';
@@ -61,9 +60,9 @@ export class ExampleViewerComponent implements OnDestroy {
         takeUntil(this._destroy$)
       )
       .subscribe((documents: IExampleDocuments) => {
-        this.typescriptFile = this.addMarkdown(documents.typescript, 'ts');
-        this.htmlFile = this.addMarkdown(documents.html, 'html');
-        this.stylesFile = this.addMarkdown(documents.styles, 'scss');
+        this.typescriptFile = documents.typescript;
+        this.htmlFile = documents.html;
+        this.stylesFile = documents.styles;
         this.viewCode = true;
       });
     // Load extra files if any
@@ -89,14 +88,11 @@ export class ExampleViewerComponent implements OnDestroy {
       .map(fileDefinition =>
         this.loadFile(fileDefinition.path, fileDefinition.type)
           .pipe(map(fileContent => ({
-            content: this.addMarkdown(fileContent, fileDefinition.type),
+            content: fileContent,
             definition: fileDefinition
           } as IExtraFile)))
       );
 
   private loadFile = (path: string, type: FileExtension): Observable<string> =>
     this._fileLoad.loadCodeFile(path, type);
-
-  private addMarkdown = (value: string, type: FileExtension): string =>
-    value ? `\`\`\`${type} ${value}\`\`\`` : '';
 }
