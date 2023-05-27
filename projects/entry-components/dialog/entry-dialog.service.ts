@@ -18,11 +18,10 @@ export class EntryDialogService {
     private readonly matDialog: MatDialog) { }
 
   /**
-   * Opens alert dialog
+   * Opens alert dialog.
    *
-   * @param data - Contains title, message and optional confirm button text of IEntryAlertDialogData type
+   * @param data - Contains title, message and optional confirm button text
    * @param disableClose - Optional parameter that disable closing dialog when pressing escape or clicking on backdrop
-   * @returns Observable of any
    */
   openAlert = (
     data: IEntryAlertDialogData,
@@ -30,12 +29,11 @@ export class EntryDialogService {
     this.open(EntryAlertDialogComponent, data, disableClose);
 
   /**
-   * Opens confirm dialog
+   * Opens confirm dialog.
    *
-   * @param data - Contains title, message and optional confirm/cancel buttons text of IEntryConfirmDialogData type
+   * @param data - Contains title, message and optional confirm/cancel buttons text
    * @param disableClose - Optional parameter that disable closing dialog when pressing escape or clicking on backdrop
-   * @returns Observable of bool or undefined, `true` if confirmed, `false` if canceled or closed
-   * , `undefined` if closed by clicking on backdrop or pressing escape
+   * @returns `true` if confirmed, `false` if canceled or closed, `undefined` if closed by clicking on backdrop or pressing escape
    */
   openConfirm = (
     data: IEntryConfirmDialogData,
@@ -43,7 +41,7 @@ export class EntryDialogService {
     this.open(EntryConfirmDialogComponent, data, disableClose);
 
   /**
-   * Opens dialog with custom component
+   * Opens dialog with custom component.
    *
    * @param component - Dialog custom component implementation
    * @param data - Optional parameter used to supply component with input parameters
@@ -69,7 +67,10 @@ export class EntryDialogService {
       .pipe(take(1));
   };
 
-  close = (): void => this.matDialog.closeAll();
+  /**
+   * Closes all opened dialogs.
+   */
+  closeAll = (): void => this.matDialog.closeAll();
 
   private setPanelClassFor = <T>(configuration: MatDialogConfig<T>, cssClass: string) => {
     configuration.panelClass = ['dialog-container', cssClass];

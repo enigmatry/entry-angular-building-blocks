@@ -7,11 +7,13 @@ import { EntryDialogService } from 'projects/entry-components/dialog/entry-dialo
   styleUrls: ['./alert-example.component.scss']
 })
 export class AlertExampleComponent {
+  disableClose = false;
 
   constructor(private _entryDialog: EntryDialogService) { }
 
-  openAlert = () => this._entryDialog.openAlert({
-    title: `ALERT`,
-    message: `Lorem Ipsum is simply dummy text of the printing and typesetting industry.`
-  });
+  openAlert = () => this._entryDialog
+    .openAlert({
+      title: `ALERT`,
+      message: `Lorem Ipsum is simply dummy text of the printing and typesetting industry.`
+    }, this.disableClose);
 }
