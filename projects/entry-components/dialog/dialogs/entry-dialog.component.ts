@@ -2,6 +2,7 @@ import { Component, HostListener, Inject, Input, TemplateRef } from '@angular/co
 import { MatDialogRef } from '@angular/material/dialog';
 import { Observable, of } from 'rxjs';
 import { ENTRY_DIALOG_CONFIG, EntryDialogConfig } from '../entry-dialog-config.model';
+import { EntryDialogButtonsAlignment } from '../entry-dialog-buttons-alignment.type';
 
 /**
  * Base Entry dialog component. Must be extended when building custom dialogs.
@@ -13,6 +14,7 @@ import { ENTRY_DIALOG_CONFIG, EntryDialogConfig } from '../entry-dialog-config.m
  * @property hideButtons - Show or hide dialog buttons
  * @property hideCancel - Show or hide dialog cancel button
  * @property hideClose - Show or hide dialog close button
+ * @property disableClose - Disable closing dialog when pressing escape or clicking on backdrop
  * @property disableConfirm - Enable or disable dialog confirm button
  * @property buttonsTemplate - Provide custom buttons template
  */
@@ -25,7 +27,7 @@ export class EntryDialogComponent {
     /** Dialog header title  */
     @Input() title: string;
     /** Dialog buttons horizontal alignment */
-    @Input() buttonsAlignment: 'align-right' | 'align-center' | '' = this.config.buttonsAlignment;
+    @Input() buttonsAlignment: EntryDialogButtonsAlignment = this.config.buttonsAlignment;
     /** Confirm button label */
     @Input() confirmButtonText = this.config.confirmButtonText;
     /** Cancel button label */
@@ -36,6 +38,8 @@ export class EntryDialogComponent {
     @Input() hideCancel: boolean;
     /** Show or hide dialog close button */
     @Input() hideClose: boolean = this.config.hideClose;
+    /** Disable closing dialog when pressing escape or clicking on backdrop */
+    @Input() disableClose: boolean = this.config.disableClose;
     /** Enable or disable dialog confirm button */
     @Input() disableConfirm: boolean;
     /** Provide custom buttons template */
@@ -50,12 +54,12 @@ export class EntryDialogComponent {
 
     @HostListener('keydown.esc')
     onEsc = () => {
-        if (!this.config.disableClose) {
+        if (!this.disableClose) {
             this.cancel();
         }
     };
 
-    onSubmit = () => {
+    onSubmit = () =>
         this.confirm().subscribe({
             next: closeDialog => {
                 if (closeDialog) {
@@ -63,7 +67,6 @@ export class EntryDialogComponent {
                 }
             }
         });
-    };
 
     close = (value: unknown = true) => this.mdDialogRef.close(value);
 }

@@ -1,7 +1,8 @@
 import { InjectionToken } from '@angular/core';
+import { EntryDialogButtonsAlignment } from './entry-dialog-buttons-alignment.type';
 
 /**
- * Used to provide default configurations on module level
+ * Used to provide default configurations on module level.
  *
  * @property confirmButtonText - Confirm button label (default 'Ok')
  * @property cancelButtonText - Cancel button label (default 'Cancel')
@@ -15,7 +16,7 @@ export class EntryDialogConfig {
     /** Cancel button label (default 'Cancel') */
     cancelButtonText: string;
     /** Dialog buttons horizontal alignment (default 'align-right') */
-    buttonsAlignment: 'align-right' | 'align-center' | '';
+    buttonsAlignment: EntryDialogButtonsAlignment;
     /** Determines if close button is visible (default is false) */
     hideClose: boolean;
     /** Disable closing dialog when pressing escape or clicking on backdrop (default false) */

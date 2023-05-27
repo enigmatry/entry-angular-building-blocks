@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { IEntryAlertDialogData } from 'projects/entry-components/dialog/dialogs/alert/entry-alert-dialog-data.interface';
 import { EntryDialogService } from 'projects/entry-components/dialog/entry-dialog.service';
 
 @Component({
@@ -7,13 +8,17 @@ import { EntryDialogService } from 'projects/entry-components/dialog/entry-dialo
   styleUrls: ['./alert-example.component.scss']
 })
 export class AlertExampleComponent {
-  disableClose = false;
+  alertData: IEntryAlertDialogData = {
+    title: `ALERT`,
+    message: `Lorem Ipsum is simply dummy text of the printing and typesetting industry.`,
+    // Optional properties:
+    confirmText: 'Ok',
+    buttonsAlignment: 'align-center',
+    hideClose: false,
+    disableClose: false
+  };
 
   constructor(private _entryDialog: EntryDialogService) { }
 
-  openAlert = () => this._entryDialog
-    .openAlert({
-      title: `ALERT`,
-      message: `Lorem Ipsum is simply dummy text of the printing and typesetting industry.`
-    }, this.disableClose);
+  openAlert = () => this._entryDialog.openAlert(this.alertData);
 }
