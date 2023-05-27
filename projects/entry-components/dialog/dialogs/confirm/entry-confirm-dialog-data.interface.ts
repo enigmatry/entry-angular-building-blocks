@@ -1,7 +1,7 @@
 import { IEntryAlertDialogData } from '../alert/entry-alert-dialog-data.interface';
 
 /**
- * Confirm dialog data
+ * Confirm dialog data. Extends IEntryAlertDialogData.
  *
  * @property cancelText - Optional dialog cancel text label
  */
