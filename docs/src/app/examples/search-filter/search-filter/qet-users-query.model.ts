@@ -5,7 +5,7 @@ import { SearchFilterPagedQuery } from '@enigmatry/entry-table';
 /**
  * @description
  *
- * An example implementation of the SearchFilterPagedQuery that  contains configuration 
+ * An example implementation of the SearchFilterPagedQuery that  contains configuration
  * of the inputs that will be displayed in the search-filter component.
  *
  */
