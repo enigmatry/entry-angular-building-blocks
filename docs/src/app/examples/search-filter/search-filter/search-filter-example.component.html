@@ -1,33 +1,32 @@
-<entry-search-filter [searchFilters]="query.filters"
-    (searchFilterChange)="searchFilterChange($event)"></entry-search-filter>
+<!-- Entry Search Filter component -->
+<entry-search-filter
+    [searchFilters]="query.filters"
+    (searchFilterChange)="searchFilterChange($event)">
+</entry-search-filter>
 
+<!-- Angular material table with data filtering example -->
 <table mat-table [dataSource]="users" class="mat-elevation-z8">
 
-    <!-- Name Column -->
     <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef> Name </th>
         <td mat-cell *matCellDef="let user"> {{user.firstName}} {{user.lastName}}</td>
     </ng-container>
 
-    <!-- Email Column -->
     <ng-container matColumnDef="email">
         <th mat-header-cell *matHeaderCellDef> Email </th>
         <td mat-cell *matCellDef="let user"> {{user.userName}} </td>
     </ng-container>
 
-    <!-- Date of Birth Column -->
     <ng-container matColumnDef="dateOfBirth">
         <th mat-header-cell *matHeaderCellDef> Date of Birth </th>
         <td mat-cell *matCellDef="let user"> {{user.dateOfBirth | date:'dd-MM-yyyy' }} </td>
     </ng-container>
 
-    <!-- Created On Column -->
     <ng-container matColumnDef="createdOn">
         <th mat-header-cell *matHeaderCellDef> Created On </th>
         <td mat-cell *matCellDef="let user"> {{user.createdOn | date:'dd-MM-yyyy' }} </td>
     </ng-container>
 
-    <!-- Updated On Column -->
     <ng-container matColumnDef="updatedOn">
         <th mat-header-cell *matHeaderCellDef> Updated On </th>
         <td mat-cell *matCellDef="let user"> {{user.updatedOn | date:'dd-MM-yyyy' }} </td>

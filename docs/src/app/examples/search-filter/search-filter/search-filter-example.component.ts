@@ -29,7 +29,6 @@ export class SearchFilterExampleComponent {
   // Handle search filters change
   searchFilterChange(searchParams: SearchFilterParams) {
     this.query.searchFilterChange(searchParams);
-    // this.updateRouteQueryString(this.query.getRouteQueryParams());
     this.fetchUsers();
   }
 

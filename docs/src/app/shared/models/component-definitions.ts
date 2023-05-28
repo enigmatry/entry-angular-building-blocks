@@ -24,7 +24,7 @@ const COMPONENT_DEFINITIONS: IComponentDefinition[] = [
         label: 'Search filter',
         shortDescription: `Search filter component.`,
         route: RouteSegments.searchFilter,
-        documentationPath: ''
+        documentationPath: '/entry-components/search-filter/README.md'
     }
 ];
 
