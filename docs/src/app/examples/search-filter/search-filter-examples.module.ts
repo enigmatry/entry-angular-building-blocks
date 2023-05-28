@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SearchFilterExampleComponent } from './search-filter/search-filter-example.component';
+import { SharedModule } from '../../shared/shared.module';
+import { EntrySearchFilterModule } from 'projects/entry-components/search-filter/entry-search-filter.module';
+import { MatTableModule } from '@angular/material/table';
 
 
 
@@ -9,7 +12,10 @@ import { SearchFilterExampleComponent } from './search-filter/search-filter-exam
     SearchFilterExampleComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    SharedModule,
+    EntrySearchFilterModule,
+    MatTableModule
   ],
   exports: [
     SearchFilterExampleComponent

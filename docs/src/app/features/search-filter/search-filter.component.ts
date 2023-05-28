@@ -8,5 +8,5 @@ import { RouteSegments } from '../../shared/models/route-segments';
   styleUrls: ['./search-filter.component.scss']
 })
 export class SearchFilterComponent {
-  searchFilterComponentDefinition = COMPONENT_DEFINITIONS.find(c => c.route === RouteSegments.search_filter);  
+  searchFilterComponentDefinition = COMPONENT_DEFINITIONS.find(c => c.route === RouteSegments.searchFilter);
 }

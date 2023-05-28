@@ -17,7 +17,7 @@ const routes: Routes = [
     loadChildren: () => import('./features/header/header.module').then(module => module.HeaderModule)
   },
   {
-    path: RouteSegments.search_filter,
+    path: RouteSegments.searchFilter,
     loadChildren: () => import('./features/search-filter/search-filter.module').then(module => module.SearchFilterModule)
   }
 ];

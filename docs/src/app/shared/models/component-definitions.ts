@@ -23,7 +23,7 @@ const COMPONENT_DEFINITIONS: IComponentDefinition[] = [
     {
         label: 'Search filter',
         shortDescription: `Search filter component.`,
-        route: RouteSegments.search_filter,
+        route: RouteSegments.searchFilter,
         documentationPath: ''
     }
 ];
