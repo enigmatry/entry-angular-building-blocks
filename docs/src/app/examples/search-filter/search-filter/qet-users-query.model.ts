@@ -2,6 +2,13 @@
 import { SearchFilterInput } from 'projects/entry-components/search-filter/public-api';
 import { SearchFilterPagedQuery } from '@enigmatry/entry-table';
 
+/**
+ * @description
+ *
+ * An example implementation of the SearchFilterPagedQuery that  contains configuration 
+ * of the inputs that will be displayed in the search-filter component.
+ *
+ */
 export class GetUsersQuery extends SearchFilterPagedQuery {
   name = new SearchFilterInput({
     key: 'name',
