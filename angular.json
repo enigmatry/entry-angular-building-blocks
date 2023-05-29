@@ -148,7 +148,7 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "docs/src/favicon.ico",
-              "staticwebapp.config.json",
+              "docs/src/staticwebapp.config.json",
               "docs/src/assets",
               {
                 "glob": "**/*",
