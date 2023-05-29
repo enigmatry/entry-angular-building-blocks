@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { SearchFilterInput, SearchFilterParams } from 'projects/entry-components/search-filter/public-api';
-import { ActivatedRoute, Router } from '@angular/router';
 import { User, UsersService } from './users.service';
 
 @Component({
@@ -26,9 +25,7 @@ export class SearchFilterExampleComponent {
   // displayedColumns is property needed to configure Angular material table
   displayedColumns: string[] = ['name', 'email', 'dateOfBirth', 'createdOn', 'updatedOn'];
 
-  constructor(protected router: Router,
-    protected activatedRoute: ActivatedRoute,
-    protected usersService: UsersService) {
+  constructor(private usersService: UsersService) {
     this.fetchUsers();
   }
 
