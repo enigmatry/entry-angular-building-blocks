@@ -4,10 +4,7 @@
     "entryPoints": [
         "projects/*"
     ],
-    "out": "generated-documentation",
-    "plugin": [
-        "typedoc-plugin-markdown"
-    ],
+    "out": "api-docs",
     "cleanOutputDir": true,
     "logLevel": "Verbose"
 }
