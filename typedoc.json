@@ -1,0 +1,10 @@
+{
+    "name": "Entry Angular Building Blocks",
+    "entryPointStrategy": "packages",
+    "entryPoints": [
+        "projects/*"
+    ],
+    "out": "docs/src/assets/api",
+    "cleanOutputDir": true,
+    "logLevel": "Verbose"
+}

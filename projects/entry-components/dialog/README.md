@@ -5,7 +5,7 @@ Enables working with built-in (alert and confirm) and custom dialogs. Supports d
 ## Imports
 
 ```ts
-import { EntryDialogModule } from '@enigmatry/entry-components/entry-dialog';
+import { EntryDialogModule } from '@enigmatry/entry-components/dialog';
 import { MatDialogModule } from '@angular/material/dialog';
 ```
 

@@ -1,7 +1,22 @@
 <p>
+    <mat-checkbox [(ngModel)]="confirmData.hideClose">
+        Hide close button
+    </mat-checkbox>
+</p>
+<p>
     <mat-checkbox [(ngModel)]="confirmData.disableClose">
         Disable closing on Esc or backdrop click
     </mat-checkbox>
+</p>
+<p>
+    <mat-form-field>
+        <mat-label>Horizontal buttons alignment</mat-label>
+        <mat-select  [(ngModel)]="confirmData.buttonsAlignment">
+            <mat-option *ngFor="let alignment of alignments" [value]="alignment">
+                {{alignment}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
 </p>
 <button
     mat-raised-button
