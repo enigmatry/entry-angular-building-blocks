@@ -1,0 +1,13 @@
+{
+    "entryPoints": [
+        "projects/entry-components/dialog/public-api.ts"
+    ],
+    "out": "generated-documentation",
+    "plugin": [
+        "typedoc-plugin-markdown"
+    ],
+    "entryPointStrategy": "resolve",
+    "compilerOptions": {
+        "strictNullChecks": false
+    }
+}
