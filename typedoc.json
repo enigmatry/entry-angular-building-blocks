@@ -10,5 +10,7 @@
         "projects/scss-foundation",
         "projects/eslint-config",
     ],
-    "logLevel": "Verbose"
+    "customCss": "docs/src/styles/modules/_typedoc-custom.scss",
+    "logLevel": "Verbose",
+    "hideGenerator": true
 }
