@@ -1,13 +1,12 @@
 {
+    "includeVersion": true,
     "entryPoints": [
-        "projects/entry-components/dialog/public-api.ts"
+        "projects/*"
     ],
     "out": "generated-documentation",
+    "entryPointStrategy": "packages",
     "plugin": [
         "typedoc-plugin-markdown"
     ],
-    "entryPointStrategy": "resolve",
-    "compilerOptions": {
-        "strictNullChecks": false
-    }
+    "logLevel": "Verbose"
 }
