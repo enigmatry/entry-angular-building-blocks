@@ -7,6 +7,7 @@ import { ExampleViewerComponent } from './example-viewer/example-viewer.componen
 import { MarkdownViewerComponent } from './markdown-viewer/markdown-viewer.component';
 import { MarkdownPipe } from './pipes/markdown.pipe';
 import { AsMarkdownCodePipe } from './pipes/as-markdown-code.pipe';
+import { SafeUriPipe } from './pipes/safe-uri.pipe';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { AsMarkdownCodePipe } from './pipes/as-markdown-code.pipe';
     ExampleViewerComponent,
     MarkdownViewerComponent,
     MarkdownPipe,
-    AsMarkdownCodePipe
+    AsMarkdownCodePipe,
+    SafeUriPipe
   ],
   imports: [
     CommonModule,
