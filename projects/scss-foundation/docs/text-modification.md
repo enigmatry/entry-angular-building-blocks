@@ -5,7 +5,7 @@ From time to time we need to prettify and alter some text in HTML. Following met
 
 ## Text Modification
 
-@use scss-foundation/src/text/modification as text-modification;
+@use scss-foundation/src/modules/text/modification as text-modification;
 
 - Capitalizes given string.
 ```

@@ -4,7 +4,7 @@ Alignment utilities for positioning items using flex.
 
 ## Items
 
-@use scss-foundation/src/display/items;
+@use scss-foundation/src/modules/display/items;
 
 - Center alignment. Wrapper method for following flex settings: flex direction row, justify content on flex start and align items centrally.
 ```

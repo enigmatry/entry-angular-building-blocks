@@ -1,10 +1,10 @@
 # Background hover method
 
-Hover utility for easily define the regular and hover states of background.
+Hover utilities for easy definition of regular and hover background states.
 
 ## Background hover
 
-@use scss-foundation/src/states/hover;
+@use scss-foundation/src/modules/states/hover;
 
 - Background hover. Method for set the background color of any element for the regular state, and when the element is hovered over, it changes the color to the specified hover state.
 ```

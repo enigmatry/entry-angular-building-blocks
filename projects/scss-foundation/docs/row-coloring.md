@@ -4,7 +4,7 @@ Row coloring utilities for background color to rows based on their position.
 
 ## Row coloring
 
-@use scss-foundation/src/lists/row-coloring as list;
+@use scss-foundation/src/modules/lists/row-coloring as list;
 
 - Odd row coloring. Method for easily apply specified background color to odd-numbered rows.
 ```
