@@ -1,15 +1,16 @@
 <p>
-    This example demonstrates custom dialog implementation and passing custom data.
+    This example demonstrates custom dialog implementation.
 </p>
-<div>
+<p>
     <mat-form-field>
-        <mat-label>Custom dialog message</mat-label>
-        <input matInput type="text" [(ngModel)]="customMessage">
+        <mat-label>Enter your question</mat-label>
+        <input matInput type="text" [(ngModel)]="question">
     </mat-form-field>
-</div>
+</p>
 <button
     mat-raised-button
     color="accent"
     (click)="openCustom()">
     Open Custom Dialog
 </button>
+<pre>{{result | json}}</pre>

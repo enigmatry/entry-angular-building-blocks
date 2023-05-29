@@ -1,5 +1,7 @@
 <p>
-    Selected response: {{confirmResponse}}
+    <mat-checkbox [(ngModel)]="confirmData.disableClose">
+        Disable closing on Esc or backdrop click
+    </mat-checkbox>
 </p>
 <button
     mat-raised-button
@@ -7,3 +9,6 @@
     (click)="openConfirm()">
     Open Confirm Dialog
 </button>
+<p>
+    Selected response: {{confirmResponse}}
+</p>

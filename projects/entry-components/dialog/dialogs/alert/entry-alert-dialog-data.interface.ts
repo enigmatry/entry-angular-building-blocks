@@ -1,11 +1,19 @@
+import { EntryDialogButtonsAlignment } from '../../entry-dialog-buttons-alignment.type';
+
 /**
- * Alert dialog data
+ * Alert dialog data.
  */
 export interface IEntryAlertDialogData {
-    /** @property title - Dialog header title */
+    /** Dialog header title */
     title: string;
-    /** @property message - Dialog content message */
+    /** Dialog content message */
     message: string;
-    /** @property confirmText - Optional dialog confirm text label */
+    /** Optional dialog buttons horizontal alignment */
+    buttonsAlignment: EntryDialogButtonsAlignment | undefined;
+    /** Optional dialog confirm text label */
     confirmText?: string | undefined;
+    /** Optionally show or hide dialog close button */
+    hideClose: boolean | undefined;
+    /** Optionally disable closing dialog when pressing escape or clicking on backdrop */
+    disableClose?: boolean | undefined;
 }

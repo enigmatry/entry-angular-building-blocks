@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { EntryDialogService } from 'projects/entry-components/dialog/entry-dialog.service';
-import { CustomDialogComponent } from './custom-dialog.component';
+import { CustomDialogComponent, ICustomDialogResult } from './custom-dialog.component';
 
 export interface ICustomDialogData {
-    items: string[];
-    message: string;
+    question: string;
 }
 
 @Component({
@@ -13,15 +12,16 @@ export interface ICustomDialogData {
     styleUrls: ['./custom-dialog-example.component.scss']
 })
 export class CustomDialogExampleComponent {
-    customMessage = 'Isn\'t this logo cute?';
+    question = 'Isn\'t this logo cute?';
+    result: ICustomDialogResult;
 
     constructor(private _entryDialog: EntryDialogService) { }
 
-    openCustom = () => this._entryDialog.open(
-        CustomDialogComponent,
-        {
-            items: ['Item 1', 'Item 2', 'Item 3'],
-            message: this.customMessage
-        } as ICustomDialogData
-    );
+    openCustom = () =>
+        this._entryDialog.open(
+            CustomDialogComponent,
+            { question: this.question } as ICustomDialogData,
+            true
+        )
+        .subscribe(result => this.result = result);
 }
