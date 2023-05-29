@@ -4,7 +4,7 @@
     "entryPoints": [
         "projects/*"
     ],
-    "out": "api-docs",
+    "out": "docs-api",
     "cleanOutputDir": true,
     "logLevel": "Verbose"
 }
