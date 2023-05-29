@@ -1,9 +1,9 @@
 <div class="dialog-form">
     <div class="dialog-header">
-        <h1 class="title">{{ title }}</h1>
+        <h1 class="dialog-title">{{title}}</h1>
 
-        <button *ngIf="!hideClose" type="button" class="close-button" (click)="cancel()">
-            <span class="icon-close icon"></span>
+        <button *ngIf="!hideClose" type="button" class="dialog-close-button" (click)="cancel()">
+            <span class="icon-close dialog-close-icon"></span>
         </button>
     </div>
 
@@ -20,13 +20,12 @@
             <button
                 cdkFocusInitial
                 type="button"
-                class="button-confirm"
-                cdkFocusInitial
+                class="button button-accent dialog-footer-button"
                 (click)="onSubmit()">{{confirmButtonText}}</button>
             <button
                 *ngIf="!hideCancel"
                 type="button"
-                class="button-cancel"
+                class="button button-primary dialog-footer-button"
                 (click)="cancel()">{{cancelButtonText}}</button>
         </div>
     </ng-template>
