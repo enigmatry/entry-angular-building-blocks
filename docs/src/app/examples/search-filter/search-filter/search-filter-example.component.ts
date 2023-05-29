@@ -14,15 +14,13 @@ export class SearchFilterExampleComponent {
     key: 'name',
     label: 'Name',
     placeholder: 'User name or lastname',
-    order: 2,
     maxLength: 25
   }),
   new SearchFilterInput({
     key: 'email',
     label: 'E-mail',
     placeholder: 'user@example.com',
-    type: 'email',
-    order: 1
+    type: 'email'
   })];
 
   // displayedColumns is property needed to configure Angular material table
