@@ -1,4 +1,4 @@
-import { Injectable, Type } from '@angular/core';
+import { Inject, Injectable, Type } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { EntryDialogComponent } from './dialogs/entry-dialog.component';
 import { take } from 'rxjs/operators';
@@ -7,22 +7,60 @@ import { EntryAlertDialogComponent } from './dialogs/alert/entry-alert-dialog.co
 import { Observable } from 'rxjs';
 import { EntryConfirmDialogComponent } from './dialogs/confirm/entry-confirm-dialog.component';
 import { IEntryConfirmDialogData } from './dialogs/confirm/entry-confirm-dialog-data.interface';
+import { ENTRY_DIALOG_CONFIG, EntryDialogConfig } from './entry-dialog-config.model';
 
+/**
+ * Used to open built-in and custom entry dialogs.
+ */
 @Injectable({
   providedIn: 'root'
 })
 export class EntryDialogService {
-  constructor(private readonly matDialog: MatDialog) { }
+  constructor(
+    @Inject(ENTRY_DIALOG_CONFIG) protected readonly config: EntryDialogConfig,
+    private readonly matDialog: MatDialog) { }
 
-  openAlert = (data: IEntryAlertDialogData): Observable<any> =>
-    this.open(EntryAlertDialogComponent, data);
+  /**
+   * Opens alert dialog.
+   *
+   * @param data - Contains title, message and optional confirm button text
+   * @returns `true` if confirmed, `undefined` if closed by clicking on backdrop or pressing escape
+   */
+  openAlert = (data: Partial<IEntryAlertDialogData>): Observable<true | undefined> => {
+    data.disableClose = data.disableClose === undefined ? this.config.disableClose : data.disableClose;
+    return this.open(EntryAlertDialogComponent, data, data.disableClose);
+  };
 
-  readonly openConfirm = (data: IEntryConfirmDialogData): Observable<boolean | undefined> =>
-    this.open(EntryConfirmDialogComponent, data);
+  /**
+   * Opens confirm dialog.
+   *
+   * @param data - Contains title, message and optional confirm/cancel buttons text
+   * @returns `true` if confirmed, `false` if canceled or closed, `undefined` if closed by clicking on backdrop or pressing escape
+   */
+  openConfirm = (data: Partial<IEntryConfirmDialogData>): Observable<boolean | undefined> => {
+    data.disableClose = data.disableClose === undefined ? this.config.disableClose : data.disableClose;
+    return this.open(EntryConfirmDialogComponent, data, data.disableClose);
+  };
 
-  readonly open = (component: Type<EntryDialogComponent>, data: unknown = undefined, cssClass: string = '') => {
+  /**
+   * Opens dialog with custom component.
+   *
+   * @param component - Dialog custom component implementation
+   * @param data - Optional parameter used to supply component with input parameters
+   * @param disableClose - Optional parameter that disable closing dialog when pressing escape or clicking on backdrop
+   * @param cssClass - Optional parameter used to set custom class to Material overlay pane
+   * @returns Any result custom implementation provides
+   */
+  open = (
+    component: Type<EntryDialogComponent>,
+    data: unknown = undefined,
+    disableClose: boolean | undefined = undefined,
+    cssClass: string = ''): Observable<any> => {
     const configuration = new MatDialogConfig<unknown>();
     configuration.data = data;
+    configuration.disableClose = disableClose === undefined
+      ? this.config.disableClose
+      : disableClose;
     this.setPanelClassFor(configuration, cssClass);
 
     return this.matDialog
@@ -31,7 +69,10 @@ export class EntryDialogService {
       .pipe(take(1));
   };
 
-  readonly close = (): void => this.matDialog.closeAll();
+  /**
+   * Closes all opened dialogs.
+   */
+  closeAll = (): void => this.matDialog.closeAll();
 
   private setPanelClassFor = <T>(configuration: MatDialogConfig<T>, cssClass: string) => {
     configuration.panelClass = ['dialog-container', cssClass];

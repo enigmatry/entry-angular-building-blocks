@@ -1,0 +1,26 @@
+trigger:
+- master
+
+# no PR triggers
+pr: none
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: Npm@1
+  displayName: 'npm install'
+  inputs:
+    command: 'install'
+- task: Npm@1
+  displayName: 'Build docs application'
+  inputs:
+    command: 'custom'
+    customCommand: 'run build @enigmatry/docs-app'
+
+- task: AzureStaticWebApp@0
+  inputs:
+    app_location: '/dist/enigmatry/docs'
+    output_location: '/'
+    azure_static_web_apps_api_token: $(deployment_token)
+  displayName: 'Deploy docs application'

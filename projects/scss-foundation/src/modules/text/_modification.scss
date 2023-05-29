@@ -16,10 +16,15 @@
 }
 
 @mixin ellipsis($num: 1) {
-	display: inline-block;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	-webkit-line-clamp: $num;
-	-webkit-box-orient: vertical;
+
+	@if $num > 1 {
+		white-space: unset;
+		/* stylelint-disable-next-line order/properties-order, value-no-vendor-prefix */
+		display: -webkit-box;
+		-webkit-line-clamp: $num;
+		-webkit-box-orient: vertical;
+	}
 }
