@@ -1,10 +1,9 @@
 # Text hover method
 
-Hover utility for easily define the regular and hover states of a font.
-
+Hover utilities for easy definition of regular and hover font states.
 ## Text Hover
 
-@use scss-foundation/src/text/hover;
+@use scss-foundation/src/modules/text/hover;
 
 - Font hover. Method for set the color of the font for the regular state, and when the element is hovered over, it changes the color to the specified hover state.
 ```

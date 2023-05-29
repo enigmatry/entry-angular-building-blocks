@@ -4,7 +4,7 @@ Alignment utilities for fixed positioning of content.
 
 ## Fixed
 
-@use scss-foundation/src/position/fixed;
+@use scss-foundation/src/modules/position/fixed;
 
 - Replaces the several most common lines in fixed positioning with just one liner.
 ```

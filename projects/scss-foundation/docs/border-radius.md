@@ -4,7 +4,7 @@ Border radius utility for set different border radius values for each corner of 
 
 ## Border Radius
 
-@use scss-foundation/src/borders/border-radius;
+@use scss-foundation/src/modules/borders/border-radius;
 
 - Replaces the several most common lines in border radius with just one liner.
 ```
