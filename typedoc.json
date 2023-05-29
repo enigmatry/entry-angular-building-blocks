@@ -5,6 +5,10 @@
         "projects/*"
     ],
     "out": "docs/src/assets/api",
-    "cleanOutputDir": true,
+    "exclude": [
+        "projects/stylelint-config",
+        "projects/scss-foundation",
+        "projects/eslint-config",
+    ],
     "logLevel": "Verbose"
 }
