@@ -11,7 +11,7 @@ export class AlertExampleComponent {
   alertData: Partial<IEntryAlertDialogData> = {
     title: `ALERT`,
     message: `Lorem Ipsum is simply dummy text of the printing and typesetting industry.`,
-    // Optional properties:
+    // Optional properties (if not provided, default values are used from ENTRY_DIALOG_CONFIG):
     // confirmText: 'Ok',
     // buttonsAlignment: 'align-center',
     // hideClose: true,

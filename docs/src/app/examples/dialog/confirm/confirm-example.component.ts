@@ -11,11 +11,11 @@ export class ConfirmExampleComponent {
   confirmData: Partial<IEntryConfirmDialogData> = {
     title: `CONFIRM`,
     message: `Lorem Ipsum is simply dummy text of the printing and typesetting industry.`,
-    // Optional properties:
+    // Optional properties (if not provided, default values are used from ENTRY_DIALOG_CONFIG):
     // confirmText: 'Ok',
     // cancelText: 'Cancel',
     // buttonsAlignment: 'align-right',
-    // hideClose: true,
+    hideClose: true,
     disableClose: true
   };
   confirmResponse: boolean | undefined;
