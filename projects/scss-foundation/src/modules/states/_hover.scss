@@ -1,0 +1,25 @@
+@mixin background-hover($background, $background-hover) {
+	background-color: $background;
+
+	&:hover {
+		background-color: $background-hover;
+	}
+}
+
+@mixin text-hover($text-color, $text-hover) {
+	color: $text-color;
+
+	&:hover {
+		color: $text-hover;
+	}
+}
+
+@mixin combined-hover($background: null, $background-hover: null, $text-color: null, $text-hover: null) {
+	@if $background {
+		@include background-hover($background, $background-hover);
+	}
+
+	@if $text-color {
+		@include text-hover($text-color, $text-hover);
+	}
+}
