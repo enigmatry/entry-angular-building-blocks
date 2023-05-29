@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { User } from './api-reference';
-import { GetUsersQuery } from './qet-users-query.model';
+import { SearchFilterParams } from 'projects/entry-components/search-filter/public-api';
 
 /**
  * @description
@@ -13,38 +12,25 @@ import { GetUsersQuery } from './qet-users-query.model';
   providedIn: 'root'
 })
 export class UsersService {
+
   private data: Array<User>;
 
   constructor() {
     this.data = this.fetchData();
   }
 
-  getUsers(query: GetUsersQuery): Array<User> {
+  getUsers(searchParams: SearchFilterParams): Array<User> {
     let users = this.data;
 
-    if (!!query.name.value) {
-      users = users?.filter(x => x.firstName?.toLowerCase().includes(query.name.value.toLowerCase())
-        || x.lastName?.toLowerCase().includes(query.name.value.toLowerCase()));
+    if (!!searchParams.name) {
+      users = users?.filter(x => x.firstName?.toLowerCase().includes(searchParams.name.toLowerCase())
+        || x.lastName?.toLowerCase().includes(searchParams.name.toLowerCase()));
     }
-    if (!!query.email.value) {
-      users = users?.filter(x => x.userName?.toLowerCase().includes(query.email.value.toLowerCase()));
+    if (!!searchParams.email) {
+      users = users?.filter(x => x.userName?.toLowerCase().includes(searchParams.email.toLowerCase()));
     }
 
     return users;
-  }
-
-  getUser(id: string): User | undefined {
-    return this.data?.find(x => x.id === id);
-  }
-
-  addUser(user: User): void {
-    user.id = '' + ((this.data?.length || 0) + 1);
-    user.createdOn = new Date();
-    this.data?.push(user);
-  }
-
-  updateUser(user: User): void {
-    user.updatedOn = new Date();
   }
 
   private fetchData(): User[] {
@@ -151,3 +137,22 @@ export class UsersService {
     ];
   }
 }
+
+export class User {
+  id?: string;
+  userName?: string;
+  firstName?: string;
+  lastName?: string;
+  dateOfBirth?: Date;
+  createdOn?: Date;
+  updatedOn?: Date;
+
+  constructor(data?: Partial<User>) {
+    if (data) {
+      for (const property in data) {
+        if (data.hasOwnProperty(property)) { (this)[property] = (data)[property]; }
+      }
+    }
+  }
+}
+

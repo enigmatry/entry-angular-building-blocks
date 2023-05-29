@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
-import { GetUsersQuery } from './qet-users-query.model';
-import { User } from './api-reference';
-import { SearchFilterParams } from 'projects/entry-components/search-filter/public-api';
+import { SearchFilterInput, SearchFilterParams } from 'projects/entry-components/search-filter/public-api';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UsersService } from './users.service';
+import { User, UsersService } from './users.service';
 
 @Component({
   selector: 'app-search-filter-example',
@@ -12,7 +10,21 @@ import { UsersService } from './users.service';
 })
 export class SearchFilterExampleComponent {
   users: Array<User>;
-  query = new GetUsersQuery();
+  filters = [new SearchFilterInput({
+    key: 'name',
+    label: 'Name',
+    placeholder: 'User name or lastname',
+    order: 2,
+    maxLength: 25
+  }),
+  new SearchFilterInput({
+    key: 'email',
+    label: 'E-mail',
+    placeholder: 'user@example.com',
+    type: 'email',
+    order: 1
+  })];
+
   // displayedColumns is property needed to configure Angular material table
   displayedColumns: string[] = ['name', 'email', 'dateOfBirth', 'createdOn', 'updatedOn'];
 
@@ -24,11 +36,10 @@ export class SearchFilterExampleComponent {
 
   // Handle search filters change
   searchFilterChange(searchParams: SearchFilterParams) {
-    this.query.searchFilterChange(searchParams);
-    this.fetchUsers();
+    this.fetchUsers(searchParams);
   }
 
-  private fetchUsers(): void {
-    this.users = this.usersService.getUsers(this.query);
+  private fetchUsers(searchParams: SearchFilterParams = {}): void {
+    this.users = this.usersService.getUsers(searchParams);
   }
 }

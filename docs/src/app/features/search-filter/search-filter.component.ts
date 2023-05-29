@@ -12,16 +12,6 @@ export class SearchFilterComponent {
   searchFilterComponentDefinition = COMPONENT_DEFINITIONS.find(c => c.route === RouteSegments.searchFilter);
   extraFiles: ICodeFileDefinition[] = [
     {
-      name: 'qet-users-query.model.ts',
-      path: 'search-filter\\search-filter\\qet-users-query.model',
-      type: 'ts'
-    },
-    {
-      name: 'api-reference.ts',
-      path: 'search-filter\\search-filter\\api-reference',
-      type: 'ts'
-    },
-    {
       name: 'users.service.ts',
       path: 'search-filter\\search-filter\\users.service',
       type: 'ts'
