@@ -18,14 +18,14 @@
     <ng-template #defaultButtonsTemplate>
         <div *ngIf="!hideButtons" class="dialog-footer {{ buttonsAlignment }}">
             <button
+                cdkFocusInitial
                 type="button"
                 class="button button-accent dialog-footer-button"
-                cdkFocusInitial
                 (click)="onSubmit()">{{confirmButtonText}}</button>
             <button
+                *ngIf="!hideCancel"
                 type="button"
                 class="button button-primary dialog-footer-button"
-                *ngIf="!hideCancel"
                 (click)="cancel()">{{cancelButtonText}}</button>
         </div>
     </ng-template>

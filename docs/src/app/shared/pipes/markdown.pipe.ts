@@ -8,5 +8,5 @@ export class MarkdownPipe implements PipeTransform {
 
   private _markdown = md('default'); // commonmark, default, zero
 
-  transform = (value: string): string => this._markdown.render(value);
+  transform = (value: string | null | undefined): string => value ? this._markdown.render(value) : '';
 }

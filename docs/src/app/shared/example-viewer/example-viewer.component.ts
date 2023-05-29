@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnDestroy } from '@angular/core';
 import { Observable, Subject, Subscriber, forkJoin } from 'rxjs';
 import { catchError, map, takeUntil } from 'rxjs/operators';

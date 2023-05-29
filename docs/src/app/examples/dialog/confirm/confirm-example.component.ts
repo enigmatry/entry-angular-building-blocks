@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { IEntryConfirmDialogData } from 'projects/entry-components/dialog/dialogs/confirm/entry-confirm-dialog-data.interface';
 import { EntryDialogService } from 'projects/entry-components/dialog/entry-dialog.service';
 
 @Component({
@@ -7,14 +8,21 @@ import { EntryDialogService } from 'projects/entry-components/dialog/entry-dialo
   styleUrls: ['./confirm-example.component.scss']
 })
 export class ConfirmExampleComponent {
+  confirmData: Partial<IEntryConfirmDialogData> = {
+    title: `CONFIRM`,
+    message: `Lorem Ipsum is simply dummy text of the printing and typesetting industry.`,
+    // Optional properties:
+    // confirmText: 'Ok',
+    // cancelText: 'Cancel',
+    // buttonsAlignment: 'align-right',
+    // hideClose: true,
+    disableClose: true
+  };
   confirmResponse: boolean | undefined;
 
   constructor(private _entryDialog: EntryDialogService) { }
 
   openConfirm = () => this._entryDialog
-    .openConfirm({
-      title: `CONFIRM`,
-      message: `Lorem Ipsum is simply dummy text of the printing and typesetting industry.`
-    })
+    .openConfirm(this.confirmData)
     .subscribe((response: boolean | undefined) => this.confirmResponse = response);
 }

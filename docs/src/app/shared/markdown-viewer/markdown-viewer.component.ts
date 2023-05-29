@@ -9,7 +9,7 @@ import { FileLoadService } from '../services/file-load.service';
 })
 export class MarkdownViewerComponent implements OnInit {
   @Input() componentDefinition: IComponentDefinition;
-  markdownContent: string | undefined;
+  markdownContent: string | undefined = undefined;
 
   constructor(private _fileLoad: FileLoadService) {}
 
@@ -17,7 +17,10 @@ export class MarkdownViewerComponent implements OnInit {
     if (this.componentDefinition.documentationPath) {
       this._fileLoad
         .loadDocumentationFile(this.componentDefinition.documentationPath)
-        .subscribe(response => this.markdownContent = response);
+        .subscribe({
+          next: response => this.markdownContent = response,
+          error: _ => this.markdownContent = `### No API documentation found :'(`
+        });
     }
   }
 }
