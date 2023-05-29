@@ -8,13 +8,6 @@
     "plugin": [
         "typedoc-plugin-markdown"
     ],
-    "exclude": [
-        "projects/eslint-config/*",
-        "projects/scss-foundation/*",
-        "projects/stylelint-config/*",
-    ],
     "cleanOutputDir": true,
-    "excludeNotDocumented": true,
-    "readme": "README.md",
     "logLevel": "Verbose"
 }
