@@ -24,7 +24,7 @@
             }
 
             .active {
-                background-color: vars.$menu-item-selected-color;
+                background-color: vars.$menu-item-selected;
             }
         }
     }
@@ -35,7 +35,7 @@
         left: 0;
         right: 0;
         padding: 0;
-        background-color: vars.$header-back-color;
+        background-color: vars.$header-back;
 
         .logo {
             width: 200px;
