@@ -6,5 +6,6 @@
         "dialog/public-api.ts",
         "header/public-api.ts",
         "search-filter/public-api.ts"
-    ]
+    ],
+    "readme": "README.md",
 }

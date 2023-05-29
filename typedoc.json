@@ -1,12 +1,20 @@
 {
-    "includeVersion": true,
+    "name": "Entry Angular Building Blocks",
+    "entryPointStrategy": "packages",
     "entryPoints": [
         "projects/*"
     ],
     "out": "generated-documentation",
-    "entryPointStrategy": "packages",
     "plugin": [
         "typedoc-plugin-markdown"
     ],
+    "exclude": [
+        "projects/eslint-config/*",
+        "projects/scss-foundation/*",
+        "projects/stylelint-config/*",
+    ],
+    "cleanOutputDir": true,
+    "excludeNotDocumented": true,
+    "readme": "README.md",
     "logLevel": "Verbose"
 }
