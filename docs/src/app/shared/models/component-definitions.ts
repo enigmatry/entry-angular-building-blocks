@@ -20,6 +20,12 @@ const COMPONENT_DEFINITIONS: IComponentDefinition[] = [
         route: RouteSegments.header,
         documentationPath: '/entry-components/header/README.md'
     },
+    {
+        label: 'Search filter',
+        shortDescription: `Search filter component.`,
+        route: RouteSegments.searchFilter,
+        documentationPath: '/entry-components/search-filter/README.md'
+    }
 ];
 
 export {
