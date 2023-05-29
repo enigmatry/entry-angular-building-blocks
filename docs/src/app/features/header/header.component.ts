@@ -8,5 +8,5 @@ import { RouteSegments } from '../../shared/models/route-segments';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-  dialogComponentDefinition = COMPONENT_DEFINITIONS.find(c => c.route === RouteSegments.header);
+  headerComponentDefinition = COMPONENT_DEFINITIONS.find(c => c.route === RouteSegments.header);
 }
