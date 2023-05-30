@@ -1,6 +1,10 @@
 import { InjectionToken } from '@angular/core';
 
+/**
+ * Used to provide default configurations on module level.
+ */
 export class EntrySearchFilterConfig {
+    /** Apply search filters button label (default 'Apply') */
     applyButtonText: string;
 
     constructor(config: Partial<EntrySearchFilterConfig> = {}) {

@@ -28,7 +28,7 @@ const COMPONENT_DEFINITIONS: IComponentDefinition[] = [
         shortDescription: `Search filter component.`,
         route: RouteSegments.searchFilter,
         readmePath: '/entry-components/search-filter/README.md',
-        apiDocsPath: ''
+        apiDocsPath: 'assets/api/modules/_enigmatry_entry_components.search_filter_public_api.html'
     }
 ];
 

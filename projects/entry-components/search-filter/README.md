@@ -46,14 +46,3 @@ import {
 })
 export class AppModule { }
 ```
-
-## Classes and Interfaces
-
-| `EntrySearchFilterComponent` |  |
-| - | - |
-| @Input() searchFilters: `SearchFilterBase<string>[]` | Accepts the configuration of the search filters inputs that will be displayed in the search-filter component. |
-| @Output() searchFilterChange: `EventEmitter<SearchFilterParams>` | Emits the change in SearchFilterParams so the containing component can apply them and retreive the filtered results. SearchFilterParams are the same type as @angular/router type Params for easy integration. |
-
-| `EntryDialogConfig` |  |
-| - | - |
-| applyButtonText: `string` | Apply filters button text (default: 'Apply') |
