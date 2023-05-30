@@ -1,0 +1,25 @@
+@use '../../../styles/modules/variables' as vars;
+
+.landing {
+    margin: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 10px;
+
+    .component-card {
+        margin: 10px;
+        padding: 0px;
+
+        mat-card-header {
+            padding-top: 10px;
+        }
+
+        mat-card-content {
+            margin: 10px 10px 10px 17px;
+        }
+
+        mat-card-actions {
+            margin: 10px 10px 10px 17px;
+        }
+    }
+}

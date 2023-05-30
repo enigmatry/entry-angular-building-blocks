@@ -1,0 +1,16 @@
+{
+    "name": "Entry Angular Building Blocks",
+    "entryPointStrategy": "packages",
+    "entryPoints": [
+        "libs/*"
+    ],
+    "out": "apps/demo-app/src/assets/api",
+    "exclude": [
+        "libs/stylelint-config",
+        "libs/scss-foundation",
+        "libs/eslint-config",
+    ],
+    "customCss": "apps/demo-app/src/styles/modules/_typedoc-custom.scss",
+    "logLevel": "Verbose",
+    "hideGenerator": true
+}
