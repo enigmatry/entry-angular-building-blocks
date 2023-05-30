@@ -8,6 +8,7 @@ import { MarkdownViewerComponent } from './markdown-viewer/markdown-viewer.compo
 import { MarkdownPipe } from './pipes/markdown.pipe';
 import { AsMarkdownCodePipe } from './pipes/as-markdown-code.pipe';
 import { SafeUriPipe } from './pipes/safe-uri.pipe';
+import { SortPipe } from './pipes/sort.pipe';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { SafeUriPipe } from './pipes/safe-uri.pipe';
     MarkdownViewerComponent,
     MarkdownPipe,
     AsMarkdownCodePipe,
-    SafeUriPipe
+    SafeUriPipe,
+    SortPipe
   ],
   imports: [
     CommonModule,
@@ -29,7 +31,8 @@ import { SafeUriPipe } from './pipes/safe-uri.pipe';
     ExampleViewerComponent,
     MarkdownViewerComponent,
     MarkdownPipe,
-    AsMarkdownCodePipe
+    AsMarkdownCodePipe,
+    SortPipe
   ]
 })
 export class SharedModule { }

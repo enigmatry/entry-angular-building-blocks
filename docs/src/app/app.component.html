@@ -16,7 +16,7 @@
   <mat-sidenav-container class="docs-container">
     <mat-sidenav mode="side" opened class="docs-sidenav">
       <mat-nav-list class="docs-menu-items">
-        <a *ngFor="let item of menuItems"
+        <a *ngFor="let item of (menuItems | sort)"
           mat-list-item
           [routerLink]="item.route"
           routerLinkActive="active"
