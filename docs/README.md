@@ -20,16 +20,6 @@ Regarding the content of component's `README.md` file, it should be short as pos
 * Add `Imports` section listing all dependencies that the component requires.
 * If possible, present basic usage of the component or how it can be configured.
 
-## API tab
-
-This tab should load generated documentation of the components api.
-
-To be able to have api documentation, exported features of the component (defined in component's `public-api.ts`) must be documented with comments (`/** */` or `//`) like in `projects/entry-components/dialog/entry-dialog.service.ts`.
-
-After the component features are decorated with documentation comments use `typedoc` npm script to generate documentation. Documentation will be generated in `assets/api/` folder and can be accessed in browser using same path.
-
-To be able to load generated documentation in Api tab, path to the component's generated page (e.g. 'assets/api/modules/Entry_Components.dialog_public_api.html') should be provided as value of `apiDocsPath` field in `COMPONENT_DEFINITIONS` list.
-
 ## Examples tab
 
 Examples are documented with `example-viewer` shared component. We use it to present entry component logic and the code behind it.
@@ -52,3 +42,13 @@ Use example components in `example-viewer` like this:
 ### Extra files
 
 By default, `example-viewer` displays 3 files (`.ts`, `.scss` and `.html`) of examples component. We can add extra files using `extraFileDefinitions` input parameter (e.g. `features/dialog/dialog.component.html`).
+
+## API tab
+
+This tab should load generated documentation of the components api.
+
+To be able to have api documentation, exported features of the component (defined in component's `public-api.ts`) must be documented with comments (`/** */` or `//`) like in `projects/entry-components/dialog/entry-dialog.service.ts`.
+
+After the component features are decorated with documentation comments use `typedoc` npm script to generate documentation. Documentation will be generated in `assets/api/` folder and can be accessed in browser using same path.
+
+To be able to load generated documentation in Api tab, path to the component's generated page (e.g. 'assets/api/modules/Entry_Components.dialog_public_api.html') should be provided as value of `apiDocsPath` field in `COMPONENT_DEFINITIONS` list.

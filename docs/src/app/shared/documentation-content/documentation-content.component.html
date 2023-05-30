@@ -5,14 +5,14 @@
                 <app-markdown-viewer [componentDefinition]="componentDefinition"></app-markdown-viewer>
             </div>
         </mat-tab>
-        <mat-tab label="API" *ngIf="componentDefinition.apiDocsPath">
-            <div class="doc-content-wrapper">
-                <iframe [src]="componentDefinition.apiDocsPath | safeUri" class="api-iframe"></iframe>
-            </div>
-        </mat-tab>
         <mat-tab label="Examples">
             <div class="doc-content-wrapper">
                 <ng-content></ng-content>
+            </div>
+        </mat-tab>
+        <mat-tab label="API" *ngIf="componentDefinition.apiDocsPath">
+            <div class="doc-content-wrapper">
+                <iframe [src]="componentDefinition.apiDocsPath | safeUri" class="api-iframe"></iframe>
             </div>
         </mat-tab>
     </mat-tab-group>
