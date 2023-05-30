@@ -148,6 +148,7 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "docs/src/favicon.ico",
+              "docs/src/staticwebapp.config.json",
               "docs/src/assets",
               {
                 "glob": "**/*",
@@ -156,7 +157,9 @@
               }
             ],
             "styles": [
-              "docs/src/styles/partial/main.scss"
+              "docs/src/styles/partial/main.scss",
+              "node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
+              "node_modules/github-markdown-css/github-markdown-light.css"
             ],
             "scripts": []
           },
@@ -224,7 +227,9 @@
               "docs/src/assets"
             ],
             "styles": [
-              "docs/src/styles/partial/mail.scss"
+              "docs/src/styles/partial/mail.scss",
+              "node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
+              "node_modules/github-markdown-css/github-markdown-light.css"
             ],
             "scripts": []
           }

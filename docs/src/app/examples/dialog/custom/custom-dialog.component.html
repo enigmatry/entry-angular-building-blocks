@@ -1,7 +1,25 @@
-<entry-dialog title="Custom Dialog" [buttons]="buttons">
-    <ul>
-        <li *ngFor="let item of data.items">{{item}}</li>
-    </ul>
-    <p>{{data.message}}</p>
+<entry-dialog
+    title="Custom Dialog"
+    hideClose="false"
+    [buttonsTemplate]="customButtonsTemplate">
+    <p>{{data.question}}</p>
     <img src="./../../../../assets/images/entry_logo_small.png">
+    <p>
+        <mat-form-field>
+            <mat-label>Write your comment</mat-label>
+            <input matInput type="text" [(ngModel)]="comment">
+        </mat-form-field>
+    </p>
 </entry-dialog>
+
+<ng-template #customButtonsTemplate>
+    <button cdkFocusInitial mat-button color="primary" (click)="onClick('Yes it is')">
+        Yes it is
+    </button>
+    <button mat-button (click)="onClick('So-so')">
+        So-so
+    </button>
+    <button mat-button (click)="onClick('Nope')">
+        Nope
+    </button>
+</ng-template>

@@ -1,17 +1,13 @@
 <div class="dialog-form">
     <div class="dialog-header">
-        <h1 class="dialog-title">
-            {{ title }}
-        </h1>
+        <h1 class="dialog-title">{{title}}</h1>
 
-        <button type="button" class="dialog-close-button" (click)="cancel()">
+        <button *ngIf="!hideClose" type="button" class="dialog-close-button" (click)="cancel()">
             <span class="icon-close dialog-close-icon"></span>
         </button>
     </div>
 
-    <mat-dialog-content
-        class="dialog-content"
-        [ngClass]="{'with-actions': buttons.visible}">
+    <mat-dialog-content class="dialog-content" [ngClass]="{'with-actions': !hideButtons}">
         <ng-content></ng-content>
     </mat-dialog-content>
 
@@ -20,17 +16,17 @@
     </ng-template>
 
     <ng-template #defaultButtonsTemplate>
-        <div *ngIf="buttons.visible" class="dialog-footer {{ buttons.buttonsAlignment }}">
+        <div *ngIf="!hideButtons" class="dialog-footer {{ buttonsAlignment }}">
             <button
+                cdkFocusInitial
                 type="button"
                 class="button button-accent dialog-footer-button"
-                cdkFocusInitial
-                (click)="onSubmit()">{{buttons.confirmButtonText}}</button>
+                (click)="onSubmit()">{{confirmButtonText}}</button>
             <button
+                *ngIf="!hideCancel"
                 type="button"
                 class="button button-primary dialog-footer-button"
-                *ngIf="buttons.cancelButtonText !== ''"
-                (click)="cancel()">{{buttons.cancelButtonText}}</button>
+                (click)="cancel()">{{cancelButtonText}}</button>
         </div>
     </ng-template>
 </div>

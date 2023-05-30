@@ -11,6 +11,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSelectModule } from '@angular/material/select';
 import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
@@ -29,6 +31,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatMenuModule,
     MatInputModule,
     MatTooltipModule,
+    MatCheckboxModule,
+    MatSelectModule,
     MatDialogModule // ?
   ],
   providers: [

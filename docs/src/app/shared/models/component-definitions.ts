@@ -10,7 +10,7 @@ interface IComponentDefinition {
 const COMPONENT_DEFINITIONS: IComponentDefinition[] = [
     {
         label: 'Dialog',
-        shortDescription: `Enables built in dialogs and adds support for building custom ones.`,
+        shortDescription: `Enables built-in dialogs and adds support for building custom ones.`,
         route: RouteSegments.dialog,
         documentationPath: '/entry-components/dialog/README.md',
     },
@@ -20,6 +20,12 @@ const COMPONENT_DEFINITIONS: IComponentDefinition[] = [
         route: RouteSegments.header,
         documentationPath: '/entry-components/header/README.md'
     },
+    {
+        label: 'Search filter',
+        shortDescription: `Search filter component.`,
+        route: RouteSegments.searchFilter,
+        documentationPath: '/entry-components/search-filter/README.md'
+    }
 ];
 
 export {
