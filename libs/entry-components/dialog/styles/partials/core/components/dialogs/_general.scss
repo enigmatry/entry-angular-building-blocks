@@ -2,6 +2,7 @@
 @use '../../../../modules/states/hover';
 @use '../../../../modules/variables' as vars;
 @use 'sass:color';
+@use '../../../../modules/typography/fonts';
 
 $border-dark: #000;
  
@@ -36,6 +37,7 @@ $border-dark: #000;
 		@include items.fully-align(center, space-between, row, nowrap);
 	
 		.title {
+			// @include fonts.title-font();
 			line-height: 1.2;
 		}
 	
