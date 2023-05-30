@@ -47,7 +47,7 @@ By default, `example-viewer` displays 3 files (`.ts`, `.scss` and `.html`) of ex
 
 This tab should load generated documentation of the components api.
 
-To be able to have api documentation, exported features of the component (defined in component's `public-api.ts`) must be documented with comments (`/** */` or `//`) like in `projects/entry-components/dialog/entry-dialog.service.ts`.
+To be able to have api documentation, exported features of the component (defined in component's `public-api.ts`) must be documented with comments (`/** */` or `//`) like in `libs/entry-components/dialog/entry-dialog.service.ts`.
 
 After the component features are decorated with documentation comments use `typedoc` npm script to generate documentation. Documentation will be generated in `assets/api/` folder and can be accessed in browser using same path.
 
