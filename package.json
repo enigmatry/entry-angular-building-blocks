@@ -22,6 +22,7 @@
     "@angular/platform-browser": "~13.3.12",
     "@angular/platform-browser-dynamic": "~13.3.12",
     "@angular/router": "~13.3.12",
+    "@enigmatry/scss-foundation": "^1.2.70",
     "github-markdown-css": "^5.2.0",
     "markdown-it": "^13.0.1",
     "rxjs": "~6.6.0",
