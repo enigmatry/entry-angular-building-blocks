@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SearchFilterParams } from 'projects/entry-components/search-filter/public-api';
+import { SearchFilterParams } from '@enigmatry/entry-components/search-filter';
 
 /**
  * @description

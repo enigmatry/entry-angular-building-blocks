@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { EntryDialogService } from 'projects/entry-components/dialog/entry-dialog.service';
 import { CustomDialogComponent, ICustomDialogResult } from './custom-dialog.component';
+import { EntryDialogService } from '@enigmatry/entry-components/dialog';
 
 export interface ICustomDialogData {
     question: string;

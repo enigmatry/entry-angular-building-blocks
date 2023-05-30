@@ -2,9 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SearchFilterExampleComponent } from './search-filter/search-filter-example.component';
 import { SharedModule } from '../../shared/shared.module';
-import {
-  ENTRY_SEARCH_FILTER_CONFIG, EntrySearchFilterConfig, EntrySearchFilterModule
-} from 'projects/entry-components/search-filter/public-api';
+import { ENTRY_SEARCH_FILTER_CONFIG, EntrySearchFilterConfig, EntrySearchFilterModule } from '@enigmatry/entry-components/search-filter';
 import { MatTableModule } from '@angular/material/table';
 
 
