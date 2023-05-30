@@ -1,7 +1,0 @@
-@use 'core';
-@use 'vendors';
-
-// TODO remove this once dialog is merged to its own package
-@use '../modules/generator';
-
-@include generator.generate();
