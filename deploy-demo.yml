@@ -16,7 +16,7 @@ steps:
   displayName: 'Build docs application'
   inputs:
     command: 'custom'
-    customCommand: 'run build @enigmatry/docs-app'
+    customCommand: 'run build @enigmatry/demo-app'
 
 - task: AzureStaticWebApp@0
   inputs:

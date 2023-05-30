@@ -4,13 +4,13 @@
     "entryPoints": [
         "projects/*"
     ],
-    "out": "docs/src/assets/api",
+    "out": "apps/demo-app/src/assets/api",
     "exclude": [
         "projects/stylelint-config",
         "projects/scss-foundation",
         "projects/eslint-config",
     ],
-    "customCss": "docs/src/styles/modules/_typedoc-custom.scss",
+    "customCss": "apps/demo-app/src/styles/modules/_typedoc-custom.scss",
     "logLevel": "Verbose",
     "hideGenerator": true
 }
