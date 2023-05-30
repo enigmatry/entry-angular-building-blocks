@@ -6,7 +6,6 @@ Enables working with built-in (alert and confirm) and custom dialogs. Supports d
 
 ```ts
 import { EntryDialogModule } from '@enigmatry/entry-components/dialog';
-import { MatDialogModule } from '@angular/material/dialog';
 ```
 
 ## Basic usage
@@ -40,8 +39,7 @@ To override with custom defaults use providers on application level:
 ```ts
 @NgModule({
   imports: [
-    EntryDialogModule,
-    MatDialogModule
+    EntryDialogModule
   ],
   providers: [
     {
