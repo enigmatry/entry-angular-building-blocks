@@ -5,21 +5,21 @@
   "projects": {
     "@enigmatry/entry-table": {
       "projectType": "library",
-      "root": "projects/entry-table",
-      "sourceRoot": "projects/entry-table/src",
+      "root": "libs/entry-table",
+      "sourceRoot": "libs/entry-table/src",
       "prefix": "entry",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "project": "projects/entry-table/ng-package.json"
+            "project": "libs/entry-table/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/entry-table/tsconfig.lib.prod.json"
+              "tsConfig": "libs/entry-table/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/entry-table/tsconfig.lib.json"
+              "tsConfig": "libs/entry-table/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -27,17 +27,17 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/entry-table/src/test.ts",
-            "tsConfig": "projects/entry-table/tsconfig.spec.json",
-            "karmaConfig": "projects/entry-table/karma.conf.js"
+            "main": "libs/entry-table/src/test.ts",
+            "tsConfig": "libs/entry-table/tsconfig.spec.json",
+            "karmaConfig": "libs/entry-table/karma.conf.js"
           }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "lintFilePatterns": [
-              "projects/entry-table/**/*.ts",
-              "projects/entry-table/**/*.html"
+              "libs/entry-table/**/*.ts",
+              "libs/entry-table/**/*.html"
             ]
           }
         }
@@ -45,21 +45,21 @@
     },
     "@enigmatry/entry-form": {
       "projectType": "library",
-      "root": "projects/entry-form",
-      "sourceRoot": "projects/entry-form/src",
+      "root": "libs/entry-form",
+      "sourceRoot": "libs/entry-form/src",
       "prefix": "entry",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "project": "projects/entry-form/ng-package.json"
+            "project": "libs/entry-form/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/entry-form/tsconfig.lib.prod.json"
+              "tsConfig": "libs/entry-form/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/entry-form/tsconfig.lib.json"
+              "tsConfig": "libs/entry-form/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -67,17 +67,17 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/entry-form/src/test.ts",
-            "tsConfig": "projects/entry-form/tsconfig.spec.json",
-            "karmaConfig": "projects/entry-form/karma.conf.js"
+            "main": "libs/entry-form/src/test.ts",
+            "tsConfig": "libs/entry-form/tsconfig.spec.json",
+            "karmaConfig": "libs/entry-form/karma.conf.js"
           }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "lintFilePatterns": [
-              "projects/entry-form/**/*.ts",
-              "projects/entry-form/**/*.html"
+              "libs/entry-form/**/*.ts",
+              "libs/entry-form/**/*.html"
             ]
           }
         }
@@ -85,21 +85,21 @@
     },
     "@enigmatry/entry-components": {
       "projectType": "library",
-      "root": "projects/entry-components",
-      "sourceRoot": "projects/entry-components",
+      "root": "libs/entry-components",
+      "sourceRoot": "libs/entry-components",
       "prefix": "entry",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "project": "projects/entry-components/ng-package.json"
+            "project": "libs/entry-components/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/entry-components/tsconfig.lib.prod.json"
+              "tsConfig": "libs/entry-components/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/entry-components/tsconfig.lib.json"
+              "tsConfig": "libs/entry-components/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -107,17 +107,17 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/entry-components/test.ts",
-            "tsConfig": "projects/entry-components/tsconfig.spec.json",
-            "karmaConfig": "projects/entry-components/karma.conf.js"
+            "main": "libs/entry-components/test.ts",
+            "tsConfig": "libs/entry-components/tsconfig.spec.json",
+            "karmaConfig": "libs/entry-components/karma.conf.js"
           }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "lintFilePatterns": [
-              "projects/entry-components/**/*.ts",
-              "projects/entry-components/**/*.html"
+              "libs/entry-components/**/*.ts",
+              "libs/entry-components/**/*.html"
             ]
           }
         }
