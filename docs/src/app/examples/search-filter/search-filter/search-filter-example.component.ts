@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { SearchFilterInput, SearchFilterParams } from 'projects/entry-components/search-filter/public-api';
 import { User, UsersService } from './users.service';
+import { SearchFilterInput, SearchFilterParams } from '@enigmatry/entry-components/search-filter';
 
 @Component({
   selector: 'app-search-filter-example',

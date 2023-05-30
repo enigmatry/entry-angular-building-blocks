@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { IEntryConfirmDialogData } from 'projects/entry-components/dialog/dialogs/confirm/entry-confirm-dialog-data.interface';
-import { EntryDialogService } from 'projects/entry-components/dialog/entry-dialog.service';
-import { EntryDialogButtonsAlignment } from 'projects/entry-components/dialog/public-api';
+import { IEntryConfirmDialogData, EntryDialogButtonsAlignment, EntryDialogService } from '@enigmatry/entry-components/dialog';
 
 @Component({
   selector: 'app-confirm-example',

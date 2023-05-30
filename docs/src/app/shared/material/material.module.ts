@@ -33,7 +33,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatTooltipModule,
     MatCheckboxModule,
     MatSelectModule,
-    MatDialogModule // ?
+    MatDialogModule
   ],
   providers: [
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2500 } }
