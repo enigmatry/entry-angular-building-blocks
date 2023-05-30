@@ -24,7 +24,7 @@ Regarding the content of component's `README.md` file, it should be short as pos
 
 This tab should load generated documentation of the components api.
 
-To be able to have api documentation, exported features of the component (defined in component's `public-api.ts`) must be documented with comments (`/** */` or `//`) like in `projects/entry-components/dialog/entry-dialog.service.ts`. All of the exported features should be well documented!.
+To be able to have api documentation, exported features of the component (defined in component's `public-api.ts`) must be documented with comments (`/** */` or `//`) like in `projects/entry-components/dialog/entry-dialog.service.ts`.
 
 After the component features are decorated with documentation comments use `typedoc` npm script to generate documentation. Documentation will be generated in `assets/api/` folder and can be accessed in browser using same path.
 
