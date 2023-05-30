@@ -4,6 +4,9 @@ import { SearchFilterBase } from './search-filter-base';
 import { SearchFilterParams } from './search-filter-params';
 import { ENTRY_SEARCH_FILTER_CONFIG, EntrySearchFilterConfig } from './search-filter-config.model';
 
+/**
+ * Entry SearchFilter component.
+ */
 @Component({
   selector: 'entry-search-filter',
   templateUrl: './entry-search-filter.component.html',
@@ -12,7 +15,11 @@ import { ENTRY_SEARCH_FILTER_CONFIG, EntrySearchFilterConfig } from './search-fi
 })
 export class EntrySearchFilterComponent implements OnInit {
 
+  /** Configuration of the search filters inputs that will be displayed in the search-filter component. */
   @Input() searchFilters: SearchFilterBase<string>[] = [];
+  /**
+   * Emits the change in SearchFilterParams so the containing component can apply them and retreive the filtered results.
+   */
   @Output() searchFilterChange = new EventEmitter<SearchFilterParams>();
 
   searchFilterForm!: FormGroup;
