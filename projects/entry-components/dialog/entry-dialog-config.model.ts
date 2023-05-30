@@ -24,6 +24,18 @@ export class EntryDialogConfig {
         this.disableClose = config.disableClose ?? false;
     }
 }
+
+/**
+ * Entry dialog injection token of EntryDialogConfig type containing dialog default configurations.
+ * Can be updated with custom configuration.
+ *
+ * Defaults:
+ * - confirmButtonText: 'Ok'
+ * - cancelButtonText: 'Cancel'
+ * - buttonsAlignment: 'align-right'
+ * - hideClose: true
+ * - disableClose: false
+ */
 export const ENTRY_DIALOG_CONFIG = new InjectionToken<EntryDialogConfig>(
     'EntryDialogConfig',
     {
