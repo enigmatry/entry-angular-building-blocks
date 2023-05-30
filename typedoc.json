@@ -5,6 +5,12 @@
         "projects/*"
     ],
     "out": "docs/src/assets/api",
-    "cleanOutputDir": true,
-    "logLevel": "Verbose"
+    "exclude": [
+        "projects/stylelint-config",
+        "projects/scss-foundation",
+        "projects/eslint-config",
+    ],
+    "customCss": "docs/src/styles/modules/_typedoc-custom.scss",
+    "logLevel": "Verbose",
+    "hideGenerator": true
 }

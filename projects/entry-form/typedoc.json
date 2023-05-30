@@ -1,0 +1,9 @@
+{
+    "name": "@enigmatry/entry-form",
+    "extends": [
+        "../../typedoc.base.json"
+    ],
+    "entryPoints": [
+        "public-api.ts"
+    ]
+}

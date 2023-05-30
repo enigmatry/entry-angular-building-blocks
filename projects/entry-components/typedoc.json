@@ -1,5 +1,5 @@
 {
-    "name": "Entry Components",
+    "name": "@enigmatry/entry-components",
     "extends": [
         "../../typedoc.base.json"
     ],

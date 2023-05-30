@@ -14,9 +14,9 @@ export class MarkdownViewerComponent implements OnInit {
   constructor(private _fileLoad: FileLoadService) {}
 
   ngOnInit(): void {
-    if (this.componentDefinition.documentationPath) {
+    if (this.componentDefinition.readmePath) {
       this._fileLoad
-        .loadDocumentationFile(this.componentDefinition.documentationPath)
+        .loadDocumentationFile(this.componentDefinition.readmePath)
         .subscribe({
           next: response => this.markdownContent = response,
           error: _ => this.markdownContent = `### No API documentation found :'(`
