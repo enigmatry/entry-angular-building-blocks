@@ -1,3 +1,13 @@
 body {
-    background-color: #ffffff;
+    background-color: white;
+}
+
+.tsd-page-toolbar {
+    display: none;
+}
+
+.tsd-navigation {
+    &.settings {
+        display: none;
+    }
 }
