@@ -12,9 +12,7 @@ import { ENTRY_DIALOG_CONFIG, EntryDialogConfig } from './entry-dialog-config.mo
 /**
  * Used to open built-in and custom entry dialogs.
  */
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class EntryDialogService {
   constructor(
     @Inject(ENTRY_DIALOG_CONFIG) protected readonly config: EntryDialogConfig,

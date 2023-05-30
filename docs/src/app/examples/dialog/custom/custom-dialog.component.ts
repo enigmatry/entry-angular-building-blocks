@@ -1,8 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ENTRY_DIALOG_CONFIG, EntryDialogConfig } from 'projects/entry-components/dialog/entry-dialog-config.model';
-import { EntryDialogComponent } from 'projects/entry-components/dialog/public-api';
 import { ICustomDialogData } from './custom-dialog-example.component';
+import { EntryDialogComponent, ENTRY_DIALOG_CONFIG, EntryDialogConfig } from '@enigmatry/entry-components/dialog';
 
 export interface ICustomDialogResult {
     response: string;

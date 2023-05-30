@@ -4,6 +4,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { EntryAlertDialogComponent } from './dialogs/alert/entry-alert-dialog.component';
 import { EntryConfirmDialogComponent } from './dialogs/confirm/entry-confirm-dialog.component';
 import { EntryDialogComponent } from './dialogs/entry-dialog.component';
+import { EntryDialogService } from './entry-dialog.service';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { EntryDialogComponent } from './dialogs/entry-dialog.component';
     EntryDialogComponent,
     EntryAlertDialogComponent,
     EntryConfirmDialogComponent
-  ]
+  ],
+  providers: [EntryDialogService]
 })
 export class EntryDialogModule { }

@@ -6,18 +6,18 @@
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "paths": {
-      "@enigmatry/entry-components": [
-        "dist/enigmatry/entry-components/enigmatry-entry-components",
-        "dist/enigmatry/entry-components"
-      ],
-      "@enigmatry/entry-form": [
-        "dist/enigmatry/entry-form/enigmatry-entry-form",
-        "dist/enigmatry/entry-form"
-      ],
-      "@enigmatry/entry-table": [
-        "dist/enigmatry/entry-table/enigmatry-entry-table",
-        "dist/enigmatry/entry-table"
-      ]
+
+      "@enigmatry/entry-components":["projects/entry-components/public-api.ts"],
+      "@enigmatry/entry-components/dialog":["projects/entry-components/dialog/public-api.ts"],
+      "@enigmatry/entry-components/header":["projects/entry-components/header/public-api.ts"],
+      "@enigmatry/entry-components/search-filter":["projects/entry-components/search-filter/public-api.ts"],
+
+      "@enigmatry/entry-form": ["projects/entry-form/public-api.ts"],
+      "@enigmatry/entry-form/autocomplete": ["projects/entry-form/autocomplete/public-api.ts"],
+      "@enigmatry/entry-form/ckeditor": ["projects/entry-form/ckeditor/public-api.ts"],
+      "@enigmatry/entry-form/date-time-picker": ["projects/entry-form/date-time-picker/public-api.ts"],
+      
+      "@enigmatry/entry-table": ["projects/entry-table/public-api.ts"]
     },
     "strict": false,
     "noImplicitReturns": true,

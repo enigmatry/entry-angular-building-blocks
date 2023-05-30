@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { IEntryAlertDialogData } from 'projects/entry-components/dialog/dialogs/alert/entry-alert-dialog-data.interface';
-import { EntryDialogService } from 'projects/entry-components/dialog/entry-dialog.service';
+import { EntryDialogService, IEntryAlertDialogData } from '@enigmatry/entry-components/dialog';
 
 @Component({
   selector: 'app-alert-example',
