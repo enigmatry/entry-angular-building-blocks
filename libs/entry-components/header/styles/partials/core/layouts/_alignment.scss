@@ -1,0 +1,6 @@
+@use '../../../../../../scss-foundation/src/modules/display/items';
+
+// TODO: remove this once https://jira.enigmatry.com/browse/ETL-480 is done 
+.space-between {
+	@include items.fully-align(center, space-between);
+}
