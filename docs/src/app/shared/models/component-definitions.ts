@@ -14,7 +14,7 @@ const COMPONENT_DEFINITIONS: IComponentDefinition[] = [
         shortDescription: `Enables built-in dialogs and adds support for building custom ones.`,
         route: RouteSegments.dialog,
         readmePath: '/entry-components/dialog/README.md',
-        apiDocsPath: 'assets/api/modules/Entry_Components.dialog_public_api.html'
+        apiDocsPath: 'assets/api/modules/_enigmatry_entry_components.dialog_public_api.html'
     },
     {
         label: 'Header',
