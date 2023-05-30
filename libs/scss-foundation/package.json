@@ -1,0 +1,31 @@
+{
+  "name": "@enigmatry/scss-foundation",
+  "version": "1.0.0",
+  "author": "Enigmatry",
+  "description": "Collection of SCSS utilities useful for the most of projects.",
+  "homepage": "https://github.com/enigmatry/entry-angular-building-blocks/tree/master/libs/scss-foundation#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/enigmatry/entry-angular-building-blocks.git"
+  },
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "sass --style=compressed --load-path=src src/partials/main.scss dist/scss-foundation.css",
+    "build-modules": "sass --style=compressed --load-path=src src/modules/_index.scss dist/scss-foundation-modules.css",
+    "lint": "stylelint --fix src/**/*.scss",
+    "test": "jest --coverage --colors"
+  },
+  "devDependencies": {
+    "@enigmatry/stylelint-config": "1.2.25",
+    "jest": "29.5.0",
+    "jest-environment-node-single-context": "29.0.0",
+    "sass": "1.60.0",
+    "sass-true": "7.0.0"
+  },
+  "peerDependencies": {
+    "sass-true": "7.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
