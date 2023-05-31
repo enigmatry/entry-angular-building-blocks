@@ -11,6 +11,6 @@
         "libs/eslint-config",
     ],
     "customCss": "apps/demo-app/src/styles/modules/_typedoc-custom.scss",
-    "logLevel": "Verbose",
+    "logLevel": "Info",
     "hideGenerator": true
 }
