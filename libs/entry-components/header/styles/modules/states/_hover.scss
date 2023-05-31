@@ -1,17 +1,7 @@
-@use '../variables' as vars;
-
 @mixin background-hover($regular-background, $hover-background) {
 	background-color: $regular-background;
 
 	&:hover {
 		background-color: $hover-background;
 	}
-}
-
-@mixin primary-hover() {
-	@include background-hover(vars.$primary, vars.$accent);
-}
-
-@mixin accent-hover() {
-	@include background-hover(vars.$accent, vars.$primary);
 }

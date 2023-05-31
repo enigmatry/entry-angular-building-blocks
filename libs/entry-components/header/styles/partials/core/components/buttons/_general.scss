@@ -1,6 +1,5 @@
 @use '../../../../modules/variables' as vars;
 // @use 'typography/fonts';
-@use '../../../../modules/states/hover';
 
 .button, %button {
 	// @include fonts.main-bolded-font(14px);
@@ -29,14 +28,8 @@
 	}
 }
 
-.button-primary {
+.button-primary, .button-accent {
 	@extend %button;
-	@include hover.primary-hover();
-}
-
-.button-accent {
-	@extend %button;
-	@include hover.accent-hover();
 }
 
 .action-buttons {

@@ -3,6 +3,10 @@
 @mixin generate-headers-from($theme) {
 
     .entry-header {
-        background-color: map.value-from($theme, 'header-background');
+        background-color: map.value-from($theme, 'header.background');
+
+        .title {
+            font-size: map.value-from($theme, 'header.title-size');
+        }
     }
 }
