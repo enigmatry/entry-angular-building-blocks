@@ -1,11 +1,11 @@
 <div class="entry-toolbar">
-    <div *ngIf="logo" class="left-side">
+    <span *ngIf="logo" class="left-side">
         <img [src]="logo"/>
-    </div>
-    <div class="center">
-        <ng-content select="[center]"></ng-content>
-    </div>
-    <div class="right-side">
+    </span>
+    <span class="main">
+        <ng-content select="[main]"></ng-content>
+    </span>
+    <span class="right-side">
         <ng-content select="[right-side]"></ng-content>
-    </div>
+    </span>
 </div>

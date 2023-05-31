@@ -1,10 +1,17 @@
 <entry-toolbar
     logo="./../../../assets/images/entry_logo_small.png">
-    <div center>
-        <button mat-button [matMenuTriggerFor]="menu">Menu</button>
+    <div main>
+        <div class="example-button-row">
+            <button mat-button color="primary">Products</button>
+            <button mat-button color="primary">Organizations</button>
+            <button mat-button color="primary">Configuration</button>
+        </div>
+    </div>
+    <div right-side>
+        <button mat-raised-button color="primary" [matMenuTriggerFor]="menu">User</button>
         <mat-menu #menu="matMenu">
-            <button mat-menu-item>Item 1</button>
-            <button mat-menu-item>Item 2</button>
+            <button mat-menu-item>Profile</button>
+            <button mat-menu-item>Sign out</button>
         </mat-menu>
     </div>
 </entry-toolbar>
