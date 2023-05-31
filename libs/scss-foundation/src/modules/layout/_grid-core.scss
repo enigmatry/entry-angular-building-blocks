@@ -16,6 +16,10 @@ $breakpoints: () !default;
 			max-width: 100%;
 			padding: 0 $spacing;
 		}
+
+		[class ^= #{$column-prefix}]{
+			box-sizing: border-box;
+		}
 	}
 
 	#{'.' + $column-prefix}auto {
