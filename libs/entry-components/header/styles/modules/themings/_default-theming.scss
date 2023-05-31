@@ -1,36 +1,7 @@
+@use '../variables' as vars;
+
 @use 'sass:list';
 
 $theme: (
-    field: (
-        infix-padding-top: .4375em,
-        infix-padding-bottom: .4375em,
-        label-color: #0000008a,
-        underline-display: block,
-        outline: (
-            border: 1px solid #EBEBEB,
-            border-hover: 1px solid #EBEBEB,
-            border-right: none,
-            border-left: none,
-            disabled-background: #F5F5F5,
-            disabled-hover: 1px solid #EBEBEB, 
-        )
-    ),
-    checkbox: (
-        width: 20px,
-        height: 20px,
-        background-color: #fff,
-        checkmark-color: #000, // not necessary
-        selected-checkmark-color: #000,
-        selected-background-color: #fff,
-        selected-border-color: #000,
-        border: 2px solid #0000008a,
-        border-hover: 2px solid #0000008a,
-        border-radius: 0,
-        label-breaking: nowrap,
-    ),
-    
-    radio-button: (
-        align: flex-start,
-        white-space: nowrap,
-    ),
+    header-background: vars.$primary-lightest
 );

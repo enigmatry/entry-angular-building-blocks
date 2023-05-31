@@ -1,0 +1,29 @@
+@use '../../../../modules/variables' as vars;
+// @use 'styles/modules/breakpoints';
+
+.entry-header {
+	padding: 4px vars.$default-gap vars.$default-gap;
+
+	// @include breakpoints.apply-on-tablet() {
+	// 	padding: {
+	// 		top: vars.$default-gap;
+	// 		bottom: vars.$large-gap;
+	// 	};
+	// }
+    
+	.header-item {
+		margin-top: 20px;
+	}
+
+    .title {
+        font-size: 32px;
+    }
+
+	.content {
+		padding-top: 20px;
+
+		// @include breakpoints.apply-on-tablet() {
+		// 	padding-top: vars.$large-gap;
+		// }
+	}
+}
