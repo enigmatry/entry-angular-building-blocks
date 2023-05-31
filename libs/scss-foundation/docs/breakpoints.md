@@ -8,7 +8,7 @@ This module has overridable breakpoints variable. Due to Sass limitations, there
 Breakpoints must be in the same format as variables inside src root folder.
 
 Usage:
-@use scss-foundation/src/responsiveness/breakpoints;
+@use scss-foundation/src/modules/responsiveness/breakpoints;
 
 - Applies desired styles and properties starting from certain breakpoint given by its key. Key must be valid key from given (or default) breakpoint collection.
 ```

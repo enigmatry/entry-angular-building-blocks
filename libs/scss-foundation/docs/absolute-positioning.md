@@ -4,7 +4,7 @@ Alignment utilities for absolute positioning of content.
 
 ## Absolute
 
-@use scss-foundation/src/position/absolute;
+@use scss-foundation/src/modules/position/absolute;
 
 - Replaces the several most common lines in absolute positioning with just one liner.
 ```
