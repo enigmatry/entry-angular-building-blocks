@@ -1,0 +1,15 @@
+.component-doc-content {
+    margin: 10px;
+
+    .doc-content-wrapper {
+        margin: 30px 20px;
+        line-height: 2;
+
+        .api-iframe {
+            width: 100%;
+            min-height: 800px;
+            height: max-content;
+            border: 0;
+        }
+    }
+}

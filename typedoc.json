@@ -2,9 +2,15 @@
     "name": "Entry Angular Building Blocks",
     "entryPointStrategy": "packages",
     "entryPoints": [
-        "projects/*"
+        "libs/*"
     ],
-    "out": "docs/src/assets/api",
-    "cleanOutputDir": true,
-    "logLevel": "Verbose"
+    "out": "apps/demo-app/src/assets/api",
+    "exclude": [
+        "libs/stylelint-config",
+        "libs/scss-foundation",
+        "libs/eslint-config",
+    ],
+    "customCss": "apps/demo-app/src/styles/modules/_typedoc-custom.scss",
+    "logLevel": "Verbose",
+    "hideGenerator": true
 }
