@@ -1,3 +1,11 @@
 <div class="entry-toolbar">
-    TOOLBAR
+    <div *ngIf="logo" class="left-side">
+        <img [src]="logo"/>
+    </div>
+    <div class="center">
+        <ng-content select="[center]"></ng-content>
+    </div>
+    <div class="right-side">
+        <ng-content select="[right-side]"></ng-content>
+    </div>
 </div>

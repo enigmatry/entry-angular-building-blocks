@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 /**
  * Used to render basic toolbar that supports content projection.
@@ -16,11 +16,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
   styleUrls: ['./entry-toolbar.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EntryToolbarComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+export class EntryToolbarComponent {
+  /** Optional parameter used to supply logo image on toolbar's left side */
+  @Input() logo?: string | undefined;
 }
