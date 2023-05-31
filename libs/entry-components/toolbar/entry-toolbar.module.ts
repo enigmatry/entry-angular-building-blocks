@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ToolbarComponent } from './toolbar.component';
+import { EntryToolbarComponent } from './entry-toolbar.component';
 
 @NgModule({
   declarations: [
-    ToolbarComponent
+    EntryToolbarComponent
   ],
   imports: [
     CommonModule
   ],
   exports: [
-    ToolbarComponent
+    EntryToolbarComponent
   ]
 })
-export class ToolbarModule { }
+export class EntryToolbarModule { }

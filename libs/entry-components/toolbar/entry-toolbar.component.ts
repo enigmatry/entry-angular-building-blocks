@@ -12,11 +12,11 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
  */
 @Component({
   selector: 'entry-toolbar',
-  templateUrl: './toolbar.component.html',
-  styleUrls: ['./toolbar.component.css'],
+  templateUrl: './entry-toolbar.component.html',
+  styleUrls: ['./entry-toolbar.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ToolbarComponent implements OnInit {
+export class EntryToolbarComponent implements OnInit {
 
   constructor() { }
 

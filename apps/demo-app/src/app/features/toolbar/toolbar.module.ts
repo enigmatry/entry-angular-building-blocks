@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ToolbarRoutingModule } from './toolbar-routing.module';
 import { ToolbarComponent } from './toolbar.component';
 import { SharedModule } from '../../shared/shared.module';
+import { ToolbarExampleModule } from '../../examples/toolbar/toolbar-example.module';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import { SharedModule } from '../../shared/shared.module';
   imports: [
     CommonModule,
     SharedModule,
-    ToolbarRoutingModule
+    ToolbarRoutingModule,
+    ToolbarExampleModule
   ]
 })
 export class ToolbarModule { }

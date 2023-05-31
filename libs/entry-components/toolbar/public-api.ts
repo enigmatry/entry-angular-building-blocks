@@ -1,2 +1,2 @@
-export { ToolbarComponent } from './toolbar.component';
-export { ToolbarModule } from './toolbar.module';
+export { EntryToolbarComponent } from './entry-toolbar.component';
+export { EntryToolbarModule } from './entry-toolbar.module';
