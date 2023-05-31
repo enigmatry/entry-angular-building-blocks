@@ -6,6 +6,11 @@ import { EntryDialogButtonsAlignment } from '../entry-dialog-buttons-alignment.t
 
 /**
  * Base Entry dialog component. Must be extended when building custom dialogs.
+ *
+ * @example
+ * ```html
+ * <entry-dialog title="TITLE"><p>Dialog content</p></entry-dialog>
+ * ```
  */
 @Component({
     selector: 'entry-dialog',
