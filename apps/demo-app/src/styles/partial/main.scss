@@ -1,4 +1,7 @@
 @use '../../../../../libs/entry-components/dialog/styles/partials/main.scss';
+@use '../../../../../libs/entry-components/dialog/styles/modules/generator' as dialog-generator;
+
+@include dialog-generator.generate();
 
 .spacer {
     flex: 1 1 auto;
