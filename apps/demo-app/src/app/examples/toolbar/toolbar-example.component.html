@@ -1,13 +1,21 @@
+<p>
+    <mat-checkbox [(ngModel)]="showLeftSide">
+        Show left-side projection
+    </mat-checkbox>
+</p>
+<p>
+    <mat-checkbox [(ngModel)]="showRightSide">
+        Show right-side projection
+    </mat-checkbox>
+</p>
 <entry-toolbar>
-    <span left-side>
-        <img src="./../../../assets/images/entry_logo_small_transparent_material.png">
-    </span>
+    <img *ngIf="showLeftSide" left-side src="./../../../assets/images/entry_logo_small_transparent_material.png">
     <div class="example-button-row">
         <button mat-button color="primary">Products</button>
         <button mat-button color="primary">Organizations</button>
         <button mat-button color="primary">Configuration</button>
     </div>
-    <span right-side>
+    <span *ngIf="showRightSide" right-side>
         <button mat-raised-button color="primary" [matMenuTriggerFor]="menu">User</button>
         <mat-menu #menu="matMenu">
             <button mat-menu-item>Profile</button>
