@@ -1,4 +1,13 @@
 $menu-item-selected: #f2f4f8;
 $header-back: #f2f4f8;
-$accent: #ffd740;
-$primary: #7531FF;
+
+$primary: #2581C4;
+$accent: #EA518D;
+
+$font-color-default: #323232;
+$font-color-light: #FFF;
+
+$default-gap: 16px;
+$large-gap: calc(#{$default-gap} * 2);
+
+$default-transition: .3s;

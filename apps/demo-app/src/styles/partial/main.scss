@@ -2,8 +2,10 @@
 @use '../../../../../libs/entry-components/dialog/styles/modules/generator' as dialog-generator;
 @use '../../../../../libs/entry-components/header/styles/partials/main.scss' as header;
 @use 'vendors';
+@use '../modules/typography/fonts' as default_font;
+@use '../modules/theming/default-theming' as default_theme;
 
-@include dialog-generator.generate();
+@include dialog-generator.generate(default_theme.$theme, default_font.$app-fonts);
 
 .spacer {
     flex: 1 1 auto;

@@ -1,11 +1,22 @@
 @use 'sass:map';
 
-@use 'themings/default-theming' as default;
+@use 'themings/default-theming' as default_theme;
 @use 'components/dialogs/general' as dialogs;
+@use 'typography/default_fonts' as default_fonts;
+@use 'typography/fonts' as fonts;
 
-$default-theme: default.$theme;
+$default-theme: default_theme.$theme;
+$default-fonts: default_fonts.$fonts;
 
-@mixin generate($custom-theme: ()) {
+@mixin generate($custom-theme: (), $custom-fonts: null) {
 	$merged-theme: map.deep-merge($default-theme, $custom-theme);
 	@include dialogs.generate-dialog-from($merged-theme);
+
+	@if $custom-fonts == null {
+		// @debug 'SEXY: #{$default-fonts}';
+		@include fonts.generate-font-face($default-fonts, 'assets/fonts/');
+	}
+	@else {
+		@include fonts.generate-font-face($custom-fonts, 'assets/fonts/');
+	}
 }
