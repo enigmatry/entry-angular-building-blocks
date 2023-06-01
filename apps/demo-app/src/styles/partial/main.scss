@@ -1,5 +1,7 @@
-@use '../../../../../libs/entry-components/dialog/styles/partials/main.scss';
+@use '../../../../../libs/entry-components/dialog/styles/partials/main.scss' as dialog;
 @use '../../../../../libs/entry-components/dialog/styles/modules/generator' as dialog-generator;
+@use '../../../../../libs/entry-components/header/styles/partials/main.scss' as header;
+@use 'vendors';
 
 @include dialog-generator.generate();
 
