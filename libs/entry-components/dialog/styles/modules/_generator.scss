@@ -13,7 +13,6 @@ $default-fonts: default_fonts.$fonts;
 	@include dialogs.generate-dialog-from($merged-theme);
 
 	@if $custom-fonts == null {
-		// @debug 'SEXY: #{$default-fonts}';
 		@include fonts.generate-font-face($default-fonts, 'assets/fonts/');
 	}
 	@else {
