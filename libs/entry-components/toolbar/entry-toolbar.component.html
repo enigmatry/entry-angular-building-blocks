@@ -1,6 +1,6 @@
 <div class="entry-toolbar">
-    <span *ngIf="logo" class="left-side">
-        <img [src]="logo"/>
+    <span class="left-side">
+        <ng-content select="[left-side]"></ng-content>
     </span>
     <span class="main">
         <ng-content></ng-content>

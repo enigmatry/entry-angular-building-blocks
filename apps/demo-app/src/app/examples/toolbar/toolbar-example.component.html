@@ -1,12 +1,12 @@
-<entry-toolbar
-    logo="./../../../assets/images/entry_logo_small_transparent_material.png">
-    <span>
-        <div class="example-button-row">
-            <button mat-button color="primary">Products</button>
-            <button mat-button color="primary">Organizations</button>
-            <button mat-button color="primary">Configuration</button>
-        </div>
+<entry-toolbar>
+    <span left-side>
+        <img src="./../../../assets/images/entry_logo_small_transparent_material.png">
     </span>
+    <div class="example-button-row">
+        <button mat-button color="primary">Products</button>
+        <button mat-button color="primary">Organizations</button>
+        <button mat-button color="primary">Configuration</button>
+    </div>
     <span right-side>
         <button mat-raised-button color="primary" [matMenuTriggerFor]="menu">User</button>
         <mat-menu #menu="matMenu">
