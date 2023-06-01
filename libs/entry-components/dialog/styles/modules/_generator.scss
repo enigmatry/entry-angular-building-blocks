@@ -19,5 +19,5 @@ $default-fonts: default_fonts.$fonts;
 		@include fonts.generate-font-face($custom-fonts, 'assets/fonts/');
 	}
 
-	@include fonts.generate-icomoon-font-face('/assets/fonts/');
+	@include fonts.entry-icomoon-icons('/assets/fonts/');
 }

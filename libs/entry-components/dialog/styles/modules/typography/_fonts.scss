@@ -41,7 +41,7 @@
 	@include -font('Montserrat-bold', $size);
 }
 
-@mixin generate-icomoon-font-face($font-path) {
+@mixin entry-icomoon-icons($font-path) {
 	@font-face {
 		font-family: 'icomoon';
 		font-style: normal;
