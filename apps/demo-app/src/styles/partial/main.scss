@@ -1,7 +1,2 @@
-.spacer {
-    flex: 1 1 auto;
-}
-
-.mat-drawer-content {
-    background-color: #fff;
-}
+@use '../../../../../libs/entry-components/header/styles/partials/main.scss';
+@use 'vendors';

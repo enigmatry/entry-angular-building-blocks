@@ -1,0 +1,7 @@
+@mixin background-hover($regular-background, $hover-background) {
+	background-color: $regular-background;
+
+	&:hover {
+		background-color: $hover-background;
+	}
+}

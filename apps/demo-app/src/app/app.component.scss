@@ -1,7 +1,6 @@
 @use '../styles/modules/variables' as vars;
 
 .docs-main {
-
     .docs-container {
         position: absolute;
         top: 60px;
@@ -36,6 +35,8 @@
         right: 0;
         padding: 0;
         background-color: vars.$header-back;
+        display: flex;
+        justify-content: space-between;
 
         .logo {
             width: 200px;
@@ -45,4 +46,13 @@
             margin-right: 20px;
         }
     }
+
+    .doc-navigation {
+        display: flex;
+        align-items: center;
+    }
+}
+
+.main-content {
+    background-color: #fff;
 }
