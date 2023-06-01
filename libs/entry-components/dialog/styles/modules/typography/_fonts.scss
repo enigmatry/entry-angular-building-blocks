@@ -40,3 +40,36 @@
 @mixin title-font($size: 20px) {
 	@include -font('Montserrat-bold', $size);
 }
+
+@mixin generate-icomoon-font-face($font-path) {
+	@font-face {
+		font-family: 'icomoon';
+		font-style: normal;
+		font-weight: normal;
+		src: url($font-path + 'icomoon/fonts/icomoon.eot?s68r7n');
+		src: url($font-path + 'icomoon/fonts/icomoon.eot?s68r7n#iefix') format('embedded-opentype'), 
+			url($font-path + 'icomoon/fonts/icomoon.ttf?s68r7n') format('truetype'),
+			url($font-path + 'icomoon/fonts//icomoon.woff?s68r7n') format('woff'),
+			url($font-path + 'icomoon/fonts//icomoon.svg?s68r7n#icomoon') format('svg');
+		font-display: block;
+	}
+	  
+	[class ^= 'icon-'], [class *= ' icon-'] {
+		/* use !important to prevent issues with browser extensions that change fonts */
+		font-family: 'icomoon' !important;
+	  
+		/* Better Font Rendering =========== */
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		font-style: normal;
+		font-variant: normal;
+		font-weight: normal;
+		line-height: 1;
+		text-transform: none;
+		speak: never;
+	}
+	  
+	.icon-close::before {
+		content: '\e900';
+	}
+}
