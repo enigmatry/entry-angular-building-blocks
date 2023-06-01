@@ -1,15 +1,22 @@
-.entry-toolbar {
-    background-color: red;
-    
-    .left-side {
+// Teodora, please do this properly, this is CharGPT generated :)
 
+.entry-toolbar {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    height: 50px;
+    background-color: #f2f4f8;
+    margin: 3px;
+
+    .left-side {
+        justify-self: start;
     }
 
-    .main {
-
+    .center {
+        justify-self: center;
     }
 
     .right-side {
-
+        justify-self: end;
     }
 }
