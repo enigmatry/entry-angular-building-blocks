@@ -1,0 +1,21 @@
+$breakpoints: ( 
+	mobile: (description: 'sm', size: 480px ), 
+	tablet: (description: 'md', size: 768px ), 
+	desktop: (description: 'lg', size: 992px), 
+	largeDesktop: (description: 'xl', size: 1200px));
+
+$primary: #2581C4;
+$primary-lightest: #DFF1FD;
+	
+$accent: #EA518D;
+	
+$font-color-light: #FFF;
+	
+$disabled: #D9D9D9;
+	
+$font-size-default: 14px;
+
+$default-gap: 16px;
+$large-gap: calc(#{$default-gap} * 2);
+
+$default-transition: .4s;

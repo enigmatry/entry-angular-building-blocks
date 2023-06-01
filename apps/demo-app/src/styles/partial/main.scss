@@ -1,4 +1,6 @@
-@use '../../../../../libs/entry-components/toolbar/styles/partials/main.scss';
+@use '../../../../../libs/entry-components/toolbar/styles/partials/main.scss' as toolbar;
+@use '../../../../../libs/entry-components/header/styles/partials/main.scss' as header;
+@use 'vendors';
 
 .spacer {
     flex: 1 1 auto;
