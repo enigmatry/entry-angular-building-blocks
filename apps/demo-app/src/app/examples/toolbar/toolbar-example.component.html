@@ -9,18 +9,12 @@
     </mat-checkbox>
 </p>
 <entry-toolbar>
-    <img *ngIf="showLeftSide" left-side style="height: 50px;"
+    <img *ngIf="showLeftSide" left-side
         src="./../../../assets/images/entry_black_logo_small_transparent.png">
-    <div class="example-button-row">
+    <div>
         <button mat-button color="primary">Products</button>
         <button mat-button color="primary">Organizations</button>
         <button mat-button color="primary">Configuration</button>
     </div>
-    <span *ngIf="showRightSide" right-side>
-        <button mat-raised-button color="primary" [matMenuTriggerFor]="menu">User</button>
-        <mat-menu #menu="matMenu">
-            <button mat-menu-item>Profile</button>
-            <button mat-menu-item>Sign out</button>
-        </mat-menu>
-    </span>
+    <mat-icon *ngIf="showRightSide" right-side>favorite</mat-icon>
 </entry-toolbar>
