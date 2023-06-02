@@ -13,11 +13,9 @@ $default-fonts: default_fonts.$fonts;
 	@include dialogs.generate-dialog-from($merged-theme);
 
 	@if $custom-fonts == null {
-		@include fonts.generate-font-face($default-fonts, 'assets/fonts/');
+		@include fonts.generate-font-face($default-fonts);
 	}
 	@else {
-		@include fonts.generate-font-face($custom-fonts, 'assets/fonts/');
+		@include fonts.generate-font-face($custom-fonts);
 	}
-
-	@include fonts.entry-icomoon-icons('/assets/fonts/');
 }

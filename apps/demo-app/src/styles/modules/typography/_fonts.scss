@@ -1,40 +1,20 @@
-// $app-fonts: (
-//     path: 'assets/fonts/',
-//     sources: (
-//         (
-//             name: 'OpenSans',
-//             style: normal,
-//             formats: ('eot', 'woff', 'woff2', 'ttf')
-//         ),
-//         (
-//             name: 'OpenSans',
-//             style: bold,
-//             formats: ('eot', 'woff', 'woff2', 'ttf')
-//         ),
-//         (
-//             name: 'Montserrat',
-//             style: bold,
-//             formats: ('eot', 'woff', 'woff2', 'ttf')
-//         )
-//     )
-// );
-
-$fonts-path: 'assets/fonts/';
-
-$app-fonts: (
-    (
-        name: 'OpenSans',
-        style: normal,
-        formats: ('eot', 'woff', 'woff2', 'ttf')
-    ),
-    (
-        name: 'OpenSans',
-        style: bold,
-        formats: ('eot', 'woff', 'woff2', 'ttf')
-    ),
-    (
-        name: 'Montserrat',
-        style: bold,
-        formats: ('eot', 'woff', 'woff2', 'ttf')
+$fonts: (
+    path: 'assets/fonts/',
+    sources: (
+        (
+            name: 'OpenSans',
+            style: normal,
+            formats: ('eot', 'woff', 'woff2', 'ttf')
+        ),
+        (
+            name: 'OpenSans',
+            style: bold,
+            formats: ('eot', 'woff', 'woff2', 'ttf')
+        ),
+        (
+            name: 'Montserrat',
+            style: bold,
+            formats: ('eot', 'woff', 'woff2', 'ttf')
+        )
     )
 );
