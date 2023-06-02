@@ -2,7 +2,7 @@
 @use '../../../../modules/states/hover';
 @use '../../../../../../styles/modules/variables' as vars;
 @use 'sass:color';
-// @use '../../../../../../styles/typography/fonts';
+@use '../../../../../../styles/modules/typography/fonts' as fonts;
 
 $border-dark: #000;
  
