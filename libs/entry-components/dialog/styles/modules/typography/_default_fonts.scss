@@ -20,13 +20,7 @@
 // );
 
 $fonts: (
-    (name: 'OpenSans',
-        style: normal,
-        formats: ('eot', 'woff', 'woff2', 'ttf')),
-    (name: 'OpenSans',
-        style: bold,
-        formats: ('eot', 'woff', 'woff2', 'ttf')),
-    (name: 'Montserrat',
-        style: bold,
-        formats: ('eot', 'woff', 'woff2', 'ttf'))
+    (name: 'OpenSans', style: normal, formats: ('eot', 'woff', 'woff2', 'ttf')),
+    (name: 'OpenSans', style: bold, formats: ('eot', 'woff', 'woff2', 'ttf')),
+    (name: 'Montserrat', style: bold, formats: ('eot', 'woff', 'woff2', 'ttf'))
 );
