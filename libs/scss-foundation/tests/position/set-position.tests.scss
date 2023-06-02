@@ -1,5 +1,5 @@
 /* stylelint-disable declaration-block-no-redundant-longhand-properties */
-@use 'true';
+@use '../../node_modules/sass-true/sass/true';
 @use '../../src/modules/position/set-position' as position;
 
 @include true.describe('set-position($top, $right, $bottom, $left, $position)') {
