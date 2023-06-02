@@ -1,9 +1,8 @@
-@use '../../../../../libs/entry-components/styles/generate' as entry;
+@use 'entry-components/styles/generate' as entry;
 @use '../modules/theming/theming' as app_theme;
 @use '../modules/typography/fonts' as app_font;
 
 @include entry.generate(app_theme.$theme, app_font.$fonts);
-// @include entry.generate(app_theme.$theme);
 
 .spacer {
     flex: 1 1 auto;
