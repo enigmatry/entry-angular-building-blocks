@@ -1,6 +1,6 @@
 @use 'sass:map';
 
-@use 'themings/default-theming' as default_theme;
+@use 'theming/default-theming' as default_theme;
 @use 'components/dialogs/general' as dialogs;
 
 $default-theme: default_theme.$theme;

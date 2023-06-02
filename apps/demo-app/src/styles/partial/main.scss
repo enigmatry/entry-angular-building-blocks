@@ -3,6 +3,7 @@
 @use '../modules/typography/fonts' as app_font;
 
 @include entry.generate(app_theme.$theme, app_font.$fonts);
+// @include entry.generate(app_theme.$theme);
 
 .spacer {
     flex: 1 1 auto;

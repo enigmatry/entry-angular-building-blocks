@@ -3,28 +3,48 @@
 
 $theme: (
 	header: (
-		title: (
-			size: 20px,
-			color: vars.$font-color-default,
+		header: (
+			background: vars.$primary-lightest,
+			title-size: 32px,
 		),
-		close-icon: (
-			size: 12px,
-			default-color: vars.$font-color-default,
-			hover-color: vars.$primary,
+		button-primary: (
+			default-background: vars.$primary,
+			default-font-color: vars.$font-color-light,
+			hover-background: vars.$accent,
+			hover-font-color: vars.$font-color-light,
+		),
+		button-accent: (
+			default-background: vars.$accent,
+			default-font-color: vars.$font-color-light,
+			hover-background: vars.$primary,
+			hover-font-color: vars.$font-color-light,
 		)
 	),
-	content-color: vars.$font-color-default,
-	default-font-size: 14px,
-	button-confirm: (
-		default-background: vars.$primary,
-		default-font-color: vars.$font-color-light,
-		hover-background: vars.$accent,
-		hover-font-color: vars.$font-color-light,
-	),
-	button-cancel: (
-		default-background: transparent,
-		default-font-color: vars.$primary,
-		hover-background: transparent,
-		hover-font-color: vars.$accent,
+	dialog: (
+		header: (
+			title: (
+				size: 20px,
+				color: vars.$font-color-default,
+			),
+			close-icon: (
+				size: 12px,
+				default-color: vars.$font-color-default,
+				hover-color: vars.$primary,
+			)
+		),
+		content-color: vars.$font-color-default,
+		default-font-size: 14px,
+		button-confirm: (
+			default-background: vars.$primary,
+			default-font-color: vars.$font-color-light,
+			hover-background: vars.$accent,
+			hover-font-color: vars.$font-color-light,
+		),
+		button-cancel: (
+			default-background: transparent,
+			default-font-color: vars.$primary,
+			hover-background: transparent,
+			hover-font-color: vars.$accent,
+		)
 	)
 );
