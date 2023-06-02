@@ -1,11 +1,7 @@
-@use './default_fonts' as default;
 @use './fonts' as font;
 
 @mixin generate($config: null) {
-    @if $config == null {
-        @include font.generate-font-face(default.$fonts);
-    }
-    @else {
+    @if $config != null {
         @include font.generate-font-face($config);
     }
 }
