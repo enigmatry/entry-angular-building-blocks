@@ -34,11 +34,11 @@
 		font-family: 'icomoon';
 		font-style: normal;
 		font-weight: normal;
-		src: url('/' + $font-path + 'icomoon/fonts/icomoon.eot?s68r7n');
-		src: url('/' + $font-path + 'icomoon/fonts/icomoon.eot?s68r7n#iefix') format('embedded-opentype'), 
-			url('/' + $font-path + 'icomoon/fonts/icomoon.ttf?s68r7n') format('truetype'),
-			url('/' + $font-path + 'icomoon/fonts//icomoon.woff?s68r7n') format('woff'),
-			url('/' + $font-path + 'icomoon/fonts//icomoon.svg?s68r7n#icomoon') format('svg');
+		src: url($font-path + 'icomoon/fonts/icomoon.eot?s68r7n');
+		src: url($font-path + 'icomoon/fonts/icomoon.eot?s68r7n#iefix') format('embedded-opentype'), 
+			url($font-path + 'icomoon/fonts/icomoon.ttf?s68r7n') format('truetype'),
+			url($font-path + 'icomoon/fonts//icomoon.woff?s68r7n') format('woff'),
+			url($font-path + 'icomoon/fonts//icomoon.svg?s68r7n#icomoon') format('svg');
 		font-display: block;
 	}
 	  
