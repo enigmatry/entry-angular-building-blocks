@@ -4,7 +4,8 @@ $breakpoints: () !default;
 @use 'sass:map';
 @use 'sass:math';
 @use 'sass:meta';
-@use 'true' as sass-true;
+@use '../../../node_modules/sass-true';
+@use '../../../node_modules/sass-true/sass/throw';
 @use '../../modules/variables' as vars;
 @forward '../../modules/responsiveness/breakpoints' with (
 	$breakpoints: $breakpoints
@@ -21,7 +22,7 @@ $offset-prefix: 'offset-';
 
 @mixin generate($spacing:0, $divisions: 12) {
 	@if meta.type-of($spacing) != number {
-		@include sass-true.error(
+		@include throw.error(
 			$message: 'Please provide number parameter! Given value: ' + $spacing,
 			$source: 'generate($spacing, $divisions)',
 			$catch: vars.$testing
@@ -29,7 +30,7 @@ $offset-prefix: 'offset-';
 	}
 	@else {
 		@if ((meta.type-of($divisions) != number) or (($divisions < 2) or ($divisions > 1000))) {
-			@include sass-true.error(
+			@include throw.error(
 				$message: 'Please provide positive number for divisions, between 2 and 1000! Given value: ' + $divisions,
 				$source: 'generate($spacing, $divisions)',
 				$catch: vars.$testing

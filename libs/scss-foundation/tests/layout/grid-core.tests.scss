@@ -5,7 +5,7 @@
 /* stylelint-disable at-rule-allowed-list */
 $custom-breakpoints: () !default;
 
-@use 'true';
+@use '../../node_modules/sass-true/sass/true';
 @use '../../src/modules/variables' as vars;
 
 @forward '../../src/modules/layout/grid' with (
