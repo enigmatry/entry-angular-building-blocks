@@ -1,0 +1,16 @@
+@use '@enigmatry/scss-foundation/src/modules/map';
+@use '../../../states/hover';
+
+@mixin generate-headers-from($theme) {
+	.title {
+		color: map.value-from($theme, 'header.title.color');
+		font-size: map.value-from($theme, 'header.title.size');
+	}
+
+	.close-button {
+		@include hover.default(
+			map.value-from($theme, 'header.close-icon.default-color'), 
+				map.value-from($theme, 'header.close-icon.hover-color'));
+		font-size: map.value-from($theme, 'header.close-icon.size');
+	}
+}
