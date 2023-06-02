@@ -1,0 +1,12 @@
+@use '../dialog/styles/modules/generator' as dialog;
+@use '../dialog/styles/partials/main.scss' as dialogPartials;
+@use '../header/styles/modules/generator' as header;
+@use '../header/styles/partials/main.scss' as headerPartials;
+@use './modules/generate' as modules;
+@use 'sass:map';
+
+@mixin generate($theme, $font-config: null) {
+    @include modules.generate($font-config);
+    @include dialog.generate(map.get($theme, dialog));
+    @include header.generate(map.get($theme, header));
+}

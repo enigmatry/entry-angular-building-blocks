@@ -1,9 +1,9 @@
-@use '../../../../../libs/entry-components/dialog/styles/partials/main.scss' as dialog;
-@use '../../../../../libs/entry-components/dialog/styles/modules/generator' as dialog-generator;
-@use '../../../../../libs/entry-components/header/styles/partials/main.scss' as header;
-@use 'vendors';
+@use '../../../../../libs/entry-components/styles/generate' as entry;
+@use '../modules/theming/theming' as app_theme;
+@use '../modules/typography/fonts' as app_font;
 
-@include dialog-generator.generate();
+@include entry.generate(app_theme.$theme, app_font.$fonts);
+// @include entry.generate(app_theme.$theme);
 
 .spacer {
     flex: 1 1 auto;

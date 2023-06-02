@@ -1,9 +1,9 @@
 @use 'sass:map';
 
-@use 'themings/default-theming' as default;
+@use 'theming/default-theming' as default_theme;
 @use 'components/dialogs/general' as dialogs;
 
-$default-theme: default.$theme;
+$default-theme: default_theme.$theme;
 
 @mixin generate($custom-theme: ()) {
 	$merged-theme: map.deep-merge($default-theme, $custom-theme);
