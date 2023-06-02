@@ -24,32 +24,11 @@
 		}
 	}
 
-	// Generate icons font face:
+	// Generate icomoon icons font face:
 	@include entry-icomoon-icons($font-path);
 }
 
-@mixin -font($family, $size) {
-	font: {
-		family: $family;
-		size: $size;
-	};
-}
-
-// ?
-@mixin main-font($size: 14px) {
-	@include -font('OpenSans-normal', $size);
-}
-
-// ?
-@mixin main-bolded-font($size: 14px) {
-	@include -font('OpenSans-Bold', $size);
-}
-
-// ?
-@mixin title-font($size: 20px) {
-	@include -font('Montserrat-bold', $size);
-}
-
+// TODO: Hardcoded icons font, must be configurable but also to support default value!
 @mixin entry-icomoon-icons($font-path) {
 	@font-face {
 		font-family: 'icomoon';
@@ -82,3 +61,22 @@
 		content: '\e900';
 	}
 }
+
+// TODO: Hardcoded mixins (currently not ins use) that should be configurable!
+/*
+@mixin -font($family, $size) {
+	font: {
+		family: $family;
+		size: $size;
+	};
+}
+@mixin main-font($size: 14px) {
+	@include -font('OpenSans-normal', $size);
+}
+@mixin main-bolded-font($size: 14px) {
+	@include -font('OpenSans-Bold', $size);
+}
+@mixin title-font($size: 20px) {
+	@include -font('Montserrat-bold', $size);
+}
+*/
