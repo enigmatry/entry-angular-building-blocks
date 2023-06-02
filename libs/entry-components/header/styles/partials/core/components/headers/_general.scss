@@ -2,7 +2,7 @@
 // @use '../../../../../../styles/modules/breakpoints' as breakpoints;
 
 .entry-header {
-	padding: 4px vars.$default-gap vars.$default-gap;
+	padding: 4px vars.$large-gap vars.$default-gap;
 
 	// @include breakpoints.apply-on-tablet() {
 	// 	padding: {

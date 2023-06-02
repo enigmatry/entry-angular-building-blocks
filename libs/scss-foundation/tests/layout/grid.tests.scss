@@ -7,7 +7,7 @@
 /* stylelint-disable at-rule-allowed-list */
 @use '../../src/modules/layout/grid';
 @use '../../src/modules/variables' as vars;
-@use '../../../node_modules/sass-true';
+@use 'true' as sass-true;
 
 vars.$testing: true;
 
