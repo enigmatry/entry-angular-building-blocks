@@ -1,6 +1,6 @@
 @use '../../src/modules/variables' as vars;
 @use '../../src/modules/text/modification';
-@use 'true' as sass-true;
+@use '../../../node_modules/sass-true';
 
 vars.$testing: true;
 
