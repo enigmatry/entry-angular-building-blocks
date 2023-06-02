@@ -1,9 +1,11 @@
 @use '../dialog/styles/modules/generator' as dialog;
+@use '../dialog/styles/partials/main.scss' as dialogPartials;
 @use '../header/styles/modules/generator' as header;
+@use '../header/styles/partials/main.scss' as headerPartials;
 @use './typography/generate' as typography;
 
 @mixin generate($theme, $config: null) {
     @include typography.generate($config);
     @include dialog.generate($theme);
-    // @include header.generate($theme);
+    @include header.generate($theme);
 }
