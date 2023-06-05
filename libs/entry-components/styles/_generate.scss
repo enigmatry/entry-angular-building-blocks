@@ -2,6 +2,7 @@
 @use '../dialog/styles/partials/main.scss' as dialogPartials;
 @use '../header/styles/modules/generator' as header;
 @use '../header/styles/partials/main.scss' as headerPartials;
+@use '../toolbar/styles/partials/main.scss' as toolbarPartials;
 @use './modules/generate' as modules;
 @use 'sass:map';
 
