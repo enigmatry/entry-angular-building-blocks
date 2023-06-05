@@ -1,0 +1,13 @@
+@use '@enigmatry/scss-foundation/src/modules/display/items';
+
+.align-center {
+	@include items.align-absolute-center();
+}
+
+.align-right {
+	@include items.fully-align(center, flex-end);
+}
+
+.align-left {
+	text-align: left;
+}

@@ -18,7 +18,7 @@ export class ConfirmExampleComponent {
     disableClose: true
   };
   confirmResponse: boolean | undefined;
-  alignments: EntryDialogButtonsAlignment[] = ['', 'align-center', 'align-right'];
+  alignments: EntryDialogButtonsAlignment[] = ['align-left', 'align-center', 'align-right'];
 
   constructor(private _entryDialog: EntryDialogService) { }
 

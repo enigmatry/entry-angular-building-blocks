@@ -1,5 +1,5 @@
-@use '../../../../modules/variables' as vars;
-// @use 'typography/fonts';
+@use '../../../../../../styles/modules/variables' as vars;
+@use '../../../../../../styles/modules/typography/fonts' as fonts;
 
 .button, %button {
 	// @include fonts.main-bolded-font(14px);
