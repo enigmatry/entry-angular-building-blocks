@@ -8,6 +8,16 @@ Simple way of providing header layout and styling for the page or section header
 import { EntryHeaderModule } from '@enigmatry/entry-components/entry-header';
 ```
 
+Styles import:
+
+```css
+@use '@enigmatry/entry-components/styles/generate' as entry;
+
+@include entry.generate(APP_THEME, APP_TYPOGRAPHY);
+```
+
+Where `APP_THEME` represents application theming configuration, while `APP_TYPOGRAPHY` represents application fonts configuration.
+
 ## Basic usage
 
 `entry-header` is used to provide standard layout and styles:
