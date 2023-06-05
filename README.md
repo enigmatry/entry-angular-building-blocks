@@ -17,7 +17,7 @@ Visit [Components Demo](https://entry-demo.enigmatry.com/) application.
 
 ## Migrate project to entry
 
-[How to migrate project to entry](./wiki/Migrate-project-to-Entry)
+[How to migrate project to entry](https://github.com/enigmatry/entry-angular-building-blocks/wiki/Migrate-project-to-Entry)
 
 ## License
 
