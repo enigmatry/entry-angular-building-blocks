@@ -1,4 +1,4 @@
-import { UntypedFormControl } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 
 /**
  * Base Entry search filter input component.
@@ -19,7 +19,7 @@ export class SearchFilterBase<T> {
   controlType: string;
   /** Max text length to be enterd in the input component (default is 256) */
   maxLength: number;
-  formControl: UntypedFormControl;
+  formControl: FormControl<T>;
 
   constructor(options: Partial<SearchFilterBase<T>> = {}) {
     this.value = options.value;

@@ -1,4 +1,4 @@
-import { UntypedFormControl } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 
 export class SearchFilterBase<T> {
   key: string;
@@ -9,7 +9,7 @@ export class SearchFilterBase<T> {
   order: number;
   controlType: string;
   maxLength: number;
-  formControl: UntypedFormControl;
+  formControl: FormControl<T>;
 
   constructor(options: Partial<SearchFilterBase<T>> = {}) {
     this.value = options.value;

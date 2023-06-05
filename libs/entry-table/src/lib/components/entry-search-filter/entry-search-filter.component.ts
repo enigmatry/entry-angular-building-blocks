@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { FormControl, UntypedFormGroup } from '@angular/forms';
 
 import { SearchFilterBase } from './models/search-filter-base';
 import { SearchFilterParams } from './models/search-filter-params';
@@ -31,7 +31,7 @@ export class EntrySearchFilterComponent implements OnInit {
     const group: any = {};
 
     searchFilters.forEach(searchFilter => {
-      const formControl = new UntypedFormControl(searchFilter.value || '');
+      const formControl = new FormControl<string>(searchFilter.value || '');
       group[searchFilter.key] = formControl;
       searchFilter.formControl = formControl;
     });
