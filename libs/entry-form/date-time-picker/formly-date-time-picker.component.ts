@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { FieldType } from '@ngx-formly/material';
 
 @Component({
@@ -8,5 +8,5 @@ import { FieldType } from '@ngx-formly/material';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormlyDateTimePickerComponent extends FieldType {
-  formControl: FormControl;
+  formControl: UntypedFormControl;
 }

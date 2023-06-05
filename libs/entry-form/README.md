@@ -20,7 +20,7 @@ import { EntryFormModule } from '@enigmatry/entry-form';
 
 | @enigmatry/entry-form | Angular version
 |-|-|
-|1.x| >= 13
+|1.x| >= 14
 
 ## License
 
