@@ -8,5 +8,6 @@ import { Component } from '@angular/core';
 export class ToolbarExampleComponent {
   hideTitle = false;
   openInNewTab = true;
+  showLogo = false;
   menuItems: string[] = [ 'Home', 'Products', 'Pricing', 'About' ];
 }

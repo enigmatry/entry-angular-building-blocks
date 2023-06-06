@@ -8,9 +8,15 @@
         Open logo/title link in new tab
     </mat-checkbox>
 </p>
+<p>
+    <mat-checkbox [(ngModel)]="showLogo">
+        Show logo instead of title
+    </mat-checkbox>
+</p>
 <entry-toolbar
     title="Example Application"
     titleUri="http:\\www.google.com"
+    titleLogoSrc="{{showLogo ? './../../../../assets/images/entry_logo_small_transparent_material.png' : undefined}}"
     [hideTitle]="hideTitle"
     [openTitleUriInNewTab]="openInNewTab">
    
