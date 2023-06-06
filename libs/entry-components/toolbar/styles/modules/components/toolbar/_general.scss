@@ -1,5 +1,6 @@
 @use '@enigmatry/scss-foundation/src/modules/map';
 @use '../../../../../styles/modules/variables' as vars;
+@use '../../../../../styles/modules/states/hover' as hover;
 
 @mixin generate($theme) {
     .entry-toolbar {
@@ -10,9 +11,16 @@
 
             .entry-toolbar-logo {
                 color: map.value-from($theme, 'title-color');
-              
-                :hover {
-                  color: map.value-from($theme, 'title-hover-color');
+                @include hover.default(
+                    map.value-from($theme, 'title-color'), 
+                    map.value-from($theme, 'title-hover-color'));
+            }
+
+            .entry-toolbar-nav-toggle {
+                .nav-toggle-menu, .nav-toggle-close {
+                    @include hover.default(
+                        map.value-from($theme, 'title-color'), 
+                        map.value-from($theme, 'title-hover-color'));
                 }
             }
         }

@@ -5,9 +5,9 @@
                 {{title}}
             </a>
 
-            <div id="nav-menu-icon" class="entry-toolbar-nav-toggle"
+            <div class="entry-toolbar-nav-toggle"
                 (click)="menuOpened = !menuOpened"
-                [ngClass]="{'show-icon': menuOpened === true}">
+                [ngClass]="{'show-toolbar-icon': menuOpened === true}">
                 <i class="nav-toggle-menu">
                     <span class="icon-menu"></span>
                 </i>
@@ -17,7 +17,7 @@
             </div>
         </div>
         <span class="entry-toolbar-content"
-            [ngClass]="{'show-content': menuOpened === true}">
+            [ngClass]="{'show-toolbar-content': menuOpened === true}">
             <ng-content></ng-content>
         </span>
     </nav>

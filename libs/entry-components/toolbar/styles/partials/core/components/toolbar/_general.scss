@@ -29,7 +29,6 @@
 
         .nav-toggle-menu, .nav-toggle-close {
           font-size: 1.25rem;
-          color: var(--title-color);
           position: absolute;
           display: grid;
           place-items: center;
@@ -43,12 +42,12 @@
         }
       }
 
-      .show-icon .nav-toggle-menu {
+      .show-toolbar-icon .nav-toggle-menu {
         opacity: 0;
         transform: rotate(90deg);
       }
       
-      .show-icon .nav-toggle-close {
+      .show-toolbar-icon .nav-toggle-close {
         opacity: 1;
         transform: rotate(90deg);
       }
