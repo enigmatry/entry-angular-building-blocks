@@ -3,7 +3,16 @@
         Hide title
     </mat-checkbox>
 </p>
-<entry-toolbar title="Example Application" titleUri="http:\\www.google.com" [hideTitle]="hideTitle">
+<p>
+    <mat-checkbox [(ngModel)]="openInNewTab">
+        Open logo link in new tab
+    </mat-checkbox>
+</p>
+<entry-toolbar
+    title="Example Application"
+    titleUri="http:\\www.google.com"
+    [hideTitle]="hideTitle"
+    [openTitleUriInNewTab]="openInNewTab">
     <!-- <img *ngIf="showLeftSide" left-side
         src="./../../../assets/images/entry_black_logo_small_transparent.png">
     <div>
