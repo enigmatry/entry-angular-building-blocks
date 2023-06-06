@@ -23,4 +23,9 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EntryToolbarComponent {
+  @Input() title: string;
+  @Input() titleUri: string;
+  @Input() hideTitle = false;
+
+  menuOpened = false;
 }

@@ -46,5 +46,8 @@ $theme: (
 			hover-background: transparent,
 			hover-font-color: vars.$accent,
 		)
+	),
+	toolbar: (
+		background: vars.$primary-lightest
 	)
 );

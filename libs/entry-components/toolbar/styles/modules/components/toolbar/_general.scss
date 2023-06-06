@@ -1,0 +1,20 @@
+@use '@enigmatry/scss-foundation/src/modules/map';
+@use '../../../../../styles/modules/variables' as vars;
+
+@mixin generate($theme) {
+    .entry-toolbar {
+        background-color: map.value-from($theme, 'background');
+
+        .entry-toolbar-nav {
+            height: map.value-from($theme, 'height');
+
+            .entry-toolbar-logo {
+                color: map.value-from($theme, 'title-color');
+              
+                :hover {
+                  color: map.value-from($theme, 'title-hover-color');
+                }
+            }
+        }
+    }
+}

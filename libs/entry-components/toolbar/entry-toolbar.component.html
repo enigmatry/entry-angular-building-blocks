@@ -1,5 +1,24 @@
-<div class="entry-toolbar">
-    <span class="left-side"><ng-content select="[left-side]"></ng-content></span>
-    <span class="center"><ng-content></ng-content></span>
-    <span class="right-side"><ng-content select="[right-side]"></ng-content></span>
-</div>
+<header class="entry-toolbar">
+    <nav class="entry-toolbar-nav">
+        <div class="entry-toolbar-data">
+            <a *ngIf="!hideTitle" href="{{titleUri}}" class="entry-toolbar-logo">
+                {{title}}
+            </a>
+
+            <div id="nav-menu-icon" class="entry-toolbar-nav-toggle"
+                (click)="menuOpened = !menuOpened"
+                [ngClass]="{'show-icon': menuOpened === true}">
+                <i class="nav-toggle-menu">
+                    <span class="icon-menu"></span>
+                </i>
+                <i class="nav-toggle-close">
+                    <span class="icon-close"></span>
+                </i>
+            </div>
+        </div>
+        <span class="entry-toolbar-content"
+            [ngClass]="{'show-content': menuOpened === true}">
+            <ng-content></ng-content>
+        </span>
+    </nav>
+</header>

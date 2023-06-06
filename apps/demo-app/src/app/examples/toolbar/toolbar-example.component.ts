@@ -6,6 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./toolbar-example.component.scss']
 })
 export class ToolbarExampleComponent {
-  showLeftSide = true;
-  showRightSide = true;
+  hideTitle = false;
 }

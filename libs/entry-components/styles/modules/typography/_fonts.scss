@@ -60,6 +60,10 @@
 	.icon-close::before {
 		content: '\e900';
 	}
+	  
+	.icon-menu:before {
+		content: "\e9bd";
+	}
 }
 
 // TODO: Hardcoded mixins (currently not ins use) that should be configurable!

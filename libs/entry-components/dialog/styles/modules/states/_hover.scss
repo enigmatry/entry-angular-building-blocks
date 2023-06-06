@@ -9,7 +9,7 @@
 		color: $hover;
 	}
 
-	// Had to be done this way since at least Chrome isn't triggering ontouchend on mobile so hover state remains. 
+	// Had to be done this way since at least Chrome isn't triggering on-touch-end on mobile so hover state remains. 
 	/* stylelint-disable-next-line at-rule-allowed-list, media-feature-name-allowed-list */
 	@media (hover: hover) {
 		&:hover {
