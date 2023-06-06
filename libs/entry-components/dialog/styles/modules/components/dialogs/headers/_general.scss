@@ -1,5 +1,5 @@
 @use '@enigmatry/scss-foundation/src/modules/map';
-@use '../../../states/hover';
+@use '../../../../../../styles/modules/states/hover';
 
 @mixin generate-headers-from($theme) {
 	.title {

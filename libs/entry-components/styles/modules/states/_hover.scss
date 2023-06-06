@@ -1,4 +1,4 @@
-@use '../../../../styles/modules/variables' as vars;
+@use '../variables' as vars;
 
 // TODO: remove this once implemented https://jira.enigmatry.com/browse/ETL-484
 @mixin default($default: vars.$accent, $hover: vars.$body-font-color) {
@@ -15,5 +15,13 @@
 		&:hover {
 			color: $hover;
 		}
+	}
+}
+
+@mixin background-hover($regular-background, $hover-background) {
+	background-color: $regular-background;
+
+	&:hover {
+		background-color: $hover-background;
 	}
 }
