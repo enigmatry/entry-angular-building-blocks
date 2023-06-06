@@ -55,6 +55,12 @@
   }
 }
 
+.show-toolbar-content {
+  opacity: 1;
+  top: 3.5rem;
+  pointer-events: initial;
+}
+
 
 /*=============== BREAKPOINTS ===============*/
 @media screen and (min-width: 1118px) {

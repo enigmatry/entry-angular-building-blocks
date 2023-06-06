@@ -13,43 +13,12 @@
     titleUri="http:\\www.google.com"
     [hideTitle]="hideTitle"
     [openTitleUriInNewTab]="openInNewTab">
-    <!-- <img *ngIf="showLeftSide" left-side
-        src="./../../../assets/images/entry_black_logo_small_transparent.png">
-    <div>
-        <button mat-button color="primary">Products</button>
-        <button mat-button color="primary">Organizations</button>
-        <button mat-button color="primary">Configuration</button>
+   
+    <div class="example-nav-menu">
+        <ul class="example-nav-list">
+            <li *ngFor="let item of menuItems">
+                <a class="example-nav-menu-link" href="http:\\google.com" target="_blank">{{item}}</a>
+            </li>
+        </ul>
     </div>
-    <mat-icon *ngIf="showRightSide" right-side>favorite</mat-icon> -->
-
-    <!--=============== NAV MENU ===============-->
-        <!-- <div class="nav__menu" id="nav-menu">
-            <ul class="nav__list">
-                <li>
-                    <a href="#" class="nav__link">Home</a>
-                </li>
-
-                <li class="dropdown__item">                      
-                    <div class="nav__link dropdown__button">
-                        Discover <i class="ri-arrow-down-s-line dropdown__arrow"></i>
-                    </div>
-                </li>
-
-                <li class="dropdown__item">
-                    <div class="nav__link dropdown__button">
-                        Resources <i class="ri-arrow-down-s-line dropdown__arrow"></i>
-                    </div>
-                </li>
-
-                <li>
-                    <a href="#" class="nav__link">Pricing</a>
-                </li>
-
-                <li class="dropdown__item">                        
-                    <div class="nav__link dropdown__button">
-                        Company <i class="ri-arrow-down-s-line dropdown__arrow"></i>
-                    </div>
-                </li>
-            </ul>
-        </div> -->
 </entry-toolbar>
