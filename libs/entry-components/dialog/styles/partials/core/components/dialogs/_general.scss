@@ -1,7 +1,7 @@
-@use '@enigmatry/scss-foundation/src/modules/display/items';
-@use '../../../../modules/states/hover';
-@use '../../../../../../styles/modules/variables' as vars;
 @use 'sass:color';
+@use '@enigmatry/scss-foundation/src/modules/display/items';
+@use '../../../../../../styles/modules/variables' as vars;
+@use '../../../../../../styles/modules/states/hover';
 @use '../../../../../../styles/modules/typography/fonts' as fonts;
 
 $border-dark: #000;

@@ -1,0 +1,34 @@
+@use '@enigmatry/scss-foundation/src/modules/map';
+@use '../../../../../styles/modules/variables' as vars;
+@use '../../../../../styles/modules/states/hover' as hover;
+
+@mixin generate($theme) {
+    .entry-toolbar {
+        background-color: map.value-from($theme, 'background');
+
+        .entry-toolbar-nav {
+            height: map.value-from($theme, 'height');
+
+            .entry-toolbar-logo {
+                a {
+                    color: map.value-from($theme, 'title-color');
+                    @include hover.default(
+                        map.value-from($theme, 'title-color'), 
+                        map.value-from($theme, 'title-hover-color'));
+    
+                    img {
+                        height: map.value-from($theme, 'height');
+                    }
+                }
+            }
+
+            .entry-toolbar-nav-toggle {
+                .nav-toggle-menu, .nav-toggle-close {
+                    @include hover.default(
+                        map.value-from($theme, 'title-color'), 
+                        map.value-from($theme, 'title-hover-color'));
+                }
+            }
+        }
+    }
+}

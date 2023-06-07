@@ -8,6 +8,16 @@ Enables working with built-in (alert and confirm) and custom dialogs. Supports d
 import { EntryDialogModule } from '@enigmatry/entry-components/dialog';
 ```
 
+Styles import:
+
+```css
+@use '@enigmatry/entry-components/styles/generate' as entry;
+
+@include entry.generate(APP_THEME, APP_TYPOGRAPHY);
+```
+
+Where `APP_THEME` represents application theming configuration, while `APP_TYPOGRAPHY` represents application fonts configuration.
+
 ## Basic usage
 
 `EntryDialogService` is used to open dialogs:

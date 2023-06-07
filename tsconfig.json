@@ -11,6 +11,7 @@
       "@enigmatry/entry-components/dialog":["libs/entry-components/dialog/public-api.ts"],
       "@enigmatry/entry-components/header":["libs/entry-components/header/public-api.ts"],
       "@enigmatry/entry-components/search-filter":["libs/entry-components/search-filter/public-api.ts"],
+      "@enigmatry/entry-components/toolbar":["libs/entry-components/toolbar/public-api.ts"],
 
       "@enigmatry/entry-form": ["libs/entry-form/public-api.ts"],
       "@enigmatry/entry-form/autocomplete": ["libs/entry-form/autocomplete/public-api.ts"],
