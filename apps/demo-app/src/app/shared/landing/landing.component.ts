@@ -26,7 +26,7 @@ export class LandingComponent implements OnInit {
   };
 
   share = (item: IComponentDefinition) => {
-    this._snackBar.open(`Link copied to clipboard!`);
+    this._snackBar.open(`Link copied to the clipboard!`);
     this._clipboard.copy(`${location.href}${item.route}`);
   };
 }
