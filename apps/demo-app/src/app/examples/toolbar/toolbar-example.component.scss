@@ -22,7 +22,6 @@ ul {
     background-color: var.$accent;
 }
 
-// @media screen and (max-width: 1118px) {
 .show-toolbar-content {
     .example-nav-menu {
         background-color: var.$primary-lightest;
@@ -47,6 +46,7 @@ ul {
     }
 }
 
+// It would be nice if we loose @media here and only depend on plain css
 @media screen and (min-width: 1118px) {
     .example-nav-list {
       display: flex;

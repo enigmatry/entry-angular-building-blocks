@@ -64,7 +64,9 @@
   }
 }
 
-/*=============== BREAKPOINTS ===============*/
+// TODO: do this properly with connection to _breakpoints.scss. Move it to modules/ maybe?
+
+// Bih screen
 @media screen and (min-width: 1118px) {
   .entry-toolbar-nav {
     height: calc(var(--header-height) + 2rem);
@@ -84,7 +86,7 @@
     opacity: 1;
   }
 }
-
+// Small screen
 @media screen and (max-width: 1118px) {
   .entry-toolbar-content {
     opacity: 0;
