@@ -1,7 +1,6 @@
 # Entry Toolbar
 
-Can be used as a container for headers, titles, menus, logos, etc. It supports multi-slot content projections
-where the main one (no selector required) projects provided elements in the central frame of the toolbar. If the elements have to be projected to the left or to the right side of the central content `left-side` or `right-side` content selectors can be used.
+Container for the application header elements like menu items and titles. The elements are supplied to the toolbar component via content projection. Toolbar component is responsive, on smaller screens it switches to _mobile view_ with menu button icon.
 
 ## Imports
 
@@ -22,11 +21,13 @@ Where `APP_THEME` represents application theming configuration, while `APP_TYPOG
 ## Basic usage
 
 ```html
-<entry-toolbar>
-    <img left-side src="assets/images/logo.png" />
-    <span>Pretty application</span>
-    <span right-side>
-        <button mat-button color="primary">Sign out</button>
-    </span>
+<entry-toolbar
+    title="Food & Drinks"
+    titleUri="http://food-n-drinks.com">
+    <ul>
+        <li>Meals</li>
+        <li>Order</li>
+        <li>About</li>
+    </ul>
 </entry-toolbar>
 ```

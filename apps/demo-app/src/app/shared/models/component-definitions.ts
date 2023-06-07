@@ -32,7 +32,7 @@ const COMPONENT_DEFINITIONS: IComponentDefinition[] = [
     },
     {
         label: 'Toolbar',
-        shortDescription: `Container for headers, logos, menus, etc.`,
+        shortDescription: `Container for the application header elements like menu items and titles.`,
         route: RouteSegments.toolbar,
         readmePath: '/entry-components/toolbar/README.md',
         apiDocsPath: 'assets/api/modules/_enigmatry_entry_components.toolbar_public_api.html'
