@@ -1,20 +1,18 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 /**
- * Used to render basic toolbar that supports multi-slot content projection.
+ * Toolbar component (`<entry-toolbar>`) is used to render header section in the applications containing menu items as a content.
+ * It offers build in support for toolbar title or logo, while other elements need to be provided via content projection.
+ * On smaller screens (mobile/tablet) it switches to compact view containing menu icon button used to toggle content visibility.
  *
  * @example
  * ```html
- * <entry-toolbar>
- *    <ima left-side src="asses/logo.png"/>
- *    <p>Here we could put any html, menu for example ...</p>
- *    <user-menu right-side></user-menu>
+ * <entry-toolbar
+ *    titleUri="http://www.enigmatry.com"
+ *    titleLogoSrc="assets/enigmatry-logo.png">
+ *    <!-- SOME CUSTOM HTML CODE THAT RENDERS MENU ITEMS -->
  * </entry-toolbar>
  * ```
- *
- * Main content projection (no selector) positions the elements in the central frame of the toolbar.
- * Along with this one, `left-side` and `right-side` selectors can be used to project content
- * to the left or to the right side of the central content.
  */
 @Component({
   selector: 'entry-toolbar',
@@ -23,9 +21,13 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EntryToolbarComponent {
+  /** Toolbar title positioned in the left side */
   @Input() title: string;
+  /** Url to be redirected to if user click on the title (default value '/') */
   @Input() titleUri = '/';
+  /** If provided, it replaces string title and renders logo image instead */
   @Input() titleLogoSrc: string | undefined = undefined;
+  /** Used to hide the title section if not required (default value false) */
   @Input() hideTitle = false;
 
   menuOpened = false;
