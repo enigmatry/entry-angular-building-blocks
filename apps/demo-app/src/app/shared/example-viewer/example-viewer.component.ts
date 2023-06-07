@@ -35,7 +35,8 @@ export class ExampleViewerComponent implements OnDestroy {
 
   private _destroy$ = new Subject<void>();
 
-  constructor(private _fileLoad: FileLoadService) { }
+  constructor(
+    private _fileLoad: FileLoadService) { }
 
   ngOnDestroy(): void {
     this._destroy$.next();

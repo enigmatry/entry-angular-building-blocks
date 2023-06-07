@@ -1,0 +1,7 @@
+<div
+    class="markdown-body"
+    (click)="copy($event)"
+    matTooltip="Click to copy the code"
+    matTooltipPositionAtOrigin="true"
+    innerHTML="{{codeContent | asMarkdownCode: codeType | markdown}}">
+</div>
