@@ -10,12 +10,16 @@ Breakpoints must be in the same format as variables inside src root folder.
 Usage:
 @use scss-foundation/src/modules/responsiveness/breakpoints;
 
-- Applies desired styles and properties starting from certain breakpoint given by its key. Key must be valid key from given (or default) breakpoint collection.
+- Applies desired styles and properties starting from certain breakpoint given by its key. Key must be valid key from
+given (or default) breakpoint collection.
+
 ```
 @include breakpoints.apply-on($given-size);
 ```
 
-- Sets up breakpoints in a way so you can pass them to the JS from HTML. This is needed so you could have them defined only in SCSS after which you can apply some logic in JS based on that, but with only one spot for future maintenance.
+- Sets up breakpoints in a way so you can pass them to the JS from HTML. This is needed so you could have them defined
+only in SCSS after which you can apply some logic in JS based on that, but with only one spot for future maintenance.
+
 ```
 @include breakpoints.set-up($with-capitalization);
 ```
