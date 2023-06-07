@@ -1,6 +1,6 @@
 # Entry Toolbar
 
-Container for the application header elements like menu items and titles. The elements are supplied to the toolbar component via content projection. Toolbar component is responsive, on smaller screens it switches to _mobile view_ with menu button icon.
+Toolbar component (`<entry-toolbar>`) is used as a header section in the applications. It offers built-in support for title or logo on the left side, while other elements, like menu items, must be provided via content projection. The component is responsive in a way that on smaller screens (mobile/tablet) switches to _the compact view_ containing menu icon button used to toggle content visibility.
 
 ## Imports
 
