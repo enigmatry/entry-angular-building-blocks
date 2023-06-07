@@ -16,8 +16,8 @@ export class CodeViewComponent {
     private _clipboard: Clipboard,
     private _snackBar: MatSnackBar) {}
 
-  copy = (event: any) => {
+  copy = () => {
     this._snackBar.open(`Code copied to the clipboard!`);
-    this._clipboard.copy(event.currentTarget.innerText);
+    this._clipboard.copy(this.codeContent);
   };
 }
