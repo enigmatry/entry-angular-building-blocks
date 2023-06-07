@@ -10,13 +10,15 @@
             height: map.value-from($theme, 'height');
 
             .entry-toolbar-logo {
-                color: map.value-from($theme, 'title-color');
-                @include hover.default(
-                    map.value-from($theme, 'title-color'), 
-                    map.value-from($theme, 'title-hover-color'));
-
-                img {
-                    height: map.value-from($theme, 'height');
+                a {
+                    color: map.value-from($theme, 'title-color');
+                    @include hover.default(
+                        map.value-from($theme, 'title-color'), 
+                        map.value-from($theme, 'title-hover-color'));
+    
+                    img {
+                        height: map.value-from($theme, 'height');
+                    }
                 }
             }
 
