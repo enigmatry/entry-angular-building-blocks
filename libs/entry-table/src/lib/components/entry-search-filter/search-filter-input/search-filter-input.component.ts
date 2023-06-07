@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 
 import { SearchFilterBase } from '../models/search-filter-base';
 
@@ -10,5 +10,5 @@ import { SearchFilterBase } from '../models/search-filter-base';
 export class EntrySearchFilterInputComponent {
 
   @Input() searchFilter!: SearchFilterBase<string>;
-  @Input() form!: FormGroup;
+  @Input() form!: UntypedFormGroup;
 }
