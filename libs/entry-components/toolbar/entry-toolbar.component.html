@@ -1,11 +1,9 @@
 <header class="entry-toolbar">
     <nav class="entry-toolbar-nav">
         <div class="entry-toolbar-data">
-            <a *ngIf="!hideTitle" class="entry-toolbar-logo"
-                href="{{titleUri}}">
-                
+            <a *ngIf="!hideTitle" class="entry-toolbar-logo" [href]="titleUri">
                 <span *ngIf="!titleLogoSrc">{{title}}</span>
-                <img *ngIf="titleLogoSrc" src="{{titleLogoSrc}}"/>
+                <img *ngIf="titleLogoSrc" [src]="titleLogoSrc"/>
             </a>
 
             <div class="entry-toolbar-nav-toggle"
