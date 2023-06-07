@@ -3,6 +3,7 @@
         <div class="entry-toolbar-data">
             <a *ngIf="!hideTitle" class="entry-toolbar-logo"
                 href="{{titleUri}}">
+                
                 <span *ngIf="!titleLogoSrc">{{title}}</span>
                 <img *ngIf="titleLogoSrc" src="{{titleLogoSrc}}"/>
             </a>

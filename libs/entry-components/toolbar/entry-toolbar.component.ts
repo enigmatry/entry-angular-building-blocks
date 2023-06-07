@@ -19,7 +19,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 @Component({
   selector: 'entry-toolbar',
   templateUrl: './entry-toolbar.component.html',
-  styleUrls: ['./entry-toolbar.component.css'],
+  styleUrls: ['./entry-toolbar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EntryToolbarComponent {
