@@ -24,10 +24,9 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 })
 export class EntryToolbarComponent {
   @Input() title: string;
-  @Input() titleUri: string;
+  @Input() titleUri = '/';
   @Input() titleLogoSrc: string | undefined = undefined;
   @Input() hideTitle = false;
-  @Input() openTitleUriInNewTab = true;
 
   menuOpened = false;
 }
