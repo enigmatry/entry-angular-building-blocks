@@ -16,10 +16,10 @@ ul {
     justify-content: space-between;
     align-items: center;
     transition: background-color 0.3s;
-}
 
-.example-nav-menu-link:hover {
-    background-color: var.$accent;
+    &:hover {
+		color: var.$accent;
+    }
 }
 
 .show-toolbar-content {
