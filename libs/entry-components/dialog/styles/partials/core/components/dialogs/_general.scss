@@ -1,0 +1,78 @@
+@use 'sass:color';
+@use '@enigmatry/scss-foundation/src/modules/display/items';
+@use '../../../../../../styles/modules/variables' as vars;
+@use '../../../../../../styles/modules/states/hover';
+@use '../../../../../../styles/modules/typography/fonts' as fonts;
+
+$border-dark: #000;
+ 
+.dialog-container {
+	/* stylelint-disable-next-line declaration-no-important */
+	position: absolute !important;
+	top: vars.$large-gap;
+	width: 100%;
+	max: {
+		/* stylelint-disable-next-line declaration-no-important */
+		width: 700px !important;
+		/* stylelint-disable-next-line declaration-no-important */
+		height: calc(100% - 2 * vars.$large-gap) !important;
+	}
+    
+	&.wide {
+		/* stylelint-disable-next-line declaration-no-important */
+		max-width: 85% !important;
+	}
+
+	&.small {
+		width: 400px;
+	}
+}
+
+.entry-dialog {
+	&.dialog-form {
+		height: 100%;
+	}
+	 
+	.dialog-header {
+		@include items.fully-align(center, space-between, row, nowrap);
+	
+		.title {
+			// @include fonts.title-font();
+			line-height: 1.2;
+		}
+	
+		.close-button {
+			margin-left: vars.$default-gap;
+			border: none;
+			background: none;
+		}
+	}
+
+	.dialog-content {
+		margin: {
+			top: vars.$default-gap;
+			bottom: vars.$large-gap;
+		}
+		line-height: 1.4;
+
+		&.with-actions {
+			/* stylelint-disable-next-line declaration-no-important */
+			max-height: calc(100% - 115px) !important;
+		}
+	}
+	
+	.button-confirm, .button-cancel {
+		padding: 10px 20px;
+	}
+
+	.dialog-radio-buttons {
+		display: block;
+		padding: 10px 0;
+	}
+	
+	.dialog-radio-button {
+		display: block;
+		margin-top: vars.$default-gap;
+		white-space: break;
+	}
+}

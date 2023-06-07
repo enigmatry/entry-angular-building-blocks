@@ -29,6 +29,13 @@ const COMPONENT_DEFINITIONS: IComponentDefinition[] = [
         route: RouteSegments.searchFilter,
         readmePath: '/entry-components/search-filter/README.md',
         apiDocsPath: 'assets/api/modules/_enigmatry_entry_components.search_filter_public_api.html'
+    },
+    {
+        label: 'Toolbar',
+        shortDescription: `Container for the application header elements like menu items and titles.`,
+        route: RouteSegments.toolbar,
+        readmePath: '/entry-components/toolbar/README.md',
+        apiDocsPath: 'assets/api/modules/_enigmatry_entry_components.toolbar_public_api.html'
     }
 ];
 

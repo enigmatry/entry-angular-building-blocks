@@ -9,7 +9,7 @@ export class SearchFilterBase<T> {
   order: number;
   controlType: string;
   maxLength: number;
-  formControl: FormControl;
+  formControl: FormControl<T>;
 
   constructor(options: Partial<SearchFilterBase<T>> = {}) {
     this.value = options.value;

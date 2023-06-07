@@ -4,7 +4,7 @@ Reusable entry components for Angular material.
 
 ## Installation
 
-```
+```ts
 npm install @enigmatry/entry-components
 ```
 
@@ -14,7 +14,7 @@ npm install @enigmatry/entry-components
 
 | @enigmatry/entry-components | Angular version
 |-|-|
-|1.x| >= 13
+|1.x| >= 14
 
 ## License
 

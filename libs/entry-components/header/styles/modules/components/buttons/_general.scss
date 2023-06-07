@@ -1,0 +1,26 @@
+@use '@enigmatry/scss-foundation/src/modules/map';
+@use '../../../../../styles/modules/states/hover';
+
+@mixin generate-buttons-from($theme) {
+	.button-primary {
+		@include hover.background-hover(
+			map.value-from($theme, 'button-primary.default-background'), 
+			map.value-from($theme, 'button-primary.hover-background'));
+		color: map.value-from($theme, 'button-primary.default-font-color');
+
+		&:hover {
+			color: map.value-from($theme, 'button-accent.default-font-color');
+		}
+	}
+
+	.button-accent {
+		@include hover.background-hover(
+			map.value-from($theme, 'button-accent.default-background'), 
+			map.value-from($theme, 'button-accent.hover-background'));
+            color: map.value-from($theme, 'button-accent.default-font-color');
+
+		&:hover {
+			color: map.value-from($theme, 'button-accent.default-font-color');
+		}
+	}
+}

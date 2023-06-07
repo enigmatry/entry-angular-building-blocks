@@ -1,0 +1,13 @@
+@use 'sass:map';
+
+@use 'theming/default-theming' as default;
+@use 'components/headers/general' as headers;
+@use 'components/buttons/general' as buttons;
+
+$default-theme: default.$theme;
+
+@mixin generate($custom-theme: ()) {
+    $merged-theme: map.deep-merge($default-theme, $custom-theme);
+    @include headers.generate-headers-from($merged-theme);
+    @include buttons.generate-buttons-from($merged-theme);
+}

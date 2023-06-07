@@ -1,0 +1,43 @@
+@use '../../../../../../styles/modules/variables' as vars;
+@use '../../../../../../styles/modules/typography/fonts' as fonts;
+
+.button, %button {
+	// @include fonts.main-bolded-font(14px);
+	display: inline-block;
+	position: relative;
+	padding: 10px 20px;
+	transition: vars.$default-transition;
+	border: 1px solid transparent;
+	background-color: transparent;
+	color: vars.$font-color-light;
+	line-height: 1.25;
+	cursor: pointer;
+	text: {
+		align: center;
+		decoration: none;
+	}
+
+	&:disabled {
+		background-color: vars.$disabled;
+		cursor: not-allowed;
+
+		/* stylelint-disable-next-line selector-max-pseudo-class */
+		&:hover {
+			background-color: vars.$disabled;
+		}
+	}
+}
+
+.button-primary, .button-accent {
+	@extend %button;
+}
+
+.action-buttons {
+	.item {
+		margin-left: 12px;
+        
+        &:first-child {
+            margin-left: 0;
+        }
+	}
+}

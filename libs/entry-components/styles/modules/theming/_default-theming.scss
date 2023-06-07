@@ -1,0 +1,9 @@
+@use '../../../dialog/styles/modules/theming/default-theming' as dialogTheme;
+@use '../../../header/styles/modules/theming/default-theming' as headerTheme;
+@use '../../../toolbar/styles/modules/theming/default-theming' as toolbarTheme;
+
+$theme: (
+	header: headerTheme.$theme,
+	dialog: dialogTheme.$theme,
+	toolbar: toolbarTheme.$theme
+);

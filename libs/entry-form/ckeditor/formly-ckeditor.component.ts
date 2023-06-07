@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { FieldType } from '@ngx-formly/core';
 import { CKEditor5 } from '@ckeditor/ckeditor5-angular';
 import { ENTRY_CKEDITOR_OPTIONS, EntryCkeditorOptions } from './ckeditor-options';
@@ -10,7 +10,7 @@ import { ENTRY_CKEDITOR_OPTIONS, EntryCkeditorOptions } from './ckeditor-options
 })
 export class FormlyCkeditorComponent extends FieldType {
 
-  formControl: FormControl;
+  formControl: UntypedFormControl;
 
   editorBuild: CKEditor5.EditorConstructor;
   editorConfig: CKEditor5.Config = {};

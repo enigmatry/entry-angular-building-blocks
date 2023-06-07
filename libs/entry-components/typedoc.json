@@ -6,6 +6,7 @@
     "entryPoints": [
         "dialog/public-api.ts",
         "header/public-api.ts",
-        "search-filter/public-api.ts"
+        "search-filter/public-api.ts",
+        "toolbar/public-api.ts"
     ]
 }

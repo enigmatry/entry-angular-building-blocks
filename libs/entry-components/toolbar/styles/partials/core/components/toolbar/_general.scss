@@ -1,0 +1,100 @@
+.entry-toolbar {
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-shadow: 0 2px 8px hsla(220, 68%, 12%, 0.1);
+
+  .entry-toolbar-nav {
+    margin: 10px;
+
+    .entry-toolbar-data {
+      height: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .entry-toolbar-logo {
+        display: inline-flex;
+        align-items: center;
+        column-gap: 0.25rem;
+
+        a {
+          text-decoration: none;
+          font-weight: 600;
+          transition: color 0.3s;
+
+          img {
+            display: block;
+          }
+        }
+      }
+
+      .entry-toolbar-nav-toggle {
+        position: relative;
+        width: 32px;
+        height: 32px;
+
+        .nav-toggle-menu,
+        .nav-toggle-close {
+          font-size: 1.25rem;
+          position: absolute;
+          display: grid;
+          place-items: center;
+          inset: 0;
+          cursor: pointer;
+          transition: opacity 0.1s, transform 0.4s;
+        }
+
+        .nav-toggle-close {
+          opacity: 0;
+        }
+      }
+
+      .show-toolbar-icon .nav-toggle-menu {
+        opacity: 0;
+        transform: rotate(90deg);
+      }
+
+      .show-toolbar-icon .nav-toggle-close {
+        opacity: 1;
+        transform: rotate(90deg);
+      }
+    }
+  }
+}
+
+.entry-toolbar-content {
+  &.show-toolbar-content {
+    opacity: 1;
+    top: 3.5rem;
+    pointer-events: initial;
+  }
+}
+
+// TODO: do this properly with connection to _breakpoints.scss. Move it to modules/ maybe?
+// Big screen
+@media screen and (min-width: 1118px) {
+  .entry-toolbar-nav {
+    height: calc(var(--header-height) + 2rem);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .entry-toolbar-nav-toggle {
+    display: none;
+  }
+
+  .entry-toolbar-nav li {
+    display: flex;
+  }
+
+  .entry-toolbar-content {
+    opacity: 1;
+  }
+}
+// Small screen
+@media screen and (max-width: 1118px) {
+  .entry-toolbar-content {
+    opacity: 0;
+  }
+}

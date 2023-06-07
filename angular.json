@@ -161,6 +161,11 @@
               "node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "node_modules/github-markdown-css/github-markdown-light.css"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "libs"
+              ]
+            },
             "scripts": []
           },
           "configurations": {
@@ -247,6 +252,8 @@
     }
   },
   "cli": {
-    "defaultCollection": "@angular-eslint/schematics"
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ]
   }
 }

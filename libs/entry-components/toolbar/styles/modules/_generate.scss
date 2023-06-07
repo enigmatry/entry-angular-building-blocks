@@ -1,0 +1,10 @@
+@use 'sass:map';
+@use 'theming/default-theming' as default;
+@use 'components/toolbar/general' as toolbar;
+
+$default-theme: default.$theme;
+
+@mixin generate($custom-theme: ()) {
+    $merged-theme: map.deep-merge($default-theme, $custom-theme);
+    @include toolbar.generate($merged-theme);
+}
