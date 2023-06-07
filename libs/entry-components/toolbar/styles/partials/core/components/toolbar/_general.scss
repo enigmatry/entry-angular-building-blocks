@@ -68,8 +68,7 @@
 }
 
 // TODO: do this properly with connection to _breakpoints.scss. Move it to modules/ maybe?
-
-// Bih screen
+// Big screen
 @media screen and (min-width: 1118px) {
   .entry-toolbar-nav {
     height: calc(var(--header-height) + 2rem);
