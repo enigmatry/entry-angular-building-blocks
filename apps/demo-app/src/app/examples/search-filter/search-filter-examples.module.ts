@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { SearchFilterExampleComponent } from './search-filter/search-filter-example.component';
 import { SharedModule } from '../../shared/shared.module';
 import { ENTRY_SEARCH_FILTER_CONFIG, EntrySearchFilterConfig, EntrySearchFilterModule } from '@enigmatry/entry-components/search-filter';
-import { MatTableModule } from '@angular/material/table';
+import { MatLegacyTableModule as MatTableModule } from '@angular/material/legacy-table';
 
 
 @NgModule({

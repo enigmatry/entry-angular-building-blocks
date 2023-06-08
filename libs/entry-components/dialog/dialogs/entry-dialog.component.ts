@@ -1,5 +1,5 @@
 import { Component, Inject, Input, TemplateRef } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import { Observable, of } from 'rxjs';
 import { ENTRY_DIALOG_CONFIG, EntryDialogConfig } from '../entry-dialog-config.model';
 import { EntryDialogButtonsAlignment } from '../entry-dialog-buttons-alignment.type';
