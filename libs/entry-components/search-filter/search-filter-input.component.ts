@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
-import { SearchFilterBase } from './search-filter-base';
+import { SearchFilterBase } from './search-filter-base.model';
 
 @Component({
   selector: 'entry-search-filter-input',

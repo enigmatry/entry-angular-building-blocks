@@ -1,8 +1,8 @@
 export { EntrySearchFilterComponent } from './entry-search-filter.component';
 
-export { SearchFilterParams } from './search-filter-params';
-export { SearchFilterBase } from './search-filter-base';
-export { SearchFilterTextInput } from './search-filter-text-input';
+export { SearchFilterParams } from './search-filter-params.type';
+export { SearchFilterBase } from './search-filter-base.model';
+export { SearchFilterTextInput } from './search-filter-text-input.model';
 
 export { EntrySearchFilterModule } from './entry-search-filter.module';
 

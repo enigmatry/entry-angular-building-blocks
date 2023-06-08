@@ -1,4 +1,4 @@
-import { SearchFilterBase } from './search-filter-base';
+import { SearchFilterBase } from './search-filter-base.model';
 
 /**
  * Search filter text input filed configuration.

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { FormControl, UntypedFormGroup } from '@angular/forms';
-import { SearchFilterBase } from './search-filter-base';
-import { SearchFilterParams } from './search-filter-params';
+import { SearchFilterBase } from './search-filter-base.model';
+import { SearchFilterParams } from './search-filter-params.type';
 import { ENTRY_SEARCH_FILTER_CONFIG, EntrySearchFilterConfig } from './search-filter-config.model';
 
 /**
