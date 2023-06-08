@@ -2,7 +2,7 @@ export { EntrySearchFilterComponent } from './entry-search-filter.component';
 
 export { SearchFilterParams } from './search-filter-params';
 export { SearchFilterBase } from './search-filter-base';
-export { SearchFilterInput } from './search-filter-textbox';
+export { SearchFilterTextInput } from './search-filter-text-input';
 
 export { EntrySearchFilterModule } from './entry-search-filter.module';
 
