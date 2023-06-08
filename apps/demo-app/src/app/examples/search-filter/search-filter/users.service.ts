@@ -41,8 +41,7 @@ export class UsersService {
         firstName: 'Emmett',
         lastName: 'O\'Connell',
         dateOfBirth: new Date(1992, 3, 3),
-        createdOn: new Date(2020, 3, 2),
-        updatedOn: new Date(2022, 2, 26)
+        occupation: Occupation.electrician
       }),
       new User({
         id: '2',
@@ -50,8 +49,7 @@ export class UsersService {
         firstName: 'Lila',
         lastName: 'Fairbanks',
         dateOfBirth: new Date(1985, 5, 26),
-        createdOn: new Date(2021, 12, 31),
-        updatedOn: new Date(2023, 2, 24)
+        occupation: Occupation.unknown
       }),
       new User({
         id: '3',
@@ -59,8 +57,7 @@ export class UsersService {
         firstName: 'Preston',
         lastName: 'McAllister',
         dateOfBirth: new Date(1977, 9, 14),
-        createdOn: new Date(2020, 11, 28),
-        updatedOn: new Date(2022, 1, 1)
+        occupation: Occupation.baker
       }),
       new User({
         id: '4',
@@ -68,8 +65,7 @@ export class UsersService {
         firstName: 'Gracie',
         lastName: 'Monroe',
         dateOfBirth: new Date(2000, 2, 8),
-        createdOn: new Date(2021, 11, 13),
-        updatedOn: new Date(2023, 1, 5)
+        occupation: Occupation.plumber
       }),
       new User({
         id: '5',
@@ -77,8 +73,7 @@ export class UsersService {
         firstName: 'Silas',
         lastName: 'Harrington',
         dateOfBirth: new Date(1965, 11, 11),
-        createdOn: new Date(2022, 1, 2),
-        updatedOn: new Date(2023, 3, 1)
+        occupation: Occupation.teacher
       }),
       new User({
         id: '6',
@@ -86,8 +81,7 @@ export class UsersService {
         firstName: 'Elodie',
         lastName: 'Whitmore',
         dateOfBirth: new Date(1996, 7, 22),
-        createdOn: new Date(2020, 12, 21),
-        updatedOn: new Date(2022, 3, 6)
+        occupation: Occupation.baker
       }),
       new User({
         id: '7',
@@ -95,8 +89,7 @@ export class UsersService {
         firstName: 'Conrad',
         lastName: 'Sullivan',
         dateOfBirth: new Date(1983, 0, 15),
-        createdOn: new Date(2020, 10, 23),
-        updatedOn: new Date(2023, 4, 2)
+        occupation: Occupation.soldier
       }),
       new User({
         id: '8',
@@ -104,8 +97,7 @@ export class UsersService {
         firstName: 'Rosalind',
         lastName: 'Espinoza',
         dateOfBirth: new Date(1973, 4, 19),
-        createdOn: new Date(2020, 9, 8),
-        updatedOn: new Date(2022, 2, 3)
+        occupation: Occupation.baker
       }),
       new User({
         id: '9',
@@ -113,8 +105,7 @@ export class UsersService {
         firstName: 'Nolan',
         lastName: 'Baxter',
         dateOfBirth: new Date(1987, 6, 30),
-        createdOn: new Date(2020, 12, 8),
-        updatedOn: new Date(2022, 11, 13)
+        occupation: Occupation.doctor
       }),
       new User({
         id: '10',
@@ -122,8 +113,7 @@ export class UsersService {
         firstName: 'Greta',
         lastName: 'Underwood',
         dateOfBirth: new Date(1994, 1, 21),
-        createdOn: new Date(2020, 5, 25),
-        updatedOn: new Date(2023, 3, 12)
+        occupation: Occupation.painter
       }),
       new User({
         id: '11',
@@ -131,11 +121,21 @@ export class UsersService {
         firstName: 'Clair',
         lastName: 'Underwood',
         dateOfBirth: new Date(1951, 1, 1),
-        createdOn: new Date(2022, 3, 2),
-        updatedOn: new Date(2022, 12, 17)
+        occupation: Occupation.teacher
       })
     ];
   }
+}
+
+export enum Occupation {
+  unknown = 0,
+  electrician = 1,
+  soldier = 2,
+  doctor = 3,
+  painter = 4,
+  baker = 5,
+  teacher = 6,
+  plumber = 7
 }
 
 export class User {
@@ -144,8 +144,7 @@ export class User {
   firstName?: string;
   lastName?: string;
   dateOfBirth?: Date;
-  createdOn?: Date;
-  updatedOn?: Date;
+  occupation: Occupation;
 
   constructor(data?: Partial<User>) {
     if (data) {

@@ -12,7 +12,7 @@ export class SearchFilterExampleComponent {
   filters = [new SearchFilterInput({
     key: 'name',
     label: 'Name',
-    placeholder: 'User name or lastname',
+    placeholder: 'User name or last name',
     maxLength: 25
   }),
   new SearchFilterInput({
@@ -23,7 +23,7 @@ export class SearchFilterExampleComponent {
   })];
 
   // displayedColumns is property needed to configure Angular material table
-  displayedColumns: string[] = ['name', 'email', 'dateOfBirth', 'createdOn', 'updatedOn'];
+  displayedColumns: string[] = ['name', 'email', 'dateOfBirth', 'occupation'];
 
   constructor(private usersService: UsersService) {
     this.fetchUsers();
