@@ -9,6 +9,7 @@ import { MarkdownPipe } from './pipes/markdown.pipe';
 import { AsMarkdownCodePipe } from './pipes/as-markdown-code.pipe';
 import { SafeUriPipe } from './pipes/safe-uri.pipe';
 import { SortPipe } from './pipes/sort.pipe';
+import { CodeViewComponent } from './example-viewer/code-view/code-view.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { SortPipe } from './pipes/sort.pipe';
     MarkdownPipe,
     AsMarkdownCodePipe,
     SafeUriPipe,
-    SortPipe
+    SortPipe,
+    CodeViewComponent
   ],
   imports: [
     CommonModule,

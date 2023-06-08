@@ -1,4 +1,3 @@
-
 <p>
     Resize browser window to trigger toolbar "compact view".
 </p>
@@ -16,7 +15,7 @@
 <entry-toolbar
     title="Example Application"
     titleUri="http:\\www.google.com"
-    titleLogoSrc="{{showLogo ? './../../../../assets/images/entry_logo_small_transparent_material.png' : undefined}}"
+    [titleLogoSrc]="showLogo ? './../../../../assets/images/entry_logo_small_transparent_material.png' : undefined"
     [hideTitle]="hideTitle">
    
     <div class="example-nav-menu">
