@@ -3,7 +3,7 @@
 
   <div [ngSwitch]="searchFilter.controlType">
 
-    <input *ngSwitchCase="'textbox'" [formControlName]="searchFilter.key" [id]="searchFilter.key"
+    <input *ngSwitchCase="'text-box'" [formControlName]="searchFilter.key" [id]="searchFilter.key"
       [type]="searchFilter.type" matInput [placeholder]="searchFilter.placeholder" [maxlength]="searchFilter.maxLength">
 
   </div>
