@@ -15,9 +15,9 @@ export class SearchFilterBase<T> {
   /** Type of input control e.g. 'email' */
   type: string;
   order: number;
-  /** Control type to be overriden in implementing class, used to render the proper input type e.g. 'textbox' */
+  /** Control type to be overridden in implementing class, used to render the proper input type e.g. 'text box' */
   controlType: string;
-  /** Max text length to be enterd in the input component (default is 256) */
+  /** Max text length to be entered in the input component (default is 256) */
   maxLength: number;
   formControl: FormControl<T>;
 
