@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
-import { User, UsersService } from './users.service';
-import { SearchFilterTextInput, SearchFilterParams } from '@enigmatry/entry-components/search-filter';
+import { Occupation, User, UsersService } from './users.service';
+import {
+  SearchFilterTextInput,
+  SearchFilterParams,
+  SearchFilterSelectInput,
+  SearchFilterSelectOption
+} from '@enigmatry/entry-components/search-filter';
 
 @Component({
   selector: 'app-search-filter-example',
@@ -21,7 +26,13 @@ export class SearchFilterExampleComponent {
       label: 'E-mail',
       placeholder: 'user@example.com',
       type: 'email'
-    })
+    }),
+    // new SearchFilterSelectInput({
+    //   key: 'occupation',
+    //   label: 'Occupation',
+    //   placeholder: 'Pilot',
+    //   value: Object.keys(Occupation).map(o => new SearchFilterSelectOption(Occupation[o], o))
+    // })
   ];
 
   // displayedColumns is property needed to configure Angular material table

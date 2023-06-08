@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
 import { SearchFilterInput } from './search-filter-input.model';
+import { FilterInputControlType } from './filter-input-control-type.model';
 
 @Component({
   selector: 'entry-search-filter-input',
@@ -12,4 +13,6 @@ export class EntrySearchFilterInputComponent {
   @Input() searchFilter!: SearchFilterInput<string>;
   /** Form group to which the search-filter input component will be added. */
   @Input() form!: UntypedFormGroup;
+
+  controlType = FilterInputControlType;
 }

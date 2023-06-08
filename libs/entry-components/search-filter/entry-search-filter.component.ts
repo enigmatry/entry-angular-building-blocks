@@ -3,6 +3,7 @@ import { FormControl, UntypedFormGroup } from '@angular/forms';
 import { SearchFilterInput } from './search-filter-input.model';
 import { SearchFilterParams } from './search-filter-params.type';
 import { ENTRY_SEARCH_FILTER_CONFIG, EntrySearchFilterConfig } from './search-filter-config.model';
+import { FilterInputControlType } from './filter-input-control-type.model';
 
 /**
  * Entry SearchFilter component.
@@ -16,7 +17,7 @@ import { ENTRY_SEARCH_FILTER_CONFIG, EntrySearchFilterConfig } from './search-fi
 export class EntrySearchFilterComponent implements OnInit {
 
   /** Configuration of the search filters inputs that will be displayed in the search-filter component. */
-  @Input() searchFilters: SearchFilterInput<string>[] = [];
+  @Input() searchFilters: SearchFilterInput<any>[] = [];
   /**
    * Emits the change in SearchFilterParams so the containing component can apply them and retrieve the filtered results.
    */
@@ -35,13 +36,15 @@ export class EntrySearchFilterComponent implements OnInit {
     this.searchFilterChange.emit(formValue);
   }
 
-  toFormGroup(searchFilters: SearchFilterInput<string>[]) {
+  toFormGroup(searchFilters: SearchFilterInput<any>[]) {
     const group: any = {};
 
     searchFilters.forEach(searchFilter => {
-      const formControl = new FormControl<string>(searchFilter.value || '');
-      group[searchFilter.key] = formControl;
-      searchFilter.formControl = formControl;
+      if (searchFilter.controlType === FilterInputControlType.text) {
+        const formControl = new FormControl<string>(searchFilter.value || '');
+        group[searchFilter.key] = formControl;
+        searchFilter.formControl = formControl;
+      }
     });
     return new UntypedFormGroup(group);
   }
