@@ -5,7 +5,7 @@
             {{viewCode ? 'Hide' : 'View'}} Code
         </button>
     </mat-toolbar-row>
-    <mat-tab-group  animationDuration="0ms" *ngIf="viewCode">
+    <mat-tab-group  animationDuration="0ms" *ngIf="viewCode" mat-stretch-tabs="false">
         <mat-tab label="HTML">
             <app-code-view [codeContent]="htmlFile" codeType="html"></app-code-view>
         </mat-tab>
