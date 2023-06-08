@@ -1,5 +1,5 @@
 import { Inject, Injectable, Type } from '@angular/core';
-import { MatLegacyDialog as MatDialog, MatLegacyDialogConfig as MatDialogConfig } from '@angular/material/legacy-dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { EntryDialogComponent } from './dialogs/entry-dialog.component';
 import { take } from 'rxjs/operators';
 import { IEntryAlertDialogData } from './dialogs/alert/entry-alert-dialog-data.interface';

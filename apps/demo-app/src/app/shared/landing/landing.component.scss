@@ -9,15 +9,15 @@
     .component-card {
         margin: 10px;
         padding: 0px;
-
+        /* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
         mat-card-header {
             padding-top: 10px;
         }
-
+        /* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
         mat-card-content {
             margin: 10px 10px 10px 17px;
         }
-
+        /* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
         mat-card-actions {
             margin: 10px 10px 10px 17px;
         }

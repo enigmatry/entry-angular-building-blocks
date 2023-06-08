@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IComponentDefinition, COMPONENT_DEFINITIONS } from '../models/component-definitions';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Clipboard } from '@angular/cdk/clipboard';
 
 @Component({

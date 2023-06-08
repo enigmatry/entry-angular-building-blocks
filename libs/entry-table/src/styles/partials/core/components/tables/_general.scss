@@ -4,19 +4,19 @@
 	flex-direction: column;
 	width: 100%;
 
-	.mat-table-container {
+	.mat-mdc-table-container {
 		overflow: auto;
 
-		&.mat-table-with-data {
+		&.mat-mdc-table-with-data {
 			flex: 1;
 		}
 	}
 
-	.mat-table {
+	.mat-mdc-table {
 		min-width: 100%;
 		border-collapse: separate;
 	}
-
+	/* TODO(mdc-migration): The following rule targets internal classes of paginator that may no longer apply for the MDC version. */
 	.mat-paginator-hidden {
 		display: none;
 	}
