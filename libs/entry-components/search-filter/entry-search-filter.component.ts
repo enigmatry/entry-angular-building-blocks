@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { FormControl, UntypedFormGroup } from '@angular/forms';
-import { SearchFilterInput } from './search-filter-input.model';
 import { SearchFilterParams } from './search-filter-params.type';
 import { ENTRY_SEARCH_FILTER_CONFIG, EntrySearchFilterConfig } from './search-filter-config.model';
 import { FilterInputControlType } from './filter-input-control-type.model';
+import { SearchFilterBase } from './public-api';
 
 /**
  * Entry SearchFilter component.
@@ -17,7 +17,7 @@ import { FilterInputControlType } from './filter-input-control-type.model';
 export class EntrySearchFilterComponent implements OnInit {
 
   /** Configuration of the search filters inputs that will be displayed in the search-filter component. */
-  @Input() searchFilters: SearchFilterInput<any>[] = [];
+  @Input() searchFilters: SearchFilterBase<any>[] = [];
   /**
    * Emits the change in SearchFilterParams so the containing component can apply them and retrieve the filtered results.
    */
@@ -36,7 +36,7 @@ export class EntrySearchFilterComponent implements OnInit {
     this.searchFilterChange.emit(formValue);
   }
 
-  toFormGroup(searchFilters: SearchFilterInput<any>[]) {
+  toFormGroup(searchFilters: SearchFilterBase<any>[]) {
     const group: any = {};
 
     searchFilters.forEach(searchFilter => {

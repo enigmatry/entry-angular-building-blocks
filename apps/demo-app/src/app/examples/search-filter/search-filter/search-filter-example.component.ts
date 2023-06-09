@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { Occupation, User, UsersService } from './users.service';
 import {
-  SearchFilterTextInput,
   SearchFilterParams,
-  SearchFilterSelectInput,
-  SearchFilterSelectOption
+  SearchFilterSelectOption,
+  SelectSearchFilter,
+  TextSearchFilter
 } from '@enigmatry/entry-components/search-filter';
 
 @Component({
@@ -16,19 +16,19 @@ export class SearchFilterExampleComponent {
   users: Array<User>;
   displayedColumns: string[] = ['name', 'email', 'dateOfBirth', 'occupation'];
   filters = [
-    new SearchFilterTextInput({
+    new TextSearchFilter({
       key: 'name',
       label: 'Name',
       placeholder: 'User name or last name',
       maxLength: 25
     }),
-    new SearchFilterTextInput({
+    new TextSearchFilter({
       key: 'email',
       label: 'E-mail',
       placeholder: 'user@example.com',
       type: 'email'
     }),
-    new SearchFilterSelectInput({
+    new SelectSearchFilter({
       key: 'occupation',
       label: 'Occupation',
       placeholder: 'Pilot',

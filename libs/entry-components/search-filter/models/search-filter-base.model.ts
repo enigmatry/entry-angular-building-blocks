@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 /**
  * Base Entry search filter input component.
  */
-export class SearchFilterInput<T> {
+export class SearchFilterBase<T> {
   /** Unique search-filter input key */
   key: string;
   /** Default value to be displayed/selected in the input control */
@@ -21,7 +21,7 @@ export class SearchFilterInput<T> {
   maxLength: number;
   formControl: FormControl<T>;
 
-  constructor(options: Partial<SearchFilterInput<T>> = {}) {
+  constructor(options: Partial<SearchFilterBase<T>> = {}) {
     this.value = options.value;
     this.key = options.key || '';
     this.label = options.label || '';

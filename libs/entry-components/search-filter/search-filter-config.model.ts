@@ -11,7 +11,8 @@ export class EntrySearchFilterConfig {
         this.applyButtonText = config.applyButtonText ?? 'Apply';
     }
 }
-export const ENTRY_SEARCH_FILTER_CONFIG = new InjectionToken<EntrySearchFilterConfig>('EntrySearchFilterConfig',
+export const ENTRY_SEARCH_FILTER_CONFIG = new InjectionToken<EntrySearchFilterConfig>(
+    'EntrySearchFilterConfig',
     {
         providedIn: 'root',
         factory: () => new EntrySearchFilterConfig()
