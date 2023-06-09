@@ -28,7 +28,6 @@ export class SearchFilterExampleComponent {
   }
 
   enableMultipleSelectChanged(event: MatCheckboxChange) {
-    this.fetchUsers();
     this.filters = this.createFilterInputs(event.checked);
   }
 
