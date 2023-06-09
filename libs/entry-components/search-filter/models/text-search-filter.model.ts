@@ -1,4 +1,4 @@
-import { FilterInputControlType } from '../filter-input-control-type.model';
+import { FilterInputControlType } from './filter-input-control-type.model';
 import { SearchFilterBase } from './search-filter-base.model';
 
 /**

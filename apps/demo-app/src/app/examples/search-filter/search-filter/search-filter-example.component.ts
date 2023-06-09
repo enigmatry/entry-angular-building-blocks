@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { Occupation, User, UsersService } from './users.service';
 import {
   SearchFilterParams,
-  SearchFilterSelectOption,
   SelectSearchFilter,
+  SelectSearchFilterOption,
   TextSearchFilter
 } from '@enigmatry/entry-components/search-filter';
 
@@ -35,7 +35,7 @@ export class SearchFilterExampleComponent {
       multiSelect: false,
       options: Object.values(Occupation)
         .filter(value => typeof(value) === 'number')
-        .map((value: number) =>new SearchFilterSelectOption(value, Occupation[value]))
+        .map((value: number) =>new SelectSearchFilterOption(value, Occupation[value]))
     })
   ];
 

@@ -8,7 +8,7 @@ import { MatSelectModule } from '@angular/material/select';
 
 
 import { EntrySearchFilterComponent } from './entry-search-filter.component';
-import { EntrySearchFilterInputComponent } from './search-filter-input.component';
+import { EntrySearchFilterInputComponent } from './search-filter-input/search-filter-input.component';
 
 @NgModule({
   declarations: [

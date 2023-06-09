@@ -4,7 +4,7 @@ export { SearchFilterParams } from './search-filter-params.type';
 export { SearchFilterBase } from './models/search-filter-base.model';
 export { TextSearchFilter } from './models/text-search-filter.model';
 export { SelectSearchFilter } from './models/select-search-filter.model';
-export { SearchFilterSelectOption } from './search-filter-select-option.model';
+export { SelectSearchFilterOption } from './models/select-search-filter-option.model';
 
 export { EntrySearchFilterModule } from './entry-search-filter.module';
 
