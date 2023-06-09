@@ -1,3 +1,3 @@
 export class SearchFilterSelectOption {
-    constructor(key: number | undefined, label: string) {}
+    constructor(public key: number | undefined, public label: string) {}
 }

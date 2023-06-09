@@ -9,4 +9,11 @@ import { FilterInputControlType } from './filter-input-control-type.model';
  */
 export class SearchFilterSelectInput extends SearchFilterInput<SearchFilterSelectOption[] | Observable<string[]>> {
     override controlType = FilterInputControlType.select;
+    /** Enables selection of multiple options (default is true) */
+    public multiSelect = true;
+
+    constructor(options: Partial<SearchFilterSelectInput> = {}) {
+        super(options);
+        this.multiSelect = options.multiSelect;
+      }
 }

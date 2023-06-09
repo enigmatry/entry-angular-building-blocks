@@ -27,12 +27,14 @@ export class SearchFilterExampleComponent {
       placeholder: 'user@example.com',
       type: 'email'
     }),
-    // new SearchFilterSelectInput({
-    //   key: 'occupation',
-    //   label: 'Occupation',
-    //   placeholder: 'Pilot',
-    //   value: Object.keys(Occupation).map(o => new SearchFilterSelectOption(Occupation[o], o))
-    // })
+    new SearchFilterSelectInput({
+      key: 'occupation',
+      label: 'Occupation',
+      placeholder: 'Pilot',
+      multiSelect: false,
+      value: Object.keys(Occupation)
+        .map(o => new SearchFilterSelectOption(o as unknown as number, Occupation[o]))
+    })
   ];
 
   // displayedColumns is property needed to configure Angular material table

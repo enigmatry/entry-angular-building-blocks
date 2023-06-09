@@ -4,6 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
+import { MatSelectModule } from '@angular/material/select';
+
 
 import { EntrySearchFilterComponent } from './entry-search-filter.component';
 import { EntrySearchFilterInputComponent } from './search-filter-input.component';
@@ -19,7 +21,8 @@ import { EntrySearchFilterInputComponent } from './search-filter-input.component
     ReactiveFormsModule,
     MatInputModule,
     MatButtonModule,
-    MatListModule
+    MatListModule,
+    MatSelectModule
   ],
   exports: [
     EntrySearchFilterComponent

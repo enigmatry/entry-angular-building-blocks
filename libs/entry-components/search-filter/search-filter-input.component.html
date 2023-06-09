@@ -3,12 +3,14 @@
 
   <div [ngSwitch]="searchFilter.controlType">
 
-    <input *ngSwitchCase="controlType.text" [formControlName]="searchFilter.key" [id]="searchFilter.key"
+    <input *ngSwitchCase="controlType.text"
+      [formControlName]="searchFilter.key" [id]="searchFilter.key"
       [type]="searchFilter.type" matInput [placeholder]="searchFilter.placeholder" [maxlength]="searchFilter.maxLength">
 
-    <!-- <mat-select *ngSwitchCase="controlType.select" [formControlName]="searchFilter.key" [id]="searchFilter.key">
+    <mat-select *ngSwitchCase="controlType.select"
+      [formControlName]="searchFilter.key" [id]="searchFilter.key" [multiple]="searchFilter.multiSelect">
       <mat-option *ngFor="let option of searchFilter.value" [value]="option.key">{{option.label}}</mat-option>
-    </mat-select> -->
+    </mat-select>
 
   </div>
 </mat-form-field>
