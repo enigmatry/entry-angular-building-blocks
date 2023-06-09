@@ -33,4 +33,3 @@ Where `APP_THEME` represents application theming configuration, while `APP_TYPOG
     </div>
 </entry-header>
 ```
-

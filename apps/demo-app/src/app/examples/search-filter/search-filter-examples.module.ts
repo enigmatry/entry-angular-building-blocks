@@ -6,7 +6,6 @@ import { ENTRY_SEARCH_FILTER_CONFIG, EntrySearchFilterConfig, EntrySearchFilterM
 import { MatTableModule } from '@angular/material/table';
 import { EnumToStringPipe } from './search-filter/enum-to-string.pipe';
 
-
 @NgModule({
   declarations: [
     SearchFilterExampleComponent,

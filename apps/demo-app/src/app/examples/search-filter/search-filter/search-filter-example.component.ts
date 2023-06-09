@@ -32,7 +32,7 @@ export class SearchFilterExampleComponent {
       key: 'occupation',
       label: 'Occupation',
       placeholder: 'Pilot',
-      multiSelect: false,
+      multiSelect: true,
       options: Object.values(Occupation)
         .filter(value => typeof(value) === 'number')
         .map((value: number) =>new SelectSearchFilterOption(value, Occupation[value]))

@@ -1,10 +1,8 @@
-<!-- Entry Search Filter component -->
 <entry-search-filter
     [searchFilters]="filters"
     (searchFilterChange)="searchFilterChange($event)">
 </entry-search-filter>
 
-<!-- Angular material table with data filtering example -->
 <table mat-table [dataSource]="users" class="mat-elevation-z8">
 
     <ng-container matColumnDef="name">

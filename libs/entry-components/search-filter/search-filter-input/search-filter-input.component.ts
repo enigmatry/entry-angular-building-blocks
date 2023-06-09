@@ -10,7 +10,7 @@ import { SearchFilterBase } from '../public-api';
 })
 export class EntrySearchFilterInputComponent {
   /** Configuration of the search filters inputs that will be displayed in the search-filter component. */
-  @Input() searchFilter!: SearchFilterBase<string>;
+  @Input() searchFilter!: SearchFilterBase<any>;
   /** Form group to which the search-filter input component will be added. */
   @Input() form!: UntypedFormGroup;
 
