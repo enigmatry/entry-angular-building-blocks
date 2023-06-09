@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Occupation, User, UsersService } from './users.service';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 import {
   SearchFilterParams,
   SelectSearchFilter,
@@ -15,40 +16,49 @@ import {
 export class SearchFilterExampleComponent {
   users: Array<User>;
   displayedColumns: string[] = ['name', 'email', 'dateOfBirth', 'occupation'];
-  filters = [
-    new TextSearchFilter({
-      key: 'name',
-      label: 'Name',
-      placeholder: 'User name or last name',
-      maxLength: 25
-    }),
-    new TextSearchFilter({
-      key: 'email',
-      label: 'E-mail',
-      placeholder: 'user@example.com',
-      type: 'email'
-    }),
-    new SelectSearchFilter({
-      key: 'occupation',
-      label: 'Occupation',
-      placeholder: 'Pilot',
-      multiSelect: true,
-      options: Object.values(Occupation)
-        .filter(value => typeof(value) === 'number')
-        .map((value: number) =>new SelectSearchFilterOption(value, Occupation[value]))
-    })
-  ];
+  filters = [];
 
   constructor(private usersService: UsersService) {
+    this.filters = this.createFilterInputs(false);
     this.fetchUsers();
   }
 
-  // Handle search filters change
   searchFilterChange(searchParams: SearchFilterParams) {
     this.fetchUsers(searchParams);
   }
 
+  enableMultipleSelectChanged(event: MatCheckboxChange) {
+    this.fetchUsers();
+    this.filters = this.createFilterInputs(event.checked);
+  }
+
   private fetchUsers(searchParams: SearchFilterParams = {}): void {
     this.users = this.usersService.getUsers(searchParams);
+  }
+
+  private createFilterInputs(enableMultiSelect: boolean): any[] {
+    return [
+      new TextSearchFilter({
+        key: 'name',
+        label: 'Name',
+        placeholder: 'User name or last name',
+        maxLength: 25
+      }),
+      new TextSearchFilter({
+        key: 'email',
+        label: 'E-mail',
+        placeholder: 'user@example.com',
+        type: 'email'
+      }),
+      new SelectSearchFilter({
+        key: 'occupation',
+        label: 'Occupation',
+        placeholder: 'Pilot',
+        multiSelect: enableMultiSelect,
+        options: Object.values(Occupation)
+          .filter(value => typeof(value) === 'number')
+          .map((value: number) =>new SelectSearchFilterOption(value, Occupation[value]))
+      })
+    ];
   }
 }
