@@ -10,8 +10,8 @@ import { EntryHeaderModule } from '@enigmatry/entry-components/entry-header';
 
 Styles import:
 
-```css
-@use '@enigmatry/entry-components/styles/generate' as entry;
+```scss
+@use 'entry-components/styles/generate' as entry;
 
 @include entry.generate(APP_THEME, APP_TYPOGRAPHY);
 ```

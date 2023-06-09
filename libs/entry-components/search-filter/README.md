@@ -10,8 +10,8 @@ import { EntrySearchFilterModule } from '@enigmatry/entry-components/search-filt
 
 Styles import:
 
-```css
-@use '@enigmatry/entry-components/styles/generate' as entry;
+```scss
+@use 'entry-components/styles/generate' as entry;
 
 @include entry.generate(APP_THEME, APP_TYPOGRAPHY);
 ```
