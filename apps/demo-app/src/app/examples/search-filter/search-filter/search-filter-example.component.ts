@@ -14,6 +14,7 @@ import {
 })
 export class SearchFilterExampleComponent {
   users: Array<User>;
+  displayedColumns: string[] = ['name', 'email', 'dateOfBirth', 'occupation'];
   filters = [
     new SearchFilterTextInput({
       key: 'name',
@@ -32,13 +33,11 @@ export class SearchFilterExampleComponent {
       label: 'Occupation',
       placeholder: 'Pilot',
       multiSelect: false,
-      value: Object.keys(Occupation)
-        .map(o => new SearchFilterSelectOption(o as unknown as number, Occupation[o]))
+      value: Object.values(Occupation)
+        .filter(value => typeof(value) === 'number')
+        .map((value: number) =>new SearchFilterSelectOption(value, Occupation[value]))
     })
   ];
-
-  // displayedColumns is property needed to configure Angular material table
-  displayedColumns: string[] = ['name', 'email', 'dateOfBirth', 'occupation'];
 
   constructor(private usersService: UsersService) {
     this.fetchUsers();
