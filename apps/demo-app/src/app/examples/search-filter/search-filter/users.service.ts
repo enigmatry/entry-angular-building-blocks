@@ -30,9 +30,13 @@ export class UsersService {
     if (!!searchParams.email) {
       users = users?.filter(x => x.userName?.toLowerCase().includes(searchParams.email.toLowerCase()));
     }
-    if (!!searchParams.occupation) {
+    if (!!searchParams.occupation?.length) {
       users = users?.filter(x => searchParams.occupation instanceof Array
         ? searchParams.occupation.includes(x.occupation) : searchParams.occupation === x.occupation);
+    }
+    if (!!searchParams.occupation?.username) {
+      users = users?.filter(x => searchParams.username instanceof Array
+        ? searchParams.username.includes(x.userName) : searchParams.username === x.userName);
     }
 
     return users;

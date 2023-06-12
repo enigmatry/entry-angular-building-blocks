@@ -9,6 +9,7 @@ import {
   TextSearchFilter
 } from '@enigmatry/entry-components/search-filter';
 import { map } from 'rxjs/operators';
+import { DynamicSelectSearchFilter } from 'libs/entry-components/search-filter/models/dynamic-select-search-filter.model';
 
 @Component({
   selector: 'app-search-filter-example',
@@ -56,12 +57,12 @@ export class SearchFilterExampleComponent {
           .filter(value => typeof(value) === 'number')
           .map((value: number) => new SelectSearchFilterOption(value, Occupation[value]))
       }),
-      new SelectSearchFilter({
-        key: 'email',
-        label: 'Email',
-        placeholder: 'Select mail',
+      new DynamicSelectSearchFilter({
+        key: 'username',
+        label: 'Username',
+        placeholder: 'Select username',
         multiSelect: false,
-        options: this._usersService
+        options$: this._usersService
           .getAllMails()
           .pipe(map(mails => mails.map(m => new SelectSearchFilterOption(m, m))))
       })
