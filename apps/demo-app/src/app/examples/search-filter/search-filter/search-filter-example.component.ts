@@ -9,7 +9,7 @@ import {
   TextSearchFilter
 } from '@enigmatry/entry-components/search-filter';
 import { map } from 'rxjs/operators';
-import { DynamicSelectSearchFilter } from 'libs/entry-components/search-filter/models/dynamic-select-search-filter.model';
+import { DynamicSelectSearchFilter } from 'libs/entry-components/search-filter/search-filter-input/inputs/dynamic-select-search-filter.model';
 
 @Component({
   selector: 'app-search-filter-example',

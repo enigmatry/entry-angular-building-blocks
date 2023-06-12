@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, OnInit
 import { FormControl, UntypedFormGroup } from '@angular/forms';
 import { SearchFilterParams } from './search-filter-params.type';
 import { ENTRY_SEARCH_FILTER_CONFIG, EntrySearchFilterConfig } from './search-filter-config.model';
-import { FilterInputControlType } from './models/filter-input-control-type.model';
+import { ControlType } from './search-filter-input/control-type.model';
 import { SearchFilterBase, SelectSearchFilter } from './public-api';
 
 /**
@@ -48,10 +48,10 @@ export class EntrySearchFilterComponent implements OnInit {
 
   private toFormControl(searchFilter: SearchFilterBase<any>): FormControl {
     switch (searchFilter.controlType) {
-      case FilterInputControlType.text:
+      case ControlType.text:
         return new FormControl<string>(searchFilter.value || '');
-      case FilterInputControlType.select:
-      case FilterInputControlType.dynamicSelect:
+      case ControlType.select:
+      case ControlType.dynamicSelect:
         return new FormControl<any | [] | undefined>(
           (searchFilter as SelectSearchFilter).multiSelect
             ? searchFilter.value ?? []

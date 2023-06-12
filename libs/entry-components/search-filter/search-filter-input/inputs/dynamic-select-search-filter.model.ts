@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
-import { SearchFilterBase } from './search-filter-base.model';
-import { FilterInputControlType } from './filter-input-control-type.model';
+import { SearchFilterBase } from '../search-filter-base.model';
+import { ControlType } from '../control-type.model';
 import { SelectSearchFilterOption } from './select-search-filter-option.model';
 
 /**
@@ -8,7 +8,7 @@ import { SelectSearchFilterOption } from './select-search-filter-option.model';
  * It supports observable select options of SelectSearchFilterOption type.
  */
 export class DynamicSelectSearchFilter extends SearchFilterBase<any> {
-    override controlType = FilterInputControlType.dynamicSelect;
+    override controlType = ControlType.dynamicSelect;
     /** Observable list of possible value options */
     options$: Observable<SelectSearchFilterOption[]>;
     /** Enables selection of multiple options (default is true) */

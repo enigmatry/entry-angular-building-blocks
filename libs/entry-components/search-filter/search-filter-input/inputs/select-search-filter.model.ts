@@ -1,5 +1,5 @@
-import { SearchFilterBase } from './search-filter-base.model';
-import { FilterInputControlType } from './filter-input-control-type.model';
+import { ControlType } from '../control-type.model';
+import { SearchFilterBase } from '../search-filter-base.model';
 import { SelectSearchFilterOption } from './select-search-filter-option.model';
 
 /**
@@ -7,7 +7,7 @@ import { SelectSearchFilterOption } from './select-search-filter-option.model';
  * It supports static select values.
  */
 export class SelectSearchFilter extends SearchFilterBase<any> {
-    override controlType = FilterInputControlType.select;
+    override controlType = ControlType.select;
     /** Filter static list of possible value options */
     options: SelectSearchFilterOption[];
     /** Enables selection of multiple options (default is true) */
