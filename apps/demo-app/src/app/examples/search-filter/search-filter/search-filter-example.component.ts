@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 import { Occupation, User, UsersService } from './users.service';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import {
+  SearchFilterBase,
   SearchFilterParams,
   SelectSearchFilter,
   SelectSearchFilterOption,
   TextSearchFilter
 } from '@enigmatry/entry-components/search-filter';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-search-filter-example',
@@ -16,42 +18,53 @@ import {
 export class SearchFilterExampleComponent {
   users: Array<User>;
   displayedColumns: string[] = ['name', 'email', 'dateOfBirth', 'occupation'];
-  filters = [
-    new TextSearchFilter({
-      key: 'name',
-      label: 'Name',
-      placeholder: 'User name or last name',
-      maxLength: 25
-    }),
-    new TextSearchFilter({
-      key: 'email',
-      label: 'E-mail',
-      placeholder: 'user@example.com',
-      type: 'email'
-    }),
-    new SelectSearchFilter({
-      key: 'occupation',
-      label: 'Occupation',
-      placeholder: 'Pilot',
-      multiSelect: true,
-      options: Object.values(Occupation)
-        .filter(value => typeof(value) === 'number')
-        .map((value: number) =>new SelectSearchFilterOption(value, Occupation[value]))
-    })
-  ];
+  filters = [];
 
-  constructor(private usersService: UsersService) {
+  constructor(private _usersService: UsersService) {
     this.fetchUsers();
+    this.filters = this.createSearchFilters();
   }
 
   searchFilterChange(searchParams: SearchFilterParams) {
     this.fetchUsers(searchParams);
   }
 
-  enableMultipleSelectChanged(event: MatCheckboxChange) {
+  private fetchUsers(searchParams: SearchFilterParams = {}): void {
+    this.users = this._usersService.getUsers(searchParams);
   }
 
-  private fetchUsers(searchParams: SearchFilterParams = {}): void {
-    this.users = this.usersService.getUsers(searchParams);
+  private createSearchFilters(): SearchFilterBase<any>[] {
+    return [
+      new TextSearchFilter({
+        key: 'name',
+        label: 'Name',
+        placeholder: 'User name or last name',
+        maxLength: 25
+      }),
+      new TextSearchFilter({
+        key: 'email',
+        label: 'E-mail',
+        placeholder: 'user@example.com',
+        type: 'email'
+      }),
+      new SelectSearchFilter({
+        key: 'occupation',
+        label: 'Occupation',
+        placeholder: 'Select occupation',
+        multiSelect: true,
+        options: Object.values(Occupation)
+          .filter(value => typeof(value) === 'number')
+          .map((value: number) => new SelectSearchFilterOption(value, Occupation[value]))
+      }),
+      new SelectSearchFilter({
+        key: 'email',
+        label: 'Email',
+        placeholder: 'Select mail',
+        multiSelect: false,
+        options: this._usersService
+          .getAllMails()
+          .pipe(map(mails => mails.map(m => new SelectSearchFilterOption(m, m))))
+      })
+    ];
   }
 }

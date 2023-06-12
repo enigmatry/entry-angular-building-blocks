@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SearchFilterParams } from '@enigmatry/entry-components/search-filter';
+import { Observable, of } from 'rxjs';
 
 /**
  * @description
@@ -35,6 +36,10 @@ export class UsersService {
     }
 
     return users;
+  }
+
+  getAllMails(): Observable<string[]> {
+    return of(this.data.map(x => x.userName));
   }
 
   private fetchData(): User[] {
