@@ -15,7 +15,7 @@ export class SelectSearchFilter extends SearchFilterBase<any> {
 
     constructor(options: Partial<SelectSearchFilter> = {}) {
         super(options);
-        this.options = [new SelectSearchFilterOption(undefined, '')].concat(options.options);
+        this.options = options.options;
         this.multiSelect = options.multiSelect;
       }
 }

@@ -9,11 +9,13 @@
 
     <mat-select *ngSwitchCase="controlType.select"
       [formControlName]="searchFilter.key" [id]="searchFilter.key" [multiple]="searchFilter.multiSelect">
+      <mat-option [value]="undefined">{{config.noneSelectedOptionText}}</mat-option>
       <mat-option *ngFor="let option of searchFilter.options" [value]="option.key">{{option.label}}</mat-option>
     </mat-select>
 
     <mat-select *ngSwitchCase="controlType.dynamicSelect"
       [formControlName]="searchFilter.key" [id]="searchFilter.key" [multiple]="searchFilter.multiSelect">
+      <mat-option [value]="undefined">{{config.noneSelectedOptionText}}</mat-option>
       <mat-option *ngFor="let option of searchFilter.options$ | async" [value]="option.key">{{option.label}}</mat-option>
     </mat-select>
 

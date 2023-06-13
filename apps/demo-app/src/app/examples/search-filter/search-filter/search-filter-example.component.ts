@@ -1,15 +1,14 @@
 import { Component } from '@angular/core';
 import { Occupation, User, UsersService } from './users.service';
-import { MatCheckboxChange } from '@angular/material/checkbox';
 import {
   SearchFilterBase,
   SearchFilterParams,
   SelectSearchFilter,
   SelectSearchFilterOption,
-  TextSearchFilter
+  TextSearchFilter,
+  DynamicSelectSearchFilter
 } from '@enigmatry/entry-components/search-filter';
 import { map } from 'rxjs/operators';
-import { DynamicSelectSearchFilter } from 'libs/entry-components/search-filter/search-filter-input/inputs/dynamic-select-search-filter.model';
 
 @Component({
   selector: 'app-search-filter-example',
