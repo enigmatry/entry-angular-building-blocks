@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SearchFilterParams } from '@enigmatry/entry-components/search-filter';
 import { Observable, of } from 'rxjs';
-import { User, Occupation, LIST_OF_USERS } from './user.model';
+import { User, LIST_OF_USERS } from './users';
 
 /**
  * A service that provides some example user data to help showcase the filtering.

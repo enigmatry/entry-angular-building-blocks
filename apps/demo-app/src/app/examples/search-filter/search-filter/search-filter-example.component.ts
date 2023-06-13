@@ -8,7 +8,7 @@ import {
   TextSearchFilter,
 } from '@enigmatry/entry-components/search-filter';
 import { map } from 'rxjs/operators';
-import { Occupation, User } from './user.model';
+import { Occupation, User } from './users';
 
 @Component({
   selector: 'app-search-filter-example',
