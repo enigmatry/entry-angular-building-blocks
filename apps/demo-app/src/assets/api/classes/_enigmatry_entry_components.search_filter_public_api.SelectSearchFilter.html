@@ -18,8 +18,8 @@
 <li><a href="_enigmatry_entry_components.search_filter_public_api.SelectSearchFilter.html">SelectSearchFilter</a></li></ul>
 <h1>Class SelectSearchFilter</h1></div>
 <section class="tsd-panel tsd-comment">
-<div class="tsd-comment tsd-typography"><p>Search filter select input field configuration. Select options can be provided as fixed list 
-or observable dynamic list that can be filled in from API.</p>
+<div class="tsd-comment tsd-typography"><p>Search filter select input field configuration. Select options can be provided as fixed list (<code>options</code>)
+or observable (dynamic) list (<code>options$</code>).</p>
 </div></section>
 <section class="tsd-panel tsd-hierarchy">
 <h4>Hierarchy</h4>
@@ -74,7 +74,8 @@ or observable dynamic list that can be filled in from API.</p>
 <section class="tsd-panel tsd-member"><a id="multiSelect" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>multi<wbr/>Select</span><a href="#multiSelect" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">multi<wbr/>Select</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = true</span></div>
-<div class="tsd-comment tsd-typography"><p>Enables selection of multiple options (default is true)</p>
+<div class="tsd-comment tsd-typography"><p>Enables selection of multiple options (default is true).
+If it is set to false, &#39;none selected&#39; option becomes available as a first option.</p>
 </div></section>
 <section class="tsd-panel tsd-member"><a id="options" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>options</span><a href="#options" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
@@ -84,7 +85,7 @@ or observable dynamic list that can be filled in from API.</p>
 <section class="tsd-panel tsd-member"><a id="options_" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>options$</span><a href="#options_" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">options$</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type ">Observable</span><span class="tsd-signature-symbol">&lt;</span><a href="_enigmatry_entry_components.search_filter_public_api.SelectSearchFilterOption.html" class="tsd-signature-type tsd-kind-class">SelectSearchFilterOption</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></div>
-<div class="tsd-comment tsd-typography"><p>Observable list of possible value options</p>
+<div class="tsd-comment tsd-typography"><p>Observable (dynamic) list of select filter options</p>
 </div></section>
 <section class="tsd-panel tsd-member tsd-is-inherited"><a id="placeholder" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>placeholder</span><a href="#placeholder" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
