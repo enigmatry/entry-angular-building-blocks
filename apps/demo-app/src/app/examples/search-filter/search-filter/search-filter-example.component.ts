@@ -6,7 +6,6 @@ import {
   SelectSearchFilter,
   SelectSearchFilterOption,
   TextSearchFilter,
-  DynamicSelectSearchFilter
 } from '@enigmatry/entry-components/search-filter';
 import { map } from 'rxjs/operators';
 import { Occupation, User } from './user.model';
@@ -57,11 +56,11 @@ export class SearchFilterExampleComponent {
           .filter(value => typeof(value) === 'number')
           .map((value: number) => new SelectSearchFilterOption(value, Occupation[value]))
       }),
-      new DynamicSelectSearchFilter({
+      new SelectSearchFilter({
         key: 'username',
         label: 'Username',
         placeholder: 'Select username',
-        multiSelect: false,
+        multiSelect: true,
         options$: this._usersService
           .getUsernames()
           .pipe(map(mails => mails.map(m => new SelectSearchFilterOption(m, m))))

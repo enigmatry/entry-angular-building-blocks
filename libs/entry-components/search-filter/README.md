@@ -3,8 +3,7 @@
 Entry component for providing standard filtering capabilities that can be consumed by entry-table component, but also any other list data representation component like Angular material table component. It supports the following filtering inputs:
 
 * Text filter
-* Static select filter (Enums, fixed lists of options, etc.)
-* Dynamic select filter (List of options provided by API)
+* Select filter (supports fixed and dynamic (Observable) options)
 
 ## Imports
 

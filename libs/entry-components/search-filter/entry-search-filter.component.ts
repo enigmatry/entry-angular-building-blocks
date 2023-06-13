@@ -51,7 +51,6 @@ export class EntrySearchFilterComponent implements OnInit {
       case ControlType.text:
         return new FormControl<string>(searchFilter.value || '');
       case ControlType.select:
-      case ControlType.dynamicSelect:
         return new FormControl<any | [] | undefined>(
           (searchFilter as SelectSearchFilter).multiSelect
             ? searchFilter.value ?? []

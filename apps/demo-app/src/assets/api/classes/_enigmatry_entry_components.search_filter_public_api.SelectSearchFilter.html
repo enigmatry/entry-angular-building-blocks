@@ -18,8 +18,8 @@
 <li><a href="_enigmatry_entry_components.search_filter_public_api.SelectSearchFilter.html">SelectSearchFilter</a></li></ul>
 <h1>Class SelectSearchFilter</h1></div>
 <section class="tsd-panel tsd-comment">
-<div class="tsd-comment tsd-typography"><p>Search filter select input filed configuration.
-It supports static select values.</p>
+<div class="tsd-comment tsd-typography"><p>Search filter select input field configuration. Select options can be provided as fixed list 
+or observable dynamic list that can be filled in from API.</p>
 </div></section>
 <section class="tsd-panel tsd-hierarchy">
 <h4>Hierarchy</h4>
@@ -40,6 +40,7 @@ It supports static select values.</p>
 <a href="_enigmatry_entry_components.search_filter_public_api.SelectSearchFilter.html#maxLength" class="tsd-index-link tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>max<wbr/>Length</span></a>
 <a href="_enigmatry_entry_components.search_filter_public_api.SelectSearchFilter.html#multiSelect" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>multi<wbr/>Select</span></a>
 <a href="_enigmatry_entry_components.search_filter_public_api.SelectSearchFilter.html#options" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>options</span></a>
+<a href="_enigmatry_entry_components.search_filter_public_api.SelectSearchFilter.html#options_" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>options$</span></a>
 <a href="_enigmatry_entry_components.search_filter_public_api.SelectSearchFilter.html#placeholder" class="tsd-index-link tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>placeholder</span></a>
 <a href="_enigmatry_entry_components.search_filter_public_api.SelectSearchFilter.html#type" class="tsd-index-link tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>type</span></a>
 <a href="_enigmatry_entry_components.search_filter_public_api.SelectSearchFilter.html#value" class="tsd-index-link tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>value</span></a>
@@ -77,8 +78,13 @@ It supports static select values.</p>
 </div></section>
 <section class="tsd-panel tsd-member"><a id="options" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>options</span><a href="#options" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-property">options</span><span class="tsd-signature-symbol">:</span> <a href="_enigmatry_entry_components.search_filter_public_api.SelectSearchFilterOption.html" class="tsd-signature-type tsd-kind-class">SelectSearchFilterOption</a><span class="tsd-signature-symbol">[]</span></div>
-<div class="tsd-comment tsd-typography"><p>Filter static list of possible value options</p>
+<div class="tsd-signature"><span class="tsd-kind-property">options</span><span class="tsd-signature-symbol">:</span> <a href="_enigmatry_entry_components.search_filter_public_api.SelectSearchFilterOption.html" class="tsd-signature-type tsd-kind-class">SelectSearchFilterOption</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
+<div class="tsd-comment tsd-typography"><p>Fixed list of select filter options (default is empty list)</p>
+</div></section>
+<section class="tsd-panel tsd-member"><a id="options_" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>options$</span><a href="#options_" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature"><span class="tsd-kind-property">options$</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type ">Observable</span><span class="tsd-signature-symbol">&lt;</span><a href="_enigmatry_entry_components.search_filter_public_api.SelectSearchFilterOption.html" class="tsd-signature-type tsd-kind-class">SelectSearchFilterOption</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></div>
+<div class="tsd-comment tsd-typography"><p>Observable list of possible value options</p>
 </div></section>
 <section class="tsd-panel tsd-member tsd-is-inherited"><a id="placeholder" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>placeholder</span><a href="#placeholder" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
@@ -123,6 +129,7 @@ It supports static select values.</p>
 <li><a href="#maxLength" class="tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>max<wbr/>Length</span></a></li>
 <li><a href="#multiSelect" class=""><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>multi<wbr/>Select</span></a></li>
 <li><a href="#options" class=""><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>options</span></a></li>
+<li><a href="#options_" class=""><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>options$</span></a></li>
 <li><a href="#placeholder" class="tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>placeholder</span></a></li>
 <li><a href="#type" class="tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>type</span></a></li>
 <li><a href="#value" class="tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>value</span></a></li></ul></div></details></div>
@@ -148,7 +155,6 @@ It supports static select values.</p>
 <details class="tsd-index-accordion" open data-key="@enigmatry/entry-components.search-filter/public-api"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4.93896 8.531L12 15.591L19.061 8.531L16.939 6.409L12 11.349L7.06098 6.409L4.93896 8.531Z" fill="var(--color-text)"></path></svg><a href="../modules/_enigmatry_entry_components.search_filter_public_api.html"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4-path"></use><use href="#icon-4-text"></use></svg><span>search-<wbr/>filter/public-<wbr/>api</span></a></summary>
 <div class="tsd-accordion-details">
 <ul class="tsd-nested-navigation">
-<li><a href="_enigmatry_entry_components.search_filter_public_api.DynamicSelectSearchFilter.html"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-128-path"></use><use href="#icon-128-text"></use></svg><span>Dynamic<wbr/>Select<wbr/>Search<wbr/>Filter</span></a></li>
 <li><a href="_enigmatry_entry_components.search_filter_public_api.EntrySearchFilterComponent.html"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-128-path"></use><use href="#icon-128-text"></use></svg><span>Entry<wbr/>Search<wbr/>Filter<wbr/>Component</span></a></li>
 <li><a href="_enigmatry_entry_components.search_filter_public_api.EntrySearchFilterConfig.html"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-128-path"></use><use href="#icon-128-text"></use></svg><span>Entry<wbr/>Search<wbr/>Filter<wbr/>Config</span></a></li>
 <li><a href="_enigmatry_entry_components.search_filter_public_api.SearchFilterBase.html"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-128-path"></use><use href="#icon-128-text"></use></svg><span>Search<wbr/>Filter<wbr/>Base</span></a></li>

@@ -4,7 +4,6 @@ export { SearchFilterParams } from './search-filter-params.type';
 export { SearchFilterBase } from './search-filter-input/search-filter-base.model';
 export { TextSearchFilter } from './search-filter-input/inputs/text-search-filter.model';
 export { SelectSearchFilter } from './search-filter-input/inputs/select-search-filter.model';
-export { DynamicSelectSearchFilter } from './search-filter-input/inputs/dynamic-select-search-filter.model';
 export { SelectSearchFilterOption } from './search-filter-input/inputs/select-search-filter-option.model';
 
 export { EntrySearchFilterModule } from './entry-search-filter.module';
