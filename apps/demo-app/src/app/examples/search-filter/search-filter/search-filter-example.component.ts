@@ -54,16 +54,16 @@ export class SearchFilterExampleComponent {
         multiSelect: true,
         options: Object.values(Occupation)
           .filter(value => typeof(value) === 'number')
-          .map((value: number) => new SelectSearchFilterOption(value, Occupation[value]))
+          .map((value: number) => new SelectSearchFilterOption(value, Occupation[value].replace(/^[a-z]/, x => x.toUpperCase())))
       }),
       new SelectSearchFilter({
         key: 'username',
         label: 'Username',
         placeholder: 'Select username',
-        multiSelect: true,
+        multiSelect: false,
         options$: this._usersService
           .getUsernames()
-          .pipe(map(mails => mails.map(m => new SelectSearchFilterOption(m, m))))
+          .pipe(map(usernames => usernames.map(un => new SelectSearchFilterOption(un, un))))
       })
     ];
   }
