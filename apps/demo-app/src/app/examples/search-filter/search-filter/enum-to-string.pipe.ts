@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Occupation } from './users.service';
+import { Occupation } from './user.model';
 
 @Pipe({
   name: 'enumToString'

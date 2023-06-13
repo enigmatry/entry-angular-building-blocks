@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Occupation, User, UsersService } from './users.service';
+import { UsersService } from './users.service';
 import {
   SearchFilterBase,
   SearchFilterParams,
@@ -9,6 +9,7 @@ import {
   DynamicSelectSearchFilter
 } from '@enigmatry/entry-components/search-filter';
 import { map } from 'rxjs/operators';
+import { Occupation, User } from './user.model';
 
 @Component({
   selector: 'app-search-filter-example',
@@ -62,7 +63,7 @@ export class SearchFilterExampleComponent {
         placeholder: 'Select username',
         multiSelect: false,
         options$: this._usersService
-          .getAllMails()
+          .getUsernames()
           .pipe(map(mails => mails.map(m => new SelectSearchFilterOption(m, m))))
       })
     ];
