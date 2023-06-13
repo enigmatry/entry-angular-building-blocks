@@ -54,7 +54,8 @@ export class SearchFilterExampleComponent {
         multiSelect: true,
         options: Object.values(Occupation)
           .filter(value => typeof(value) === 'number')
-          .map((value: number) => new SelectSearchFilterOption(value, Occupation[value].replace(/^[a-z]/, x => x.toUpperCase())))
+          .map((value: number) => new SelectSearchFilterOption(
+            value, Occupation[value].replace(/^[a-z]/, x => x.toUpperCase())))
       }),
       new SelectSearchFilter({
         key: 'username',
