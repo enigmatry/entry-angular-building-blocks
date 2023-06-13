@@ -24,40 +24,32 @@ export class UsersService {
   getUsers(searchParams: SearchFilterParams): Array<User> {
     let users = this.data;
 
-    if (!!searchParams.name) {
+    if (!this.noFilterParam(searchParams, 'name')) {
       users = users?.filter(x => x.firstName?.toLowerCase().includes(searchParams.name.toLowerCase())
         || x.lastName?.toLowerCase().includes(searchParams.name.toLowerCase()));
     }
-    if (!!searchParams.email) {
+    if (!this.noFilterParam(searchParams, 'email')) {
       users = users?.filter(x => x.userName?.toLowerCase().includes(searchParams.email.toLowerCase()));
     }
-    users = this.filterOccupation(users, searchParams);
-    users = this.filterUsername(users, searchParams);
-
-    return users;
-  }
-
-  private filterOccupation(users: User[], searchParams: SearchFilterParams): User[] {
-    if (searchParams.occupation === undefined
-      || searchParams.occupation.length === 0
-      || searchParams.occupation[0] === undefined) {
-      return users;
+    if (!this.noFilterParam(searchParams, 'occupation')) {
+      users = users?.filter(x => searchParams.occupation instanceof Array
+        ? searchParams.occupation.includes(x.occupation)
+        : searchParams.occupation === x.occupation);
     }
-    // if (!!searchParams.occupation?.length) {
-    return users?.filter(x => searchParams.occupation instanceof Array
-      ? searchParams.occupation.includes(x.occupation)
-      : searchParams.occupation === x.occupation);
-    // }
-    // return users;
-  }
-
-  private filterUsername(users: User[], searchParams: SearchFilterParams): User[] {
-    if (!!searchParams.username?.length) {
+    if (!this.noFilterParam(searchParams, 'username')) {
       users = users?.filter(x => searchParams.username instanceof Array
         ? searchParams.username.includes(x.userName)
         : searchParams.username === x.userName);
     }
+
     return users;
+  }
+
+  private noFilterParam(searchParams: SearchFilterParams, paramName: string): boolean {
+    return searchParams[paramName] === undefined
+      || searchParams[paramName] === null
+      || searchParams[paramName]?.length === 0
+      || searchParams[paramName][0] === undefined;
   }
 }
 
