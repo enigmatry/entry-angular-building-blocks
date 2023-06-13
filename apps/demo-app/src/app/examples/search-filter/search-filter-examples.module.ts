@@ -5,7 +5,6 @@ import { SharedModule } from '../../shared/shared.module';
 import { ENTRY_SEARCH_FILTER_CONFIG, EntrySearchFilterConfig, EntrySearchFilterModule } from '@enigmatry/entry-components/search-filter';
 import { MatTableModule } from '@angular/material/table';
 import { EnumToStringPipe } from './search-filter/enum-to-string.pipe';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -15,8 +14,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     SharedModule,
-    FormsModule,
-    ReactiveFormsModule,
     EntrySearchFilterModule,
     MatTableModule
   ],

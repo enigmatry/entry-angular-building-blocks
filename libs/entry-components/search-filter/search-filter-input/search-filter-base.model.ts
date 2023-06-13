@@ -18,6 +18,7 @@ export class SearchFilterBase<T> {
   controlType: string;
   /** Max text length to be entered in the input component (default is 256) */
   maxLength: number;
+  /** A reference to the form control it represents */
   formControl: FormControl<T>;
 
   constructor(options: Partial<SearchFilterBase<T>> = {}) {
