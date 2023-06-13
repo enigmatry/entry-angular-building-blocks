@@ -19,6 +19,8 @@ export class UsersService {
     this.data = LIST_OF_USERS;
   }
 
+  getUsernames = (): Observable<string[]> => of(this.data.map(x => x.userName));
+
   getUsers(searchParams: SearchFilterParams): Array<User> {
     let users = this.data;
 
@@ -29,19 +31,34 @@ export class UsersService {
     if (!!searchParams.email) {
       users = users?.filter(x => x.userName?.toLowerCase().includes(searchParams.email.toLowerCase()));
     }
-    if (!!searchParams.occupation?.length) {
-      users = users?.filter(x => searchParams.occupation instanceof Array
-        ? searchParams.occupation.includes(x.occupation) : searchParams.occupation === x.occupation);
-    }
-    if (!!searchParams.occupation?.username) {
-      users = users?.filter(x => searchParams.username instanceof Array
-        ? searchParams.username.includes(x.userName) : searchParams.username === x.userName);
-    }
+    users = this.filterOccupation(users, searchParams);
+    users = this.filterUsername(users, searchParams);
 
     return users;
   }
 
-  getUsernames = (): Observable<string[]> => of(this.data.map(x => x.userName));
+  private filterOccupation(users: User[], searchParams: SearchFilterParams): User[] {
+    if (searchParams.occupation === undefined
+      || searchParams.occupation.length === 0
+      || searchParams.occupation[0] === undefined) {
+      return users;
+    }
+    // if (!!searchParams.occupation?.length) {
+    return users?.filter(x => searchParams.occupation instanceof Array
+      ? searchParams.occupation.includes(x.occupation)
+      : searchParams.occupation === x.occupation);
+    // }
+    // return users;
+  }
+
+  private filterUsername(users: User[], searchParams: SearchFilterParams): User[] {
+    if (!!searchParams.username?.length) {
+      users = users?.filter(x => searchParams.username instanceof Array
+        ? searchParams.username.includes(x.userName)
+        : searchParams.username === x.userName);
+    }
+    return users;
+  }
 }
 
 
