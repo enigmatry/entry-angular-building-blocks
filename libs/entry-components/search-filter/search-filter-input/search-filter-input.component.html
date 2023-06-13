@@ -16,17 +16,9 @@
         <mat-option *ngFor="let option of searchFilter.options$ | async" [value]="option.key">{{option.label}}</mat-option>
       </div>
       <ng-template #fixedSelectValues>
-        <mat-option #fixedSelectValues *ngFor="let option of searchFilter.options" [value]="option.key">{{option.label}}</mat-option>
+        <mat-option *ngFor="let option of searchFilter.options" [value]="option.key">{{option.label}}</mat-option>
       </ng-template>
     </mat-select>
-
-    <!-- <mat-select *ngSwitchCase="controlType.dynamicSelect"
-      [formControlName]="searchFilter.key" [id]="searchFilter.key" [multiple]="searchFilter.multiSelect">
-      <mat-option *ngIf="!searchFilter.multiSelect" [value]="undefined">
-        {{config.noneSelectedOptionText}}
-      </mat-option>
-      <mat-option *ngFor="let option of searchFilter.options$ | async" [value]="option.key">{{option.label}}</mat-option>
-    </mat-select> -->
 
   </div>
 </mat-form-field>
