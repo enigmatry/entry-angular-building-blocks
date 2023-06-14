@@ -54,6 +54,13 @@ steps:
     workingDir: 'libs/scss-foundation'
 
 - task: Npm@1
+  displayName: 'Set the version scss entry'
+  inputs:
+    command: custom
+    customCommand: version $(Build.Buildnumber) --no-git-tag-version
+    workingDir: 'libs/scss-entry'
+
+- task: Npm@1
   displayName: 'npm install'
   inputs:
     command: 'install'
@@ -83,11 +90,24 @@ steps:
     workingDir: 'libs/scss-foundation'
 
 - task: Npm@1
+  displayName: 'npm install scss entry'
+  inputs:
+    command: 'install'
+    workingDir: 'libs/scss-entry'
+
+- task: Npm@1
   displayName: 'Lint the scss foundation library'
   inputs:
     command: 'custom'
     customCommand: 'run lint'
     workingDir: 'libs/scss-foundation'
+
+- task: Npm@1
+  displayName: 'Lint the scss entry library'
+  inputs:
+    command: 'custom'
+    customCommand: 'run lint'
+    workingDir: 'libs/scss-entry'
     
 - task: Npm@1
   displayName: 'Test the scss foundation library'
@@ -120,6 +140,13 @@ steps:
     command: 'custom'
     customCommand: 'run build'
     workingDir: 'libs/scss-foundation'
+
+- task: Npm@1
+  displayName: 'Build the scss entry library'
+  inputs:
+    command: 'custom'
+    customCommand: 'run build'
+    workingDir: 'libs/scss-entry'
 
 - task: Npm@1
   displayName: 'Publish entry table'
@@ -168,3 +195,11 @@ steps:
     publishRegistry: useExternalRegistry
     publishEndpoint: npm
     workingDir: 'libs/scss-foundation'
+
+- task: Npm@1
+  displayName: 'Publish the scss entry'
+  inputs:
+    command: publish
+    publishRegistry: useExternalRegistry
+    publishEndpoint: npm
+    workingDir: 'libs/scss-entry'
