@@ -11,11 +11,11 @@
             <input matInput type="text" formControlName="lastName">
         </mat-form-field>
     </div>
-    <div>
-        <entry-form-errors [form]="form"></entry-form-errors>
-    </div>
+
+    <entry-form-errors [form]="form"></entry-form-errors>
+    
     <button mat-flat-button color="accent" type="submit">Submit</button>
-    <button mat-flat-button type="button" (click)="form.reset()">Reset</button>
+    <button mat-flat-button type="button" (click)="form.reset(); validationResult = undefined;">Reset</button>
 </form>
 
 <pre>{{validationResult | json}}</pre>
