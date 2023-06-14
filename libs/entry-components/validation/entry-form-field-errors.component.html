@@ -1,0 +1,3 @@
+<mat-error *ngIf="formControl.hasError(errorKey)">
+    {{formControl.getError(errorKey) | json}}
+</mat-error>

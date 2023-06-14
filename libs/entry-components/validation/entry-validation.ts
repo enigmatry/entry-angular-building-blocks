@@ -2,7 +2,7 @@ import { UntypedFormGroup, ValidationErrors } from '@angular/forms';
 import { IValidationProblemDetails } from './validation-problem-details.interface';
 
 const FORM_ERROR_KEY = 'general';
-const FIELD_ERROR_KEY = 'fromServer';
+const FORM_FIELD_ERROR_KEY = 'fromServer';
 
 const copyServerSideValidationErrorsToForm = (form: UntypedFormGroup, error: IValidationProblemDetails) => {
     form.setErrors(null);
@@ -14,7 +14,7 @@ const copyServerSideValidationErrorsToForm = (form: UntypedFormGroup, error: IVa
             if (form.controls[key]) {
                 const control = form.controls[key];
                 const fieldErrors = {} as ValidationErrors;
-                fieldErrors[FIELD_ERROR_KEY] = validationErrors[key];
+                fieldErrors[FORM_FIELD_ERROR_KEY] = validationErrors[key];
                 control.setErrors(fieldErrors);
                 control.markAsTouched();
             } else {
@@ -30,5 +30,7 @@ const copyServerSideValidationErrorsToForm = (form: UntypedFormGroup, error: IVa
 };
 
 export {
+    FORM_ERROR_KEY,
+    FORM_FIELD_ERROR_KEY,
     copyServerSideValidationErrorsToForm
 };
