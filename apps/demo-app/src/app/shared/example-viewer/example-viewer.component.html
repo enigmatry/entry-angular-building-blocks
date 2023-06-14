@@ -12,7 +12,7 @@
         <mat-tab label="TS">
             <app-code-view [codeContent]="typescriptFile" codeType="ts"></app-code-view>
         </mat-tab>
-        <mat-tab label="SCSS" *ngIf="stylesFile">
+        <mat-tab label="SCSS" *ngIf="!noScss && stylesFile">
             <app-code-view [codeContent]="stylesFile" codeType="scss"></app-code-view>
         </mat-tab>
         <mat-tab *ngFor="let file of extraFiles" [label]="file.definition.name">
