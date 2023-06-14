@@ -6,7 +6,7 @@ import { InjectionToken } from '@angular/core';
 export class EntrySearchFilterConfig {
     /** Apply search filters button label (default 'Apply') */
     applyButtonText: string;
-    /** LAbel for 'none selected' select filter option */
+    /** Label for 'none selected' select filter option */
     noneSelectedOptionText: string;
 
     constructor(config: Partial<EntrySearchFilterConfig> = {}) {
