@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 
 /**
  * A component used to display back-end validation errors on form level (errors that are not connected to the specific form field).
@@ -12,5 +12,5 @@ import { FormGroup } from '@angular/forms';
   styleUrls: ['./entry-form-errors.component.scss']
 })
 export class EntryFormErrorsComponent {
-  @Input() form: FormGroup;
+  @Input() form: UntypedFormGroup;
 }
