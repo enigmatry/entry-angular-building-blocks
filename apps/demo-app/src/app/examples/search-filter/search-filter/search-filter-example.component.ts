@@ -3,8 +3,8 @@ import { UsersService } from './users.service';
 import {
   SearchFilterBase,
   SearchFilterParams,
+  SelectFilterOption,
   SelectSearchFilter,
-  SelectSearchFilterOption,
   TextSearchFilter,
 } from '@enigmatry/entry-components/search-filter';
 import { map } from 'rxjs/operators';
@@ -54,7 +54,7 @@ export class SearchFilterExampleComponent {
         multiSelect: true,
         options: Object.values(Occupation)
           .filter(value => typeof(value) === 'number')
-          .map((value: number) => new SelectSearchFilterOption(
+          .map((value: number) => new SelectFilterOption(
             value, Occupation[value].replace(/^[a-z]/, x => x.toUpperCase())))
       }),
       new SelectSearchFilter({
@@ -64,7 +64,7 @@ export class SearchFilterExampleComponent {
         multiSelect: false,
         options$: this._usersService
           .getUsernames()
-          .pipe(map(usernames => usernames.map(un => new SelectSearchFilterOption(un, un))))
+          .pipe(map(usernames => usernames.map(un => new SelectFilterOption(un, un))))
       })
     ];
   }
