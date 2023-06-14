@@ -23,6 +23,10 @@ const routes: Routes = [
   {
     path: RouteSegments.toolbar,
     loadChildren: () => import('./features/toolbar/toolbar.module').then(module => module.ToolbarModule)
+  },
+  {
+    path: RouteSegments.validation,
+    loadChildren: () => import('./features/validation/validation.module').then(module => module.ValidationModule)
   }
 ];
 
