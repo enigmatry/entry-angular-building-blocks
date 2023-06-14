@@ -16,15 +16,20 @@
 <li><a href="../modules/_enigmatry_entry_components.html">@enigmatry/entry-components</a></li>
 <li><a href="../modules/_enigmatry_entry_components.search_filter_public_api.html">search-filter/public-api</a></li>
 <li><a href="_enigmatry_entry_components.search_filter_public_api.SelectSearchFilter.html">SelectSearchFilter</a></li></ul>
-<h1>Class SelectSearchFilter</h1></div>
+<h1>Class SelectSearchFilter&lt;T&gt;</h1></div>
 <section class="tsd-panel tsd-comment">
 <div class="tsd-comment tsd-typography"><p>Search filter select input field configuration. Select options can be provided as fixed list (<code>options</code>)
 or observable (dynamic) list (<code>options$</code>).</p>
-</div></section>
+</div></section> 
+<section class="tsd-panel">
+<h4>Type Parameters</h4>
+<ul class="tsd-type-parameter-list">
+<li>
+<h4><span class="tsd-kind-type-parameter">T</span></h4></li></ul></section> 
 <section class="tsd-panel tsd-hierarchy">
 <h4>Hierarchy</h4>
 <ul class="tsd-hierarchy">
-<li><a href="_enigmatry_entry_components.search_filter_public_api.SearchFilterBase.html" class="tsd-signature-type tsd-kind-class">SearchFilterBase</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
+<li><a href="_enigmatry_entry_components.search_filter_public_api.SearchFilterBase.html" class="tsd-signature-type tsd-kind-class">SearchFilterBase</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">&gt;</span>
 <ul class="tsd-hierarchy">
 <li><span class="target">SelectSearchFilter</span></li></ul></li></ul></section>
 <section class="tsd-panel-group tsd-index-group">
@@ -49,7 +54,7 @@ or observable (dynamic) list (<code>options$</code>).</p>
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member tsd-is-inherited"><a id="formControl" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>form<wbr/>Control</span><a href="#formControl" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" id="icon-anchor-a"></path><path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" id="icon-anchor-b"></path><path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" id="icon-anchor-c"></path></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-property">form<wbr/>Control</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type ">FormControl</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></div>
+<div class="tsd-signature"><span class="tsd-kind-property">form<wbr/>Control</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type ">FormControl</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">&gt;</span></div>
 <div class="tsd-comment tsd-typography"><p>A reference to the form control it represents</p>
 </div><aside class="tsd-sources">
 <p>Inherited from <a href="_enigmatry_entry_components.search_filter_public_api.SearchFilterBase.html">SearchFilterBase</a>.<a href="_enigmatry_entry_components.search_filter_public_api.SearchFilterBase.html#formControl">formControl</a></p></aside></section>
@@ -79,12 +84,12 @@ If it is set to false, &#39;none selected&#39; option becomes available as a fir
 </div></section>
 <section class="tsd-panel tsd-member"><a id="options" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>options</span><a href="#options" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-property">options</span><span class="tsd-signature-symbol">:</span> <a href="_enigmatry_entry_components.search_filter_public_api.SelectSearchFilterOption.html" class="tsd-signature-type tsd-kind-class">SelectSearchFilterOption</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
+<div class="tsd-signature"><span class="tsd-kind-property">options</span><span class="tsd-signature-symbol">:</span> <a href="_enigmatry_entry_components.search_filter_public_api.SelectFilterOption.html" class="tsd-signature-type tsd-kind-class">SelectFilterOption</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
 <div class="tsd-comment tsd-typography"><p>Fixed list of select filter options (default is empty list)</p>
 </div></section>
 <section class="tsd-panel tsd-member"><a id="options_" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>options$</span><a href="#options_" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-property">options$</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type ">Observable</span><span class="tsd-signature-symbol">&lt;</span><a href="_enigmatry_entry_components.search_filter_public_api.SelectSearchFilterOption.html" class="tsd-signature-type tsd-kind-class">SelectSearchFilterOption</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></div>
+<div class="tsd-signature"><span class="tsd-kind-property">options$</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type ">Observable</span><span class="tsd-signature-symbol">&lt;</span><a href="_enigmatry_entry_components.search_filter_public_api.SelectFilterOption.html" class="tsd-signature-type tsd-kind-class">SelectFilterOption</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></div>
 <div class="tsd-comment tsd-typography"><p>Observable (dynamic) list of select filter options</p>
 </div></section>
 <section class="tsd-panel tsd-member tsd-is-inherited"><a id="placeholder" class="tsd-anchor"></a>
@@ -101,7 +106,7 @@ If it is set to false, &#39;none selected&#39; option becomes available as a fir
 <p>Inherited from <a href="_enigmatry_entry_components.search_filter_public_api.SearchFilterBase.html">SearchFilterBase</a>.<a href="_enigmatry_entry_components.search_filter_public_api.SearchFilterBase.html#type">type</a></p></aside></section>
 <section class="tsd-panel tsd-member tsd-is-inherited"><a id="value" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>value</span><a href="#value" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-property">value</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+<div class="tsd-signature"><span class="tsd-kind-property">value</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type tsd-kind-type-parameter">T</span></div>
 <div class="tsd-comment tsd-typography"><p>Default value to be displayed/selected in the input control</p>
 </div><aside class="tsd-sources">
 <p>Inherited from <a href="_enigmatry_entry_components.search_filter_public_api.SearchFilterBase.html">SearchFilterBase</a>.<a href="_enigmatry_entry_components.search_filter_public_api.SearchFilterBase.html#value">value</a></p></aside></section></section></div>
@@ -159,8 +164,8 @@ If it is set to false, &#39;none selected&#39; option becomes available as a fir
 <li><a href="_enigmatry_entry_components.search_filter_public_api.EntrySearchFilterComponent.html"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-128-path"></use><use href="#icon-128-text"></use></svg><span>Entry<wbr/>Search<wbr/>Filter<wbr/>Component</span></a></li>
 <li><a href="_enigmatry_entry_components.search_filter_public_api.EntrySearchFilterConfig.html"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-128-path"></use><use href="#icon-128-text"></use></svg><span>Entry<wbr/>Search<wbr/>Filter<wbr/>Config</span></a></li>
 <li><a href="_enigmatry_entry_components.search_filter_public_api.SearchFilterBase.html"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-128-path"></use><use href="#icon-128-text"></use></svg><span>Search<wbr/>Filter<wbr/>Base</span></a></li>
+<li><a href="_enigmatry_entry_components.search_filter_public_api.SelectFilterOption.html"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-128-path"></use><use href="#icon-128-text"></use></svg><span>Select<wbr/>Filter<wbr/>Option</span></a></li>
 <li><a href="_enigmatry_entry_components.search_filter_public_api.SelectSearchFilter.html" class="current"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-128-path"></use><use href="#icon-128-text"></use></svg><span>Select<wbr/>Search<wbr/>Filter</span></a></li>
-<li><a href="_enigmatry_entry_components.search_filter_public_api.SelectSearchFilterOption.html"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-128-path"></use><use href="#icon-128-text"></use></svg><span>Select<wbr/>Search<wbr/>Filter<wbr/>Option</span></a></li>
 <li><a href="_enigmatry_entry_components.search_filter_public_api.TextSearchFilter.html"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-128-path"></use><use href="#icon-128-text"></use></svg><span>Text<wbr/>Search<wbr/>Filter</span></a></li>
 <li><a href="../types/_enigmatry_entry_components.search_filter_public_api.SearchFilterParams.html"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4194304-path"></use><use href="#icon-4194304-text"></use></svg><span>Search<wbr/>Filter<wbr/>Params</span></a></li></ul></div></details></li>
 <li>
