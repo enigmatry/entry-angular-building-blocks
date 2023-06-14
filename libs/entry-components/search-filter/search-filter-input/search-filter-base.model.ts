@@ -37,4 +37,8 @@ export class SearchFilterBase<T> {
       this.formControl.patchValue(value);
     }
   }
+
+  toFormControl(): FormControl<T> {
+    return new FormControl<T>(this.value);
+  }
 }

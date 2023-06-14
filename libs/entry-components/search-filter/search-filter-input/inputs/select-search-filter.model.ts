@@ -7,7 +7,7 @@ import { SelectSearchFilterOption } from './select-search-filter-option.model';
  * Search filter select input field configuration. Select options can be provided as fixed list (`options`)
  * or observable (dynamic) list (`options$`).
  */
-export class SelectSearchFilter extends SearchFilterBase<any> {
+export class SelectSearchFilter<T> extends SearchFilterBase<T> {
     override controlType = ControlType.select;
     /** Fixed list of select filter options (default is empty list) */
     options: SelectSearchFilterOption[] = [];
@@ -19,7 +19,7 @@ export class SelectSearchFilter extends SearchFilterBase<any> {
      * */
     multiSelect = true;
 
-    constructor(options: Partial<SelectSearchFilter> = {}) {
+    constructor(options: Partial<SelectSearchFilter<T>> = {}) {
         super(options);
         this.options = options.options;
         this.options$ = options.options$;

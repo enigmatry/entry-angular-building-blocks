@@ -1,9 +1,8 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
-import { FormControl, UntypedFormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { SearchFilterParams } from './search-filter-params.type';
 import { ENTRY_SEARCH_FILTER_CONFIG, EntrySearchFilterConfig } from './search-filter-config.model';
-import { ControlType } from './search-filter-input/control-type.model';
-import { SearchFilterBase, SelectSearchFilter } from './public-api';
+import { SearchFilterBase } from './public-api';
 
 /**
  * Entry SearchFilter component.
@@ -39,23 +38,11 @@ export class EntrySearchFilterComponent implements OnInit {
   toFormGroup(searchFilters: SearchFilterBase<any>[]) {
     const group: any = {};
     searchFilters.forEach(searchFilter => {
-      const formControl = this.toFormControl(searchFilter);
+      const formControl = searchFilter.toFormControl();
       group[searchFilter.key] = formControl;
       searchFilter.formControl = formControl;
     });
     return new UntypedFormGroup(group);
   }
-
-  private toFormControl(searchFilter: SearchFilterBase<any>): FormControl {
-    switch (searchFilter.controlType) {
-      case ControlType.text:
-        return new FormControl<string>(searchFilter.value || '');
-      case ControlType.select:
-        return new FormControl<any | [] | undefined>(
-          (searchFilter as SelectSearchFilter).multiSelect
-            ? searchFilter.value ?? []
-            : searchFilter.value || undefined);
-      default: throw new Error(`FormControl not defined for '${searchFilter.controlType}' filter type`);
-    }
-  }
 }
+
