@@ -25,11 +25,11 @@
     "eslint-plugin-promise": "6.1.1",
     "eslint-plugin-unused-imports": "2.0.0",
     "eslint-plugin-xss": "0.1.12",
-    "@angular-eslint/builder": "14.4.0",
-    "@angular-eslint/eslint-plugin": "14.4.0",
-    "@angular-eslint/eslint-plugin-template": "14.4.0",
-    "@angular-eslint/schematics": "14.4.0",
-    "@angular-eslint/template-parser": "14.4.0"
+    "@angular-eslint/builder": "15.2.1",
+    "@angular-eslint/eslint-plugin": "15.2.1",
+    "@angular-eslint/eslint-plugin-template": "15.2.1",
+    "@angular-eslint/schematics": "15.2.1",
+    "@angular-eslint/template-parser": "15.2.1"
   },
   "peerDependencies": {
     "eslint": "8.37.0",
@@ -44,11 +44,11 @@
     "eslint-plugin-promise": "6.1.1",
     "eslint-plugin-unused-imports": "2.0.0",
     "eslint-plugin-xss": "0.1.12",
-    "@angular-eslint/builder": "14.4.0",
-    "@angular-eslint/eslint-plugin": "14.4.0",
-    "@angular-eslint/eslint-plugin-template": "14.4.0",
-    "@angular-eslint/schematics": "14.4.0",
-    "@angular-eslint/template-parser": "14.4.0"
+    "@angular-eslint/builder": "15.2.1",
+    "@angular-eslint/eslint-plugin": "15.2.1",
+    "@angular-eslint/eslint-plugin-template": "15.2.1",
+    "@angular-eslint/schematics": "15.2.1",
+    "@angular-eslint/template-parser": "15.2.1"
   },
   "publishConfig": {
     "access": "public"
