@@ -10,9 +10,9 @@ import { SelectFilterOption } from './select-filter-option.model';
 export class SelectSearchFilter<T> extends SearchFilterBase<T> {
   override controlType = ControlType.select;
   /** Fixed list of select filter options (default is empty list) */
-  options: SelectFilterOption[] = [];
+  options: SelectFilterOption<T>[] = [];
   /** Observable (dynamic) list of select filter options */
-  options$: Observable<SelectFilterOption[]> | undefined;
+  options$: Observable<SelectFilterOption<T>[]> | undefined;
   /**
    * Enables selection of multiple options (default is true).
    * If it is set to false, 'none selected' option becomes available as a first option.
