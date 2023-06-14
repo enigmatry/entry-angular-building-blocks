@@ -25,6 +25,7 @@ interface IExtraFile {
 export class ExampleViewerComponent implements OnDestroy {
   @Input() path: string;
   @Input() title = 'Example';
+  @Input() noScss = false;
   @Input() extraFileDefinitions: ICodeFileDefinition[] = [];
 
   viewCode = false;
