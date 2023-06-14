@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { COMPONENT_DEFINITIONS } from '../../shared/models/component-definitions';
 import { RouteSegments } from '../../shared/models/route-segments';
+import { ICodeFileDefinition } from '../../shared/example-viewer/code-file-definition.interface';
 
 @Component({
   selector: 'app-validation',
@@ -9,4 +10,11 @@ import { RouteSegments } from '../../shared/models/route-segments';
 })
 export class ValidationComponent {
   componentDefinition = COMPONENT_DEFINITIONS.find(c => c.route === RouteSegments.validation);
+  extraFiles: ICodeFileDefinition[] = [
+    {
+      name: 'validation.service.ts',
+      path: 'validation\\validation.service',
+      type: 'ts'
+    }
+  ];
 }

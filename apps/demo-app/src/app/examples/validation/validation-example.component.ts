@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, UntypedFormGroup } from '@angular/forms';
+import { ValidationService } from './validation.service';
+import {
+  IValidationProblemDetails,
+  copyServerSideValidationErrorsToForm
+} from '@enigmatry/entry-components';
 
 @Component({
   selector: 'app-validation-example',
@@ -7,23 +12,28 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   styleUrls: ['./validation-example.component.scss']
 })
 export class ValidationExampleComponent implements OnInit {
-  form: FormGroup;
+  form: UntypedFormGroup;
+  validationResult: any;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private _formBuilder: FormBuilder,
+    private _validationService: ValidationService) { }
 
   ngOnInit(): void {
-    this.form = this.formBuilder.group({
+    this.form = this._formBuilder.group({
       firstName: ['John'],
       lastName: ['Doe']
     });
   }
 
   submitForm() {
-    if (this.form.valid) {
-      const firstName = this.form.get('firstName').value;
-      const lastName = this.form.get('lastName').value;
-
-      this.form.reset();
-    }
+    this._validationService.submitWithValidationErrors()
+      .subscribe({
+        error: (error: IValidationProblemDetails) => {
+          copyServerSideValidationErrorsToForm(this.form, error);
+          this.validationResult = error;
+          console.log(JSON.stringify(error));
+        }
+      });
   }
 }
