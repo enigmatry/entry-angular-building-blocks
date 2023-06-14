@@ -1,0 +1,5 @@
+<div *ngIf="form.errors">
+    <div *ngFor="let error of form.errors.general">
+        <span class="mat-error error">* {{error}}</span>
+    </div>
+</div>

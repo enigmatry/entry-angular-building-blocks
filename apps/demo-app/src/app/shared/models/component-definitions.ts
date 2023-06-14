@@ -42,7 +42,7 @@ const COMPONENT_DEFINITIONS: IComponentDefinition[] = [
         shortDescription: `Set of components and helper functions used to apply server side validation messages to the forms.`,
         route: RouteSegments.validation,
         readmePath: '/entry-components/validation/README.md',
-        apiDocsPath: 'assets/api/modules/_enigmatry_entry_components.toolbar_public_api.html'
+        apiDocsPath: 'assets/api/modules/_enigmatry_entry_components.validation_public_api.html'
     }
 ];
 
