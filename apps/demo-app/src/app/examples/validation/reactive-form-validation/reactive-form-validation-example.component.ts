@@ -1,15 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, UntypedFormGroup } from '@angular/forms';
-import { ValidationService } from './validation.service';
-import {
-  IValidationProblemDetails,
-  copyServerSideValidationErrorsToForm
-} from '@enigmatry/entry-components';
+import { IValidationProblemDetails, copyServerSideValidationErrorsToForm } from '@enigmatry/entry-components';
+import { ValidationService } from '../validation.service';
 
 @Component({
-  selector: 'app-validation-example',
-  templateUrl: './validation-example.component.html',
-  styleUrls: ['./validation-example.component.scss']
+  selector: 'app-reactive-form-validation-example',
+  templateUrl: './reactive-form-validation-example.component.html',
+  styleUrls: ['./reactive-form-validation-example.component.scss']
 })
 export class ValidationExampleComponent implements OnInit {
   form: UntypedFormGroup | undefined;

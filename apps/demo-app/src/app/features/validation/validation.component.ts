@@ -10,11 +10,4 @@ import { ICodeFileDefinition } from '../../shared/example-viewer/code-file-defin
 })
 export class ValidationComponent {
   componentDefinition = COMPONENT_DEFINITIONS.find(c => c.route === RouteSegments.validation);
-  extraFiles: ICodeFileDefinition[] = [
-    {
-      name: 'validation.service.ts',
-      path: 'validation\\validation.service',
-      type: 'ts'
-    }
-  ];
 }

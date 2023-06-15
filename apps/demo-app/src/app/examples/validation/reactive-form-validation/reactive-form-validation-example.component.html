@@ -21,5 +21,8 @@
         <button mat-flat-button type="button" (click)="form.reset(); validationResult = undefined;">Reset</button>
     </form>
 </div>
-
-<pre>{{validationResult | json}}</pre>
+<br/>
+<p>
+    Validation error response:  
+</p>
+<pre><code>{{validationResult | json}}</code></pre>
