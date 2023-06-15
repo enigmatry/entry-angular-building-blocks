@@ -31,7 +31,6 @@ export class ValidationExampleComponent implements OnInit {
         error: (error: IValidationProblemDetails) => {
           copyServerSideValidationErrorsToForm(this.form, error);
           this.validationResult = error;
-          const errors = this.form.get('firstName').errors;
         }
       });
   }
