@@ -8,7 +8,7 @@ import { ValidationService } from '../validation.service';
   templateUrl: './reactive-form-validation-example.component.html',
   styleUrls: ['./reactive-form-validation-example.component.scss']
 })
-export class ValidationExampleComponent implements OnInit {
+export class ReactiveFormExampleComponent implements OnInit {
   form: UntypedFormGroup | undefined;
   validationResult: any;
 
