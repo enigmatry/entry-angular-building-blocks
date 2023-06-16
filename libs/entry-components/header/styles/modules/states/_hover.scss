@@ -1,0 +1,21 @@
+@use '../variables' as vars;
+
+/* stylelint-disable-next-line max-line-length */
+@mixin default($background: vars.$primary, $hover-background: vars.$accent, $color: vars.$font-color-lightest, $disabled-background: vars.$disabled) {
+	background-color: $background;
+
+	&:hover {
+		background-color: $hover-background;
+		color: $color;
+	}
+
+	&:disabled, &.disabled {
+		background-color: $disabled-background;
+		cursor: not-allowed;
+
+		/* stylelint-disable-next-line selector-max-pseudo-class */
+		&:hover {
+			background-color: $disabled-background;
+		}
+	}
+}

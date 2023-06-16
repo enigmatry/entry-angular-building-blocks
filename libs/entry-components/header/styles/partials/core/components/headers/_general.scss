@@ -1,8 +1,10 @@
 @use '../../../../../../styles/modules/variables' as vars;
+@use '../../../../modules/typography/fonts';
 // @use '../../../../../../styles/modules/breakpoints' as breakpoints;
 
 .entry-header {
 	padding: 4px vars.$large-gap vars.$default-gap;
+	background: vars.$primary-lightest;
 
 	// @include breakpoints.apply-on-tablet() {
 	// 	padding: {
@@ -10,8 +12,10 @@
 	// 		bottom: vars.$large-gap;
 	// 	};
 	// }
-    
-	.header-item {
+
+	.entry-title {
+		@include fonts.title-font(32px);
+		color: vars.$primary;
 		margin-top: 20px;
 	}
 
