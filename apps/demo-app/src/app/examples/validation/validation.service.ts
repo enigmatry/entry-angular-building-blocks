@@ -33,7 +33,7 @@ export class ValidationService {
         'personalInfo.firstName': ['This name is not cool enough.'],
         'personalInfo.lastName': ['Also not cool.'],
         'partnerInfo.firstName': ['Already exist.'],
-        'partnerInfo.lastName': ['Cannot be same last name.']
+        'partnerInfo.lastName': ['Cannot be the same last name.']
       }
     } as IValidationProblemDetails);
   }
