@@ -1,6 +1,9 @@
 # Entry Search Filter
 
-Entry component for providing standard filtering capabilities that can be consumed by entry-table component, but also any other list data representation component like Angular material table component.
+Entry component for providing standard filtering capabilities that can be consumed by entry-table component, but also any other list data representation component like Angular material table component. It supports the following filtering inputs:
+
+* Text filter
+* Select filter (supports fixed and dynamic (Observable) options)
 
 ## Imports
 
@@ -10,8 +13,8 @@ import { EntrySearchFilterModule } from '@enigmatry/entry-components/search-filt
 
 Styles import:
 
-```css
-@use '@enigmatry/entry-components/styles/generate' as entry;
+```scss
+@use 'entry-components/styles/generate' as entry;
 
 @include entry.generate(APP_THEME, APP_TYPOGRAPHY);
 ```
@@ -49,7 +52,8 @@ import {
     {
       provide: ENTRY_SEARCH_FILTER_CONFIG,
       useFactory: () => new EntrySearchFilterConfig({
-        applyButtonText: 'Filter'
+        applyButtonText: 'Filter',
+        noneSelectedOptionText: 'None'
       })
     }
   ]

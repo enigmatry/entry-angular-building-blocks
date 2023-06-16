@@ -7,6 +7,7 @@
 /dist
 /tmp
 /out-tsc
+/libs/scss-entry/dist/*.css
 /libs/scss-foundation/coverage
 /libs/scss-foundation/dist/scss-foundation-modules.css
 
