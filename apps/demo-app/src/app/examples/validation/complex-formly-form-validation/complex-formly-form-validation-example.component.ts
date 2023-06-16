@@ -11,6 +11,21 @@ import { ValidationService } from '../validation.service';
 })
 export class ComplexFormlyFormValidationExampleComponent {
   form = new FormGroup({});
+  model = {
+    personalInfo: {
+      firstName: 'John',
+      lastName: 'Doe'
+    },
+    partnerInfo: {
+      firstName: 'Johanna',
+      lastName: 'Doe'
+    },
+    children: [
+      { name: 'Mišo' },
+      { name: 'Jovo' },
+      { name: 'Mila' }
+    ]
+  };
   fields: FormlyFieldConfig[] = [
     {
       type: 'field-set',
@@ -20,13 +35,11 @@ export class ComplexFormlyFormValidationExampleComponent {
         {
           key: 'firstName',
           type: 'input',
-          defaultValue: 'John',
           templateOptions: { label: 'First name' }
         },
         {
           key: 'lastName',
           type: 'input',
-          defaultValue: 'Doe',
           templateOptions: { label: 'Last name' }
         }
       ]
@@ -39,16 +52,45 @@ export class ComplexFormlyFormValidationExampleComponent {
         {
           key: 'firstName',
           type: 'input',
-          defaultValue: 'Johanna',
           templateOptions: { label: 'First name' }
         },
         {
           key: 'lastName',
           type: 'input',
-          defaultValue: 'Doe',
           templateOptions: { label: 'Last name' }
         }
       ]
+    },
+    {
+      key: 'children',
+      defaultValue: [ undefined ],
+      fieldArray: {
+        key: 'children',
+        fieldGroup: [
+          {
+            key: 'name'
+          }
+        ]
+      }
+      // fieldArray: {
+      //   fieldGroup: [
+      //     {
+      //       key: 'name',
+      //       type: 'input',
+      //       templateOptions: { label: 'Name' }
+      //     },
+      //     {
+      //       key: 'name',
+      //       type: 'input',
+      //       templateOptions: { label: 'Name' }
+      //     },
+      //     {
+      //       key: 'name',
+      //       type: 'input',
+      //       templateOptions: { label: 'Name' }
+      //     }
+      //   ]
+      // }
     }
   ];
   validationResult: any;
