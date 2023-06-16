@@ -7,11 +7,14 @@ import { ReactiveFormExampleComponent } from './reactive-form-validation/reactiv
 import { FormlyFormValidationExampleComponent } from './formly-form-validation/formly-form-validation-example.component';
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyMaterialModule } from '@ngx-formly/material';
+import { ComplexFormlyFormValidationExampleComponent }
+from './complex-formly-form-validation/complex-formly-form-validation-example.component';
 
 @NgModule({
   declarations: [
     ReactiveFormExampleComponent,
-    FormlyFormValidationExampleComponent
+    FormlyFormValidationExampleComponent,
+    ComplexFormlyFormValidationExampleComponent
   ],
   imports: [
     CommonModule,
@@ -20,6 +23,9 @@ import { FormlyMaterialModule } from '@ngx-formly/material';
     ReactiveFormsModule,
     EntryValidationModule,
     FormlyMaterialModule,
+    /**
+     * Formly requires configuring filed validation message mappers to be configured!
+     */
     FormlyModule.forChild({
       validationMessages: [
           { name: FORM_FIELD_ERROR_KEY, message: (error, _) => error }
@@ -28,7 +34,8 @@ import { FormlyMaterialModule } from '@ngx-formly/material';
   ],
   exports: [
     ReactiveFormExampleComponent,
-    FormlyFormValidationExampleComponent
+    FormlyFormValidationExampleComponent,
+    ComplexFormlyFormValidationExampleComponent
   ]
 })
 export class ValidationExampleModule { }

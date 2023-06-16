@@ -1,0 +1,13 @@
+<form [formGroup]="form" (ngSubmit)="submitForm()" class="formly-form">
+    <formly-form [fields]="fields" [form]="form"></formly-form>
+
+    <entry-form-errors [form]="form"></entry-form-errors>
+    
+    <button mat-flat-button color="accent" type="submit">Submit</button>
+    <button mat-flat-button type="button" (click)="form.reset(); validationResult = undefined;">Reset</button>
+</form>
+<br/>
+<p>
+    Validation error response (<em>IValidationProblemDetails</em>): 
+</p>
+<pre><code>{{validationResult | json}}</code></pre>
