@@ -1,18 +1,33 @@
-import { UntypedFormGroup, ValidationErrors } from '@angular/forms';
+import { AbstractControl, FormArray, FormGroup, UntypedFormGroup, ValidationErrors } from '@angular/forms';
 import { IValidationProblemDetails } from './validation-problem-details.interface';
 
 const FORM_ERROR_KEY = 'general';
 const FORM_FIELD_ERROR_KEY = 'fromServer';
 
-const copyServerSideValidationErrorsToForm = (form: UntypedFormGroup, error: IValidationProblemDetails) => {
+const getFormControl = (formControl: AbstractControl | null | undefined, keys: string[]): AbstractControl | null | undefined => {
+    if (keys.length === 0) {
+        return formControl;
+    }
+    if (formControl instanceof FormGroup) {
+        return getFormControl(formControl.controls[keys[0].charAt(0).toLowerCase() + keys[0].slice(1)], keys.slice(1));
+    }
+    if (formControl instanceof FormArray && +keys[0] >= 0) {
+        return getFormControl(formControl.controls[+keys[0]], keys.slice(1));
+    }
+    return null;
+};
+
+const handleValidationProblemDetails = (form: UntypedFormGroup, error: IValidationProblemDetails) => {
     form.setErrors(null);
     const validationErrors = error?.errors;
     const formErrors: ValidationErrors = {};
 
     if (validationErrors) {
+        // eslint-disable-next-line guard-for-in
         for (const key in validationErrors) {
-            if (form.controls[key]) {
-                const control = form.controls[key];
+            const control = getFormControl(form, key.split(/[.[\]]+/gu));
+
+            if (control) {
                 const fieldErrors = {} as ValidationErrors;
                 fieldErrors[FORM_FIELD_ERROR_KEY] = validationErrors[key];
                 control.setErrors(fieldErrors);
@@ -30,7 +45,6 @@ const copyServerSideValidationErrorsToForm = (form: UntypedFormGroup, error: IVa
 };
 
 export {
-    FORM_ERROR_KEY,
     FORM_FIELD_ERROR_KEY,
-    copyServerSideValidationErrorsToForm
+    handleValidationProblemDetails
 };

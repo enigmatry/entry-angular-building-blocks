@@ -1,1 +1,1 @@
-<mat-error *ngFor="let error of fieldControl.getError(errorKey)">{{error}}</mat-error>
+<mat-error *ngIf="fieldControl.errors | asString as error">{{error}}</mat-error>

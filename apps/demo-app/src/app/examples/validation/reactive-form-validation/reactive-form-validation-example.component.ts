@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, UntypedFormGroup } from '@angular/forms';
-import { IValidationProblemDetails, copyServerSideValidationErrorsToForm } from '@enigmatry/entry-components';
+import { FormBuilder, UntypedFormGroup } from '@angular/forms';
+import { IValidationProblemDetails, handleValidationProblemDetails } from '@enigmatry/entry-components';
 import { ValidationService } from '../validation.service';
 
 @Component({
@@ -27,7 +27,7 @@ export class ReactiveFormExampleComponent implements OnInit {
     this._validationService.submitWithValidationErrors()
       .subscribe({
         error: (error: IValidationProblemDetails) => {
-          copyServerSideValidationErrorsToForm(this.form, error);
+          handleValidationProblemDetails(this.form, error);
           this.validationResult = error;
         }
       });
