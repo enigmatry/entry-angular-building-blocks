@@ -13,12 +13,42 @@ export class ComplexFormlyFormValidationExampleComponent {
   form = new FormGroup({});
   fields: FormlyFieldConfig[] = [
     {
-      key: 'firstName',
-      type: 'input',
-      defaultValue: 'John',
-      templateOptions: {
-        label: 'First name'
-      }
+      type: 'field-set',
+      key: 'personalInfo',
+      templateOptions: { label: 'Personal Info' },
+      fieldGroup: [
+        {
+          key: 'firstName',
+          type: 'input',
+          defaultValue: 'John',
+          templateOptions: { label: 'First name' }
+        },
+        {
+          key: 'lastName',
+          type: 'input',
+          defaultValue: 'Doe',
+          templateOptions: { label: 'Last name' }
+        }
+      ]
+    },
+    {
+      type: 'field-set',
+      key: 'partnerInfo',
+      templateOptions: { label: 'Partner Info' },
+      fieldGroup: [
+        {
+          key: 'firstName',
+          type: 'input',
+          defaultValue: 'Johanna',
+          templateOptions: { label: 'First name' }
+        },
+        {
+          key: 'lastName',
+          type: 'input',
+          defaultValue: 'Doe',
+          templateOptions: { label: 'Last name' }
+        }
+      ]
     }
   ];
   validationResult: any;
@@ -26,7 +56,7 @@ export class ComplexFormlyFormValidationExampleComponent {
   constructor(private _validationService: ValidationService) {}
 
   submitForm() {
-    this._validationService.submitWithValidationErrors()
+    this._validationService.submitWithComplexValidationErrors()
       .subscribe({
         error: (error: IValidationProblemDetails) => {
           handleValidationProblemDetails(this.form, error);

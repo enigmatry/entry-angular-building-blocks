@@ -9,12 +9,14 @@ import { FormlyModule } from '@ngx-formly/core';
 import { FormlyMaterialModule } from '@ngx-formly/material';
 import { ComplexFormlyFormValidationExampleComponent }
 from './complex-formly-form-validation/complex-formly-form-validation-example.component';
+import { FieldSetComponent } from './complex-formly-form-validation/field-set.component';
 
 @NgModule({
   declarations: [
     ReactiveFormExampleComponent,
     FormlyFormValidationExampleComponent,
-    ComplexFormlyFormValidationExampleComponent
+    ComplexFormlyFormValidationExampleComponent,
+    FieldSetComponent,
   ],
   imports: [
     CommonModule,
@@ -23,12 +25,13 @@ from './complex-formly-form-validation/complex-formly-form-validation-example.co
     ReactiveFormsModule,
     EntryValidationModule,
     FormlyMaterialModule,
-    /**
-     * Formly requires configuring filed validation message mappers to be configured!
-     */
     FormlyModule.forChild({
+      /** Formly requires configuring filed validation message mappers to be configured! */
       validationMessages: [
           { name: FORM_FIELD_ERROR_KEY, message: (error, _) => error }
+      ],
+      types: [
+        { name: 'field-set', component: FieldSetComponent },
       ]
     })
   ],

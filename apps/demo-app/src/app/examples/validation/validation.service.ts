@@ -25,4 +25,16 @@ export class ValidationService {
       }
     } as IValidationProblemDetails);
   }
+
+  submitWithComplexValidationErrors(): Observable<any> {
+    return throwError({
+      errors: {
+        '': ['Personal & Partner do not match.'],
+        'personalInfo.firstName': ['This name is not cool enough.'],
+        'personalInfo.lastName': ['Also not cool.'],
+        'partnerInfo.firstName': ['Already exist.'],
+        'partnerInfo.lastName': ['Cannot be same last name.']
+      }
+    } as IValidationProblemDetails);
+  }
 }
