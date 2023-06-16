@@ -108,6 +108,7 @@ module.exports = {
     "no-extra-semicolons": true,
     "no-invalid-double-slash-comments": true,
     "no-unknown-animations": true,
+    "no-unknown-custom-properties": null,
     "number-max-precision": 2,
     "number-no-trailing-zeros": true,
     "number-leading-zero": "never",
