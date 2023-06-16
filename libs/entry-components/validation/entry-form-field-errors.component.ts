@@ -9,17 +9,17 @@ import { FORM_FIELD_ERROR_KEY } from './entry-validation';
  *
  * @example
  * ```html
- * <entry-form-field-errors [formControl]="myForm.get('Name')"></entry-form-field-errors>
+ * <entry-form-field-errors [fieldControl]="myForm.get('Name')"></entry-form-field-errors>
  * ```
  */
 @Component({
   selector: 'entry-form-field-errors',
   templateUrl: './entry-form-field-errors.component.html',
   styleUrls: ['./entry-form-field-errors.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class EntryFormFieldErrorsComponent {
-  @Input() formControl: AbstractControl;
+  @Input() fieldControl: AbstractControl;
 
   errorKey = FORM_FIELD_ERROR_KEY;
 }

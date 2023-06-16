@@ -17,7 +17,8 @@ export class ValidationService {
           'The combination of First & Last name already exists.',
           'And one more error, just to show off.'
         ],
-        firstName: ['This name is not cool enough.']
+        firstName: ['This name is not cool enough.'],
+        lastName: ['Last name is also not cool :-/']
       }
     } as IValidationProblemDetails);
   }

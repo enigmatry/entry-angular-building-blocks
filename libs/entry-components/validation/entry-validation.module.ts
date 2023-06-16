@@ -14,7 +14,8 @@ import { MatInputModule } from '@angular/material/input';
     MatInputModule
   ],
   exports: [
-    EntryFormErrorsComponent
+    EntryFormErrorsComponent,
+    EntryFormFieldErrorsComponent
   ]
 })
 export class EntryValidationModule { }

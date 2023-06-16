@@ -20,11 +20,11 @@ import { FormlyMaterialModule } from '@ngx-formly/material';
     ReactiveFormsModule,
     EntryValidationModule,
     FormlyMaterialModule,
-    FormlyModule.forChild({
-      validationMessages: [
-          { name: FORM_FIELD_ERROR_KEY, message: (error, _) => error }
-      ]
-    })
+    // FormlyModule.forChild({
+    //   validationMessages: [
+    //       { name: FORM_FIELD_ERROR_KEY, message: (error, _) => error }
+    //   ]
+    // })
   ],
   exports: [
     ValidationExampleComponent,
