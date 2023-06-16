@@ -12,8 +12,6 @@ export class ReactiveFormExampleComponent implements OnInit {
   form: UntypedFormGroup | undefined;
   validationResult: any;
 
-  field: AbstractControl;
-
   constructor(
     private _formBuilder: FormBuilder,
     private _validationService: ValidationService) {}
