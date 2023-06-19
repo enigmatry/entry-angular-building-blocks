@@ -27,6 +27,7 @@ export class ReactiveFormExampleComponent implements OnInit {
     this._validationService.submitWithValidationErrors()
       .subscribe({
         error: (error: IValidationProblemDetails) => {
+          /** Applies received server side validation errors to the form */
           handleValidationProblemDetails(this.form, error);
           this.validationResult = error;
         }

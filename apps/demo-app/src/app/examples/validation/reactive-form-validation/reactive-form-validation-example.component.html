@@ -2,14 +2,17 @@
     <mat-form-field class="example-form-field">
         <mat-label>First name</mat-label>
         <input matInput type="text" formControlName="firstName">
+        <!-- Renders form field level server side validation errors -->
         <entry-form-field-errors [fieldControl]="form.get('firstName')"></entry-form-field-errors>
     </mat-form-field>
     <mat-form-field class="example-form-field">
         <mat-label>Last name</mat-label>
         <input matInput type="text" formControlName="lastName">
+        <!-- Renders form field level server side validation errors -->
         <entry-form-field-errors [fieldControl]="form.get('lastName')"></entry-form-field-errors>
     </mat-form-field>
 
+    <!-- Renders form level server side validation errors -->
     <entry-form-errors [form]="form"></entry-form-errors>
 
     <button mat-flat-button color="accent" type="submit">Submit</button>
