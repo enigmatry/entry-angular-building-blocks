@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, UntypedFormGroup } from '@angular/forms';
+import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { IValidationProblemDetails, handleValidationProblemDetails } from '@enigmatry/entry-components';
 import { ValidationService } from '../validation.service';
 
@@ -18,8 +18,8 @@ export class ReactiveFormExampleComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this._formBuilder.group({
-      firstName: ['John'],
-      lastName: ['Doe']
+      firstName: ['John', Validators.required],
+      lastName: ['Doe', Validators.required]
     });
   }
 

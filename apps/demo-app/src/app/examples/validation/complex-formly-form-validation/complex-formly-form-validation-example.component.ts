@@ -35,12 +35,12 @@ export class ComplexFormlyFormValidationExampleComponent {
         {
           key: 'firstName',
           type: 'input',
-          templateOptions: { label: 'First name' }
+          templateOptions: { label: 'First name', required: true }
         },
         {
           key: 'lastName',
           type: 'input',
-          templateOptions: { label: 'Last name' }
+          templateOptions: { label: 'Last name', required: true }
         }
       ]
     },
@@ -52,12 +52,12 @@ export class ComplexFormlyFormValidationExampleComponent {
         {
           key: 'firstName',
           type: 'input',
-          templateOptions: { label: 'First name' }
+          templateOptions: { label: 'First name', required: true }
         },
         {
           key: 'lastName',
           type: 'input',
-          templateOptions: { label: 'Last name' }
+          templateOptions: { label: 'Last name', required: true }
         }
       ]
     },
