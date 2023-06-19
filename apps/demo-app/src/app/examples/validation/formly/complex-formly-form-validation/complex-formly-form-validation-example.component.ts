@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { IValidationProblemDetails, handleValidationProblemDetails } from '@enigmatry/entry-components';
 import { FormlyFieldConfig } from '@ngx-formly/core';
-import { ValidationService } from '../validation.service';
+import { ValidationService } from '../../validation.service';
 
 @Component({
   selector: 'app-complex-formly-form-validation-example',

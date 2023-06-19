@@ -12,8 +12,8 @@ export class ValidationComponent {
   componentDefinition = COMPONENT_DEFINITIONS.find(c => c.route === RouteSegments.validation);
   extraFiles: ICodeFileDefinition[] = [
     {
-      name: 'validation-example.module.ts',
-      path: 'validation\\validation-example.module',
+      name: 'formly-validation-example.module.ts',
+      path: 'validation\\formly\\formly-validation-example.module',
       type: 'ts'
     }
   ];

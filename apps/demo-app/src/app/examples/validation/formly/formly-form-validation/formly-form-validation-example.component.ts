@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
-import { ValidationService } from '../validation.service';
+import { ValidationService } from '../../validation.service';
 import { IValidationProblemDetails, handleValidationProblemDetails } from '@enigmatry/entry-components';
 
 @Component({
