@@ -10,10 +10,17 @@ import { ICodeFileDefinition } from '../../shared/example-viewer/code-file-defin
 })
 export class ValidationComponent {
   componentDefinition = COMPONENT_DEFINITIONS.find(c => c.route === RouteSegments.validation);
-  extraFiles: ICodeFileDefinition[] = [
+  formlyExtraFiles: ICodeFileDefinition[] = [
     {
       name: 'formly-validation-example.module.ts',
       path: 'validation\\formly\\formly-validation-example.module',
+      type: 'ts'
+    }
+  ];
+  reactiveFormExtraFiles: ICodeFileDefinition[] = [
+    {
+      name: 'reactive-form-validation-example.module.ts',
+      path: 'validation\\reactive-form\\reactive-form-validation-example.module',
       type: 'ts'
     }
   ];
