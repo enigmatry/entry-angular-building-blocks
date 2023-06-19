@@ -10,6 +10,7 @@ import { FormlyMaterialModule } from '@ngx-formly/material';
 import { ComplexFormlyFormValidationExampleComponent }
 from './complex-formly-form-validation/complex-formly-form-validation-example.component';
 import { FieldSetComponent } from './complex-formly-form-validation/field-set.component';
+import { RepeatNameComponent } from './complex-formly-form-validation/repeat-name.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { FieldSetComponent } from './complex-formly-form-validation/field-set.co
     FormlyFormValidationExampleComponent,
     ComplexFormlyFormValidationExampleComponent,
     FieldSetComponent,
+    RepeatNameComponent,
   ],
   imports: [
     CommonModule,
@@ -26,12 +28,14 @@ import { FieldSetComponent } from './complex-formly-form-validation/field-set.co
     EntryValidationModule,
     FormlyMaterialModule,
     FormlyModule.forChild({
-      /** Formly requires configuring filed validation message mappers to be configured! */
       validationMessages: [
-          { name: FORM_FIELD_ERROR_KEY, message: (error, _) => error }
+          /** Map form fields server side validation errors to FORM_FIELD_ERROR_KEY key */
+          { name: FORM_FIELD_ERROR_KEY, message: (error, _) => error },
+          { name: 'required', message: 'Required field.' }
       ],
       types: [
         { name: 'field-set', component: FieldSetComponent },
+        { name: 'repeat-name', component: RepeatNameComponent },
       ]
     })
   ],

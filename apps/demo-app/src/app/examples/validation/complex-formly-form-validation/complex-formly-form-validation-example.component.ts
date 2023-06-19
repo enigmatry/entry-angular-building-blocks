@@ -20,11 +20,7 @@ export class ComplexFormlyFormValidationExampleComponent {
       firstName: 'Johanna',
       lastName: 'Doe'
     },
-    children: [
-      { name: 'Dragana' },
-      { name: 'Jovana' },
-      { name: 'Mila' }
-    ]
+    children: [ 'Dragana', 'Jovana', 'Mila' ]
   };
   fields: FormlyFieldConfig[] = [
     {
@@ -63,34 +59,13 @@ export class ComplexFormlyFormValidationExampleComponent {
     },
     {
       key: 'children',
-      defaultValue: [ undefined ],
+      type: 'repeat-name',
+      templateOptions: { label: 'Children' },
       fieldArray: {
-        key: 'children',
-        fieldGroup: [
-          {
-            key: 'name'
-          }
-        ]
+        key: 'name',
+        type: 'input',
+        templateOptions: { label: 'Name', required: true }
       }
-      // fieldArray: {
-      //   fieldGroup: [
-      //     {
-      //       key: 'name',
-      //       type: 'input',
-      //       templateOptions: { label: 'Name' }
-      //     },
-      //     {
-      //       key: 'name',
-      //       type: 'input',
-      //       templateOptions: { label: 'Name' }
-      //     },
-      //     {
-      //       key: 'name',
-      //       type: 'input',
-      //       templateOptions: { label: 'Name' }
-      //     }
-      //   ]
-      // }
     }
   ];
   validationResult: any;
