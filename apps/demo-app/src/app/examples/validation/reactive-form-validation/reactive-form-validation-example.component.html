@@ -15,7 +15,7 @@
     <!-- Renders form level server side validation errors -->
     <entry-form-errors [form]="form"></entry-form-errors>
 
-    <button mat-flat-button color="accent" type="submit" [disabled]="form.invalid">Submit</button>
+    <button mat-flat-button color="accent" type="submit">Submit</button>
     <button mat-flat-button type="button" (click)="form.reset(); validationResult = undefined;">Reset</button>
 </form>
 <br/>
