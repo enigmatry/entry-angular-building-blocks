@@ -21,8 +21,8 @@ export class ComplexFormlyFormValidationExampleComponent {
       lastName: 'Doe'
     },
     children: [
-      { name: 'Mišo' },
-      { name: 'Jovo' },
+      { name: 'Dragana' },
+      { name: 'Jovana' },
       { name: 'Mila' }
     ]
   };

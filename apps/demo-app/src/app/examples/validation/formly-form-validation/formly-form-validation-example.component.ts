@@ -11,22 +11,20 @@ import { IValidationProblemDetails, handleValidationProblemDetails } from '@enig
 })
 export class FormlyFormValidationExampleComponent {
   form = new FormGroup({});
+  model = {
+    firstName: 'John',
+    lastName: 'Doe'
+  };
   fields: FormlyFieldConfig[] = [
     {
       key: 'firstName',
       type: 'input',
-      defaultValue: 'John',
-      templateOptions: {
-        label: 'First name'
-      }
+      templateOptions: { label: 'First name' }
     },
     {
       key: 'lastName',
       type: 'input',
-      defaultValue: 'Doe',
-      templateOptions: {
-        label: 'Last name'
-      }
+      templateOptions: { label: 'Last name' }
     }
   ];
   validationResult: any;
