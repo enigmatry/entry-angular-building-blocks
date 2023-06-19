@@ -10,8 +10,13 @@
   },
   "license": "Apache-2.0",
   "peerDependencies": {
-    "@angular/common": ">=14.0.0",
-    "@angular/core": ">=14.0.0",
+    "@angular/animations": "^14.0.0",
+    "@angular/cdk": "^14.0.0",
+    "@angular/common": "^14.0.0",
+    "@angular/core": "^14.0.0",
+    "@angular/material": "^14.0.0",
+    "@angular/forms": "^14.0.0",
+    "@angular/platform-browser": "^14.0.0",
     "@ngx-formly/core": "^6.1.0",
     "@ngx-formly/material": "^6.1.0"
   },
@@ -24,7 +29,7 @@
   },
   "devDependencies": {
     "@enigmatry/scss-foundation": "1.1.4",
-    "@enigmatry/stylelint-config": "1.1.4",
+    "@enigmatry/stylelint-config": "1.14.4",
     "sass": "^1.44.0",
     "stylelint": "14.14.1"
   },
