@@ -1,12 +1,11 @@
 import { InjectionToken } from '@angular/core';
-import { Observable } from 'rxjs';
 
 /** Validation message configuration */
 export interface IEntryValidationMessage {
     // Validation key
     name: string;
     // Validation message. Can be resolved dynamically (e.g. when it needs to be translated).
-    message: string | (() => string | Observable<string>);
+    message: string | (() => string);
 }
 
 /**

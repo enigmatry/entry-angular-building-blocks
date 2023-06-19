@@ -24,7 +24,8 @@ import { SharedModule } from '../../../shared/shared.module';
       provide: ENTRY_VALIDATION_CONFIG,
       useFactory: () => new EntryValidationConfig({
         validationMessages: [
-          { name: 'required', message: 'This field is mandatory!' }
+          { name: 'required', message: 'This field is mandatory!' },
+          { name: 'min', message: 'Maximal number of characters is 4.' }
         ]
       })
     }
