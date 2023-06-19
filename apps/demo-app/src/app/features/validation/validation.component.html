@@ -1,9 +1,24 @@
 <app-documentation-content [componentDefinition]="componentDefinition">
     <app-example-viewer
+        title="Reactive Form validation example"
+        path="validation\reactive-form-validation\reactive-form-validation-example.component"
+        noScss="true">
+        <p>
+            Demonstrates how to apply server side validation errors in reactive forms using <em>entry-form-errors</em> and <em>entry-form-field-errors</em> components.
+        </p>
+        <br/>
+        <app-reactive-form-validation-example></app-reactive-form-validation-example>
+    </app-example-viewer>
+    <app-example-viewer
         title="Formly Form validation example"
         path="validation\formly-form-validation\formly-form-validation-example.component"
         [extraFileDefinitions]="extraFiles"
         noScss="true">
+        <p>
+            Demonstrates how to apply server side validation errors in forms built with <a href="https://formly.dev/" target="_blank">Formly</a> package.
+            Same principle applies to the forms generated with <a href="https://github.com/enigmatry/entry-code-generation" target="_blank">Entry Code Generator</a>.
+        </p>
+        <br/>
         <app-formly-form-validation-example></app-formly-form-validation-example>
     </app-example-viewer>
     <app-example-viewer
@@ -11,12 +26,11 @@
         path="validation\complex-formly-form-validation\complex-formly-form-validation-example.component"
         [extraFileDefinitions]="extraFiles"
         noScss="true">
+        <p>
+            Demonstrates how to apply server side validation errors in forms built with <a href="https://formly.dev/" target="_blank">Formly</a> package.
+            Same principle applies to the forms generated with <a href="https://github.com/enigmatry/entry-code-generation" target="_blank">Entry Code Generator</a>.
+        </p>
+        <br/>
         <app-complex-formly-form-validation-example></app-complex-formly-form-validation-example>
-    </app-example-viewer>
-    <app-example-viewer
-        title="Reactive Form validation example"
-        path="validation\reactive-form-validation\reactive-form-validation-example.component"
-        noScss="true">
-        <app-reactive-form-validation-example></app-reactive-form-validation-example>
     </app-example-viewer>
 </app-documentation-content>
