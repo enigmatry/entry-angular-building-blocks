@@ -36,7 +36,7 @@ export class ValidationService {
         'partnerInfo.lastName': ['Cannot be the same last name.'],
         'children.0': ['Oldest'],
         'children.1': ['Middle'],
-        'children.2': ['Good kid'],
+        'children.2': ['Good kid']
       }
     } as IValidationProblemDetails);
   }
