@@ -3,17 +3,17 @@
 
 $theme: (
 	header: (
-		header: (
+		entry-header: (
 			background: vars.$primary-lightest,
 			title-size: 32px,
 		),
-		button-primary: (
+		entry-button-primary: (
 			default-background: vars.$primary,
 			default-font-color: vars.$font-color-light,
 			hover-background: vars.$accent,
 			hover-font-color: vars.$font-color-light,
 		),
-		button-accent: (
+		entry-button-accent: (
 			default-background: vars.$accent,
 			default-font-color: vars.$font-color-light,
 			hover-background: vars.$primary,

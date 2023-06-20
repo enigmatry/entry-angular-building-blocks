@@ -1,25 +1,14 @@
 @use '../../../../../../styles/modules/variables' as vars;
-// @use '../../../../../../styles/modules/breakpoints' as breakpoints;
 
 .entry-header {
-	padding: 4px vars.$large-gap vars.$default-gap;
+	padding: 24px vars.$default-gap;
+	background: vars.$primary-lightest;
 
-	// @include breakpoints.apply-on-tablet() {
-	// 	padding: {
-	// 		top: vars.$default-gap;
-	// 		bottom: vars.$large-gap;
-	// 	};
-	// }
-    
-	.header-item {
-		margin-top: 20px;
+	.entry-title {
+		color: vars.$primary;
 	}
 
 	.content {
 		padding-top: 20px;
-
-		// @include breakpoints.apply-on-tablet() {
-		// 	padding-top: vars.$large-gap;
-		// }
 	}
 }
