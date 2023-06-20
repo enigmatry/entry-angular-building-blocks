@@ -1,15 +1,15 @@
 import { Inject, Pipe, PipeTransform } from '@angular/core';
-import { ValidationErrors } from '@angular/forms';
+import { AbstractControl, ValidationErrors } from '@angular/forms';
 import { FORM_FIELD_ERROR_KEY } from './entry-validation';
 import { ENTRY_VALIDATION_CONFIG, EntryValidationConfig } from './entry-validation-config.model';
 
 @Pipe({
-  name: 'asString'
+  name: 'asFieldValidation'
 })
-export class AsStringPipe implements PipeTransform {
+export class AsFieldValidationPipe implements PipeTransform {
   constructor(@Inject(ENTRY_VALIDATION_CONFIG) public readonly config: EntryValidationConfig) {}
 
-  transform(value: ValidationErrors | null | undefined): string | undefined {
+  transform(value: ValidationErrors | null | undefined , control: AbstractControl): string | undefined {
     if (!value) {
       return undefined;
     }
@@ -17,7 +17,7 @@ export class AsStringPipe implements PipeTransform {
     const errorsString = this.config.validationMessages
       .map(validationMessage => value[validationMessage.name]
         ? typeof(validationMessage.message) === 'string'
-          ? validationMessage.message : validationMessage.message()
+          ? validationMessage.message : validationMessage.message(control)
         : ''
       )
       .filter(message => message !== '')

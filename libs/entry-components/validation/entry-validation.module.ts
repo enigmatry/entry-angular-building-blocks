@@ -3,13 +3,13 @@ import { CommonModule } from '@angular/common';
 import { EntryFormErrorsComponent } from './entry-form-errors.component';
 import { EntryFormFieldErrorsComponent } from './entry-form-field-errors.component';
 import { MatInputModule } from '@angular/material/input';
-import { AsStringPipe } from './as-string.pipe';
+import { AsFieldValidationPipe } from './as-field-validation.pipe';
 
 @NgModule({
   declarations: [
     EntryFormErrorsComponent,
     EntryFormFieldErrorsComponent,
-    AsStringPipe
+    AsFieldValidationPipe
   ],
   imports: [
     CommonModule,

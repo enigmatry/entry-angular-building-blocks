@@ -1,11 +1,12 @@
 import { InjectionToken } from '@angular/core';
+import { AbstractControl } from '@angular/forms';
 
 /** Validation message configuration */
 export interface IEntryValidationMessage {
     // Validation key
     name: string;
     // Validation message. Can be resolved dynamically (e.g. when it needs to be translated).
-    message: string | (() => string);
+    message: string | ((c: AbstractControl) => string);
 }
 
 /**

@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
-import { FORM_FIELD_ERROR_KEY } from './entry-validation';
 
 /**
  * A component used to display back-end validation errors on field level.
@@ -20,6 +19,4 @@ import { FORM_FIELD_ERROR_KEY } from './entry-validation';
 })
 export class EntryFormFieldErrorsComponent {
   @Input() fieldControl: AbstractControl;
-
-  errorKey = FORM_FIELD_ERROR_KEY;
 }
