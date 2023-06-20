@@ -1,7 +1,7 @@
 <form [formGroup]="form" (ngSubmit)="submitForm()" class="formly-form">
     <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
 
-    <!-- Renders form level server side validation errors -->
+    <!-- Renders form level validation errors -->
     <entry-form-errors [form]="form"></entry-form-errors>
     
     <button mat-flat-button color="accent" type="submit">Submit</button>
