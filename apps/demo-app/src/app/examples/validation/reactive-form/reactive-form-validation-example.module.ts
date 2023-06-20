@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormExampleComponent } from './reactive-form-validation-example.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AbstractControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ENTRY_VALIDATION_CONFIG, EntryValidationConfig, EntryValidationModule } from '@enigmatry/entry-components';
 import { SharedModule } from '../../../shared/shared.module';
 
@@ -23,9 +23,10 @@ import { SharedModule } from '../../../shared/shared.module';
     {
       provide: ENTRY_VALIDATION_CONFIG,
       useFactory: () => new EntryValidationConfig({
+        /** Configure validation messages for standard client side validators */
         validationMessages: [
           { name: 'required', message: 'This field is mandatory!' },
-          { name: 'minlength', message: (control) => `Minimal length is ${control.errors.minlength.requiredLength}!`}
+          { name: 'minlength', message: (control: AbstractControl) => `Minimal length is ${control.errors.minlength.requiredLength}!`}
         ]
       })
     }
