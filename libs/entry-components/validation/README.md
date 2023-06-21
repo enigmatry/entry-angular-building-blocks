@@ -1,5 +1,8 @@
 # Entry Validation
 
+Enables displaying serve & client side validation messages in forms. To 
+
+
 These components are used to apply server side validation messages, supplied in form of [Microsoft.AspNetCore.Mvc.ValidationProblemDetails](https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.validationproblemdetails?view=aspnetcore-7.0), to the forms.
 
 The validation errors can be applied on form or form field level.

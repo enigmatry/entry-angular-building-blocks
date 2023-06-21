@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { ValidationService } from '../../validation.service';
-import { IValidationProblemDetails, handleValidationProblemDetails } from '@enigmatry/entry-components';
+import { IValidationProblemDetails, setValidationErrorsToForm } from '@enigmatry/entry-components';
 
 @Component({
   selector: 'app-formly-form-validation-example',
@@ -36,7 +36,7 @@ export class FormlyFormValidationExampleComponent {
       .subscribe({
         error: (error: IValidationProblemDetails) => {
           /** Applies received server side validation errors to the form */
-          handleValidationProblemDetails(this.form, error);
+          setValidationErrorsToForm(error, this.form);
           this.validationResult = error;
         }
       });
