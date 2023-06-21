@@ -9,9 +9,9 @@ import { ENTRY_VALIDATION_CONFIG, EntryValidationConfig } from './entry-validati
 export class AsFieldValidationPipe implements PipeTransform {
   constructor(@Inject(ENTRY_VALIDATION_CONFIG) public readonly config: EntryValidationConfig) {}
 
-  transform(value: ValidationErrors | null | undefined , control: AbstractControl): string | undefined {
+  transform(value: ValidationErrors | null | undefined , control: AbstractControl): string {
     if (!value) {
-      return undefined;
+      return '';
     }
 
     const errorsString = this.config.validationMessages
