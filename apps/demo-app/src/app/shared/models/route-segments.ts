@@ -3,4 +3,5 @@ export class RouteSegments {
     static header = `header`;
     static searchFilter = `search-filter`;
     static toolbar = `toolbar`;
+    static validation = `validation`;
 }
