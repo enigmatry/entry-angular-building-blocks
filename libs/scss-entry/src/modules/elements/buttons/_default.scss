@@ -1,0 +1,28 @@
+@use '../../variables' as vars;
+@use '../../typography/fonts';
+@use 'sass:map';
+
+%entry-button {
+	display: inline-block;
+	padding: 10px 20px;
+	transition: vars.$default-transition;
+	border: 0;
+	line-height: 1.25;
+	cursor: pointer;
+	text: {
+		align: center;
+		decoration: none;
+	}
+}
+
+@mixin font-color-from($theme) {
+	$font-family: map.get($theme, 'general', 'font', 'family');
+
+	@if $font-family == '' {
+		@content;
+	}
+	@else {
+		$font-size: map.get($theme, 'general', 'font', 'size');
+		@include fonts.font($font-family, $font-size);
+	}
+}
