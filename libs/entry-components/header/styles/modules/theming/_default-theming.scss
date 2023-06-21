@@ -5,13 +5,13 @@ $theme: (
         background: vars.$primary-lightest,
         title-size: 32px,
     ),
-    entry-button-primary: (
+    button-primary: (
         default-background: vars.$primary,
         default-font-color: vars.$font-color-light,
         hover-background: vars.$accent,
         hover-font-color: vars.$font-color-light,
     ),
-    entry-button-accent: (
+    button-accent: (
         default-background: vars.$accent,
         default-font-color: vars.$font-color-light,
         hover-background: vars.$primary,
