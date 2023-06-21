@@ -17,7 +17,7 @@ export class EntryControlValidationDirective implements OnInit, OnDestroy {
     private readonly _element: ElementRef) {}
 
   ngOnInit(): void {
-    this.control.statusChanges
+    this._controlSubscription = this.control.statusChanges
       .subscribe((controlStatus: FormControlStatus) => {
         if (controlStatus === 'INVALID') {
           this._element.nativeElement.innerHTML = this.extractValidationMessages();
