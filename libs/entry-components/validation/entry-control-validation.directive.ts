@@ -20,7 +20,7 @@ export class EntryControlValidationDirective implements OnInit, OnDestroy {
     this._controlSubscription = this.control.statusChanges
       .subscribe((controlStatus: FormControlStatus) => {
         if (controlStatus === 'INVALID') {
-          this._element.nativeElement.innerHTML = this.extractValidationMessages();
+          this._element.nativeElement.innerText = this.extractValidationMessages();
         }
       });
   }
