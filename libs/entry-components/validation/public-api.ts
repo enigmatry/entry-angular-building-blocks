@@ -1,5 +1,5 @@
 export { EntryFormErrorsComponent } from './entry-form-errors.component';
-export { EntryControlValidationDirective } from './entry-control-validation.directive';
+export { EntryDisplayControlValidationDirective } from './entry-display-control-validation.directive';
 
 export { EntryValidationModule } from './entry-validation.module';
 

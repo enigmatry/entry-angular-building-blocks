@@ -5,9 +5,9 @@ import { Subscription } from 'rxjs';
 import { FORM_FIELD_ERROR_KEY } from './entry-validation';
 
 @Directive({
-  selector: '[entryControlValidation]'
+  selector: '[entryDisplayControlValidation]'
 })
-export class EntryControlValidationDirective implements OnInit, OnDestroy {
+export class EntryDisplayControlValidationDirective implements OnInit, OnDestroy {
   @Input() control: AbstractControl;
 
   private _controlSubscription: Subscription | undefined;
