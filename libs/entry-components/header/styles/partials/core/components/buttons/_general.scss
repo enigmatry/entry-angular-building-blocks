@@ -11,7 +11,6 @@
 	background-color: transparent;
 	color: vars.$font-color-light;
 	line-height: 1.25;
-	cursor: pointer;
 	text: {
 		align: center;
 		decoration: none;
@@ -28,15 +27,15 @@
 	}
 }
 
-.button-primary, .button-accent {
+.entry-button-primary, .entry-button-accent {
 	@extend %button;
 }
 
 .action-buttons {
-	.item {
+	.button {
 		margin-left: 12px;
-        
-        &:first-child {
+
+        .first-button {
             margin-left: 0;
         }
 	}
