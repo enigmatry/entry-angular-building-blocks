@@ -19,12 +19,12 @@ export class FormlyFormValidationExampleComponent {
     {
       key: 'firstName',
       type: 'input',
-      templateOptions: { label: 'First name', required: true }
+      templateOptions: { label: 'First name', required: true, minLength: 3 }
     },
     {
       key: 'lastName',
       type: 'input',
-      templateOptions: { label: 'Last name', required: true }
+      templateOptions: { label: 'Last name', required: true, minLength: 3 }
     }
   ];
   validationResult: any;

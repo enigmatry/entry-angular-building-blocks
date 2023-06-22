@@ -9,7 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EntryValidationModule, FORM_FIELD_ERROR_KEY } from '@enigmatry/entry-components';
 import { FormlyMaterialModule } from '@ngx-formly/material';
 import { SharedModule } from '../../../shared/shared.module';
-import { FormlyModule } from '@ngx-formly/core';
+import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 
 @NgModule({
   declarations: [
@@ -29,7 +29,10 @@ import { FormlyModule } from '@ngx-formly/core';
       validationMessages: [
           /** Map form fields server side validation errors to FORM_FIELD_ERROR_KEY key */
           { name: FORM_FIELD_ERROR_KEY, message: (error, _) => error },
-          { name: 'required', message: 'Required field.' }
+          /** Map form fields client side validation errors */
+          { name: 'required', message: 'Required field.' },
+          { name: 'minlength', message: (_, config: FormlyFieldConfig) =>
+            `Minimal length is ${config.formControl.errors.minlength.requiredLength}` }
       ],
       types: [
         { name: 'field-set', component: FieldSetComponent },
