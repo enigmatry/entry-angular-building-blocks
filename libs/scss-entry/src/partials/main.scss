@@ -1,0 +1,18 @@
+@use '../modules/generator';
+
+$custom-theme: (
+	general: (
+		colors: (
+			primary: #FAE3C1
+		),
+		font: (
+			family: 'Some Custom font',
+			size: 13px
+		),
+		buttons: (
+			color: #AAA
+		)
+	)
+);
+
+@include generator.generate($custom-theme);

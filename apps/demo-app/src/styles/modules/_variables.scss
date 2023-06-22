@@ -1,8 +1,7 @@
 $menu-item-selected: #f2f4f8;
 $header-back: #f2f4f8;
 
-
-$default-transition: .3s;
+$default-transition: .4s;
 
 $breakpoints: ( 
 	mobile: (description: 'sm', size: 480px ), 
@@ -24,5 +23,3 @@ $font-size-default: 14px;
 
 $default-gap: 16px;
 $large-gap: calc(#{$default-gap} * 2);
-
-$default-transition: .4s;

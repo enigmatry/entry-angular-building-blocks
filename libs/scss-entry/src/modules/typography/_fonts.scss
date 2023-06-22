@@ -1,0 +1,59 @@
+@use 'sass:map';
+
+$font-path: '../../../../fonts/';
+$font-sources: (
+	(
+		name: 'OpenSans',
+		style: normal,
+		formats: ('eot', 'woff', 'woff2', 'ttf')
+	),
+	(
+		name: 'OpenSans',
+		style: bold,
+		formats: ('eot', 'woff', 'woff2', 'ttf')
+	),
+	(
+		name: 'Montserrat',
+		style: bold,
+		formats: ('eot', 'woff', 'woff2', 'ttf')
+	)
+);
+
+@mixin generate-default-font() {
+	@each $font in $font-sources {
+		$name: map.get($font, name);
+		$style: map.get($font, style);
+		$formats: map.get($font, formats);
+
+		@each $format in $formats {
+			$url: '#{$font-path}#{$name}/#{$name}-#{$style}.#{$format}';
+
+			@font-face {
+				font: {
+					family: '#{$name}-#{$style}';
+					style: '#{$style}';
+				}
+				src: url('#{$url}') format('#{$format}');
+			}
+		}
+	}
+}
+
+@mixin font($family: 'OpenSans-normal', $size: 14px) {
+	font: {
+		family: $family;
+		size: $size;
+	};
+}
+
+@mixin main-font($size: 14px) {
+	@include font('OpenSans-normal', $size);
+}
+
+@mixin main-bolded-font($size: 14px) {
+	@include font('OpenSans-Bold', $size);
+}
+
+@mixin title-font($size: 20px) {
+	@include font('Montserrat-bold', $size);
+}
