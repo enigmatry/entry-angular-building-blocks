@@ -4,10 +4,21 @@ import { AbstractControl, FormControlStatus } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { FORM_FIELD_ERROR_KEY } from './entry-validation';
 
+/**
+ * A directive that displays configured validation messages or server side validations for given form control.
+ * The messages are separated with coma(,) and displayed as _innerHTML_ value of host component.
+ *
+ * @example
+ * ```html
+ * <div entryDisplayControlValidation [control]="myForm.controls.firstName">
+ * </div
+ * ```
+ */
 @Directive({
   selector: '[entryDisplayControlValidation]'
 })
 export class EntryDisplayControlValidationDirective implements OnInit, OnDestroy {
+  /** Form control for which the validation messages are displayed for. */
   @Input() control: AbstractControl;
 
   private _controlSubscription: Subscription | undefined;

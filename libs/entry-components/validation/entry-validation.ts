@@ -23,10 +23,10 @@ const getFormControl = (formControl: AbstractControl | null | undefined, keys: s
  * Applies validation errors received from server side to the form.
  * The errors are applied to multiple levels: form, form group, form array, and form field.
  *
- * @param form Form to apply validation errors to.
  * @param error Server side validation errors response.
+ * @param form Form to apply validation errors to.
  */
-const handleValidationProblemDetails = (form: UntypedFormGroup, error: IValidationProblemDetails) => {
+const setServerSideValidationErrors = (error: IValidationProblemDetails, form: UntypedFormGroup) => {
     form.setErrors(null);
     const validationErrors = error?.errors;
     const formErrors: ValidationErrors = {};
@@ -47,7 +47,7 @@ const handleValidationProblemDetails = (form: UntypedFormGroup, error: IValidati
             }
         }
     } else {
-        formErrors[FORM_ERROR_KEY] = [ `An error occurred on the server.` ];
+        formErrors[FORM_ERROR_KEY] = [`An error occurred on the server.`];
     }
 
     form.setErrors(formErrors);
@@ -55,5 +55,5 @@ const handleValidationProblemDetails = (form: UntypedFormGroup, error: IValidati
 
 export {
     FORM_FIELD_ERROR_KEY,
-    handleValidationProblemDetails
+    setServerSideValidationErrors
 };

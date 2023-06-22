@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { IValidationProblemDetails, handleValidationProblemDetails } from '@enigmatry/entry-components';
+import { IValidationProblemDetails, setServerSideValidationErrors } from '@enigmatry/entry-components/validation';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { ValidationService } from '../../validation.service';
 
@@ -77,7 +77,7 @@ export class ComplexFormlyFormValidationExampleComponent {
       .subscribe({
         error: (error: IValidationProblemDetails) => {
           /** Applies received server side validation errors to the form */
-          handleValidationProblemDetails(this.form, error);
+          setServerSideValidationErrors(error, this.form);
           this.validationResult = error;
         }
       });
