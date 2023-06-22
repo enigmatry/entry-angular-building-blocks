@@ -15,7 +15,7 @@ export class ValidationService {
       errors: {
         '': [
           'The combination of First & Last name already exists.',
-          'And one more error, just to show off.'
+          'Too many John Doe names in the system.'
         ],
         firstName: [
           'This name is not cool enough.',
@@ -29,14 +29,14 @@ export class ValidationService {
   submitWithComplexValidationErrors(): Observable<any> {
     return throwError({
       errors: {
-        '': ['Personal & Partner do not match.'],
+        '': ['Personal & Partner info do not match.'],
         'personalInfo.firstName': ['This name is not cool enough.'],
         'personalInfo.lastName': ['Also not cool.'],
         'partnerInfo.firstName': ['Already exist.'],
-        'partnerInfo.lastName': ['Cannot be the same last name.'],
-        'children.0': ['Oldest'],
-        'children.1': ['Middle'],
-        'children.2': ['Good kid']
+        'partnerInfo.lastName': ['Cannot be the same last name like in Personal info.'],
+        'children.0': [`First child name is not 'Dragana'`],
+        'children.1': [`First child name is not 'Jovana'`],
+        'children.2': [`First child name is not 'Mila'`]
       }
     } as IValidationProblemDetails);
   }
