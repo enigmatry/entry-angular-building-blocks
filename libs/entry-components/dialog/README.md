@@ -2,7 +2,13 @@
 
 Enables working with built-in (alert and confirm) and custom dialogs. Supports dialog configuration on application level.
 
-## Imports
+## Integration
+
+```npm
+npm i @enigmatry/entry-components
+```
+
+Import component package:
 
 ```ts
 import { EntryDialogModule } from '@enigmatry/entry-components/dialog';

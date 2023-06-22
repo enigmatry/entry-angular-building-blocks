@@ -5,7 +5,13 @@ Entry component for providing standard filtering capabilities that can be consum
 * Text filter
 * Select filter (supports fixed and dynamic (Observable) options)
 
-## Imports
+## Integration
+
+```npm
+npm i @enigmatry/entry-components
+```
+
+Import component package:
 
 ```ts
 import { EntrySearchFilterModule } from '@enigmatry/entry-components/search-filter';
