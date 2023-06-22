@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { IValidationProblemDetails, setValidationErrorsToForm } from '@enigmatry/entry-components';
+import { IValidationProblemDetails, setServerSideValidationErrors } from '@enigmatry/entry-components/validation';
 import { ValidationService } from '../validation.service';
 
 @Component({
@@ -32,7 +32,7 @@ export class ReactiveFormExampleComponent implements OnInit {
       .subscribe({
         error: (error: IValidationProblemDetails) => {
           /** Applies received server side validation errors to the form */
-          setValidationErrorsToForm(error, this.form);
+          setServerSideValidationErrors(error, this.form);
           this.validationResult = error;
         }
       });

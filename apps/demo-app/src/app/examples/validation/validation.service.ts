@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Injectable } from '@angular/core';
-import { IValidationProblemDetails } from '@enigmatry/entry-components';
+import { IValidationProblemDetails } from '@enigmatry/entry-components/validation';
 import { Observable, throwError } from 'rxjs';
 
 /**

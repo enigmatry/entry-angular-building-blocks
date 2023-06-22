@@ -6,7 +6,7 @@ import { FieldSetComponent } from './complex-formly-form-validation/field-set.co
 import { RepeatNameComponent } from './complex-formly-form-validation/repeat-name.component';
 import { FormlyFormValidationExampleComponent } from './formly-form-validation/formly-form-validation-example.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { EntryValidationModule, FORM_FIELD_ERROR_KEY } from '@enigmatry/entry-components';
+import { EntryValidationModule, FORM_FIELD_ERROR_KEY } from '@enigmatry/entry-components/validation';
 import { FormlyMaterialModule } from '@ngx-formly/material';
 import { SharedModule } from '../../../shared/shared.module';
 import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';

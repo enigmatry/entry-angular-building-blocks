@@ -26,7 +26,7 @@ const getFormControl = (formControl: AbstractControl | null | undefined, keys: s
  * @param error Server side validation errors response.
  * @param form Form to apply validation errors to.
  */
-const setValidationErrorsToForm = (error: IValidationProblemDetails, form: UntypedFormGroup) => {
+const setServerSideValidationErrors = (error: IValidationProblemDetails, form: UntypedFormGroup) => {
     form.setErrors(null);
     const validationErrors = error?.errors;
     const formErrors: ValidationErrors = {};
@@ -47,7 +47,7 @@ const setValidationErrorsToForm = (error: IValidationProblemDetails, form: Untyp
             }
         }
     } else {
-        formErrors[FORM_ERROR_KEY] = [ `An error occurred on the server.` ];
+        formErrors[FORM_ERROR_KEY] = [`An error occurred on the server.`];
     }
 
     form.setErrors(formErrors);
@@ -55,5 +55,5 @@ const setValidationErrorsToForm = (error: IValidationProblemDetails, form: Untyp
 
 export {
     FORM_FIELD_ERROR_KEY,
-    setValidationErrorsToForm
+    setServerSideValidationErrors
 };

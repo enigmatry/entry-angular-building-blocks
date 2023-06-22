@@ -2,7 +2,7 @@
 
 Enables configuring forms (Reactive or [Formly](https://formly.dev/) forms) so that server or client side validation errors are displayed correctly. To accomplish this, it offers the following features:
 
-* `setValidationErrorsToForm(error, form)` - a method that maps received server side validation errors to the form and its fields.
+* `setServerSideValidationErrors(error, form)` - a method that maps received server side validation errors to the form and its fields.
 * `entryDisplayControlValidation` - a directive that displays field level validation errors.
 * `<entry-form-errors>` - a component that displays form level validation errors.
 * `ENTRY_VALIDATION_CONFIG` - configuration provider used to configure default client side validation messages on module level.
@@ -41,16 +41,16 @@ Reactive form example with configured validation components (`entryDisplayContro
 </form>
 ```
 
-On submit, in case of _BadRequest (400)_ errors, response must be handled using `setValidationErrorsToForm(error, form)` method:
+On submit, in case of _BadRequest (400)_ errors, response must be handled using `setServerSideValidationErrors(error, form)` method:
 
 ```ts
-import { IValidationProblemDetails, setValidationErrorsToForm } from '@enigmatry/entry-components';
+import { IValidationProblemDetails, setServerSideValidationErrors } from '@enigmatry/entry-components/validation';
 
 // ...
 submitForm() {
   this._apiService.post()
     .subscribe({
-      error: (error: IValidationProblemDetails) => setValidationErrorsToForm(error, this.form)
+      error: (error: IValidationProblemDetails) => setServerSideValidationErrors(error, this.form)
     });
 }
 ```
@@ -62,7 +62,7 @@ Optionally, when using Reactive form we can configure validation messages on mod
 ```ts
 // ...
 import { AbstractControl } from '@angular/forms';
-import { ENTRY_VALIDATION_CONFIG, EntryValidationConfig, EntryValidationModule } from '@enigmatry/entry-components';
+import { ENTRY_VALIDATION_CONFIG, EntryValidationConfig, EntryValidationModule } from '@enigmatry/entry-components/validation';
 
 @NgModule({
   imports: [
@@ -100,6 +100,6 @@ public async Task<ActionResult<Response>> Post([FromBody] Command command)
 }
 ```
 
-When set like this, we can generate, using [NSwag](https://github.com/RicoSuter/NSwag), client side models for _Bad Request_ responses, that can be then used with `setValidationErrorsToForm(error, form)` method as input parameter.
+When set like this, we can generate, using [NSwag](https://github.com/RicoSuter/NSwag), client side models for _Bad Request_ responses, that can be then used with `setServerSideValidationErrors(error, form)` method as input parameter.
 
 This is because we based our `IValidationProblemDetails` interface on [ValidationProblemDetails](https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.validationproblemdetails?view=aspnetcore-7.0) class.
