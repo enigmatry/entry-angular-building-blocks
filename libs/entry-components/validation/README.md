@@ -86,7 +86,7 @@ export class AppModule { }
 
 ## Microsoft WEB.API & NSwag configuration
 
-To configure your REST API (_Microsoft WEB.API_) so it returns _Bad Request_ response in uniform format we should decorate all end-points that trigger validation with `ProducesResponseType` attribute that mapps [ValidationProblemDetails](https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.validationproblemdetails?view=aspnetcore-7.0) to _Bad Request_ responses:
+To configure your REST API (_Microsoft WEB.API_) so it returns _Bad Request_ response in uniform format we should decorate all end-points that trigger validation with `ProducesResponseType` attribute that maps [ValidationProblemDetails](https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.validationproblemdetails?view=aspnetcore-7.0) to _Bad Request_ responses:
 
 ```csharp
 using Microsoft.AspNetCore.Mvc;
