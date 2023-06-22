@@ -86,7 +86,7 @@ export class AppModule { }
 
 ## Microsoft WEB.API & NSwag configuration
 
-To configure our API (_Microsoft WEB.API_) so it returns _Bad Request_ response in uniform format we should use the following approach on all end-points that trigger validation:
+To configure your REST API (_Microsoft WEB.API_) so it returns _Bad Request_ response in uniform format we should decorate all end-points that trigger validation with `ProducesResponseType` attribute that mapps [ValidationProblemDetails](https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.validationproblemdetails?view=aspnetcore-7.0) to _Bad Request_ responses:
 
 ```csharp
 using Microsoft.AspNetCore.Mvc;
@@ -95,15 +95,11 @@ using Microsoft.AspNetCore.Mvc;
 
 [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
 public async Task<ActionResult<Response>> Post([FromBody] Command command)
-
-// ...
+{
+    // ...
+}
 ```
 
-Where [ValidationProblemDetails](https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.validationproblemdetails?view=aspnetcore-7.0) is a model on which we based our `IValidationProblemDetails` interface used in `setValidationErrorsToForm(error, form)` method.
+When set like this, we can generate, using [NSwag](https://github.com/RicoSuter/NSwag), client side models for _Bad Request_ responses, that can be then used with `setValidationErrorsToForm(error, form)` method as input parameter.
 
-1st, all API end-points that will be validated should be decorated with `ProducesResponseType` attribute that will map _BadRequest (400)_ errors to `ValidationProblemDetails` model. This is required, when using _NSwag_ so it knows how to generate 400 error response models:
-
-
-
-
-
+This is because we based our `IValidationProblemDetails` interface on [ValidationProblemDetails](https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.validationproblemdetails?view=aspnetcore-7.0) class.
