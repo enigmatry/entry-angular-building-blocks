@@ -36,6 +36,13 @@ const COMPONENT_DEFINITIONS: IComponentDefinition[] = [
         route: RouteSegments.toolbar,
         readmePath: '/entry-components/toolbar/README.md',
         apiDocsPath: 'assets/api/modules/_enigmatry_entry_components.toolbar_public_api.html'
+    },
+    {
+        label: 'Validation',
+        shortDescription: `Enables mapping server/client side validation messages for Reactive/Formly forms.`,
+        route: RouteSegments.validation,
+        readmePath: '/entry-components/validation/README.md',
+        apiDocsPath: 'assets/api/modules/_enigmatry_entry_components.validation_public_api.html'
     }
 ];
 

@@ -5,7 +5,10 @@ $theme: (
 	header: (
 		header: (
 			background: vars.$primary-lightest,
-			title-size: 32px,
+			title: (
+				size: 32px,
+				color: vars.$primary,
+			),
 		),
 		button-primary: (
 			default-background: vars.$primary,

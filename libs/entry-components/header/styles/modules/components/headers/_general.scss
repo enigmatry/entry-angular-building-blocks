@@ -6,7 +6,8 @@
         background-color: map.value-from($theme, 'header.background');
 
         .title {
-            font-size: map.value-from($theme, 'header.title-size');
+            font-size: map.value-from($theme, 'header.title.size');
+            color: map.value-from($theme, 'header.title.color');
         }
     }
 }
