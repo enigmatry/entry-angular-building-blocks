@@ -35,8 +35,8 @@ export class ValidationService {
         'partnerInfo.firstName': ['Already exist.'],
         'partnerInfo.lastName': ['Cannot be the same last name like in Personal info.'],
         'children.0': [`First child name is not 'Dragana'`],
-        'children.1': [`First child name is not 'Jovana'`],
-        'children.2': [`First child name is not 'Mila'`]
+        'children.1': [`Middle child name is not 'Jovana'`],
+        'children.2': [`Last child name is not 'Mila'`]
       }
     } as IValidationProblemDetails);
   }
