@@ -28,7 +28,7 @@
     "tslib": "^2.3.0"
   },
   "devDependencies": {
-    "@enigmatry/scss-foundation": "1.1.4",
+    "@enigmatry/scss-foundation": "1.14.11",
     "@enigmatry/stylelint-config": "1.14.4",
     "sass": "^1.44.0",
     "stylelint": "14.14.1"
