@@ -3,19 +3,21 @@
 $theme: (
     header: (
         background: vars.$primary-lightest,
-        title-size: 32px,
+		title-size: 32px,
         title-color: vars.$primary,
     ),
-    button-primary: (
-        default-background: vars.$primary,
-        default-font-color: vars.$font-color-light,
-        hover-background: vars.$accent,
-        hover-font-color: vars.$font-color-light,
-    ),
-    button-accent: (
-        default-background: vars.$accent,
-        default-font-color: vars.$font-color-light,
-        hover-background: vars.$primary,
-        hover-font-color: vars.$font-color-light,
-    )
+    general: (
+		colors: (
+			primary: #2581C4,
+			accent: #EA518D,
+			disabled: #D9D9D9
+		),
+		font: (
+			family: '',
+			size: 14px
+		),
+		buttons: (
+			color: #FFF
+		)
+	)
 );

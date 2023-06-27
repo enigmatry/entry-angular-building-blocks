@@ -1,7 +1,12 @@
 @use '../../../../../../styles/modules/variables' as vars;
+@use '../../../../../../../scss-entry/src/modules/typography/fonts';
 
 .entry-header {
 	padding: 24px vars.$default-gap;
+
+	.title {
+		@include fonts.title-font();
+	}
 
 	.content {
 		padding-top: 20px;
