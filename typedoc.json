@@ -14,7 +14,6 @@
         "libs/eslint-config",
         "libs/scss-entry"
     ],
-    "customCss": "apps/demo-app/src/styles/modules/typedoc/_typedoc-custom.scss",
     "logLevel": "Info",
     "outputFileStrategy": "modules",
     "propertiesFormat": "table",
