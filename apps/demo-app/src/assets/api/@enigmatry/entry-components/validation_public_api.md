@@ -1,7 +1,3 @@
-[**validation/public-api**](validation_public_api.md)
-
----
-
 # Module: validation/public-api
 
 ## Index

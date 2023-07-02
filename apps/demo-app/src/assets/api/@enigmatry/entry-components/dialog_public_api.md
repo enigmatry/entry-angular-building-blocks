@@ -1,7 +1,3 @@
-[**dialog/public-api**](dialog_public_api.md)
-
----
-
 # Module: dialog/public-api
 
 ## Index

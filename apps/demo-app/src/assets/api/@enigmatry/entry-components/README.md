@@ -1,7 +1,3 @@
-[**@enigmatry/entry-components**](API.md) ( Readme \| [API](API.md) )
-
----
-
 # @enigmatry/entry-components
 
 Reusable entry components for Angular material.

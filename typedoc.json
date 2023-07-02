@@ -16,8 +16,9 @@
     ],
     "customCss": "apps/demo-app/src/styles/modules/typedoc/_typedoc-custom.scss",
     "logLevel": "Info",
-    "hideGenerator": true,
-    "hideBreadcrumbs": true,
     "outputFileStrategy": "modules",
-    "propertiesFormat": "table"
+    "propertiesFormat": "table",
+    "hideGenerator": true,
+    "hidePageHeader": true,
+    "hideBreadcrumbs": true
 }

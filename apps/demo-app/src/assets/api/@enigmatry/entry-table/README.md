@@ -1,7 +1,3 @@
-[**@enigmatry/entry-table**](API.md) ( Readme \| [API](API.md) )
-
----
-
 # @enigmatry/entry-table
 
 Reusable table component for Angular.

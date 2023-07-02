@@ -1,7 +1,3 @@
-[**@enigmatry/entry-form**](API.md) ( Readme \| [API](API.md) )
-
----
-
 # @enigmatry/entry-form
 
 Reusable form components for Angular.

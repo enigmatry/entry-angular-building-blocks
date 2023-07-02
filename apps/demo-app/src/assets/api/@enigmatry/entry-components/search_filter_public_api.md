@@ -1,7 +1,3 @@
-[**search-filter/public-api**](search_filter_public_api.md)
-
----
-
 # Module: search-filter/public-api
 
 ## Index

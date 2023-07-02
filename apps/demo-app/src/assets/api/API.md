@@ -1,7 +1,3 @@
-[**Entry Angular Building Blocks**](README.md) ( [Readme](README.md) \| API )
-
----
-
 # Entry Angular Building Blocks
 
 ## Packages

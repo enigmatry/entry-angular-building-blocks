@@ -1,7 +1,3 @@
-[**toolbar/public-api**](toolbar_public_api.md)
-
----
-
 # Module: toolbar/public-api
 
 ## Index

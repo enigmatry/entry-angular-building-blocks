@@ -1,7 +1,3 @@
-[**Entry Angular Building Blocks**](README.md) ( Readme \| [API](API.md) )
-
----
-
 # Entry Angular Building Blocks
 
 ## Projects

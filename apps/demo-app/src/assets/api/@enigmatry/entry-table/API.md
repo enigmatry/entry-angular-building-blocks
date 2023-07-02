@@ -1,7 +1,3 @@
-[**@enigmatry/entry-table**](API.md) ( [Readme](README.md) \| API )
-
----
-
 # @enigmatry/entry-table
 
 ## Index
