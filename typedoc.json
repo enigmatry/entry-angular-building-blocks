@@ -4,6 +4,7 @@
     "entryPoints": [
         "libs/*"
     ],
+    "plugin": ["typedoc-plugin-markdown"],
     "out": "apps/demo-app/src/assets/api",
     "exclude": [
         "libs/stylelint-config",
@@ -13,5 +14,7 @@
     ],
     "customCss": "apps/demo-app/src/styles/modules/typedoc/_typedoc-custom.scss",
     "logLevel": "Info",
-    "hideGenerator": true
+    "hideGenerator": true,
+    "propertiesFormat": "table",
+    "outputFileStrategy": "modules"
 }
