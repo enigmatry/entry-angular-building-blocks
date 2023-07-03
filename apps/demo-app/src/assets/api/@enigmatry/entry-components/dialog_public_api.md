@@ -1,26 +1,5 @@
 # Module: dialog/public-api
 
-## Index
-
-### Classes
-
-- [EntryDialogComponent](dialog_public_api.md#entrydialogcomponent)
-- [EntryDialogConfig](dialog_public_api.md#entrydialogconfig)
-- [EntryDialogService](dialog_public_api.md#entrydialogservice)
-
-### Interfaces
-
-- [IEntryAlertDialogData](dialog_public_api.md#ientryalertdialogdata)
-- [IEntryConfirmDialogData](dialog_public_api.md#ientryconfirmdialogdata)
-
-### Type Aliases
-
-- [EntryDialogButtonsAlignment](dialog_public_api.md#entrydialogbuttonsalignment)
-
-### Variables
-
-- [ENTRY_DIALOG_CONFIG](dialog_public_api.md#entry_dialog_config)
-
 ## Classes
 
 ### EntryDialogComponent

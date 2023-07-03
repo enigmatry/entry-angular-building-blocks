@@ -1,11 +1,5 @@
 # Module: toolbar/public-api
 
-## Index
-
-### Classes
-
-- [EntryToolbarComponent](toolbar_public_api.md#entrytoolbarcomponent)
-
 ## Classes
 
 ### EntryToolbarComponent

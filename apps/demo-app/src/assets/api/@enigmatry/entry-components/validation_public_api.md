@@ -1,27 +1,5 @@
 # Module: validation/public-api
 
-## Index
-
-### Classes
-
-- [EntryDisplayControlValidationDirective](validation_public_api.md#entrydisplaycontrolvalidationdirective)
-- [EntryFormErrorsComponent](validation_public_api.md#entryformerrorscomponent)
-- [EntryValidationConfig](validation_public_api.md#entryvalidationconfig)
-
-### Interfaces
-
-- [IEntryValidationMessage](validation_public_api.md#ientryvalidationmessage)
-- [IValidationProblemDetails](validation_public_api.md#ivalidationproblemdetails)
-
-### Variables
-
-- [ENTRY_VALIDATION_CONFIG](validation_public_api.md#entry_validation_config)
-- [FORM_FIELD_ERROR_KEY](validation_public_api.md#form_field_error_key)
-
-### Functions
-
-- [setServerSideValidationErrors](validation_public_api.md#setserversidevalidationerrors)
-
 ## Classes
 
 ### EntryDisplayControlValidationDirective

@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IComponentDefinition } from '../models/component-definitions';
 import { FileLoadService } from '../services/file-load.service';
 
 @Component({
@@ -8,15 +7,15 @@ import { FileLoadService } from '../services/file-load.service';
   styleUrls: ['./markdown-viewer.component.scss']
 })
 export class MarkdownViewerComponent implements OnInit {
-  @Input() componentDefinition: IComponentDefinition;
-  markdownContent: string | undefined = undefined;
+  @Input() filePath: string | undefined;
+  markdownContent: string | undefined;
 
   constructor(private _fileLoad: FileLoadService) {}
 
   ngOnInit(): void {
-    if (this.componentDefinition.readmePath) {
+    if (this.filePath) {
       this._fileLoad
-        .loadDocumentationFile(this.componentDefinition.readmePath)
+        .loadDocumentationFile(this.filePath)
         .subscribe({
           next: response => this.markdownContent = response,
           error: _ => this.markdownContent = `### No API documentation found :'(`

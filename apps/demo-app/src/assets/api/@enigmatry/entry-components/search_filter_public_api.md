@@ -1,20 +1,5 @@
 # Module: search-filter/public-api
 
-## Index
-
-### Classes
-
-- [EntrySearchFilterComponent](search_filter_public_api.md#entrysearchfiltercomponent)
-- [EntrySearchFilterConfig](search_filter_public_api.md#entrysearchfilterconfig)
-- [SearchFilterBase](search_filter_public_api.md#searchfilterbase)
-- [SelectFilterOption](search_filter_public_api.md#selectfilteroption)
-- [SelectSearchFilter](search_filter_public_api.md#selectsearchfilter)
-- [TextSearchFilter](search_filter_public_api.md#textsearchfilter)
-
-### Type Aliases
-
-- [SearchFilterParams](search_filter_public_api.md#searchfilterparams)
-
 ## Classes
 
 ### EntrySearchFilterComponent

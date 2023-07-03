@@ -19,5 +19,6 @@
     "propertiesFormat": "table",
     "hideGenerator": true,
     "hidePageHeader": true,
-    "hideBreadcrumbs": true
+    "hideBreadcrumbs": true,
+    "hideInPageTOC": true
 }

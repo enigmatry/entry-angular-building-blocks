@@ -1,15 +1,5 @@
 # @enigmatry/entry-table
 
-## Index
-
-### Classes
-
-- [PageEvent](API.md#pageevent)
-
-### Interfaces
-
-- [SortEvent](API.md#sortevent)
-
 ## Classes
 
 ### PageEvent

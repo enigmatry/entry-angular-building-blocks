@@ -2,7 +2,7 @@
     <mat-tab-group animationDuration="0ms">
         <mat-tab label="Overview">
             <div class="doc-content-wrapper">
-                <app-markdown-viewer [componentDefinition]="componentDefinition"></app-markdown-viewer>
+                <app-markdown-viewer [filePath]="componentDefinition.readmePath"></app-markdown-viewer>
             </div>
         </mat-tab>
         <mat-tab label="Examples">
@@ -12,7 +12,7 @@
         </mat-tab>
         <mat-tab label="API" *ngIf="componentDefinition.apiDocsPath">
             <div class="doc-content-wrapper">
-                <iframe [src]="componentDefinition.apiDocsPath | safeUri" class="api-iframe"></iframe>
+                <app-markdown-viewer [filePath]="componentDefinition.apiDocsPath"></app-markdown-viewer>
             </div>
         </mat-tab>
     </mat-tab-group>
