@@ -79,10 +79,7 @@ export class MarkdownViewerComponent implements OnInit {
 
   private isHeadingLink(anchor: HTMLAnchorElement): boolean {
     const href = anchor.getAttribute('href');
-    if (href) {
-      return href.includes('#');
-    }
-    return false;
+    return href && href.includes('#');
   }
 
   private getHeadingId(str: string): string {
