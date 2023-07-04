@@ -1,5 +1,7 @@
 # Entry Angular Building Blocks
 
+This version is compatible with Angular 14.x.
+
 ## Projects
 
 | Project | Description |
