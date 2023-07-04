@@ -11,8 +11,7 @@ export class FileLoadService {
     constructor(private _httpClient: HttpClient) { }
 
     loadDocumentationFile = (path: string): Observable<string> => {
-        const url = path.startsWith('assets')
-            ? path
+        const url = this.isAssetsUrl(path) ? path
             : `${environment.documentationUri}${path}?v=${this.getVersion()}`;
         return this._httpClient.get(url, { responseType: 'text' });
     };
@@ -25,4 +24,8 @@ export class FileLoadService {
 
     private getVersion = (): number =>
         new Date().getMilliseconds() + new Date().getSeconds();
+
+    private isAssetsUrl = (path: string): boolean =>
+        path.startsWith('assets') ||
+        path.startsWith('/assets');
 }
