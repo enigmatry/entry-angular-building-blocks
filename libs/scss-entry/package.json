@@ -15,8 +15,8 @@
     "lint": "stylelint --fix src/**/*.scss"
   },
   "devDependencies": {
-    "@enigmatry/stylelint-config": "1.14.4",
-    "sass": "1.63.4"
+    "@enigmatry/stylelint-config": "1.14.14",
+    "sass": "1.63.6"
   },
   "publishConfig": {
     "access": "public"

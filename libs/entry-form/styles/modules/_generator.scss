@@ -6,6 +6,6 @@
 $default-theme: default.$theme;
 
 @mixin generate($custom-theme: ()) {
-    $merged-theme: map.deep-merge($default-theme, $custom-theme);
-    @include forms.generate-form-from($merged-theme);
+	$merged-theme: map.deep-merge($default-theme, $custom-theme);
+	@include forms.generate-form-from($merged-theme);
 }

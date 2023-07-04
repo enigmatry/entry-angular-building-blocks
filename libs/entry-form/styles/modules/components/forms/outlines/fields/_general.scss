@@ -1,0 +1,39 @@
+@use 'sass:map';
+
+@mixin -generate($border-value, $theme) {
+	.mat-form-field-outline-start, .mat-form-field-outline-gap, .mat-form-field-outline-end {
+		border: $border-value;
+	}
+
+	.mat-form-field-outline-start, .mat-form-field-outline-gap {
+		border-right-style: map.get($theme, 'forms', 'fields', 'outline', 'border-right');
+	}
+
+	.mat-form-field-outline-end, .mat-form-field-outline-gap {
+		border-left-style: map.get($theme, 'forms', 'fields', 'outline', 'border-left');
+	}
+}
+
+@mixin generate-field-outline-from($theme) {
+	@include -generate(map.get($theme, 'forms', 'fields', 'outline', 'border'), $theme);
+
+	&.mat-focused, &:hover {
+		.mat-form-field-outline {
+			border-bottom: map.get($theme, 'forms', 'fields', 'outline', 'border-hover');
+		}
+
+		@include -generate(transparent, $theme);
+	}
+
+	&.mat-form-field-disabled {
+		.mat-form-field-outline {
+			background-color: map.get($theme, 'forms', 'fields', 'outline', 'disabled-background');
+		}
+
+		&:hover {
+			.mat-form-field-outline-start, .mat-form-field-outline-gap, .mat-form-field-outline-end {
+				border-color: map.get($theme, 'forms', 'fields', 'outline', 'disabled-hover');
+			}
+		}
+	}
+}

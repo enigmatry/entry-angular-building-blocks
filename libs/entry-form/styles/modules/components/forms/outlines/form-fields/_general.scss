@@ -1,0 +1,22 @@
+@use 'sass:map';
+
+@mixin generate-form-fields-from($theme) {
+	.mat-form-field-label {
+		color: map.get($theme, 'forms', 'fields', 'label-color');
+	}
+
+	.mat-form-field-infix {
+		padding: {
+			top: map.get($theme, 'forms', 'fields', 'infix-padding-top');
+			bottom: map.get($theme, 'forms', 'fields', 'infix-padding-bottom');
+		}
+	}
+
+	.mat-form-field-flex {
+		background-color: map.get($theme, 'general', 'inputs', 'background-color');
+	}
+
+	.mat-form-field-underline {
+		display: map.get($theme, 'forms', 'fields', 'underline-display');
+	}
+}

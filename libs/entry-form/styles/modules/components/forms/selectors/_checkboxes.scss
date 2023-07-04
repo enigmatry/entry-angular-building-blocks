@@ -1,0 +1,46 @@
+@use 'sass:map';
+
+@mixin generate-from($theme) {
+	.mat-checkbox {
+		.mat-checkbox-inner-container {
+			width: map.get($theme, 'forms', 'checkboxes', 'width');
+			height: map.get($theme, 'forms', 'checkboxes', 'height');
+			background-color: map.get($theme, 'forms', 'checkboxes', 'background-color');
+		}
+
+		.mat-checkbox-label {
+			white-space: map.get($theme, 'forms', 'checkboxes', 'label-breaking');
+		}
+
+		.mat-checkbox-frame {
+			border: map.get($theme, 'forms', 'checkboxes', 'border');
+			border-radius: map.get($theme, 'forms', 'checkboxes', 'border-radius');
+		}
+
+		.mat-checkbox-checkmark-path {
+			/* stylelint-disable-next-line declaration-no-important */
+			stroke: map.get($theme, 'forms', 'checkboxes', 'checkmark-color') !important;
+		}
+
+		&:hover {
+			.mat-checkbox-frame {
+				border: map.get($theme, 'forms', 'checkboxes', 'border-hover');
+			}
+		}
+
+		&.mat-checkbox-checked {
+			.mat-checkbox-background {
+				background-color: map.get($theme, 'forms', 'checkboxes', 'selected-background-color');
+    
+				.mat-checkbox-checkmark-path {
+					/* stylelint-disable-next-line declaration-no-important */
+					stroke: map.get($theme, 'forms', 'checkboxes', 'selected-checkmark-color') !important;
+				}
+			}
+    
+			.mat-checkbox-frame {
+				border-color: map.get($theme, 'forms', 'checkboxes', 'selected-background-color');
+			}
+		}
+	}
+}

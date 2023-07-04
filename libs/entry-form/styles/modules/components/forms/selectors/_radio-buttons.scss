@@ -1,0 +1,29 @@
+@use 'sass:map';
+
+@mixin generate-from($theme) {
+	.mat-radio-group {
+		.mat-radio-label {
+			align-items: map.get($theme, 'forms', 'radio-buttons', 'align');
+			white-space: map.get($theme, 'forms', 'radio-buttons', 'white-space');
+		}
+
+		$background: map.get($theme, 'general', 'inputs', 'background-color');
+
+		.mat-radio-button {
+			.mat-radio-outer-circle {
+				border-color: $background;
+				background-color: $background;
+			}
+
+			&.mat-radio-checked {
+				.mat-radio-outer-circle {
+					border-color: $background;
+				}
+
+				.mat-radio-inner-circle {
+					background-color: map.get($theme, 'general', 'colors', 'primary');
+				}
+			}
+		}
+	}
+}
