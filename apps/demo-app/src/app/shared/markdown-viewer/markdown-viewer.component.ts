@@ -39,7 +39,11 @@ export class MarkdownViewerComponent implements OnInit {
   }
 
   private convertMarkdownToHtml(markdown: string): SafeHtml {
-    const converter = MarkdownIt('default');
+    const converter = MarkdownIt('default', {
+      html: true,
+      breaks: true,
+      typographer: true
+    });
 
     const html = converter.render(markdown ?? '');
     const sanitizedHtml = this._domSanitizer.sanitize(SecurityContext.HTML, html);
