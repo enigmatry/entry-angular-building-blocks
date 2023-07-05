@@ -23,6 +23,7 @@
     "@angular/platform-browser-dynamic": "^14.3.0",
     "@angular/router": "^14.3.0",
     "github-markdown-css": "^5.2.0",
+    "highlight.js": "^11.8.0",
     "markdown-it": "^13.0.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.2.0",
@@ -59,7 +60,8 @@
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
     "ng-packagr": "^14.2.2",
-    "typedoc": "^0.24.7",
+    "typedoc": "^0.24.8",
+    "typedoc-plugin-markdown": "^4.0.0-next.16",
     "typescript": "^4.6.4"
   }
 }
