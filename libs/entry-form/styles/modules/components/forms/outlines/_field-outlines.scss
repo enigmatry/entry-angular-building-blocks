@@ -14,7 +14,7 @@
 	}
 }
 
-@mixin generate-field-outline-from($theme) {
+@mixin generate-from($theme) {
 	@include -generate(map.get($theme, 'forms', 'fields', 'outline', 'border'), $theme);
 
 	&.mat-focused, &:hover {

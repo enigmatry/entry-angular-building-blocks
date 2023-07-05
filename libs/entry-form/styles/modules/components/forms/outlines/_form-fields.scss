@@ -1,6 +1,6 @@
 @use 'sass:map';
 
-@mixin generate-form-fields-from($theme) {
+@mixin generate-from($theme) {
 	.mat-form-field-label {
 		color: map.get($theme, 'forms', 'fields', 'label-color');
 	}
