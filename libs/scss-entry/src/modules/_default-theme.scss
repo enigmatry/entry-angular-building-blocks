@@ -1,5 +1,12 @@
 /* stylelint-disable number-max-precision */
 $theme: (
+	header: (
+        background-color: #DFF1FD,
+		title: (
+            size: 32px,
+            color: #2581C4
+        )
+	),
 	general: (
 		colors: (
 			primary: #2581C4,

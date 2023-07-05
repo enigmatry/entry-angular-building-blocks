@@ -1,0 +1,15 @@
+@use 'default';
+@use '../../../../../node_modules/@enigmatry/scss-entry/src/modules/typography/fonts';
+
+@mixin generate-headers-from($theme) {
+    .entry-header {
+        background: map.get($theme, 'header', 'background-color');
+
+        .title {
+            @include fonts.color-from($theme) {
+                @include fonts.title-font(32px);
+            }
+            color: map.get($theme, 'header', 'title', 'color');
+        }
+    }
+}
