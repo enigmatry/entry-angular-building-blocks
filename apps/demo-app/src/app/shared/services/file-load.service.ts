@@ -10,11 +10,11 @@ import { environment } from 'apps/demo-app/src/environments/environment';
 export class FileLoadService {
     constructor(private _httpClient: HttpClient) { }
 
-    loadDocumentationFile = (path: string): Observable<string> =>
-        this._httpClient.get(
-            `${environment.documentationUri}${path}?v=${this.getVersion()}`,
-            { responseType: 'text' }
-        );
+    loadDocumentationFile = (path: string): Observable<string> => {
+        const url = this.isAssetsUrl(path) ? path
+            : `${environment.documentationUri}${path}?v=${this.getVersion()}`;
+        return this._httpClient.get(url, { responseType: 'text' });
+    };
 
     loadCodeFile = (path: string, type: FileExtension): Observable<string> =>
         this._httpClient.get(
@@ -24,4 +24,8 @@ export class FileLoadService {
 
     private getVersion = (): number =>
         new Date().getMilliseconds() + new Date().getSeconds();
+
+    private isAssetsUrl = (path: string): boolean =>
+        path.startsWith('assets') ||
+        path.startsWith('/assets');
 }
