@@ -57,3 +57,15 @@ $font-sources: (
 @mixin title-font($size: 20px) {
 	@include font('Montserrat-bold', $size);
 }
+
+@mixin color-from($theme) {
+	$font-family: map.get($theme, 'general', 'font', 'family');
+
+	@if $font-family == '' {
+		@content;
+	}
+	@else {
+		$font-size: map.get($theme, 'general', 'font', 'size');
+		@include fonts.font($font-family, $font-size);
+	}
+}
