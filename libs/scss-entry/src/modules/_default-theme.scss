@@ -1,3 +1,4 @@
+/* stylelint-disable number-max-precision */
 $theme: (
 	general: (
 		colors: (
@@ -12,6 +13,43 @@ $theme: (
 		),
 		buttons: (
 			color: #FFF
+		),
+		inputs: (
+			background-color: #FFF
 		)
+	),
+	forms: (
+		fields: (
+			infix-padding-top: .4375em,
+			infix-padding-bottom: .4375em,
+			label-color: #0000008A,
+			underline-display: block,
+			outline: (
+				border: 2px solid #EBEBEB,
+				border-hover: 2px solid #2581C4,
+				border-right: none,
+				border-left: none,
+				disabled-background: #F5F5F5,
+				disabled-hover: 2px solid #EBEBEB, 
+			)
+		),
+		checkboxes: (
+			width: 20px,
+			height: 20px,
+			background-color: #FFF,
+			checkmark-color: #000,
+			selected-checkmark-color: #000,
+			selected-background-color: #FFF,
+			selected-border-color: #000,
+			border: 2px solid #0000008A,
+			border-hover: 2px solid #0000008A,
+			border-radius: 0,
+			label-breaking: nowrap,
+		),
+
+		radio-buttons: (
+			align: flex-start,
+			white-space: nowrap,
+		),
 	)
 );
