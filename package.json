@@ -30,14 +30,14 @@
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^15.2.8",
+    "@angular-devkit/build-angular": "^15.2.9",
     "@angular-eslint/builder": "15.2.1",
     "@angular-eslint/eslint-plugin": "15.2.1",
     "@angular-eslint/eslint-plugin-template": "15.2.1",
     "@angular-eslint/schematics": "15.2.1",
     "@angular-eslint/template-parser": "15.2.1",
     "@angular-material-components/datetime-picker": "^9.0.0",
-    "@angular/cli": "^15.2.8",
+    "@angular/cli": "^15.2.9",
     "@angular/compiler-cli": "^15.2.9",
     "@angular/material-date-fns-adapter": "15.2.9",
     "@ckeditor/ckeditor5-angular": "^5.2.0",
