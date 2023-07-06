@@ -10,9 +10,6 @@ pool:
 variables:
   theLatestVersion: ''
 
-  # This determines the build number
-name: $(MajorMinorVersion)$(Rev:.r)
-
 steps:
 - checkout: self
   fetchDepth: 50
