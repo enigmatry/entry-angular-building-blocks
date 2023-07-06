@@ -29,10 +29,14 @@ steps:
     custom: 'tool '
     arguments: install minver-cli
 
-- script: |
-    $(theLatestVersion) = dotnet minver
-    echo "Setting up the latest version to: $(theLatestVersion)"
-  displayName: Run minver
+- task: PowerShell@2
+  displayName: 'Set MinVer Version'
+  inputs:
+    targetType: inline
+    script: |
+      $version = dotnet minver
+      echo "##vso[task.setvariable variable=theLatestVersion]$version"
+      Write-Host "Setting MinVer to '$version'"
 
 - task: Npm@1
   displayName: 'Set the version for entry table'
