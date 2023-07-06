@@ -1,0 +1,45 @@
+@use 'default';
+@use 'sass:map';
+@use '../../typography/fonts';
+@use '../../states/hover';
+
+@mixin generate-from($theme) {
+	$button-color: map.get($theme, 'general', 'buttons', 'color');
+	$colors: map.get($theme, 'general', 'colors');
+	$primary-color: map.get($colors, 'primary');
+	$accent-color: map.get($colors, 'accent');
+	$disabled-color: map.get($colors, 'disabled');
+
+	.entry-button-accent, .entry-button-primary, .entry-button-dark {
+		@extend %entry-button;
+		@include default.font-color-from($theme) {
+			@include fonts.main-bolded-font();
+		}
+		color: $button-color;
+	}
+
+	.entry-button-primary {
+		@include hover.default($primary-color, $accent-color, $button-color, $disabled-color);
+	}
+    
+	.entry-button-accent {
+		@include hover.default($accent-color, $primary-color, $button-color, $disabled-color);
+	}
+
+	.entry-button-dark {
+		@include hover.default(map.get($colors, 'dark'), $primary-color, $button-color, $disabled-color);
+	}
+    
+	.entry-button-blank {
+		@include default.font-color-from($theme) {
+			@include fonts.main-font();
+		}
+
+		@include hover.default(transparent, transparent, $accent-color, transparent);
+		color: $primary-color;
+    
+		&:disabled {
+			color: $primary-color;
+		}
+	}
+}

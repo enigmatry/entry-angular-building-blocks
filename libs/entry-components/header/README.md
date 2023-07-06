@@ -2,7 +2,13 @@
 
 Simple way of providing header layout and styling for the page or section header.
 
-## Imports
+## Integration
+
+```npm
+npm i @enigmatry/entry-components
+```
+
+Import component package:
 
 ```ts
 import { EntryHeaderModule } from '@enigmatry/entry-components/entry-header';

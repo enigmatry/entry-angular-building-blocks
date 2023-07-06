@@ -4,6 +4,9 @@
     "entryPoints": [
         "libs/*"
     ],
+    "plugin": [
+        "typedoc-plugin-markdown"
+    ],
     "out": "apps/demo-app/src/assets/api",
     "exclude": [
         "libs/stylelint-config",
@@ -11,7 +14,11 @@
         "libs/eslint-config",
         "libs/scss-entry"
     ],
-    "customCss": "apps/demo-app/src/styles/modules/typedoc/_typedoc-custom.scss",
     "logLevel": "Info",
-    "hideGenerator": true
+    "outputFileStrategy": "modules",
+    "propertiesFormat": "table",
+    "hideGenerator": true,
+    "hidePageHeader": true,
+    "hideBreadcrumbs": true,
+    "hideInPageTOC": true
 }

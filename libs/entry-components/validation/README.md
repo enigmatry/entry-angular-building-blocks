@@ -1,16 +1,22 @@
 # Entry Validation
 
-Enables configuring forms (Reactive or [Formly](https://formly.dev/) forms) so that server or client side validation errors are displayed correctly. To accomplish this, it offers the following features:
+Enables configuring forms (Reactive or [Formly](https://formly.dev/)) so that server or client side validation errors are displayed correctly. To accomplish this, it offers the following features:
 
 * `setServerSideValidationErrors(error, form)` - a method that maps received server side validation errors to the form and its fields.
 * `entryDisplayControlValidation` - a directive that displays field level validation errors.
 * `<entry-form-errors>` - a component that displays form level validation errors.
 * `ENTRY_VALIDATION_CONFIG` - configuration provider used to configure default client side validation messages on module level.
 
-## Imports
+## Integration
+
+```npm
+npm i @enigmatry/entry-components
+```
+
+Import component package:
 
 ```ts
-import { EntryDialogModule } from '@enigmatry/entry-components/validation';
+import { EntryValidationModule } from '@enigmatry/entry-components/validation';
 ```
 
 Styles import:
@@ -25,7 +31,7 @@ Where `APP_THEME` represents application theming configuration, while `APP_TYPOG
 
 ## Basic usage
 
-Reactive form example with configured validation components (`entryDisplayControlValidation` & `<entry-form-errors>`):
+Add `entryDisplayControlValidation` & `<entry-form-errors>` elements to the form to support validation error messages:
 
 ```html
 <form [formGroup]="form" (ngSubmit)="submitForm()">
@@ -41,7 +47,7 @@ Reactive form example with configured validation components (`entryDisplayContro
 </form>
 ```
 
-On submit, in case of _BadRequest (400)_ errors, response must be handled using `setServerSideValidationErrors(error, form)` method:
+On submit handle _BadRequest (400)_ response using `setServerSideValidationErrors(error, form)` method:
 
 ```ts
 import { IValidationProblemDetails, setServerSideValidationErrors } from '@enigmatry/entry-components/validation';
@@ -57,7 +63,7 @@ submitForm() {
 
 ## Configuration
 
-Optionally, when using Reactive form we can configure validation messages on module level for form validators in use:
+Optionally, when using Reactive form, client side validation messages can be configured on module level:
 
 ```ts
 // ...
@@ -86,7 +92,7 @@ export class AppModule { }
 
 ## Microsoft WEB.API & NSwag configuration
 
-To configure your REST API (_Microsoft WEB.API_) so it returns _Bad Request_ response in uniform format we should decorate all end-points that trigger validation with `ProducesResponseType` attribute that maps [ValidationProblemDetails](https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.validationproblemdetails?view=aspnetcore-7.0) to _Bad Request_ responses:
+To configure REST API (_Microsoft WEB.API_) to return _Bad Request_ responses in uniform format, decorate all end-points that trigger validation with `ProducesResponseType` attribute that maps [ValidationProblemDetails](https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.validationproblemdetails?view=aspnetcore-7.0) to _Bad Request_ responses:
 
 ```csharp
 using Microsoft.AspNetCore.Mvc;
@@ -100,6 +106,6 @@ public async Task<ActionResult<Response>> Post([FromBody] Command command)
 }
 ```
 
-When set like this, we can generate, using [NSwag](https://github.com/RicoSuter/NSwag), client side models for _Bad Request_ responses, that can be then used with `setServerSideValidationErrors(error, form)` method as input parameter.
+When set like this, generated ([NSwag](https://github.com/RicoSuter/NSwag)) client side models for _Bad Request_ responses can be used as input parameter of `setServerSideValidationErrors(error, form)` method.
 
-This is because we based our `IValidationProblemDetails` interface on [ValidationProblemDetails](https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.validationproblemdetails?view=aspnetcore-7.0) class.
+This is because `IValidationProblemDetails` interface is based on [ValidationProblemDetails](https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.validationproblemdetails?view=aspnetcore-7.0) class.

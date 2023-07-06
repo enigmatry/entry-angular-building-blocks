@@ -2,7 +2,13 @@
 
 Toolbar component (`<entry-toolbar>`) is used as a header section in the applications. It offers built-in support for title or logo on the left side, while other elements, like menu items, must be provided via content projection. The component is responsive in a way that on smaller screens (mobile/tablet) switches to _the compact view_ containing menu icon button used to toggle content visibility.
 
-## Imports
+## Integration
+
+```npm
+npm i @enigmatry/entry-components
+```
+
+Import component package:
 
 ```ts
 import { EntryDialogModule } from '@enigmatry/entry-components/toolbar';

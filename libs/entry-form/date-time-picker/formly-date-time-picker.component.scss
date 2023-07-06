@@ -1,0 +1,5 @@
+@use '@enigmatry/scss-foundation/src/modules/display/items';
+
+.entry-date-time-picker {
+    @include items.fully-align(baseline, space-between, row, nowrap);
+}

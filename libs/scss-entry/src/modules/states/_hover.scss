@@ -1,0 +1,18 @@
+@mixin default($background, $hover-background, $color, $disabled-background) {
+	background-color: $background;
+
+	&:hover {
+		background-color: $hover-background;
+		color: $color;
+	}
+
+	&:disabled, &.disabled {
+		background-color: $disabled-background;
+		cursor: not-allowed;
+
+		/* stylelint-disable-next-line selector-max-pseudo-class */
+		&:hover {
+			background-color: $disabled-background;
+		}
+	}
+}

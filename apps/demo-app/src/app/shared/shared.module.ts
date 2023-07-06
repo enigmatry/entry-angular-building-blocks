@@ -5,9 +5,6 @@ import { DocumentationContentComponent } from './documentation-content/documenta
 import { LandingComponent } from './landing/landing.component';
 import { ExampleViewerComponent } from './example-viewer/example-viewer.component';
 import { MarkdownViewerComponent } from './markdown-viewer/markdown-viewer.component';
-import { MarkdownPipe } from './pipes/markdown.pipe';
-import { AsMarkdownCodePipe } from './pipes/as-markdown-code.pipe';
-import { SafeUriPipe } from './pipes/safe-uri.pipe';
 import { SortPipe } from './pipes/sort.pipe';
 import { CodeViewComponent } from './example-viewer/code-view/code-view.component';
 
@@ -17,9 +14,6 @@ import { CodeViewComponent } from './example-viewer/code-view/code-view.componen
     LandingComponent,
     ExampleViewerComponent,
     MarkdownViewerComponent,
-    MarkdownPipe,
-    AsMarkdownCodePipe,
-    SafeUriPipe,
     SortPipe,
     CodeViewComponent
   ],
@@ -32,8 +26,6 @@ import { CodeViewComponent } from './example-viewer/code-view/code-view.componen
     DocumentationContentComponent,
     ExampleViewerComponent,
     MarkdownViewerComponent,
-    MarkdownPipe,
-    AsMarkdownCodePipe,
     SortPipe
   ]
 })

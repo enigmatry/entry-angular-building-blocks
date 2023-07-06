@@ -17,7 +17,7 @@ This tab should load component's `README.md` file. To enable that, relative path
 Regarding the content of component's `README.md` file, it should be short as possible and easy to understand. Some guidelines:
 
 * Start with description of the component and some of it's core features.
-* Add `Imports` section listing all dependencies that the component requires.
+* Add `Integration` section listing all dependencies that the component requires.
 * If possible, present basic usage of the component or how it can be configured.
 
 ## Examples tab
