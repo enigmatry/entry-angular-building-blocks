@@ -1,11 +1,11 @@
-<mat-card class="example-card">
+<mat-card appearance="outlined" class="example-card">
     <mat-toolbar-row>
         <span>{{title}}</span>
         <button mat-button (click)="toggleCodeView()" color="primary">
             {{viewCode ? 'Hide' : 'View'}} Code
         </button>
     </mat-toolbar-row>
-    <mat-tab-group  animationDuration="0ms" *ngIf="viewCode">
+    <mat-tab-group  animationDuration="0ms" *ngIf="viewCode" mat-stretch-tabs="false">
         <mat-tab label="HTML">
             <app-code-view [codeContent]="htmlFile" codeType="html"></app-code-view>
         </mat-tab>
@@ -20,7 +20,7 @@
         </mat-tab>
     </mat-tab-group>
     <mat-divider></mat-divider>
-    <mat-card-content>
+    <mat-card-content class="example-content">
         <ng-content></ng-content>
     </mat-card-content>
 </mat-card>

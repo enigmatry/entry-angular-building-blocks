@@ -1,7 +1,7 @@
 .entry-table {
-    .mat-header-cell,
-	.mat-footer-cell,
-	.mat-cell {
+    .mat-mdc-header-cell,
+	.mat-mdc-footer-cell,
+	.mat-mdc-cell {
 		box-sizing: border-box;
 		padding: 4px 10px;
 
@@ -13,10 +13,10 @@
 		}
 	}
 
-    .mat-table {
-		.mat-header-cell,
-		.mat-footer-cell,
-		.mat-cell {
+    .mat-mdc-table {
+		.mat-mdc-header-cell,
+		.mat-mdc-footer-cell,
+		.mat-mdc-cell {
 			&:not(.entry-table-checkbox-cell) {
 				min-width: 80px;
 			}
@@ -42,16 +42,16 @@
 	width: 56px;
 	flex: none;
 
-	.mat-checkbox {
+	.mat-mdc-checkbox {
 		display: flex;
 		margin: 0 10px;
 	}
-
+	/* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
 	.mat-checkbox-inner-container {
 		margin-left: 0;
 	}
 
-	.mat-icon-button {
+	.mat-mdc-icon-button {
 		padding-top: 5px;
 	}
 }

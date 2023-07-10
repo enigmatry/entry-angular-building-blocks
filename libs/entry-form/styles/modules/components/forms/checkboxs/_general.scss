@@ -1,41 +1,44 @@
 @use '@enigmatry/scss-foundation/src/modules/map';
 
 @mixin generate-checkboxs-from($theme) {
-    .mat-checkbox {
+    .mat-mdc-checkbox {
+        /* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
         .mat-checkbox-inner-container {
             width: map.value-from($theme, 'checkbox.width');
             height: map.value-from($theme, 'checkbox.height');
             background-color: map.value-from($theme, 'checkbox.background-color');
         }
-
+        /* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
         .mat-checkbox-label {
             white-space: map.value-from($theme, 'checkbox.label-breaking');
         }
-
+        /* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
         .mat-checkbox-frame {
             border: map.value-from($theme, 'checkbox.border');
             border-radius: map.value-from($theme, 'checkbox.border-radius');
         }
-
+        /* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
         .mat-checkbox-checkmark-path {
             stroke: map.value-from($theme, 'checkbox.checkmark-color')!important;
         }
 
         &:hover {
+            /* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
             .mat-checkbox-frame {
                 border: map.value-from($theme, 'checkbox.border-hover');
             }
         }
-
+        /* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
         &.mat-checkbox-checked {
+            /* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
             .mat-checkbox-background {
                 background-color: map.value-from($theme, 'checkbox.selected-background-color');
-    
+                /* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
                 .mat-checkbox-checkmark-path {
                     stroke: map.value-from($theme, 'checkbox.selected-checkmark-color')!important;
                 }
             }
-    
+            /* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
             .mat-checkbox-frame {
                 border-color: map.value-from($theme, 'checkbox.selected-border-color');
             }
