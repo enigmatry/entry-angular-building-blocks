@@ -34,7 +34,7 @@ steps:
   inputs:
     targetType: inline
     script: |
-      $version = dotnet minver
+      $version = dotnet minver -p preview
       echo "##vso[task.setvariable variable=theLatestVersion]$version"
       Write-Host "Setting MinVer to '$version'"
 
