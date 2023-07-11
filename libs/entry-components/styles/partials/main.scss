@@ -15,4 +15,4 @@ $custom-theme: (
 	)
 );
 
-@include generator.generate($custom-theme);
+@include generator.generate-from($custom-theme);

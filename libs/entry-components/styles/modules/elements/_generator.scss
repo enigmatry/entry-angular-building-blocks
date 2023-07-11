@@ -1,12 +1,12 @@
 @use 'sass:map';
-@use 'default-theme' as default;
-@use 'typography/fonts';
-@use 'elements/anchors/generator' as anchors;
-@use 'elements/buttons/generator' as buttons;
+@use '../default-theme' as default;
+@use '../typography/fonts';
+@use 'anchors/generator' as anchors;
+@use 'buttons/generator' as buttons;
 
 $default-theme: default.$theme;
 
-@mixin generate($custom-theme: ()) {
+@mixin generate-from($custom-theme: ()) {
 	$merged-theme: map.deep-merge($default-theme, $custom-theme);
 
 	$font-family: map.get($merged-theme, 'general', 'font', 'family');

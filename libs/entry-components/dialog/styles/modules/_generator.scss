@@ -1,11 +1,9 @@
 @use 'sass:map';
+@use 'components/dialogs/headers/general' as headers;
 
-@use 'theming/default-theming' as default_theme;
-@use 'components/dialogs/general' as dialogs;
-
-$default-theme: default_theme.$theme;
-
-@mixin generate($custom-theme: ()) {
-	$merged-theme: map.deep-merge($default-theme, $custom-theme);
-	@include dialogs.generate-dialog-from($merged-theme);
+@mixin generate-from($theme) {
+	.entry-dialog {
+		@include headers.generate-headers-from($theme);
+		font-size: map.get($theme, 'general', 'font', 'size');
+	}
 }
