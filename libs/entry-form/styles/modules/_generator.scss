@@ -1,11 +1,10 @@
 @use 'sass:map';
-
-@use 'themings/default-theming' as default;
+@use '../../node_modules/@enigmatry/scss-entry/src/modules/default-theme' as default;
 @use 'components/forms/general' as forms;
 
 $default-theme: default.$theme;
 
 @mixin generate($custom-theme: ()) {
-    $merged-theme: map.deep-merge($default-theme, $custom-theme);
-    @include forms.generate-form-from($merged-theme);
+	$merged-theme: map.deep-merge($default-theme, $custom-theme);
+	@include forms.generate-form-from($merged-theme);
 }

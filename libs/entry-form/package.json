@@ -22,16 +22,17 @@
   },
   "scripts": {
     "compile-scss": "sass --style=compressed --load-path=styles styles/partials/theming.scss styles/dist/main.css",
+    "compile-scss-modules": "sass --load-path=src styles/modules/index.scss styles/dist/modules.css",
     "lint": "stylelint --fix styles/**/*.scss"
   },
   "dependencies": {
     "tslib": "^2.3.0"
   },
   "devDependencies": {
-    "@enigmatry/scss-foundation": "1.1.4",
-    "@enigmatry/stylelint-config": "1.14.4",
-    "sass": "^1.44.0",
-    "stylelint": "14.14.1"
+    "@enigmatry/stylelint-config": "1.14.17",
+    "@enigmatry/scss-foundation": "1.14.17",
+    "@enigmatry/scss-entry": "1.14.17",
+    "sass": "1.63.6"
   },
   "publishConfig": {
     "access": "public"
