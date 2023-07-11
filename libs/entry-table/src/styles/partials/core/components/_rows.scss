@@ -1,0 +1,13 @@
+.entry-table {
+	.mat-row, .mat-header-row {
+		height: 36px;
+	}
+}
+
+.entry-table-menu {
+	min-height: 40px;
+
+	.mat-menu-content:not(:empty) {
+		padding: 0;
+	}
+}

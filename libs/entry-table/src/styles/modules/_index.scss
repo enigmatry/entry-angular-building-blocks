@@ -9,8 +9,14 @@ $theme: (
 		)
 	),
 	tables: (
+		cells: (
+			first-cell-padding-left: 5px,
+			last-cell-padding-right: 7px,
+			min-width: 22px
+		),
 		rows: (
-			odd-even-background: red
+			odd-even-background: red,
+			odd-even-row: odd
 		),
 		columns: (
 			sorted: (

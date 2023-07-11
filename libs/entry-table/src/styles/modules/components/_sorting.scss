@@ -1,6 +1,6 @@
 @use 'sass:map';
 
-@mixin generate-sorting-from($theme) {
+@mixin generate-from($theme) {
 	.mat-sort-header-sorted {
 		font: {
 			size: map.get($theme, 'general', 'font', 'size');

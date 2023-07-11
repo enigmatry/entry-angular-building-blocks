@@ -1,6 +1,6 @@
 @use 'sass:map';
 
-@mixin generate-cells-from($theme) {
+@mixin generate-from($theme) {
 	.mat-cell {
 		color: map.get($theme, 'general', 'colors', 'dark');
 	}

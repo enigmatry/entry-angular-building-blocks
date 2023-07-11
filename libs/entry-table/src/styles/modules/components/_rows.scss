@@ -1,9 +1,10 @@
 @use 'sass:map';
-@use '../../../../../../../node_modules/@enigmatry/scss-foundation/src/modules/lists/row-coloring' as list;
+@use '../../../../node_modules/@enigmatry/scss-foundation/src/modules/lists/row-coloring' as list;
 
-@mixin generate-rows-from($theme) {
+@mixin generate-from($theme) {
 	.mat-row {
 		$edge-selected-color: map.get($theme, 'forms', 'checkboxes', 'selected-border-color');
+		
 		@include list.row-coloring(map.get($theme, 'tables', 'rows', 'odd-even-background'),
 		map.get($theme, 'tables', 'rows', 'odd-even-row'));
 

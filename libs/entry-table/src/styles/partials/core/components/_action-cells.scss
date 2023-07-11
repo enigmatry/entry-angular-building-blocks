@@ -1,0 +1,25 @@
+@use '../../../../../node_modules/@enigmatry/scss-foundation/src/modules/display/items';
+
+.entry-table .mat-icon-button {
+	width: unset;
+	@include items.align-center();
+}
+
+.entry-table-checkbox-cell, .entry-table-context-menu-cell {
+	flex: none;
+	width: 56px;
+	max-width: 40px;
+
+	.mat-checkbox {
+		display: flex;
+		margin: 0 10px;
+	}
+
+	.mat-checkbox-inner-container {
+		margin-left: 0;
+	}
+
+	.mat-icon-button {
+		padding-top: 2px;
+	}
+}

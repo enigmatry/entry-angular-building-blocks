@@ -1,10 +1,4 @@
-@use '../../../../../../node_modules/@enigmatry/scss-foundation/src/modules/display/items';
-
 .entry-table {
-	.mat-row, .mat-header-row {
-		height: 36px;
-	}
-
 	.mat-cell, .mat-header-cell {
 		padding: 0 10px;
 		border-bottom: none;
@@ -30,11 +24,6 @@
 		}
 	}
 
-	.mat-icon-button {
-		width: unset;
-		@include items.align-center();
-	}
-
 	.mat-header-cell-inner {
 		display: flex;
 		align-items: center;
@@ -46,32 +35,5 @@
 		.mat-header-cell-inner {
 			justify-content: right;
 		}
-	}
-}
-
-.entry-table-menu {
-	min-height: 40px;
-
-	.mat-menu-content:not(:empty) {
-		padding: 0;
-	}
-}
-
-.entry-table-checkbox-cell, .entry-table-context-menu-cell {
-	flex: none;
-	width: 56px;
-	max-width: 40px;
-
-	.mat-checkbox {
-		display: flex;
-		margin: 0 10px;
-	}
-
-	.mat-checkbox-inner-container {
-		margin-left: 0;
-	}
-
-	.mat-icon-button {
-		padding-top: 2px;
 	}
 }

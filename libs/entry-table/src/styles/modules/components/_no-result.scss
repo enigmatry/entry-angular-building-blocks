@@ -1,6 +1,6 @@
 @use 'sass:map';
 
-@mixin generate-no-result-from($theme) {
+@mixin generate-from($theme) {
 	.entry-table-no-result {
 		text-transform: map.get($theme, 'tables', 'contents', 'no-result', 'text-transform');
         
