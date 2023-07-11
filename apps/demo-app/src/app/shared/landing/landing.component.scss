@@ -9,17 +9,26 @@
     .component-card {
         margin: 10px;
         padding: 0px;
+        height: 200px;
+        position: relative;
 
-        mat-card-header {
+        .card-header {
             padding-top: 10px;
+            padding-bottom: 10px;
+            background-color: vars.$header-back;
         }
 
-        mat-card-content {
-            margin: 10px 10px 10px 17px;
+        .card-content {
+            margin: 10px 15px 10px 15px;
+            font-size: 14px;
+            font-style: italic;
         }
 
-        mat-card-actions {
-            margin: 10px 10px 10px 17px;
+        .card-actions {
+            position: absolute;
+            bottom: 0;
+            align-self: end;
+            margin-right: 15px;
         }
     }
 }

@@ -3,5 +3,6 @@
         <mat-icon>content_copy</mat-icon>
     </button>
 </div>
-<div class="markdown-body" [innerHTML]="codeContent | asMarkdownCode: codeType | markdown">
+<div class="markdown-body">
+    <pre><code [innerHTML]="highlightedCode"></code></pre>
 </div>

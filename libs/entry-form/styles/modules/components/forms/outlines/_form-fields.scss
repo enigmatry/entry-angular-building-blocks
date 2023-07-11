@@ -1,10 +1,12 @@
 @use 'sass:map';
 
 @mixin generate-from($theme) {
+	/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
 	.mat-form-field-label {
 		color: map.get($theme, 'forms', 'fields', 'label-color');
 	}
 
+	/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
 	.mat-form-field-infix {
 		padding: {
 			top: map.get($theme, 'forms', 'fields', 'infix-padding-top');
@@ -12,10 +14,12 @@
 		}
 	}
 
+	/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
 	.mat-form-field-flex {
 		background-color: map.get($theme, 'general', 'inputs', 'background-color');
 	}
 
+	/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
 	.mat-form-field-underline {
 		display: map.get($theme, 'forms', 'fields', 'underline-display');
 	}

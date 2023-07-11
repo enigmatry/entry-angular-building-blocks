@@ -1,14 +1,17 @@
 @use 'sass:map';
 
 @mixin -generate($border-value, $theme) {
+	/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
 	.mat-form-field-outline-start, .mat-form-field-outline-gap, .mat-form-field-outline-end {
 		border: $border-value;
 	}
 
+	/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
 	.mat-form-field-outline-start, .mat-form-field-outline-gap {
 		border-right-style: map.get($theme, 'forms', 'fields', 'outline', 'border-right');
 	}
 
+	/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
 	.mat-form-field-outline-end, .mat-form-field-outline-gap {
 		border-left-style: map.get($theme, 'forms', 'fields', 'outline', 'border-left');
 	}
@@ -18,6 +21,7 @@
 	@include -generate(map.get($theme, 'forms', 'fields', 'outline', 'border'), $theme);
 
 	&.mat-focused, &:hover {
+		/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
 		.mat-form-field-outline {
 			border-bottom: map.get($theme, 'forms', 'fields', 'outline', 'border-hover');
 		}
@@ -26,11 +30,13 @@
 	}
 
 	&.mat-form-field-disabled {
+		/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
 		.mat-form-field-outline {
 			background-color: map.get($theme, 'forms', 'fields', 'outline', 'disabled-background');
 		}
 
 		&:hover {
+			/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
 			.mat-form-field-outline-start, .mat-form-field-outline-gap, .mat-form-field-outline-end {
 				border-color: map.get($theme, 'forms', 'fields', 'outline', 'disabled-hover');
 			}

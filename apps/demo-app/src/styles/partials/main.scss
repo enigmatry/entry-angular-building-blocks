@@ -4,6 +4,10 @@
 
 @include entry.generate(app_theme.$theme, app_font.$fonts);
 
+:root {
+    font-family: var(--mdc-typography-headline6-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));
+}
+
 .spacer {
     flex: 1 1 auto;
 }
@@ -11,3 +15,4 @@
 .mat-drawer-content {
     background-color: #fff;
 }
+
