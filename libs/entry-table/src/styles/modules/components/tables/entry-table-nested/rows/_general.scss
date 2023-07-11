@@ -1,39 +1,47 @@
-@use '@enigmatry/scss-foundation/src/modules/map';
-@use '@enigmatry/scss-foundation/src/modules/lists/row-coloring' as list;
+@use 'sass:map';
+@use '../../../../../../../node_modules/@enigmatry/scss-foundation/src/modules/lists/row-coloring' as list;
 
 @mixin generate-rows-from($theme) {
+	.mat-row {
+		$edge-selected-color: map.get($theme, 'forms', 'checkboxes', 'selected-border-color');
+		@include list.row-coloring(map.get($theme, 'tables', 'rows', 'odd-even-background'),
+		map.get($theme, 'tables', 'rows', 'odd-even-row'));
 
-    .mat-row {
-        @include list.row-coloring(map.value-from($theme, 'row.odd-even-background'), map.value-from($theme, 'row.odd-even-row'));
+		.mat-checkbox-inner-container {
+			background-color: map.get($theme, 'forms', 'checkboxes', 'background-color');
+		}
 
-        .mat-checkbox-inner-container {
-            background-color: map.value-from($theme, 'checkbox.background-color');
-        }
-
-        &.selected {
-            background-color: map.value-from($theme, 'row.selected-background-color');
+		&.selected {
+			background-color: map.get($theme, 'tables', 'rows', 'selected-background-color');
     
-            .mat-cell, a {
-                color: map.value-from($theme, 'row.selected-color');
-            }
+			.mat-cell {
+				color: map.get($theme, 'tables', 'rows', 'selected-color');
+			}
 
-            .mat-checkbox-checked {
-                .mat-checkbox-background {
-                    background-color: map.value-from($theme, 'checkbox.selected-background-color');
+			.mat-checkbox-checked {
+				.mat-checkbox-background {
+					background-color: map.get($theme, 'forms', 'checkboxes', 'selected-background-color');
         
-                    .mat-checkbox-checkmark-path {
-                        stroke: map.value-from($theme, 'checkbox.selected-checkmark-color')!important;
-                    }
-                }
+					/* stylelint-disable-next-line max-nesting-depth, selector-max-combinators, selector-max-compound-selectors */
+					.mat-checkbox-checkmark-path {
+						/* stylelint-disable-next-line declaration-no-important */
+						stroke: $edge-selected-color !important;
+					}
+				}
         
-                .mat-checkbox-frame {
-                    border-color: map.value-from($theme, 'checkbox.selected-border-color');
-                }
-            }
-        }
-    }
+				.mat-checkbox-frame {
+					border-color: $edge-selected-color;
+				}
+			}
+		}
+	}
 
-    .mat-row-disabled {
-        background-color: map.value-from($theme, 'row.disabled');
-    }
+	.mat-row-disabled {
+		background-color: map.get($theme, 'general', 'colors', 'disabled-light');
+	}
+
+	.entry-table-menu .context-menu-item:hover {
+		background-color: map.get($theme, 'general', 'colors', 'accent');
+		color: map.get($theme, 'general', 'colors', 'dark');
+	}
 }

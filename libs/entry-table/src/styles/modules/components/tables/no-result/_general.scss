@@ -1,15 +1,12 @@
-@use '@enigmatry/scss-foundation/src/modules/display/items';
-@use '@enigmatry/scss-foundation/src/modules/map';
+@use 'sass:map';
 
 @mixin generate-no-result-from($theme) {
-    .entry-table-no-result {
-        @include items.align-absolute-center();
-        min-height: 50px;
-        flex: 1;
-        font: {
-            size: map.value-from($theme, 'content.no-result.font-size');
-            weight: map.value-from($theme, 'content.no-result.font-weight');
-        }
-        text-transform: map.value-from($theme, 'content.no-result.text-transform');
-    }
+	.entry-table-no-result {
+		text-transform: map.get($theme, 'tables', 'contents', 'no-result', 'text-transform');
+        
+		font: {
+			size: map.get($theme, 'tables', 'contents', 'no-result', 'font-size');
+			weight: map.get($theme, 'tables', 'contents', 'no-result', 'font-weight');
+		}
+	}
 }

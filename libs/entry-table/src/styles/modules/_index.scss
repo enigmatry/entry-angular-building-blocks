@@ -1,0 +1,28 @@
+@use 'generator';
+
+$theme: (
+	general: (
+		colors: (
+			primary: #FF81C4,
+			accent: #11518D,
+			dark: #AAA
+		)
+	),
+	tables: (
+		rows: (
+			odd-even-background: red
+		),
+		columns: (
+			sorted: (
+				content-align: right
+			)
+		),
+		contents: (
+			no-result: (
+				font-size: 24px
+			)
+		)
+	)
+);
+
+@include generator.generate($theme);

@@ -1,7 +1,16 @@
+@use '../../../../../../node_modules/@enigmatry/scss-foundation/src/modules/display/items';
+
 .entry-table {
-    .mat-header-cell,
-	.mat-footer-cell,
-	.mat-cell {
+	.mat-row, .mat-header-row {
+		height: 36px;
+	}
+
+	.mat-cell, .mat-header-cell {
+		padding: 0 10px;
+		border-bottom: none;
+	}
+
+	.mat-header-cell, .mat-footer-cell, .mat-cell {
 		box-sizing: border-box;
 		padding: 4px 10px;
 
@@ -13,14 +22,17 @@
 		}
 	}
 
-    .mat-table {
-		.mat-header-cell,
-		.mat-footer-cell,
-		.mat-cell {
+	.mat-table {
+		.mat-header-cell, .mat-footer-cell, .mat-cell {
 			&:not(.entry-table-checkbox-cell) {
 				min-width: 80px;
 			}
 		}
+	}
+
+	.mat-icon-button {
+		width: unset;
+		@include items.align-center();
 	}
 
 	.mat-header-cell-inner {
@@ -37,10 +49,18 @@
 	}
 }
 
-.entry-table-checkbox-cell,
-.entry-table-context-menu-cell {
-	width: 56px;
+.entry-table-menu {
+	min-height: 40px;
+
+	.mat-menu-content:not(:empty) {
+		padding: 0;
+	}
+}
+
+.entry-table-checkbox-cell, .entry-table-context-menu-cell {
 	flex: none;
+	width: 56px;
+	max-width: 40px;
 
 	.mat-checkbox {
 		display: flex;
@@ -52,6 +72,6 @@
 	}
 
 	.mat-icon-button {
-		padding-top: 5px;
+		padding-top: 2px;
 	}
 }

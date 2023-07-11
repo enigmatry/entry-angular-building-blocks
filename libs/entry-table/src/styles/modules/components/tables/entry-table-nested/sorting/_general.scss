@@ -1,19 +1,18 @@
-@use '@enigmatry/scss-foundation/src/modules/map';
+@use 'sass:map';
 
 @mixin generate-sorting-from($theme) {
-    .mat-sort-header-sorted {
-        font: {
-            size: map.value-from($theme, 'column.sorted.font-size');
-            weight: map.value-from($theme, 'column.sorted.font-weight');
-        }
-        color: map.value-from($theme, 'column.sorted.color');
-    }
+	.mat-sort-header-sorted {
+		font: {
+			size: map.get($theme, 'general', 'font', 'size');
+			weight: map.get($theme, 'tables', 'columns', 'sorted', 'font-weight');
+		}
+	}
 
-    .mat-sort-header-arrow {
-        color: map.value-from($theme, 'column.sorted.color');
-    }
+	.mat-sort-header-sorted, .mat-sort-header-arrow {
+		color: map.get($theme, 'general', 'colors', 'dark');
+	}
 
-    .mat-sort-header-content {
-        text-align: map.value-from($theme, 'column.sorted.content-align');
-    }
+	.mat-sort-header-content {
+		text-align: map.get($theme, 'tables', 'columns', 'sorted', 'content-align');
+	}
 }

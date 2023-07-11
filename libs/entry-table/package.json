@@ -19,17 +19,18 @@
     "@angular/platform-browser": "^14.0.0"
   },
   "scripts": {
-    "compile-scss": "sass --style=compressed --load-path=styles src/styles/partials/theming.scss src/styles/dist/main.css",
+    "compile-scss": "sass --load-path=src/styles src/styles/partials/theming.scss src/dist/main.css",
+    "compile-modules-scss": "sass --load-path=src/styles src/styles/modules/_index.scss src/dist/modules.css",
     "lint": "stylelint --fix src/styles/**/*.scss"
   },
   "dependencies": {
     "tslib": "^2.3.0"
   },
   "devDependencies": {
-    "@enigmatry/scss-foundation": "1.1.4",
-    "@enigmatry/stylelint-config": "1.14.4",
-    "sass": "^1.44.0",
-    "stylelint": "14.14.1"
+    "@enigmatry/scss-foundation": "1.14.17",
+    "@enigmatry/stylelint-config": "1.14.17",
+    "@enigmatry/scss-entry": "1.14.17",
+    "sass": "1.63.6"
   },
   "publishConfig": {
     "access": "public"
