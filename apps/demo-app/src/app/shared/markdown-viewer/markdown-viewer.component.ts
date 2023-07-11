@@ -3,6 +3,7 @@ import { FileLoadService } from '../services/file-load.service';
 import * as MarkdownIt from 'markdown-it';
 import { map } from 'rxjs/operators';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import hljs from 'highlight.js';
 
 @Component({
   selector: 'app-markdown-viewer',
@@ -42,7 +43,8 @@ export class MarkdownViewerComponent implements OnInit {
     const converter = MarkdownIt('default', {
       html: true,
       breaks: true,
-      typographer: true
+      typographer: true,
+      highlight: this.highlightCode
     });
 
     const html = converter.render(markdown ?? '');
@@ -108,5 +110,12 @@ export class MarkdownViewerComponent implements OnInit {
       return document.querySelector('body').innerHTML;
     }
     return html;
+  }
+
+  private highlightCode(str: string, lang: string) {
+    if (lang && hljs.getLanguage(lang)) {
+      return hljs.highlight(str, { language: lang, }).value;
+    }
+    return str;
   }
 }

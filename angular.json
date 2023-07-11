@@ -67,7 +67,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "libs/entry-form/src/test.ts",
+            "main": "libs/entry-form/test.ts",
             "tsConfig": "libs/entry-form/tsconfig.spec.json",
             "karmaConfig": "libs/entry-form/karma.conf.js"
           }
@@ -159,7 +159,8 @@
             "styles": [
               "apps/demo-app/src/styles/partials/main.scss",
               "node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
-              "node_modules/github-markdown-css/github-markdown-light.css"
+              "node_modules/github-markdown-css/github-markdown-light.css",
+              "node_modules/highlight.js/styles/stackoverflow-light.css"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [

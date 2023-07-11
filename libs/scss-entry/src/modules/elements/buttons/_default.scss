@@ -14,15 +14,3 @@
 		decoration: none;
 	}
 }
-
-@mixin font-color-from($theme) {
-	$font-family: map.get($theme, 'general', 'font', 'family');
-
-	@if $font-family == '' {
-		@content;
-	}
-	@else {
-		$font-size: map.get($theme, 'general', 'font', 'size');
-		@include fonts.font($font-family, $font-size);
-	}
-}

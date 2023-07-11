@@ -1,10 +1,10 @@
 .entry-table {
-	.mat-cell, .mat-header-cell {
+	.mat-mdc-cell, .mat-mdc-header-cell {
 		padding: 0 10px;
 		border-bottom: none;
 	}
 
-	.mat-header-cell, .mat-footer-cell, .mat-cell {
+	.mat-mdc-header-cell, .mat-mdc-footer-cell, .mat-mdc-cell {
 		box-sizing: border-box;
 		padding: 4px 10px;
 
@@ -16,8 +16,8 @@
 		}
 	}
 
-	.mat-table {
-		.mat-header-cell, .mat-footer-cell, .mat-cell {
+	.mat-mdc-table {
+		.mat-mdc-header-cell, .mat-mdc-footer-cell, .mat-mdc-cell {
 			&:not(.entry-table-checkbox-cell) {
 				min-width: 80px;
 			}

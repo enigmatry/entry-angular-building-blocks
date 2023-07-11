@@ -1,0 +1,24 @@
+@use 'generator';
+
+$custom-theme: (
+	forms: (
+		fields: (
+			infix-padding-top: 20px,
+			underline-display: inline-block,
+			outline: (
+				disabled-background: red
+			)
+		),
+		checkboxes: (
+			width: 30px,
+			height: 25px,
+			border-radius: 2px
+		),
+		
+		radio-buttons: (
+			white-space: normal,
+		),
+	)
+);
+
+@include generator.generate($custom-theme);
