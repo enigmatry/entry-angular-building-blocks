@@ -1,0 +1,15 @@
+@use '../dialog/styles/modules/generator' as dialog;
+@use '../header/styles/modules/generator' as header;
+@use '../toolbar/styles/modules/generate' as toolbar;
+@use 'modules/elements/generator' as elements;
+@use 'modules/default-theme' as default;
+@use 'sass:map';
+
+@mixin generate-from($custom-theme: ()) {
+	$merged-theme: map.deep-merge(default.$theme, $custom-theme);
+
+	@include elements.generate-from($merged-theme);
+	@include dialog.generate($merged-theme);
+	@include header.generate($merged-theme);
+	@include toolbar.generate($merged-theme);
+}

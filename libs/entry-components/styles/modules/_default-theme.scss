@@ -41,7 +41,6 @@ $theme: (
 			checkmark-color: #000,
 			selected-border-color: #000,
 			selected-background-color: #FFF,
-			selected-border-color: #000,
 			border: 2px solid #0000008A,
 			border-hover: 2px solid #0000008A,
 			border-radius: 0,
@@ -62,7 +61,7 @@ $theme: (
 			selected-background-color: #06C,
 			selected-color: #FFF,
 			odd-even-row: odd,
-			odd-even-background: vars.$background-default
+			odd-even-background: #F0F0F0
 		),
 		columns: (
 			sorted: (

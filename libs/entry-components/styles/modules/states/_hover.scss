@@ -1,27 +1,18 @@
-@use '../variables' as vars;
+@mixin default($background, $hover-background, $color, $disabled-background) {
+	background-color: $background;
 
-// TODO: remove this once implemented https://jira.enigmatry.com/browse/ETL-484
-@mixin default($default: vars.$accent, $hover: vars.$body-font-color) {
-	transition: vars.$default-transition;
-	color: $default;
-
-	&:active {
-		color: $hover;
-	}
-
-	// Had to be done this way since at least Chrome isn't triggering on-touch-end on mobile so hover state remains. 
-	/* stylelint-disable-next-line at-rule-allowed-list, media-feature-name-allowed-list */
-	@media (hover: hover) {
-		&:hover {
-			color: $hover;
-		}
-	}
-}
-
-@mixin background-hover($regular-background, $hover-background) {
-	background-color: $regular-background;
-
-	&:hover {
+	&:hover, &:active {
 		background-color: $hover-background;
+		color: $color;
+	}
+
+	&:disabled, &.disabled {
+		background-color: $disabled-background;
+		cursor: not-allowed;
+
+		/* stylelint-disable-next-line selector-max-pseudo-class */
+		&:hover {
+			background-color: $disabled-background;
+		}
 	}
 }

@@ -1,5 +1,0 @@
-@use './typography/generate' as typography;
-
-@mixin generate($font-config: null) {
-    @include typography.generate($font-config);
-}
