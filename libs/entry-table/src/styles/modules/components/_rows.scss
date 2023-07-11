@@ -1,0 +1,53 @@
+@use 'sass:map';
+@use '../../../../node_modules/@enigmatry/scss-foundation/src/modules/lists/row-coloring' as list;
+
+@mixin generate-from($theme) {
+	.mat-mdc-row {
+		$edge-selected-color: map.get($theme, 'forms', 'checkboxes', 'selected-border-color');
+		
+		@include list.row-coloring(map.get($theme, 'tables', 'rows', 'odd-even-background'),
+		map.get($theme, 'tables', 'rows', 'odd-even-row'));
+
+		/* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
+		.mat-checkbox-inner-container {
+			background-color: map.get($theme, 'forms', 'checkboxes', 'background-color');
+		}
+
+		&.selected {
+			background-color: map.get($theme, 'tables', 'rows', 'selected-background-color');
+    
+			.mat-mdc-cell {
+				color: map.get($theme, 'tables', 'rows', 'selected-color');
+			}
+
+			/* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
+			.mat-checkbox-checked {
+				/* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
+				.mat-checkbox-background {
+					background-color: map.get($theme, 'forms', 'checkboxes', 'selected-background-color');
+        
+					/* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
+					/* stylelint-disable-next-line max-nesting-depth, selector-max-combinators, selector-max-compound-selectors */
+					.mat-checkbox-checkmark-path {
+						/* stylelint-disable-next-line declaration-no-important */
+						stroke: $edge-selected-color !important;
+					}
+				}
+        
+				/* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
+				.mat-checkbox-frame {
+					border-color: $edge-selected-color;
+				}
+			}
+		}
+	}
+
+	.mat-row-disabled {
+		background-color: map.get($theme, 'general', 'colors', 'disabled-light');
+	}
+
+	.entry-table-menu .context-menu-item:hover {
+		background-color: map.get($theme, 'general', 'colors', 'accent');
+		color: map.get($theme, 'general', 'colors', 'dark');
+	}
+}

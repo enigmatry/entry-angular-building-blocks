@@ -1,6 +1,8 @@
+@use '../../../../../node_modules/@enigmatry/scss-foundation/src/modules/display/items';
+
 .entry-table {
-	position: relative;
 	display: flex;
+	position: relative;
 	flex-direction: column;
 	width: 100%;
 
@@ -36,4 +38,10 @@
 .entry-table-footer {
 	position: relative;
 	z-index: 1;
+}
+
+.entry-table-no-result {
+	@include items.align-absolute-center();
+	flex: 1;
+	min-height: 50px;
 }

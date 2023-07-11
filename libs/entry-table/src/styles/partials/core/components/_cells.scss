@@ -1,0 +1,39 @@
+.entry-table {
+	.mat-mdc-cell, .mat-mdc-header-cell {
+		padding: 0 10px;
+		border-bottom: none;
+	}
+
+	.mat-mdc-header-cell, .mat-mdc-footer-cell, .mat-mdc-cell {
+		box-sizing: border-box;
+		padding: 4px 10px;
+
+		&.entry-table-checkbox-cell {
+			padding: {
+				right: 10px;
+				left: 10px;
+			}
+		}
+	}
+
+	.mat-mdc-table {
+		.mat-mdc-header-cell, .mat-mdc-footer-cell, .mat-mdc-cell {
+			&:not(.entry-table-checkbox-cell) {
+				min-width: 80px;
+			}
+		}
+	}
+
+	.mat-header-cell-inner {
+		display: flex;
+		align-items: center;
+	}
+
+	.currency {
+		text-align: right;
+
+		.mat-header-cell-inner {
+			justify-content: right;
+		}
+	}
+}

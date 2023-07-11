@@ -1,0 +1,11 @@
+@use 'rows';
+@use 'sorting';
+@use 'cells';
+
+@mixin generate-from($theme) {
+	.entry-table {
+		@include rows.generate-from($theme);
+		@include sorting.generate-from($theme);
+		@include cells.generate-from($theme);
+	}
+}

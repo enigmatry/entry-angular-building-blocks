@@ -5,7 +5,8 @@ $theme: (
 			primary: #2581C4,
 			accent: #EA518D,
 			dark: #323232,
-			disabled: #D9D9D9
+			disabled: #D9D9D9,
+			disabled-light: #F5F5F5
 		),
 		font: (
 			family: '',
@@ -38,7 +39,7 @@ $theme: (
 			height: 20px,
 			background-color: #FFF,
 			checkmark-color: #000,
-			selected-checkmark-color: #000,
+			selected-border-color: #000,
 			selected-background-color: #FFF,
 			selected-border-color: #000,
 			border: 2px solid #0000008A,
@@ -50,5 +51,31 @@ $theme: (
 			align: flex-start,
 			white-space: nowrap,
 		),
+	),
+	tables: (
+		cells: (
+			first-cell-padding-left: 4px,
+			last-cell-padding-right: 4px,
+			min-width: unset
+		),
+		rows: (
+			selected-background-color: #06C,
+			selected-color: #FFF,
+			odd-even-row: odd,
+			odd-even-background: vars.$background-default
+		),
+		columns: (
+			sorted: (
+				font-weight: 700,
+				content-align: left
+			)
+		),
+		contents: (
+			no-result: (
+				font-size: 13px,
+				font-weight: 500,
+				text-transform: none
+			)
+		)
 	)
 );

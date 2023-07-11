@@ -1,0 +1,26 @@
+@use '../../../../../node_modules/@enigmatry/scss-foundation/src/modules/display/items';
+
+.entry-table .mat-mdc-icon-button {
+	width: unset;
+	@include items.align-center();
+}
+
+.entry-table-checkbox-cell, .entry-table-context-menu-cell {
+	flex: none;
+	width: 56px;
+	max-width: 40px;
+
+	.mat-mdc-checkbox {
+		display: flex;
+		margin: 0 10px;
+	}
+
+	/* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
+	.mat-checkbox-inner-container {
+		margin-left: 0;
+	}
+
+	.mat-mdc-icon-button {
+		padding-top: 2px;
+	}
+}
