@@ -1,9 +1,0 @@
-@use 'sass:map';
-@use 'components/dialogs/headers/general' as headers;
-
-@mixin generate-from($theme) {
-	.entry-dialog {
-		@include headers.generate-headers-from($theme);
-		font-size: map.get($theme, 'general', 'font', 'size');
-	}
-}

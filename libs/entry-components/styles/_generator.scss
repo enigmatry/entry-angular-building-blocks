@@ -1,5 +1,5 @@
-@use '../dialog/styles/modules/generator' as dialog;
-@use '../header/styles/modules/generator' as header;
+@use 'modules/components/dialogs/generator' as dialog;
+@use 'modules/components/headers/generator' as header;
 @use 'modules/elements/generator' as elements;
 @use 'modules/default-theme' as default;
 @use 'sass:map';

@@ -1,11 +1,7 @@
-@use '../../variables' as vars;
-@use '../../typography/fonts';
-@use 'sass:map';
-
 %entry-button {
 	display: inline-block;
 	padding: 10px 20px;
-	transition: vars.$default-transition;
+	transition: .4s;
 	border: 0;
 	line-height: 1.25;
 	cursor: pointer;

@@ -1,8 +1,0 @@
-@use 'sass:map';
-
-@mixin generate-headers-from($theme) {
-	.title {
-		color: map.get($theme, 'general', 'colors', 'dark');
-		font-size: map.get($theme, 'dialogs', 'title', 'size');
-	}
-}

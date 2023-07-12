@@ -5,7 +5,10 @@
 @use '../../../../../../styles/modules/typography/fonts' as fonts;
 
 $border-dark: #000;
+$default-gap: 16px;
+$large-gap: calc(#{$default-gap} * 2);
  
+// TODO: Refactor me. Rename things adequately taking care of context, try minimizing styles required for this to look as expected.
 .dialog-container {
 	/* stylelint-disable-next-line declaration-no-important */
 	position: absolute !important;
