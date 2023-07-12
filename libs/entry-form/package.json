@@ -29,9 +29,9 @@
     "tslib": "^2.3.0"
   },
   "devDependencies": {
-    "@enigmatry/stylelint-config": "1.14.17",
-    "@enigmatry/scss-foundation": "1.14.17",
-    "@enigmatry/scss-entry": "1.14.17",
+    "@enigmatry/stylelint-config": "1.15.1-preview.3",
+    "@enigmatry/scss-foundation": "1.15.1-preview.3",
+    "@enigmatry/entry-components": "1.15.1-preview.3",
     "sass": "1.63.6"
   },
   "publishConfig": {
