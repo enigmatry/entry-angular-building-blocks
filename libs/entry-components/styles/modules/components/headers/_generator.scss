@@ -1,0 +1,12 @@
+@use 'sass:map';
+
+@mixin generate-from($theme) {
+	.entry-header {
+		background-color: map.get($theme, 'general', 'colors', 'primary');
+
+		.title {
+			color: map.get($theme, 'general', 'colors', 'dark');
+			font-size: map.get($theme, 'headers', 'title', 'size');
+		}
+	}
+}

@@ -1,8 +1,0 @@
-@use '../../../../styles/modules/variables' as vars;
-
-$theme: (
-    background: vars.$primary-lightest,
-    height: 56px,
-    title-color: vars.$primary,
-    title-hover-color: vars.$accent
-);

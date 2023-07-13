@@ -1,9 +1,0 @@
-@use '../../../../../../styles/modules/variables' as vars;
-
-.entry-header {
-	padding: 24px vars.$default-gap;
-
-	.content {
-		padding-top: 20px;
-	}
-}

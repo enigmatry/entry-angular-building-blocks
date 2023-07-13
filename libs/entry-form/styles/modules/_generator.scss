@@ -1,5 +1,5 @@
 @use 'sass:map';
-@use '../../node_modules/@enigmatry/scss-entry/src/modules/default-theme' as default;
+@use '../../node_modules/@enigmatry/entry-components/styles/modules/default-theme' as default;
 @use 'components/forms/general' as forms;
 
 $default-theme: default.$theme;
