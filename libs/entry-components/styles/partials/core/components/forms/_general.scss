@@ -1,3 +1,5 @@
+@use '../../../../../node_modules/@enigmatry/scss-foundation/src/modules/display/items';
+
 .entry-form {
 	.action-buttons {
 		margin-top: 25px;
@@ -23,4 +25,8 @@
 			bottom: 8px;
 		}
 	}
+}
+
+.entry-date-time-picker {
+	@include items.fully-align(baseline, space-between, row, nowrap);
 }

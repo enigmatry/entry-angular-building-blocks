@@ -86,16 +86,10 @@ steps:
     command: 'install'
 
 - task: Npm@1
-  displayName: 'Lint entry table'
+  displayName: 'Entry Components npm install'
   inputs:
-    command: 'custom'
-    customCommand: 'run lint @enigmatry/entry-table'
-
-- task: Npm@1
-  displayName: 'Lint entry form'
-  inputs:
-    command: 'custom'
-    customCommand: 'run lint @enigmatry/entry-form'
+    command: 'install'
+    workingDir: 'libs/entry-components'
 
 - task: Npm@1
   displayName: 'Lint entry components'
@@ -147,6 +141,20 @@ steps:
     command: 'custom'
     customCommand: 'run build'
     workingDir: 'libs/scss-foundation'
+
+- task: Npm@1
+  displayName: 'Test entry components theming'
+  inputs:
+    command: 'custom'
+    customCommand: 'run compile-theme'
+    workingDir: 'libs/entry-components'
+
+- task: Npm@1
+  displayName: 'Test entry components fixed theming'
+  inputs:
+    command: 'custom'
+    customCommand: 'run compile-fixed-theme'
+    workingDir: 'libs/entry-components'
 
 - task: Npm@1
   displayName: 'Publish entry table'

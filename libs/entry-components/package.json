@@ -19,15 +19,16 @@
     "@angular/platform-browser": "^15.0.0"
   },
   "scripts": {
-    "compile-scss": "sass --load-path=styles styles/partials/main.scss styles/dist/main.css",
+    "compile-fixed-theme": "sass --load-path=styles styles/partials/theming.scss styles/dist/theming.css",
+    "compile-theme": "sass --load-path=styles styles/partials/test.scss styles/dist/test.css",
     "lint": "stylelint --fix styles/**/*.scss"
   },
   "dependencies": {
     "tslib": "^2.3.0"
   },
   "devDependencies": {
-    "@enigmatry/scss-foundation": "1.15.1-preview.3",
-    "@enigmatry/stylelint-config": "1.15.1-preview.3",
+    "@enigmatry/scss-foundation": "1.15.1-preview.5",
+    "@enigmatry/stylelint-config": "1.15.1-preview.5",
     "sass": "1.63.6"
   },
   "publishConfig": {

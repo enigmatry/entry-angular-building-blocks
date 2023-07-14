@@ -1,0 +1,7 @@
+@use 'no-result';
+@use 'table-body' as table;
+
+@mixin generate-from($theme) {
+	@include table.generate-from($theme);
+	@include no-result.generate-from($theme);
+}

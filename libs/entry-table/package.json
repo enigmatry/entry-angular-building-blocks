@@ -18,19 +18,9 @@
     "@angular/forms": "^15.0.0",
     "@angular/platform-browser": "^15.0.0"
   },
-  "scripts": {
-    "compile-scss": "sass --load-path=src/styles src/styles/partials/theming.scss src/dist/main.css",
-    "compile-modules-scss": "sass --load-path=src/styles src/styles/modules/_index.scss src/dist/modules.css",
-    "lint": "stylelint --fix src/styles/**/*.scss"
-  },
   "dependencies": {
-    "tslib": "^2.3.0"
-  },
-  "devDependencies": {
-    "@enigmatry/scss-foundation": "1.15.1-preview.3",
-    "@enigmatry/stylelint-config": "1.15.1-preview.3",
-    "@enigmatry/entry-components": "1.15.1-preview.3",
-    "sass": "1.63.6"
+    "tslib": "^2.3.0",
+    "@enigmatry/entry-components": "1.15.1-preview.5"
   },
   "publishConfig": {
     "access": "public"
