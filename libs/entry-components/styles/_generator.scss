@@ -1,5 +1,7 @@
 @use 'modules/components/dialogs/generator' as dialog;
 @use 'modules/components/headers/generator' as header;
+@use 'modules/components/tables/generator' as table;
+@use 'modules/components/forms/generator' as form;
 @use 'modules/elements/generator' as elements;
 @use 'modules/default-theme' as default;
 @use 'sass:map';
@@ -8,6 +10,8 @@
 	$merged-theme: map.deep-merge(default.$theme, $custom-theme);
 
 	@include elements.generate-from($merged-theme);
+	@include table.generate-from($merged-theme);
+	@include form.generate-from($merged-theme);
 	@include dialog.generate-from($merged-theme);
 	@include header.generate-from($merged-theme);
 }

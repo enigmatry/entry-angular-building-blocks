@@ -2,7 +2,7 @@
 @use 'selectors/checkboxes';
 @use 'selectors/radio-buttons';
 
-@mixin generate-form-from($theme) {
+@mixin generate-from($theme) {
 	@include appearance-outlines.generate-from($theme);
 	@include checkboxes.generate-from($theme);
 	@include radio-buttons.generate-from($theme);

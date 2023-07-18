@@ -149,6 +149,18 @@ steps:
     workingDir: 'libs/scss-foundation'
 
 - task: Npm@1
+  displayName: 'Test entry components theming'
+  inputs:
+    command: 'custom'
+    customCommand: 'run entry-component:compile-theme'
+
+- task: Npm@1
+  displayName: 'Test entry components fixed theming'
+  inputs:
+    command: 'custom'
+    customCommand: 'run entry-component:compile-fixed-theme'
+
+- task: Npm@1
   displayName: 'Publish entry table'
   inputs:
     command: publish

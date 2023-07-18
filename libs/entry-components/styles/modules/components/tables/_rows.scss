@@ -1,5 +1,5 @@
 @use 'sass:map';
-@use '../../../../node_modules/@enigmatry/scss-foundation/src/modules/lists/row-coloring' as list;
+@use '@enigmatry/scss-foundation/src/modules/lists/row-coloring' as list;
 
 @mixin generate-from($theme) {
 	.mat-mdc-row {

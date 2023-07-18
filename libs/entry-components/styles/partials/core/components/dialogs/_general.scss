@@ -1,8 +1,5 @@
 @use 'sass:color';
 @use '@enigmatry/scss-foundation/src/modules/display/items';
-@use '../../../../../../styles/modules/variables' as vars;
-@use '../../../../../../styles/modules/states/hover';
-@use '../../../../../../styles/modules/typography/fonts' as fonts;
 
 $border-dark: #000;
 $default-gap: 16px;
@@ -12,13 +9,13 @@ $large-gap: calc(#{$default-gap} * 2);
 .dialog-container {
 	/* stylelint-disable-next-line declaration-no-important */
 	position: absolute !important;
-	top: vars.$large-gap;
+	top: $large-gap;
 	width: 100%;
 	max: {
 		/* stylelint-disable-next-line declaration-no-important */
 		width: 700px !important;
 		/* stylelint-disable-next-line declaration-no-important */
-		height: calc(100% - 2 * vars.$large-gap) !important;
+		height: calc(100% - 2 * $large-gap) !important;
 	}
     
 	&.wide {
@@ -40,12 +37,11 @@ $large-gap: calc(#{$default-gap} * 2);
 		@include items.fully-align(center, space-between, row, nowrap);
 	
 		.title {
-			// @include fonts.title-font();
 			line-height: 1.2;
 		}
 	
 		.close-button {
-			margin-left: vars.$default-gap;
+			margin-left: $default-gap;
 			border: none;
 			background: none;
 		}
@@ -53,8 +49,8 @@ $large-gap: calc(#{$default-gap} * 2);
 
 	.dialog-content {
 		margin: {
-			top: vars.$default-gap;
-			bottom: vars.$large-gap;
+			top: $default-gap;
+			bottom: $large-gap;
 		}
 		line-height: 1.4;
 
@@ -75,7 +71,7 @@ $large-gap: calc(#{$default-gap} * 2);
 	
 	.dialog-radio-button {
 		display: block;
-		margin-top: vars.$default-gap;
+		margin-top: $default-gap;
 		white-space: break;
 	}
 }
