@@ -86,12 +86,6 @@ steps:
     command: 'install'
 
 - task: Npm@1
-  displayName: 'Entry Components npm install'
-  inputs:
-    command: 'install'
-    workingDir: 'libs/entry-components'
-
-- task: Npm@1
   displayName: 'Lint entry components'
   inputs:
     command: 'custom'
@@ -146,15 +140,13 @@ steps:
   displayName: 'Test entry components theming'
   inputs:
     command: 'custom'
-    customCommand: 'run compile-theme'
-    workingDir: 'libs/entry-components'
+    customCommand: 'run entry-component:compile-theme'
 
 - task: Npm@1
   displayName: 'Test entry components fixed theming'
   inputs:
     command: 'custom'
-    customCommand: 'run compile-fixed-theme'
-    workingDir: 'libs/entry-components'
+    customCommand: 'run entry-component:compile-fixed-theme'
 
 - task: Npm@1
   displayName: 'Publish entry table'
