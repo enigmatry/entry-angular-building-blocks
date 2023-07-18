@@ -8,7 +8,12 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "typedoc": "typedoc"
+    "typedoc": "typedoc",
+    "entry-components:build": "ng build @enigmatry/entry-components",
+    "entry-components:watch": "ng build @enigmatry/entry-components --watch --configuration development",
+    "entry-component:compile-fixed-theme": "cd libs/entry-components && sass --load-path=styles --load-path=../../node_modules styles/partials/theming.scss styles/dist/theming.css",
+    "entry-component:compile-theme": "cd libs/entry-components && sass --load-path=styles --load-path=../../node_modules styles/partials/test.scss styles/dist/test.css",
+    "entry-components:stylelint": "cd libs/entry-components && stylelint --fix styles/**/*.scss"
   },
   "private": true,
   "dependencies": {
@@ -41,7 +46,8 @@
     "@angular/compiler-cli": "^15.2.9",
     "@angular/material-date-fns-adapter": "15.2.9",
     "@ckeditor/ckeditor5-angular": "^5.2.0",
-    "@enigmatry/scss-foundation": "^1.2.79",
+    "@enigmatry/scss-foundation": "1.15.1-preview.5",
+    "@enigmatry/stylelint-config": "1.15.1-preview.5",
     "@ngx-formly/core": "^6.1.7",
     "@ngx-formly/material": "^6.1.7",
     "@types/jasmine": "~3.8.0",
@@ -60,6 +66,7 @@
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
     "ng-packagr": "^15.2.2",
+    "sass": "1.63.6",
     "typedoc": "^0.24.8",
     "typedoc-plugin-markdown": "^4.0.0-next.16",
     "typescript": "^4.9.5"

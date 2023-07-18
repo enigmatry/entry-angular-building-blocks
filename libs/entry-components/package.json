@@ -18,11 +18,6 @@
     "@angular/forms": "^15.0.0",
     "@angular/platform-browser": "^15.0.0"
   },
-  "scripts": {
-    "compile-fixed-theme": "sass --load-path=styles styles/partials/theming.scss styles/dist/theming.css",
-    "compile-theme": "sass --load-path=styles styles/partials/test.scss styles/dist/test.css",
-    "lint": "stylelint --fix styles/**/*.scss"
-  },
   "dependencies": {
     "tslib": "^2.3.0"
   },
