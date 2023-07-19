@@ -21,6 +21,10 @@ const routes: Routes = [
     loadChildren: () => import('./features/search-filter/search-filter.module').then(module => module.SearchFilterModule)
   },
   {
+    path: RouteSegments.table,
+    loadChildren: () => import('./features/table/table.module').then(module => module.TableModule)
+  },
+  {
     path: RouteSegments.toolbar,
     loadChildren: () => import('./features/toolbar/toolbar.module').then(module => module.ToolbarModule)
   },
