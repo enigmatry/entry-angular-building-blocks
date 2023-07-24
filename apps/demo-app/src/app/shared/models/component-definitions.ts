@@ -31,6 +31,13 @@ const COMPONENT_DEFINITIONS: IComponentDefinition[] = [
         apiDocsPath: 'assets/api/@enigmatry/entry-components/search_filter_public_api.md'
     },
     {
+        label: 'Table',
+        shortDescription: `Reusable table component with context menu, sorting and paging`,
+        route: RouteSegments.table,
+        readmePath: '/entry-table/README.md',
+        apiDocsPath: ''
+    },
+    {
         label: 'Toolbar',
         shortDescription: `Container for the application header elements like menu items and title or logo.`,
         route: RouteSegments.toolbar,
