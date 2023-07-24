@@ -1,6 +1,6 @@
-# @enigmatry/entry-table
+# Entry table
 
-Reusable table component for Angular.
+Reusable table component with context menu, sorting and paging.
 
 ## Installation
 
