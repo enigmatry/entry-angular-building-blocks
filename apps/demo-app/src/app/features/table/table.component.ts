@@ -9,4 +9,12 @@ import { RouteSegments } from '../../shared/models/route-segments';
 })
 export class TableComponent {
   tableComponentDefinition = COMPONENT_DEFINITIONS.find(c => c.route === RouteSegments.table);
+
+  extraFiles = [
+    {
+      name: 'users.ts',
+      path: 'search-filter\\search-filter\\users',
+      type: 'ts'
+    }
+  ];
 }
