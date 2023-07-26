@@ -2,7 +2,7 @@
 @use '../modules/theming/theming' as app_theme;
 @use '../modules/typography/fonts' as app_font;
 
-@include entry.generate-from();
+@include entry.generate-from(app_theme.$theme);
 
 :root {
     font-family: var(--mdc-typography-headline6-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));

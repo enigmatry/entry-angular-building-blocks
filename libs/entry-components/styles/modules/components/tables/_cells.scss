@@ -20,4 +20,9 @@
 	.entry-table-checkbox-cell, .entry-table-context-menu-cell {
 		min-width: map.get($theme, 'tables', 'cells', 'min-width');
 	}
+
+	.mat-mdc-menu-trigger {
+		border: map.get($theme, 'tables', 'context-menu', 'border');
+		background: map.get($theme, 'tables', 'context-menu', 'background-color');
+	}
 }
