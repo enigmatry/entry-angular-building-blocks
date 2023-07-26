@@ -38,8 +38,8 @@ export class EntryButtonDirective implements OnInit {
   }
 
   private getButtonConfig(): MatButtonConfig {
-    const isSubmit = this.hostHasAttribute('entry-submit-button');
-    return isSubmit ? this._config.submitButton : this._config.cancelButton;
+    const isSubmitButton = this.hostHasAttribute('entry-submit-button');
+    return isSubmitButton ? this._config.submitButton : this._config.cancelButton;
   }
 
   private hostHasAttribute(...attributes: string[]) {
