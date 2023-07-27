@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { RouteSegments } from './shared/models/route-segments';
+import { RouteSegments } from './features/route-segments';
 import { LandingComponent } from './shared/landing/landing.component';
 
 const routes: Routes = [
