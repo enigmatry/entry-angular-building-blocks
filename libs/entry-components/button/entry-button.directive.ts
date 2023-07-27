@@ -5,10 +5,14 @@ import { ENTRY_BUTTON_CONFIG, EntryButtonConfig, MatButtonConfig } from './entry
 
 @Directive({
   // eslint-disable-next-line @angular-eslint/directive-selector
-  selector: `[mat-button][entry-submit-button],
-  [mat-button][entry-cancel-button]`
+  selector: `[mat-button][entry-submit-button],[mat-button][entry-cancel-button]`
 })
 export class EntryButtonDirective implements OnInit {
+
+  attributes = {
+    submit: `entry-submit-button`,
+    cancel: `entry-cancel-button`
+  };
 
   classes: { [key: string]: string[] } = {
     basic: ['mdc-button', 'mat-mdc-button'],
@@ -25,7 +29,7 @@ export class EntryButtonDirective implements OnInit {
   }
 
   ngOnInit(): void {
-    const buttonConfig = this.getButtonConfig();
+    const buttonConfig: MatButtonConfig = this.getButtonConfig();
 
     const classes = this.classes[buttonConfig.type];
     this._elementRef.nativeElement.classList.add(...classes);
@@ -38,11 +42,7 @@ export class EntryButtonDirective implements OnInit {
   }
 
   private getButtonConfig(): MatButtonConfig {
-    const isSubmitButton = this.hostHasAttribute('entry-submit-button');
-    return isSubmitButton ? this._config.submitButton : this._config.cancelButton;
-  }
-
-  private hostHasAttribute(...attributes: string[]) {
-    return attributes.some(attribute => this._elementRef.nativeElement.hasAttribute(attribute));
+    return this._elementRef.nativeElement.hasAttribute(this.attributes.submit)
+      ? this._config.submitButton : this._config.cancelButton;
   }
 }
