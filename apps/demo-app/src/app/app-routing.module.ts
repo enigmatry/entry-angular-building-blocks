@@ -9,6 +9,10 @@ const routes: Routes = [
     component: LandingComponent
   },
   {
+    path: RouteSegments.button,
+    loadChildren: () => import('./features/button/button.module').then(module => module.ButtonModule)
+  },
+  {
     path: RouteSegments.dialog,
     loadChildren: () => import('./features/dialog/dialog.module').then(module => module.DialogModule)
   },

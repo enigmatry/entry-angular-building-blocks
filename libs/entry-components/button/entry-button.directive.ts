@@ -28,7 +28,7 @@ export class EntryButtonDirective implements OnInit {
     const buttonConfig = this.getButtonConfig();
 
     const classes = this.classes[buttonConfig.type];
-    this._elementRef.nativeElement.classList.add(classes);
+    this._elementRef.nativeElement.classList.add(...classes);
 
     const color: ThemePalette = buttonConfig.color;
     if (color) {

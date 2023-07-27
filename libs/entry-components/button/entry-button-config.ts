@@ -11,7 +11,7 @@ export interface MatButtonConfig {
 }
 
 /**
- * Used to provide button configurations on module or application level.
+ * Used to provide button configuration on module or application level.
  */
 export class EntryButtonConfig {
   /** Submit button configuration */
