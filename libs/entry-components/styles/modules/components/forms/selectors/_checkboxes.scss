@@ -1,54 +1,93 @@
+/* stylelint-disable no-descending-specificity */
+/* stylelint-disable max-nesting-depth */
+/* stylelint-disable selector-max-pseudo-class */
+/* stylelint-disable selector-max-combinators */
+/* stylelint-disable selector-max-compound-selectors */
 @use 'sass:map';
 
 @mixin generate-from($theme) {
-	.mat-checkbox {
-		/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-		.mat-checkbox-inner-container {
-			width: map.get($theme, 'forms', 'checkboxes', 'width');
-			height: map.get($theme, 'forms', 'checkboxes', 'height');
-			background-color: map.get($theme, 'forms', 'checkboxes', 'background-color');
+	.mat-mdc-checkbox {
+		&.mat-accent .mdc-checkbox--selected ~ .mdc-checkbox__ripple {
+			background: map.get($theme, 'forms', 'checkboxes', 'background-color');
 		}
 
-		/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-		.mat-checkbox-label {
-			white-space: map.get($theme, 'forms', 'checkboxes', 'label-breaking');
-		}
-
-		/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-		.mat-checkbox-frame {
-			border: map.get($theme, 'forms', 'checkboxes', 'border');
-			border-radius: map.get($theme, 'forms', 'checkboxes', 'border-radius');
-		}
-
-		/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-		.mat-checkbox-checkmark-path {
-			/* stylelint-disable-next-line declaration-no-important */
-			stroke: map.get($theme, 'forms', 'checkboxes', 'checkmark-color') !important;
-		}
-
-		&:hover {
-			/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-			.mat-checkbox-frame {
-				border: map.get($theme, 'forms', 'checkboxes', 'border-hover');
+		.mdc-checkbox {
+			.mdc-checkbox__background {
+				width: map.get($theme, 'forms', 'checkboxes', 'width');
+				height: map.get($theme, 'forms', 'checkboxes', 'height');
 			}
-		}
 
-		/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-		&.mat-checkbox-checked {
-			/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-			.mat-checkbox-background {
-				background-color: map.get($theme, 'forms', 'checkboxes', 'selected-background-color');
-    
-				/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-				.mat-checkbox-checkmark-path {
-					/* stylelint-disable-next-line declaration-no-important */
-					stroke: map.get($theme, 'forms', 'checkboxes', 'selected-checkmark-color') !important;
+			.mdc-checkbox__ripple {
+				background: map.get($theme, 'forms', 'checkboxes', 'background-color');
+			}
+
+			&:hover {
+				.mdc-checkbox__native-control:enabled:checked, .mdc-checkbox__native-control:enabled:indeterminate {
+					~ .mdc-checkbox__background {
+						border-color: map.get($theme, 'forms', 'checkboxes', 'border-hover-color');
+						background: map.get($theme, 'forms', 'checkboxes', 'background-color');
+					}
 				}
 			}
-    
-			/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-			.mat-checkbox-frame {
-				border-color: map.get($theme, 'forms', 'checkboxes', 'selected-background-color');
+
+			.mdc-checkbox__native-control:enabled {
+				~ .mdc-checkbox__background .mdc-checkbox__mixedmark {
+					border-color: map.get($theme, 'forms', 'checkboxes', 'checkmark-color');
+				}
+
+				&:checked, &:indeterminate {
+					~ .mdc-checkbox__background {
+						border-color: map.get($theme, 'forms', 'checkboxes', 'border-color');
+						background-color: map.get($theme, 'forms', 'checkboxes', 'selected-background-color');
+
+						.mdc-checkbox__checkmark {
+							color: map.get($theme, 'forms', 'checkboxes', 'checkmark-color');
+						}
+					}
+				}
+
+				&:focus {
+					&:checked, &:indeterminate {
+						~ .mdc-checkbox__background {
+							border-color: map.get($theme, 'forms', 'checkboxes', 'border-color');
+							background-color: map.get($theme, 'forms', 'checkboxes', 'selected-background-color');
+						}
+					}
+				}
+			}
+
+			&:not(:disabled):active {
+				.mdc-checkbox__native-control:enabled {
+					&:indeterminate {
+						~ .mdc-checkbox__background {
+							border-color: map.get($theme, 'forms', 'checkboxes', 'border-color');
+							background-color: map.get($theme, 'forms', 'checkboxes', 'selected-background-color');
+						}
+					}
+				}
+
+				&:hover {
+					&:checked, &:indeterminate {
+						~ .mdc-checkbox__background {
+							border-color: map.get($theme, 'forms', 'checkboxes', 'border-color');
+							background-color: map.get($theme, 'forms', 'checkboxes', 'selected-background-color');
+						}
+					}
+				}
+
+				.mdc-checkbox__native-control:enabled:checked {
+					~ .mdc-checkbox__background {
+						border-color: map.get($theme, 'forms', 'checkboxes', 'border-color');
+						background-color: map.get($theme, 'forms', 'checkboxes', 'selected-background-color');
+					}
+				}
+			}
+
+			&:not(.mdc-ripple-upgraded):focus .mdc-checkbox__native-control:enabled:checked {
+				~ .mdc-checkbox__background {
+					border-color: map.get($theme, 'forms', 'checkboxes', 'border-color');
+					background-color: map.get($theme, 'forms', 'checkboxes', 'selected-background-color');
+				}
 			}
 		}
 	}

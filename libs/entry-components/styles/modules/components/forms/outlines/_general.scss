@@ -2,8 +2,8 @@
 @use 'form-fields';
 
 @mixin generate-from($theme) {
-	.mat-form-field-appearance-outline {
-		@include field-outlines.generate-from($theme);
+	.mat-mdc-form-field, .mat-form-field-appearance-outline {
 		@include form-fields.generate-from($theme);
+		@include field-outlines.generate-from($theme);
 	}
 }

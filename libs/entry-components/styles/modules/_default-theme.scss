@@ -21,17 +21,18 @@ $theme: (
 	),
 	forms: (
 		fields: (
-			infix-padding-top: .4375em,
-			infix-padding-bottom: .4375em,
+			infix-padding-top: 28px,
+			infix-padding-bottom: 8px,
 			label-color: #0000008A,
 			underline-display: block,
 			outline: (
-				border: 2px solid #EBEBEB,
-				border-hover: 2px solid #2581C4,
+				border-width: 2px,
+				border-color: #EBEBEB,
+				border-hover-color: #2581C4,
 				border-right: none,
 				border-left: none,
 				disabled-background: #F5F5F5,
-				disabled-hover: 2px solid #EBEBEB, 
+				disabled-hover-color: #EBEBEB,
 			)
 		),
 		checkboxes: (
@@ -41,8 +42,9 @@ $theme: (
 			checkmark-color: #000,
 			selected-border-color: #000,
 			selected-background-color: #FFF,
-			border: 2px solid #0000008A,
-			border-hover: 2px solid #0000008A,
+			border-width: 2px,
+			border-color: #0000008A,
+			border-hover-color: #0000008A,
 			border-radius: 0,
 			label-breaking: nowrap,
 		),

@@ -1,37 +1,33 @@
+/* stylelint-disable selector-max-pseudo-class */
+/* stylelint-disable max-nesting-depth */
+/* stylelint-disable selector-max-compound-selectors */
+/* stylelint-disable selector-max-combinators */
+
 @use 'sass:map';
 
 @mixin generate-from($theme) {
-	/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-	.mat-radio-group {
-
-		/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-		.mat-radio-label {
-			align-items: map.get($theme, 'forms', 'radio-buttons', 'align');
-			white-space: map.get($theme, 'forms', 'radio-buttons', 'white-space');
-		}
-
-		$background: map.get($theme, 'general', 'inputs', 'background-color');
-
-		/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-		.mat-radio-button {
-
-			/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-			.mat-radio-outer-circle {
-				border-color: $background;
-				background-color: $background;
-			}
-
-			/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-			&.mat-radio-checked {
-
-				/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-				.mat-radio-outer-circle {
-					border-color: $background;
+	.mat-mdc-radio-group {
+		.mat-mdc-radio-button {
+			.mdc-radio {
+				.mdc-radio__background::before {
+					$background: map.get($theme, 'general', 'inputs', 'background-color');
 				}
 
-				/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-				.mat-radio-inner-circle {
-					background-color: map.get($theme, 'general', 'colors', 'primary');
+				.mdc-radio__outer-circle {
+					border-color: map.get($theme, 'general', 'colors', 'primary');
+					background-color: map.get($theme, 'general', 'inputs', 'background-color');
+				}
+
+				.mdc-radio__native-control:enabled + .mdc-radio__background {
+					.mdc-radio__inner-circle, .mdc-radio__outer-circle {
+						border-color: map.get($theme, 'general', 'colors', 'primary');
+					}
+
+					&:hover {
+						.mdc-radio__inner-circle, .mdc-radio__outer-circle {
+							border-color: map.get($theme, 'general', 'colors', 'primary');
+						}
+					}
 				}
 			}
 		}
