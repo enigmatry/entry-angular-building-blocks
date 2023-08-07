@@ -12,6 +12,7 @@
       "@enigmatry/entry-components/search-filter":["libs/entry-components/search-filter/public-api.ts"],
       "@enigmatry/entry-components/toolbar":["libs/entry-components/toolbar/public-api.ts"],
       "@enigmatry/entry-components/validation":["libs/entry-components/validation/public-api.ts"],
+      "@enigmatry/entry-components/button":["libs/entry-components/button/public-api.ts"],
 
       "@enigmatry/entry-form": ["libs/entry-form/public-api.ts"],
       "@enigmatry/entry-form/autocomplete": ["libs/entry-form/autocomplete/public-api.ts"],

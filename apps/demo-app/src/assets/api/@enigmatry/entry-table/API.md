@@ -11,9 +11,9 @@ different page size or navigates to another page.
 
 | Property             | Type     | Description                                                                                                      |
 | :------------------- | :------- | :--------------------------------------------------------------------------------------------------------------- |
-| `length`             | `number` | The current total number of items being paged                                                                    |
+| `length`             | `number` | The current total number of items being paged.                                                                   |
 | `pageIndex`          | `number` | The current page index.                                                                                          |
-| `pageSize`           | `number` | The current page size                                                                                            |
+| `pageSize`           | `number` | The current page size.                                                                                           |
 | `previousPageIndex`? | `number` | Index of the page that was selected previously.<br />@breaking-change 8.0.0 To be made into a required property. |
 
 ## Interfaces

@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { IComponentDefinition } from '../models/component-definitions';
+import { COMPONENT_DEFINITIONS, IComponentDefinition } from '../../features/component-definitions';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-documentation-content',
@@ -7,5 +8,10 @@ import { IComponentDefinition } from '../models/component-definitions';
   styleUrls: ['./documentation-content.component.scss']
 })
 export class DocumentationContentComponent {
-  @Input() componentDefinition: IComponentDefinition;
+  componentDefinition: IComponentDefinition;
+
+  constructor(activatedRoute: ActivatedRoute) {
+    const componentRoute = activatedRoute.snapshot.parent.url[0].path;
+    this.componentDefinition = COMPONENT_DEFINITIONS.find(c => c.route === componentRoute);
+  }
 }

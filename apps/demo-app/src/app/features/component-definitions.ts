@@ -1,5 +1,6 @@
 import { RouteSegments } from './route-segments';
 
+
 interface IComponentDefinition {
     label: string;
     shortDescription: string;
@@ -9,6 +10,13 @@ interface IComponentDefinition {
 }
 
 const COMPONENT_DEFINITIONS: IComponentDefinition[] = [
+    {
+        label: 'Button',
+        shortDescription: `Used to provide button configuration on module or application level.`,
+        route: RouteSegments.button,
+        readmePath: '/entry-components/button/README.md',
+        apiDocsPath: 'assets/api/@enigmatry/entry-components/button_public_api.md'
+    },
     {
         label: 'Dialog',
         shortDescription: `Enables built-in dialogs and adds support for building custom ones.`,

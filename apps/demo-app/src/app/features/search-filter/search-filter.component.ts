@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { ICodeFileDefinition } from '../../shared/example-viewer/code-file-definition.interface';
-import { COMPONENT_DEFINITIONS } from '../../shared/models/component-definitions';
-import { RouteSegments } from '../../shared/models/route-segments';
 
 @Component({
   selector: 'app-search-filter',
@@ -9,7 +7,6 @@ import { RouteSegments } from '../../shared/models/route-segments';
   styleUrls: ['./search-filter.component.scss']
 })
 export class SearchFilterComponent {
-  searchFilterComponentDefinition = COMPONENT_DEFINITIONS.find(c => c.route === RouteSegments.searchFilter);
   extraFiles: ICodeFileDefinition[] = [
     {
       name: 'users.service.ts',
