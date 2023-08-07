@@ -1,0 +1,7 @@
+@mixin background-hover($regular-state, $hover-state) {
+	background-color: $regular-state;
+
+	&:hover, &:hover::before {
+		background-color: $hover-state;
+	}
+}
