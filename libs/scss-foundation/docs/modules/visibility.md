@@ -11,17 +11,17 @@ Visibility utilities for control of element visibility based on different device
 ```
 @include visibility.show-on-mobile($mobile-state: block);
 ```
-Argument is optional and default to block. Sets following property:
+The argument is optional and defaults to block. Sets the following property:
 ```
 	display: $mobile-state;
 ```
 
-- Show on tablet. Method for controlling the visibility of the element on tablet devices.
+- Show on the tablet. Method for controlling the visibility of the element on tablet devices.
 
 ```
 @include visibility.show-on-tablet($tablet-state: block);
 ```
-Argument is optional and default to block. Sets following property:
+The argument is optional and defaults to block. Sets the following property:
 ```
 	display: $tablet-state;
 ```

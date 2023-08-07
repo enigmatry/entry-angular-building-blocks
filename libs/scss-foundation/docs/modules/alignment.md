@@ -19,8 +19,7 @@ align items centrally.
 @include items.align($align);
 ```
 
-- Horizontal and vertical central alignment. Wrapper method for following flex settings: flex direction row, justify
-content centrally and align items centrally.
+- Horizontal and vertical central alignment. Wrapper method for following flex settings: flex direction row, justify content centrally and align items centrally.
 
 ```
 @include items.align-absolute-center();
@@ -34,7 +33,7 @@ content centrally and align items centrally.
 
 Optional arguments and their default values:
 $justify: flex-start, $direction: row, $wrap: wrap
-Sets following properties:
+Sets the following properties:
 ```
 	display: flex;
 	flex: {

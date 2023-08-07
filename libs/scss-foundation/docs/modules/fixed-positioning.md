@@ -11,7 +11,7 @@ Alignment utilities for fixed positioning of content.
 ```
 @include fixed.position($top, $right, $bottom, $left);
 ```
-All arguments are optional and default to 0. Sets following properties:
+All arguments are optional and default to 0. Sets the following properties:
 ```
 	position: fixed;
 	top: $top;
@@ -25,4 +25,4 @@ All arguments are optional and default to 0. Sets following properties:
 ```
 @include fixed.position-unset($top, $right, $bottom, $left);
 ```
-All arguments are optional and default to unset. Sets the same properties as in previous method.
+All arguments are optional and default to unset. Sets the same properties as in the previous method.

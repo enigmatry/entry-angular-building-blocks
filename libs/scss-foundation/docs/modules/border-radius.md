@@ -1,6 +1,6 @@
 # Border-radius method
 
-Border radius utility for set different border radius values for each corner of an element.
+Border radius utility for setting different border radius values for each corner of an element.
 
 ## Border Radius
 
@@ -11,7 +11,7 @@ Border radius utility for set different border radius values for each corner of 
 ```
 @include border-radius.partial-border-radius($top-left, $top-right, $bottom-right, $bottom-left);
 ```
-All arguments are optional and default to 0. Sets following properties:
+All arguments are optional and default to 0. Sets the following properties:
 ```
 	top-left-radius: $top-left;
 	top-right-radius: $top-right;

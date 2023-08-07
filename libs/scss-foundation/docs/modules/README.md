@@ -2,7 +2,7 @@
 
 ## How to use it
 
-Utilities are nothing more than just sass mixins that won't be included in your code base unless you @use individual file of this library and @include them.
+Utilities are nothing more than just sass mixins that won't be included in your code base unless you @use individual files of this library and @include them.
 
 ## What's included
 
