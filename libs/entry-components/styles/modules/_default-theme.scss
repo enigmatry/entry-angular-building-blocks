@@ -38,11 +38,11 @@ $theme: (
 			width: 20px,
 			height: 20px,
 			background-color: #FFF,
-			checkmark-color: #FFF,
-			selected-border-color: #2581C4,
-			selected-background-color: #2581C4,
-			border: 2px solid #2581C4,
-			border-hover: 2px solid #2581C4,
+			checkmark-color: #000,
+			selected-border-color: #000,
+			selected-background-color: #FFF,
+			border: 2px solid #0000008A,
+			border-hover: 2px solid #0000008A,
 			border-radius: 0,
 			label-breaking: nowrap,
 		),
@@ -58,7 +58,7 @@ $theme: (
 			min-width: unset
 		),
 		rows: (
-			selected-background-color: #EA518D,
+			selected-background-color: #06C,
 			selected-color: #FFF,
 			odd-even-row: odd,
 			odd-even-background: #F0F0F0
@@ -74,12 +74,8 @@ $theme: (
 				font-size: 13px,
 				font-weight: 500,
 				text-transform: none
-			),
-		),
-		context-menu: (
-			border: none,
-			background-color: transparent
-		),
+			)
+		)
 	),
 	headers: (
 		title: (

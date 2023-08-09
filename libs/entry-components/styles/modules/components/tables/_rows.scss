@@ -8,11 +8,6 @@
 		@include list.row-coloring(map.get($theme, 'tables', 'rows', 'odd-even-background'),
 		map.get($theme, 'tables', 'rows', 'odd-even-row'));
 
-		&:hover {
-			background-color: map.get($theme, 'tables', 'rows', 'selected-background-color');
-			color: map.get($theme, 'tables', 'rows', 'selected-color');
-		}
-
 		&.selected {
 			background-color: map.get($theme, 'tables', 'rows', 'selected-background-color');
 
@@ -29,20 +24,5 @@
 
 	.mat-row-disabled {
 		background-color: map.get($theme, 'general', 'colors', 'disabled-light');
-	}
-
-	.mat-mdc-table .mat-mdc-row {
-		&:hover {
-			background-color: map.get($theme, 'tables', 'rows', 'selected-background-color');
-
-			.mat-mdc-cell {
-				color: map.get($theme, 'tables', 'rows', 'selected-color');
-			}
-		}
-	}
-
-	.entry-table-menu .context-menu-item:hover {
-		background-color: map.get($theme, 'general', 'colors', 'accent');
-		color: map.get($theme, 'general', 'colors', 'dark');
 	}
 }
