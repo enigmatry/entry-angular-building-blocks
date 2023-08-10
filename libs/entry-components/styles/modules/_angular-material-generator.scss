@@ -1,0 +1,34 @@
+@use '@angular/material' as theming;
+@use 'palette-generator';
+@use 'sass:map';
+
+/* stylelint-disable scss/function-no-unknown */
+@mixin generate-from($theme) {
+	@include theming.core();
+
+	$primary-palette: theming.define-palette(-get-material-palette-for('primary', $theme));
+	$accent-palette: theming.define-palette(-get-material-palette-for('accent', $theme));
+	$warn-palette: theming.define-palette(theming.$red-palette);
+
+	$default-theme: theming.define-light-theme((
+		color: (
+			primary: $primary-palette,
+			accent: $accent-palette,
+			warn: $warn-palette
+		),
+		typography: theming.define-typography-config()
+	));
+	
+	@include theming.all-component-themes($default-theme);
+}
+
+@function -get-material-palette-for($key, $theme) {
+	$palette: map.get($theme, 'general', 'colors', $key + '-theme');
+
+	@if $palette {
+		@return $palette;
+	}
+
+	$color: map.get($theme, 'general', 'colors', $key);
+	@return palette-generator.generate-from($color);
+}
