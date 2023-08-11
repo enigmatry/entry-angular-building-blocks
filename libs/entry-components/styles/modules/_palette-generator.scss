@@ -1,0 +1,32 @@
+@use 'sass:color';
+@use 'sass:map';
+
+@function generate-from($color) {
+	$result: (
+		50: color.adjust($color, $lightness: -30%),
+		contrast: (
+			50: #212121,
+			100: #212121,
+			200: #212121,
+			300: #212121,
+			400: #212121,
+			500: #FFF,
+			600: #FFF,
+			700: #FFF,
+			800: #FFF,
+			900: #FFF,
+			a100: #212121,
+			a200: #212121,
+			a400: #FFF,
+			a700: #FFF
+		)
+	);
+
+	@for $counter from 1 through 9 {
+		$blended-color: color.adjust($color, $lightness: -27 + $counter * 5%);
+		/* stylelint-disable-next-line scss/no-duplicate-dollar-variables */
+		$result: map.set($result, $counter * 100, $blended-color);
+	}
+
+	@return $result;
+}
