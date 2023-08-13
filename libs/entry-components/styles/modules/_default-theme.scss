@@ -33,7 +33,7 @@ $theme: (
 				border-right: none,
 				border-left: none,
 				disabled-background: #F5F5F5,
-				disabled-hover: 2px solid #EBEBEB, 
+				disabled-hover: 2px solid #EBEBEB
 			)
 		),
 		checkboxes: (
@@ -46,11 +46,11 @@ $theme: (
 			border: 2px solid #0000008A,
 			border-hover: 2px solid #0000008A,
 			border-radius: 0,
-			label-breaking: nowrap,
+			label-breaking: nowrap
 		),
 		radio-buttons: (
 			align: flex-start,
-			white-space: nowrap,
+			white-space: nowrap
 		),
 	),
 	tables: (

@@ -1,13 +1,15 @@
 .entry-table {
-	.mat-row, .mat-header-row {
-		height: 36px;
+	.mat-mdc-table {
+		.mdc-data-table__header-row, .mdc-data-table__row {
+			height: 36px;
+		}
 	}
 }
 
 .entry-table-menu {
 	min-height: 40px;
 
-	.mat-menu-content:not(:empty) {
+	.mat-mdc-menu-content:not(:empty) {
 		padding: 0;
 	}
 }

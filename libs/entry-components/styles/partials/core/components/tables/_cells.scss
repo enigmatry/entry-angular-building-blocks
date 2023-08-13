@@ -1,3 +1,5 @@
+@use '@enigmatry/scss-foundation/src/modules/display/items';
+
 .entry-table {
 	.mat-mdc-cell, .mat-mdc-header-cell {
 		padding: 0 10px;
@@ -13,6 +15,12 @@
 				right: 10px;
 				left: 10px;
 			}
+		}
+
+		&.entry-table-context-menu-cell {
+			@include items.fully-align(center, flex-end);
+			/* stylelint-disable-next-line declaration-no-important */
+			min-width: unset !important;
 		}
 	}
 
