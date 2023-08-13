@@ -12,7 +12,7 @@
     "entry-components:build": "ng build @enigmatry/entry-components",
     "entry-components:watch": "ng build @enigmatry/entry-components --watch --configuration development",
     "entry-component:compile-fixed-theme": "cd libs/entry-components && sass --load-path=styles --load-path=../../node_modules styles/partials/theming.scss styles/dist/theming.css",
-    "entry-component:compile-theme": "cd libs/entry-components && sass --load-path=styles --load-path=../../node_modules styles/partials/test.scss styles/dist/test.css",
+    "entry-component:compile-theme": "cd libs/entry-components && sass --load-path=styles --load-path=../../node_modules styles/partials/generator-test.scss styles/dist/test.css",
     "entry-components:stylelint": "cd libs/entry-components && stylelint --fix styles/**/*.scss"
   },
   "private": true,

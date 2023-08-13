@@ -4,11 +4,13 @@
 @use 'modules/components/forms/generator' as form;
 @use 'modules/elements/generator' as elements;
 @use 'modules/default-theme' as default;
+@use 'modules/angular-material-generator' as material-theme;
 @use 'sass:map';
 
 @mixin generate-from($custom-theme: ()) {
 	$merged-theme: map.deep-merge(default.$theme, $custom-theme);
 
+	@include material-theme.generate-from($merged-theme);
 	@include elements.generate-from($merged-theme);
 	@include table.generate-from($merged-theme);
 	@include form.generate-from($merged-theme);

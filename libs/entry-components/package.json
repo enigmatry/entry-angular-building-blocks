@@ -9,6 +9,11 @@
     "url": "https://github.com/enigmatry/entry-angular-building-blocks.git"
   },
   "license": "Apache-2.0",
+  "scripts": {
+    "compile-scss": "sass --load-path=node_modules styles/partials/theming.scss styles/dist/theming.css",
+    "compile-generator": "sass --load-path=node_modules styles/partials/generator-test.scss styles/dist/generator-test.css",
+    "lint": "stylelint --fix styles/**/*.scss"
+  },
   "peerDependencies": {
     "@angular/animations": "^15.0.0",
     "@angular/cdk": "^15.0.0",

@@ -1,12 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { RouteSegments } from './shared/models/route-segments';
+import { RouteSegments } from './features/route-segments';
 import { LandingComponent } from './shared/landing/landing.component';
 
 const routes: Routes = [
   {
     path: '',
     component: LandingComponent
+  },
+  {
+    path: RouteSegments.button,
+    loadChildren: () => import('./features/button/button.module').then(module => module.ButtonModule)
   },
   {
     path: RouteSegments.dialog,

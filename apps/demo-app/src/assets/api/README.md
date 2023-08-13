@@ -1,5 +1,7 @@
 # Entry Angular Building Blocks
 
+This project is compatible with Angular 15.
+
 ## Projects
 
 | Project                                                          | Description                                    |
