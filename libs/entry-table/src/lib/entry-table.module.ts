@@ -13,7 +13,7 @@ import { EntryTableComponent } from './components/entry-table/entry-table.compon
 import { EntryCellComponent } from './components/entry-cell/entry-cell.component';
 import { EntryCellContextMenuComponent } from './components/entry-cell-context-menu/entry-cell-context-menu.component';
 import { EntryCellFormattedValueComponent } from './components/entry-cell-formatted-value/entry-cell-formatted-value.component';
-import { DEFAULT_DATE_FORMAT, DEFAULT_TIMEZONE, DEFAULT_PERCENTAGE_MULTIPLIER } from './interfaces';
+import { DEFAULT_PERCENTAGE_MULTIPLIER } from './interfaces';
 
 @NgModule({
   imports: [
@@ -41,8 +41,6 @@ import { DEFAULT_DATE_FORMAT, DEFAULT_TIMEZONE, DEFAULT_PERCENTAGE_MULTIPLIER } 
     EntryCellFormattedValueComponent
   ],
   providers: [
-    { provide: DEFAULT_DATE_FORMAT, useValue: 'mediumDate' },
-    { provide: DEFAULT_TIMEZONE, useValue: 'undefined' },
     { provide: DEFAULT_PERCENTAGE_MULTIPLIER, useValue: 1 }
   ]
 })
