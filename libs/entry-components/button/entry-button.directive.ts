@@ -9,11 +9,6 @@ import { ENTRY_BUTTON_CONFIG, EntryButtonConfig, MatButtonConfig } from './entry
 })
 export class EntryButtonDirective implements OnInit {
 
-  entrySelector = {
-    submit: 'entry-submit-button',
-    cancel: 'entry-cancel-button'
-  };
-
   matClasses: { [key: string]: string[] } = {
     basic: ['mdc-button', 'mat-mdc-button'],
     raised: ['mdc-button', 'mdc-button--raised', 'mat-mdc-raised-button'],
@@ -29,19 +24,12 @@ export class EntryButtonDirective implements OnInit {
   }
 
   ngOnInit(): void {
+    const entryButtonType = this.getEntryType();
+    const buttonConfig: MatButtonConfig = this._config[entryButtonType];
 
-    let buttonConfig: MatButtonConfig;
-    let entryClasses: string[];
-
-    if (this.isSubmit()) {
-      buttonConfig = this._config.submitButton;
-      entryClasses = ['entry-button', this.entrySelector.submit];
-    } else {
-      buttonConfig = this._config.cancelButton;
-      entryClasses = ['entry-button', this.entrySelector.cancel];
-    }
-
+    const entryClasses: string[] = ['entry-button', `entry-${entryButtonType}-button`];
     const matClasses = this.matClasses[buttonConfig.type];
+
     this._elementRef.nativeElement.classList.add(...entryClasses, ...matClasses);
 
     const color: ThemePalette = buttonConfig.color;
@@ -51,9 +39,8 @@ export class EntryButtonDirective implements OnInit {
     }
   }
 
-  private isSubmit(): boolean {
-    return this._elementRef.nativeElement.hasAttribute(this.entrySelector.submit);
+  private getEntryType(): string {
+    return this._elementRef.nativeElement.hasAttribute('entry-submit-button')
+      ? 'submit' : 'cancel';
   }
-
-  private
 }

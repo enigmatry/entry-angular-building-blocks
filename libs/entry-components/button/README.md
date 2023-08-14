@@ -31,8 +31,8 @@ import { ENTRY_BUTTON_CONFIG, EntryButtonConfig, EntryButtonModule } from '@enig
   providers: [{
     provide: ENTRY_BUTTON_CONFIG,
     useValue: new EntryButtonConfig({
-      submitButton: { type: 'raised', color: 'primary' },
-      cancelButton: { type: 'basic', }
+      submit: { type: 'raised', color: 'primary' },
+      cancel: { type: 'basic', }
     })
   }]
 })

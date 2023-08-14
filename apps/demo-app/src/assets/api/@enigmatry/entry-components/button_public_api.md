@@ -8,10 +8,10 @@ Used to provide button configuration on module or application level.
 
 #### Properties
 
-| Property       | Type              | Description                 |
-| :------------- | :---------------- | :-------------------------- |
-| `cancelButton` | `MatButtonConfig` | Cancel button configuration |
-| `submitButton` | `MatButtonConfig` | Submit button configuration |
+| Property | Type              | Description                 |
+| :------- | :---------------- | :-------------------------- |
+| `cancel` | `MatButtonConfig` | Cancel button configuration |
+| `submit` | `MatButtonConfig` | Submit button configuration |
 
 ## Variables
 
@@ -23,5 +23,5 @@ Entry button config injection token. Can be used to provide custom button config
 
 Defaults:
 
-- submitButton: type: 'flat', color: 'primary'
-- cancelButton: type: 'basic', color: 'accent'
+- submit: type: 'flat', color: 'primary'
+- cancel: type: 'basic', color: 'accent'
