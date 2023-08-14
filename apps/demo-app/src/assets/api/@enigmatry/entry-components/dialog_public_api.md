@@ -175,7 +175,7 @@ Confirm dialog data. Extends IEntryAlertDialogData.
 
 ### EntryDialogButtonsAlignment
 
-> **EntryDialogButtonsAlignment**: `"align-left"` \| `"align-center"` \| `"align-right"`
+> **EntryDialogButtonsAlignment**: `"start"` \| `"center"` \| `"end"`
 
 Defines horizontal alignment of dialog buttons.
 
@@ -192,6 +192,6 @@ Defaults:
 
 - confirmButtonText: 'Ok'
 - cancelButtonText: 'Cancel'
-- buttonsAlignment: 'align-right'
+- buttonsAlignment: 'end'
 - hideClose: true
 - disableClose: false

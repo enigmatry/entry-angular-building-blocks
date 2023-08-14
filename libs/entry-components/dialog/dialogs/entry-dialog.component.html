@@ -1,33 +1,19 @@
-<div class="entry-dialog dialog-form">
-    <div class="dialog-header">
-        <h1 class="title">{{ title }}</h1>
-
-        <button *ngIf="!hideClose" type="button" class="close-button" (click)="cancel()">
-            <span class="icon-close icon"></span>
-        </button>
-    </div>
-
-    <mat-dialog-content class="dialog-content" [ngClass]="{'with-actions': !hideButtons}">
-        <ng-content></ng-content>
-    </mat-dialog-content>
-
-    <ng-template [ngIf]="buttonsTemplate" [ngIfElse]="defaultButtonsTemplate">
-        <ng-template [ngTemplateOutlet]="buttonsTemplate"></ng-template>
-    </ng-template>
-
-    <ng-template #defaultButtonsTemplate>
-        <div *ngIf="!hideButtons" class="dialog-footer {{ buttonsAlignment }}">
-            <button
-                cdkFocusInitial
-                type="button"
-                class="button-confirm"
-                cdkFocusInitial
-                (click)="onSubmit()">{{confirmButtonText}}</button>
-            <button
-                *ngIf="!hideCancel"
-                type="button"
-                class="button-cancel"
-                (click)="cancel()">{{cancelButtonText}}</button>
-        </div>
-    </ng-template>
+<h1 mat-dialog-title>{{ title }}
+    <button mat-icon-button mat-dialog-close aria-label="Close dialog" *ngIf="!hideClose">
+        <mat-icon>close</mat-icon>
+      </button>
+</h1>
+<div mat-dialog-content>
+    <ng-content></ng-content>
 </div>
+<div mat-dialog-actions [align]="buttonsAlignment">
+    <ng-container [ngTemplateOutlet]="buttonsTemplate" *ngIf="buttonsTemplate"></ng-container>
+    <ng-container *ngIf="!buttonsTemplate && !hideButtons">
+        <ng-container *ngTemplateOutlet="defaultButtonsTemplate"></ng-container>
+    </ng-container>
+</div>
+
+<ng-template #defaultButtonsTemplate>
+    <button mat-button entry-submit-button cdkFocusInitial (click)="onSubmit()">{{confirmButtonText}}</button>
+    <button *ngIf="!hideCancel" mat-button entry-cancel-button mat-dialog-close>{{cancelButtonText}}</button>
+</ng-template>
