@@ -15,13 +15,13 @@ export interface MatButtonConfig {
  */
 export class EntryButtonConfig {
   /** Submit button configuration */
-  submitButton: MatButtonConfig;
+  submit: MatButtonConfig;
   /** Cancel button configuration */
-  cancelButton: MatButtonConfig;
+  cancel: MatButtonConfig;
 
   constructor(config: Partial<EntryButtonConfig> = {}) {
-    this.submitButton = config.submitButton ?? { type: 'flat', color: 'primary' };
-    this.cancelButton = config.cancelButton ?? { type: 'basic', color: 'accent' };
+    this.submit = config.submit ?? { type: 'flat', color: 'primary' };
+    this.cancel = config.cancel ?? { type: 'basic', color: 'accent' };
   }
 }
 
@@ -29,8 +29,8 @@ export class EntryButtonConfig {
  * Entry button config injection token. Can be used to provide custom button configuration.
  *
  * Defaults:
- * - submitButton: type: 'flat', color: 'primary'
- * - cancelButton: type: 'basic', color: 'accent'
+ * - submit: type: 'flat', color: 'primary'
+ * - cancel: type: 'basic', color: 'accent'
  */
 export const ENTRY_BUTTON_CONFIG = new InjectionToken<EntryButtonConfig>('EntryButtonConfig',
   {
