@@ -21,7 +21,7 @@ export class EntryButtonConfig {
 
   constructor(config: Partial<EntryButtonConfig> = {}) {
     this.submitButton = config.submitButton ?? { type: 'flat', color: 'primary' };
-    this.cancelButton = config.cancelButton ?? { type: 'basic' };
+    this.cancelButton = config.cancelButton ?? { type: 'basic', color: 'accent' };
   }
 }
 
@@ -30,7 +30,7 @@ export class EntryButtonConfig {
  *
  * Defaults:
  * - submitButton: type: 'flat', color: 'primary'
- * - cancelButton: type: 'basic'
+ * - cancelButton: type: 'basic', color: 'accent'
  */
 export const ENTRY_BUTTON_CONFIG = new InjectionToken<EntryButtonConfig>('EntryButtonConfig',
   {
