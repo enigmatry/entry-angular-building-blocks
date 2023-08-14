@@ -6,10 +6,9 @@
 <div mat-dialog-content>
     <ng-content></ng-content>
 </div>
-<div mat-dialog-actions [align]="buttonsAlignment">
-    <ng-container [ngTemplateOutlet]="buttonsTemplate" *ngIf="buttonsTemplate"></ng-container>
-    <ng-container *ngIf="!buttonsTemplate && !hideButtons">
-        <ng-container *ngTemplateOutlet="defaultButtonsTemplate"></ng-container>
+
+<div mat-dialog-actions [align]="buttonsAlignment" *ngIf="!hideButtons">
+    <ng-container *ngIf="buttonsTemplate; then buttonsTemplate; else defaultButtonsTemplate">
     </ng-container>
 </div>
 
