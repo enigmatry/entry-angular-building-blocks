@@ -24,4 +24,4 @@ Entry button config injection token. Can be used to provide custom button config
 Defaults:
 
 - submitButton: type: 'flat', color: 'primary'
-- cancelButton: type: 'basic'
+- cancelButton: type: 'basic', color: 'accent'
