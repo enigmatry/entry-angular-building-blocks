@@ -9,12 +9,12 @@ import { ENTRY_BUTTON_CONFIG, EntryButtonConfig, MatButtonConfig } from './entry
 })
 export class EntryButtonDirective implements OnInit {
 
-  attributes = {
-    submit: `entry-submit-button`,
-    cancel: `entry-cancel-button`
+  entrySelector = {
+    submit: 'entry-submit-button',
+    cancel: 'entry-cancel-button'
   };
 
-  classes: { [key: string]: string[] } = {
+  matClasses: { [key: string]: string[] } = {
     basic: ['mdc-button', 'mat-mdc-button'],
     raised: ['mdc-button', 'mdc-button--raised', 'mat-mdc-raised-button'],
     stroked: ['mdc-button', 'mdc-button--outlined', 'mat-mdc-outlined-button'],
@@ -22,17 +22,27 @@ export class EntryButtonDirective implements OnInit {
   };
 
   constructor(
-    private _elementRef: ElementRef,
+    private _elementRef: ElementRef<HTMLElement>,
     @Inject(ENTRY_BUTTON_CONFIG) private _config: EntryButtonConfig,
     @Optional() private _matButton?: MatButton,
     @Optional() private _matAnchor?: MatAnchor) {
   }
 
   ngOnInit(): void {
-    const buttonConfig: MatButtonConfig = this.getButtonConfig();
 
-    const classes = this.classes[buttonConfig.type];
-    this._elementRef.nativeElement.classList.add(...classes);
+    let buttonConfig: MatButtonConfig;
+    let entryClasses: string[];
+
+    if (this.isSubmit()) {
+      buttonConfig = this._config.submitButton;
+      entryClasses = ['entry-button', this.entrySelector.submit];
+    } else {
+      buttonConfig = this._config.cancelButton;
+      entryClasses = ['entry-button', this.entrySelector.cancel];
+    }
+
+    const matClasses = this.matClasses[buttonConfig.type];
+    this._elementRef.nativeElement.classList.add(...entryClasses, ...matClasses);
 
     const color: ThemePalette = buttonConfig.color;
     if (color) {
@@ -41,8 +51,9 @@ export class EntryButtonDirective implements OnInit {
     }
   }
 
-  private getButtonConfig(): MatButtonConfig {
-    return this._elementRef.nativeElement.hasAttribute(this.attributes.submit)
-      ? this._config.submitButton : this._config.cancelButton;
+  private isSubmit(): boolean {
+    return this._elementRef.nativeElement.hasAttribute(this.entrySelector.submit);
   }
+
+  private
 }
