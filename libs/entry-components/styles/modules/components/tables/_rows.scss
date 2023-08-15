@@ -3,8 +3,6 @@
 
 @mixin generate-from($theme) {
 	.mat-mdc-row {
-		$edge-selected-color: map.get($theme, 'forms', 'checkboxes', 'selected-border-color');
-
 		@include list.row-coloring(map.get($theme, 'tables', 'rows', 'odd-even-background'),
 		map.get($theme, 'tables', 'rows', 'odd-even-row'));
 
