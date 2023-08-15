@@ -1,9 +1,0 @@
-@use 'outlines/general' as appearance-outlines;
-@use 'selectors/checkboxes';
-@use 'selectors/radio-buttons';
-
-@mixin generate-from($theme) {
-	@include appearance-outlines.generate-from($theme);
-	@include checkboxes.generate-from($theme);
-	@include radio-buttons.generate-from($theme);
-}
