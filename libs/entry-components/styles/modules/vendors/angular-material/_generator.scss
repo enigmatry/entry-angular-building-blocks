@@ -1,14 +1,24 @@
 @use '@angular/material' as theming;
 @use 'palette-generator';
+@use 'typography-generator';
 @use 'sass:map';
+@use '../../typography/fonts';
 
 /* stylelint-disable scss/function-no-unknown */
 @mixin generate-from($theme) {
 	@include theming.core();
+	$body-font: map.get($theme, 'general', 'fonts', 'body', 'family');
+
+	@if $body-font == '' {
+		@include fonts.generate-default-font();
+	}
 
 	$primary-palette: theming.define-palette(-get-material-palette-for('primary', $theme));
 	$accent-palette: theming.define-palette(-get-material-palette-for('accent', $theme));
 	$warn-palette: theming.define-palette(theming.$red-palette);
+
+	$typography: typography-generator.generate-from($theme);
+	@include theming.typography-hierarchy($typography);
 
 	$default-theme: theming.define-light-theme((
 		color: (
@@ -16,7 +26,7 @@
 			accent: $accent-palette,
 			warn: $warn-palette
 		),
-		typography: theming.define-typography-config()
+		typography: $typography
 	));
 	
 	@include theming.all-component-themes($default-theme);
