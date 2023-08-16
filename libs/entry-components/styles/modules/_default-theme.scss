@@ -1,4 +1,3 @@
-/* stylelint-disable number-max-precision */
 $theme: (
 	general: (
 		colors: (
@@ -23,20 +22,16 @@ $theme: (
 	),
 	tables: (
 		cells: (
-			first-cell-padding-left: 4px,
-			last-cell-padding-right: 4px,
-			min-width: unset
+			edge-gap: 4px
 		),
 		rows: (
-			selected-background-color: #06C,
 			selected-color: #FFF,
 			odd-even-row: odd,
 			odd-even-background: #F0F0F0
 		),
 		columns: (
 			sorted: (
-				font-weight: 700,
-				content-align: left
+				font-weight: 700
 			)
 		),
 		contents: (

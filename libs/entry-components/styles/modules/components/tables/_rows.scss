@@ -6,12 +6,16 @@
 		@include list.row-coloring(map.get($theme, 'tables', 'rows', 'odd-even-background'),
 		map.get($theme, 'tables', 'rows', 'odd-even-row'));
 
+		&:hover {
+			@include list.row-coloring(map.get($theme, 'tables', 'rows', 'odd-even-background'),
+			map.get($theme, 'tables', 'rows', 'odd-even-row'));
+		}
+
 		&.selected {
-			background-color: map.get($theme, 'tables', 'rows', 'selected-background-color');
+			background-color: map.get($theme, 'general', 'colors', 'primary');
 
 			&:hover {
-				background-color: map.get($theme, 'tables', 'rows', 'selected-background-color');
-				color: map.get($theme, 'tables', 'rows', 'selected-color');
+				background-color: map.get($theme, 'general', 'colors', 'primary');
 			}
 
 			.mat-mdc-cell {
