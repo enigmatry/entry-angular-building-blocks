@@ -1,8 +1,10 @@
 @use '@enigmatry/scss-foundation/src/modules/display/items';
 
-.mat-table-container {
-	&.mat-table-with-data {
-		flex: 1;
+.entry-table {
+	.mat-table-container {
+		&.mat-table-with-data {
+			flex: 1;
+		}
 	}
 }
 
