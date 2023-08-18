@@ -1,0 +1,98 @@
+/* stylelint-disable scss/no-duplicate-dollar-variables, scss/function-no-unknown */
+@use '@angular/material' as theming;
+@use 'sass:map';
+
+@function generate-from($theme) {
+	$theme-typography: map.get($theme, 'general', 'typography');
+
+	@if $theme-typography {
+		@return $theme-typography;
+	}
+
+	@return -generate-typography-from($theme);
+}
+
+@function -generate-typography-from($theme) {
+	$fonts: map.get($theme, 'general', 'fonts');
+	$typography: theming.define-typography-config();
+
+	$typography: -set-font-size-for('body', $typography, $fonts, ('body-1', 'body-2'));
+	$typography: -set-font-size-for('buttons', $typography, $fonts, ('buttons'));
+	$typography: -set-font-size-for('hero-titles', $typography, $fonts, ('headline-1', 'headline-2', 'headline-3', 'headline-4'));
+	$typography: -set-font-size-for('titles', $typography, $fonts, ('headline-5', 'headline-6', 'subtitle-1', 'subtitle-2'));
+	$typography: -set-font-family($typography, $fonts);
+
+	@return $typography;
+}
+
+@function -set-font-size-for($selector, $typography, $fonts, $desired-size-settings) {
+	$desired-size: map.get($fonts, $selector, 'size');
+
+	@if $desired-size != 0 {
+		@each $setting in $desired-size-settings {
+			$typography: map.set($typography, $setting, 'font-size', $desired-size);
+		}
+	}
+
+	@return $typography;
+}
+
+@function -set-font-family($typography, $fonts) {
+	$body-font: map.get($fonts, 'body', 'family');
+
+	@if $body-font == '' {
+		@return -generate-defaults-from($typography);
+	}
+
+	$typography: -set-typography-group($typography, ('body-1', 'body-2', 'caption'), $body-font);
+
+	$titles-font: map.get($fonts, 'titles', 'family');
+	$hero-titles-font: map.get($fonts, 'hero-titles', 'family');
+	$buttons-font: map.get($fonts, 'buttons', 'family');
+
+	// We fallback to body font if buttons font isn't provided.
+	@if $buttons-font == '' {
+		$buttons-font: $body-font;
+	}
+
+	// Both titles font fallback to body font unless main one's being set.
+	@if $hero-titles-font == '' and $titles-font == '' {
+		$hero-titles-font: $body-font;
+		$titles-font: $body-font;
+	}
+	@else if $hero-titles-font == '' and $titles-font != '' {
+		$hero-titles-font: $titles-font;
+	}
+
+	$typography: -set-text-groups-for($typography, $body-font, $buttons-font);
+	$typography: -set-typography-group($typography, ('headline-1', 'headline-2', 'headline-3', 'headline-4'), $hero-titles-font);
+	$typography: -set-typography-group($typography, ('headline-5', 'headline-6', 'subtitle-1', 'subtitle-2'), $titles-font);
+
+	@return $typography;
+}
+
+@function -set-text-groups-for($typography, $body-font, $buttons-font) {
+	$typography: -set-typography-group($typography, ('body-1', 'body-2', 'caption'), $body-font);
+	$typography: -set-typography-group($typography, ('button'), $buttons-font);
+	@return $typography;
+}
+
+@function -generate-defaults-from($typography) {
+	$typography: -set-text-groups-for($typography, 'OpenSans-normal', 'OpenSans-bold');
+	$typography: -set-typography-group($typography,('headline-1', 'headline-2', 'headline-3', 
+	'headline-4', 'headline-5', 'headline-6', 'subtitle-1', 'subtitle-2'),'Montserrat-bold');
+	@return $typography;
+}
+
+@function -set-typography-group($typography, $desired-typography-group, $font) {
+	@each $setting in $desired-typography-group {
+		$typography: -set-typography-font($typography, $setting, $font);
+	}
+
+	@return $typography;
+}
+
+@function -set-typography-font($typography, $section, $font) {
+	$typography: map.set($typography, $section, 'font-family', $font);
+	@return $typography;
+}
