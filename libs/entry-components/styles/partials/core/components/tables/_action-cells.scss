@@ -1,13 +1,3 @@
-.entry-table-checkbox-cell {
-	width: 46px;
-
-	.mat-mdc-checkbox {
-		.mdc-form-field {
-			margin-bottom: 0;
-		}
-	}
-}
-
-.entry-table-context-menu-cell {
+.entry-table-checkbox-cell, .entry-table-context-menu-cell {
 	width: 48px;
 }
