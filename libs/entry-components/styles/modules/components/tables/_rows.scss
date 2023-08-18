@@ -3,19 +3,16 @@
 
 @mixin generate-from($theme) {
 	.mat-mdc-row {
-		@include list.row-coloring(map.get($theme, 'tables', 'rows', 'odd-even-background'),
-		map.get($theme, 'tables', 'rows', 'odd-even-row'));
+		&.mdc-data-table__row {
+			@include list.row-coloring(map.get($theme, 'tables', 'rows', 'odd-even-background'),
+			map.get($theme, 'tables', 'rows', 'odd-even-row'));
 
-		&.selected {
-			background-color: map.get($theme, 'tables', 'rows', 'selected-background-color');
+			&.selected {
+				background-color: map.get($theme, 'general', 'colors', 'primary');
 
-			&:hover {
-				background-color: map.get($theme, 'tables', 'rows', 'selected-background-color');
-				color: map.get($theme, 'tables', 'rows', 'selected-color');
-			}
-
-			.mat-mdc-cell {
-				color: map.get($theme, 'tables', 'rows', 'selected-color');
+				.mat-mdc-cell {
+					color: map.get($theme, 'tables', 'rows', 'selected-color');
+				}
 			}
 		}
 	}

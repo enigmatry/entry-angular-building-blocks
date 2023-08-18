@@ -11,8 +11,4 @@
 	.mat-sort-header-sorted, .mat-sort-header-arrow {
 		color: map.get($theme, 'general', 'colors', 'dark');
 	}
-
-	.mat-sort-header-content {
-		text-align: map.get($theme, 'tables', 'columns', 'sorted', 'content-align');
-	}
 }

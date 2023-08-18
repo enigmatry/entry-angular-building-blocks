@@ -1,7 +1,6 @@
 @use 'entry-components/styles/generator' as entry;
-@use '../modules/theming/theming' as application;
 
-@include entry.generate-from(application.$theme);
+@include entry.generate-from();
 
 :root {
     font-family: var(--mdc-typography-headline6-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));
