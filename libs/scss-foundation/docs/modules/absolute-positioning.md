@@ -4,13 +4,14 @@ Alignment utilities for absolute positioning of content.
 
 ## Absolute
 
-@use scss-foundation/src/position/absolute;
+@use scss-foundation/src/modules/position/absolute;
 
 - Replaces the several most common lines in absolute positioning with just one liner.
+
 ```
 @include absolute.position($top, $right, $bottom, $left);
 ```
-All arguments are optional and default to 0. Sets following properties:
+All arguments are optional and default to 0. Sets the following properties:
 ```
 	position: absolute;
 	top: $top;
@@ -20,7 +21,8 @@ All arguments are optional and default to 0. Sets following properties:
 ```
 
 - Replaces the several most common lines in absolute positioning for unset values with just one liner.
+
 ```
 @include absolute.position-unset($top, $right, $bottom, $left);
 ```
-All arguments are optional and default to unset. Sets the same properties as in previous method.
+All arguments are optional and default to unset. Sets the same properties as in the previous method.
