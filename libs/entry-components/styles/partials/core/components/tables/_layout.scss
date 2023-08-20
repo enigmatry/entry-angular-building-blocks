@@ -14,6 +14,10 @@
 	overflow: auto;
 }
 
+.entry-table-content {
+	flex-direction: column;
+}
+
 .entry-table-footer {
 	position: relative;
 	z-index: 1;
