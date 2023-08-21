@@ -34,8 +34,6 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EntryTableComponent<T> implements OnChanges {
-
-  @HostBinding('class') className = 'entry-table';
   @ViewChild('tableContainer') tableContainer: ElementRef<HTMLDivElement>;
 
   dataSource = new MatTableDataSource<T>([]);

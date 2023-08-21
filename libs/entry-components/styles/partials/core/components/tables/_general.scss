@@ -1,0 +1,26 @@
+@use '@enigmatry/scss-foundation/src/modules/display/items';
+
+.entry-table {
+	// TODO: Do we need any/some of these for real?
+	display: flex;
+	overflow: auto;
+
+	.selection-cell, .action-cell {
+		width: 48px;
+	}
+
+	.mat-table-with-data {
+		flex: 1;
+	}
+
+	.pagination {
+		position: relative;
+		z-index: 1;
+	}
+
+	.no-results {
+		@include items.align-absolute-center();
+		flex: 1;
+		min-height: 50px;
+	}
+}
