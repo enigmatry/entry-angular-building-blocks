@@ -4,7 +4,7 @@ import { ControlType } from './control-type.model';
 import { ENTRY_SEARCH_FILTER_CONFIG, EntrySearchFilterConfig } from '../search-filter-config.model';
 import { SearchFilterBase } from './search-filter-base.model';
 import { SelectSearchFilter } from './inputs/select-search-filter.model';
-import { TextSearchFilter } from '../public-api';
+import { TextSearchFilter } from './inputs/text-search-filter.model';
 
 @Component({
   selector: 'entry-search-filter-input',
