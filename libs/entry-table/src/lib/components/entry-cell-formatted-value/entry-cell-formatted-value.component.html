@@ -14,7 +14,7 @@
   </ng-container>
   <!-- Percent -->
   <ng-container *ngSwitchCase="'percent'">
-    {{value * (typeParameter?.multiplier ?? defaultPercentageMultiplier) | percent: typeParameter?.digitsInfo : typeParameter?.locale}}
+    {{+value * (typeParameter?.multiplier ?? defaultPercentageMultiplier) | percent: typeParameter?.digitsInfo : typeParameter?.locale}}
   </ng-container>
   <!-- Date -->
   <ng-container *ngSwitchCase="'date'">

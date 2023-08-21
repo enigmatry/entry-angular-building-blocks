@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ICodeFileDefinition } from '../../shared/example-viewer/code-file-definition.interface';
 
 @Component({
   selector: 'app-button',
@@ -6,7 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./button.component.scss']
 })
 export class ButtonComponent {
-  extraFiles = [
+  extraFiles: ICodeFileDefinition[] = [
     {
       name: 'button-example.module.ts',
       path: 'button\\button-example.module',

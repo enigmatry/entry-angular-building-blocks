@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ICodeFileDefinition } from '../../shared/example-viewer/code-file-definition.interface';
 
 @Component({
   selector: 'app-table',
@@ -6,7 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./table.component.scss']
 })
 export class TableComponent {
-  extraFiles = [
+  extraFiles: ICodeFileDefinition[] = [
     {
       name: 'users.ts',
       path: 'search-filter\\search-filter\\users',
