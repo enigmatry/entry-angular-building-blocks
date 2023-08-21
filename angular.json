@@ -157,7 +157,7 @@
               },
               {
                 "glob": "**/*",
-                "input": "./node_modules/@enigmatry/entry-components/assets/",
+                "input": "./libs/entry-components/assets/",
                 "output": "/assets/"
               }
             ],
