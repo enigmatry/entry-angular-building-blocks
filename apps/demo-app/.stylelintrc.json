@@ -1,0 +1,14 @@
+{
+  "extends": "@enigmatry/stylelint-config",
+  "rules": {
+    "value-keyword-case": [
+      "lower",
+      {
+        "ignoreKeywords": [
+          "largeDesktop",
+          "extraLargeDesktop"
+        ]
+      }
+    ]
+  }
+}

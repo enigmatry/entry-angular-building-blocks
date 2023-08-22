@@ -1,34 +1,34 @@
 @use '../../../styles/modules/variables' as vars;
 
 .landing {
-    margin: 20px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    grid-gap: 10px;
+	display: grid;
+	grid-gap: 10px;
+	grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+	margin: 20px;
 
-    .component-card {
-        margin: 10px;
-        padding: 0px;
-        height: 200px;
-        position: relative;
+	.component-card {
+		position: relative;
+		height: 200px;
+		margin: 10px;
+		padding: 0;
 
-        .card-header {
-            padding-top: 10px;
-            padding-bottom: 10px;
-            background-color: vars.$header-back;
-        }
+		.card-header {
+			padding-top: 10px;
+			padding-bottom: 10px;
+			background-color: vars.$header-back;
+		}
 
-        .card-content {
-            margin: 10px 15px 10px 15px;
-            font-size: 14px;
-            font-style: italic;
-        }
+		.card-content {
+			margin: 10px 15px;
+			font-size: 14px;
+			font-style: italic;
+		}
 
-        .card-actions {
-            position: absolute;
-            bottom: 0;
-            align-self: end;
-            margin-right: 15px;
-        }
-    }
+		.card-actions {
+			position: absolute;
+			bottom: 0;
+			align-self: end;
+			margin-right: 15px;
+		}
+	}
 }

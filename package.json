@@ -10,15 +10,16 @@
     "automated-tests": "npm run entry-component:compile-fixed-theme && npm run entry-component:compile-theme && npm run scss-foundation:build && npm run scss-foundation:build-modules && npm run scss-foundation:test",
     "lint": "ng lint && npm run entry-components:stylelint && npm run scss-foundation:stylelint",
     "typedoc": "typedoc",
+    "demo-app:stylelint": "cd apps/demo-app && stylelint --fix src/**/*.scss",
     "entry-components:build": "ng build @enigmatry/entry-components",
     "entry-components:watch": "ng build @enigmatry/entry-components --watch --configuration development",
-    "entry-component:compile-fixed-theme": "cd libs/entry-components && sass --load-path=styles --load-path=../../node_modules styles/partials/theming.scss styles/dist/theming.css",
-    "entry-component:compile-theme": "cd libs/entry-components && sass --load-path=styles --load-path=../../node_modules styles/partials/generator-test.scss styles/dist/test.css",
-    "entry-components:stylelint": "cd libs/entry-components && stylelint --fix styles/**/*.scss",
-    "scss-foundation:build": "cd libs/scss-foundation && sass --style=compressed --load-path=src src/partials/main.scss dist/scss-foundation.css",
-    "scss-foundation:build-modules": "cd libs/scss-foundation && sass --style=compressed --load-path=src --load-path=../../node_modules src/modules/_index.scss dist/scss-foundation-modules.css",
-    "scss-foundation:stylelint": "cd libs/scss-foundation && stylelint --fix src/**/*.scss",
-    "scss-foundation:test": "cd libs/scss-foundation && jest --coverage --colors --silent=false"
+    "entry-component:compile-fixed-theme": "cd libs/entry-components && npm run compile-scss",
+    "entry-component:compile-theme": "cd libs/entry-components && npm run compile-generator",
+    "entry-components:stylelint": "cd libs/entry-components && npm run lint",
+    "scss-foundation:build": "cd libs/scss-foundation && npm run build",
+    "scss-foundation:build-modules": "cd libs/scss-foundation && npm run build-modules",
+    "scss-foundation:stylelint": "cd libs/scss-foundation && npm run lint",
+    "scss-foundation:test": "cd libs/scss-foundation && npm run test"
   },
   "private": true,
   "dependencies": {
