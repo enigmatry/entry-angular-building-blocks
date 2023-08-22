@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "automated-tests": "npm run entry-component:compile-fixed-theme && npm run entry-component:compile-theme && npm run scss-foundation:build && npm run scss-foundation:build-modules && npm run scss-foundation:test",
-    "lint": "ng lint && npm run entry-components:stylelint && npm run scss-foundation:stylelint",
+    "lint": "ng lint && npm run entry-components:stylelint && npm run scss-foundation:stylelint && npm run demo-app:stylelint",
     "typedoc": "typedoc",
     "demo-app:stylelint": "cd apps/demo-app && stylelint --fix src/**/*.scss",
     "entry-components:build": "ng build @enigmatry/entry-components",

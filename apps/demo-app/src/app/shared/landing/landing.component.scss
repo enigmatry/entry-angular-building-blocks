@@ -2,8 +2,11 @@
 
 .landing {
 	display: grid;
-	grid-gap: 10px;
-	grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+	grid: {
+		gap: 10px;
+		/* stylelint-disable-next-line unit-allowed-list */
+		template-columns: repeat(auto-fit, minmax(400px, 1fr));
+	}
 	margin: 20px;
 
 	.component-card {
@@ -13,15 +16,19 @@
 		padding: 0;
 
 		.card-header {
-			padding-top: 10px;
-			padding-bottom: 10px;
+			padding: {
+				top: 10px;
+				bottom: 10px;
+			}
 			background-color: vars.$header-back;
 		}
 
 		.card-content {
 			margin: 10px 15px;
-			font-size: 14px;
-			font-style: italic;
+			font: {
+				size: 14px;
+				style: italic;
+			}
 		}
 
 		.card-actions {

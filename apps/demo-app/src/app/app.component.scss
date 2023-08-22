@@ -11,17 +11,17 @@
 		align-items: center;
 		justify-content: center;
 		width: 200px;
+	}
 
-		.docs-menu-items {
-			padding-top: 0;
+	.docs-menu-items {
+		padding-top: 0;
 
-			.docs-menu-item {
-				cursor: pointer;
-			}
+		.docs-menu-item {
+			cursor: pointer;
+		}
 
-			.active {
-				background-color: vars.$menu-item-selected;
-			}
+		.active {
+			background-color: vars.$menu-item-selected;
 		}
 	}
     

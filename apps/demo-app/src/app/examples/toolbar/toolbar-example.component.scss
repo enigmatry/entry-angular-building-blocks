@@ -28,6 +28,7 @@ ul {
 		top: 2.5rem;
 		left: 0;
 		width: 100%;
+		/* stylelint-disable-next-line unit-allowed-list */
 		height: calc(100vh - 3.5rem);
 		padding-block: 1.5rem 4rem;
 		overflow: auto;
@@ -47,12 +48,14 @@ ul {
 }
 
 // It would be nice if we loose @media here and only depend on plain css
+/* stylelint-disable-next-line at-rule-allowed-list */
 @media screen and (width >= 1118px) {
 	.example-nav-list {
 		display: flex;
 		height: 100%;
 		column-gap: 3rem;
 
+		/* stylelint-disable-next-line scss/selector-no-redundant-nesting-selector */
 		& li {
 			display: flex;
 		}
