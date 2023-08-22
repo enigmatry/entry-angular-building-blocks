@@ -1,3 +1,4 @@
+@use 'entry-components/styles/partials/theming';
 @use 'entry-components/styles/generator' as entry;
 
 @include entry.generate-from();
