@@ -1,16 +1,16 @@
+@use 'entry-components/styles/partials/theming';
 @use 'entry-components/styles/generator' as entry;
 
 @include entry.generate-from();
 
 :root {
-    font-family: var(--mdc-typography-headline6-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));
+	font-family: var(--mdc-typography-headline6-font-family, var(--mdc-typography-font-family, Roboto, sans-serif));
 }
 
 .spacer {
-    flex: 1 1 auto;
+	flex: 1 1 auto;
 }
 
 .mat-drawer-content {
-    background-color: #fff;
+	background-color: #FFF;
 }
-

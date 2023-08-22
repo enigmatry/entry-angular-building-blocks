@@ -7,7 +7,7 @@
 /* stylelint-disable at-rule-allowed-list */
 @use '../../src/modules/layout/grid';
 @use '../../src/modules/variables' as vars;
-@use '../../../node_modules/sass-true';
+@use 'sass-true';
 
 vars.$testing: true;
 
@@ -128,6 +128,7 @@ vars.$testing: true;
 				}
 
 				.row [class ^= 'col-'], .row [class ^= 'offset-'] {
+					box-sizing: border-box;
 					flex-shrink: 0;
 					max-width: 100%;
 					padding: 0 0;
@@ -925,6 +926,7 @@ vars.$testing: true;
 					margin: 0 -8px;
 
 					[class ^= 'col-'], [class ^= 'offset-'] {
+						box-sizing: border-box;
 						flex-shrink: 0;
 						max-width: 100%;
 						padding: 0 8px;

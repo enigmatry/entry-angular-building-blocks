@@ -1,6 +1,6 @@
 @use 'sass:string';
 @use '../../modules/variables' as vars;
-@use '../../../node_modules/sass-true';
+@use 'sass-true';
 @use 'sass:meta';
 
 @function capitalize($string) {

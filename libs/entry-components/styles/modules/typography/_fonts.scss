@@ -1,37 +1,61 @@
 @use 'sass:map';
 
-$font-path: 'assets/fonts/';
+$font-path: '/assets/fonts/';
 $font-sources: (
 	(
-		name: 'OpenSans',
+		name: 'Roboto',
 		style: normal,
-		formats: ('eot', 'woff', 'woff2', 'ttf')
+		formats: ('woff2'),
+		weight: 400
 	),
 	(
-		name: 'OpenSans',
+		name: 'Roboto',
 		style: bold,
-		formats: ('eot', 'woff', 'woff2', 'ttf')
-	),
-	(
-		name: 'Montserrat',
-		style: bold,
-		formats: ('eot', 'woff', 'woff2', 'ttf')
+		formats: ('woff2'),
+		weight: 500
 	)
 );
+
+// $font-sources: (
+// 	(
+// 		name: 'OpenSans',
+// 		style: normal,
+// 		formats: ('eot', 'woff', 'woff2', 'ttf')
+// 	),
+// 	(
+// 		name: 'OpenSans',
+// 		style: bold,
+// 		formats: ('eot', 'woff', 'woff2', 'ttf')
+// 	),
+// 	(
+// 		name: 'Montserrat',
+// 		style: bold,
+// 		formats: ('eot', 'woff', 'woff2', 'ttf')
+// 	)
+// );
 
 @mixin generate-default-font() {
 	@each $font in $font-sources {
 		$name: map.get($font, name);
 		$style: map.get($font, style);
 		$formats: map.get($font, formats);
+		$weight: map.get($font, weight);
 
 		@each $format in $formats {
 			$url: '#{$font-path}#{$name}/#{$name}-#{$style}.#{$format}';
 
 			@font-face {
 				font: {
-					family: '#{$name}-#{$style}';
 					style: '#{$style}';
+		
+					@if $weight {
+						family: '#{$name}';
+						weight: $weight;
+					}
+
+					@else {
+						family: '#{$name}-#{$style}';
+					}
 				}
 				src: url('#{$url}') format('#{$format}');
 			}

@@ -86,42 +86,10 @@ steps:
     command: 'install'
 
 - task: Npm@1
-  displayName: 'Lint entry table'
-  inputs:
-    command: 'custom'
-    customCommand: 'run lint @enigmatry/entry-table'
-
-- task: Npm@1
-  displayName: 'Lint entry form'
-  inputs:
-    command: 'custom'
-    customCommand: 'run lint @enigmatry/entry-form'
-
-- task: Npm@1
-  displayName: 'Lint entry components'
-  inputs:
-    command: 'custom'
-    customCommand: 'run lint @enigmatry/entry-components'
-
-- task: Npm@1
-  displayName: 'npm install scss foundation'
-  inputs:
-    command: 'install'
-    workingDir: 'libs/scss-foundation'
-
-- task: Npm@1
-  displayName: 'Lint the scss foundation library'
+  displayName: 'Lint libraries'
   inputs:
     command: 'custom'
     customCommand: 'run lint'
-    workingDir: 'libs/scss-foundation'
-    
-- task: Npm@1
-  displayName: 'Test the scss foundation library'
-  inputs:
-    command: 'custom'
-    customCommand: 'run test'
-    workingDir: 'libs/scss-foundation'
 
 - task: Npm@1
   displayName: 'Build entry table'
@@ -142,23 +110,10 @@ steps:
     customCommand: 'run build @enigmatry/entry-components'
 
 - task: Npm@1
-  displayName: 'Build the scss foundation library'
+  displayName: 'Run unit tests'
   inputs:
     command: 'custom'
-    customCommand: 'run build'
-    workingDir: 'libs/scss-foundation'
-
-- task: Npm@1
-  displayName: 'Test entry components theming'
-  inputs:
-    command: 'custom'
-    customCommand: 'run entry-component:compile-theme'
-
-- task: Npm@1
-  displayName: 'Test entry components fixed theming'
-  inputs:
-    command: 'custom'
-    customCommand: 'run entry-component:compile-fixed-theme'
+    customCommand: 'run automated-tests'
 
 - task: Npm@1
   displayName: 'Publish entry table'
