@@ -8,6 +8,11 @@ import { Component } from '@angular/core';
 export class TableComponent {
   extraFiles = [
     {
+      name: 'table-example.module.ts',
+      path: 'table\\table-example.module',
+      type: 'ts'
+    },
+    {
       name: 'users.ts',
       path: 'search-filter\\search-filter\\users',
       type: 'ts'

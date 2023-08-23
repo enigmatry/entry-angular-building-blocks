@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DATE_PIPE_DEFAULT_OPTIONS } from '@angular/common';
 import { TableExampleComponent } from './table-example/table-example.component';
 import { EntryTableModule } from '@enigmatry/entry-table';
 
@@ -13,6 +13,9 @@ import { EntryTableModule } from '@enigmatry/entry-table';
   ],
   exports: [
     TableExampleComponent
+  ],
+  providers: [
+    {provide: DATE_PIPE_DEFAULT_OPTIONS, useValue: {dateFormat: 'dd-MM-yyyy HH:mm'}}
   ]
 })
 export class TableExampleModule { }

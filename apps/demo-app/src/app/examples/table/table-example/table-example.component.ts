@@ -24,8 +24,9 @@ export class TableExampleComponent implements OnInit {
       { field: 'userName', header: 'E-mail', sortable: true },
       { field: 'firstName', header: 'First name', hide: false, sortable: true },
       { field: 'lastName', header: 'Last name', hide: false, sortable: true },
-      { field: 'dateOfBirth', header: 'Date of birth', hide: false, sortable: true, type: 'date' },
-      { field: 'occupation', header: 'Occupation', hide: false, sortable: true }
+      { field: 'dateOfBirth', header: 'Date of birth', hide: false, sortable: true, type: 'date', typeParameter: { format: 'dd-MM-yyyy' } },
+      { field: 'occupation', header: 'Occupation', hide: false, sortable: true },
+      { field: 'lastLogin', header: 'Last login', hide: false, sortable: true, type: 'date' }
     ];
     this.contextMenuItems = [
       { id: 'edit', name: `Edit`, icon: 'edit' }
