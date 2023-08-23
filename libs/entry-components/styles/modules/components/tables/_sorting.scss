@@ -6,6 +6,6 @@
 	}
 
 	.mat-sort-header-sorted, .mat-sort-header-arrow {
-		color: map.get($theme, 'general', 'colors', 'dark');
+		color: map.get($theme, 'general', 'colors', 'font');
 	}
 }
