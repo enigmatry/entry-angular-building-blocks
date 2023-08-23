@@ -131,7 +131,7 @@
       </table>
 
     <!-- No results -->
-    <div class="no-results" *ngIf="hasNoResult">
+    <div class="no-results mat-body-2" *ngIf="hasNoResult">
       <ng-template [ngIf]="isTemplateRef(noResultTemplate)" [ngIfElse]="defaultNoResultTpl">
         <ng-template [ngTemplateOutlet]="noResultTemplate"></ng-template>
       </ng-template>

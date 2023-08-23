@@ -154,6 +154,11 @@
                 "glob": "**/*",
                 "input": "apps/demo-app/src/app/examples",
                 "output": "assets/examples"
+              },
+              {
+                "glob": "**/*",
+                "input": "./libs/entry-components/assets/",
+                "output": "/assets/"
               }
             ],
             "styles": [
@@ -253,6 +258,7 @@
   "cli": {
     "schematicCollections": [
       "@angular-eslint/schematics"
-    ]
+    ],
+    "analytics": false
   }
 }

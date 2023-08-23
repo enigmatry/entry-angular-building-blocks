@@ -67,6 +67,7 @@
 	$typography: -set-text-groups-for($typography, $body-font, $buttons-font);
 	$typography: -set-typography-group($typography, ('headline-1', 'headline-2', 'headline-3', 'headline-4'), $hero-titles-font);
 	$typography: -set-typography-group($typography, ('headline-5', 'headline-6', 'subtitle-1', 'subtitle-2'), $titles-font);
+	$typography: map.set($typography, 'font-family', '"#{$buttons-font}"');
 
 	@return $typography;
 }
@@ -78,9 +79,10 @@
 }
 
 @function -generate-defaults-from($typography) {
-	$typography: -set-text-groups-for($typography, 'OpenSans-normal', 'OpenSans-bold');
-	$typography: -set-typography-group($typography,('headline-1', 'headline-2', 'headline-3', 
-	'headline-4', 'headline-5', 'headline-6', 'subtitle-1', 'subtitle-2'),'Montserrat-bold');
+	// Return Roboto (default Angular Material's font (for now).
+	// $typography: -set-text-groups-for($typography, 'OpenSans-normal', 'OpenSans-bold');
+	// $typography: -set-typography-group($typography,('headline-1', 'headline-2', 'headline-3', 
+	// 'headline-4', 'headline-5', 'headline-6', 'subtitle-1', 'subtitle-2'),'Montserrat-bold');
 	@return $typography;
 }
 
@@ -93,6 +95,6 @@
 }
 
 @function -set-typography-font($typography, $section, $font) {
-	$typography: map.set($typography, $section, 'font-family', $font);
+	$typography: map.set($typography, $section, 'font-family', '"#{$font}"');
 	@return $typography;
 }

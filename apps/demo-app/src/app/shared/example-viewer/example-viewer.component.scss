@@ -1,22 +1,24 @@
 .example-card {
-    box-shadow: 0 1px 1px 0 rgba(60, 64, 67, 80%), 0 1px 3px 1px rgba(60, 64, 67, 16%);
-    overflow: hidden;
+	overflow: hidden;
+	box-shadow: 0 1px 1px 0 rgb(60 64 67 / .8), 0 1px 3px 1px rgb(60 64 67 / .16);
 
-    .mat-toolbar-row {
-        height: 56px;
+	.mat-toolbar-row {
+		height: 56px;
 
-        button {
-            margin-left: auto; 
-            margin-right: 0;
-        }
-    }
+		button {
+			margin: {
+				right: 0;
+				left: auto;
+			}
+		}
+	}
     
-    .example-content {
-        padding: 16px;
-    }
+	.example-content {
+		padding: 16px;
+	}
 }
 
 :host {
-    display: block;
-    margin-bottom: 2em;
+	display: block;
+	margin-bottom: 2em;
 }
