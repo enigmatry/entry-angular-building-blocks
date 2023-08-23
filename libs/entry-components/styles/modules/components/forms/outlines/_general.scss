@@ -1,9 +1,0 @@
-@use 'field-outlines';
-@use 'form-fields';
-
-@mixin generate-from($theme) {
-	.mat-form-field-appearance-outline {
-		@include field-outlines.generate-from($theme);
-		@include form-fields.generate-from($theme);
-	}
-}

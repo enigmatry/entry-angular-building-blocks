@@ -10,14 +10,10 @@
 	}
 
 	.mat-mdc-header-cell:first-of-type, .mat-mdc-cell:first-of-type, .mat-mdc-footer-cell:first-of-type {
-		padding-left: map.get($theme, 'tables', 'cells', 'first-cell-padding-left');
+		padding-left: map.get($theme, 'tables', 'cells', 'edge-gap');
 	}
 
 	.mat-mdc-header-cell:last-of-type, .mat-mdc-cell:last-of-type, .mat-mdc-footer-cell:last-of-type {
-		padding-right: map.get($theme, 'tables', 'cells', 'last-cell-padding-right');
-	}
-
-	.entry-table-checkbox-cell, .entry-table-context-menu-cell {
-		min-width: map.get($theme, 'tables', 'cells', 'min-width');
+		padding-right: map.get($theme, 'tables', 'cells', 'edge-gap');
 	}
 }

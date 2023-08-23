@@ -4,18 +4,22 @@
 	.action-buttons {
 		margin-top: 25px;
 
-		.button {
+		.mdc-button:not(:first-child) {
 			margin-left: 10px;
-
-			&:first-child {
-				margin-left: 0;
-			}
 		}
+	}
+
+	.entry-checkbox {
+		display: block;
 	}
 }
 
-.mat-form-field-appearance-outline .mat-form-field-should-float .mat-form-field-label {
-	top: 31px;
+.mat-mdc-form-field {
+	margin-bottom: 20px;
+}
+  
+.mdc-form-field {
+	margin-bottom: 10px;
 }
 
 .datetimepicker {

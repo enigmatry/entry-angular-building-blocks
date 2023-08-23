@@ -5,18 +5,10 @@ $custom-theme: (
 		colors: (
 			primary: #FAE3C1
 		),
-		font: (
-			size: 13px
-		),
-		buttons: (
-			color: #AAA
-		)
-	),
-	forms: (
-		fields: (
-			infix-padding-top: 41px,
-			outline: (
-				border-hover: 2px solid #666
+		fonts: (
+			body: (
+				family: 'My-Font',
+				size: 41px
 			)
 		)
 	),

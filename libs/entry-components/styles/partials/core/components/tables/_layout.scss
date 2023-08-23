@@ -1,22 +1,10 @@
 @use '@enigmatry/scss-foundation/src/modules/display/items';
 
 .entry-table {
-	display: flex;
-	position: relative;
-	flex-direction: column;
-	width: 100%;
-
-	.mat-mdc-table-container {
-		overflow: auto;
-
-		&.mat-mdc-table-with-data {
+	.mat-table-container {
+		&.mat-table-with-data {
 			flex: 1;
 		}
-	}
-
-	.mat-mdc-table {
-		min-width: 100%;
-		border-collapse: separate;
 	}
 }
 
@@ -24,11 +12,6 @@
 	display: flex;
 	flex: 1 1 auto;
 	overflow: auto;
-}
-
-.entry-table-content {
-	flex-direction: column;
-	width: 0;
 }
 
 .entry-table-footer {

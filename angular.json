@@ -158,7 +158,6 @@
             ],
             "styles": [
               "apps/demo-app/src/styles/partials/main.scss",
-              "node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "node_modules/github-markdown-css/github-markdown-light.css",
               "node_modules/highlight.js/styles/stackoverflow-light.css"
             ],
@@ -234,7 +233,6 @@
             ],
             "styles": [
               "apps/demo-app/src/styles/partials/main.scss",
-              "node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "node_modules/github-markdown-css/github-markdown-light.css"
             ],
             "scripts": []

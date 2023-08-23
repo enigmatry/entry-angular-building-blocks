@@ -1,16 +1,3 @@
-.entry-table .mat-icon-button {
-	padding-top: 8px;
-	border: none;
-	background-color: transparent;
-	cursor: pointer;
-}
-
-.entry-table-checkbox-cell {
-	flex: none;
-	width: 56px;
-	max-width: 40px;
-
-	.mat-mdc-checkbox {
-		display: flex;
-	}
+.entry-table-checkbox-cell, .entry-table-context-menu-cell {
+	width: 48px;
 }

@@ -12,6 +12,7 @@ $breakpoints: () !default;
 		}
 
 		[class ^= #{$column-prefix}], [class ^= #{$offset-prefix}] {
+			box-sizing: border-box;
 			flex-shrink: 0;
 			max-width: 100%;
 			padding: 0 $spacing;
@@ -44,7 +45,7 @@ $breakpoints: () !default;
 
 		#{$reverse-prefix + $under + $size} {
 			flex-direction: row-reverse;
-		
+
 			@include breakpoints.apply-on($item) {
 				flex-direction: row;
 			}
