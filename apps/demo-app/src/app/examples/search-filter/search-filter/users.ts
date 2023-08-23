@@ -16,6 +16,7 @@ class User {
     lastName?: string;
     dateOfBirth?: Date;
     occupation: Occupation;
+    lastLogin?: Date;
 
     constructor(data?: Partial<User>) {
         if (data) {
@@ -33,7 +34,8 @@ const LIST_OF_USERS = [
         firstName: 'Emmett',
         lastName: 'O\'Connell',
         dateOfBirth: new Date(1992, 3, 3),
-        occupation: Occupation.electrician
+        occupation: Occupation.electrician,
+        lastLogin: new Date()
     }),
     new User({
         id: '2',
@@ -41,7 +43,8 @@ const LIST_OF_USERS = [
         firstName: 'Lila',
         lastName: 'Fairbanks',
         dateOfBirth: new Date(1985, 5, 26),
-        occupation: Occupation.unknown
+        occupation: Occupation.unknown,
+        lastLogin: new Date()
     }),
     new User({
         id: '3',
@@ -49,7 +52,8 @@ const LIST_OF_USERS = [
         firstName: 'Preston',
         lastName: 'McAllister',
         dateOfBirth: new Date(1977, 9, 14),
-        occupation: Occupation.baker
+        occupation: Occupation.baker,
+        lastLogin: new Date()
     }),
     new User({
         id: '4',
@@ -57,7 +61,8 @@ const LIST_OF_USERS = [
         firstName: 'Gracie',
         lastName: 'Monroe',
         dateOfBirth: new Date(2000, 2, 8),
-        occupation: Occupation.plumber
+        occupation: Occupation.plumber,
+        lastLogin: new Date()
     }),
     new User({
         id: '5',
@@ -65,7 +70,8 @@ const LIST_OF_USERS = [
         firstName: 'Silas',
         lastName: 'Harrington',
         dateOfBirth: new Date(1965, 11, 11),
-        occupation: Occupation.teacher
+        occupation: Occupation.teacher,
+        lastLogin: new Date()
     }),
     new User({
         id: '6',
@@ -73,7 +79,8 @@ const LIST_OF_USERS = [
         firstName: 'Elodie',
         lastName: 'Whitmore',
         dateOfBirth: new Date(1996, 7, 22),
-        occupation: Occupation.baker
+        occupation: Occupation.baker,
+        lastLogin: new Date()
     }),
     new User({
         id: '7',
@@ -81,7 +88,8 @@ const LIST_OF_USERS = [
         firstName: 'Conrad',
         lastName: 'Sullivan',
         dateOfBirth: new Date(1983, 0, 15),
-        occupation: Occupation.soldier
+        occupation: Occupation.soldier,
+        lastLogin: new Date()
     }),
     new User({
         id: '8',
@@ -89,7 +97,8 @@ const LIST_OF_USERS = [
         firstName: 'Rosalind',
         lastName: 'Espinoza',
         dateOfBirth: new Date(1973, 4, 19),
-        occupation: Occupation.baker
+        occupation: Occupation.baker,
+        lastLogin: new Date()
     }),
     new User({
         id: '9',
@@ -97,7 +106,8 @@ const LIST_OF_USERS = [
         firstName: 'Nolan',
         lastName: 'Baxter',
         dateOfBirth: new Date(1987, 6, 30),
-        occupation: Occupation.doctor
+        occupation: Occupation.doctor,
+        lastLogin: new Date()
     }),
     new User({
         id: '10',
@@ -105,7 +115,8 @@ const LIST_OF_USERS = [
         firstName: 'Greta',
         lastName: 'Underwood',
         dateOfBirth: new Date(1994, 1, 21),
-        occupation: Occupation.painter
+        occupation: Occupation.painter,
+        lastLogin: new Date()
     }),
     new User({
         id: '11',
@@ -113,7 +124,8 @@ const LIST_OF_USERS = [
         firstName: 'Clair',
         lastName: 'Underwood',
         dateOfBirth: new Date(1951, 1, 1),
-        occupation: Occupation.teacher
+        occupation: Occupation.teacher,
+        lastLogin: new Date()
     })
 ];
 

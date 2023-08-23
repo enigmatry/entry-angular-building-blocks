@@ -9,8 +9,7 @@
   </ng-container>
   <!-- Currency -->
   <ng-container *ngSwitchCase="'currency'">
-    {{value | currency: typeParameter?.currencyCode ?? defaultCurrencyCode :
-      typeParameter?.display : typeParameter?.digitsInfo : typeParameter?.locale}}
+    {{value | currency: typeParameter?.currencyCode : typeParameter?.display : typeParameter?.digitsInfo : typeParameter?.locale}}
   </ng-container>
   <!-- Percent -->
   <ng-container *ngSwitchCase="'percent'">
@@ -18,9 +17,7 @@
   </ng-container>
   <!-- Date -->
   <ng-container *ngSwitchCase="'date'">
-    {{value | date: typeParameter?.format ?? defaultDateFormat
-      : typeParameter?.timezone ?? defaultTimezone
-      : typeParameter?.locale}}
+    {{value | date: typeParameter?.format : typeParameter?.timezone : typeParameter?.locale}}
   </ng-container>
   <!-- Link -->
   <ng-container *ngSwitchCase="'link'">

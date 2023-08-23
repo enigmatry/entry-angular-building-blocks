@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, DEFAULT_CURRENCY_CODE, Inject, Input } from '@angular/core';
-import { DEFAULT_DATE_FORMAT, DEFAULT_PERCENTAGE_MULTIPLIER, DEFAULT_TIMEZONE } from '../../interfaces/entry-table-config';
+import { ChangeDetectionStrategy, Component, Inject, Input } from '@angular/core';
+import { DEFAULT_PERCENTAGE_MULTIPLIER } from '../../interfaces/entry-table-config';
 
 @Component({
   selector: 'entry-cell-formatted-value',
@@ -13,9 +13,6 @@ export class EntryCellFormattedValueComponent {
   @Input() typeParameter: any | undefined;
 
   constructor(
-    @Inject(DEFAULT_DATE_FORMAT) public defaultDateFormat: string,
-    @Inject(DEFAULT_TIMEZONE) public defaultTimezone: string,
-    @Inject(DEFAULT_CURRENCY_CODE) public defaultCurrencyCode: string,
     @Inject(DEFAULT_PERCENTAGE_MULTIPLIER) public defaultPercentageMultiplier: number) {
   }
 }
