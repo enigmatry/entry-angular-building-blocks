@@ -1,6 +1,6 @@
 /* stylelint-disable declaration-block-no-redundant-longhand-properties */
 /* stylelint-disable shorthand-property-no-redundant-values */
-@use '../../node_modules/sass-true/sass/true';
+@use 'sass-true/sass/true';
 @use '../../src/modules/position/absolute';
 
 @include true.describe('position($top, $right, $bottom, $left)') {

@@ -4,8 +4,8 @@ $breakpoints: () !default;
 @use 'sass:map';
 @use 'sass:math';
 @use 'sass:meta';
-@use '../../../node_modules/sass-true';
-@use '../../../node_modules/sass-true/sass/throw';
+@use 'sass-true';
+@use 'sass-true/sass/throw';
 @use '../../modules/variables' as vars;
 @forward '../../modules/responsiveness/breakpoints' with (
 	$breakpoints: $breakpoints

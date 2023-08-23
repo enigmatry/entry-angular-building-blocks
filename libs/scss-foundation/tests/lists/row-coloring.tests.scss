@@ -1,5 +1,5 @@
 @use 'sass:color';
-@use '../../node_modules/sass-true/sass/true';
+@use 'sass-true/sass/true';
 @use '../../src/modules/lists/row-coloring' as lists;
 
 @include true.describe('row-coloring($color, $rows)') {

@@ -3,7 +3,8 @@
   "dest": "../../dist/enigmatry/entry-components",
   "assets": [
     "*/styles/**/*.scss",
-    "styles/**/*.scss"
+    "styles/**/*.scss",
+    "assets/**"
   ],
   "lib": {
     "entryFile": "./public-api.ts"
