@@ -10,6 +10,7 @@ import { EntryValidationModule, FORM_FIELD_ERROR_KEY } from '@enigmatry/entry-co
 import { FormlyMaterialModule } from '@ngx-formly/material';
 import { SharedModule } from '../../../shared/shared.module';
 import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
+import { ENTRY_BUTTON_CONFIG, EntryButtonConfig, EntryButtonModule } from '@enigmatry/entry-components/button';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
     ReactiveFormsModule,
     EntryValidationModule,
     FormlyMaterialModule,
+    EntryButtonModule,
     FormlyModule.forChild({
       validationMessages: [
           /** Map form fields server side validation errors to FORM_FIELD_ERROR_KEY key */
@@ -43,6 +45,13 @@ import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
   exports: [
     FormlyFormValidationExampleComponent,
     ComplexFormlyFormValidationExampleComponent
-  ]
+  ],
+  providers: [{
+    provide: ENTRY_BUTTON_CONFIG,
+    useValue: new EntryButtonConfig({
+      submit: { type: 'raised', color: 'primary' },
+      cancel: { type: 'basic', }
+    })
+  }]
 })
 export class FormlyValidationExampleModule { }

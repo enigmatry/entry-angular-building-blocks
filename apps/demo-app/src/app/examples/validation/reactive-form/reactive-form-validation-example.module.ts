@@ -4,6 +4,7 @@ import { ReactiveFormExampleComponent } from './reactive-form-validation-example
 import { AbstractControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ENTRY_VALIDATION_CONFIG, EntryValidationConfig, EntryValidationModule } from '@enigmatry/entry-components/validation';
 import { SharedModule } from '../../../shared/shared.module';
+import { ENTRY_BUTTON_CONFIG, EntryButtonConfig, EntryButtonModule } from '@enigmatry/entry-components/button';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { SharedModule } from '../../../shared/shared.module';
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
+    EntryButtonModule,
     EntryValidationModule,
   ],
   exports: [
@@ -28,6 +30,13 @@ import { SharedModule } from '../../../shared/shared.module';
           { name: 'required', message: 'This field is mandatory!' },
           { name: 'minlength', message: (control: AbstractControl) => `Minimal length is ${control.errors.minlength.requiredLength}!`}
         ]
+      })
+    },
+    {
+      provide: ENTRY_BUTTON_CONFIG,
+      useValue: new EntryButtonConfig({
+        submit: { type: 'raised', color: 'primary' },
+        cancel: { type: 'basic', }
       })
     }
   ]
