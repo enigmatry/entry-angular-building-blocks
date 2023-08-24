@@ -2,11 +2,7 @@
 
 @mixin generate-from($theme) {
 	.mat-mdc-cell {
-		color: map.get($theme, 'general', 'colors', 'dark');
-	}
-
-	.mat-mdc-cell, .mat-mdc-header-cell {
-		font-size: map.get($theme, 'general', 'font', 'size');
+		color: map.get($theme, 'general', 'colors', 'font');
 	}
 
 	.mat-mdc-header-cell:first-of-type, .mat-mdc-cell:first-of-type, .mat-mdc-footer-cell:first-of-type {

@@ -5,8 +5,7 @@ $theme: (
 			accent-theme: null,
 			primary: #2581C4,
 			accent: #EA518D,
-			dark: #323232,
-			disabled-light: #F5F5F5
+			font: #323232
 		),
 		typography: null,
 		fonts: (
@@ -34,19 +33,14 @@ $theme: (
 		),
 		rows: (
 			selected-color: #FFF,
+			disabled-color: #F5F5F5,
 			odd-even-row: odd,
 			odd-even-background: #F0F0F0
-		),
-		columns: (
-			sorted: (
-				font-weight: 700
-			)
 		),
 		contents: (
 			no-result: (
 				font-size: 13px,
-				font-weight: 500,
-				text-transform: none
+				font-weight: 500
 			)
 		)
 	),

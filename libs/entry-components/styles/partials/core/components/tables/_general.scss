@@ -1,0 +1,21 @@
+@use '@enigmatry/scss-foundation/src/modules/display/items';
+
+.entry-table {
+	display: flex;
+	flex-direction: column;
+	overflow: auto;
+
+	.selection-cell, .action-cell {
+		width: 48px;
+	}
+
+	.pagination {
+		margin-bottom: 10px;
+	}
+
+	.no-results {
+		@include items.align-absolute-center();
+		flex: 1;
+		min-height: 50px;
+	}
+}

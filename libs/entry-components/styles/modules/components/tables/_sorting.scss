@@ -2,13 +2,10 @@
 
 @mixin generate-from($theme) {
 	.mat-sort-header-sorted {
-		font: {
-			size: map.get($theme, 'general', 'font', 'size');
-			weight: map.get($theme, 'tables', 'columns', 'sorted', 'font-weight');
-		}
+		font-weight: 700;
 	}
 
 	.mat-sort-header-sorted, .mat-sort-header-arrow {
-		color: map.get($theme, 'general', 'colors', 'dark');
+		color: map.get($theme, 'general', 'colors', 'font');
 	}
 }

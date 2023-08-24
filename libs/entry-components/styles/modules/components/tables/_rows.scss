@@ -14,10 +14,10 @@
 					color: map.get($theme, 'tables', 'rows', 'selected-color');
 				}
 			}
-		}
-	}
 
-	.mat-row-disabled {
-		background-color: map.get($theme, 'general', 'colors', 'disabled-light');
+			&.mat-row-disabled {
+				background-color: map.get($theme, 'tables', 'rows', 'disabled-color');
+			}
+		}
 	}
 }

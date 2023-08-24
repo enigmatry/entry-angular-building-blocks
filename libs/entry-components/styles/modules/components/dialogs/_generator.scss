@@ -3,7 +3,7 @@
 @mixin generate-from($theme) {
 	.entry-dialog {
 		.title {
-			color: map.get($theme, 'general', 'colors', 'dark');
+			color: map.get($theme, 'general', 'colors', 'font');
 			font-size: map.get($theme, 'dialogs', 'title', 'size');
 		}
 		font-size: map.get($theme, 'general', 'font', 'size');

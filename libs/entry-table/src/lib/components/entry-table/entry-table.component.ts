@@ -7,7 +7,6 @@ import {
   EventEmitter,
   ViewEncapsulation,
   ChangeDetectionStrategy,
-  ViewChild,
   OnChanges,
   TemplateRef,
   ChangeDetectorRef,
@@ -34,9 +33,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EntryTableComponent<T> implements OnChanges {
-
   @HostBinding('class') className = 'entry-table';
-  @ViewChild('tableContainer') tableContainer: ElementRef<HTMLDivElement>;
 
   dataSource = new MatTableDataSource<T>([]);
 
@@ -105,6 +102,9 @@ export class EntryTableComponent<T> implements OnChanges {
   @Input() noResultText: string;
   @Input() noResultTemplate: TemplateRef<any> | null;
 
+  private readonly selectionColumn = 'selection-column';
+  private readonly contextMenuColumn = 'context-menu-column';
+
   get hasNoResult() {
     return (!this.data || this._data.length === 0) && !this.loading;
   }
@@ -115,6 +115,7 @@ export class EntryTableComponent<T> implements OnChanges {
 
   constructor(
     @Inject(ENTRY_TABLE_CONFIG) private _config: EntryTableConfig,
+    private _elementRef: ElementRef<HTMLElement>,
     private _changeDetectorRef: ChangeDetectorRef) { }
 
   detectChanges() {
@@ -156,12 +157,12 @@ export class EntryTableComponent<T> implements OnChanges {
 
     this.displayedColumns = this.columns.filter(item => !item.hide).map(item => item.field);
 
-    if (this.rowSelectable && !this.displayedColumns.includes('CheckboxColumnDef')) {
-      this.displayedColumns.unshift('CheckboxColumnDef');
+    if (this.rowSelectable && !this.displayedColumns.includes(this.selectionColumn)) {
+      this.displayedColumns.unshift(this.selectionColumn);
     }
 
-    if (this.showContextMenu && !this.displayedColumns.includes('ContextMenuColumnDef')) {
-      this.displayedColumns.push('ContextMenuColumnDef');
+    if (this.showContextMenu && !this.displayedColumns.includes(this.contextMenuColumn)) {
+      this.displayedColumns.push(this.contextMenuColumn);
     }
 
     if (this.rowSelectable) {
@@ -189,7 +190,7 @@ export class EntryTableComponent<T> implements OnChanges {
     this.dataSource = new MatTableDataSource(this._data);
 
     if (changes.data) {
-      this.scrollTop(0);
+      this.scrollToTop();
     }
   }
 
@@ -226,10 +227,8 @@ export class EntryTableComponent<T> implements OnChanges {
     this.pageChange.emit(e);
   }
 
-  scrollTop(value?: number): void {
-    if (value != null && this.tableContainer && !this.loading) {
-      this.tableContainer.nativeElement.scrollTop = value;
-    }
+  scrollToTop(): void {
+    this._elementRef.nativeElement.scrollTop = 0;
   }
 
   private convertToKebabCase(value: string): string {
