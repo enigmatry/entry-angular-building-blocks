@@ -7,7 +7,6 @@ import {
   EventEmitter,
   ViewEncapsulation,
   ChangeDetectionStrategy,
-  ViewChild,
   OnChanges,
   TemplateRef,
   ChangeDetectorRef,
@@ -34,7 +33,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EntryTableComponent<T> implements OnChanges {
-  @ViewChild('tableContainer') tableContainer: ElementRef<HTMLDivElement>;
+  @HostBinding('class') className = 'entry-table';
 
   dataSource = new MatTableDataSource<T>([]);
 
@@ -113,6 +112,7 @@ export class EntryTableComponent<T> implements OnChanges {
 
   constructor(
     @Inject(ENTRY_TABLE_CONFIG) private _config: EntryTableConfig,
+    private _elementRef: ElementRef<HTMLElement>,
     private _changeDetectorRef: ChangeDetectorRef) { }
 
   detectChanges() {
@@ -187,7 +187,7 @@ export class EntryTableComponent<T> implements OnChanges {
     this.dataSource = new MatTableDataSource(this._data);
 
     if (changes.data) {
-      this.scrollTop(0);
+      this.scrollToTop();
     }
   }
 
@@ -224,10 +224,8 @@ export class EntryTableComponent<T> implements OnChanges {
     this.pageChange.emit(e);
   }
 
-  scrollTop(value?: number): void {
-    if (value != null && this.tableContainer && !this.loading) {
-      this.tableContainer.nativeElement.scrollTop = value;
-    }
+  scrollToTop(): void {
+    this._elementRef.nativeElement.scrollTop = 0;
   }
 
   private convertToKebabCase(value: string): string {
