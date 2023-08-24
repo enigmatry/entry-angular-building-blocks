@@ -102,6 +102,9 @@ export class EntryTableComponent<T> implements OnChanges {
   @Input() noResultText: string;
   @Input() noResultTemplate: TemplateRef<any> | null;
 
+  private readonly selectionColumn = 'selection-column';
+  private readonly contextMenuColumn = 'context-menu-column';
+
   get hasNoResult() {
     return (!this.data || this._data.length === 0) && !this.loading;
   }
@@ -154,12 +157,12 @@ export class EntryTableComponent<T> implements OnChanges {
 
     this.displayedColumns = this.columns.filter(item => !item.hide).map(item => item.field);
 
-    if (this.rowSelectable && !this.displayedColumns.includes('CheckboxColumnDef')) {
-      this.displayedColumns.unshift('CheckboxColumnDef');
+    if (this.rowSelectable && !this.displayedColumns.includes(this.selectionColumn)) {
+      this.displayedColumns.unshift(this.selectionColumn);
     }
 
-    if (this.showContextMenu && !this.displayedColumns.includes('ContextMenuColumnDef')) {
-      this.displayedColumns.push('ContextMenuColumnDef');
+    if (this.showContextMenu && !this.displayedColumns.includes(this.contextMenuColumn)) {
+      this.displayedColumns.push(this.contextMenuColumn);
     }
 
     if (this.rowSelectable) {

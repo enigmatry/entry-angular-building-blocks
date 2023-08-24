@@ -11,7 +11,7 @@
         (matSortChange)="sortChange.emit($event)">
 
   <!-- Selection column -->
-  <ng-container *ngIf="rowSelectable" matColumnDef="CheckboxColumnDef">
+  <ng-container *ngIf="rowSelectable" [matColumnDef]="selectionColumn">
     <th mat-header-cell *matHeaderCellDef class="selection-cell">
       <mat-checkbox *ngIf="multiSelectable && showSelectAllCheckbox"
                     [checked]="rowSelection.hasValue() && isAllSelected()"
@@ -39,7 +39,7 @@
   </ng-container>
 
   <!-- Context menu column -->
-  <ng-container *ngIf="showContextMenu" matColumnDef="ContextMenuColumnDef">
+  <ng-container *ngIf="showContextMenu" [matColumnDef]="contextMenuColumn">
     <th mat-header-cell *matHeaderCellDef class="action-cell"></th>
     <td mat-cell *matCellDef="let row; let index = index; let dataIndex = dataIndex;"
         class="action-cell">
