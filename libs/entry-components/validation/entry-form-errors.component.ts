@@ -15,7 +15,9 @@ import { UntypedFormGroup } from '@angular/forms';
   selector: 'entry-form-errors',
   template: `
     <div *ngIf="form.errors">
-      <mat-error *ngFor="let error of form.errors.general">{{error}}</mat-error>
+      <mat-error *ngFor="let error of form.errors.general">
+        <span class="mat-body-2">{{error}}</span>
+      </mat-error>
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.Default
