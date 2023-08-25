@@ -102,8 +102,8 @@ export class EntryTableComponent<T> implements OnChanges {
   @Input() noResultText: string;
   @Input() noResultTemplate: TemplateRef<any> | null;
 
-  private readonly selectionColumn = 'selection-column';
-  private readonly contextMenuColumn = 'context-menu-column';
+  readonly selectionColumn = 'selection-column';
+  readonly contextMenuColumn = 'context-menu-column';
 
   get hasNoResult() {
     return (!this.data || this._data.length === 0) && !this.loading;
