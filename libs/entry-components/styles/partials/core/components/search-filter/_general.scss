@@ -1,0 +1,9 @@
+@use '@enigmatry/scss-foundation/src/modules/display/items';
+
+.search-form-container {
+	@include items.align-center();
+
+	.form-field {
+		width: 200px;
+	}
+}

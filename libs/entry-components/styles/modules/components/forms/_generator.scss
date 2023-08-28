@@ -1,0 +1,15 @@
+@use 'sass:map';
+
+@mixin generate-from($theme) {
+	$default-gap: map.get($theme, 'general', 'spacing', 'default');
+
+	.entry-form {
+		.action-buttons {
+			margin-top: $default-gap;
+		}
+
+		.mat-mdc-form-field {
+			margin-bottom: $default-gap;
+		}
+	}
+}

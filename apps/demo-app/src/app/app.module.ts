@@ -12,11 +12,11 @@ import { HttpClientModule } from '@angular/common/http';
     AppComponent
   ],
   imports: [
+    SharedModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    AppRoutingModule,
-    SharedModule
+    AppRoutingModule
   ],
   bootstrap: [AppComponent]
 })
