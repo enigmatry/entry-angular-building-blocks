@@ -10,18 +10,17 @@
         <ng-content></ng-content>
     </mat-dialog-content>
 
-    <ng-template [ngIf]="buttonsTemplate" [ngIfElse]="defaultButtonsTemplate">
-        <ng-template [ngTemplateOutlet]="buttonsTemplate"></ng-template>
-    </ng-template>
-
+    <mat-dialog-actions class="dialog-actions" [align]="buttonsAlignment" *ngIf="!hideButtons">
+        <ng-container *ngIf="buttonsTemplate; then buttonsTemplate; else defaultButtonsTemplate">
+        </ng-container>
+    </mat-dialog-actions>
+    
     <ng-template #defaultButtonsTemplate>
-        <mat-dialog-actions *ngIf="!hideButtons" class="dialog-actions" [align]="buttonsAlignment">
-            <button cdkFocusInitial mat-button entry-submit-button (click)="onSubmit()">
-                <span>{{confirmButtonText}}</span>
-            </button>
-            <button *ngIf="!hideCancel" mat-button entry-cancel-button (click)="cancel()">
-                <span>{{cancelButtonText}}</span>
-            </button>
-        </mat-dialog-actions>
+        <button cdkFocusInitial mat-button entry-submit-button (click)="onSubmit()">
+            <span>{{confirmButtonText}}</span>
+        </button>
+        <button *ngIf="!hideCancel" mat-button entry-cancel-button (click)="cancel()">
+            <span>{{cancelButtonText}}</span>
+        </button>
     </ng-template>
 </div>
