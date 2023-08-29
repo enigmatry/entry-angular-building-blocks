@@ -15,13 +15,13 @@
     </ng-template>
 
     <ng-template #defaultButtonsTemplate>
-        <div mat-dialog-actions *ngIf="!hideButtons" class="dialog-actions" [align]="buttonsAlignment">
+        <mat-dialog-actions *ngIf="!hideButtons" class="dialog-actions" [align]="buttonsAlignment">
             <button cdkFocusInitial mat-button entry-submit-button (click)="onSubmit()">
                 <span>{{confirmButtonText}}</span>
             </button>
             <button *ngIf="!hideCancel" mat-button entry-cancel-button (click)="cancel()">
                 <span>{{cancelButtonText}}</span>
             </button>
-        </div>
+        </mat-dialog-actions>
     </ng-template>
 </div>
