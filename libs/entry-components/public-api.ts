@@ -8,3 +8,4 @@ export * from '@enigmatry/entry-components/search-filter';
 export * from '@enigmatry/entry-components/toolbar';
 export * from '@enigmatry/entry-components/validation';
 export * from '@enigmatry/entry-components/button';
+export * from '@enigmatry/entry-components/file-input';

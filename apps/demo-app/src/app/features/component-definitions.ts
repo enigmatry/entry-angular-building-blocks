@@ -25,6 +25,13 @@ const COMPONENT_DEFINITIONS: IComponentDefinition[] = [
         apiDocsPath: 'assets/api/@enigmatry/entry-components/dialog_public_api.md'
     },
     {
+        label: 'File input',
+        shortDescription: `Enables built-in dialogs and adds support for building custom ones.`,
+        route: RouteSegments.fileInput,
+        readmePath: '/entry-components/file-input/README.md',
+        apiDocsPath: ''
+    },
+    {
         label: 'Header',
         shortDescription: `Simple way of standard header layout and styling.`,
         route: RouteSegments.header,

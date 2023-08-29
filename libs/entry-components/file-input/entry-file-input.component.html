@@ -1,0 +1,18 @@
+<button 
+ #fileButton 
+ mat-button 
+ entry-submit-button 
+ type="button" 
+ [disabled]="disabled">
+  <mat-icon *ngIf="matIcon">{{matIcon}}</mat-icon>
+  <span>{{label}}</span>
+</button>
+<input
+ #fileInput
+ type="file"
+ class="file-input-hidden"
+ [accept]="accept"
+ [multiple]="multiple"
+ [disabled]="disabled"
+ (change)="onFileSelect($event)"
+/>

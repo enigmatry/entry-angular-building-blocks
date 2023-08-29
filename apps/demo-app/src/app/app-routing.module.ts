@@ -17,6 +17,10 @@ const routes: Routes = [
     loadChildren: () => import('./features/dialog/dialog.module').then(module => module.DialogModule)
   },
   {
+    path: RouteSegments.fileInput,
+    loadChildren: () => import('./features/file-input/file-input.module').then(module => module.FileInputModule)
+  },
+  {
     path: RouteSegments.header,
     loadChildren: () => import('./features/header/header.module').then(module => module.HeaderModule)
   },
