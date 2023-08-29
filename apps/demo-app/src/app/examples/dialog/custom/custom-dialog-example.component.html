@@ -1,13 +1,12 @@
-<p>
+<section class="dialog-example stack-vertical">
     <mat-form-field>
         <mat-label>Enter your question</mat-label>
         <input matInput type="text" [(ngModel)]="question">
     </mat-form-field>
-</p>
-<button
-    mat-raised-button
-    color="accent"
-    (click)="openCustom()">
-    Open Custom Dialog
-</button>
-<pre>{{result | json}}</pre>
+    <button mat-button entry-submit-button (click)="openCustom()" class="item">
+        <span>Open Custom Dialog</span>
+    </button>
+    <strong>
+        <pre>{{result | json}}</pre>
+    </strong>
+</section>

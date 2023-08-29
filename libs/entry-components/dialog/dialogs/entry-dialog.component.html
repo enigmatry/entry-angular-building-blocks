@@ -1,9 +1,8 @@
-<div class="entry-dialog dialog-form">
+<div class="entry-dialog">
     <div class="dialog-header">
-        <h1 class="title">{{ title }}</h1>
-
-        <button *ngIf="!hideClose" type="button" class="close-button" (click)="cancel()">
-            <span class="icon-close icon"></span>
+        <h1 class="title" [ngClass]="{'without-close-icon': hideClose === true}" mat-dialog-title>{{ title }}</h1>
+        <button mat-icon-button *ngIf="!hideClose" type="button" class="close-button" (click)="cancel()">
+            <mat-icon>close</mat-icon>
         </button>
     </div>
 
@@ -16,18 +15,13 @@
     </ng-template>
 
     <ng-template #defaultButtonsTemplate>
-        <div *ngIf="!hideButtons" class="dialog-footer {{ buttonsAlignment }}">
-            <button
-                cdkFocusInitial
-                type="button"
-                class="button-confirm"
-                cdkFocusInitial
-                (click)="onSubmit()">{{confirmButtonText}}</button>
-            <button
-                *ngIf="!hideCancel"
-                type="button"
-                class="button-cancel"
-                (click)="cancel()">{{cancelButtonText}}</button>
+        <div mat-dialog-actions *ngIf="!hideButtons" class="dialog-actions" [align]="buttonsAlignment">
+            <button cdkFocusInitial mat-button entry-submit-button (click)="onSubmit()">
+                <span>{{confirmButtonText}}</span>
+            </button>
+            <button *ngIf="!hideCancel" mat-button entry-cancel-button (click)="cancel()">
+                <span>{{cancelButtonText}}</span>
+            </button>
         </div>
     </ng-template>
 </div>

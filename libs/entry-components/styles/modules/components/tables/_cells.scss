@@ -12,4 +12,8 @@
 	.mat-mdc-header-cell:last-of-type, .mat-mdc-cell:last-of-type, .mat-mdc-footer-cell:last-of-type {
 		padding-right: map.get($theme, 'tables', 'cells', 'edge-gap');
 	}
+
+	.selection-cell, .action-cell {
+		width: map.get($theme, 'general', 'buttons', 'icon-size');
+	}
 }
