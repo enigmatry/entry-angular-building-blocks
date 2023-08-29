@@ -32,7 +32,7 @@ export class EntryDialogConfig {
  * Defaults:
  * - confirmButtonText: 'Ok'
  * - cancelButtonText: 'Cancel'
- * - buttonsAlignment: 'align-right'
+ * - buttonsAlignment: 'end'
  * - hideClose: true
  * - disableClose: false
  */
