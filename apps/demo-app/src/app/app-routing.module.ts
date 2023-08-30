@@ -17,20 +17,12 @@ const routes: Routes = [
     loadChildren: () => import('./features/dialog/dialog.module').then(module => module.DialogModule)
   },
   {
-    path: RouteSegments.header,
-    loadChildren: () => import('./features/header/header.module').then(module => module.HeaderModule)
-  },
-  {
     path: RouteSegments.searchFilter,
     loadChildren: () => import('./features/search-filter/search-filter.module').then(module => module.SearchFilterModule)
   },
   {
     path: RouteSegments.table,
     loadChildren: () => import('./features/table/table.module').then(module => module.TableModule)
-  },
-  {
-    path: RouteSegments.toolbar,
-    loadChildren: () => import('./features/toolbar/toolbar.module').then(module => module.ToolbarModule)
   },
   {
     path: RouteSegments.validation,

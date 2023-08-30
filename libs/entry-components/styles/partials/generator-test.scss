@@ -16,12 +16,7 @@ $custom-theme: (
 		cells: (
 			first-cell-padding-left: 11px
 		)
-	),
-	headers: (
-		title: (
-			size: 41px
-		)
-	),
+	)
 );
 
 @include generator.generate-from($custom-theme);
