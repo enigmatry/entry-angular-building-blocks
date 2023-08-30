@@ -19,7 +19,7 @@ export class EntryDialogConfig {
     constructor(config: Partial<EntryDialogConfig> = {}) {
         this.confirmButtonText = config.confirmButtonText ?? 'Ok';
         this.cancelButtonText = config.cancelButtonText ?? 'Cancel';
-        this.buttonsAlignment = config.buttonsAlignment ?? 'align-right';
+        this.buttonsAlignment = config.buttonsAlignment ?? 'end';
         this.hideClose = config.hideClose ?? true;
         this.disableClose = config.disableClose ?? false;
     }
@@ -32,7 +32,7 @@ export class EntryDialogConfig {
  * Defaults:
  * - confirmButtonText: 'Ok'
  * - cancelButtonText: 'Cancel'
- * - buttonsAlignment: 'align-right'
+ * - buttonsAlignment: 'end'
  * - hideClose: true
  * - disableClose: false
  */

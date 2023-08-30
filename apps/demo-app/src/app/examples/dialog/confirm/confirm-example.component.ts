@@ -13,12 +13,12 @@ export class ConfirmExampleComponent {
     // Optional properties (if not provided, default values are used from ENTRY_DIALOG_CONFIG):
     // confirmText: 'Ok',
     // cancelText: 'Cancel',
-    buttonsAlignment: 'align-center',
+    buttonsAlignment: 'center',
     hideClose: true,
     disableClose: true
   };
   confirmResponse: boolean | undefined;
-  alignments: EntryDialogButtonsAlignment[] = ['align-left', 'align-center', 'align-right'];
+  alignments: EntryDialogButtonsAlignment[] = ['start', 'center', 'end'];
 
   constructor(private _entryDialog: EntryDialogService) { }
 

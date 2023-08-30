@@ -1,20 +1,12 @@
 @use '@enigmatry/scss-foundation/src/modules/display/items';
 
 .entry-form {
-	.action-buttons {
-		margin-top: 15px;
-
-		.mdc-button:not(:first-child) {
-			margin-left: 10px;
-		}
+	.action-buttons .mdc-button:not(:first-child) {
+		margin-left: 10px;
 	}
 
 	.entry-checkbox {
 		display: block;
-	}
-
-	.mat-mdc-form-field {
-		margin-bottom: 15px;
 	}
 	  
 	.mdc-form-field {

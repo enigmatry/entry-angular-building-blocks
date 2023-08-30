@@ -1,29 +1,22 @@
-<p>
+<section class="dialog-example stack-vertical">
     <mat-checkbox [(ngModel)]="confirmData.hideClose">
         Hide close button
     </mat-checkbox>
-</p>
-<p>
-    <mat-checkbox [(ngModel)]="confirmData.disableClose">
+    <mat-checkbox [(ngModel)]="confirmData.disableClose" class="item">
         Disable closing on Esc or backdrop click
     </mat-checkbox>
-</p>
-<p>
-    <mat-form-field>
+    <mat-form-field class="item">
         <mat-label>Buttons horizontal alignment</mat-label>
-        <mat-select  [(ngModel)]="confirmData.buttonsAlignment">
+        <mat-select [(ngModel)]="confirmData.buttonsAlignment">
             <mat-option *ngFor="let alignment of alignments" [value]="alignment">
                 {{alignment}}
             </mat-option>
         </mat-select>
     </mat-form-field>
-</p>
-<button
-    mat-raised-button
-    color="accent"
-    (click)="openConfirm()">
-    Open Confirm Dialog
-</button>
-<p>
-    Selected response: {{confirmResponse}}
-</p>
+    <button mat-button entry-submit-button (click)="openConfirm()" class="item">
+        <span>Open Confirm Dialog</span>
+    </button>
+    <p>
+        Selected response: <strong>{{confirmResponse}}</strong>
+    </p>
+</section>

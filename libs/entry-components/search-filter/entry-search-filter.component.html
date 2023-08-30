@@ -1,15 +1,11 @@
-<div class="search-form-container">
-    <form (ngSubmit)="onSubmit()" [formGroup]="searchFilterForm">
-        <div class="search-form-fields">
-            <div *ngFor="let searchFilter of searchFilters" class="search-form-field">
-                <entry-search-filter-input [searchFilter]="searchFilter" [form]="searchFilterForm">
-                </entry-search-filter-input>
-            </div>
-            <div>
-                <button type="button" class="mat-raised-button mat-accent" type="submit">
-                    {{config.applyButtonText}}
-                </button>
-            </div>
-        </div>
-    </form>
-</div>
+<form (ngSubmit)="onSubmit()" [formGroup]="searchFilterForm" class="search-form-container entry-form">
+    <div *ngFor="let searchFilter of searchFilters" class="form-field">
+        <entry-search-filter-input [searchFilter]="searchFilter" [form]="searchFilterForm">
+        </entry-search-filter-input>
+    </div>
+    <div>
+        <button mat-button entry-submit-button>
+            <span>{{config.applyButtonText}}</span>
+        </button>
+    </div>
+</form>

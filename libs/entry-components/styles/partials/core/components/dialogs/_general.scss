@@ -1,77 +1,23 @@
-@use 'sass:color';
-@use '@enigmatry/scss-foundation/src/modules/display/items';
-
-$border-dark: #000;
-$default-gap: 16px;
-$large-gap: calc(#{$default-gap} * 2);
- 
-// TODO: Refactor me. Rename things adequately taking care of context, try minimizing styles required for this to look as expected.
-.dialog-container {
-	/* stylelint-disable-next-line declaration-no-important */
-	position: absolute !important;
-	top: $large-gap;
-	width: 100%;
-	max: {
-		/* stylelint-disable-next-line declaration-no-important */
-		width: 700px !important;
-		/* stylelint-disable-next-line declaration-no-important */
-		height: calc(100% - 2 * $large-gap) !important;
-	}
-    
-	&.wide {
-		/* stylelint-disable-next-line declaration-no-important */
-		max-width: 85% !important;
-	}
-
-	&.small {
-		width: 400px;
-	}
-}
+@use 'scss-foundation/src/modules/display/items';
+@use 'scss-foundation/src/modules/text/modification' as text;
 
 .entry-dialog {
-	&.dialog-form {
-		height: 100%;
-	}
-	 
 	.dialog-header {
 		@include items.fully-align(center, space-between, row, nowrap);
-	
+
 		.title {
-			line-height: 1.2;
-		}
-	
-		.close-button {
-			margin-left: $default-gap;
-			border: none;
-			background: none;
+			@include text.ellipsis();
 		}
 	}
 
 	.dialog-content {
-		margin: {
-			top: $default-gap;
-			bottom: $large-gap;
-		}
-		line-height: 1.4;
-
-		&.with-actions {
-			/* stylelint-disable-next-line declaration-no-important */
-			max-height: calc(100% - 115px) !important;
-		}
-	}
-	
-	.button-confirm, .button-cancel {
-		padding: 10px 20px;
+		display: inline-block;
+		width: 100%;
+		/* stylelint-disable-next-line unit-allowed-list */
+		max-height: 50vh;
 	}
 
-	.dialog-radio-buttons {
-		display: block;
-		padding: 10px 0;
-	}
-	
-	.dialog-radio-button {
-		display: block;
-		margin-top: $default-gap;
-		white-space: break;
+	.dialog-actions {
+		padding: 0 24px 14px;
 	}
 }

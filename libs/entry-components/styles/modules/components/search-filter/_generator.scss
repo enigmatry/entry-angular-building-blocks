@@ -1,0 +1,15 @@
+@use 'sass:map';
+
+@mixin generate-from($theme) {
+	$default-gap: map.get($theme, 'general', 'spacing', 'default');
+
+	.search-form-container {
+		.entry-button {
+			margin-bottom: $default-gap;
+		}
+
+		.form-field {
+			margin-right: 2 * $default-gap;
+		}
+	}
+}
