@@ -1,7 +1,6 @@
 @use 'modules/components/dialogs/generator' as dialog;
 @use 'modules/components/forms/generator' as forms;
 @use 'modules/components/search-filter/generator' as search-filter;
-@use 'modules/components/headers/generator' as header;
 @use 'modules/components/tables/generator' as table;
 @use 'modules/default-theme' as default;
 @use 'modules/vendors/angular-material/generator' as material-theme;
@@ -16,5 +15,4 @@
 	@include forms.generate-from($merged-theme);
 	@include search-filter.generate-from($merged-theme);
 	@include dialog.generate-from($merged-theme);
-	@include header.generate-from($merged-theme);
 }

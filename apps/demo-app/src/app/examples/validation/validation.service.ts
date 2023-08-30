@@ -32,7 +32,7 @@ export class ValidationService {
         '': ['Personal & Partner info do not match.'],
         'personalInfo.firstName': ['This name is not cool enough.'],
         'personalInfo.lastName': ['Also not cool.'],
-        'partnerInfo.firstName': ['Already exist.'],
+        'partnerInfo.firstName': ['Already exists.'],
         'partnerInfo.lastName': ['Cannot be the same last name like in Personal info.'],
         'children.0': [`First child name is not 'Dragana'`],
         'children.1': [`Middle child name is not 'Jovana'`],
