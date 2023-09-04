@@ -1,1 +1,13 @@
+<p>
+  Default look and feel
+</p>
 <entry-file-input></entry-file-input>
+<p>
+  Configurable label and icon
+</p>
+<entry-file-input accept="image/*" label="Browse" matIcon="attachment"></entry-file-input>
+<p>
+  Supports binding with template driven form <code>[(ngModel)]</code>
+  or reactive forms <code>formControlName="control"</code>
+</p>
+<entry-file-input accept="image/*" [(ngModel)]="selectedImage"></entry-file-input> {{selectedImage?.name}}

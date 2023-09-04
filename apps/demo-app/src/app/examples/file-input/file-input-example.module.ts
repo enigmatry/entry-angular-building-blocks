@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../shared/shared.module';
 import { EntryFileInputModule } from '@enigmatry/entry-components/file-input';
 import { FileInputExampleComponent } from './file-input-example/file-input-example.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -11,6 +12,8 @@ import { FileInputExampleComponent } from './file-input-example/file-input-examp
   imports: [
     CommonModule,
     SharedModule,
+    FormsModule,
+    ReactiveFormsModule,
     EntryFileInputModule
   ],
   exports: [

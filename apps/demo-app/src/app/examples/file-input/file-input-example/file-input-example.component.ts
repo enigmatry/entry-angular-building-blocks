@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./file-input-example.component.scss']
 })
 export class FileInputExampleComponent {
-
+  selectedImage: File | undefined;
 }
