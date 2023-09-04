@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-file-input-example',
@@ -6,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./file-input-example.component.scss']
 })
 export class FileInputExampleComponent {
-  selectedImage: File | undefined;
+  selectedFile: File | undefined;
+  control = new FormControl<File | undefined>(undefined);
 }
