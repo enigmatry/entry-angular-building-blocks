@@ -3,16 +3,19 @@
  mat-button 
  entry-submit-button 
  type="button" 
- [disabled]="disabled">
+ [disabled]="disabled || readonly">
   <mat-icon *ngIf="matIcon">{{matIcon}}</mat-icon>
   <span>{{label}}</span>
 </button>
+<ng-container *ngIf="value">
+  {{fileNames}}
+</ng-container>
 <input
  #fileInput
  type="file"
- class="file-input-hidden"
  [accept]="accept"
  [multiple]="multiple"
  [disabled]="disabled"
+ [readonly]="readonly"
  (change)="onFileSelect($event)"
 />

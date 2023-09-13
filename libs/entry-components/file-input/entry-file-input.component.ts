@@ -65,6 +65,18 @@ export class EntryFileInputComponent implements
   private _disabled = false;
 
   /**
+   * Same as 'readonly' attribute in <input/> element.
+   */
+  @Input()
+  set readonly(readonly: BooleanInput) {
+    this._readonly = coerceBooleanProperty(readonly);
+  }
+  get readonly(): boolean {
+    return this._readonly;
+  }
+  private _readonly = false;
+
+  /**
    * Current selected [File | FileList] object.
    */
   value: File | FileList | undefined;
@@ -86,6 +98,16 @@ export class EntryFileInputComponent implements
   constructor(
     private readonly _ngZone: NgZone,
     private readonly _renderer: Renderer2) {
+  }
+
+  get fileNames(): string {
+    if (this.value instanceof File) {
+      return this.value.name;
+    }
+    if (this.value instanceof FileList) {
+      return `${this.value.length} files`;
+    }
+    return '';
   }
 
   ngOnInit(): void {

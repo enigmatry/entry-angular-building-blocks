@@ -4,6 +4,7 @@ import { EntryFileInputComponent } from './entry-file-input.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
+import { EntryButtonModule } from '@enigmatry/entry-components/button';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     FormsModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    EntryButtonModule
   ],
   exports: [
     EntryFileInputComponent
