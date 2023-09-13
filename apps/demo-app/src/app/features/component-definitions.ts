@@ -26,7 +26,7 @@ const COMPONENT_DEFINITIONS: IComponentDefinition[] = [
     },
     {
         label: 'File input',
-        shortDescription: `A Configurable file input component`,
+        shortDescription: `Component that provides a custom file input button with additional functionality`,
         route: RouteSegments.fileInput,
         readmePath: '/entry-components/file-input/README.md',
         apiDocsPath: ''

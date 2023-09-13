@@ -8,10 +8,10 @@ import { ICodeFileDefinition } from '../../shared/example-viewer/code-file-defin
 })
 export class FileInputComponent {
   extraFiles: ICodeFileDefinition[] = [
-    {
-      name: 'file-input-example.module.ts',
-      path: 'file-input\\file-input-example.module',
-      type: 'ts'
-    }
+    // {
+    //   name: 'file-input-example.module.ts',
+    //   path: 'file-input\\file-input-example.module',
+    //   type: 'ts'
+    // }
   ];
 }
