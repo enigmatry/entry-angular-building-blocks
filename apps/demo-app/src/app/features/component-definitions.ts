@@ -25,6 +25,13 @@ const COMPONENT_DEFINITIONS: IComponentDefinition[] = [
         apiDocsPath: 'assets/api/@enigmatry/entry-components/dialog_public_api.md'
     },
     {
+        label: 'File input',
+        shortDescription: `Component that provides a custom file input button with additional functionality`,
+        route: RouteSegments.fileInput,
+        readmePath: '/entry-components/file-input/README.md',
+        apiDocsPath: ''
+    },
+    {
         label: 'Search filter',
         shortDescription: `Search filter component with configurable input elements.`,
         route: RouteSegments.searchFilter,
