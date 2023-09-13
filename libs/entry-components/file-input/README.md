@@ -1,47 +1,71 @@
 # Entry File Input
 
-Simple way of providing mat button type and color for material buttons that are used in other entry components e.g. dialog or form.
+`EntryFileInputComponent` is an Angular component that provides a custom file input button with additional functionality
 
-Allows projects to specify which type: flat, raised or basic, to use for a submit or cancel button.
+## Setup
 
-## Integration
-
-```npm
-npm i @enigmatry/entry-components
-```
-
-Import component module:
-
-```ts
-import { EntryFileInputModule } from '@enigmatry/entry-components/file-input';
-```
-
-
-## Basic usage
-
-Provide configuration for submit or cancel button in feature or shared module.
+Import the [EntryFileInputModule] in your NgModule:
 
 ```typescript
-import { ENTRY_BUTTON_CONFIG, EntryButtonConfig, EntryButtonModule } from '@enigmatry/entry-components/button';
-
+import { EntryFileInputModule } from '@enigmatry/entry-components/file-input';
 @NgModule({
-  declarations: [],
-  imports: [],
-  exports: [],
-  providers: [{
-    provide: ENTRY_BUTTON_CONFIG,
-    useValue: new EntryButtonConfig({
-      submit: { type: 'raised', color: 'primary' },
-      cancel: { type: 'basic', }
-    })
-  }]
+  imports: [
+    EntryFileInputModule,
+    ...
+  ],
+  ...
 })
-export class SharedModule { }
+export class MyModule {}
 ```
 
-Apply the directive entry-submit-button or entry-cancel-button on a button instead of mat-flat-button or mat-raised-button.
+## Usage
+
+Use the entry-file-input component in your template:
 
 ```html
-  <button mat-button entry-submit-button>Submit</button>
-  <button mat-button entry-cancel-button>Cancel</button>
+<entry-file-input 
+ [label]="'Choose a file...'" 
+ [matIcon]="'attachment'" 
+ [accept]="'image/*'" 
+ [multiple]="false" 
+ [disabled]="false"
+ [(ngModel)]="files"
+ (selectedFile)="selectEvent($event)">
+ </entry-file-input>
 ```
+
+```typescript
+export class Sample {
+
+  files: File | FileList;
+
+  selectEvent(files: FileList | File): void {
+    if (files instanceof FileList) {
+      ...
+    } else {
+      ...
+    }
+  };
+}
+```
+
+## API Summary
+
+#### Inputs
+- matIcon: string
+  - MatIcon for the select file button. Defaults to 'insert_drive_file' (optional).
+- multiple: boolean
+  - Sets if multiple files can be selected at once in.
+- accept: string
+  - Sets files accepted when opening the file browser dialog. Same as "accept" attribute in `<input/>` element.
+- disabled: boolean
+  - Disables input and clears selected files.
+
+#### Events
+
+- selectedFile: function($event)
+  - Emits a [File or FileList] object.
+
+#### Styling
+
+Button type and color can be styled by providing entry-button configuration. 
