@@ -1,4 +1,4 @@
-<mat-form-field [formGroup]="form">
+<mat-form-field [formGroup]="form" subscriptSizing="dynamic">
   <mat-label [attr.for]="searchFilter.key">{{searchFilter.label}}</mat-label>
 
   <ng-container *ngIf="textSearchFilter as searchFilter">

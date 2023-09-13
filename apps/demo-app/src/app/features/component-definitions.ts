@@ -32,13 +32,6 @@ const COMPONENT_DEFINITIONS: IComponentDefinition[] = [
         apiDocsPath: ''
     },
     {
-        label: 'Header',
-        shortDescription: `Simple way of standard header layout and styling.`,
-        route: RouteSegments.header,
-        readmePath: '/entry-components/header/README.md',
-        apiDocsPath: ''
-    },
-    {
         label: 'Search filter',
         shortDescription: `Search filter component with configurable input elements.`,
         route: RouteSegments.searchFilter,
@@ -51,13 +44,6 @@ const COMPONENT_DEFINITIONS: IComponentDefinition[] = [
         route: RouteSegments.table,
         readmePath: '/entry-table/README.md',
         apiDocsPath: ''
-    },
-    {
-        label: 'Toolbar',
-        shortDescription: `Container for the application header elements like menu items and title or logo.`,
-        route: RouteSegments.toolbar,
-        readmePath: '/entry-components/toolbar/README.md',
-        apiDocsPath: 'assets/api/@enigmatry/entry-components/toolbar_public_api.md'
     },
     {
         label: 'Validation',

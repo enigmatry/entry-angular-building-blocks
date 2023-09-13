@@ -15,3 +15,7 @@
 .align-vertical {
 	@include items.align(center);
 }
+
+.stack-vertical {
+	@include items.fully-align(baseline, space-between, column, nowrap);
+}

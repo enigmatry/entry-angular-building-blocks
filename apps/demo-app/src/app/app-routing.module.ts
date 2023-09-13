@@ -21,20 +21,12 @@ const routes: Routes = [
     loadChildren: () => import('./features/file-input/file-input.module').then(module => module.FileInputModule)
   },
   {
-    path: RouteSegments.header,
-    loadChildren: () => import('./features/header/header.module').then(module => module.HeaderModule)
-  },
-  {
     path: RouteSegments.searchFilter,
     loadChildren: () => import('./features/search-filter/search-filter.module').then(module => module.SearchFilterModule)
   },
   {
     path: RouteSegments.table,
     loadChildren: () => import('./features/table/table.module').then(module => module.TableModule)
-  },
-  {
-    path: RouteSegments.toolbar,
-    loadChildren: () => import('./features/toolbar/toolbar.module').then(module => module.ToolbarModule)
   },
   {
     path: RouteSegments.validation,

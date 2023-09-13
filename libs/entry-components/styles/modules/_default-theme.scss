@@ -25,6 +25,12 @@ $theme: (
 				family: '',
 				size: 0
 			)
+		),
+		spacing: (
+			default: 15px
+		),
+		buttons: (
+			icon-size: 48px
 		)
 	),
 	tables: (
@@ -42,11 +48,6 @@ $theme: (
 				font-size: 13px,
 				font-weight: 500
 			)
-		)
-	),
-	headers: (
-		title: (
-			size: 32px
 		)
 	),
 	dialogs: (

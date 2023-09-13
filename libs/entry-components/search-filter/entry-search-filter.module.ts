@@ -4,7 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
-
+import { EntryButtonModule } from '@enigmatry/entry-components/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { EntrySearchFilterComponent } from './entry-search-filter.component';
 import { EntrySearchFilterInputComponent } from './search-filter-input/search-filter-input.component';
 
@@ -19,7 +20,9 @@ import { EntrySearchFilterInputComponent } from './search-filter-input/search-fi
     ReactiveFormsModule,
     MatInputModule,
     MatButtonModule,
-    MatSelectModule
+    EntryButtonModule,
+    MatSelectModule,
+    MatTooltipModule
   ],
   exports: [
     EntrySearchFilterComponent

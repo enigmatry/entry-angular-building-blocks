@@ -3,9 +3,14 @@
 @mixin generate-from($theme) {
 	.entry-dialog {
 		.title {
+			$close-icon-width: map.get($theme, 'general', 'buttons', 'icon-size');
+			width: calc(100% - $close-icon-width);
 			color: map.get($theme, 'general', 'colors', 'font');
 			font-size: map.get($theme, 'dialogs', 'title', 'size');
+		
+			&.without-close-icon {
+				width: 100%;
+			}
 		}
-		font-size: map.get($theme, 'general', 'font', 'size');
 	}
 }

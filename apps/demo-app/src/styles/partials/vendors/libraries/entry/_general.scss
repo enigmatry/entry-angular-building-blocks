@@ -1,0 +1,3 @@
+@use 'entry-components/styles/generator' as entry-theming;
+
+@include entry-theming.generate-from();

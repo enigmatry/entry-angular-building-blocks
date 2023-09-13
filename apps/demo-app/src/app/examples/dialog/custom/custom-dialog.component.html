@@ -1,25 +1,24 @@
-<entry-dialog
-    title="Custom Dialog"
-    [hideClose]="false"
-    [buttonsTemplate]="customButtonsTemplate">
-    <p>{{data.question}}</p>
-    <img src="./../../../../assets/images/entry_logo_small_transparent_material.png">
-    <p>
+<entry-dialog title="Custom Dialog" [hideClose]="false" [buttonsTemplate]="customButtonsTemplate">
+    <div class="stack-vertical">
+        <p>{{data.question}}</p>
+        <img class="custom-dialog-logo" src="./../../../../assets/images/entry_logo_small_transparent_material.png">
         <mat-form-field>
             <mat-label>Write your comment</mat-label>
             <input matInput type="text" [(ngModel)]="comment">
         </mat-form-field>
-    </p>
+    </div>
 </entry-dialog>
 
 <ng-template #customButtonsTemplate>
-    <button cdkFocusInitial mat-button color="primary" (click)="onClick('Yes it is')">
-        Yes it is
-    </button>
-    <button mat-button (click)="onClick('So-so')">
-        So-so
-    </button>
-    <button mat-button (click)="onClick('Nope')">
-        Nope
-    </button>
+    <mat-dialog-actions class="dialog-actions" align="center">
+        <button cdkFocusInitial mat-button color="primary" (click)="onClick('Yes it is')">
+            Yes it is
+        </button>
+        <button mat-button (click)="onClick('So-so')">
+            So-so
+        </button>
+        <button mat-button (click)="onClick('Nope')">
+            Nope
+        </button>
+    </mat-dialog-actions>
 </ng-template>

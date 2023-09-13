@@ -1,11 +1,13 @@
-<form [formGroup]="form" (ngSubmit)="submitForm()" class="formly-form">
+<form [formGroup]="form" (ngSubmit)="submitForm()" class="formly-form entry-form">
     <formly-form [fields]="fields" [form]="form" [model]="model"></formly-form>
 
     <!-- Displays form level validation errors -->
     <entry-form-errors [form]="form"></entry-form-errors>
     
-    <button mat-flat-button color="accent" type="submit">Submit</button>
-    <button mat-flat-button type="button" (click)="form.reset(); validationResult = undefined;">Reset</button>
+    <div class="action-buttons">
+        <button mat-button entry-submit-button type="submit">Submit</button>
+        <button mat-button entry-cancel-button type="reset" (click)="form.reset(); validationResult = undefined;">Reset</button>
+    </div>
 </form>
 <br/>
 <p>

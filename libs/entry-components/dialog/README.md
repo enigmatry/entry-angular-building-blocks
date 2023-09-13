@@ -46,7 +46,7 @@ Default values are:
 |:------|:------|:------|:------|
 |`confirmButtonText`|`string`|'Ok'|Confirm button label|
 |`cancelButtonText`|`string`|'Cancel'|Cancel button label|
-|`buttonsAlignment`|`EntryDialogButtonsAlignment`|'align-right'|Dialog buttons horizontal alignment|
+|`buttonsAlignment`|`EntryDialogButtonsAlignment`|'end'|Dialog buttons horizontal alignment|
 |`hideClose`|`boolean`|true|Determines if close button is visible|
 |`disableClose`|`boolean`|false|Disable closing dialog when pressing escape or clicking on backdrop|
 
@@ -63,7 +63,7 @@ To override with custom defaults use providers on application level:
         useFactory: () => new EntryDialogConfig({
           confirmButtonText: 'Yes',
           cancelButtonText: 'No',
-          buttonsAlignment: 'align-center',
+          buttonsAlignment: 'end',
           hideClose: false,
           disableClose: true
         })

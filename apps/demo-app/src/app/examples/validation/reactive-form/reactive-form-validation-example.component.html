@@ -1,4 +1,4 @@
-<form [formGroup]="form" (ngSubmit)="submitForm()" class="reactive-form">
+<form [formGroup]="form" (ngSubmit)="submitForm()" class="reactive-form entry-form">
     <mat-form-field class="example-form-field">
         <mat-label>First name</mat-label>
         <input matInput type="text" formControlName="firstName">
@@ -15,8 +15,10 @@
     <!-- Displays form level validation errors -->
     <entry-form-errors [form]="form"></entry-form-errors>
 
-    <button mat-flat-button color="accent" type="submit">Submit</button>
-    <button mat-flat-button type="button" (click)="form.reset(); validationResult = undefined;">Reset</button>
+    <div class="action-buttons">
+        <button mat-button entry-submit-button type="submit">Submit</button>
+        <button mat-button entry-cancel-button type="reset" (click)="form.reset(); validationResult = undefined;">Reset</button>
+    </div>
 </form>
 <br/>
 <p>

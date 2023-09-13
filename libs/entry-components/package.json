@@ -10,8 +10,8 @@
   },
   "license": "Apache-2.0",
   "scripts": {
-    "compile-scss": "sass --load-path=../../node_modules styles/partials/theming.scss styles/dist/theming.css",
-    "compile-generator": "sass --load-path=../../node_modules styles/partials/generator-test.scss styles/dist/generator-test.css",
+    "compile-scss": "sass --load-path=../../node_modules --load-path=../../node_modules/@enigmatry styles/partials/theming.scss styles/dist/theming.css",
+    "compile-generator": "sass --load-path=../../node_modules --load-path=../../node_modules/@enigmatry styles/partials/generator-test.scss styles/dist/generator-test.css",
     "lint": "stylelint --fix styles/**/*.scss"
   },
   "peerDependencies": {
@@ -27,8 +27,8 @@
     "tslib": "^2.3.0"
   },
   "devDependencies": {
-    "@enigmatry/scss-foundation": "1.15.1-preview.5",
-    "@enigmatry/stylelint-config": "1.15.1-preview.5",
+    "@enigmatry/scss-foundation": "1.15.1-preview.24",
+    "@enigmatry/stylelint-config": "1.15.1-preview.24",
     "sass": "1.63.6"
   },
   "publishConfig": {
