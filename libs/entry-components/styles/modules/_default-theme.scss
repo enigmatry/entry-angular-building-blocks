@@ -1,11 +1,16 @@
 $theme: (
 	general: (
+		density: 0,
 		colors: (
 			primary-theme: null,
 			accent-theme: null,
 			primary: #2581C4,
 			accent: #EA518D,
-			font: #323232
+			font: #323232,
+			disabled: (
+				foreground: rgb(0 0 0 / .38),
+				background: rgb(0 0 0 / .12)
+			)
 		),
 		typography: null,
 		fonts: (

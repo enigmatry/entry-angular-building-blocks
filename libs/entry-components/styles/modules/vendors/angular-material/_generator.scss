@@ -1,3 +1,4 @@
+/* stylelint-disable scss/no-duplicate-dollar-variables */
 @use '@angular/material' as theming;
 @use 'palette-generator';
 @use 'typography-generator';
@@ -5,31 +6,32 @@
 @use '../../typography/fonts';
 
 /* stylelint-disable scss/function-no-unknown */
-@mixin generate-from($theme) {
+@mixin generate-from($entry-theme) {
 	@include theming.core();
-	$body-font: map.get($theme, 'general', 'fonts', 'body', 'family');
+	$body-font: map.get($entry-theme, 'general', 'fonts', 'body', 'family');
 
 	@if $body-font == '' {
 		@include fonts.generate-default-font();
 	}
 
-	$primary-palette: theming.define-palette(-get-material-palette-for('primary', $theme));
-	$accent-palette: theming.define-palette(-get-material-palette-for('accent', $theme));
+	$primary-palette: theming.define-palette(-get-material-palette-for('primary', $entry-theme));
+	$accent-palette: theming.define-palette(-get-material-palette-for('accent', $entry-theme));
 	$warn-palette: theming.define-palette(theming.$red-palette);
 
-	$typography: typography-generator.generate-from($theme);
+	$typography: typography-generator.generate-from($entry-theme);
 	@include theming.typography-hierarchy($typography);
 
-	$default-theme: theming.define-light-theme((
+	$material-theme: theming.define-light-theme((
 		color: (
 			primary: $primary-palette,
 			accent: $accent-palette,
-			warn: $warn-palette
+			warn: $warn-palette,
 		),
-		typography: $typography
+		typography: $typography,
+		density: map.get($entry-theme, 'general', 'density')
 	));
-	
-	@include theming.all-component-themes($default-theme);
+
+	@include theming.all-component-themes($material-theme);
 }
 
 @function -get-material-palette-for($key, $theme) {
