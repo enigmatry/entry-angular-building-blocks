@@ -3,12 +3,19 @@
 $custom-theme: (
 	general: (
 		colors: (
-			primary: #FAE3C1
+			primary: #FAE3C1,
+			disabled: (
+				foreground: cyan,
+				background: magenta
+			)
 		),
 		fonts: (
 			body: (
 				family: 'My-Font',
 				size: 41px
+			),
+			buttons: (
+				size: 26px
 			)
 		)
 	),
