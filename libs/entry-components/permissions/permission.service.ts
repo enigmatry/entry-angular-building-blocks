@@ -1,5 +1,5 @@
-import { EntryPermission } from './permission';
+import { PermissionType } from './permission-type';
 
-export abstract class EntryPermissionService {
-  public abstract hasPermission(permissions: EntryPermission | EntryPermission[]): boolean;
+export abstract class EntryPermissionService<T extends PermissionType> {
+  public abstract hasPermission(permissions: T | T[]): boolean;
 }
