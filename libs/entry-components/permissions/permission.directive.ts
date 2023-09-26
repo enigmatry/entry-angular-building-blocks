@@ -4,7 +4,7 @@ import { PermissionType } from './permission-type';
 import { EntryPermissionService } from './permission.service';
 
 @Directive({
-  selector: '[entryPermissionOnly],[entryPermissionExcept]',
+  selector: '[entryPermissionsOnly],[entryPermissionsExcept]',
   hostDirectives: [{
     directive: NgIf
   }]
@@ -13,11 +13,11 @@ export class EntryPermissionDirective<T extends PermissionType> {
   private ngIfDirective = inject(NgIf);
   private permissionService = inject(EntryPermissionService<T>);
 
-  @Input('entryPermissionOnly') set only(permission: T | T[]) {
-    this.ngIfDirective.ngIf = this.permissionService.hasPermission(permission);
+  @Input('entryPermissionsOnly') set only(permissions: T[]) {
+    this.ngIfDirective.ngIf = this.permissionService.hasPermissions(permissions);
   }
 
-  @Input('entryPermissionExcept') set except(permission: T | T[]) {
-    this.ngIfDirective.ngIf = !this.permissionService.hasPermission(permission);
+  @Input('entryPermissionsExcept') set except(permissions: T[]) {
+    this.ngIfDirective.ngIf = !this.permissionService.hasPermissions(permissions);
   }
 }

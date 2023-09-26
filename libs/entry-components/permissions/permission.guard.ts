@@ -4,8 +4,8 @@ import { PermissionType } from './permission-type';
 import { EntryPermissionService } from './permission.service';
 
 interface RoutePermissionConfig<T extends PermissionType> {
-  only?: T | T[];
-  except?: T | T[];
+  only?: T[];
+  except?: T[];
 }
 
 export const entryPermissionGuard: CanActivateFn =
@@ -14,10 +14,10 @@ export const entryPermissionGuard: CanActivateFn =
   const routePermissions = route.data.permissions as RoutePermissionConfig<T> ?? {};
 
   if (routePermissions.only) {
-    return permissionService.hasPermission(routePermissions.only);
+    return permissionService.hasPermissions(routePermissions.only);
   }
   if (routePermissions.except) {
-    return !permissionService.hasPermission(routePermissions.except);
+    return !permissionService.hasPermissions(routePermissions.except);
   }
 
   return false;
