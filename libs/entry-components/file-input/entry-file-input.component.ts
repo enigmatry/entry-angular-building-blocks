@@ -186,7 +186,7 @@ export class EntryFileInputComponent implements OnInit, OnDestroy,
     if (this.maxSizeKb && control.value) {
       const fileSize = this.getFileSize(control.value);
       const maxSize = this.maxSizeKb * 1024;
-      return fileSize > maxSize ? { maxSize: true } : null;
+      return fileSize > maxSize ? { maxFileSize: true } : null;
     }
     return null;
   }
