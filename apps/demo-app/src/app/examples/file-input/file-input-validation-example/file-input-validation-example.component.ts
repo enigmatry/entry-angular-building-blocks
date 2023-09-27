@@ -8,6 +8,6 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class FileInputValidationExampleComponent {
   form = new FormGroup({
-    file: new FormControl<File | undefined>(undefined, { validators: [Validators.required] })
+    file: new FormControl<File>(undefined, { validators: [Validators.required] })
   });
 }

@@ -1,5 +1,5 @@
 <form [formGroup]="form">
-  <p>Required and max size 100KB</p>
+  <p>Required and max file size 100KB</p>
   <entry-file-input accept="image/*" multiple="true" label="Select file" [maxSizeKb]="100" formControlName="file">
   </entry-file-input>
   <p>Is valid: {{ form.valid }} , errors: {{ form.get('file').errors | json }}</p>

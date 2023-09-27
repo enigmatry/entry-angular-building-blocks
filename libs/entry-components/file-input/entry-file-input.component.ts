@@ -5,30 +5,34 @@ import {
   Component, ElementRef, EventEmitter, Input, NgZone,
   OnDestroy, OnInit, Output, Renderer2, ViewChild, forwardRef
 } from '@angular/core';
-import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
+import {
+  AbstractControl, ControlValueAccessor, NG_VALIDATORS,
+  NG_VALUE_ACCESSOR, ValidationErrors, Validator
+} from '@angular/forms';
 import { Subject, fromEvent } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+
+const providers = [
+  {
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => EntryFileInputComponent),
+    multi: true
+  },
+  {
+    provide: NG_VALIDATORS,
+    useExisting: forwardRef(() => EntryFileInputComponent),
+    multi: true
+  }
+];
 
 @Component({
   selector: 'entry-file-input',
   templateUrl: './entry-file-input.component.html',
   styleUrls: ['./entry-file-input.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => EntryFileInputComponent),
-      multi: true
-    },
-    {
-      provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => EntryFileInputComponent),
-      multi: true
-    }
-  ],
+  providers
 })
-export class EntryFileInputComponent implements OnInit, OnDestroy,
-  ControlValueAccessor, Validator {
+export class EntryFileInputComponent implements OnInit, OnDestroy, ControlValueAccessor, Validator {
 
   /**
    * Label for the select file button. Defaults to 'Choose file...'
@@ -82,7 +86,7 @@ export class EntryFileInputComponent implements OnInit, OnDestroy,
   private _readonly = false;
 
   /**
-   * Max size in Kb
+   * Max file size in KB (kilobytes)
    */
   @Input() maxSizeKb?: number = undefined;
 
@@ -158,7 +162,7 @@ export class EntryFileInputComponent implements OnInit, OnDestroy,
     this._renderer.setProperty(this._fileInput.nativeElement, 'value', '');
   }
 
-  // implements ControlValueAccessor
+  // implements ControlValueAccessor interface
 
   onChange = (_: any) => { };
 
@@ -184,14 +188,14 @@ export class EntryFileInputComponent implements OnInit, OnDestroy,
 
   validate(control: AbstractControl<File | FileList | undefined>): ValidationErrors {
     if (this.maxSizeKb && control.value) {
-      const fileSize = this.getFileSize(control.value);
-      const maxSize = this.maxSizeKb * 1024;
-      return fileSize > maxSize ? { maxFileSize: true } : null;
+      const fileSizeBytes = this.getFileSizeInBytes(control.value);
+      const maxSizeBytes = this.maxSizeKb * 1024;
+      return fileSizeBytes > maxSizeBytes ? { maxFileSize: true } : null;
     }
     return null;
   }
 
-  private getFileSize(files: File | FileList): number {
+  private getFileSizeInBytes(files: File | FileList): number {
     if (files instanceof File) {
       return files.size;
     }
