@@ -5,7 +5,7 @@ import {
   Component, ElementRef, EventEmitter, Input, NgZone,
   OnDestroy, OnInit, Output, Renderer2, ViewChild, forwardRef
 } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
 import { Subject, fromEvent } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -18,12 +18,17 @@ import { takeUntil } from 'rxjs/operators';
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => EntryFileInputComponent),
-      multi: true,
+      multi: true
     },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => EntryFileInputComponent),
+      multi: true
+    }
   ],
 })
-export class EntryFileInputComponent implements
-  OnInit, OnDestroy, ControlValueAccessor {
+export class EntryFileInputComponent implements OnInit, OnDestroy,
+  ControlValueAccessor, Validator {
 
   /**
    * Label for the select file button. Defaults to 'Choose file...'
@@ -75,6 +80,11 @@ export class EntryFileInputComponent implements
     return this._readonly;
   }
   private _readonly = false;
+
+  /**
+   * Max size in Kb
+   */
+  @Input() maxSizeKb?: number = undefined;
 
   /**
    * Current selected [File | FileList] object.
@@ -148,7 +158,7 @@ export class EntryFileInputComponent implements
     this._renderer.setProperty(this._fileInput.nativeElement, 'value', '');
   }
 
-  // ControlValueAccessor methods
+  // implements ControlValueAccessor
 
   onChange = (_: any) => { };
 
@@ -168,5 +178,32 @@ export class EntryFileInputComponent implements
 
   setDisabledState?(isDisabled: boolean): void {
     this._disabled = isDisabled;
+  }
+
+  // implements Validator interface
+
+  validate(control: AbstractControl<File | FileList | undefined>): ValidationErrors {
+    if (this.maxSizeKb && control.value) {
+      const fileSize = this.getFileSize(control.value);
+      const maxSize = this.maxSizeKb * 1024;
+      return fileSize > maxSize ? { maxSize: true } : null;
+    }
+    return null;
+  }
+
+  private getFileSize(files: File | FileList): number {
+    if (files instanceof File) {
+      return files.size;
+    }
+    if (files instanceof FileList) {
+      let size = 0;
+      // eslint-disable-next-line @typescript-eslint/prefer-for-of
+      for (let index = 0; index < files.length; index++) {
+        const file = files[index];
+        size += file.size;
+      }
+      return size;
+    }
+    return 0;
   }
 }

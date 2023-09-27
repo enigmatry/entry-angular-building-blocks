@@ -5,11 +5,13 @@ import { EntryFileInputModule } from '@enigmatry/entry-components/file-input';
 import { FileInputBasicExampleComponent } from './file-input-basic-example/file-input-basic-example.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FileInputFormExampleComponent } from './file-input-form-example/file-input-form-example.component';
+import { FileInputValidationExampleComponent } from './file-input-validation-example/file-input-validation-example.component';
 
 @NgModule({
   declarations: [
     FileInputBasicExampleComponent,
-    FileInputFormExampleComponent
+    FileInputFormExampleComponent,
+    FileInputValidationExampleComponent
   ],
   imports: [
     CommonModule,
@@ -20,7 +22,8 @@ import { FileInputFormExampleComponent } from './file-input-form-example/file-in
   ],
   exports: [
     FileInputBasicExampleComponent,
-    FileInputFormExampleComponent
+    FileInputFormExampleComponent,
+    FileInputValidationExampleComponent
   ]
 })
 export class FileInputExampleModule { }
