@@ -51,6 +51,13 @@ const COMPONENT_DEFINITIONS: IComponentDefinition[] = [
         route: RouteSegments.validation,
         readmePath: '/entry-components/validation/README.md',
         apiDocsPath: 'assets/api/@enigmatry/entry-components/validation_public_api.md'
+    },
+    {
+        label: 'Permissions',
+        shortDescription: `Permission access control for angular`,
+        route: RouteSegments.permissions,
+        readmePath: '/entry-components/permissions/README.md',
+        apiDocsPath: ''
     }
 ];
 

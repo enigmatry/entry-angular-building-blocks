@@ -31,6 +31,10 @@ const routes: Routes = [
   {
     path: RouteSegments.validation,
     loadChildren: () => import('./features/validation/validation.module').then(module => module.ValidationModule)
+  },
+  {
+    path: RouteSegments.permissions,
+    loadChildren: () => import('./features/permissions/permissions.module').then(module => module.PermissionsModule)
   }
 ];
 
