@@ -6,5 +6,4 @@ import { Component } from '@angular/core';
   styleUrls: ['./permissions-example.component.scss']
 })
 export class PermissionsExampleComponent {
-
 }
