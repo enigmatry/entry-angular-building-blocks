@@ -5,4 +5,5 @@ export class RouteSegments {
     static searchFilter = `search-filter`;
     static table = `table`;
     static validation = `validation`;
+    static permissions = `permissions`;
 }

@@ -1,5 +1,8 @@
 {
     "cSpell.words": [
         "stylelint"
-    ]
+    ],
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    }
 }
