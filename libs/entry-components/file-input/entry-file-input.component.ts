@@ -28,7 +28,7 @@ const providers = [
 @Component({
   selector: 'entry-file-input',
   templateUrl: './entry-file-input.component.html',
-  styleUrls: ['./entry-file-input.component.css'],
+  styleUrls: ['./entry-file-input.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers
 })
@@ -86,9 +86,14 @@ export class EntryFileInputComponent implements OnInit, OnDestroy, ControlValueA
   private _readonly = false;
 
   /**
-   * Max file size in KB (kilobytes)
+   * Size limit per file in KB (kilobytes)
    */
-  @Input() maxSizeKb?: number = undefined;
+  @Input() maxFileSizeInKb?: number = undefined;
+
+  /**
+   * Number of files allowed when multiple=true
+   */
+  @Input() maxFileCount?: number = undefined;
 
   /**
    * Current selected [File | FileList] object.
@@ -187,27 +192,43 @@ export class EntryFileInputComponent implements OnInit, OnDestroy, ControlValueA
   // implements Validator interface
 
   validate(control: AbstractControl<File | FileList | undefined>): ValidationErrors {
-    if (this.maxSizeKb && control.value) {
-      const fileSizeBytes = this.getFileSizeInBytes(control.value);
-      const maxSizeBytes = this.maxSizeKb * 1024;
-      return fileSizeBytes > maxSizeBytes ? { maxFileSize: true } : null;
+    const isSizeLimitExceeded = this.isFileSizeLimitExceeded(control.value);
+    const isCountLimitExceeded = this.isFileCountLimitExceeded(control.value);
+
+    if (!isSizeLimitExceeded && !isCountLimitExceeded) {
+      return null;
     }
-    return null;
+    return {
+      ...(isSizeLimitExceeded ? { maxFileSize: true } : {}),
+      ...(isCountLimitExceeded ? { maxFileCount: true } : {})
+    };
   }
 
-  private getFileSizeInBytes(files: File | FileList): number {
+  private isFileCountLimitExceeded(files: File | FileList): boolean {
+    const isMultiple = this.multiple && files instanceof FileList;
+    const maxFileCount = this.maxFileCount;
+    const actualFileCount = (files as FileList)?.length;
+
+    return isMultiple && maxFileCount && actualFileCount > maxFileCount;
+  }
+
+  private isFileSizeLimitExceeded(files: File | FileList): boolean {
+    if (!this.maxFileSizeInKb) {
+      return false;
+    }
+    const maxFileSizeInBytes = this.maxFileSizeInKb * 1024;
+
     if (files instanceof File) {
-      return files.size;
+      return files.size > maxFileSizeInBytes;
     }
     if (files instanceof FileList) {
-      let size = 0;
       // eslint-disable-next-line @typescript-eslint/prefer-for-of
-      for (let index = 0; index < files.length; index++) {
-        const file = files[index];
-        size += file.size;
+      for (let i = 0; i < files.length; i++) {
+        if (files[i].size > maxFileSizeInBytes) {
+          return true;
+        }
       }
-      return size;
     }
-    return 0;
+    return false;
   }
 }
