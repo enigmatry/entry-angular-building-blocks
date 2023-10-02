@@ -222,12 +222,7 @@ export class EntryFileInputComponent implements OnInit, OnDestroy, ControlValueA
       return files.size > maxFileSizeInBytes;
     }
     if (files instanceof FileList) {
-      // eslint-disable-next-line @typescript-eslint/prefer-for-of
-      for (let i = 0; i < files.length; i++) {
-        if (files[i].size > maxFileSizeInBytes) {
-          return true;
-        }
-      }
+      return Array.from(files).some(file => file.size > maxFileSizeInBytes);
     }
     return false;
   }
