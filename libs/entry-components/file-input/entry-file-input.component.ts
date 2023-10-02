@@ -5,25 +5,34 @@ import {
   Component, ElementRef, EventEmitter, Input, NgZone,
   OnDestroy, OnInit, Output, Renderer2, ViewChild, forwardRef
 } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {
+  AbstractControl, ControlValueAccessor, NG_VALIDATORS,
+  NG_VALUE_ACCESSOR, ValidationErrors, Validator
+} from '@angular/forms';
 import { Subject, fromEvent } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+
+const providers = [
+  {
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => EntryFileInputComponent),
+    multi: true
+  },
+  {
+    provide: NG_VALIDATORS,
+    useExisting: forwardRef(() => EntryFileInputComponent),
+    multi: true
+  }
+];
 
 @Component({
   selector: 'entry-file-input',
   templateUrl: './entry-file-input.component.html',
-  styleUrls: ['./entry-file-input.component.css'],
+  styleUrls: ['./entry-file-input.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => EntryFileInputComponent),
-      multi: true,
-    },
-  ],
+  providers
 })
-export class EntryFileInputComponent implements
-  OnInit, OnDestroy, ControlValueAccessor {
+export class EntryFileInputComponent implements OnInit, OnDestroy, ControlValueAccessor, Validator {
 
   /**
    * Label for the select file button. Defaults to 'Choose file...'
@@ -75,6 +84,16 @@ export class EntryFileInputComponent implements
     return this._readonly;
   }
   private _readonly = false;
+
+  /**
+   * Size limit per file in KB (kilobytes)
+   */
+  @Input() maxFileSizeInKb?: number = undefined;
+
+  /**
+   * Number of files allowed when multiple=true
+   */
+  @Input() maxFileCount?: number = undefined;
 
   /**
    * Current selected [File | FileList] object.
@@ -148,7 +167,7 @@ export class EntryFileInputComponent implements
     this._renderer.setProperty(this._fileInput.nativeElement, 'value', '');
   }
 
-  // ControlValueAccessor methods
+  // implements ControlValueAccessor interface
 
   onChange = (_: any) => { };
 
@@ -168,5 +187,43 @@ export class EntryFileInputComponent implements
 
   setDisabledState?(isDisabled: boolean): void {
     this._disabled = isDisabled;
+  }
+
+  // implements Validator interface
+
+  validate(control: AbstractControl<File | FileList | undefined>): ValidationErrors {
+    const isSizeLimitExceeded = this.isFileSizeLimitExceeded(control.value);
+    const isCountLimitExceeded = this.isFileCountLimitExceeded(control.value);
+
+    if (!isSizeLimitExceeded && !isCountLimitExceeded) {
+      return null;
+    }
+    return {
+      ...(isSizeLimitExceeded ? { maxFileSize: true } : {}),
+      ...(isCountLimitExceeded ? { maxFileCount: true } : {})
+    };
+  }
+
+  private isFileCountLimitExceeded(files: File | FileList): boolean {
+    const isMultiple = this.multiple && files instanceof FileList;
+    const maxFileCount = this.maxFileCount;
+    const actualFileCount = (files as FileList)?.length;
+
+    return isMultiple && maxFileCount && actualFileCount > maxFileCount;
+  }
+
+  private isFileSizeLimitExceeded(files: File | FileList): boolean {
+    if (!this.maxFileSizeInKb) {
+      return false;
+    }
+    const maxFileSizeInBytes = this.maxFileSizeInKb * 1024;
+
+    if (files instanceof File) {
+      return files.size > maxFileSizeInBytes;
+    }
+    if (files instanceof FileList) {
+      return Array.from(files).some(file => file.size > maxFileSizeInBytes);
+    }
+    return false;
   }
 }
