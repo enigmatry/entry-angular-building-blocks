@@ -6,4 +6,5 @@ export class RouteSegments {
     static table = `table`;
     static validation = `validation`;
     static permissions = `permissions`;
+    static form = `form`;
 }

@@ -29,6 +29,10 @@ const routes: Routes = [
     loadChildren: () => import('./features/table/table.module').then(module => module.TableModule)
   },
   {
+    path: RouteSegments.form,
+    loadChildren: () => import('./features/form/form-demo.module').then(module => module.FormDemoModule)
+  },
+  {
     path: RouteSegments.validation,
     loadChildren: () => import('./features/validation/validation.module').then(module => module.ValidationModule)
   },
