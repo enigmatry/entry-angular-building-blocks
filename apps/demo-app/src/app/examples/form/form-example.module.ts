@@ -32,6 +32,9 @@ import { FormlyAutocompleteModule } from '@enigmatry/entry-form/autocomplete';
             }
           }
         }
+      ],
+      validationMessages: [
+        { name: 'required', message: 'This field is required' }
       ]
     })
   ],

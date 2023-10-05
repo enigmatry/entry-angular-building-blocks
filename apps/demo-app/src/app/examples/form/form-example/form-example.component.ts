@@ -60,7 +60,6 @@ export class FormExampleComponent {
         label: `Amount`,
         placeholder: `Amount`,
         description: ``,
-        required: true,
         type: 'number',
       },
     },
@@ -88,6 +87,4 @@ export class FormExampleComponent {
       },
     }
   ];
-
-  constructor() { }
 }
