@@ -1,1 +1,1 @@
-export type FileExtension = 'ts' | 'scss' | 'html';
+export type FileExtension = 'ts' | 'scss' | 'html' | 'md';

@@ -1,16 +1,9 @@
 import { Component, Input, OnDestroy } from '@angular/core';
-import { Observable, Subject, Subscriber, forkJoin } from 'rxjs';
+import { Observable, Subject, Subscriber, forkJoin, of } from 'rxjs';
 import { catchError, map, takeUntil } from 'rxjs/operators';
 import { ICodeFileDefinition } from './code-file-definition.interface';
 import { FileExtension } from '../models/file-extension.type';
 import { FileLoadService } from '../services/file-load.service';
-
-interface IExampleDocuments {
-  typescript: string;
-  html: string;
-  styles: string;
-  additionalTabs: string[];
-}
 
 interface IExtraFile {
   content: string;
@@ -25,13 +18,17 @@ interface IExtraFile {
 export class ExampleViewerComponent implements OnDestroy {
   @Input() path: string;
   @Input() title = 'Example';
-  @Input() noScss = false;
+  @Input() showTs = true;
+  @Input() showHtml = true;
+  @Input() showScss = false;
+  @Input() showDocs = false;
   @Input() extraFileDefinitions: ICodeFileDefinition[] = [];
 
   viewCode = false;
-  typescriptFile!: string;
-  htmlFile!: string;
-  stylesFile!: string;
+  typescriptFile: string;
+  htmlFile: string;
+  stylesFile: string;
+  docsFile: string;
   extraFiles: IExtraFile[] = [];
 
   private _destroy$ = new Subject<void>();
@@ -53,18 +50,20 @@ export class ExampleViewerComponent implements OnDestroy {
 
   private loadExampleDocuments = () => {
     forkJoin({
-      typescript: this.loadFile(this.path, 'ts'),
-      html: this.loadFile(this.path, 'html'),
-      styles: this.loadFile(this.path, 'scss')
+      typescript: this.showTs ? this.loadFile(this.path, 'ts') : of(null),
+      html: this.showHtml ? this.loadFile(this.path, 'html') : of(null),
+      styles: this.showScss ? this.loadFile(this.path, 'scss') : of(null),
+      docs: this.showDocs ? this.loadFile(this.path, 'md') : of(null)
     })
       .pipe(
         catchError((error: Response) => this.handleError(error)),
         takeUntil(this._destroy$)
       )
-      .subscribe((documents: IExampleDocuments) => {
+      .subscribe(documents => {
         this.typescriptFile = documents.typescript;
         this.htmlFile = documents.html;
         this.stylesFile = documents.styles;
+        this.docsFile = documents.docs;
         this.viewCode = true;
       });
     // Load extra files if any
