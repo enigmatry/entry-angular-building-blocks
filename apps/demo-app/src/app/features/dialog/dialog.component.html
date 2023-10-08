@@ -12,7 +12,9 @@
     <app-example-viewer
         title="Custom dialog example"
         path="dialog\custom\custom-dialog-example.component"
-        [extraFileDefinitions]="extraFiles">
+        [extraFiles]="[
+            'dialog/custom/custom-dialog.component.ts',
+            'dialog/custom/custom-dialog.component.html']">
         <app-custom-dialog-example></app-custom-dialog-example>
     </app-example-viewer>
 </app-documentation-content>

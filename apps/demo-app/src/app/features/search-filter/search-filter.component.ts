@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { ICodeFileDefinition } from '../../shared/example-viewer/code-file-definition.interface';
 
 @Component({
   selector: 'app-search-filter',
@@ -7,11 +6,4 @@ import { ICodeFileDefinition } from '../../shared/example-viewer/code-file-defin
   styleUrls: ['./search-filter.component.scss']
 })
 export class SearchFilterComponent {
-  extraFiles: ICodeFileDefinition[] = [
-    {
-      name: 'users.service.ts',
-      path: 'search-filter\\search-filter\\users.service',
-      type: 'ts'
-    }
-  ];
 }

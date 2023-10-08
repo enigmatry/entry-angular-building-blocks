@@ -1,13 +1,14 @@
 import { Component, Input, OnDestroy } from '@angular/core';
 import { Observable, Subject, Subscriber, forkJoin, of } from 'rxjs';
 import { catchError, map, takeUntil } from 'rxjs/operators';
-import { ICodeFileDefinition } from './code-file-definition.interface';
 import { FileExtension } from '../models/file-extension.type';
 import { FileLoadService } from '../services/file-load.service';
 
 interface IExtraFile {
+  name: string;
+  path: string;
+  type: FileExtension;
   content: string;
-  definition: ICodeFileDefinition;
 }
 
 @Component({
@@ -22,14 +23,14 @@ export class ExampleViewerComponent implements OnDestroy {
   @Input() showHtml = true;
   @Input() showScss = false;
   @Input() showDocs = false;
-  @Input() extraFileDefinitions: ICodeFileDefinition[] = [];
+  @Input() extraFiles: string[] = [];
 
   viewCode = false;
   typescriptFile: string;
   htmlFile: string;
   stylesFile: string;
   docsFile: string;
-  extraFiles: IExtraFile[] = [];
+  extraFilesToDisplay: IExtraFile[] = [];
 
   private _destroy$ = new Subject<void>();
 
@@ -56,7 +57,6 @@ export class ExampleViewerComponent implements OnDestroy {
       docs: this.showDocs ? this.loadFile(this.path, 'md') : of(null)
     })
       .pipe(
-        catchError((error: Response) => this.handleError(error)),
         takeUntil(this._destroy$)
       )
       .subscribe(documents => {
@@ -67,33 +67,28 @@ export class ExampleViewerComponent implements OnDestroy {
         this.viewCode = true;
       });
     // Load extra files if any
-    forkJoin(this.mapFileCalls(this.extraFileDefinitions))
-      .pipe(
-        catchError((error: Response) => this.handleError(error)),
-        takeUntil(this._destroy$)
-      )
-      .subscribe((files: IExtraFile[]) => this.extraFiles = files);
+    forkJoin(this.getExtraFiles(this.extraFiles))
+      .pipe(takeUntil(this._destroy$))
+      .subscribe((files: IExtraFile[]) => this.extraFilesToDisplay = files);
   };
 
-  private handleError = (error: Response) =>
-    new Observable<any>((subscriber: Subscriber<any>) => {
-      try {
-        subscriber.error(error);
-      } catch (err) {
-        subscriber.error(error);
-      }
-    });
+  private getExtraFiles = (paths: string[]): Observable<IExtraFile>[] =>
+    paths
+      .map(path => {
+        const pathWithoutExtension = path.substring(0, path.lastIndexOf('.'));
+        const extension = path.substring(path.lastIndexOf('.') + 1) as FileExtension;
+        const name = path.split('/').pop();
 
-  private mapFileCalls = (definitions: ICodeFileDefinition[]): Observable<IExtraFile>[] =>
-    definitions
-      .map(fileDefinition =>
-        this.loadFile(fileDefinition.path, fileDefinition.type)
+        return this.loadFile(pathWithoutExtension, extension)
           .pipe(map(fileContent => ({
-            content: fileContent,
-            definition: fileDefinition
-          } as IExtraFile)))
-      );
+            name,
+            path,
+            type: extension,
+            content: fileContent
+          })));
+      });
 
   private loadFile = (path: string, type: FileExtension): Observable<string> =>
-    this._fileLoad.loadCodeFile(path, type);
+    this._fileLoad.loadCodeFile(path, type)
+      .pipe(catchError(_ => of('')));
 }

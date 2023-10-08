@@ -18,8 +18,8 @@
         <mat-tab label="DOCS" *ngIf="showDocs">
             <app-markdown-viewer [markdownContent]="docsFile"></app-markdown-viewer>
         </mat-tab>
-        <mat-tab *ngFor="let file of extraFiles" [label]="file.definition.name">
-            <app-code-view [codeContent]="file.content" [codeType]="file.definition.type"></app-code-view>
+        <mat-tab *ngFor="let file of extraFilesToDisplay" [label]="file.name">
+            <app-code-view [codeContent]="file.content" [codeType]="file.type"></app-code-view>
         </mat-tab>
     </mat-tab-group>
     <mat-divider></mat-divider>

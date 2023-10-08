@@ -2,7 +2,8 @@
     <app-example-viewer
         title="Reactive form validation example"
         path="validation\reactive-form\reactive-form-validation-example.component"
-        [extraFileDefinitions]="reactiveFormExtraFiles">
+        [extraFiles]="[
+        'validation/reactive-form/reactive-form-validation-example.module.ts','validation/validation.service.ts']">
         <p>
             Apply server & client side validation errors to reactive form using <em>entry-form-errors</em> component and <em>entryDisplayControlValidation</em> directive.
         </p>
@@ -15,7 +16,7 @@
     <app-example-viewer
         title="Formly form validation example"
         path="validation\formly\formly-form-validation\formly-form-validation-example.component"
-        [extraFileDefinitions]="formlyExtraFiles">
+        [extraFiles]="['validation/formly/formly-validation-example.module.ts', 'validation/validation.service.ts']">
         <p>
             Apply server & client side validation errors to <a href="https://formly.dev/" target="_blank">Formly</a> form using <em>entry-form-errors</em> component and <em>FormlyModule</em> configuration.
             Same principle applies to the forms generated with <a href="https://github.com/enigmatry/entry-code-generation" target="_blank">Entry Code Generator</a>, since they are based on <em>Formly</em>.
@@ -29,7 +30,7 @@
     <app-example-viewer
         title="Complex Formly form validation example"
         path="validation\formly\complex-formly-form-validation\complex-formly-form-validation-example.component"
-        [extraFileDefinitions]="formlyExtraFiles">
+        [extraFiles]="['validation/formly/formly-validation-example.module.ts', 'validation/validation.service.ts']">
         <p>
             Validation errors can be mapped to complex form structures like groups and arrays.
         </p>
