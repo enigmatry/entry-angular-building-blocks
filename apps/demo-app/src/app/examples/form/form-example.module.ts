@@ -8,10 +8,12 @@ import { FormlyMaterialModule } from '@ngx-formly/material';
 import { FormlyMatDatepickerModule } from '@ngx-formly/material/datepicker';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { FormlyAutocompleteModule } from '@enigmatry/entry-form/autocomplete';
+import { InputExampleComponent } from './input/input-example.component';
 
 @NgModule({
   declarations: [
-    FormExampleComponent
+    FormExampleComponent,
+    InputExampleComponent
   ],
   imports: [
     CommonModule,
@@ -39,7 +41,8 @@ import { FormlyAutocompleteModule } from '@enigmatry/entry-form/autocomplete';
     })
   ],
   exports: [
-    FormExampleComponent
+    FormExampleComponent,
+    InputExampleComponent
   ],
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } }

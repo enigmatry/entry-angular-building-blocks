@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RouteSegments } from './features/route-segments';
@@ -10,35 +11,35 @@ const routes: Routes = [
   },
   {
     path: RouteSegments.button,
-    loadChildren: () => import('./features/button/button.module').then(module => module.ButtonModule)
+    loadComponent: () => import('./features/button/button-documentation.component').then(m => m.ButtonDocumentationComponent)
   },
   {
     path: RouteSegments.dialog,
-    loadChildren: () => import('./features/dialog/dialog.module').then(module => module.DialogModule)
+    loadComponent: () => import('./features/dialog/dialog-documentation.component').then(m => m.DialogDocumentationComponent)
   },
   {
     path: RouteSegments.fileInput,
-    loadChildren: () => import('./features/file-input/file-input.module').then(module => module.FileInputModule)
-  },
-  {
-    path: RouteSegments.searchFilter,
-    loadChildren: () => import('./features/search-filter/search-filter.module').then(module => module.SearchFilterModule)
-  },
-  {
-    path: RouteSegments.table,
-    loadChildren: () => import('./features/table/table.module').then(module => module.TableModule)
+    loadComponent: () => import('./features/file-input/file-input-documentation.component').then(m => m.FileInputDocumentationComponent)
   },
   {
     path: RouteSegments.form,
-    loadChildren: () => import('./features/form/form-demo.module').then(module => module.FormDemoModule)
-  },
-  {
-    path: RouteSegments.validation,
-    loadChildren: () => import('./features/validation/validation.module').then(module => module.ValidationModule)
+    loadComponent: () => import('./features/form/form-documentation.component').then(m => m.FormDocumentationComponent)
   },
   {
     path: RouteSegments.permissions,
-    loadChildren: () => import('./features/permissions/permissions.module').then(module => module.PermissionsModule)
+    loadComponent: () => import('./features/permissions/permissions-documentation.component').then(m => m.PermissionsDocumentationComponent)
+  },
+  {
+    path: RouteSegments.searchFilter,
+    loadComponent: () => import('./features/search-filter/search-filter-documentation.component').then(m => m.SearchFilterDocumentationComponent)
+  },
+  {
+    path: RouteSegments.table,
+    loadComponent: () => import('./features/table/table-documentation.component').then(m => m.TableDocumentationComponent)
+  },
+  {
+    path: RouteSegments.validation,
+    loadComponent: () => import('./features/validation/validation-documentation.component').then(m => m.ValidationDocumentationComponent)
   }
 ];
 
