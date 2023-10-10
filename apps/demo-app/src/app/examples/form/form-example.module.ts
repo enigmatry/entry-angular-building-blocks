@@ -9,11 +9,21 @@ import { FormlyMatDatepickerModule } from '@ngx-formly/material/datepicker';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { FormlyAutocompleteModule } from '@enigmatry/entry-form/autocomplete';
 import { InputExampleComponent } from './input/input-example.component';
+import { SelectExampleComponent } from './select/select-example.component';
+import { TextareaExampleComponent } from './textarea/textarea-example.component';
+import { CheckboxExampleComponent } from './checkbox/checkbox-example.component';
+import { DatepickerExampleComponent } from './datepicker/datepicker-example.component';
+import { RadioExampleComponent } from './radio/radio-example.component';
 
 @NgModule({
   declarations: [
     FormExampleComponent,
-    InputExampleComponent
+    InputExampleComponent,
+    SelectExampleComponent,
+    TextareaExampleComponent,
+    CheckboxExampleComponent,
+    DatepickerExampleComponent,
+    RadioExampleComponent
   ],
   imports: [
     CommonModule,
@@ -42,7 +52,12 @@ import { InputExampleComponent } from './input/input-example.component';
   ],
   exports: [
     FormExampleComponent,
-    InputExampleComponent
+    InputExampleComponent,
+    SelectExampleComponent,
+    TextareaExampleComponent,
+    CheckboxExampleComponent,
+    DatepickerExampleComponent,
+    RadioExampleComponent
   ],
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } }

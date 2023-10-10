@@ -10,4 +10,4 @@ import { SharedModule } from '../../shared/shared.module';
     DialogExamplesModule,
   ]
 })
-export class DialogDocumentationComponent {}
+export class DialogDocumentationComponent { }

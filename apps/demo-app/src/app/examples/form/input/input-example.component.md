@@ -1,5 +1,6 @@
 
 ```csharp
 builder.InputFormControl(x => x.Name)
-            .WithPlaceholder("Unique name");
+  .WithLabel("Name")
+  .WithPlaceholder("Name");
 ```

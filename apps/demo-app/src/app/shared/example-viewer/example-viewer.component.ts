@@ -17,7 +17,7 @@ interface IExtraFile {
   styleUrls: ['./example-viewer.component.scss']
 })
 export class ExampleViewerComponent implements OnDestroy {
-  @Input() path: string;
+  @Input() component: string;
   @Input() title = 'Example';
   @Input() showTs = true;
   @Input() showHtml = true;
@@ -51,10 +51,10 @@ export class ExampleViewerComponent implements OnDestroy {
 
   private loadExampleDocuments = () => {
     forkJoin({
-      typescript: this.showTs ? this.loadFile(this.path, 'ts') : of(null),
-      html: this.showHtml ? this.loadFile(this.path, 'html') : of(null),
-      styles: this.showScss ? this.loadFile(this.path, 'scss') : of(null),
-      docs: this.showDocs ? this.loadFile(this.path, 'md') : of(null)
+      typescript: this.showTs ? this.loadFile(this.component, 'ts') : of(null),
+      html: this.showHtml ? this.loadFile(this.component, 'html') : of(null),
+      styles: this.showScss ? this.loadFile(this.component, 'scss') : of(null),
+      docs: this.showDocs ? this.loadFile(this.component, 'md') : of(null)
     })
       .pipe(
         takeUntil(this._destroy$)

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { ButtonExampleModule } from '../../examples/button/button-example.module';
 import { SharedModule } from '../../shared/shared.module';
+import { ButtonExampleModule } from '../../examples/button/button-example.module';
 
 @Component({
   standalone: true,
@@ -10,4 +10,4 @@ import { SharedModule } from '../../shared/shared.module';
     ButtonExampleModule,
   ]
 })
-export class ButtonDocumentationComponent {}
+export class ButtonDocumentationComponent { }
