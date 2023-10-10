@@ -14,6 +14,7 @@ import { TextareaExampleComponent } from './textarea/textarea-example.component'
 import { CheckboxExampleComponent } from './checkbox/checkbox-example.component';
 import { DatepickerExampleComponent } from './datepicker/datepicker-example.component';
 import { RadioExampleComponent } from './radio/radio-example.component';
+import { ProductsGeneratedModule } from './form-example/generated/products-generated.module';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { RadioExampleComponent } from './radio/radio-example.component';
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
+    ProductsGeneratedModule,
     FormlyMaterialModule,
     FormlyAutocompleteModule,
     FormlyMatDatepickerModule,
