@@ -1,0 +1,16 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" [class.entry-form-readonly]="isReadonly" class="entry-product-edit-form entry-form">
+    <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
+    <ng-template [ngIf]="formButtonsTemplate" [ngIfElse]="defaultFormButtonsTpl">
+        <ng-template [ngTemplateOutlet]="formButtonsTemplate"></ng-template>
+    </ng-template>
+    <ng-template #defaultFormButtonsTpl>
+        <div class="action-buttons">
+            <button class="entry-button-primary button save-button" *ngIf="!isReadonly" [disabled]="saveButtonDisabled" type="submit">
+                {{saveButtonText}}
+            </button>
+            <button class="entry-button-blank button cancel-button" *ngIf="!isReadonly" type="button" (click)="cancel.emit()">
+                {{cancelButtonText}}
+            </button>
+        </div>
+    </ng-template>
+</form>

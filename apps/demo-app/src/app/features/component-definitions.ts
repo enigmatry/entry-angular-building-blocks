@@ -46,6 +46,13 @@ const COMPONENT_DEFINITIONS: IComponentDefinition[] = [
         apiDocsPath: ''
     },
     {
+        label: 'Form',
+        shortDescription: `Form demo with entry configuration`,
+        route: RouteSegments.form,
+        readmePath: '/entry-form/README.md',
+        apiDocsPath: ''
+    },
+    {
         label: 'Validation',
         shortDescription: `Enables mapping server/client side validation messages to Reactive/Formly forms.`,
         route: RouteSegments.validation,

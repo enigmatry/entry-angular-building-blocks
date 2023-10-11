@@ -1,20 +1,14 @@
 import { Component, Input, OnDestroy } from '@angular/core';
-import { Observable, Subject, Subscriber, forkJoin } from 'rxjs';
+import { Observable, Subject, Subscriber, forkJoin, of } from 'rxjs';
 import { catchError, map, takeUntil } from 'rxjs/operators';
-import { ICodeFileDefinition } from './code-file-definition.interface';
 import { FileExtension } from '../models/file-extension.type';
 import { FileLoadService } from '../services/file-load.service';
 
-interface IExampleDocuments {
-  typescript: string;
-  html: string;
-  styles: string;
-  additionalTabs: string[];
-}
-
 interface IExtraFile {
+  name: string;
+  path: string;
+  type: FileExtension;
   content: string;
-  definition: ICodeFileDefinition;
 }
 
 @Component({
@@ -23,16 +17,20 @@ interface IExtraFile {
   styleUrls: ['./example-viewer.component.scss']
 })
 export class ExampleViewerComponent implements OnDestroy {
-  @Input() path: string;
+  @Input() component: string;
   @Input() title = 'Example';
-  @Input() noScss = false;
-  @Input() extraFileDefinitions: ICodeFileDefinition[] = [];
+  @Input() showTs = true;
+  @Input() showHtml = true;
+  @Input() showScss = false;
+  @Input() showDocs = false;
+  @Input() extraFiles: string[] = [];
 
   viewCode = false;
-  typescriptFile!: string;
-  htmlFile!: string;
-  stylesFile!: string;
-  extraFiles: IExtraFile[] = [];
+  typescriptFile: string;
+  htmlFile: string;
+  stylesFile: string;
+  docsFile: string;
+  extraFilesToDisplay: IExtraFile[] = [];
 
   private _destroy$ = new Subject<void>();
 
@@ -53,48 +51,44 @@ export class ExampleViewerComponent implements OnDestroy {
 
   private loadExampleDocuments = () => {
     forkJoin({
-      typescript: this.loadFile(this.path, 'ts'),
-      html: this.loadFile(this.path, 'html'),
-      styles: this.loadFile(this.path, 'scss')
+      typescript: this.showTs ? this.loadFile(this.component, 'ts') : of(null),
+      html: this.showHtml ? this.loadFile(this.component, 'html') : of(null),
+      styles: this.showScss ? this.loadFile(this.component, 'scss') : of(null),
+      docs: this.showDocs ? this.loadFile(this.component, 'md') : of(null)
     })
       .pipe(
-        catchError((error: Response) => this.handleError(error)),
         takeUntil(this._destroy$)
       )
-      .subscribe((documents: IExampleDocuments) => {
+      .subscribe(documents => {
         this.typescriptFile = documents.typescript;
         this.htmlFile = documents.html;
         this.stylesFile = documents.styles;
+        this.docsFile = documents.docs;
         this.viewCode = true;
       });
     // Load extra files if any
-    forkJoin(this.mapFileCalls(this.extraFileDefinitions))
-      .pipe(
-        catchError((error: Response) => this.handleError(error)),
-        takeUntil(this._destroy$)
-      )
-      .subscribe((files: IExtraFile[]) => this.extraFiles = files);
+    forkJoin(this.getExtraFiles(this.extraFiles))
+      .pipe(takeUntil(this._destroy$))
+      .subscribe((files: IExtraFile[]) => this.extraFilesToDisplay = files);
   };
 
-  private handleError = (error: Response) =>
-    new Observable<any>((subscriber: Subscriber<any>) => {
-      try {
-        subscriber.error(error);
-      } catch (err) {
-        subscriber.error(error);
-      }
-    });
+  private getExtraFiles = (paths: string[]): Observable<IExtraFile>[] =>
+    paths
+      .map(path => {
+        const pathWithoutExtension = path.substring(0, path.lastIndexOf('.'));
+        const extension = path.substring(path.lastIndexOf('.') + 1) as FileExtension;
+        const name = path.split('/').pop();
 
-  private mapFileCalls = (definitions: ICodeFileDefinition[]): Observable<IExtraFile>[] =>
-    definitions
-      .map(fileDefinition =>
-        this.loadFile(fileDefinition.path, fileDefinition.type)
+        return this.loadFile(pathWithoutExtension, extension)
           .pipe(map(fileContent => ({
-            content: fileContent,
-            definition: fileDefinition
-          } as IExtraFile)))
-      );
+            name,
+            path,
+            type: extension,
+            content: fileContent
+          })));
+      });
 
   private loadFile = (path: string, type: FileExtension): Observable<string> =>
-    this._fileLoad.loadCodeFile(path, type);
+    this._fileLoad.loadCodeFile(path, type)
+      .pipe(catchError(_ => of('')));
 }

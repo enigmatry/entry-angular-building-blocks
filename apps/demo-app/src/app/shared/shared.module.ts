@@ -8,6 +8,7 @@ import { MarkdownViewerComponent } from './markdown-viewer/markdown-viewer.compo
 import { SortPipe } from './pipes/sort.pipe';
 import { CodeViewComponent } from './example-viewer/code-view/code-view.component';
 import { ENTRY_BUTTON_CONFIG, EntryButtonConfig, EntryButtonModule } from '@enigmatry/entry-components/button';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,8 @@ import { ENTRY_BUTTON_CONFIG, EntryButtonConfig, EntryButtonModule } from '@enig
   exports: [
     MaterialModule,
     EntryButtonModule,
+    FormsModule,
+    ReactiveFormsModule,
     DocumentationContentComponent,
     ExampleViewerComponent,
     MarkdownViewerComponent,

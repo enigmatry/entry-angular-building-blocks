@@ -14,7 +14,8 @@ npm install @enigmatry/entry-components
 
 | @enigmatry/entry-components | Angular version
 |-|-|
-|1.x| >= 14
+|1.14.x| = 14
+|1.15.x| = 15
 
 ## License
 

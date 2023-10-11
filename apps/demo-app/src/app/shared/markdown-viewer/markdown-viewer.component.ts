@@ -12,7 +12,9 @@ import hljs from 'highlight.js';
 })
 export class MarkdownViewerComponent implements OnInit {
   @Input() fileUrl: string | undefined;
-  markdownContent: SafeHtml | undefined = '';
+  @Input() markdownContent: string | undefined;
+
+  markdownContentHtml: SafeHtml | undefined = '';
 
   constructor(
     private _fileLoad: FileLoadService,
@@ -25,6 +27,9 @@ export class MarkdownViewerComponent implements OnInit {
     if (this.fileUrl) {
       this.loadFileContent();
     }
+    if (this.markdownContent) {
+      this.markdownContentHtml = this.convertMarkdownToHtml(this.markdownContent);
+    }
     this.handleAnchorClicks();
   }
 
@@ -34,8 +39,8 @@ export class MarkdownViewerComponent implements OnInit {
       .pipe(
         map(response => this.convertMarkdownToHtml(response))
       ).subscribe({
-        next: response => this.markdownContent = response,
-        error: _ => this.markdownContent = `### No API documentation found :'(`
+        next: response => this.markdownContentHtml = response,
+        error: _ => this.markdownContentHtml = `### No API documentation found :'(`
       });
   }
 
