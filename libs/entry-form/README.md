@@ -1,6 +1,6 @@
 # @enigmatry/entry-form
 
-Form components and helper methods used by https://github.com/enigmatry/entry-code-generation
+Form components and helper methods used by [entry-code-generation](https://github.com/enigmatry/entry-code-generation)
 
 ## Installation
 
@@ -18,8 +18,7 @@ import { EntryFormModule } from '@enigmatry/entry-form';
 
 Create a new Class with name e.g. [MyEntity]ComponentConfiguration and implement ```IFormComponentConfiguration``` interface.
 
-The ```FormComponentBuilder``` class provides a fluent API for configuring a form component.
-It provides methods to configure various aspects of the form component, such as component name, feature name as well as the properties and behaviors of each form control.
+The ```FormComponentBuilder``` class provides a fluent API for configuring a form component - provides methods to configure various aspects of the form component, such as component name, feature name as well as the properties and behaviors of each form control.
 
 ```csharp
 [PublicAPI]
@@ -68,7 +67,7 @@ public class ProductEditComponentConfiguration : IFormComponentConfiguration<Get
 
 ## Run the Code Generation
 
-### Install the latest version
+Install the latest version
 ```
 dotnet tool install enigmatry.entry.codegeneration.tools -g
 ```
@@ -78,7 +77,7 @@ or update existing installation
 dotnet tool update enigmatry.entry.codegeneration.tools -g
 ```
 
-### Run
+Run
 
 ```
 entry-codegen --source-assembly ../MyProject.CodeGeneration.Setup/bin/Debug/net7.0/MyProject.CodeGeneration.Setup.dll --destination-directory ./src/app/features
