@@ -18,6 +18,10 @@ const routes: Routes = [
     loadComponent: () => import('./features/dialog/dialog-documentation.component').then(m => m.DialogDocumentationComponent)
   },
   {
+    path: RouteSegments.dynamicForm,
+    loadComponent: () => import('./features/dynamic-form/dynamic-form-documentation.component').then(m => m.DynamicFormDocumentationComponent)
+  },
+  {
     path: RouteSegments.fileInput,
     loadComponent: () => import('./features/file-input/file-input-documentation.component').then(m => m.FileInputDocumentationComponent)
   },

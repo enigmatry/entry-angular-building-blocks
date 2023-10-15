@@ -37,7 +37,8 @@
             "style": "camelCase"
           }
         ],
-        "no-underscore-dangle": "off"
+        "no-underscore-dangle": "off",
+        "prefer-arrow/prefer-arrow-functions": "off"
       }
     },
     {
