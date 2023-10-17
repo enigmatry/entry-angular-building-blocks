@@ -2,13 +2,16 @@
   <mat-label>{{ label }}</mat-label>
   <input
     matInput
-    [formControl]="ngControl.control"
-    [placeholder]="placeholder"
-    [type]="type"
-    [required]="required"
+    [formControl]="control"
     [name]="name"
+    [type]="type"
+    [placeholder]="placeholder"
+    [required]="required"
     [attr.minLength]="minLength"
-    [attr.maxLength]="maxLength"/>
+    [attr.maxLength]="maxLength"
+    (input)="handleInput($event)"
+    (blur)="controlValueAccessorOnTouched()"
+    />
   <mat-hint>{{ hint }}</mat-hint>
   <mat-error></mat-error>
 </mat-form-field>

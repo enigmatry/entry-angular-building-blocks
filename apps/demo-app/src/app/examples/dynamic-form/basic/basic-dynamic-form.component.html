@@ -1,3 +1,7 @@
-<entry-input #input label="Name" [formControl]="formControl"></entry-input>
+<h4>Reactive form Control</h4>
+<entry-input label="Name" [formControl]="formControl"></entry-input>
+<p>The value of the input is: {{formControl.value}}</p>
 
+<h4>Template driven form control</h4>
 <entry-input label="Name" [(ngModel)]="name"></entry-input>
+<p>The value of the input is: {{name}}</p>

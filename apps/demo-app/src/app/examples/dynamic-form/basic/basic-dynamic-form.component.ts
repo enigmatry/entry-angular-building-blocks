@@ -7,6 +7,6 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./basic-dynamic-form.component.scss']
 })
 export class BasicDynamicFormComponent {
-  name = '';
+  name = 'test';
   formControl = new FormControl<string>('');
 }
