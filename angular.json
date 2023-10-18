@@ -85,6 +85,11 @@
     },
     "@enigmatry/entry-components": {
       "projectType": "library",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
       "root": "libs/entry-components",
       "sourceRoot": "libs/entry-components",
       "prefix": "entry",

@@ -1,0 +1,16 @@
+<mat-form-field>
+  <mat-label>{{ label }}</mat-label>
+  <textarea
+    matInput
+    [formControl]="control"
+    [placeholder]="placeholder"
+    [required]="required"
+    [name]="name"
+    [required]="required"
+    [attr.minLength]="minLength"
+    [attr.maxLength]="maxLength"
+    [attr.rows]="rows"
+  ></textarea>
+  <mat-hint>{{ hint }}</mat-hint>
+  <mat-error></mat-error>
+</mat-form-field>
