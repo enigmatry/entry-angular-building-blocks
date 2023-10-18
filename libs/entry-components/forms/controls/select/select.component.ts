@@ -1,24 +1,22 @@
 import { Component, Input, inject } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
 import { NgControlAccessorDirective } from '../../directives/ng-control-accessor.directive';
 import { NoopCvaDirective } from '../../directives/noop-cva.directive';
 
 @Component({
-  selector: 'entry-textarea',
-  templateUrl: './textarea.component.html',
-  styleUrls: ['./textarea.component.scss'],
+  selector: 'entry-select',
+  templateUrl: './select.component.html',
+  styleUrls: ['./select.component.scss'],
   hostDirectives: [NoopCvaDirective, NgControlAccessorDirective]
 })
-export class EntryTextareaComponent {
+export class EntrySelectComponent {
 
-  @Input() label: string;
-  @Input() placeholder: string;
-  @Input() hint: string;
   @Input() name: string;
+  @Input() label: string;
+  @Input() hint: string;
   @Input() required: boolean;
-  @Input() minLength?: number;
-  @Input() maxLength?: number;
-  @Input() rows = 4;
+  @Input() options?: { value: any; label: string }[];
+  @Input() multiple?: boolean;
+  @Input() placeholder: string;
 
   ngControlAccessor = inject(NgControlAccessorDirective);
 }

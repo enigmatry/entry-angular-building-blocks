@@ -1,16 +1,19 @@
 <mat-form-field>
   <mat-label>{{ label }}</mat-label>
-  <textarea
+  <input
     matInput
+    type="text"
     [formControl]="ngControlAccessor.control"
     [placeholder]="placeholder"
     [required]="required"
     [name]="name"
-    [required]="required"
-    [attr.minLength]="minLength"
-    [attr.maxLength]="maxLength"
-    [attr.rows]="rows"
-  ></textarea>
+    [matAutocomplete]="matAutocomplete"
+  >
+  <mat-autocomplete #matAutocomplete>
+    <mat-option *ngFor="let option of options" [value]="option.value">
+      {{option.label}}
+    </mat-option>
+  </mat-autocomplete>
   <mat-hint>{{ hint }}</mat-hint>
   <mat-error></mat-error>
 </mat-form-field>

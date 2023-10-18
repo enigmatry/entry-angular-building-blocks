@@ -2,14 +2,19 @@
   <mat-label>{{ label }}</mat-label>
   <input 
     matInput
+    [matDatepicker]="matDatePicker"
     [formControl]="ngControlAccessor.control"
-    [name]="name"
-    [type]="type"
     [placeholder]="placeholder"
     [required]="required"
-    [attr.minLength]="minLength"
-    [attr.maxLength]="maxLength"
+    [name]="name"
+    [min]="min"
+    [max]="max"
   />
   <mat-hint>{{ hint }}</mat-hint>
   <mat-error></mat-error>
+  <mat-datepicker-toggle 
+    matSuffix 
+    [for]="matDatePicker">
+  </mat-datepicker-toggle>
+  <mat-datepicker #matDatePicker></mat-datepicker>
 </mat-form-field>

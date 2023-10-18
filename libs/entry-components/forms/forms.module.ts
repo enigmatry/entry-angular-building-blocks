@@ -1,19 +1,27 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { EntryInputComponent } from './controls/input/input.component';
+import { EntryAutocompleteComponent } from './controls/autocomplete/autocomplete.component';
 import { EntryCheckboxComponent } from './controls/checkbox/checkbox.component';
+import { EntryDatePickerComponent } from './controls/date-picker/date-picker.component';
+import { EntryInputComponent } from './controls/input/input.component';
+import { EntrySelectComponent } from './controls/select/select.component';
 import { EntryTextareaComponent } from './controls/textarea/textarea.component';
 
 @NgModule({
   declarations: [
     EntryInputComponent,
+    EntrySelectComponent,
     EntryCheckboxComponent,
-    EntryTextareaComponent
+    EntryTextareaComponent,
+    EntryDatePickerComponent,
+    EntryAutocompleteComponent
   ],
   imports: [
     CommonModule,
@@ -22,12 +30,17 @@ import { EntryTextareaComponent } from './controls/textarea/textarea.component';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatDatepickerModule,
+    MatAutocompleteModule
   ],
   exports: [
     EntryInputComponent,
+    EntrySelectComponent,
     EntryCheckboxComponent,
-    EntryTextareaComponent
+    EntryTextareaComponent,
+    EntryDatePickerComponent,
+    EntryAutocompleteComponent
   ]
 })
 export class EntryFormsModule { }

@@ -1,5 +1,9 @@
 export { EntryFormsModule } from './forms.module';
-export { EntryInputComponent } from './controls/input/input.component';
+export { EntryAutocompleteComponent } from './controls/autocomplete/autocomplete.component';
 export { EntryCheckboxComponent } from './controls/checkbox/checkbox.component';
+export { EntryDatePickerComponent } from './controls/date-picker/date-picker.component';
+export { EntryInputComponent } from './controls/input/input.component';
+export { EntrySelectComponent } from './controls/select/select.component';
 export { EntryTextareaComponent } from './controls/textarea/textarea.component';
-export { NoopValueAccessorDirective } from './directives/noop-value-accessor.directive';
+export { NoopCvaDirective } from './directives/noop-cva.directive';
+export { NgControlAccessorDirective } from './directives/ng-control-accessor.directive';
