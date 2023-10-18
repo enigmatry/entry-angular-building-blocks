@@ -25,7 +25,9 @@ import { EntryTextareaComponent } from './controls/textarea/textarea.component';
     MatCheckboxModule
   ],
   exports: [
-    EntryInputComponent
+    EntryInputComponent,
+    EntryCheckboxComponent,
+    EntryTextareaComponent
   ]
 })
-export class EntryDynamicFormModule { }
+export class EntryFormsModule { }

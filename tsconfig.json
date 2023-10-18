@@ -13,7 +13,7 @@
       "@enigmatry/entry-components/button":["libs/entry-components/button/public-api.ts"],
       "@enigmatry/entry-components/file-input":["libs/entry-components/file-input/public-api.ts"],
       "@enigmatry/entry-components/permissions":["libs/entry-components/permissions/public-api.ts"],
-      "@enigmatry/entry-components/dynamic-form":["libs/entry-components/dynamic-form/public-api.ts"],
+      "@enigmatry/entry-components/forms":["libs/entry-components/forms/public-api.ts"],
 
       "@enigmatry/entry-form": ["libs/entry-form/public-api.ts"],
       "@enigmatry/entry-form/autocomplete": ["libs/entry-form/autocomplete/public-api.ts"],

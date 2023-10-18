@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BasicDynamicFormComponent } from './basic/basic-dynamic-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { EntryDynamicFormModule } from '@enigmatry/entry-components/dynamic-form';
+import { EntryFormsModule } from '@enigmatry/entry-components/forms';
 
 @NgModule({
   declarations: [
@@ -12,7 +12,7 @@ import { EntryDynamicFormModule } from '@enigmatry/entry-components/dynamic-form
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    EntryDynamicFormModule
+    EntryFormsModule
   ],
   exports: [
     BasicDynamicFormComponent
