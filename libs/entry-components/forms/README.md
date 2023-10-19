@@ -1,16 +1,27 @@
-# Entry forms POC
+# Entry form controls POC
 
-Current solution with formly and code generator is not optimal. We should consider a better approach.
+Describe purpose of the POC.
 
-## Creating our own form controls
+Describe issues with current solution using formly and code generator.
+- Removing dependency on formly
+- Multiple hoops while developing: 1. entry component 2. formly wrapper for entry component 3. code generator component configuration
+- Form controls are not reusable outside generated code
+- A lot of documentation need about how to use and how to extend/modify generated code
+- Difficulties with theming, formly adds extra wrapper elements to already complex material structure
+- Not a good solution going forward
 
-- To reduce boilerplate code
-- To have consistent look & feel and easier theming
-- To have consistent validation and error display
+## Creating entry form controls
 
-Controls would wrap existing material controls:
+Controls would wrap existing material controls to reduce boilerplate code.
+Also provide consistent way of handling theming and validation display.
+
+What to cover in the POC?
+
+- We can create entry controls that wrap material controls (done)
+- Controls can be used to with reactive or template driven form (done)
 
 ```html
+<!-- mat form field -->
 <mat-form-field class="entry-input-field">
   <mat-label>{{ label }}</mat-label>
   <input
@@ -22,40 +33,57 @@ Controls would wrap existing material controls:
     [required]="required"
     [attr.minLength]="minLength"
     [attr.maxLength]="maxLength"
-    (input)="handleInput($event)"
-    (blur)="onTouched()"
     />
   <mat-hint>{{ hint }}</mat-hint>
   <mat-error>...</mat-error>
 </mat-form-field>
 
-=>
+=> 
 
+<!-- using <entry-input> instead -->
 <entry-input label="Name"></entry-input>
 
 ```
-
-It should be possible to use them with template driven or reactive form:
+It should be possible to use them with template driven or reactive form.
 
 ```html
-<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
-  <entry-input label="First Name" formControlName="firstName"></entry-input>
-  <entry-input label="Last Name" formControlName="lastName"></entry-input>
+<form [formGroup]="form" novalidate>
 
-  <div formGroupName="address">
-    <entry-input label="Street" formControlName="street"></entry-input>
-    <entry-input label="Last Name" formControlName="city"></entry-input>
-    <entry-input label="State" formControlName="state"></entry-input>
-    <entry-input label="Zip" formControlName="zip"></entry-input>
+  <entry-input label="Name" formControlName="name"></entry-input>
+  <entry-select label="Type" formControlName="type" [options]="types"></entry-select>
+  <entry-textarea label="Description" formControlName="description"></entry-textarea>
+  <entry-date-picker labe="Delivery date" formControlName="deliveryDate"></entry-date-picker>
+  <entry-checkbox label="Free shipping" formControlName="freeShipping"></entry-checkbox>
+
+  <div class="action-buttons">
+    <button mat-button entry-submit-button type="submit">Submit</button>
+    <button mat-button entry-cancel-button (click)="form.reset()">Cancel</button>
   </div>
-
-  <button mat-button entry-submit-button type="submit">Submit</button>
 </form>
 ```
 
-## Build forms from a configuration
+Minimal working example for standard controls can be found here [entry-components/forms/controls](https://github.com/enigmatry/entry-angular-building-blocks/tree/features/dynamic-form-poc/libs/entry-components/forms/controls)
 
-It should be possible to create form from configuration only.
+- entry-input
+- entry-select
+- entry-checkbox
+- entry-date-picker
+- entry-checkbox
+- entry-autocomplete
+
+Example using controls with reactive form: [reactive-form-example](https://github.com/enigmatry/entry-angular-building-blocks/blob/features/dynamic-form-poc/apps/demo-app/src/app/examples/dynamic-form/reactive/reactive-form-example.component.html)
+
+Example using controls with template driven form: [template-driven-form-example](https://github.com/enigmatry/entry-angular-building-blocks/blob/features/dynamic-form-poc/apps/demo-app/src/app/examples/dynamic-form/template-driven/template-driven-form-example.component.html)
+
+
+## Build forms from configuration
+
+Do we need to build forms from configuration?
+- To support migrating existing code generator configurations.
+- To support creating form configurations using a tool or code generator.
+
+What to cover in the POC?
+- We can create form from configuration (TODO)
 
 ```ts
 profile: UserProfile;
@@ -83,8 +111,15 @@ formConfig = [
 
 ## Build form configuration using a builder
  
+Do we need to create configuration builder?
+- Configuration builder in TS to replace C# configuration builder? 
+- Property names and type can be derived from TS class. Builder could reduce configuration steps?
+
+What to cover in the POC?
+- Create a form configuration builder (TODO)
+ 
 ```ts
-interface UserProfile {
+class UserProfile {
   id: number;
   firstName: string;
   lastName: string;
@@ -102,8 +137,6 @@ const userForm =
     .build();
 ```
 
-Do we need a builder? Perhaps to and infer propertyNames and types:
-
 ```ts
 // all properties are added to form?
 const userForm = 
@@ -111,10 +144,11 @@ const userForm =
     .build();
 ```
 
-## Or code generator
+## Build form using a code generator
 
-Current version of the code generator is a builder for formly configuration with some extra features.
+Do we need to build form using a code generator?
+- Current code generator is a builder for formly configuration with some extra features.
+- Should we create C# builder for new typescript configurations?
 
-Should we create C# configuration classes from typescript classes and then create a builder for them?
-
-If we only have a builder for configuration do we need a code generator?
+How to migrate existing configurations to new solution:
+- TODO
