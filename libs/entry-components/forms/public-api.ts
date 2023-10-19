@@ -5,5 +5,5 @@ export { EntryDatePickerComponent } from './controls/date-picker/date-picker.com
 export { EntryInputComponent } from './controls/input/input.component';
 export { EntrySelectComponent } from './controls/select/select.component';
 export { EntryTextareaComponent } from './controls/textarea/textarea.component';
-export { NoopCvaDirective } from './directives/noop-cva.directive';
+export { NoopControlValueAccessor } from './directives/noop-control-value-accessor';
 export { NgControlAccessorDirective } from './directives/ng-control-accessor.directive';

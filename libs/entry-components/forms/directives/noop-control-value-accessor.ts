@@ -7,11 +7,11 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     {
       provide: NG_VALUE_ACCESSOR,
       multi: true,
-      useExisting: NoopCvaDirective,
+      useExisting: NoopControlValueAccessor,
     }
   ],
 })
-export class NoopCvaDirective implements ControlValueAccessor {
+export class NoopControlValueAccessor implements ControlValueAccessor {
   writeValue(obj: any): void { }
   registerOnChange(fn: any): void { }
   registerOnTouched(fn: any): void { }

@@ -1,13 +1,13 @@
 import { Component, Input, inject } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { NgControlAccessorDirective } from '../../directives/ng-control-accessor.directive';
-import { NoopCvaDirective } from '../../directives/noop-cva.directive';
+import { NoopControlValueAccessor } from '../../directives/noop-control-value-accessor';
 
 @Component({
   selector: 'entry-textarea',
   templateUrl: './textarea.component.html',
   styleUrls: ['./textarea.component.scss'],
-  hostDirectives: [NoopCvaDirective, NgControlAccessorDirective]
+  hostDirectives: [NoopControlValueAccessor, NgControlAccessorDirective]
 })
 export class EntryTextareaComponent {
 

@@ -1,12 +1,12 @@
 import { Component, Input, inject } from '@angular/core';
-import { NoopCvaDirective } from '../../directives/noop-cva.directive';
+import { NoopControlValueAccessor } from '../../directives/noop-control-value-accessor';
 import { NgControlAccessorDirective } from '../../directives/ng-control-accessor.directive';
 
 @Component({
   selector: 'entry-input',
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.scss'],
-  hostDirectives: [NoopCvaDirective, NgControlAccessorDirective]
+  hostDirectives: [NoopControlValueAccessor, NgControlAccessorDirective]
 })
 export class EntryInputComponent {
 

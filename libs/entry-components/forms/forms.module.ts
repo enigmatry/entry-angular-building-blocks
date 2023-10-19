@@ -13,6 +13,7 @@ import { EntryDatePickerComponent } from './controls/date-picker/date-picker.com
 import { EntryInputComponent } from './controls/input/input.component';
 import { EntrySelectComponent } from './controls/select/select.component';
 import { EntryTextareaComponent } from './controls/textarea/textarea.component';
+import { EntryDynamicFormComponent } from './dynamic-form/dynamic-form.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { EntryTextareaComponent } from './controls/textarea/textarea.component';
     EntryCheckboxComponent,
     EntryTextareaComponent,
     EntryDatePickerComponent,
-    EntryAutocompleteComponent
+    EntryAutocompleteComponent,
+    EntryDynamicFormComponent
   ],
   imports: [
     CommonModule,
@@ -40,7 +42,8 @@ import { EntryTextareaComponent } from './controls/textarea/textarea.component';
     EntryCheckboxComponent,
     EntryTextareaComponent,
     EntryDatePickerComponent,
-    EntryAutocompleteComponent
+    EntryAutocompleteComponent,
+    EntryDynamicFormComponent
   ]
 })
 export class EntryFormsModule { }
