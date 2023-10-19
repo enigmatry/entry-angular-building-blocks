@@ -1,0 +1,16 @@
+<form #form="ngForm" novalidate>
+
+  <entry-input label="Name" name="name" ngModel></entry-input>
+  <entry-select label="Type" name="type" ngModel [options]="types"></entry-select>
+  <entry-textarea label="Description" name="description" ngModel></entry-textarea>
+  <entry-date-picker labe="Delivery date" name="deliveryDate" ngModel></entry-date-picker>
+  <entry-checkbox label="Free shipping" name="freeShipping" ngModel></entry-checkbox>
+
+  <div class="action-buttons">
+    <button mat-button entry-submit-button type="submit">Submit</button>
+    <button mat-button entry-cancel-button (click)="form.reset()">Cancel</button>
+  </div>
+</form>
+
+<p></p>
+<p>{{form.value | json}}</p>

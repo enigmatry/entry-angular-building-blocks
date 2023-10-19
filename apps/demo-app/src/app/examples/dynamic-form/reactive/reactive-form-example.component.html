@@ -1,0 +1,16 @@
+<form [formGroup]="form" novalidate>
+
+  <entry-input label="Name" formControlName="name"></entry-input>
+  <entry-select label="Type" formControlName="type" [options]="types"></entry-select>
+  <entry-textarea label="Description" formControlName="description"></entry-textarea>
+  <entry-date-picker labe="Delivery date" formControlName="deliveryDate"></entry-date-picker>
+  <entry-checkbox label="Free shipping" formControlName="freeShipping"></entry-checkbox>
+
+  <div class="action-buttons">
+    <button mat-button entry-submit-button type="submit">Submit</button>
+    <button mat-button entry-cancel-button (click)="form.reset()">Cancel</button>
+  </div>
+</form>
+
+<p></p>
+<p>{{form.value | json}}</p>
