@@ -17,11 +17,20 @@ $custom-theme: (
 			buttons: (
 				size: 26px
 			)
+		),
+		inputs: (
+			background: yellow
 		)
 	),
 	tables: (
 		cells: (
-			first-cell-padding-left: 11px
+			edge-gap: 11px,
+			padding: 202px
+		)
+	),
+	dialogs: (
+		title: (
+			size: 42px
 		)
 	)
 );
