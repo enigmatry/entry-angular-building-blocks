@@ -1,0 +1,15 @@
+@use 'sass:map';
+
+@mixin generate-from($theme) {
+	$input-background: map.get($theme, 'general', 'inputs', 'background');
+
+	@if $input-background {
+		.mat-mdc-form-field .mat-mdc-text-field-wrapper.mdc-text-field {
+			background-color: $input-background;
+
+			&.mdc-text-field--outlined {
+				border-radius: 4px;
+			}
+		}
+	}
+}

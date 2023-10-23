@@ -34,13 +34,17 @@ $theme: (
 		spacing: (
 			default: 15px
 		),
+		inputs: (
+			background: null
+		),
 		buttons: (
 			icon-size: 48px
 		)
 	),
 	tables: (
 		cells: (
-			edge-gap: 4px
+			edge-gap: 4px,
+			padding: null
 		),
 		rows: (
 			selected-color: #FFF,

@@ -1,16 +1,23 @@
 @use 'sass:map';
 
 @mixin generate-from($theme) {
+	$row-edge-gap: map.get($theme, 'tables', 'cells', 'edge-gap');
+	$cell-padding: map.get($theme, 'tables', 'cells', 'padding');
+
 	.mat-mdc-cell {
 		color: map.get($theme, 'general', 'colors', 'font');
+
+		@if $cell-padding {
+			padding: $cell-padding;
+		}
 	}
 
 	.mat-mdc-header-cell:first-of-type, .mat-mdc-cell:first-of-type, .mat-mdc-footer-cell:first-of-type {
-		padding-left: map.get($theme, 'tables', 'cells', 'edge-gap');
+		padding-left: $row-edge-gap;
 	}
 
 	.mat-mdc-header-cell:last-of-type, .mat-mdc-cell:last-of-type, .mat-mdc-footer-cell:last-of-type {
-		padding-right: map.get($theme, 'tables', 'cells', 'edge-gap');
+		padding-right: $row-edge-gap;
 	}
 
 	.selection-cell, .action-cell {
