@@ -1,4 +1,4 @@
-<form [formGroup]="form" novalidate>
+<form [formGroup]="form" entryForm novalidate>
 
   <entry-input label="Name" formControlName="name"></entry-input>
   <entry-select label="Type" formControlName="type" [options]="types"></entry-select>
@@ -8,7 +8,7 @@
 
   <div class="action-buttons">
     <button mat-button entry-submit-button type="submit">Submit</button>
-    <button mat-button entry-cancel-button (click)="form.reset()">Cancel</button>
+    <button mat-button entry-cancel-button type="button" (click)="form.reset()">Cancel</button>
   </div>
 </form>
 
