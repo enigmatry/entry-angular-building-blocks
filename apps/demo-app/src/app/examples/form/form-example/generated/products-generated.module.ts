@@ -17,6 +17,7 @@ import { EntryTableModule } from '@enigmatry/entry-table';
 
 import { ProductEditGeneratedComponent } from './product-edit/product-edit-generated.component';
 import { SharedModule } from 'apps/demo-app/src/app/shared/shared.module';
+import { EntryFormModule } from '@enigmatry/entry-form';
 
 
 
@@ -26,6 +27,7 @@ import { SharedModule } from 'apps/demo-app/src/app/shared/shared.module';
     CommonModule,
     SharedModule,
     EntryTableModule,
+    EntryFormModule,
         MatAutocompleteModule,
         FormlyModule.forChild(
         ),
