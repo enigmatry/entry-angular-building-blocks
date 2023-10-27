@@ -7,5 +7,3 @@ export { EntrySelectComponent } from './controls/select/select.component';
 export { EntryTextareaComponent } from './controls/textarea/textarea.component';
 export { NoopControlValueAccessor } from './directives/noop-control-value-accessor';
 export { NgControlAccessorDirective } from './directives/ng-control-accessor.directive';
-export { PreventMultipleClicksDirective as PreventDoubleClickDirective } from './directives/prevent-multiple-clicks.directive';
-export { EntryFormDirective } from './directives/entry-form.directive';

@@ -14,8 +14,6 @@ import { EntryInputComponent } from './controls/input/input.component';
 import { EntrySelectComponent } from './controls/select/select.component';
 import { EntryTextareaComponent } from './controls/textarea/textarea.component';
 import { EntryDynamicFormComponent } from './dynamic-form/dynamic-form.component';
-import { EntryFormDirective } from './directives/entry-form.directive';
-import { PreventMultipleClicksDirective } from './directives/prevent-multiple-clicks.directive';
 
 @NgModule({
   declarations: [
@@ -36,9 +34,7 @@ import { PreventMultipleClicksDirective } from './directives/prevent-multiple-cl
     MatSelectModule,
     MatCheckboxModule,
     MatDatepickerModule,
-    MatAutocompleteModule,
-    PreventMultipleClicksDirective,
-    EntryFormDirective
+    MatAutocompleteModule
   ],
   exports: [
     EntryInputComponent,
@@ -47,9 +43,7 @@ import { PreventMultipleClicksDirective } from './directives/prevent-multiple-cl
     EntryTextareaComponent,
     EntryDatePickerComponent,
     EntryAutocompleteComponent,
-    EntryDynamicFormComponent,
-    PreventMultipleClicksDirective,
-    EntryFormDirective
+    EntryDynamicFormComponent
   ]
 })
 export class EntryFormsModule { }
