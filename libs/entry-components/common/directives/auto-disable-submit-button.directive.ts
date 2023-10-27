@@ -1,39 +1,32 @@
-import { Directive, ElementRef, Host, Input, OnDestroy, OnInit, Optional } from '@angular/core';
-import { ControlContainer } from '@angular/forms';
+import { Directive, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subject, fromEvent, timer } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-
-// selects submit button which is not disabled manually
-const selector = 'button[type=submit]:not([disabled])';
+import { NG_VALID_CLASS } from '../constants';
 
 /**
- * Submit button is disabled automatically for short period of time, after form is submitted.
- * Unless disabled is handled manually.
+ * After form is submitted submit button is disabled automatically for short period of time.
+ * Unless disabled is handled manually. Directive is applied to 'button[type=submit]:not([disabled])'
  */
 @Directive({
   standalone: true,
-  selector
+  selector: 'button[type=submit]:not([disabled])'
 })
 export class AutoDisableSubmitButtonDirective implements OnInit, OnDestroy {
 
-  @Input() disablePeriodInMs = 2000; // ms
+  @Input() disablePeriodInMs = 2000;
   private destroy$ = new Subject<void>();
 
-  constructor(@Host() @Optional() private form: ControlContainer,
-    private elementRef: ElementRef<HTMLButtonElement>) { }
+  constructor(private elementRef: ElementRef<HTMLButtonElement>) { }
 
   ngOnInit(): void {
-    if (!this.form) {
+    const form: HTMLFormElement = this.elementRef.nativeElement.closest('form');
+    if (!form) {
       return;
     }
-    const formElement = this.elementRef.nativeElement.closest('form');
-    if (!formElement) {
-      return;
-    }
-    fromEvent(formElement, 'submit')
+    fromEvent(form, 'submit')
       .pipe(takeUntil(this.destroy$))
       .subscribe(_ => {
-        if (this.form.valid) {
+        if (form.matches(NG_VALID_CLASS)) {
           this.disableSubmitButton(this.disablePeriodInMs);
         }
       });
@@ -46,6 +39,8 @@ export class AutoDisableSubmitButtonDirective implements OnInit, OnDestroy {
 
   private disableSubmitButton(disablePeriodInMs: number): void {
     const submitButton = this.elementRef.nativeElement;
+
+    submitButton.disabled = true;
 
     timer(disablePeriodInMs)
       .pipe(takeUntil(this.destroy$))

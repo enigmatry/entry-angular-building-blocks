@@ -1,4 +1,4 @@
-<form [formGroup]="form" entryForm (ngSubmit)="onSubmit()" [class.entry-form-readonly]="isReadonly" class="entry-product-edit-form entry-form">
+<form [formGroup]="form" (ngSubmit)="onSubmit()" [class.entry-form-readonly]="isReadonly" class="entry-product-edit-form entry-form">
     <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
     <ng-template [ngIf]="formButtonsTemplate" [ngIfElse]="defaultFormButtonsTpl">
         <ng-template [ngTemplateOutlet]="formButtonsTemplate"></ng-template>

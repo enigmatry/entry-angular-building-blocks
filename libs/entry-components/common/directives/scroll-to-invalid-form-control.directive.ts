@@ -1,12 +1,12 @@
-/* eslint-disable @angular-eslint/directive-selector */
 import { Directive, ElementRef, OnDestroy, OnInit, Self } from '@angular/core';
 import { ControlContainer } from '@angular/forms';
 import { Subject, fromEvent } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { NG_INVALID_CLASS } from '../constants';
 
 /**
  * Scroll to first invalid control when form is submitted and invalid.
- * Directive is applied to form tag with [formGroup] or [ngForm] directive attached.
+ * Directive is applied to 'form[formGroup],form[ngForm]' (reactive or template driven forms)
  */
 @Directive({
   standalone: true,
@@ -14,7 +14,6 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class ScrollToInvalidFormControlDirective implements OnInit, OnDestroy {
 
-  private invalidControlClassName = '.ng-invalid';
   private destroy$ = new Subject<void>();
 
   constructor(@Self() private form: ControlContainer, private elementRef: ElementRef<HTMLFormElement>) { }
@@ -36,11 +35,11 @@ export class ScrollToInvalidFormControlDirective implements OnInit, OnDestroy {
 
   private scrollToInvalidControl() {
     const firstInvalidControl: HTMLElement =
-      this.elementRef.nativeElement.querySelector(this.invalidControlClassName);
+      this.elementRef.nativeElement.querySelector(NG_INVALID_CLASS);
 
     if (firstInvalidControl) {
       firstInvalidControl.scrollIntoView({
-        behavior: 'auto',
+        behavior: 'smooth',
         block: 'center'  // vertical alignment
       });
     }
