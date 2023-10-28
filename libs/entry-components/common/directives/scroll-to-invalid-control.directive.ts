@@ -5,18 +5,19 @@ import { takeUntil } from 'rxjs/operators';
 import { NG_INVALID_CLASS } from '../constants';
 
 /**
- * Scroll to first invalid control when form is submitted and invalid.
+ * Scroll to first invalid control when form is submitted.
  * Directive is applied to 'form[formGroup],form[ngForm]' (reactive or template driven forms)
  */
 @Directive({
   standalone: true,
   selector: 'form[formGroup],form[ngForm]'
 })
-export class ScrollToInvalidFormControlDirective implements OnInit, OnDestroy {
+export class ScrollToInvalidControlDirective implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
 
-  constructor(@Self() private form: ControlContainer, private elementRef: ElementRef<HTMLFormElement>) { }
+  constructor(@Self() private form: ControlContainer,
+    private elementRef: ElementRef<HTMLFormElement>) { }
 
   ngOnInit(): void {
     fromEvent(this.elementRef.nativeElement, 'submit')

@@ -43,7 +43,7 @@ export abstract class EntryEventManagerPlugin extends EventManagerPlugin {
     return eventName.includes(this.modifier);
   }
 
-  /** unwrap modifier params e.g. (click.debounce.500) => ['debounce', 500] */
+  /** unwrap params e.g. (click.debounce.500) => ['debounce', 500] */
   unwrapParams(eventName: string): string[] {
     return eventName
       .substring(eventName.indexOf(this.modifier))
@@ -51,7 +51,7 @@ export abstract class EntryEventManagerPlugin extends EventManagerPlugin {
       .filter(x => !!x);
   }
 
-  /** get actual event name e.g. (click.debounce.500) => click */
+  /** get event name e.g. (click.debounce.500) => click */
   unwrapEventName(eventName: string): string {
     return eventName.substring(0, eventName.indexOf(this.modifier));
   }

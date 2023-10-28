@@ -19,7 +19,7 @@ export class ThrottleEventPlugin extends EntryEventManagerPlugin {
     // e.g. (keyup.throttle.500)
     const [_modifier, milliseconds = 500] = this.unwrapParams(eventName);
 
-    // run original handler inside ngZone as expected
+    // run original handler inside ngZone in which the event occurred
     const innerHandler = (event: any) => this.manager.getZone().runGuarded(() => originalHandler(event));
 
     // create throttled handler

@@ -4,8 +4,8 @@ import { takeUntil } from 'rxjs/operators';
 import { NG_VALID_CLASS } from '../constants';
 
 /**
- * After form is submitted submit button is disabled automatically for short period of time.
- * Unless disabled is handled manually. Directive is applied to 'button[type=submit]:not([disabled])'
+ * Auto disable submit button when form is submitted, unless disabling is handled manually.
+ * Directive is applied to 'button[type=submit]:not([disabled])'
  */
 @Directive({
   standalone: true,
@@ -13,7 +13,7 @@ import { NG_VALID_CLASS } from '../constants';
 })
 export class AutoDisableSubmitButtonDirective implements OnInit, OnDestroy {
 
-  @Input() disablePeriodInMs = 2000;
+  @Input() disableIntervalInMs = 2000;
   private destroy$ = new Subject<void>();
 
   constructor(private elementRef: ElementRef<HTMLButtonElement>) { }
@@ -27,7 +27,7 @@ export class AutoDisableSubmitButtonDirective implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe(_ => {
         if (form.matches(NG_VALID_CLASS)) {
-          this.disableSubmitButton(this.disablePeriodInMs);
+          this.disableSubmitButton(this.disableIntervalInMs);
         }
       });
   }
