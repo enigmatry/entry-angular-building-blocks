@@ -13,7 +13,7 @@ import { NG_VALID_CLASS } from '../constants';
 })
 export class AutoDisableSubmitButtonDirective implements OnInit, OnDestroy {
 
-  @Input() disableIntervalInMs = 2000;
+  @Input() autoDisableIntervalInMs = 2000;
   private destroy$ = new Subject<void>();
 
   constructor(private elementRef: ElementRef<HTMLButtonElement>) { }
@@ -27,7 +27,7 @@ export class AutoDisableSubmitButtonDirective implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe(_ => {
         if (form.matches(NG_VALID_CLASS)) {
-          this.disableSubmitButton(this.disableIntervalInMs);
+          this.disableSubmitButton(this.autoDisableIntervalInMs);
         }
       });
   }
