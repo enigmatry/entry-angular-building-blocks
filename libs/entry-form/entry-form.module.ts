@@ -6,7 +6,7 @@ import { FormlyAutocompleteModule } from './autocomplete/formly-autocomplete.mod
   declarations: [
   ],
   imports: [
-    FormlyAutocompleteModule,
+    FormlyAutocompleteModule
   ],
   providers: [
     {
