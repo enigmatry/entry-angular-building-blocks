@@ -1,8 +1,6 @@
-# @enigmatry/entry-components
+# Module: @enigmatry/entry-components
 
-## Index
-
-### Modules
+## Modules
 
 - [button/public-api](button_public_api.md)
 - [dialog/public-api](dialog_public_api.md)

@@ -9,7 +9,7 @@
 /* eslint-disable */
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EntryTableModule } from '@enigmatry/entry-table';
+import { EntryTableModule } from '@enigmatry/entry-components/table';
     import { FormlyModule, FORMLY_CONFIG } from '@ngx-formly/core';
     import { FormlyMaterialModule } from '@ngx-formly/material';
     import { MatAutocompleteModule } from '@angular/material/autocomplete';

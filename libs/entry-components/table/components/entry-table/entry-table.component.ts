@@ -28,8 +28,6 @@ import {
 @Component({
   selector: 'entry-table',
   templateUrl: './entry-table.component.html',
-  styleUrls: ['./entry-table.component.scss'],
-  encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EntryTableComponent<T> implements OnChanges {

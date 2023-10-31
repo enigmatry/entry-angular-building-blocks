@@ -7,7 +7,6 @@ This project is compatible with Angular 15.
 | Project | Description |
 |-|-|
 | [@enigmatry/entry-components](./libs/entry-components/README.md) | Angular components |
-| [@enigmatry/entry-table](./libs/entry-table/README.md) | Angular table component |
 | [@enigmatry/entry-form](./libs/entry-form/README.md) | Angular form components |
 | [@enigmatry/eslint-config](./libs/eslint-config/README.md) | ESLint config for the Enigmatry style guide |
 | [@enigmatry/scss-foundation ](./libs/scss-foundation/README.md) | SCSS Foundation |
