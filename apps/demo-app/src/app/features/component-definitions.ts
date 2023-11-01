@@ -40,9 +40,9 @@ const COMPONENT_DEFINITIONS: IComponentDefinition[] = [
     },
     {
         label: 'Table',
-        shortDescription: `Reusable table component with context menu, sorting and paging`,
+        shortDescription: `Table component with context menu, sorting and paging`,
         route: RouteSegments.table,
-        readmePath: '/entry-table/README.md',
+        readmePath: '/entry-components/table/README.md',
         apiDocsPath: ''
     },
     {

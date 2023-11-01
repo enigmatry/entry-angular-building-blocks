@@ -14,19 +14,19 @@ Base Entry dialog component. Must be extended when building custom dialogs.
 
 #### Properties
 
-| Property            | Type                                                                              | Description                             |
-| :------------------ | :-------------------------------------------------------------------------------- | :-------------------------------------- |
-| `buttonsAlignment`  | [`EntryDialogButtonsAlignment`](dialog_public_api.md#entrydialogbuttonsalignment) | Dialog buttons horizontal alignment     |
-| `buttonsTemplate`   | `TemplateRef`\< `any` \>                                                          | Provide custom buttons template         |
-| `cancelButtonText`  | `string`                                                                          | Cancel button label                     |
-| `confirmButtonText` | `string`                                                                          | Confirm button label                    |
-| `disableConfirm`    | `boolean`                                                                         | Enable or disable dialog confirm button |
-| `hideButtons`       | `boolean`                                                                         | Show or hide dialog buttons             |
-| `hideCancel`        | `boolean`                                                                         | Show or hide dialog cancel button       |
-| `hideClose`         | `boolean`                                                                         | Show or hide dialog close button        |
-| `title`             | `string`                                                                          | Dialog header title                     |
+| Property | Type | Description |
+| :------ | :------ | :------ |
+| `buttonsAlignment` | [`EntryDialogButtonsAlignment`](dialog_public_api.md#entrydialogbuttonsalignment) | Dialog buttons horizontal alignment |
+| `buttonsTemplate` | `TemplateRef`\< `any` \> | Provide custom buttons template |
+| `cancelButtonText` | `string` | Cancel button label |
+| `confirmButtonText` | `string` | Confirm button label |
+| `disableConfirm` | `boolean` | Enable or disable dialog confirm button |
+| `hideButtons` | `boolean` | Show or hide dialog buttons |
+| `hideCancel` | `boolean` | Show or hide dialog cancel button |
+| `hideClose` | `boolean` | Show or hide dialog close button |
+| `title` | `string` | Dialog header title |
 
----
+***
 
 ### EntryDialogConfig
 
@@ -34,15 +34,15 @@ Used to provide default configurations on module level.
 
 #### Properties
 
-| Property            | Type                                                                              | Description                                                                         |
-| :------------------ | :-------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------- |
-| `buttonsAlignment`  | [`EntryDialogButtonsAlignment`](dialog_public_api.md#entrydialogbuttonsalignment) | Dialog buttons horizontal alignment (default 'align-right')                         |
-| `cancelButtonText`  | `string`                                                                          | Cancel button label (default 'Cancel')                                              |
-| `confirmButtonText` | `string`                                                                          | Confirm button label (default 'Ok')                                                 |
-| `disableClose`      | `boolean`                                                                         | Disable closing dialog when pressing escape or clicking on backdrop (default false) |
-| `hideClose`         | `boolean`                                                                         | Determines if close button is visible (default is true)                             |
+| Property | Type | Description |
+| :------ | :------ | :------ |
+| `buttonsAlignment` | [`EntryDialogButtonsAlignment`](dialog_public_api.md#entrydialogbuttonsalignment) | Dialog buttons horizontal alignment (default 'align-right') |
+| `cancelButtonText` | `string` | Cancel button label (default 'Cancel') |
+| `confirmButtonText` | `string` | Confirm button label (default 'Ok') |
+| `disableClose` | `boolean` | Disable closing dialog when pressing escape or clicking on backdrop (default false) |
+| `hideClose` | `boolean` | Determines if close button is visible (default is true) |
 
----
+***
 
 ### EntryDialogService
 
@@ -50,7 +50,7 @@ Used to open built-in and custom entry dialogs.
 
 #### Methods
 
-##### closeAll()
+##### closeAll
 
 > **closeAll**(): `void`
 
@@ -60,26 +60,26 @@ Closes all opened dialogs.
 
 `void`
 
----
+***
 
-##### open()
+##### open
 
 > **open**(
-> `component`,
-> `data` = `undefined`,
-> `disableClose` = `undefined`,
-> `cssClass` = `''`): `Observable`\< `any` \>
+  `component`,
+  `data` = `undefined`,
+  `disableClose` = `undefined`,
+  `cssClass` = `''`): `Observable`\< `any` \>
 
 Opens dialog with custom component.
 
 ###### Parameters
 
-| Parameter      | Type                                                                            | Default value | Description                                                                                 |
-| :------------- | :------------------------------------------------------------------------------ | :------------ | :------------------------------------------------------------------------------------------ |
-| `component`    | `Type`\< [`EntryDialogComponent`](dialog_public_api.md#entrydialogcomponent) \> | `undefined`   | Dialog custom component implementation                                                      |
-| `data`         | `unknown`                                                                       | `undefined`   | Optional parameter used to supply component with input parameters                           |
-| `disableClose` | `boolean`                                                                       | `undefined`   | Optional parameter that disable closing dialog when pressing escape or clicking on backdrop |
-| `cssClass`     | `string`                                                                        | `''`          | Optional parameter used to set custom class to Material overlay pane                        |
+| Parameter | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `component` | `Type`\< [`EntryDialogComponent`](dialog_public_api.md#entrydialogcomponent) \> | `undefined` | Dialog custom component implementation |
+| `data` | `unknown` | `undefined` | Optional parameter used to supply component with input parameters |
+| `disableClose` | `boolean` | `undefined` | Optional parameter that disable closing dialog when pressing escape or clicking on backdrop |
+| `cssClass` | `string` | `''` | Optional parameter used to set custom class to Material overlay pane |
 
 ###### Returns
 
@@ -87,9 +87,9 @@ Opens dialog with custom component.
 
 Any result custom implementation provides
 
----
+***
 
-##### openAlert()
+##### openAlert
 
 > **openAlert**(`data`): `Observable`\< `true` \>
 
@@ -97,9 +97,9 @@ Opens alert dialog.
 
 ###### Parameters
 
-| Parameter | Type                                                                                 | Description                                              |
-| :-------- | :----------------------------------------------------------------------------------- | :------------------------------------------------------- |
-| `data`    | `Partial`\< [`IEntryAlertDialogData`](dialog_public_api.md#ientryalertdialogdata) \> | Contains title, message and optional confirm button text |
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `data` | `Partial`\< [`IEntryAlertDialogData`](dialog_public_api.md#ientryalertdialogdata) \> | Contains title, message and optional confirm button text |
 
 ###### Returns
 
@@ -107,9 +107,9 @@ Opens alert dialog.
 
 `true` if confirmed, `undefined` if closed by clicking on backdrop or pressing escape
 
----
+***
 
-##### openConfirm()
+##### openConfirm
 
 > **openConfirm**(`data`): `Observable`\< `boolean` \>
 
@@ -117,9 +117,9 @@ Opens confirm dialog.
 
 ###### Parameters
 
-| Parameter | Type                                                                                     | Description                                                      |
-| :-------- | :--------------------------------------------------------------------------------------- | :--------------------------------------------------------------- |
-| `data`    | `Partial`\< [`IEntryConfirmDialogData`](dialog_public_api.md#ientryconfirmdialogdata) \> | Contains title, message and optional confirm/cancel buttons text |
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `data` | `Partial`\< [`IEntryConfirmDialogData`](dialog_public_api.md#ientryconfirmdialogdata) \> | Contains title, message and optional confirm/cancel buttons text |
 
 ###### Returns
 
@@ -140,16 +140,16 @@ Alert dialog data.
 
 #### Properties
 
-| Property           | Type                                                                              | Description                                                                    |
-| :----------------- | :-------------------------------------------------------------------------------- | :----------------------------------------------------------------------------- |
-| `buttonsAlignment` | [`EntryDialogButtonsAlignment`](dialog_public_api.md#entrydialogbuttonsalignment) | Optional dialog buttons horizontal alignment                                   |
-| `confirmText`?     | `string`                                                                          | Optional dialog confirm text label                                             |
-| `disableClose`?    | `boolean`                                                                         | Optionally disable closing dialog when pressing escape or clicking on backdrop |
-| `hideClose`        | `boolean`                                                                         | Optionally show or hide dialog close button                                    |
-| `message`          | `string`                                                                          | Dialog content message                                                         |
-| `title`            | `string`                                                                          | Dialog header title                                                            |
+| Property | Type | Description |
+| :------ | :------ | :------ |
+| `buttonsAlignment` | [`EntryDialogButtonsAlignment`](dialog_public_api.md#entrydialogbuttonsalignment) | Optional dialog buttons horizontal alignment |
+| `confirmText`? | `string` | Optional dialog confirm text label |
+| `disableClose`? | `boolean` | Optionally disable closing dialog when pressing escape or clicking on backdrop |
+| `hideClose` | `boolean` | Optionally show or hide dialog close button |
+| `message` | `string` | Dialog content message |
+| `title` | `string` | Dialog header title |
 
----
+***
 
 ### IEntryConfirmDialogData
 
@@ -161,37 +161,36 @@ Confirm dialog data. Extends IEntryAlertDialogData.
 
 #### Properties
 
-| Property           | Type                                                                              | Description                                                                    |
-| :----------------- | :-------------------------------------------------------------------------------- | :----------------------------------------------------------------------------- |
-| `buttonsAlignment` | [`EntryDialogButtonsAlignment`](dialog_public_api.md#entrydialogbuttonsalignment) | Optional dialog buttons horizontal alignment                                   |
-| `cancelText`?      | `string`                                                                          | Optional dialog cancel text label                                              |
-| `confirmText`?     | `string`                                                                          | Optional dialog confirm text label                                             |
-| `disableClose`?    | `boolean`                                                                         | Optionally disable closing dialog when pressing escape or clicking on backdrop |
-| `hideClose`        | `boolean`                                                                         | Optionally show or hide dialog close button                                    |
-| `message`          | `string`                                                                          | Dialog content message                                                         |
-| `title`            | `string`                                                                          | Dialog header title                                                            |
+| Property | Type | Description |
+| :------ | :------ | :------ |
+| `buttonsAlignment` | [`EntryDialogButtonsAlignment`](dialog_public_api.md#entrydialogbuttonsalignment) | Optional dialog buttons horizontal alignment |
+| `cancelText`? | `string` | Optional dialog cancel text label |
+| `confirmText`? | `string` | Optional dialog confirm text label |
+| `disableClose`? | `boolean` | Optionally disable closing dialog when pressing escape or clicking on backdrop |
+| `hideClose` | `boolean` | Optionally show or hide dialog close button |
+| `message` | `string` | Dialog content message |
+| `title` | `string` | Dialog header title |
 
 ## Type Aliases
 
 ### EntryDialogButtonsAlignment
 
-> **EntryDialogButtonsAlignment**: `"align-left"` \| `"align-center"` \| `"align-right"`
+> **EntryDialogButtonsAlignment**: `"start"` \| `"center"` \| `"end"`
 
 Defines horizontal alignment of dialog buttons.
 
 ## Variables
 
-### ENTRY_DIALOG_CONFIG
+### ENTRY\_DIALOG\_CONFIG
 
-> `const` **ENTRY_DIALOG_CONFIG**: `InjectionToken`\< [`EntryDialogConfig`](dialog_public_api.md#entrydialogconfig) \>
+> `const` **ENTRY\_DIALOG\_CONFIG**: `InjectionToken`\< [`EntryDialogConfig`](dialog_public_api.md#entrydialogconfig) \>
 
 Entry dialog injection token of EntryDialogConfig type containing dialog default configurations.
 Can be updated with custom configuration.
 
 Defaults:
-
 - confirmButtonText: 'Ok'
 - cancelButtonText: 'Cancel'
-- buttonsAlignment: 'align-right'
+- buttonsAlignment: 'end'
 - hideClose: true
 - disableClose: false

@@ -5,7 +5,7 @@ Reusable table component with context menu, sorting and paging.
 ## Installation
 
 ```
-npm install @enigmatry/entry-table
+npm install @enigmatry/entry-components
 ```
 
 ## Basic Usage
@@ -13,13 +13,13 @@ npm install @enigmatry/entry-table
 Import the `EntryTableModule` in your `feature.module` or `shared.module`
 
 ```typescript
-import { EntryTableModule } from '@enigmatry/entry-table';
+import { EntryTableModule } from '@enigmatry/entry-components/table';
 ```
 
 `component.ts`
 
 ```typescript
-import { PagedData, ContextMenuItem, ColumnDef } from '@enigmatry/entry-table';
+import { PagedData, ContextMenuItem, ColumnDef } from '@enigmatry/entry-components/table';
 
 @Component({
 ...
@@ -66,7 +66,7 @@ export class UserListComponent implements OnInit {
 
 ## Compatibility with Angular Versions
 
-| @enigmatry/entry-table | Angular version
+| @enigmatry/entry-components | Angular version
 |-|-|
 |1.14.x| = 14
 |1.15.x| = 15

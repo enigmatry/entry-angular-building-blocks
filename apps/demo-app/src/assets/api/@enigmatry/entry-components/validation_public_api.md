@@ -21,11 +21,11 @@ The messages are separated with coma(,) and displayed as _innerHTML_ value of ho
 
 #### Properties
 
-| Property  | Type                                | Description                                                       |
-| :-------- | :---------------------------------- | :---------------------------------------------------------------- |
+| Property | Type | Description |
+| :------ | :------ | :------ |
 | `control` | `AbstractControl`\< `any`, `any` \> | Form control for which the validation messages are displayed for. |
 
----
+***
 
 ### EntryFormErrorsComponent
 
@@ -35,16 +35,17 @@ The messages are displayed as a list, each message in a new row.
 #### Example
 
 ```html
-<entry-form-errors [form]="myForm"> </entry-form-errors>
+<entry-form-errors [form]="myForm">
+</entry-form-errors>
 ```
 
 #### Properties
 
-| Property | Type               | Description                                                       |
-| :------- | :----------------- | :---------------------------------------------------------------- |
-| `form`   | `UntypedFormGroup` | A form group for which the validation errors are being displayed. |
+| Property | Type | Description |
+| :------ | :------ | :------ |
+| `form` | `UntypedFormGroup` | A form group for which the validation errors are being displayed. |
 
----
+***
 
 ### EntryValidationConfig
 
@@ -52,9 +53,9 @@ Used to provide default configurations on module level.
 
 #### Properties
 
-| Property             | Type                                                                            | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-| :------------------- | :------------------------------------------------------------------------------ | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `validationMessages` | [`IEntryValidationMessage`](validation_public_api.md#ientryvalidationmessage)[] | Validation key to message configuration on module level. Used to configure client side validation messages<br />for standard validators (_required_, _minLength_, _email_, etc.).<br /><br />**NOTE:** If using _Formly_ package to render forms, this configuration should not be used.<br />Instead, use `FormlyModule` to configure validation messages.<br /><br />**Example**<br /><br />`new EntryValidationConfig() {   validationMessages: [     { name: 'required': message: 'This field is mandatory' },     { name: 'minlength', message: (control: AbstractControl) =>`Minimal length is ${control.errors.minlength.requiredLength}`}   ] } ` |
+| Property | Type | Description |
+| :------ | :------ | :------ |
+| `validationMessages` | [`IEntryValidationMessage`](validation_public_api.md#ientryvalidationmessage)[] | Validation key to message configuration on module level. Used to configure client side validation messages<br />for standard validators (_required_, _minLength_, _email_, etc.).<br /><br />**NOTE:** If using _Formly_ package to render forms, this configuration should not be used.<br />Instead, use `FormlyModule` to configure validation messages.<br /><br />**Example**<br /><br />` new EntryValidationConfig() {   validationMessages: [     { name: 'required': message: 'This field is mandatory' },     { name: 'minlength', message: (control: AbstractControl) => `Minimal length is ${control.errors.minlength.requiredLength}`}   ] } ` |
 
 ## Interfaces
 
@@ -64,12 +65,12 @@ Used to configure mapping between validation keys and messages
 
 #### Properties
 
-| Property  | Type                                | Description                                                                                                                                                         |
-| :-------- | :---------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Property | Type | Description |
+| :------ | :------ | :------ |
 | `message` | `string` \| (`control`) => `string` | Validation message. Can be static string or expression returning string<br /> (when messages need to be resolved dynamically: parametrization, localization, etc.). |
-| `name`    | `string`                            | Validation key (e.g. '_required_', '_minlength_', '_email_', etc.)                                                                                                  |
+| `name` | `string` | Validation key (e.g. '_required_', '_minlength_', '_email_', etc.) |
 
----
+***
 
 ### IValidationProblemDetails
 
@@ -77,28 +78,27 @@ Defines the api used as a container for server side validation errors.
 
 ## Variables
 
-### ENTRY_VALIDATION_CONFIG
+### ENTRY\_VALIDATION\_CONFIG
 
-> `const` **ENTRY_VALIDATION_CONFIG**: `InjectionToken`\< [`EntryValidationConfig`](validation_public_api.md#entryvalidationconfig) \>
+> `const` **ENTRY\_VALIDATION\_CONFIG**: `InjectionToken`\< [`EntryValidationConfig`](validation_public_api.md#entryvalidationconfig) \>
 
 Entry validation injection token of EntryValidationConfig type containing validation default configurations.
 Can be updated with custom configuration.
 
 Defaults:
-
 - validationMessages: []
 
----
+***
 
-### FORM_FIELD_ERROR_KEY
+### FORM\_FIELD\_ERROR\_KEY
 
-> `const` **FORM_FIELD_ERROR_KEY**: `"fromServer"` = `'fromServer'`
+> `const` **FORM\_FIELD\_ERROR\_KEY**: `"fromServer"` = `'fromServer'`
 
 A key used to map server side validation errors on form field level
 
 ## Functions
 
-### setServerSideValidationErrors()
+### setServerSideValidationErrors
 
 > **setServerSideValidationErrors**(`error`, `form`): `void`
 
@@ -107,10 +107,10 @@ The errors are applied to multiple levels: form, form group, form array, and for
 
 #### Parameters
 
-| Parameter | Type                                                                              | Description                             |
-| :-------- | :-------------------------------------------------------------------------------- | :-------------------------------------- |
-| `error`   | [`IValidationProblemDetails`](validation_public_api.md#ivalidationproblemdetails) | Server side validation errors response. |
-| `form`    | `UntypedFormGroup`                                                                | Form to apply validation errors to.     |
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `error` | [`IValidationProblemDetails`](validation_public_api.md#ivalidationproblemdetails) | Server side validation errors response. |
+| `form` | `UntypedFormGroup` | Form to apply validation errors to. |
 
 #### Returns
 

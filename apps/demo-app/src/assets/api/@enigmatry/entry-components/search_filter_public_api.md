@@ -12,12 +12,12 @@ Entry SearchFilter component.
 
 #### Properties
 
-| Property             | Type                                                                                       | Description                                                                                                          |
-| :------------------- | :----------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------- |
+| Property | Type | Description |
+| :------ | :------ | :------ |
 | `searchFilterChange` | `EventEmitter`\< [`SearchFilterParams`](search_filter_public_api.md#searchfilterparams) \> | Emits the change in SearchFilterParams so the containing component can apply them and retrieve the filtered results. |
-| `searchFilters`      | [`SearchFilterBase`](search_filter_public_api.md#searchfilterbase)\< `any` \>[]            | Configuration of the search filters inputs that will be displayed in the search-filter component.                    |
+| `searchFilters` | [`SearchFilterBase`](search_filter_public_api.md#searchfilterbase)\< `any` \>[] | Configuration of the search filters inputs that will be displayed in the search-filter component. |
 
----
+***
 
 ### EntrySearchFilterConfig
 
@@ -25,12 +25,12 @@ Used to provide default configurations on module level.
 
 #### Properties
 
-| Property                 | Type     | Description                                         |
-| :----------------------- | :------- | :-------------------------------------------------- |
-| `applyButtonText`        | `string` | Apply search filters button label (default 'Apply') |
-| `noneSelectedOptionText` | `string` | Label for 'none selected' select filter option      |
+| Property | Type | Description |
+| :------ | :------ | :------ |
+| `applyButtonText` | `string` | Apply search filters button label (default 'Apply') |
+| `noneSelectedOptionText` | `string` | Label for 'none selected' select filter option |
 
----
+***
 
 ### SearchFilterBase
 
@@ -43,45 +43,33 @@ Base Entry search filter input component.
 - [`SelectSearchFilter`](search_filter_public_api.md#selectsearchfilter)
 - [`TextSearchFilter`](search_filter_public_api.md#textsearchfilter)
 
-#### Type parameters
-
-| Parameter |
-| :-------- |
-| `T`       |
-
 #### Properties
 
-| Property      | Type                   | Description                                                                                                 |
-| :------------ | :--------------------- | :---------------------------------------------------------------------------------------------------------- |
-| `controlType` | `string`               | Control type to be overridden in implementing class, used to render the proper input type e.g. 'text-input' |
-| `formControl` | `FormControl`\< `T` \> | A reference to the form control it represents                                                               |
-| `key`         | `string`               | Unique search-filter input key                                                                              |
-| `label`       | `string`               | Label text to be displayed for the search-filter input control                                              |
-| `maxLength`   | `number`               | Max text length to be entered in the input component (default is 256)                                       |
-| `placeholder` | `string`               | Placeholder text for search-filter input control                                                            |
-| `type`        | `string`               | Type of input control e.g. 'email'                                                                          |
-| `value`       | `T`                    | Default value to be displayed/selected in the input control                                                 |
+| Property | Type | Description |
+| :------ | :------ | :------ |
+| `controlType` | `string` | Control type to be overridden in implementing class, used to render the proper input type e.g. 'text-input' |
+| `formControl` | `FormControl`\< `T` \> | A reference to the form control it represents |
+| `key` | `string` | Unique search-filter input key |
+| `label` | `string` | Label text to be displayed for the search-filter input control |
+| `maxLength` | `number` | Max text length to be entered in the input component (default is 256) |
+| `placeholder` | `string` | Placeholder text for search-filter input control |
+| `type` | `string` | Type of input control e.g. 'email' |
+| `value` | `T` | Default value to be displayed/selected in the input control |
 
----
+***
 
 ### SelectFilterOption
 
 Model used to populate select filter options.
 
-#### Type parameters
-
-| Parameter |
-| :-------- |
-| `T`       |
-
 #### Properties
 
-| Property | Type     | Description                                         |
-| :------- | :------- | :-------------------------------------------------- |
-| `key`    | `T`      | Key used as a value for selected option             |
-| `label`  | `string` | String value used as display label of select option |
+| Property | Type | Description |
+| :------ | :------ | :------ |
+| `key` | `T` | Key used as a value for selected option |
+| `label` | `string` | String value used as display label of select option |
 
----
+***
 
 ### SelectSearchFilter
 
@@ -92,28 +80,22 @@ or observable (dynamic) list (`options$`).
 
 - [`SearchFilterBase`](search_filter_public_api.md#searchfilterbase)\< `T` \>
 
-#### Type parameters
-
-| Parameter |
-| :-------- |
-| `T`       |
-
 #### Properties
 
-| Property      | Type                                                                                                | Description                                                                                                                                      |
-| :------------ | :-------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------- |
-| `formControl` | `FormControl`\< `T` \>                                                                              | A reference to the form control it represents                                                                                                    |
-| `key`         | `string`                                                                                            | Unique search-filter input key                                                                                                                   |
-| `label`       | `string`                                                                                            | Label text to be displayed for the search-filter input control                                                                                   |
-| `maxLength`   | `number`                                                                                            | Max text length to be entered in the input component (default is 256)                                                                            |
-| `multiSelect` | `boolean`                                                                                           | Enables selection of multiple options (default is true).<br />If it is set to false, 'none selected' option becomes available as a first option. |
-| `options`     | [`SelectFilterOption`](search_filter_public_api.md#selectfilteroption)\< `T` \>[]                   | Fixed list of select filter options (default is empty list)                                                                                      |
-| `options$`    | `Observable`\< [`SelectFilterOption`](search_filter_public_api.md#selectfilteroption)\< `T` \>[] \> | Observable (dynamic) list of select filter options                                                                                               |
-| `placeholder` | `string`                                                                                            | Placeholder text for search-filter input control                                                                                                 |
-| `type`        | `string`                                                                                            | Type of input control e.g. 'email'                                                                                                               |
-| `value`       | `T`                                                                                                 | Default value to be displayed/selected in the input control                                                                                      |
+| Property | Type | Description |
+| :------ | :------ | :------ |
+| `formControl` | `FormControl`\< `T` \> | A reference to the form control it represents |
+| `key` | `string` | Unique search-filter input key |
+| `label` | `string` | Label text to be displayed for the search-filter input control |
+| `maxLength` | `number` | Max text length to be entered in the input component (default is 256) |
+| `multiSelect` | `boolean` | Enables selection of multiple options (default is true).<br />If it is set to false, 'none selected' option becomes available as a first option. |
+| `options` | [`SelectFilterOption`](search_filter_public_api.md#selectfilteroption)\< `T` \>[] | Fixed list of select filter options (default is empty list) |
+| `options$` | `Observable`\< [`SelectFilterOption`](search_filter_public_api.md#selectfilteroption)\< `T` \>[] \> | Observable (dynamic) list of select filter options |
+| `placeholder` | `string` | Placeholder text for search-filter input control |
+| `type` | `string` | Type of input control e.g. 'email' |
+| `value` | `T` | Default value to be displayed/selected in the input control |
 
----
+***
 
 ### TextSearchFilter
 
@@ -125,15 +107,15 @@ Search filter text input filed configuration.
 
 #### Properties
 
-| Property      | Type                        | Description                                                           |
-| :------------ | :-------------------------- | :-------------------------------------------------------------------- |
-| `formControl` | `FormControl`\< `string` \> | A reference to the form control it represents                         |
-| `key`         | `string`                    | Unique search-filter input key                                        |
-| `label`       | `string`                    | Label text to be displayed for the search-filter input control        |
-| `maxLength`   | `number`                    | Max text length to be entered in the input component (default is 256) |
-| `placeholder` | `string`                    | Placeholder text for search-filter input control                      |
-| `type`        | `string`                    | Type of input control e.g. 'email'                                    |
-| `value`       | `string`                    | Default value to be displayed/selected in the input control           |
+| Property | Type | Description |
+| :------ | :------ | :------ |
+| `formControl` | `FormControl`\< `string` \> | A reference to the form control it represents |
+| `key` | `string` | Unique search-filter input key |
+| `label` | `string` | Label text to be displayed for the search-filter input control |
+| `maxLength` | `number` | Max text length to be entered in the input component (default is 256) |
+| `placeholder` | `string` | Placeholder text for search-filter input control |
+| `type` | `string` | Type of input control e.g. 'email' |
+| `value` | `string` | Default value to be displayed/selected in the input control |
 
 ## Type Aliases
 
@@ -146,4 +128,4 @@ containing a collection of query URL parameters for easy integration.
 
 #### Index signature
 
-\[`key`: `string`\]: `any`
+ \[`key`: `string`\]: `any`
