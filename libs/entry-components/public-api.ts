@@ -8,5 +8,6 @@ export * from '@enigmatry/entry-components/file-input';
 export * from '@enigmatry/entry-components/permissions';
 export * from '@enigmatry/entry-components/search-filter';
 export * from '@enigmatry/entry-components/validation';
+export * from '@enigmatry/entry-components/table';
 
-export { EntryComponentsModule } from './entry-components.module';
+export { EntryComponentsModule } from './modules/entry-components.module';

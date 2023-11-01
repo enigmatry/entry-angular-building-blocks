@@ -5,11 +5,19 @@ import { EntryPermissionModule, EntryPermissionService } from '@enigmatry/entry-
 import { EntrySearchFilterModule } from '@enigmatry/entry-components/search-filter';
 import { EntryValidationModule } from '@enigmatry/entry-components/validation';
 import { EntryFileInputModule } from '@enigmatry/entry-components/file-input';
+import { EntryTableModule } from '@enigmatry/entry-components/table';
 
-interface ModuleForRootOptions {
+interface ModuleRootProviderOptions {
   permissionService?: Type<any>;
 }
 
+/**
+ * Exports all entry components.
+ *
+ * Usage
+ * import EntryComponentsModule in shared.module.ts to have access to all components, directives, pipes.
+ * import EntryComponentsModule.forRoot() in app.module.ts to register root module providers.
+ */
 @NgModule({
   declarations: [],
   exports: [
@@ -18,12 +26,12 @@ interface ModuleForRootOptions {
     EntryFileInputModule,
     EntryValidationModule,
     EntryPermissionModule,
-    EntrySearchFilterModule
-  ],
-  providers: []
+    EntrySearchFilterModule,
+    EntryTableModule
+  ]
 })
 export class EntryComponentsModule {
-  static forRoot(options: ModuleForRootOptions = {}): ModuleWithProviders<EntryComponentsModule> {
+  static forRoot(options: ModuleRootProviderOptions = {}): ModuleWithProviders<EntryComponentsModule> {
     const providers: Provider[] = options.permissionService
       ? [{
         provide: EntryPermissionService,
