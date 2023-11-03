@@ -1,7 +1,7 @@
 import { Params } from '@angular/router';
 import { OnPage, OnSort, PageEvent, SortDirection, SortEvent } from './pagination';
 
-export const defaultPageSize = 10;
+export const defaultPageSize = 20;
 export const defaultPageNumber = 1;
 
 export class PagedQuery implements OnPage, OnSort {
