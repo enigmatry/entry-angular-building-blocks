@@ -53,21 +53,20 @@ Default values are:
 To override with custom defaults use providers on application level:
 
 ```ts
+import { EntryDialogModule, provideEntryDialogConfig } from '@enigmatry/entry-components/dialog';
+
 @NgModule({
   imports: [
     EntryDialogModule
   ],
   providers: [
-    {
-        provide: ENTRY_DIALOG_CONFIG,
-        useFactory: () => new EntryDialogConfig({
-          confirmButtonText: 'Yes',
-          cancelButtonText: 'No',
-          buttonsAlignment: 'end',
-          hideClose: false,
-          disableClose: true
-        })
-    }
+    provideEntryDialogConfig({
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      buttonsAlignment: 'end',
+      hideClose: false,
+      disableClose: true
+    })
   ]
 })
 export class AppModule { }
