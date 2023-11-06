@@ -7,7 +7,7 @@ import { EntryValidationModule } from '@enigmatry/entry-components/validation';
 import { EntryFileInputModule } from '@enigmatry/entry-components/file-input';
 import { EntryTableModule } from '@enigmatry/entry-components/table';
 
-interface ModuleRootProviderOptions {
+interface EntryComponentsModuleOptions {
   permissionService?: Type<any>;
 }
 
@@ -31,14 +31,13 @@ interface ModuleRootProviderOptions {
   ]
 })
 export class EntryComponentsModule {
-  static forRoot(options: ModuleRootProviderOptions = {}): ModuleWithProviders<EntryComponentsModule> {
-    const providers: Provider[] = options.permissionService
-      ? [{
-        provide: EntryPermissionService,
-        useClass: options.permissionService
-      }]
+  static forRoot(options: EntryComponentsModuleOptions = {}): ModuleWithProviders<EntryComponentsModule> {
+
+    const permissionServiceProvider: Provider[] = options.permissionService
+      ? [{ provide: EntryPermissionService, useClass: options.permissionService }]
       : [];
 
+    const providers: Provider[] = [...permissionServiceProvider];
     return {
       ngModule: EntryComponentsModule,
       providers
