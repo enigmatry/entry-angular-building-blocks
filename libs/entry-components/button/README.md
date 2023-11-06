@@ -22,19 +22,18 @@ import { EntryButtonModule } from '@enigmatry/entry-components/button';
 Provide configuration for submit or cancel button in feature or shared module.
 
 ```typescript
-import { ENTRY_BUTTON_CONFIG, EntryButtonConfig, EntryButtonModule } from '@enigmatry/entry-components/button';
+import { EntryButtonModule, provideEntryButtonConfig } from '@enigmatry/entry-components/button';
 
 @NgModule({
   declarations: [],
   imports: [],
   exports: [],
-  providers: [{
-    provide: ENTRY_BUTTON_CONFIG,
-    useValue: new EntryButtonConfig({
+  providers: [
+    provideEntryButtonConfig({
       submit: { type: 'raised', color: 'primary' },
-      cancel: { type: 'basic', }
+      cancel: { type: 'basic' }
     })
-  }]
+  ]
 })
 export class SharedModule { }
 ```

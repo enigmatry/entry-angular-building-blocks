@@ -43,11 +43,7 @@ Where `APP_THEME` represents application theming configuration, while `APP_TYPOG
 `ENTRY_SEARCH_FILTER_CONFIG`: `InjectionToken<EntrySearchFilterConfig>` - Optional configuration used to override defaults.
 
 ```ts
-import {
-  EntrySearchFilterModule,
-  ENTRY_SEARCH_FILTER_CONFIG,
-  EntrySearchFilterConfig
-} from '@enigmatry/entry-components/search-filter';
+import { EntrySearchFilterModule, provideEntrySearchFilterConfig } from '@enigmatry/entry-components/search-filter';
 // ...
 
 @NgModule({
@@ -55,14 +51,10 @@ import {
     EntrySearchFilterModule
   ],
   providers: [
-    {
-      provide: ENTRY_SEARCH_FILTER_CONFIG,
-      useFactory: () => new EntrySearchFilterConfig({
-        applyButtonText: 'Filter',
-        noneSelectedOptionText: 'None'
-      })
-    }
+    provideEntrySearchFilterConfig({
+      applyButtonText: 'Filter'
+    })
   ]
 })
-export class AppModule { }
+export class SharedModule { }
 ```
