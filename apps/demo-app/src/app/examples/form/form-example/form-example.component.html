@@ -1,7 +1,7 @@
-<app-g-product-edit [formButtonsTemplate]="buttons"></app-g-product-edit>
+<app-g-product-edit [formButtonsTemplate]="buttons" [fieldsRequiredExpressions]="requiredFields"></app-g-product-edit>
 <ng-template #buttons>
   <div class="action-buttons">
     <button mat-button entry-submit-button type="submit">Submit</button>
-    <button mat-button entry-cancel-button>Cancel</button>
+    <button mat-button entry-cancel-button type="button">Cancel</button>
   </div>
 </ng-template>

@@ -6,4 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./form-example.component.scss']
 })
 export class FormExampleComponent {
+  requiredFields = {
+    name: () => true,
+    type: () => true
+  };
 }

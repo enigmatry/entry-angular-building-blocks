@@ -34,7 +34,7 @@ public class ProductEditComponentConfiguration : IFormComponentConfiguration<Get
             .WithPlaceholder("Units")
             .WithPlaceholderTranslationId(ProductTranslationId.Amount);
 
-        builder.DateTimePickerFormControl(x => x.ExpiresOn);
+        builder.DatepickerFormControl(x => x.ExpiresOn);
 
         builder.CheckboxFormControl(x => x.FreeShipping)
             .WithDefaultValue(true);
