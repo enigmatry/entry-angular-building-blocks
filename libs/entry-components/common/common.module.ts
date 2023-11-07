@@ -3,12 +3,12 @@ import { CommonModule } from '@angular/common';
 
 /** Directives */
 
+import { AutoDisableButtonDirective } from './directives/auto-disable-button.directive';
 import { ScrollToInvalidControlDirective } from './directives/scroll-to-invalid-control.directive';
-import { AutoDisableSubmitButtonDirective } from './directives/auto-disable-submit-button.directive';
 
 const DIRECTIVES = [
+  AutoDisableButtonDirective,
   ScrollToInvalidControlDirective,
-  AutoDisableSubmitButtonDirective
 ];
 
 @NgModule({
@@ -16,10 +16,10 @@ const DIRECTIVES = [
   ],
   imports: [
     CommonModule,
-    ...DIRECTIVES
+    DIRECTIVES
   ],
   exports: [
-    ...DIRECTIVES
+    DIRECTIVES
   ]
 })
 export class EntryCommonModule {
