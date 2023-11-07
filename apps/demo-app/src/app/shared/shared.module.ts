@@ -9,6 +9,7 @@ import { SortPipe } from './pipes/sort.pipe';
 import { CodeViewComponent } from './example-viewer/code-view/code-view.component';
 import { EntryButtonModule, provideEntryButtonConfig } from '@enigmatry/entry-components/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { EntryCommonModule } from '@enigmatry/entry-components/common';
 
 @NgModule({
   declarations: [
@@ -26,9 +27,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   ],
   exports: [
     MaterialModule,
-    EntryButtonModule,
     FormsModule,
     ReactiveFormsModule,
+    EntryButtonModule,
+    EntryCommonModule,
     DocumentationContentComponent,
     ExampleViewerComponent,
     MarkdownViewerComponent,

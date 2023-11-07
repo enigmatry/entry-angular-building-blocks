@@ -20,7 +20,7 @@
           "error",
           {
             "type": "attribute",
-            "prefix": "entry",
+            "prefix": ["entry", ""],
             "style": "camelCase"
           }
         ],

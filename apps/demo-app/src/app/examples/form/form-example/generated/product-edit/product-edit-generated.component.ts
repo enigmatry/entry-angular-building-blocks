@@ -175,9 +175,9 @@ className: `entry-amount-field entry-input`,
         },
         {
         key: 'expiresOn',
-        type: this.resolveFieldType('datetimepicker', false),
+        type: this.resolveFieldType('datepicker', false),
         focus: false,
-className: `entry-expires-on-field entry-datetimepicker`,
+className: `entry-expires-on-field entry-datepicker`,
         hideExpression: this.fieldsHideExpressions?.expiresOn ?? false,
         expressionProperties: {
         'templateOptions.disabled': (model) => (this.isReadonly || (this.fieldsDisableExpressions?.expiresOn ? this.fieldsDisableExpressions.expiresOn(model) : false)),
