@@ -6,6 +6,7 @@ import { EntrySearchFilterModule } from '@enigmatry/entry-components/search-filt
 import { EntryValidationModule } from '@enigmatry/entry-components/validation';
 import { EntryFileInputModule } from '@enigmatry/entry-components/file-input';
 import { EntryTableModule } from '@enigmatry/entry-components/table';
+import { EntryCommonModule, NG_EVENT_PLUGINS } from '@enigmatry/entry-components/common';
 
 interface EntryComponentsModuleOptions {
   permissionService?: Type<any>;
@@ -22,6 +23,7 @@ interface EntryComponentsModuleOptions {
   declarations: [],
   exports: [
     EntryButtonModule,
+    EntryCommonModule,
     EntryDialogModule,
     EntryFileInputModule,
     EntryValidationModule,
@@ -37,7 +39,7 @@ export class EntryComponentsModule {
       ? [{ provide: EntryPermissionService, useClass: options.permissionService }]
       : [];
 
-    const providers: Provider[] = [...permissionServiceProvider];
+    const providers: Provider[] = [...permissionServiceProvider, ...NG_EVENT_PLUGINS];
     return {
       ngModule: EntryComponentsModule,
       providers

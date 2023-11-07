@@ -10,6 +10,7 @@ import { EventManager } from '@angular/platform-browser';
  * How to create custom event modifiers
  * https://github.com/Tinkoff/ng-event-plugins,
  * https://github.com/angular/angular/blob/main/packages/platform-browser/src/dom/events/key_events.ts
+ * https://netbasal.com/lifting-the-veil-insights-into-angulars-eventmanagerplugin-ed9d14cbb31a
  */
 export abstract class EventManagerPlugin {
 
