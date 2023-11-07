@@ -18,6 +18,13 @@ const COMPONENT_DEFINITIONS: IComponentDefinition[] = [
         apiDocsPath: 'assets/api/@enigmatry/entry-components/button_public_api.md'
     },
     {
+        label: 'Common',
+        shortDescription: `Includes a set of commonly used directives, pipes, services and utilities.`,
+        route: RouteSegments.common,
+        readmePath: '/entry-components/common/README.md',
+        apiDocsPath: ''
+    },
+    {
         label: 'Dialog',
         shortDescription: `Enables built-in dialogs and adds support for building custom ones.`,
         route: RouteSegments.dialog,

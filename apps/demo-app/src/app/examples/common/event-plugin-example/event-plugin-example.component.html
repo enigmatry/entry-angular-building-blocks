@@ -1,0 +1,30 @@
+<p>
+  Example: Debouncing a click event with custom interval.
+</p>
+<p>
+  <button mat-raised-button color="primary" (click.debounce.2000)="log('click')">
+    Refresh
+    <mat-icon>refresh</mat-icon>
+  </button>
+</p>
+<br />
+
+<p>
+  Example: Throttle a keyup event with custom interval
+</p>
+<p>
+  <mat-form-field appearance="fill">
+    <mat-label>Search</mat-label>
+    <input matInput (keyup.throttle.1000)="log('keyup')">
+  </mat-form-field>
+</p>
+
+<p>
+  <mat-form-field>
+    <mat-label>Events</mat-label>
+    <textarea #events matInput rows="10"></textarea>
+  </mat-form-field>
+  <button mat-icon-button aria-label="Clear" (click)="events.value=''">
+    <mat-icon>close</mat-icon>
+  </button>
+</p>
