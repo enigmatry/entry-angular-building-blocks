@@ -5,20 +5,25 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { SharedModule } from '../../shared/shared.module';
+import { AutoDisableButtonExampleComponent } from './directives/auto-disable-button-example/auto-disable-button-example.component';
 
 @NgModule({
   declarations: [
-    EventPluginExampleComponent
+    EventPluginExampleComponent,
+    AutoDisableButtonExampleComponent
   ],
   imports: [
     CommonModule,
+    SharedModule,
     MatInputModule,
     MatFormFieldModule,
     MatButtonModule,
     MatIconModule
   ],
   exports: [
-    EventPluginExampleComponent
+    EventPluginExampleComponent,
+    AutoDisableButtonExampleComponent
   ]
 })
 export class CommonExampleModule { }
