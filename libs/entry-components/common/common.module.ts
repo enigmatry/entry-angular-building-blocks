@@ -3,10 +3,12 @@ import { CommonModule } from '@angular/common';
 
 /** Directives */
 
+import { AutoDisableButtonDirective } from './directives/auto-disable-button.directive';
 import { ScrollToInvalidControlDirective } from './directives/scroll-to-invalid-control.directive';
 
 const DIRECTIVES = [
-  ScrollToInvalidControlDirective
+  AutoDisableButtonDirective,
+  ScrollToInvalidControlDirective,
 ];
 
 /** Event plugins */
@@ -32,10 +34,10 @@ export const NG_EVENT_PLUGINS: Provider[] = EVENT_PLUGINS.map(useClass => ({
   ],
   imports: [
     CommonModule,
-    ...DIRECTIVES
+    DIRECTIVES
   ],
   exports: [
-    ...DIRECTIVES
+    DIRECTIVES
   ]
 })
 export class EntryCommonModule {
