@@ -16,7 +16,8 @@ export class ScrollToInvalidControlDirective implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
 
-  constructor(@Self() private form: ControlContainer,
+  constructor(
+    @Self() private form: ControlContainer,
     private elementRef: ElementRef<HTMLFormElement>) { }
 
   ngOnInit(): void {

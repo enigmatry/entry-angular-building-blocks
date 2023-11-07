@@ -1,7 +1,8 @@
-import { InjectionToken } from '@angular/core';
+import { Provider } from '@angular/core';
+import { createInjectionToken, provideConfig } from '@enigmatry/entry-components/common';
 
 /**
- * Used to provide default configurations on module level.
+ * Used to provide entry search filter configuration on module level.
  */
 export class EntrySearchFilterConfig {
     /** Apply search filters button label (default 'Apply') */
@@ -14,10 +15,11 @@ export class EntrySearchFilterConfig {
         this.noneSelectedOptionText = config.noneSelectedOptionText ?? 'None';
     }
 }
-export const ENTRY_SEARCH_FILTER_CONFIG = new InjectionToken<EntrySearchFilterConfig>(
-    'EntrySearchFilterConfig',
-    {
-        providedIn: 'root',
-        factory: () => new EntrySearchFilterConfig()
-    }
-);
+export const ENTRY_SEARCH_FILTER_CONFIG = createInjectionToken(new EntrySearchFilterConfig());
+
+/**
+ * Can be used to provide entry search filter configuration.
+ */
+export function provideEntrySearchFilterConfig(config: Partial<EntrySearchFilterConfig>): Provider {
+    return provideConfig(ENTRY_SEARCH_FILTER_CONFIG, () => new EntrySearchFilterConfig(config));
+}

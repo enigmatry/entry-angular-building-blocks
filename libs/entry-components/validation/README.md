@@ -68,7 +68,7 @@ Optionally, when using Reactive form, client side validation messages can be con
 ```ts
 // ...
 import { AbstractControl } from '@angular/forms';
-import { ENTRY_VALIDATION_CONFIG, EntryValidationConfig, EntryValidationModule } from '@enigmatry/entry-components/validation';
+import { EntryValidationModule, provideEntryValidationConfig } from '@enigmatry/entry-components/validation';
 
 @NgModule({
   imports: [
@@ -76,15 +76,12 @@ import { ENTRY_VALIDATION_CONFIG, EntryValidationConfig, EntryValidationModule }
     EntryValidationModule
   ]
   providers: [
-    {
-      provide: ENTRY_VALIDATION_CONFIG,
-      useFactory: () => new EntryValidationConfig({
-        validationMessages: [
-          { name: 'required', message: 'This field is mandatory!' },
-          { name: 'minlength', message: (control: AbstractControl) => `Minimal length is ${control.errors.minlength.requiredLength}!`}
-        ]
-      })
-    }
+    provideEntryValidationConfig({
+      validationMessages: [
+        { name: 'required', message: 'This field is mandatory!' },
+        { name: 'minlength', message: (control: AbstractControl) => `Minimal length is ${control.errors.minlength.requiredLength}!` }
+      ]
+    })
   ]
 })
 export class AppModule { }

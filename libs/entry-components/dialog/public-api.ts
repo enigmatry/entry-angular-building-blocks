@@ -11,4 +11,4 @@ export { EntryDialogButtonsAlignment } from './entry-dialog-buttons-alignment.ty
 export { EntryDialogService } from './entry-dialog.service';
 export { EntryDialogModule } from './entry-dialog.module';
 
-export { ENTRY_DIALOG_CONFIG, EntryDialogConfig } from './entry-dialog-config.model';
+export { ENTRY_DIALOG_CONFIG, EntryDialogConfig, provideEntryDialogConfig } from './entry-dialog-config.model';

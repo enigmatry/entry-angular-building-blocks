@@ -1,5 +1,6 @@
-import { InjectionToken } from '@angular/core';
+import { Provider } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
+import { createInjectionToken, provideConfig } from '@enigmatry/entry-components/common';
 
 /** Possible mat button variants */
 export declare type MatButtonVariants = 'basic' | 'flat' | 'raised' | 'stroked';
@@ -26,15 +27,17 @@ export class EntryButtonConfig {
 }
 
 /**
- * Entry button config injection token. Can be used to provide custom button configuration.
+ * Entry button config injection token.
  *
  * Defaults:
  * - submit: type: 'flat', color: 'primary'
  * - cancel: type: 'basic', color: 'accent'
  */
-export const ENTRY_BUTTON_CONFIG = new InjectionToken<EntryButtonConfig>('EntryButtonConfig',
-  {
-    providedIn: 'root',
-    factory: () => new EntryButtonConfig()
-  }
-);
+export const ENTRY_BUTTON_CONFIG = createInjectionToken(new EntryButtonConfig());
+
+/**
+ * Can be used to provide custom button configuration.
+ */
+export function provideEntryButtonConfig(config: Partial<EntryButtonConfig>): Provider {
+  return provideConfig(ENTRY_BUTTON_CONFIG, () => new EntryButtonConfig(config));
+}

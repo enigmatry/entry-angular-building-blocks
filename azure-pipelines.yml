@@ -39,13 +39,6 @@ steps:
       Write-Host "Setting MinVer to '$version'"
 
 - task: Npm@1
-  displayName: 'Set the version for entry table'
-  inputs:
-    command: custom
-    customCommand: version $(theLatestVersion) --no-git-tag-version
-    workingDir: 'libs/entry-table'
-
-- task: Npm@1
   displayName: 'Set the version for entry form'
   inputs:
     command: custom
@@ -92,12 +85,6 @@ steps:
     customCommand: 'run lint'
 
 - task: Npm@1
-  displayName: 'Build entry table'
-  inputs:
-    command: 'custom'
-    customCommand: 'run build @enigmatry/entry-table'
-
-- task: Npm@1
   displayName: 'Build entry form'
   inputs:
     command: 'custom'
@@ -114,14 +101,6 @@ steps:
   inputs:
     command: 'custom'
     customCommand: 'run automated-tests'
-
-- task: Npm@1
-  displayName: 'Publish entry table'
-  inputs:
-    command: publish
-    publishRegistry: useExternalRegistry
-    publishEndpoint: npm
-    workingDir: 'dist/enigmatry/entry-table'
 
 - task: Npm@1
   displayName: 'Publish entry form'

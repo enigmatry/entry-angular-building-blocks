@@ -1,5 +1,6 @@
-import { InjectionToken } from '@angular/core';
+import { Provider } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
+import { createInjectionToken, provideConfig } from '@enigmatry/entry-components/common';
 
 /** Used to configure mapping between validation keys and messages */
 export interface IEntryValidationMessage {
@@ -47,10 +48,11 @@ export class EntryValidationConfig {
  * Defaults:
  * - validationMessages: []
  */
-export const ENTRY_VALIDATION_CONFIG = new InjectionToken<EntryValidationConfig>(
-    'EntryValidationConfig',
-    {
-        providedIn: 'root',
-        factory: () => new EntryValidationConfig()
-    }
-);
+export const ENTRY_VALIDATION_CONFIG = createInjectionToken(new EntryValidationConfig());
+
+/**
+ * Can be used to provide entry validation configuration.
+ */
+export function provideEntryValidationConfig(config: Partial<EntryValidationConfig>): Provider {
+    return provideConfig(ENTRY_VALIDATION_CONFIG, () => new EntryValidationConfig(config));
+}

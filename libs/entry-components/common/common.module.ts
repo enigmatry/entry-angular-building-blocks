@@ -34,10 +34,10 @@ export const NG_EVENT_PLUGINS: Provider[] = EVENT_PLUGINS.map(useClass => ({
   ],
   imports: [
     CommonModule,
-    DIRECTIVES
+    ...DIRECTIVES
   ],
   exports: [
-    DIRECTIVES
+    ...DIRECTIVES
   ]
 })
 export class EntryCommonModule {

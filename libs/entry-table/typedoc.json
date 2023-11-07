@@ -1,9 +1,0 @@
-{
-    "name": "@enigmatry/entry-table",
-    "extends": [
-        "../../typedoc.base.json"
-    ],
-    "entryPoints": [
-        "src/public-api.ts"
-    ]
-}

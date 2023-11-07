@@ -1,3 +1,3 @@
-# @enigmatry/entry-form
+# Module: @enigmatry/entry-form
 
 ## Packages

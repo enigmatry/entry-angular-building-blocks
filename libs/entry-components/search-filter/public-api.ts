@@ -8,4 +8,4 @@ export { SelectFilterOption } from './search-filter-input/inputs/select-filter-o
 
 export { EntrySearchFilterModule } from './entry-search-filter.module';
 
-export { ENTRY_SEARCH_FILTER_CONFIG, EntrySearchFilterConfig } from './search-filter-config.model';
+export { ENTRY_SEARCH_FILTER_CONFIG, EntrySearchFilterConfig, provideEntrySearchFilterConfig } from './search-filter-config.model';
