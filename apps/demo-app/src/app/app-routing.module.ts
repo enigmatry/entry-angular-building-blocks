@@ -14,6 +14,10 @@ const routes: Routes = [
     loadComponent: () => import('./features/button/button-documentation.component').then(m => m.ButtonDocumentationComponent)
   },
   {
+    path: RouteSegments.common,
+    loadComponent: () => import('./features/common/common-documentation.component').then(m => m.CommonDocumentationComponent)
+  },
+  {
     path: RouteSegments.dialog,
     loadComponent: () => import('./features/dialog/dialog-documentation.component').then(m => m.DialogDocumentationComponent)
   },

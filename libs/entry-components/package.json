@@ -21,7 +21,8 @@
     "@angular/core": "^15.0.0",
     "@angular/material": "^15.0.0",
     "@angular/forms": "^15.0.0",
-    "@angular/platform-browser": "^15.0.0"
+    "@angular/platform-browser": "^15.0.0",
+    "lodash-es": "^4.17.21"
   },
   "dependencies": {
     "tslib": "^2.3.0"

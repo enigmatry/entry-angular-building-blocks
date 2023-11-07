@@ -3,6 +3,7 @@
  * Public API Surface of entry-components
  */
 export * from '@enigmatry/entry-components/button';
+export * from '@enigmatry/entry-components/common';
 export * from '@enigmatry/entry-components/dialog';
 export * from '@enigmatry/entry-components/file-input';
 export * from '@enigmatry/entry-components/permissions';
