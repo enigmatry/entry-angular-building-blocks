@@ -3,11 +3,9 @@ import { CommonModule } from '@angular/common';
 
 /** Directives */
 
-import { AutoDisableSubmitButtonDirective } from './directives/auto-disable-submit-button.directive';
 import { ScrollToInvalidControlDirective } from './directives/scroll-to-invalid-control.directive';
 
 const DIRECTIVES = [
-  AutoDisableSubmitButtonDirective,
   ScrollToInvalidControlDirective
 ];
 
