@@ -15,6 +15,9 @@ import { CheckboxExampleComponent } from './checkbox/checkbox-example.component'
 import { DatepickerExampleComponent } from './datepicker/datepicker-example.component';
 import { RadioExampleComponent } from './radio/radio-example.component';
 import { ProductsGeneratedModule } from './form-example/generated/products-generated.module';
+import { RichTextExampleComponent } from './rich-text/rich-text-example.component';
+import { ENTRY_CKEDITOR_OPTIONS, FormlyCkeditorModule } from '@enigmatry/entry-form/ckeditor';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,8 @@ import { ProductsGeneratedModule } from './form-example/generated/products-gener
     TextareaExampleComponent,
     CheckboxExampleComponent,
     DatepickerExampleComponent,
-    RadioExampleComponent
+    RadioExampleComponent,
+    RichTextExampleComponent,
   ],
   imports: [
     CommonModule,
@@ -35,6 +39,7 @@ import { ProductsGeneratedModule } from './form-example/generated/products-gener
     FormlyMaterialModule,
     FormlyAutocompleteModule,
     FormlyMatDatepickerModule,
+    FormlyCkeditorModule,
     FormlyModule.forChild({
       types: [
         {
@@ -59,10 +64,20 @@ import { ProductsGeneratedModule } from './form-example/generated/products-gener
     TextareaExampleComponent,
     CheckboxExampleComponent,
     DatepickerExampleComponent,
-    RadioExampleComponent
+    RadioExampleComponent,
+    RichTextExampleComponent
   ],
   providers: [
-    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } }
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } },
+    {
+      provide: ENTRY_CKEDITOR_OPTIONS,
+      useValue: {
+        build: ClassicEditor,
+        config: {
+          toolbar: ['bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote', 'link']
+        }
+      }
+    }
   ]
 })
 export class FormExampleModule { }
