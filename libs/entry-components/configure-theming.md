@@ -6,7 +6,7 @@ The `@enigmatry/entry-components` library comes with generator mixin which simpl
 Ensure that the following library is installed: 
 `@enigmatry/entry-form`
 
-#### 1. Folder structure
+### Folder structure
 
 We need separate file for including theme related style files. By our [SCSS coding standard](https://wiki.enigmatry.com/en/standards-and-guidelines/sass-coding-standard) it should be inside `styles/partials/vendors/libraries` subfolder. Create entry subfolder if it isn't already defined in project.The entry subfolder should contain the following SCSS partials:
 
@@ -14,7 +14,7 @@ We need separate file for including theme related style files. By our [SCSS codi
 2. `_general.scss` - Imports necessary library generator files for configuring theming.
 3. `_scss-foundation.scss` - imports the scss foundation library
 
-#### 2. Include theme-related style files
+### Include theme-related style files
 Within the `general.scss` partial, import the generator file from the library and our custom variables related to the project.
 
 The generator file represents a collection of includes and a mixin that, when used, generates styles for various components based on a combination of a default theme and a custom theme. The generators for each entry component handle the specifics of styling based on the provided theme. You can check which components are supported on the [Components demo](https://entry-demo.enigmatry.com/) application.
@@ -30,7 +30,7 @@ In summary, the generator:
 @use 'variables' as vars;
 ```
 
-#### 3. Define $custom-theme map 
+### Define $custom-theme map 
 
 Next, define the $custom-theme map that will be expanded with various customization options based on specific needs.
 
@@ -56,6 +56,6 @@ $custom-theme: (
 @include generator.generate-from($custom-theme);
 ```
 
-### 4. List of Configuration properties
+###  List of Configuration properties
 
 The new custom-theme map variable should override the default theme that is already defined. It contains a nested structure defining various aspects of a theme. Different key parameters can be passed in to extend it.
