@@ -6,6 +6,7 @@ import { FormlyFieldConfig } from '@ngx-formly/core';
   templateUrl: './rich-text-example.component.html'
 })
 export class RichTextExampleComponent {
+  model = { description: '' };
   fields: FormlyFieldConfig[] = [
     {
       key: 'description',
