@@ -105,6 +105,13 @@ stages:
       inputs:
         command: 'custom'
         customCommand: 'run automated-tests'
+    
+    - task: PublishBuildArtifacts@1
+    displayName: Publish artifacts
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: entry-angular-building-blocks-$(Build.BuildNumber)
+      publishLocation: 'Container'
 
 - stage: publish_npm
   dependsOn: ci_build
