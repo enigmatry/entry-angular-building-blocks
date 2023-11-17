@@ -161,7 +161,7 @@ stages:
                 command: publish
                 publishRegistry: useExternalRegistry
                 publishEndpoint: npm
-                workingDir: 'libs/eslint-config'
+                workingDir: '$(Pipeline.Workspace)/$(artifactName)-$(Build.BuildNumber)/eslint-config'
 
             - task: Npm@1
               displayName: 'Publish the stylelint recommended rules'
@@ -169,7 +169,7 @@ stages:
                 command: publish
                 publishRegistry: useExternalRegistry
                 publishEndpoint: npm
-                workingDir: 'libs/stylelint-config'
+                workingDir: '$(Pipeline.Workspace)/$(artifactName)-$(Build.BuildNumber)/stylelint-config'
                 
             - task: Npm@1
               displayName: 'Publish the scss foundation'
@@ -177,4 +177,4 @@ stages:
                 command: publish
                 publishRegistry: useExternalRegistry
                 publishEndpoint: npm
-                workingDir: 'libs/scss-foundation'
+                workingDir: '$(Pipeline.Workspace)/$(artifactName)-$(Build.BuildNumber)/scss-foundation'
