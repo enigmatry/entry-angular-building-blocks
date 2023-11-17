@@ -6,6 +6,7 @@ pr: none
 
 variables:
   theLatestVersion: ''
+  artifactName: entry-angular-building-blocks
 
 stages:
 - stage: ci_build
@@ -105,6 +106,20 @@ stages:
       inputs:
         command: 'custom'
         customCommand: 'run automated-tests'
+    
+    - task: PublishBuildArtifacts@1
+      displayName: Publish artifacts
+      inputs:
+        PathtoPublish: 'dist'
+        ArtifactName: $(artifactName)-$(Build.BuildNumber)
+        publishLocation: 'Container'
+    
+    - task: PublishBuildArtifacts@1
+      displayName: Publish libs
+      inputs:
+        PathtoPublish: 'libs'
+        ArtifactName: $(artifactName)-$(Build.BuildNumber)
+        publishLocation: 'Container'
 
 - stage: publish_npm
   dependsOn: ci_build
@@ -118,13 +133,19 @@ stages:
       runOnce:
         deploy:
           steps:
+            - checkout: self
+              fetchDepth: 50
+              fetchTags: true
+            - download: current
+              displayName: 'Download build artifacts'
+
             - task: Npm@1
               displayName: 'Publish entry form'
               inputs:
                 command: publish
                 publishRegistry: useExternalRegistry
                 publishEndpoint: npm
-                workingDir: 'dist/enigmatry/entry-form'
+                workingDir: '$(Pipeline.Workspace)/$(artifactName)-$(Build.BuildNumber)/enigmatry/entry-form'
 
             - task: Npm@1
               displayName: 'Publish entry components'
@@ -132,7 +153,7 @@ stages:
                 command: publish
                 publishRegistry: useExternalRegistry
                 publishEndpoint: npm
-                workingDir: 'dist/enigmatry/entry-components'
+                workingDir: '$(Pipeline.Workspace)/$(artifactName)-$(Build.BuildNumber)/enigmatry/entry-components'
 
             - task: Npm@1
               displayName: 'Publish the eslint recommended rules'
@@ -140,7 +161,7 @@ stages:
                 command: publish
                 publishRegistry: useExternalRegistry
                 publishEndpoint: npm
-                workingDir: 'libs/eslint-config'
+                workingDir: '$(Pipeline.Workspace)/$(artifactName)-$(Build.BuildNumber)/eslint-config'
 
             - task: Npm@1
               displayName: 'Publish the stylelint recommended rules'
@@ -148,7 +169,7 @@ stages:
                 command: publish
                 publishRegistry: useExternalRegistry
                 publishEndpoint: npm
-                workingDir: 'libs/stylelint-config'
+                workingDir: '$(Pipeline.Workspace)/$(artifactName)-$(Build.BuildNumber)/stylelint-config'
                 
             - task: Npm@1
               displayName: 'Publish the scss foundation'
@@ -156,4 +177,4 @@ stages:
                 command: publish
                 publishRegistry: useExternalRegistry
                 publishEndpoint: npm
-                workingDir: 'libs/scss-foundation'
+                workingDir: '$(Pipeline.Workspace)/$(artifactName)-$(Build.BuildNumber)/scss-foundation'
