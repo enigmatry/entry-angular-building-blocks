@@ -109,7 +109,7 @@ stages:
     - task: PublishBuildArtifacts@1
       displayName: Publish artifacts
       inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        PathtoPublish: 'dist'
         ArtifactName: entry-angular-building-blocks-$(Build.BuildNumber)
         publishLocation: 'Container'
 
