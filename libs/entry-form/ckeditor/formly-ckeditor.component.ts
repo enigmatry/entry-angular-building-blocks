@@ -1,8 +1,9 @@
 import { Component, Inject } from '@angular/core';
-import { FieldType, FormlyFieldConfig } from '@ngx-formly/core';
+import { FormlyFieldConfig } from '@ngx-formly/core';
 import { CKEditor5 } from '@ckeditor/ckeditor5-angular';
 import { ENTRY_CKEDITOR_OPTIONS, EntryCkeditorOptions } from './ckeditor-options';
 import { UntypedFormControl } from '@angular/forms';
+import { FieldType } from '@ngx-formly/material';
 
 @Component({
   selector: 'entry-formly-ckeditor',

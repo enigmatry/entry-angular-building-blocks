@@ -16,7 +16,16 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     CKEditorModule,
     FormlyModule.forChild({
       types: [
-        { name: 'ckeditor', component: FormlyCkeditorComponent, wrappers: ['form-field'] }
+        {
+          name: 'ckeditor',
+          component: FormlyCkeditorComponent,
+          wrappers: ['form-field'],
+          defaultOptions: {
+            templateOptions: {
+              floatLabel: 'always'
+            }
+          }
+        }
       ]
     })
   ]
