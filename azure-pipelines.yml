@@ -6,6 +6,7 @@ pr: none
 
 variables:
   theLatestVersion: ''
+  artifactName: entry-angular-building-blocks
 
 stages:
 - stage: ci_build
@@ -110,7 +111,7 @@ stages:
       displayName: Publish artifacts
       inputs:
         PathtoPublish: 'dist'
-        ArtifactName: entry-angular-building-blocks-$(Build.BuildNumber)
+        ArtifactName: $(artifactName)-$(Build.BuildNumber)
         publishLocation: 'Container'
 
 - stage: publish_npm
@@ -125,13 +126,19 @@ stages:
       runOnce:
         deploy:
           steps:
+            - checkout: self
+              fetchDepth: 50
+              fetchTags: true
+            - download: current
+              displayName: 'Download build artifacts'
+
             - task: Npm@1
               displayName: 'Publish entry form'
               inputs:
                 command: publish
                 publishRegistry: useExternalRegistry
                 publishEndpoint: npm
-                workingDir: 'dist/enigmatry/entry-form'
+                workingDir: '$(Pipeline.Workspace)/$(artifactName)-$(Build.BuildNumber)/enigmatry/entry-form'
 
             - task: Npm@1
               displayName: 'Publish entry components'
@@ -139,7 +146,7 @@ stages:
                 command: publish
                 publishRegistry: useExternalRegistry
                 publishEndpoint: npm
-                workingDir: 'dist/enigmatry/entry-components'
+                workingDir: '$(Pipeline.Workspace)/$(artifactName)-$(Build.BuildNumber)/enigmatry/entry-components'
 
             - task: Npm@1
               displayName: 'Publish the eslint recommended rules'
