@@ -113,6 +113,13 @@ stages:
         PathtoPublish: 'dist'
         ArtifactName: $(artifactName)-$(Build.BuildNumber)
         publishLocation: 'Container'
+    
+    - task: PublishBuildArtifacts@1
+      displayName: Publish libs
+      inputs:
+        PathtoPublish: 'libs'
+        ArtifactName: $(artifactName)-$(Build.BuildNumber)
+        publishLocation: 'Container'
 
 - stage: publish_npm
   dependsOn: ci_build
