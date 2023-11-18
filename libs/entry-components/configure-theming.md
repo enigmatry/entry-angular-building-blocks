@@ -68,11 +68,7 @@ The new custom-theme map variable should override the default theme that is alre
 
 > **_NOTE:_**  Submaps can't be nested inside each other
 
-
-# Theming Configuration Description
-
-## General Submap:
-
+### General Submap:
 
 The `general` section in the `$theme` configuration contains settings that shape the overall look and behavior of the components.
 
