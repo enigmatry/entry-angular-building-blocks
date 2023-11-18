@@ -59,3 +59,87 @@ $custom-theme: (
 ###  List of Configuration properties
 
 The new custom-theme map variable should override the default theme that is already defined. It contains a nested structure defining various aspects of a theme. Different key parameters can be passed in to extend it.
+
+| Submap     | Description              | Possible Options                  |
+|--------------|--------------------------|----------------------------------|
+| **general**    | settings that influence the overall appearance and behavior of the components.   | `typography`, `fonts`, `spacing`, `inputs`, `buttons`         |
+| **tables**    | customize table component styling   | `cells`, `rows`, `contents`        |
+| **dialogs**    | set dialog font size   | `title`         |
+
+> **_NOTE:_**  Submaps can't be nested inside each other
+
+
+# Theming Configuration Description
+
+## General Submap:
+
+
+The `general` section in the `$theme` configuration contains settings that shape the overall look and behavior of the components.
+
+- **Density:** The `density` property, set to `0` by default, controls the spacing and compactness of elements. Other possibilites are -`1` & `1`. For  [more info check](https://m2.material.io/design/layout/applying-density.html#usage)
+
+- **Colors:** The `colors` sub-submap defines various color properties:
+  - `primary` and `accent` represent the default primary and accent colors.
+  - `font` specifies the default font color.
+  - `disabled` contains settings for disabled state:
+    - `foreground` defines the text color for disabled elements.
+    - `background` specifies the background color for disabled elements.
+
+- **Fonts:**  allow customization of typography and font styles. Related configurations include:
+  - `hero-titles` - h1, h2, h3, h4 elements
+    - `family`
+    - `size` 
+  - `titles` - h3, h4 elements
+    - `family`
+    - `size` 
+  - `body`- base body text
+    - `family`
+    - `size` 
+  - `buttons` - buttons and anchors
+    - `family`
+    - `size` 
+
+- **Spacing:** The `spacing` submap, with a default of `15px`, determines the default spacing between elements.
+
+- **Buttons:** Additional customization buttons: 
+    - `icon-size` - defines the default icon size for buttons. 
+
+Code Example of general submap configuration:
+
+```
+$theme: (
+	general: (
+		density: 0,
+		colors: (
+			primary: #2581C4,
+			accent: #EA518D,
+			font: #323232,
+			disabled: (
+				foreground: rgb(0 0 0 / .38),
+				background: rgb(0 0 0 / .12)
+			)
+		),
+		fonts: (
+			hero-titles: (
+				family: 'Times New Roman',
+				size: 30px
+			),
+			titles: (
+				family: 'Inter',
+				size: 14px
+			)
+		),
+		spacing: (
+			default: 15px
+		),
+		buttons: (
+			icon-size: 48px
+		)
+	)
+)
+```
+
+## Tables Submap:
+
+The `tables` section in the `$theme` configuration handles how table components are styled and themed.
+
