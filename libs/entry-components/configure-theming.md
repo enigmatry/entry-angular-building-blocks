@@ -62,40 +62,40 @@ The new custom-theme map variable should override the default theme that is alre
 
 | Submap     | Description              | Possible Options                  |
 |--------------|--------------------------|----------------------------------|
-| **general**    | settings that influence the overall appearance and behavior of the components.   | `typography`, `fonts`, `spacing`, `inputs`, `buttons`         |
-| **tables**    | customize table component styling   | `cells`, `rows`, `contents`        |
+| **general**    | settings that influence the overall appearance and behavior of the components.   | `typography`, <br> `fonts`,<br> `spacing`,<br> `inputs`,<br> `buttons`         |
+| **tables**    | customize table component styling   | `cells`, <br> `rows`,<br> `contents`        |
 | **dialogs**    | set dialog font size   | `title`         |
-
-> **_NOTE:_**  Submaps can't be nested inside each other
+<br>
+> **_NOTE:_** Submaps can't be nested inside each other
 
 ### General Submap:
 
 The `general` section in the `$theme` configuration contains settings that shape the overall look and behavior of the components.
 
-- **Density:** The `density` property, set to `0` by default, controls the spacing and compactness of elements. Other possibilites are -`1` & `1`. For  [more info check](https://m2.material.io/design/layout/applying-density.html#usage)
+- **Density:** set to `0` by default, controls the spacing and compactness of elements. Other possibilites are -`1` & `1`. For  [more info check](https://m2.material.io/design/layout/applying-density.html#usage)
 
-- **Colors:** The `colors` sub-submap defines various color properties:
+- **Colors:** defines various color properties:
   - `primary` and `accent` represent the default primary and accent colors.
   - `font` specifies the default font color.
   - `disabled` contains settings for disabled state:
     - `foreground` defines the text color for disabled elements.
     - `background` specifies the background color for disabled elements.
 
-- **Fonts:**  allow customization of typography and font styles. Related configurations include:
-  - `hero-titles` - h1, h2, h3, h4 elements
+- **Fonts:** allow customization of typography and font styles. Related configurations include:
+  - `hero-titles` define typography for h1, h2, h3, h4 elements
     - `family`
     - `size` 
-  - `titles` - h3, h4 elements
+  - `titles` define typography h3, h4 elements
     - `family`
     - `size` 
-  - `body`- base body text
+  - `body` define typography for base body text
     - `family`
     - `size` 
-  - `buttons` - buttons and anchors
+  - `buttons` define buttons and anchors
     - `family`
     - `size` 
 
-- **Spacing:** The `spacing` submap, with a default of `15px`, determines the default spacing between elements.
+- **Spacing:** The submap, with a default of `15px`, determines the default spacing between elements.
 
 - **Buttons:** Additional customization buttons: 
     - `icon-size` - defines the default icon size for buttons. 
@@ -135,7 +135,61 @@ $theme: (
 )
 ```
 
-## Tables Submap:
+### Tables Submap:
 
 The `tables` section in the `$theme` configuration handles how table components are styled and themed.
 
+- **Cells:** contains properties related to individual cells in a table:
+  - `edge-gap` specifies the gap between cell edges.
+  - `padding` allows customization of cell padding.
+
+- **Rows:** handles the appearance of table rows:
+  - `selected-color` sets the background color for selected rows.
+  - `disabled-color` defines the background color for disabled rows.
+  - `odd-even-row` determines whether odd or even rows are styled differently.
+  - `odd-even-background` sets the background color for odd or even rows.
+
+- **Contents:** manages the styling of table content:
+  - `no-result` contains properties for the appearance of a message displayed when there are no search results:
+    - `font-size` specifies the font size of the message.
+    - `font-weight` controls the font weight of the message.
+
+```
+$theme: (
+	tables: (
+		cells: (
+			edge-gap: 4px,
+			padding: null
+		),
+		rows: (
+			selected-color: #FFF,
+			disabled-color: #F5F5F5,
+			odd-even-row: odd,
+			odd-even-background: #F0F0F0
+		),
+		contents: (
+			no-result: (
+				font-size: 13px,
+				font-weight: 500
+			)
+		)
+	)
+);
+```
+
+### Dialogs Submap:
+
+The `dialogs` submap within `$theme` focuses on configuring the appearance of dialog components.
+
+- **Title:** includes properties related to the title of a dialog:
+  - `size` determines the font size of the dialog title.
+
+```
+$theme: (
+	dialogs: (
+		title: (
+			size: 20px
+		)
+	)
+);
+```
