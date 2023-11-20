@@ -1,14 +1,15 @@
 # Theming Configuration Guide
 
-#### Prerequisites: 
+## Overview
+The `@enigmatry/entry-components` library comes with generator mixin which simplifies project theming by eliminating the need for extensive custom styling   While it comes with default settings, it offers the flexibility to be configured to meet the unique requirements of each project. A wide range of properties can be leveraged to introduce varied style changes when configured appropriately. The guide provides a detailed walkthrough of this process.
+
+## Prerequisites
 Ensure that the following libraries are installed:   
  `@enigmatry/entry-components`  
  `@enigmatry/entry-form`
 
 
-The `@enigmatry/entry-components` library comes with generator mixin which simplifies project theming by eliminating the need for extensive custom styling   While it comes with default settings, it offers the flexibility to be configured to meet the unique requirements of each project. A wide range of properties can be leveraged to introduce varied style changes when configured appropriately. The guide provides a detailed walkthrough of this process.
-
-### Folder structure
+## Project structure
 
 We need separate file for including theme related style files. By our [SCSS coding standard](https://wiki.enigmatry.com/en/standards-and-guidelines/sass-coding-standard) it should be inside `styles/partials/vendors/libraries` subfolder. Create entry subfolder if it isn't already defined in project.The entry subfolder should contain the following SCSS partials:
 
@@ -16,7 +17,7 @@ We need separate file for including theme related style files. By our [SCSS codi
 2. `_general.scss` - Imports necessary library generator files for configuring theming.
 3. `_scss-foundation.scss` - imports the scss foundation library
 
-### Include theme-related style files
+## Styles Configuration
 Within the `general.scss` partial, import the generator file from the library and our custom variables related to the project.
 
 The generator file represents a collection of includes and a mixin that, when used, generates styles for various components based on a combination of a default theme and a custom theme. The generators for each entry component handle the specifics of styling based on the provided theme. You can check which components are supported on the [Components demo](https://entry-demo.enigmatry.com/) application.
@@ -32,8 +33,7 @@ In summary, the generator:
 @use 'variables' as vars;
 ```
 
-### Define $custom-theme map 
-
+## Custom Theme Definition
 Next, define the $custom-theme map that will be expanded with various customization options based on specific needs.
 
 ```
@@ -58,7 +58,79 @@ $custom-theme: (
 @include generator.generate-from($custom-theme);
 ```
 
-###  List of Configuration properties
+## Theme Configuration Approaches
+We have 2 ways how to change fonts and colors;
+1. Native Angular Material way. Configure every single thing in Angular material need complex hex colors configuration. It depends of the situation. We have ligher and darker variations. 
+2. just pass and theming do rest, prefferable and simple version. We try this one to always use.
+ 
+### 1. Native Angular Material Configuration
+With this approach we configure every little piece in Angular material. There is lighter and darker versions of color. Bellow is example for that.
+
+```
+$typo: (headline-1: (font-size: 96px, line-height: 96px, font-weight: 300, font-family: 'roboto, sans-serif', letter-spacing: -.015625em),
+headline-2: (font-size: 60px, line-height: 60px, font-weight: 300, font-family: 'roboto, sans-serif', letter-spacing: -.0083333333em), 
+headline-3: (font-size: 48px, line-height: 50px, font-weight: 400, font-family: 'roboto, sans-serif', letter-spacing: normal),
+headline-4: (font-size: 34px, line-height: 40px, font-weight: 400, font-family: 'roboto, sans-serif', letter-spacing: .0073529412em), 
+headline-5: (font-size: 32px, line-height: 32px, font-weight: 400, font-family: 'roboto, sans-serif', letter-spacing: normal), 
+headline-6: (font-size: 32px, line-height: 32px, font-weight: 500, font-family: 'roboto, sans-serif', letter-spacing: .0125em),
+subtitle-1: (font-size: 32px, line-height: 28px, font-weight: 400, font-family: 'roboto, sans-serif', letter-spacing: .009375em),
+subtitle-2: (font-size: 32px, line-height: 22px, font-weight: 500, font-family: 'roboto, sans-serif', letter-spacing: .0071428571em),
+body-1: (font-size: 16px, line-height: 24px, font-weight: 400, font-family: 'roboto, sans-serif', letter-spacing: .03125em), 
+body-2: (font-size: 14px, line-height: 20px, font-weight: 400, font-family: 'roboto, sans-serif', letter-spacing: .0178571429em), 
+caption: (font-size: 32px, line-height: 20px, font-weight: 400, font-family: 'roboto, sans-serif', letter-spacing: .0333333333em),
+button: (font-size: 24px, line-height: 36px, font-weight: 500, font-family: 'roboto, sans-serif', letter-spacing: .0892857143em), 
+overline: (font-size: 12px, line-height: 32px, font-weight: 500, font-family: 'roboto, sans-serif', letter-spacing: .1666666667em), 
+'font-family': 'roboto, sans-serif');
+$prim: (
+	50 : #E6E6E6,
+	100 : #C0C0C0,
+	200 : #2B95DB,
+	300 : #7FE2F3,
+	400 : #B5D117,
+	500 : hsl(78 78% 47%),
+	600 : #C953EC,
+	700 : #1A81C5,
+	800 : #209E94,
+	900 : #2FC955,
+	A100 : #209E94,
+	A200 : #1A81C5,
+	A400 : #C953EC,
+	A700 : #B5D117,
+	contrast: (
+		50 : #000,
+		100 : #000,
+		200 : #000,
+		300 : #FFF,
+		400 : #FFF,
+		500 : #FFF,
+		600 : #FFF,
+		700 : #FFF,
+		800 : #FFF,
+		900 : #FFF,
+		A100 : #000,
+		A200 : #FFF,
+		A400 : #FFF,
+		A700 : #FFF,
+	)
+);
+
+$custom-theme: (
+	general: (
+		colors: (
+			primary-theme: $prim,
+			accent-theme: $prim
+		),
+		typography: $typo
+	)
+);
+
+@include generator.generate-from($custom-theme);
+
+```
+
+## 2. Simplified Configuration
+
+### 2a. Configuration Properties
 
 The new custom-theme map variable should override the default theme that is already defined. It contains a nested structure defining various aspects of a theme. Different key parameters can be passed in to extend it and customize it for our needs.
 
@@ -70,7 +142,7 @@ The new custom-theme map variable should override the default theme that is alre
 <br>
 > **_NOTE:_** Submaps can't be nested inside each other
 
-### General Submap:
+#### General Submap:
 
 The `general` section in the `$theme` configuration contains settings that shape the overall look and behavior of the components.
 
@@ -83,34 +155,34 @@ The `general` section in the `$theme` configuration contains settings that shape
     - `foreground` defines the text color for disabled elements.
     - `background` specifies the background color for disabled elements.
 
-- **Fonts:** allow customization of typography and font styles.
-We can use custom fonts or predefined fonts that comes with `entry-components` library (Montserrat, OpenSans, Roboto). 
-  1. **Default Fonts Configuration**:
-    When opting for default fonts, the necessary configuration takes place in the `angular.json` file at the root of the app. The fonts are imported from the node modules and specified in the "assets" section as follows:  
-  ```
-   "assets": [
-      "src/favicon.ico",
-      "src/assets",
-      {
-        "glob": "**/*",
-        "input": "./node_modules/@enigmatry/entry-components/assets/",
-        "output": "/assets/"
-      }
-    ],
-  ```
-  2. **Custom Fonts Configuration**, they needs to be imported locally in separated file using @font-face rule (our preferable SCSS structure is modules/components/typography/fonts.scss). Related configurations include:
-  - `hero-titles` define typography for h1, h2, h3, h4 elements
+- **Fonts:** allow customization of typography and font styles. We can use  predefined fonts that comes with `entry-components` library or our own project required customised fonts.
+  - `hero-titles` define typography for h1, h2, h3, h4 elements. 
     - `family`
     - `size` 
   - `titles` define typography h3, h4 elements
     - `family`
     - `size` 
-  - `body` define typography for base body text
+  - `body` define typography for base body text. To apply it on whole body of the app, add .mat-body class to the body element in index.html file in app root
     - `family`
     - `size` 
+     ```
+    <body class="mat-body">
+      <app-root></app-root>
+    </body>
+    ```
   - `buttons` define buttons and anchors
     - `family`
     - `size` 
+
+  > **_NOTE:_** Since we're overriding Angular Material, it is important to add CSS classes for mixin that emits styles for native header elements scoped within the .mat-typography CSS class
+
+  | CSS class      | Example                                       |
+  | -------------- | --------------------------------------------- |
+  | .mat-headline-1   | `<h1 class="mat-headline-1">{{title}}</h1>`|
+  | .mat-headline-2   | `<h2 class="mat-headline-2">{{title}}</h2>`|
+  | .mat-headline-3   |                                            |
+  | .mat-headline-4   |                                            |
+
 
 
 - **Spacing:** The submap, with a default of `15px`, determines the default spacing between elements.
@@ -152,6 +224,35 @@ $theme: (
 	)
 )
 ```
+
+#### Fonts Usage in Theming
+
+There are 2 possibilities of using fonts in our custom theme:
+
+1. **Default Fonts Configuration**:
+  Entry-components library comes with default fonts. It includes Montserrat, OpenSans and Roboto font family. When opting for default fonts, the necessary configuration takes place in the `angular.json` file at the root of the app. The fonts are imported from the node modules and specified in the "assets" section as follows:  
+  ```
+   "assets": [
+      "src/favicon.ico",
+      "src/assets",
+      {
+        "glob": "**/*",
+        "input": "./node_modules/@enigmatry/entry-components/assets/",
+        "output": "/assets/"
+      }
+    ],
+  ```
+2. **Custom Fonts Configuration**, they needs to be imported locally in separated file using @font-face rule (our preferable SCSS structure is modules/components/typography/fonts.scss).
+
+  ```
+    @font-face {
+    font: {
+      family: 'OpenSans-Bold';
+      weight: 700;
+    }
+    src: url('/assets/fonts/Helvetica.woff2') format('woff2'), url('/assets/fonts/Helvetica.woff') format('woff');
+}
+  ```
 
 ### Tables Submap:
 
