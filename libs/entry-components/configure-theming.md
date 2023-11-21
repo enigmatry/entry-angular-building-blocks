@@ -152,9 +152,10 @@ $custom-theme: (
 
 ### General Configuration
 
-The `general` section in the `$theme` configuration contains settings that shape the overall look and behavior of the components.
+The `general` section in the `$custom-theme` configuration contains settings that shape the overall look and behavior of the components.
 
 #### Density
+
 The density property typically accepts values like **-1**, **0** (default), and **1**, which correspond to different levels of density. For  [more info check](https://m2.material.io/design/layout/applying-density.html#usage):
 
 - `-1`: Reduces the spacing and makes elements more compact.
@@ -170,6 +171,7 @@ $custom-theme: (
 ```
 
 #### Colors
+
 Defines various color properties:
 
 - `primary`: Main color used in application, it sets the tone for the overall theme
@@ -197,6 +199,7 @@ $custom-theme: (
 ```
 
 #### Fonts
+
 Allow customization of typography and font styles based od Angular Material typography levels. Each font related property in configuration can have **family** and **size** values.
 
 - `hero-titles`: Define typography for h1, h2, h3, h4 elements.
@@ -258,6 +261,7 @@ Since we're overriding Angular Material, it is important to add CSS classes for 
 | .mat-headline-2   | `<h2 class="mat-headline-2">{{title}}</h2>`|
 
 #### Spacing
+
 The submap providing the necessary spacing information for styling the **entry form and search form** **button** and **form field**
 
 ```scss
@@ -271,6 +275,7 @@ $custom-theme: (
 ```
 
 #### Buttons
+
 Additional customization  for buttons:
 
 - `icon-size` - defines the default icon size for buttons.
@@ -278,7 +283,7 @@ Additional customization  for buttons:
 Code Example of general submap configuration:
 
 ```scss
-$theme: (
+$custom-theme: (
  general: (
   buttons: (
    icon-size: 48px
@@ -289,9 +294,10 @@ $theme: (
 
 ### Tables Configuration
 
-The `tables` section in the `$theme` configuration handles how table components are styled and themed.
+The `tables` section in the `$custom-theme` configuration handles how table components are styled and themed.
 
 #### Cells
+
 Contains properties related to individual cells in a table:
 
 - `edge-gap` specifies the gap between cell edges.
@@ -307,6 +313,7 @@ Handles the appearance of table rows:
 - `odd-even-background` sets the background color for odd or even rows.
 
 #### Contents
+
 Manages the styling of table content:
 
 - `no-result` contains properties for the appearance of a message displayed when there are no search results:
@@ -314,7 +321,7 @@ Manages the styling of table content:
 - `font-weight` controls the font weight of the message.
 
 ```scss
-$theme: (
+$custom-theme: (
  tables: (
   cells: (
    edge-gap: 4px,
@@ -338,20 +345,21 @@ $theme: (
 
 ### Dialogs Configuration
 
-The `dialogs` submap within `$theme` focuses on configuring the appearance of dialog components.
+The `dialogs` submap within `$custom-theme` focuses on configuring the appearance of dialog components.
 
 #### Title
+
 Includes properties related to the title of a dialog:
 
 - `size` determines the font size of the dialog title.
 
 ```scss
-$theme: (
+$custom-theme: (
  dialogs: (
   title: (
-   size: 20px
-  )
+  size: 20px
  )
+)
 );
 ```
 
