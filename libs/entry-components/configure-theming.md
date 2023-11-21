@@ -1,7 +1,7 @@
 # Theming Configuration Guide
 
 ### Table of Contents
-- [Overviewww](#overview)
+- [Overview](#overview)
 - [Prerequisites](#prerequisites)
 - [Project Structure](#project-structure)
 - [Styles Configuration](#styles-configuration)
