@@ -4,35 +4,28 @@
 
 - [Overview](#overview)
 - [Prerequisites](#prerequisites)
-- [Useful links](#useful-links)
 - [Project Structure](#project-structure)
 - [Styles Configuration](#styles-configuration)
-- [Custom Theme Definition](#custom-theme-definition)
+- [Create custom theme](#create-custom-theme)
+- [Importing fonts](#importing-fonts)
 - [Theme Configuration Approaches](#theme-configuration-approaches)
-  - [Native Angular Material Configuration](#1-native-angular-material-configuration)
-  - [Simplified Configuration](#2-simplified-configuration)
+  - [Simplified Configuration](#1-simplified-configuration)
     - [Configuration Properties](#2a-configuration-properties)
-      - [General Submap](#general-submap)
-      - [Fonts Usage in Theming](#fonts-usage-in-theming)
-      - [Tables Submap](#tables-submap)
-      - [Dialogs Submap](#dialogs-submap)
+      - [General Configuration](#general-configuration)
+      - [Tables Configuration](#tables-configuration)
+      - [Dialogs Configuration](#dialogs-configuration)
+  - [Native Angular Material Configuration](#2-native-angular-material-configuration)
 
 ## Overview
 
-The **entry-components** library comes with generator mixin which simplifies project theming by eliminating the need for extensive custom styling   While it comes with default settings, it offers the flexibility to be configured to meet the unique requirements of each project. A wide range of properties can be leveraged to introduce varied style changes when configured appropriately. The guide provides a detailed walkthrough of this process.
+The **entry-components** library comes with a generator which simplifies project theme by eliminating the need for extensive custom styling. While the library comes with default settings, it provides the flexibility to be configured according to the unique requirements of each project. A wide range of properties can be leveraged to introduce varied style changes when configured appropriately. The guide provides a detailed walkthrough of this process.
 
 ## Prerequisites
 
-Ensure that the following libraries are installed:
+Ensure that the following libraries are installed with the latest versions:
 
-- [`@enigmatry/entry-components`](https://www.npmjs.com/package/@enigmatry/entry-components)
-- [`@enigmatry/entry-form`](https://www.npmjs.com/package/@enigmatry/entry-form)
-
-## Useful links
-
-- [Theming Guide](https://material.angular.io/guide/theming)
-- [Typography Guide](https://material.angular.io/guide/typography)
-- [Sass Map Module](https://sass-lang.com/documentation/modules/map/)
+- [`entry-components`](https://www.npmjs.com/package/@enigmatry/entry-components)
+- [`entry-form`](https://www.npmjs.com/package/@enigmatry/entry-form)
 
 ## Project structure
 
@@ -40,7 +33,7 @@ We require a dedicated file for including theme-related style configurations. Ad
 
 ```diff
 ├── libraries
-    └── entry
++    └── entry
 +      ├── _general.scss
 +      ├── _scss-foundation.scss
 +      └── _index.scss
@@ -67,7 +60,7 @@ In summary, the generator:
 @use 'entry-components/styles/generator';
 ```
 
-## Custom Theme Definition
+## Create custom theme
 
 Next, define the $custom-theme map that will be expanded with various customization options based on specific needs.
 
@@ -90,18 +83,287 @@ $custom-theme: (
 );
 
 @include generator.generate-from($custom-theme);
+
+```
+
+## Importing Fonts
+
+There are 2 possibilities of using fonts in theming:
+
+### 1. Use default fonts from library
+
+**Entry-components** library comes with default fonts:  **Montserrat**, **OpenSans** and **Roboto** font family. To be able to use them, it needs to be configured in the `angular.json` file located at the root of the app. The fonts are imported from the library's node modules as follows:  
+
+```json
+"assets": [
+ "src/favicon.ico",
+ "src/assets",
+ {
+  "glob": "**/*",
+  "input": "./node_modules/@enigmatry/entry-components/assets/",
+  "output": "/assets/"
+ }
+],
+```
+
+### 2. Importing custom fonts
+
+Custom fonts needs to be imported locally in separated file using @font-face rule (our preferred SCSS structure is modules/components/typography/fonts.scss).
+
+```scss
+@font-face {
+ font: {
+  family: 'Helvetica';
+  weight: 400;
+ }
+ src: url('/assets/fonts/Helvetica.woff2') format('woff2'), url('/assets/fonts/Helvetica.woff') format('woff');
+}
 ```
 
 ## Theme Configuration Approaches
 
-We have 2 ways how to change fonts and colors;
+We have 2 ways for configuring theme. We highly suggest using first approach, since it's very simple and easy to understand. But if there are special needs then native Angular Material approach is unavoidable.
 
-1. Native Angular Material way. Configure every single thing in Angular material need complex hex colors configuration. It depends of the situation. We have ligher and darker variations.
-2. just pass and theming do rest, prefferable and simple version. We try this one to always use.
+## 1. Simplified Configuration
 
-### 1. Native Angular Material Configuration
+### Configuration Properties
 
-With this approach we configure every little piece in Angular material. There is lighter and darker versions of color. Bellow is example for that.
+The new **custom-theme map**  should override the default theme that comes from a library. It contains a nested structure defining various aspects of a theme. Different key parameters can be passed in to extend it and customize it for our needs. The structure is organized into three main sections: **general**, **tables**, and **dialogs**. Each section contains specific configuration options.
+
+| Submap       | Description                                                             | Possible Options                      |
+|--------------|-------------------------------------------------------------------------|----------------------------------------|
+| **general**  | Influence the overall appearance and behavior of components. | `typography`, `fonts`, `spacing`, `inputs`, `buttons` |
+| **tables**   | Customize table component styling.                                       | `cells`, `rows`, `contents`            |
+| **dialogs**  | Set dialog font size.                                                   | `title`                                |
+
+```scss
+$custom-theme: (
+ general: (
+ // General configuration options go here
+ ),
+ tables: (
+ // Table-related configuration options go here
+ ),
+ dialogs: (
+ // Dialog-related configuration options go here
+ )
+);
+```
+
+### General Configuration
+
+The `general` section in the `$theme` configuration contains settings that shape the overall look and behavior of the components.
+
+#### Density
+The density property typically accepts values like **-1**, **0** (default), and **1**, which correspond to different levels of density. For  [more info check](https://m2.material.io/design/layout/applying-density.html#usage):
+
+- `-1`: Reduces the spacing and makes elements more compact.
+- `0`: Default density according to the Material Design guidelines.
+- `1`: Increases spacing, providing a more relaxed and open layout.
+
+```scss
+$custom-theme: (
+ general: (
+ density: 0
+ )
+);
+```
+
+#### Colors
+Defines various color properties:
+
+- `primary`: Main color used in application, it sets the tone for the overall theme
+- `accent`: Highlight certain elements and create visual interest
+- `font`: Specifies the default font color.
+- `disabled`: Style elements that are in a disabled state:
+  - `foreground`: Text color for disabled elements
+  - `background`: Background color for disabled elements
+
+```scss
+$custom-theme: (
+ general: (
+  density: 0,
+  colors: (
+   primary: #2581C4,
+   accent: #EA518D,
+   font: #323232,
+   disabled: (
+    foreground: rgb(0 0 0 / .38),
+    background: rgb(0 0 0 / .12)
+   )
+  )
+ )
+);
+```
+
+#### Fonts
+Allow customization of typography and font styles based od Angular Material typography levels. Each font related property in configuration can have **family** and **size** values.
+
+- `hero-titles`: Define typography for h1, h2, h3, h4 elements.
+- `titles`: Typography h3, h4 elements
+- `body`: Define typography for base body text.
+- `buttons`: Typography for buttons and anchors
+
+> **_NOTE:_**  Don't forget to check if you [corrected configure](#importing-fonts) or import font family's
+
+```scss
+$custom-theme: (
+ general: (
+  density: 0,
+  colors: (
+   primary: #2581C4,
+   accent: #EA518D,
+   font: #323232,
+   disabled: (
+    foreground: rgb(0 0 0 / .38),
+    background: rgb(0 0 0 / .12)
+   )
+  ),
+  fonts: (
+   hero-titles: (
+    family: 'Helvetica',
+    size: 40px
+   ),
+   titles: (
+    family: 'Roboto',
+    size: 25px
+   ),
+   body: (
+    family: 'Helvetica',
+    size: 20px
+   ),
+   buttons: (
+    family: 'Roboto',
+    size: 10px
+   )
+  ),
+ )
+);
+```
+
+To apply it on whole body of the app, add `.mat-body` class to the body element in index.html file in app root
+
+```html
+<!-- Applying mat-body class to the root component in index.html -->
+<body class="mat-body">
+<app-root></app-root>
+</body>
+```
+
+Since we're overriding Angular Material, it is important to add CSS classes for mixin that emits styles for native header elements scoped within the .mat-typography CSS class
+
+| CSS class      | Example                                       |
+| -------------- | --------------------------------------------- |
+| .mat-headline-1   | `<h1 class="mat-headline-1">{{title}}</h1>`|
+| .mat-headline-2   | `<h2 class="mat-headline-2">{{title}}</h2>`|
+
+#### Spacing
+The submap providing the necessary spacing information for styling the **entry form and search form** **button** and **form field**
+
+```scss
+$custom-theme: (
+ general: (
+  spacing: (
+   default: 15px
+  ),
+ )
+);
+```
+
+#### Buttons
+Additional customization  for buttons:
+
+- `icon-size` - defines the default icon size for buttons.
+
+Code Example of general submap configuration:
+
+```scss
+$theme: (
+ general: (
+  buttons: (
+   icon-size: 48px
+  )
+ )
+)
+```
+
+### Tables Configuration
+
+The `tables` section in the `$theme` configuration handles how table components are styled and themed.
+
+#### Cells
+Contains properties related to individual cells in a table:
+
+- `edge-gap` specifies the gap between cell edges.
+- `padding` allows customization of cell padding.
+
+#### Rows
+
+Handles the appearance of table rows:
+
+- `selected-color` sets the background color for selected rows.
+- `disabled-color` defines the background color for disabled rows.
+- `odd-even-row` determines whether odd or even rows are styled differently.
+- `odd-even-background` sets the background color for odd or even rows.
+
+#### Contents
+Manages the styling of table content:
+
+- `no-result` contains properties for the appearance of a message displayed when there are no search results:
+- `font-size` specifies the font size of the message.
+- `font-weight` controls the font weight of the message.
+
+```scss
+$theme: (
+ tables: (
+  cells: (
+   edge-gap: 4px,
+   padding: null
+  ),
+  rows: (
+   selected-color: #FFF,
+   disabled-color: #F5F5F5,
+   odd-even-row: odd,
+   odd-even-background: #F0F0F0
+  ),
+  contents: (
+   no-result: (
+    font-size: 13px,
+    font-weight: 500
+   )
+  )
+ )
+);
+```
+
+### Dialogs Configuration
+
+The `dialogs` submap within `$theme` focuses on configuring the appearance of dialog components.
+
+#### Title
+Includes properties related to the title of a dialog:
+
+- `size` determines the font size of the dialog title.
+
+```scss
+$theme: (
+ dialogs: (
+  title: (
+   size: 20px
+  )
+ )
+);
+```
+
+## 2. Native Angular Material Configuration
+
+With this approach we configure every little piece in our entry components. Angular Material defines a predefined color palette that you can use in your application. The palette includes a range of primary, accent, and warn colors.
+Check these list for more info
+
+- [Theming Guide](https://material.angular.io/guide/theming)
+- [Typography Guide](https://material.angular.io/guide/typography)
+
+Bellow is example:
 
 ```scss
 $typo: (headline-1: (font-size: 96px, line-height: 96px, font-weight: 300, font-family: 'roboto, sans-serif', letter-spacing: -.015625em),
@@ -162,191 +424,4 @@ $custom-theme: (
 );
 
 @include generator.generate-from($custom-theme);
-
-```
-
-## 2. Simplified Configuration
-
-### 2a. Configuration Properties
-
-The new custom-theme map variable should override the default theme that is already defined. It contains a nested structure defining various aspects of a theme. Different key parameters can be passed in to extend it and customize it for our needs.
-| Submap       | Description                                                             | Possible Options                      |
-|--------------|-------------------------------------------------------------------------|----------------------------------------|
-| **general**  | Settings that influence the overall appearance and behavior of components. | `typography`, `fonts`, `spacing`, `inputs`, `buttons` |
-| **tables**   | Customize table component styling.                                       | `cells`, `rows`, `contents`            |
-| **dialogs**  | Set dialog font size.                                                   | `title`                                |
-
-> **_NOTE:_** Submaps can't be nested inside each other
-
-#### General Submap
-
-The `general` section in the `$theme` configuration contains settings that shape the overall look and behavior of the components.
-
-- **Density:** set to `0` by default, controls the spacing and compactness of elements. Other possibilites are -`1` & `1`. For  [more info check](https://m2.material.io/design/layout/applying-density.html#usage)
-
-- **Colors:** defines various color properties:
-  - `primary` and `accent` represent the default primary and accent colors.
-  - `font` specifies the default font color.
-  - `disabled` contains settings for disabled state:
-    - `foreground` defines the text color for disabled elements.
-    - `background` specifies the background color for disabled elements.
-
-- **Fonts:** allow customization of typography and font styles. We can use  predefined fonts that comes with `entry-components` library or our own project required customised fonts.
-  - `hero-titles` define typography for h1, h2, h3, h4 elements.
-    - `family`
-    - `size`
-  - `titles` define typography h3, h4 elements
-    - `family`
-    - `size`
-  - `body` define typography for base body text. To apply it on whole body of the app, add .mat-body class to the body element in index.html file in app root
-    - `family`
-    - `size`
-
-     ```html
-    <body class="mat-body">
-      <app-root></app-root>
-    </body>
-    ```
-
-  - `buttons` define buttons and anchors
-    - `family`
-    - `size`
-
-  > **_NOTE:_** Since we're overriding Angular Material, it is important to add CSS classes for mixin that emits styles for native header elements scoped within the .mat-typography CSS class
-
-  | CSS class      | Example                                       |
-  | -------------- | --------------------------------------------- |
-  | .mat-headline-1   | `<h1 class="mat-headline-1">{{title}}</h1>`|
-  | .mat-headline-2   | `<h2 class="mat-headline-2">{{title}}</h2>`|
-  | .mat-headline-3   |                                            |
-  | .mat-headline-4   |                                            |
-
-- **Spacing:** The submap, with a default of `15px`, determines the default spacing between elements.
-
-- **Buttons:** Additional customization buttons:
-  - `icon-size` - defines the default icon size for buttons.
-
-Code Example of general submap configuration:
-
-```scss
-$theme: (
- general: (
-  density: 0,
-  colors: (
-   primary: #2581C4,
-   accent: #EA518D,
-   font: #323232,
-   disabled: (
-    foreground: rgb(0 0 0 / .38),
-    background: rgb(0 0 0 / .12)
-   )
-  ),
-  fonts: (
-   hero-titles: (
-    family: 'Times New Roman',
-    size: 30px
-   ),
-   titles: (
-    family: 'Inter',
-    size: 14px
-   )
-  ),
-  spacing: (
-   default: 15px
-  ),
-  buttons: (
-   icon-size: 48px
-  )
- )
-)
-```
-
-#### Fonts Usage in Theming
-
-There are 2 possibilities of using fonts in our custom theme:
-
-1. **Default Fonts Configuration**:
-  Entry-components library comes with default fonts. It includes Montserrat, OpenSans and Roboto font family. When opting for default fonts, the necessary configuration takes place in the `angular.json` file at the root of the app. The fonts are imported from the node modules and specified in the "assets" section as follows:  
-
-  ```json
-   "assets": [
-      "src/favicon.ico",
-      "src/assets",
-      {
-        "glob": "**/*",
-        "input": "./node_modules/@enigmatry/entry-components/assets/",
-        "output": "/assets/"
-      }
-    ],
-  ```
-
-2. **Custom Fonts Configuration**, they needs to be imported locally in separated file using @font-face rule (our preferable SCSS structure is modules/components/typography/fonts.scss).
-
-```scss
-@font-face {
- font: {
-  family: 'Helvetica';
-  weight: 400;
- }
- src: url('/assets/fonts/Helvetica.woff2') format('woff2'), url('/assets/fonts/Helvetica.woff') format('woff');
-}
-```
-
-### Tables Submap
-
-The `tables` section in the `$theme` configuration handles how table components are styled and themed.
-
-- **Cells:** contains properties related to individual cells in a table:
-  - `edge-gap` specifies the gap between cell edges.
-  - `padding` allows customization of cell padding.
-
-- **Rows:** handles the appearance of table rows:
-  - `selected-color` sets the background color for selected rows.
-  - `disabled-color` defines the background color for disabled rows.
-  - `odd-even-row` determines whether odd or even rows are styled differently.
-  - `odd-even-background` sets the background color for odd or even rows.
-
-- **Contents:** manages the styling of table content:
-  - `no-result` contains properties for the appearance of a message displayed when there are no search results:
-    - `font-size` specifies the font size of the message.
-    - `font-weight` controls the font weight of the message.
-
-```scss
-$theme: (
- tables: (
-  cells: (
-   edge-gap: 4px,
-   padding: null
-  ),
-  rows: (
-   selected-color: #FFF,
-   disabled-color: #F5F5F5,
-   odd-even-row: odd,
-   odd-even-background: #F0F0F0
-  ),
-  contents: (
-   no-result: (
-    font-size: 13px,
-    font-weight: 500
-   )
-  )
- )
-);
-```
-
-### Dialogs Submap
-
-The `dialogs` submap within `$theme` focuses on configuring the appearance of dialog components.
-
-- **Title:** includes properties related to the title of a dialog:
-  - `size` determines the font size of the dialog title.
-
-```scss
-$theme: (
- dialogs: (
-  title: (
-   size: 20px
-  )
- )
-);
 ```
