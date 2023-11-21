@@ -1,16 +1,30 @@
 # Theming Configuration Guide
 
+### Table of Contents
+- [Overviewww](#overview)
+- [Prerequisites](#prerequisites)
+- [Project Structure](#project-structure)
+- [Styles Configuration](#styles-configuration)
+- [Custom Theme Definition](#custom-theme-definition)
+- [Theme Configuration Approaches](#theme-configuration-approaches)
+   - [Native Angular Material Configuration](#1-native-angular-material-configuration)
+   - [Simplified Configuration](#2-simplified-configuration)
+      - [Configuration Properties](#2a-configuration-properties)
+         - [General Submap](#general-submap)
+         - [Fonts Usage in Theming](#fonts-usage-in-theming)
+         - [Tables Submap](#tables-submap)
+         - [Dialogs Submap](#dialogs-submap)
+- [Useful links](#useful-links)
+
 ## Overview
-The `@enigmatry/entry-components` library comes with generator mixin which simplifies project theming by eliminating the need for extensive custom styling   While it comes with default settings, it offers the flexibility to be configured to meet the unique requirements of each project. A wide range of properties can be leveraged to introduce varied style changes when configured appropriately. The guide provides a detailed walkthrough of this process.
+The **entry-components** library comes with generator mixin which simplifies project theming by eliminating the need for extensive custom styling   While it comes with default settings, it offers the flexibility to be configured to meet the unique requirements of each project. A wide range of properties can be leveraged to introduce varied style changes when configured appropriately. The guide provides a detailed walkthrough of this process.
 
 ## Prerequisites
 Ensure that the following libraries are installed:   
- `@enigmatry/entry-components`  
- `@enigmatry/entry-form`
-
+- [`@enigmatry/entry-components`](https://www.npmjs.com/package/@enigmatry/entry-components)
+- [`@enigmatry/entry-form`](https://www.npmjs.com/package/@enigmatry/entry-form)
 
 ## Project structure
-
 We need separate file for including theme related style files. By our [SCSS coding standard](https://wiki.enigmatry.com/en/standards-and-guidelines/sass-coding-standard) it should be inside `styles/partials/vendors/libraries` subfolder. Create entry subfolder if it isn't already defined in project.The entry subfolder should contain the following SCSS partials:
 
 1. `_index.scss` entry point for mainating good SCSS structure
@@ -312,3 +326,8 @@ $theme: (
 	)
 );
 ```
+
+## Useful links
+- [Theming Guide](https://material.angular.io/guide/theming)
+- [Typography Guide](https://material.angular.io/guide/typography)
+- [Sass Map Module](https://sass-lang.com/documentation/modules/map/)
