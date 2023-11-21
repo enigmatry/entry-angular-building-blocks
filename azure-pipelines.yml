@@ -4,140 +4,177 @@ trigger:
 # no PR triggers
 pr: none
 
-pool:
-  vmImage: ubuntu-latest
-
 variables:
   theLatestVersion: ''
+  artifactName: entry-angular-building-blocks
 
-steps:
-- checkout: self
-  fetchDepth: 50
-  fetchTags: true
+stages:
+- stage: ci_build
+  displayName: Build the Angular Building Blocks
+  jobs:
+  - job: build
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - checkout: self
+      fetchDepth: 50
+      fetchTags: true
 
-- task: DotNetCoreCLI@2
-  displayName: Add Manifest for tool installation
-  inputs:
-    command: 'custom'
-    custom: 'new '
-    arguments: tool-manifest
+    - task: DotNetCoreCLI@2
+      displayName: Add Manifest for tool installation
+      inputs:
+        command: 'custom'
+        custom: 'new '
+        arguments: tool-manifest
 
-- task: DotNetCoreCLI@2
-  displayName: Install minver
-  inputs:
-    command: 'custom'
-    custom: 'tool '
-    arguments: install minver-cli
+    - task: DotNetCoreCLI@2
+      displayName: Install minver
+      inputs:
+        command: 'custom'
+        custom: 'tool '
+        arguments: install minver-cli
 
-- task: PowerShell@2
-  displayName: 'Set MinVer Version'
-  inputs:
-    targetType: inline
-    script: |
-      $version = dotnet minver -p preview
-      echo "##vso[task.setvariable variable=theLatestVersion]$version"
-      Write-Host "Setting MinVer to '$version'"
+    - task: PowerShell@2
+      displayName: 'Set MinVer Version'
+      inputs:
+        targetType: inline
+        script: |
+          $version = dotnet minver -p preview
+          echo "##vso[task.setvariable variable=theLatestVersion]$version"
+          Write-Host "Setting MinVer to '$version'"
 
-- task: Npm@1
-  displayName: 'Set the version for entry form'
-  inputs:
-    command: custom
-    customCommand: version $(theLatestVersion) --no-git-tag-version
-    workingDir: 'libs/entry-form'
+    - task: Npm@1
+      displayName: 'Set the version for entry form'
+      inputs:
+        command: custom
+        customCommand: version $(theLatestVersion) --no-git-tag-version
+        workingDir: 'libs/entry-form'
 
-- task: Npm@1
-  displayName: 'Set the version for entry components'
-  inputs:
-    command: custom
-    customCommand: version $(theLatestVersion) --no-git-tag-version
-    workingDir: 'libs/entry-components'
+    - task: Npm@1
+      displayName: 'Set the version for entry components'
+      inputs:
+        command: custom
+        customCommand: version $(theLatestVersion) --no-git-tag-version
+        workingDir: 'libs/entry-components'
 
-- task: Npm@1
-  displayName: 'Set the version eslint recommended rules'
-  inputs:
-    command: custom
-    customCommand: version $(theLatestVersion) --no-git-tag-version
-    workingDir: 'libs/eslint-config'
+    - task: Npm@1
+      displayName: 'Set the version eslint recommended rules'
+      inputs:
+        command: custom
+        customCommand: version $(theLatestVersion) --no-git-tag-version
+        workingDir: 'libs/eslint-config'
+        
+    - task: Npm@1
+      displayName: 'Set the version stylelint recommended rules'
+      inputs:
+        command: custom
+        customCommand: version $(theLatestVersion) --no-git-tag-version
+        workingDir: 'libs/stylelint-config'
+
+    - task: Npm@1
+      displayName: 'Set the version scss foundation'
+      inputs:
+        command: custom
+        customCommand: version $(theLatestVersion) --no-git-tag-version
+        workingDir: 'libs/scss-foundation'
+
+    - task: Npm@1
+      displayName: 'npm install'
+      inputs:
+        command: 'install'
+
+    - task: Npm@1
+      displayName: 'Lint libraries'
+      inputs:
+        command: 'custom'
+        customCommand: 'run lint'
+
+    - task: Npm@1
+      displayName: 'Build entry form'
+      inputs:
+        command: 'custom'
+        customCommand: 'run build @enigmatry/entry-form'
+
+    - task: Npm@1
+      displayName: 'Build entry components'
+      inputs:
+        command: 'custom'
+        customCommand: 'run build @enigmatry/entry-components'
+
+    - task: Npm@1
+      displayName: 'Run unit tests'
+      inputs:
+        command: 'custom'
+        customCommand: 'run automated-tests'
     
-- task: Npm@1
-  displayName: 'Set the version stylelint recommended rules'
-  inputs:
-    command: custom
-    customCommand: version $(theLatestVersion) --no-git-tag-version
-    workingDir: 'libs/stylelint-config'
-
-- task: Npm@1
-  displayName: 'Set the version scss foundation'
-  inputs:
-    command: custom
-    customCommand: version $(theLatestVersion) --no-git-tag-version
-    workingDir: 'libs/scss-foundation'
-
-- task: Npm@1
-  displayName: 'npm install'
-  inputs:
-    command: 'install'
-
-- task: Npm@1
-  displayName: 'Lint libraries'
-  inputs:
-    command: 'custom'
-    customCommand: 'run lint'
-
-- task: Npm@1
-  displayName: 'Build entry form'
-  inputs:
-    command: 'custom'
-    customCommand: 'run build @enigmatry/entry-form'
-
-- task: Npm@1
-  displayName: 'Build entry components'
-  inputs:
-    command: 'custom'
-    customCommand: 'run build @enigmatry/entry-components'
-
-- task: Npm@1
-  displayName: 'Run unit tests'
-  inputs:
-    command: 'custom'
-    customCommand: 'run automated-tests'
-
-- task: Npm@1
-  displayName: 'Publish entry form'
-  inputs:
-    command: publish
-    publishRegistry: useExternalRegistry
-    publishEndpoint: npm
-    workingDir: 'dist/enigmatry/entry-form'
-
-- task: Npm@1
-  displayName: 'Publish entry components'
-  inputs:
-    command: publish
-    publishRegistry: useExternalRegistry
-    publishEndpoint: npm
-    workingDir: 'dist/enigmatry/entry-components'
-
-- task: Npm@1
-  displayName: 'Publish the eslint recommended rules'
-  inputs:
-    command: publish
-    publishRegistry: useExternalRegistry
-    publishEndpoint: npm
-    workingDir: 'libs/eslint-config'
-
-- task: Npm@1
-  displayName: 'Publish the stylelint recommended rules'
-  inputs:
-    command: publish
-    publishRegistry: useExternalRegistry
-    publishEndpoint: npm
-    workingDir: 'libs/stylelint-config'
+    - task: PublishBuildArtifacts@1
+      displayName: Publish artifacts
+      inputs:
+        PathtoPublish: 'dist'
+        ArtifactName: $(artifactName)-$(Build.BuildNumber)
+        publishLocation: 'Container'
     
-- task: Npm@1
-  displayName: 'Publish the scss foundation'
-  inputs:
-    command: publish
-    publishRegistry: useExternalRegistry
-    publishEndpoint: npm
-    workingDir: 'libs/scss-foundation'
+    - task: PublishBuildArtifacts@1
+      displayName: Publish libs
+      inputs:
+        PathtoPublish: 'libs'
+        ArtifactName: $(artifactName)-$(Build.BuildNumber)
+        publishLocation: 'Container'
+
+- stage: publish_npm
+  dependsOn: ci_build
+  displayName: Publish to NPM
+  jobs:
+  - deployment: Deploy
+    environment: npm
+    pool:
+      vmImage: ubuntu-latest
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+            - checkout: self
+              fetchDepth: 50
+              fetchTags: true
+            - download: current
+              displayName: 'Download build artifacts'
+
+            - task: Npm@1
+              displayName: 'Publish entry form'
+              inputs:
+                command: publish
+                publishRegistry: useExternalRegistry
+                publishEndpoint: npm
+                workingDir: '$(Pipeline.Workspace)/$(artifactName)-$(Build.BuildNumber)/enigmatry/entry-form'
+
+            - task: Npm@1
+              displayName: 'Publish entry components'
+              inputs:
+                command: publish
+                publishRegistry: useExternalRegistry
+                publishEndpoint: npm
+                workingDir: '$(Pipeline.Workspace)/$(artifactName)-$(Build.BuildNumber)/enigmatry/entry-components'
+
+            - task: Npm@1
+              displayName: 'Publish the eslint recommended rules'
+              inputs:
+                command: publish
+                publishRegistry: useExternalRegistry
+                publishEndpoint: npm
+                workingDir: '$(Pipeline.Workspace)/$(artifactName)-$(Build.BuildNumber)/eslint-config'
+
+            - task: Npm@1
+              displayName: 'Publish the stylelint recommended rules'
+              inputs:
+                command: publish
+                publishRegistry: useExternalRegistry
+                publishEndpoint: npm
+                workingDir: '$(Pipeline.Workspace)/$(artifactName)-$(Build.BuildNumber)/stylelint-config'
+                
+            - task: Npm@1
+              displayName: 'Publish the scss foundation'
+              inputs:
+                command: publish
+                publishRegistry: useExternalRegistry
+                publishEndpoint: npm
+                workingDir: '$(Pipeline.Workspace)/$(artifactName)-$(Build.BuildNumber)/scss-foundation'
