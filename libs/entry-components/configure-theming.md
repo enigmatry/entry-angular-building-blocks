@@ -29,7 +29,7 @@ Ensure that the following libraries are installed with the latest versions:
 
 ## Project structure
 
-We require a dedicated file for including theme-related style configurations. Adhering to our [SCSS coding standard](https://wiki.enigmatry.com/en/standards-and-guidelines/sass-coding-standard), this file should be within the `styles/partials/vendors/libraries` subfolder. If the `entry` subfolder is not already defined in the project, create it. Within the `entry` subfolder, you'll find the following SCSS partials:
+We require a dedicated file to include theme-related style configurations. Adhering to our [SCSS coding standard](https://wiki.enigmatry.com/en/standards-and-guidelines/sass-coding-standard), this file should be within the `styles/partials/vendors/libraries` subfolder. If the `entry` subfolder is not already defined in the project, create it. Within the `entry` subfolder, the following SCSS partials should be created:
 
 ```diff
 ├── libraries
