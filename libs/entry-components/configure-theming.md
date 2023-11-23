@@ -255,7 +255,7 @@ Since we're overriding Angular Material, it is important to add CSS classes for 
 
 #### Spacing
 
-The submap providing the necessary spacing information for styling the **entry form and search form** **button** and **form field**
+The submap providing the necessary spacing information for styling the **entry form**, **search form button** and **form field**
 
 ```scss
 $custom-theme: (
@@ -271,7 +271,7 @@ $custom-theme: (
 
 Additional customization  for buttons:
 
-- `icon-size` - defines the default icon size for buttons.
+- `icon-size` - sets the default size for icons on buttons when icons are present.
 
 Code Example of general submap configuration:
 
@@ -367,7 +367,7 @@ Check these list for more info
 Bellow is example:
 
 ```scss
-$typo: (headline-1: (font-size: 96px, line-height: 96px, font-weight: 300, font-family: 'roboto, sans-serif', letter-spacing: -.015625em),
+$typography: (headline-1: (font-size: 96px, line-height: 96px, font-weight: 300, font-family: 'roboto, sans-serif', letter-spacing: -.015625em),
 headline-2: (font-size: 60px, line-height: 60px, font-weight: 300, font-family: 'roboto, sans-serif', letter-spacing: -.0083333333em), 
 headline-3: (font-size: 48px, line-height: 50px, font-weight: 400, font-family: 'roboto, sans-serif', letter-spacing: normal),
 headline-4: (font-size: 34px, line-height: 40px, font-weight: 400, font-family: 'roboto, sans-serif', letter-spacing: .0073529412em), 
@@ -381,7 +381,7 @@ caption: (font-size: 32px, line-height: 20px, font-weight: 400, font-family: 'ro
 button: (font-size: 24px, line-height: 36px, font-weight: 500, font-family: 'roboto, sans-serif', letter-spacing: .0892857143em), 
 overline: (font-size: 12px, line-height: 32px, font-weight: 500, font-family: 'roboto, sans-serif', letter-spacing: .1666666667em), 
 'font-family': 'roboto, sans-serif');
-$prim: (
+$primary: (
   50 : #E6E6E6,
   100 : #C0C0C0,
   200 : #2B95DB,
@@ -417,10 +417,10 @@ $prim: (
 $custom-theme: (
   general: (
     colors: (
-      primary-theme: $prim,
-      accent-theme: $prim
+      primary-theme: $primary,
+      accent-theme: $primary
     ),
-    typography: $typo
+    typography: $typography
   )
 );
 
