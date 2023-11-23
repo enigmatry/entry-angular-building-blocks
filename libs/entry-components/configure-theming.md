@@ -22,10 +22,9 @@ The **entry-components** library comes with a generator which simplifies project
 
 ## Prerequisites
 
-Ensure that the following libraries are installed with the latest versions:
+Ensure that the latest version of the library is installed:
 
 - [`entry-components`](https://www.npmjs.com/package/@enigmatry/entry-components)
-- [`entry-form`](https://www.npmjs.com/package/@enigmatry/entry-form)
 
 ## Project structure
 
@@ -90,19 +89,19 @@ $custom-theme: (
 
 There are 2 possibilities of using fonts in theming:
 
-### 1. Use default fonts from library
+### 1. Use default Roboto font
 
-**Entry-components** library comes with default fonts:  **Montserrat**, **OpenSans** and **Roboto** font family. To be able to use them, it needs to be configured in the `angular.json` file located at the root of the app. The fonts are imported from the library's node modules as follows:  
+**Entry-components** library comes with the default **Roboto** font family. To utilize it, configuration in the `angular.json` file at the root of the app is necessary. The font is imported from the library's node modules as follows:  
 
 ```json
 "assets": [
- "src/favicon.ico",
- "src/assets",
- {
-  "glob": "**/*",
-  "input": "./node_modules/@enigmatry/entry-components/assets/",
-  "output": "/assets/"
- }
+  "src/favicon.ico",
+  "src/assets",
+  {
+    "glob": "**/*",
+    "input": "./node_modules/@enigmatry/entry-components/assets/",
+    "output": "/assets/"
+  }
 ],
 ```
 
@@ -112,11 +111,11 @@ Custom fonts needs to be imported locally in separated file using @font-face rul
 
 ```scss
 @font-face {
- font: {
-  family: 'Helvetica';
-  weight: 400;
- }
- src: url('/assets/fonts/Helvetica.woff2') format('woff2'), url('/assets/fonts/Helvetica.woff') format('woff');
+  font: {
+    family: 'Helvetica';
+    weight: 400;
+  }
+  src: url('/assets/fonts/Helvetica.woff2') format('woff2'), url('/assets/fonts/Helvetica.woff') format('woff');
 }
 ```
 
@@ -138,15 +137,15 @@ The new **custom-theme map**  should override the default theme that comes from 
 
 ```scss
 $custom-theme: (
- general: (
- // General configuration options go here
- ),
- tables: (
- // Table-related configuration options go here
- ),
- dialogs: (
- // Dialog-related configuration options go here
- )
+  general: (
+    // General configuration options go here
+  ),
+  tables: (
+    // Table-related configuration options go here
+  ),
+  dialogs: (
+  / / Dialog-related configuration options go here
+  )
 );
 ```
 
@@ -164,9 +163,9 @@ The density property typically accepts values like **-1**, **0** (default), and 
 
 ```scss
 $custom-theme: (
- general: (
- density: 0
- )
+  general: (
+    density: 0
+  )
 );
 ```
 
@@ -183,18 +182,18 @@ Defines various color properties:
 
 ```scss
 $custom-theme: (
- general: (
-  density: 0,
-  colors: (
-   primary: #2581C4,
-   accent: #EA518D,
-   font: #323232,
-   disabled: (
-    foreground: rgb(0 0 0 / .38),
-    background: rgb(0 0 0 / .12)
-   )
+  general: (
+    density: 0,
+    colors: (
+      primary: #2581C4,
+      accent: #EA518D,
+      font: #323232,
+      disabled: (
+        foreground: rgb(0 0 0 / .38),
+        background: rgb(0 0 0 / .12)
+      )
+    )
   )
- )
 );
 ```
 
@@ -211,36 +210,36 @@ Allow customization of typography and font styles based od Angular Material typo
 
 ```scss
 $custom-theme: (
- general: (
-  density: 0,
-  colors: (
-   primary: #2581C4,
-   accent: #EA518D,
-   font: #323232,
-   disabled: (
-    foreground: rgb(0 0 0 / .38),
-    background: rgb(0 0 0 / .12)
-   )
-  ),
-  fonts: (
-   hero-titles: (
-    family: 'Helvetica',
-    size: 40px
-   ),
-   titles: (
-    family: 'Roboto',
-    size: 25px
-   ),
-   body: (
-    family: 'Helvetica',
-    size: 20px
-   ),
-   buttons: (
-    family: 'Roboto',
-    size: 10px
-   )
-  ),
- )
+  general: (
+    density: 0,
+    colors: (
+      primary: #2581C4,
+      accent: #EA518D,
+      font: #323232,
+      disabled: (
+        foreground: rgb(0 0 0 / .38),
+        background: rgb(0 0 0 / .12)
+      )
+    ),
+    fonts: (
+      hero-titles: (
+        family: 'Helvetica',
+        size: 40px
+      ),
+      titles: (
+        family: 'Roboto',
+        size: 25px
+      ),
+      body: (
+        family: 'Helvetica',
+        size: 20px
+      ),
+      buttons: (
+        family: 'Roboto',
+        size: 10px
+      )
+    ),
+  )
 );
 ```
 
@@ -266,11 +265,11 @@ The submap providing the necessary spacing information for styling the **entry f
 
 ```scss
 $custom-theme: (
- general: (
-  spacing: (
-   default: 15px
-  ),
- )
+  general: (
+    spacing: (
+      default: 15px
+    ),
+  )
 );
 ```
 
@@ -284,11 +283,11 @@ Code Example of general submap configuration:
 
 ```scss
 $custom-theme: (
- general: (
-  buttons: (
-   icon-size: 48px
+  general: (
+    buttons: (
+      icon-size: 48px
+    )
   )
- )
 )
 ```
 
@@ -322,24 +321,24 @@ Manages the styling of table content:
 
 ```scss
 $custom-theme: (
- tables: (
-  cells: (
-   edge-gap: 4px,
-   padding: null
-  ),
-  rows: (
-   selected-color: #FFF,
-   disabled-color: #F5F5F5,
-   odd-even-row: odd,
-   odd-even-background: #F0F0F0
-  ),
-  contents: (
-   no-result: (
-    font-size: 13px,
-    font-weight: 500
-   )
+  tables: (
+    cells: (
+      edge-gap: 4px,
+      padding: null
+    ),
+    rows: (
+      selected-color: #FFF,
+      disabled-color: #F5F5F5,
+      odd-even-row: odd,
+      odd-even-background: #F0F0F0
+    ),
+    contents: (
+      no-result: (
+        font-size: 13px,
+        font-weight: 500
+      )
+    )
   )
- )
 );
 ```
 
@@ -355,11 +354,11 @@ Includes properties related to the title of a dialog:
 
 ```scss
 $custom-theme: (
- dialogs: (
-  title: (
-  size: 20px
- )
-)
+  dialogs: (
+    title: (
+      size: 20px
+    )
+  )
 );
 ```
 
@@ -389,46 +388,46 @@ button: (font-size: 24px, line-height: 36px, font-weight: 500, font-family: 'rob
 overline: (font-size: 12px, line-height: 32px, font-weight: 500, font-family: 'roboto, sans-serif', letter-spacing: .1666666667em), 
 'font-family': 'roboto, sans-serif');
 $prim: (
- 50 : #E6E6E6,
- 100 : #C0C0C0,
- 200 : #2B95DB,
- 300 : #7FE2F3,
- 400 : #B5D117,
- 500 : hsl(78 78% 47%),
- 600 : #C953EC,
- 700 : #1A81C5,
- 800 : #209E94,
- 900 : #2FC955,
- A100 : #209E94,
- A200 : #1A81C5,
- A400 : #C953EC,
- A700 : #B5D117,
- contrast: (
-  50 : #000,
-  100 : #000,
-  200 : #000,
-  300 : #FFF,
-  400 : #FFF,
-  500 : #FFF,
-  600 : #FFF,
-  700 : #FFF,
-  800 : #FFF,
-  900 : #FFF,
-  A100 : #000,
-  A200 : #FFF,
-  A400 : #FFF,
-  A700 : #FFF,
- )
+  50 : #E6E6E6,
+  100 : #C0C0C0,
+  200 : #2B95DB,
+  300 : #7FE2F3,
+  400 : #B5D117,
+  500 : hsl(78 78% 47%),
+  600 : #C953EC,
+  700 : #1A81C5,
+  800 : #209E94,
+  900 : #2FC955,
+  A100 : #209E94,
+  A200 : #1A81C5,
+  A400 : #C953EC,
+  A700 : #B5D117,
+  contrast: (
+    50 : #000,
+    100 : #000,
+    200 : #000,
+    300 : #FFF,
+    400 : #FFF,
+    500 : #FFF,
+    600 : #FFF,
+    700 : #FFF,
+    800 : #FFF,
+    900 : #FFF,
+    A100 : #000,
+    A200 : #FFF,
+    A400 : #FFF,
+    A700 : #FFF,
+  )
 );
 
 $custom-theme: (
- general: (
-  colors: (
-   primary-theme: $prim,
-   accent-theme: $prim
-  ),
-  typography: $typo
- )
+  general: (
+    colors: (
+      primary-theme: $prim,
+      accent-theme: $prim
+    ),
+    typography: $typo
+  )
 );
 
 @include generator.generate-from($custom-theme);
