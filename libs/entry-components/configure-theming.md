@@ -34,19 +34,13 @@ We require a dedicated file to include theme-related style configurations. Adher
 ├── libraries
 +    └── entry
 +      ├── _general.scss
-+      ├── _scss-foundation.scss
 +      └── _index.scss
 ```
 
 - `general.scss` -Imports necessary library generator files for configuring theming.
-- `scss-foundation.scss` - imports the scss foundation library
 - `index.scss` entry point for maintaining good SCSS structure
 
 ## Styles Configuration
-
-Within the `general.scss` partial, import the generator file from the library and our custom variables related to the project.
-
-The generator file represents a collection of includes and a mixin that, when used, generates styles for various components based on a combination of a default theme and a custom theme. The generators for each entry component handle the specifics of styling based on the provided theme. You can check which components are supported on the [Components demo](https://entry-demo.enigmatry.com/) application.
 
 In summary, the generator:
 
@@ -127,7 +121,7 @@ We have 2 ways for configuring theme. We highly suggest using first approach, si
 
 ### Configuration Properties
 
-The new **custom-theme map**  should override the default theme that comes from a library. It contains a nested structure defining various aspects of a theme. Different key parameters can be passed in to extend it and customize it for our needs. The structure is organized into three main sections: **general**, **tables**, and **dialogs**. Each section contains specific configuration options.
+The new **custom theme map** should replace the library's default theme. The structure is nested and defines various aspects of a theme. It can be extended and customized for project needs by passing on different key parameters. The structure consists of three main sections: **general**, **tables**, and **dialogs**. Each section contains a specific configuration.
 
 | Submap       | Description                                                             | Possible Options                      |
 |--------------|-------------------------------------------------------------------------|----------------------------------------|
@@ -206,7 +200,7 @@ Allow customization of typography and font styles based od Angular Material typo
 - `body`: Define typography for base body text.
 - `buttons`: Typography for buttons and anchors
 
-> **_NOTE:_**  Don't forget to check if you [corrected configure](#importing-fonts) or import font family's
+> **_NOTE:_**  Don't forget to check whether font is being applied by checking font families.
 
 ```scss
 $custom-theme: (
