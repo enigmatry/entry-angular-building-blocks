@@ -11,13 +11,14 @@
 - [Importing fonts](#importing-fonts)
   - [Use default font](#1-use-default-roboto-font) 
   - [Preparing custom fonts](#2-preparing-custom-fonts)
+- [Configuration Properties](#configuration-properties)
 - [Theme Configuration Approaches](#theme-configuration-approaches)
   - [Simplified Configuration](#1-simplified-configuration)
-    - [Configuration Properties](#2a-configuration-properties)
       - [General Configuration](#general-configuration)
       - [Tables Configuration](#tables-configuration)
       - [Dialogs Configuration](#dialogs-configuration)
   - [Native Angular Material Configuration](#2-native-angular-material-configuration)
+- [Default values table](#default-values-table)
 
 ## Overview
 
@@ -129,15 +130,11 @@ Ensure that the following steps are completed:
 }
 ```
 
-## Theme Configuration Approaches
-
-We have 2 ways for configuring theme. We highly suggest using first approach, since it's very simple and easy to understand. But if there are special needs then native Angular Material approach is unavoidable.
-
-## 1. Simplified Configuration
-
 ### Configuration Properties
 
 The new **custom theme map** should replace the library's default theme. The structure is nested and defines various aspects of a theme. It can be extended and customized for project needs by passing on different key parameters. The structure consists of three main sections: **general**, **tables**, and **dialogs**. Each section contains a specific configuration.
+
+> **_NOTE:_**  Any property in the theming configuration can be skipped, and if omitted, the **default value** for that property will be used (unless it's specified differently, as for fonts). This provides flexibility for developers to customize only the specific aspects of the theme that are relevant to their project. See table with default values [here](#default-values-table)
 
 | Submap       | Description                                                             | Possible Options                      |
 |--------------|-------------------------------------------------------------------------|----------------------------------------|
@@ -159,13 +156,19 @@ $custom-theme: (
 );
 ```
 
+## Theme Configuration Approaches
+
+The theme can be configured in two ways. We highly suggest using the first approach, since it's very simple and easy to understand. If there are specific needs that cannot be met with simple theming, the native Angular Material approach is inevitable. It's crucial to note that it's not feasible to combine both methods; choose and follow one of the approaches instead.
+
+## 1. Simplified Configuration
+
 ### General Configuration
 
 The `general` section in the `$custom-theme` configuration contains settings that shape the overall look and behavior of the components.
 
 #### Density
 
-The density property typically accepts values like **-1**, **0** (default), and **1**, which correspond to different levels of density. For  [more info check](https://m2.material.io/design/layout/applying-density.html#usage):
+The density property typically accepts values like **-1**, **0**  default), and **1**, which correspond to different levels of density. For  [more info check](https://m2.material.io/design/layout/applying-density.html#usage):
 
 - `-1`: Reduces the spacing and makes elements more compact.
 - `0`: Default density according to the Material Design guidelines.
@@ -456,3 +459,33 @@ $custom-theme: (
 
 @include generator.generate-from($custom-theme);
 ```
+
+## Default values table
+
+The table below outlines the default values for various configuration properties. If a specific value is not explicitly defined in your project's configuration, the system will default to the values listed here.
+
+| Category         | Property                        | Default Value                       |
+|------------------|---------------------------------|-------------------------------------|
+| **general**      | density                         | 0                                   |
+|                  | primary-theme                   | null                                |
+|                  | accent-theme                    | null                                |
+|                  | primary                         | #2581C4                             |
+|                  | accent                          | #EA518D                             |
+|                  | font                            | #323232                             |
+|                  | disabled/foreground             | rgb(0 0 0 / .38)                    |
+|                  | disabled/background             | rgb(0 0 0 / .12)                    |
+|                  | typography                      | null                                |
+|                  | family                          | ''                                  |
+|                  | size                            | 0                                   |
+|                  | default                         | 15px                                |
+|                  | inputs/background               | null                                |
+|                  | icon-size                       | 48px                                |
+| **tables**       | edge-gap                        | 4px                                 |
+|                  | padding                         | null                                |
+|                  | selected-color                  | #FFF                                |
+|                  | disabled-color                  | #F5F5F5                             |
+|                  | odd-even-row                    | odd                                 |
+|                  | odd-even-background             | #F0F0F0                             |
+|                  | font-size                       | 13px                                |
+|                  | font-weight                     | 500                                 |
+| **dialogs**      | size                            | 20px                                |
