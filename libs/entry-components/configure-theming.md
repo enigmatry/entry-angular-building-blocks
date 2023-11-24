@@ -283,6 +283,23 @@ $custom-theme: (
 );
 ```
 
+#### Inputs
+
+We utilize the background value within the inputs configuration to establish the background color for **form text fields**. By default, background property has no color explicitly defined, allowing the default Material styling or any existing CSS rules to take effect.
+
+```scss
+$custom-theme: (
+  general: (
+    spacing: (
+      default: 15px
+    ),
+    inputs: (
+      background: 15px
+    ),
+  )
+);
+```
+
 #### Buttons
 
 Additional customization  for buttons:
