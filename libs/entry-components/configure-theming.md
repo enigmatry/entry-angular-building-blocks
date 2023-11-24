@@ -4,10 +4,13 @@
 
 - [Overview](#overview)
 - [Prerequisites](#prerequisites)
+- [Angular Material Documentation](#angular-material-documentation)
 - [Project Structure](#project-structure)
 - [Styles Configuration](#styles-configuration)
 - [Create custom theme](#create-custom-theme)
 - [Importing fonts](#importing-fonts)
+  - [Use default font](#1-use-default-roboto-font) 
+  - [Preparing custom fonts](#2-preparing-custom-fonts)
 - [Theme Configuration Approaches](#theme-configuration-approaches)
   - [Simplified Configuration](#1-simplified-configuration)
     - [Configuration Properties](#2a-configuration-properties)
@@ -21,10 +24,19 @@
 The **entry-components** library comes with a generator which simplifies project theme by eliminating the need for extensive custom styling. While the library comes with default settings, it provides the flexibility to be configured according to the unique requirements of each project. A wide range of properties can be leveraged to introduce varied style changes when configured appropriately. The guide provides a detailed walkthrough of this process.
 
 ## Prerequisites
+Before diving into theming configurations, make sure to address the following prerequisites:
 
-Ensure that the latest version of the library is installed:
+- Ensure that the latest version of the [`entry-components`](https://www.npmjs.com/package/@enigmatry/entry-components) library is installed
+- Prepare custom fonts  if customers require them, follow the instructions [`here`](#2-preparing-custom-fonts)
+- For a deeper understanding of theming concepts and customization options, refer to the [Angular Material documentation](#angular-material-documentation)
 
-- [`entry-components`](https://www.npmjs.com/package/@enigmatry/entry-components)
+### Angular Material Documentation
+
+To gain a comprehensive understanding of theming configurations, it is highly recommended to consult the official Angular Material documentation. Familiarizing Material's theming and typography guides will provide crucial insights into the available customization options.
+
+- [Theming Guide](https://material.angular.io/guide/theming)
+- [Theming your own components](https://material.angular.io/guide/theming-your-components)
+- [Typography Guide](https://material.angular.io/guide/typography)
 
 ## Project structure
 
@@ -45,7 +57,7 @@ We require a dedicated file to include theme-related style configurations. Adher
 In summary, the generator:
 
 - Includes multiple generator files for supported entry components (dialog, table, button, form...)
-- Generates [Angular Material](https://material.angular.io/guide/theming) for customization of color pallets, typography, and density settings
+- Generates [Angular Material](https://material.angular.io/guide/theming) for customization of color palettes, typography, and density settings
 - Sets up  default, boilerplate theme with predefined values
 - Combines default theme and custom theme styles
 
@@ -99,9 +111,13 @@ There are 2 possibilities of using fonts in theming:
 ],
 ```
 
-### 2. Importing custom fonts
+### 2. Preparing custom fonts
 
-Custom fonts needs to be imported locally in separated file using @font-face rule (our preferred SCSS structure is modules/components/typography/fonts.scss).
+Ensure that the following steps are completed:
+
+1. Place custom font files in the `assets/fonts/` folder of project.
+2. Create a dedicated SCSS file (e.g., `partials/core/fonts.scss`)
+3. Use the `@font-face` rule in `fonts.scss` to define custom fonts with an absolute path.
 
 ```scss
 @font-face {
@@ -358,11 +374,8 @@ $custom-theme: (
 
 ## 2. Native Angular Material Configuration
 
-With this approach we configure every little piece in our entry components. Angular Material defines a predefined color palette that you can use in your application. The palette includes a range of primary, accent, and warn colors.
-Check these list for more info
-
-- [Theming Guide](https://material.angular.io/guide/theming)
-- [Typography Guide](https://material.angular.io/guide/typography)
+In this approach, we carefully set up every little detail within entry components. Angular Material offers a predefined color palette for application, covering range of  primary, accent, and warn colors.
+When a project necessitates many illogical Angular Material overrides that we don't want to support with regular theming, this approach is necessary. It can also be useful in situations where we need more gradual control over the variations of primary and accent colors, as well as their shadows.
 
 Bellow is example:
 
