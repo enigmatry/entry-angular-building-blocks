@@ -215,7 +215,7 @@ $custom-theme: (
 Allow customization of typography and font styles based od Angular Material typography levels. Each font related property in configuration can have **family** and **size** values.
 
 - `hero-titles`: Define typography for h1, h2, h3, h4 elements.
-- `titles`: Typography h3, h4 elements
+- `titles`: Typography for h5 and h6 material subtitles
 - `body`: Define typography for base body text.
 - `buttons`: Typography for buttons and anchors
 
@@ -395,7 +395,7 @@ $custom-theme: (
 ## 2. Native Angular Material Configuration
 
 In this approach, we carefully set up every little detail within entry components. Angular Material offers a predefined color palette for application, covering range of  primary, accent, and warn colors.
-When a project necessitates many illogical Angular Material overrides that we don't want to support with regular theming, this approach is necessary. It can also be useful in situations where we need more gradual control over the variations of primary and accent colors, as well as their shadows.
+When a project necessitates many illogical Angular Material overrides that we don't want to support with regular theming, this approach is necessary. It can also be useful in situations where we need more granual control over the variations of primary and accent colors, as well as their shadows.
 
 Bellow is example:
 
