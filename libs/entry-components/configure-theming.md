@@ -297,7 +297,7 @@ $custom-theme: (
       default: 15px
     ),
     inputs: (
-      background: 15px
+      background: #f4f4f4
     ),
   )
 );
