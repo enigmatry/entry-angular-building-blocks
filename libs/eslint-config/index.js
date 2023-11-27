@@ -30,7 +30,8 @@ module.exports = {
             "prefix": [
               "app",
               "appg",
-              "enigmatry"
+              "enigmatry",
+              "entry"
             ],
             "style": "kebab-case",
             "type": "element"
@@ -42,7 +43,8 @@ module.exports = {
             "prefix": [
               "app",
               "appg",
-              "enigmatry"
+              "enigmatry",
+              "entry"
             ],
             "style": "camelCase",
             "type": "attribute"
