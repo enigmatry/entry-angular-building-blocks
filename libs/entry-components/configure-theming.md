@@ -13,7 +13,7 @@
   - [Preparing custom fonts](#2-preparing-custom-fonts)
 - [Configuration Properties](#configuration-properties)
 - [Theme Configuration Approaches](#theme-configuration-approaches)
-  - [Simplified Configuration](#1-simplified-configuration)
+  - [Custom Configuration](#1-custom-configuration)
       - [General Configuration](#general-configuration)
       - [Tables Configuration](#tables-configuration)
       - [Dialogs Configuration](#dialogs-configuration)
@@ -68,7 +68,7 @@ In summary, the generator:
 
 ## Create custom theme
 
-Next, define the $custom-theme map that will be expanded with various customization options based on specific needs.
+Next, define the $custom-theme map that will be expanded with various customization options based on specific needs. 
 
 ```scss
 $custom-theme: ();
@@ -92,7 +92,9 @@ $custom-theme: (
 
 ```
 
-## Importing Fonts
+## Fonts Prerequisites
+
+### Importing Fonts
 
 There are 2 possibilities of using fonts in theming:
 
@@ -130,11 +132,38 @@ Ensure that the following steps are completed:
 }
 ```
 
-### Configuration Properties
+### Adding Material classes
+
+Since Angular Material is using different typography levels, to be able to read values from a theme it's needed to add those typography level cases to corresponding native elements. So right font configurations will be applied. Check full list here  [Material Typography Guide](https://material.angular.io/guide/typography). 
+
+In other case, if we don't provide those classes for custom components, our typography configurations will not be applied. It depends on the situation and customer needs.
+
+First necessary step is to apply it on whole body of the app, add `.mat-body` or `.mat-body-2` class to the body element in index.html file in app root. 
+
+
+```html
+<!-- Applying mat-body class to the root component in index.html -->
+<body class="mat-body">
+<app-root></app-root>
+</body>
+```
+
+Since we're overriding Angular Material, it is important to add CSS classes for mixin that emits styles for native header elements scoped within the .mat-typography CSS class
+
+| CSS class      | Example                                       |
+| -------------- | --------------------------------------------- |
+| .mat-headline-1   | `<h1 class="mat-headline-1">{{title}}</h1>`|
+| .mat-headline-2   | `<h2 class="mat-headline-2">{{title}}</h2>`|
+
+Based on the project need we choose one of two configuration options. 
+By default, default-theme will be applied if our custom-theme object is empty. If fonts are not specified 
+body fonts will be used for everything. 
+
+## Configuration Properties
 
 The new **custom theme map** should replace the library's default theme. The structure is nested and defines various aspects of a theme. It can be extended and customized for project needs by passing on different key parameters. The structure consists of three main sections: **general**, **tables**, and **dialogs**. Each section contains a specific configuration.
 
-> **_NOTE:_**  Any property in the theming configuration can be skipped, and if omitted, the **default value** for that property will be used (unless it's specified differently, as for fonts). This provides flexibility for developers to customize only the specific aspects of the theme that are relevant to their project. See table with default values [here](#default-values-table)
+> **_NOTE:_**  Any property in the theming configuration can be skipped, and if omitted, the **default value** for that property will be used (unless it's specified differently, [as for fonts](#differences-between-configuring-typography)). This provides flexibility for developers to customize only the specific aspects of the theme that are relevant to their project. See table with default values [here](#default-values-table)
 
 | Submap       | Description                                                             | Possible Options                      |
 |--------------|-------------------------------------------------------------------------|----------------------------------------|
@@ -151,24 +180,44 @@ $custom-theme: (
     // Table-related configuration options go here
   ),
   dialogs: (
-  / / Dialog-related configuration options go here
-  )
+    // Dialog-related configuration options go here
+  ) 
 );
 ```
 
 ## Theme Configuration Approaches
 
-The theme can be configured in two ways. We highly suggest using the first approach, since it's very simple and easy to understand. If there are specific needs that cannot be met with simple theming, the native Angular Material approach is inevitable. It's crucial to note that it's not feasible to combine both methods; choose and follow one of the approaches instead.
+The theme can be configured in two ways, depending on the specific case, dependencies, and the structure of the project. It's crucial to note that it's not feasible to combine both methods; choose and stick with the one approaches instead.
+1. [Custom Configuration](#1-custom-configuration)
+2. [The native Angular Material Configuration](#2-native-angular-material-configuration)
 
-## 1. Simplified Configuration
+We highly recommend using the initial, **simplified approach** because it's straightforward, comprehensible, and easy to understand and maintain.
+If there are specific needs that cannot be met with simple theming [the native Angular Material approach](#2-native-angular-material-configuration) is inevitable. 
+[Custom Configuration]
+
+### Differences between configuring typography
+
+The configuration of typography for headers, paragraphs, and other elements exhibits slight differences depending on the chosen approach. Explore the following subsections for more details:
+- [Configure typography for simple approach](#3-fonts)
+- [Configure typography based Angular Material Typography](#1-typography-configuration)
+
+## 1. Custom Configuration
 
 ### General Configuration
 
-The `general` section in the `$custom-theme` configuration contains settings that shape the overall look and behavior of the components.
+The `general` section in the `$custom-theme` configuration contains settings that shape the overall look and behavior of the components. 
 
-#### Density
+It contains of following properties:
+1. [Density](#1-density)
+2. [Colors](#2-colors)
+3. [Fonts](#3-fonts)
+4. [Spacing](#4-spacing)
+5. [Inputs](#5-inputs)
+6. [Buttons](#6-buttons)
 
-The density property typically accepts values like **-1**, **0**  default), and **1**, which correspond to different levels of density. For  [more info check](https://m2.material.io/design/layout/applying-density.html#usage):
+### 1. Density
+
+The density property typically accepts values like **-1**, **0**  (default), and **1**, which correspond to different levels of density. For  [more info check](https://m2.material.io/design/layout/applying-density.html#usage):
 
 - `-1`: Reduces the spacing and makes elements more compact.
 - `0`: Default density according to the Material Design guidelines.
@@ -182,8 +231,8 @@ $custom-theme: (
 );
 ```
 
-#### Colors
-
+### 2. Colors
+Pass a single, hexadecimal color and theming will do the rest. It will create darker and lighter variations of that color, so we don't need to specify anymore complex color palettes.
 Defines various color properties:
 
 - `primary`: Main color used in application, it sets the tone for the overall theme
@@ -210,7 +259,7 @@ $custom-theme: (
 );
 ```
 
-#### Fonts
+### 3. Fonts
 
 Allow customization of typography and font styles based od Angular Material typography levels. Each font related property in configuration can have **family** and **size** values.
 
@@ -219,21 +268,14 @@ Allow customization of typography and font styles based od Angular Material typo
 - `body`: Define typography for base body text.
 - `buttons`: Typography for buttons and anchors
 
+> **_NOTE:_**  Properties from list above are only applied if we use this method. If we do it on Native angular material way, properties are different, based on Typography material guidelines. Check [this subsection](#1-typography-configuration) for that scenario: 
+
 > **_NOTE:_**  Don't forget to check whether font is being applied by checking font families.
 
 ```scss
 $custom-theme: (
   general: (
     density: 0,
-    colors: (
-      primary: #2581C4,
-      accent: #EA518D,
-      font: #323232,
-      disabled: (
-        foreground: rgb(0 0 0 / .38),
-        background: rgb(0 0 0 / .12)
-      )
-    ),
     fonts: (
       hero-titles: (
         family: 'Helvetica',
@@ -256,23 +298,7 @@ $custom-theme: (
 );
 ```
 
-To apply it on whole body of the app, add `.mat-body` class to the body element in index.html file in app root
-
-```html
-<!-- Applying mat-body class to the root component in index.html -->
-<body class="mat-body">
-<app-root></app-root>
-</body>
-```
-
-Since we're overriding Angular Material, it is important to add CSS classes for mixin that emits styles for native header elements scoped within the .mat-typography CSS class
-
-| CSS class      | Example                                       |
-| -------------- | --------------------------------------------- |
-| .mat-headline-1   | `<h1 class="mat-headline-1">{{title}}</h1>`|
-| .mat-headline-2   | `<h2 class="mat-headline-2">{{title}}</h2>`|
-
-#### Spacing
+### 4. Spacing
 
 The submap providing the necessary spacing information for styling the **entry form**, **search form button** and **form field**
 
@@ -286,7 +312,7 @@ $custom-theme: (
 );
 ```
 
-#### Inputs
+### 5. Inputs
 
 We utilize the background value within the inputs configuration to establish the background color for **form text fields**. By default, background property has no color explicitly defined, allowing the default Material styling or any existing CSS rules to take effect.
 
@@ -303,7 +329,7 @@ $custom-theme: (
 );
 ```
 
-#### Buttons
+### 6. Buttons
 
 Additional customization  for buttons:
 
@@ -325,14 +351,19 @@ $custom-theme: (
 
 The `tables` section in the `$custom-theme` configuration handles how table components are styled and themed.
 
-#### Cells
+It contains of following properties:
+1. [Cells](#1-cells)
+2. [Rows](#2-rows)
+3. [Contents](#3-contents)
+
+### 1. Cells
 
 Contains properties related to individual cells in a table:
 
 - `edge-gap` specifies the gap between cell edges.
 - `padding` allows customization of cell padding.
 
-#### Rows
+### 2. Rows
 
 Handles the appearance of table rows:
 
@@ -341,7 +372,7 @@ Handles the appearance of table rows:
 - `odd-even-row` determines whether odd or even rows are styled differently.
 - `odd-even-background` sets the background color for odd or even rows.
 
-#### Contents
+### 3. Contents
 
 Manages the styling of table content:
 
@@ -376,7 +407,9 @@ $custom-theme: (
 
 The `dialogs` submap within `$custom-theme` focuses on configuring the appearance of dialog components.
 
-#### Title
+It contains of only [title property](#1-title), for now:
+
+### 1. Title
 
 Includes properties related to the title of a dialog:
 
@@ -397,62 +430,126 @@ $custom-theme: (
 In this approach, we carefully set up every little detail within entry components. Angular Material offers a predefined color palette for application, covering range of  primary, accent, and warn colors.
 When a project necessitates many illogical Angular Material overrides that we don't want to support with regular theming, this approach is necessary. It can also be useful in situations where we need more granual control over the variations of primary and accent colors, as well as their shadows.
 
-Bellow is example:
+All properties for native configuration are set to `null` in default theme, meaning that they will not be applied, other related properties will take presence unless we redeclare or customize them. 
+
+### General Configuration
+
+It contains of following properties:
+1. [Typography](#1-typography-configuration)
+2. [Colors](#2-color-themes)
+
+
+### 1. Typography Configuration
+
+Typography configuration enables us to create a set of typographic styles based on the Angular Material Design specifications. These styles are then included in a custom theme, and the Sass directive generates corresponding CSS styles based on this theme. This setup allows for consistent and easily modifiable typography across a web project following Angular Material Design principles.
+
+There are few steps to follow to implement this:
+
+-In `_general.scss` partial define SCSS map that defines various typographic styles for different elements. Each style includes properties like font size, line height, font weight, font family, and letter spacing.
+```scss
+$typography: (
+  headline-1: (font-size: 96px, line-height: 96px, font-weight: 300, font-family: 'roboto, sans-serif', letter-spacing: -.015625em),
+  headline-2: (font-size: 60px, line-height: 60px, font-weight: 300, font-family: 'roboto, sans-serif', letter-spacing: -.0083333333em), 
+    // ... (include other styles)
+  'font-family': 'roboto, sans-serif'
+);
+```
+
+Next, we define our own SCSS map that includes the previously defined $typography map. It is part of a broader theme definition. It consists of general submap, with
+property `typography`. It's associating the typographic styles ($typography) with the broader theme ($custom-theme), making those styles part of the overall design theme for the project.  By default it's set to `null`
 
 ```scss
-$typography: (headline-1: (font-size: 96px, line-height: 96px, font-weight: 300, font-family: 'roboto, sans-serif', letter-spacing: -.015625em),
-headline-2: (font-size: 60px, line-height: 60px, font-weight: 300, font-family: 'roboto, sans-serif', letter-spacing: -.0083333333em), 
-headline-3: (font-size: 48px, line-height: 50px, font-weight: 400, font-family: 'roboto, sans-serif', letter-spacing: normal),
-headline-4: (font-size: 34px, line-height: 40px, font-weight: 400, font-family: 'roboto, sans-serif', letter-spacing: .0073529412em), 
-headline-5: (font-size: 32px, line-height: 32px, font-weight: 400, font-family: 'roboto, sans-serif', letter-spacing: normal), 
-headline-6: (font-size: 32px, line-height: 32px, font-weight: 500, font-family: 'roboto, sans-serif', letter-spacing: .0125em),
-subtitle-1: (font-size: 32px, line-height: 28px, font-weight: 400, font-family: 'roboto, sans-serif', letter-spacing: .009375em),
-subtitle-2: (font-size: 32px, line-height: 22px, font-weight: 500, font-family: 'roboto, sans-serif', letter-spacing: .0071428571em),
-body-1: (font-size: 16px, line-height: 24px, font-weight: 400, font-family: 'roboto, sans-serif', letter-spacing: .03125em), 
-body-2: (font-size: 14px, line-height: 20px, font-weight: 400, font-family: 'roboto, sans-serif', letter-spacing: .0178571429em), 
-caption: (font-size: 32px, line-height: 20px, font-weight: 400, font-family: 'roboto, sans-serif', letter-spacing: .0333333333em),
-button: (font-size: 24px, line-height: 36px, font-weight: 500, font-family: 'roboto, sans-serif', letter-spacing: .0892857143em), 
-overline: (font-size: 12px, line-height: 32px, font-weight: 500, font-family: 'roboto, sans-serif', letter-spacing: .1666666667em), 
-'font-family': 'roboto, sans-serif');
-$primary: (
-  50 : #E6E6E6,
-  100 : #C0C0C0,
-  200 : #2B95DB,
-  300 : #7FE2F3,
-  400 : #B5D117,
-  500 : hsl(78 78% 47%),
-  600 : #C953EC,
-  700 : #1A81C5,
-  800 : #209E94,
-  900 : #2FC955,
-  A100 : #209E94,
-  A200 : #1A81C5,
-  A400 : #C953EC,
-  A700 : #B5D117,
-  contrast: (
-    50 : #000,
-    100 : #000,
-    200 : #000,
-    300 : #FFF,
-    400 : #FFF,
-    500 : #FFF,
-    600 : #FFF,
-    700 : #FFF,
-    800 : #FFF,
-    900 : #FFF,
-    A100 : #000,
-    A200 : #FFF,
-    A400 : #FFF,
-    A700 : #FFF,
+$custom-theme: (
+  general: (
+    typography: $typography
   )
+);
+```
+
+### 2. Color Themes
+
+By default Angular Material expects colors palettes (primary, accent, warn) with darker and lighter variations. Primary and accent are must. 
+
+```scss
+$primary: (
+	50 : #E6E6E6,
+	100 : #C0C0C0,
+	200 : #2B95DB,
+	300 : #7FE2F3,
+	400 : #B5D117,
+	500 : hsl(78 78% 47%),
+	600 : #C953EC,
+	700 : #1A81C5,
+	800 : #209E94,
+	900 : #2FC955,
+	A100 : #209E94,
+	A200 : #1A81C5,
+	A400 : #C953EC,
+	A700 : #B5D117,
+	contrast: (
+		50 : #000,
+		100 : #000,
+		200 : #000,
+		300 : #FFF,
+		400 : #FFF,
+		500 : #FFF,
+		600 : #FFF,
+		700 : #FFF,
+		800 : #FFF,
+		900 : #FFF,
+		A100 : #000,
+		A200 : #FFF,
+		A400 : #FFF,
+		A700 : #FFF,
+	)
+);
+
+$accent: (
+	// put here accent color values...
+);
+
+
+$custom-theme: (
+	general: (
+		colors: (
+			primary-theme: $primary,
+			accent-theme: $accent
+		),
+		typography: $typography
+	)
+);
+```
+
+
+
+
+Don't foget to call generator at the end of file
+
+```scss
+@include generator.generate-from($custom-theme);
+```
+
+So, final code shoud look like this: 
+```scss
+$typography: (
+  headline-1: (font-size: 96px, line-height: 96px, font-weight: 300, font-family: 'roboto, sans-serif', letter-spacing: -.015625em),
+  headline-2: (font-size: 60px, line-height: 60px, font-weight: 300, font-family: 'roboto, sans-serif', letter-spacing: -.0083333333em), 
+  headline-3: (font-size: 48px, line-height: 50px, font-weight: 400, font-family: 'roboto, sans-serif', letter-spacing: normal),
+  headline-4: (font-size: 34px, line-height: 40px, font-weight: 400, font-family: 'roboto, sans-serif', letter-spacing: .0073529412em), 
+  headline-5: (font-size: 32px, line-height: 32px, font-weight: 400, font-family: 'roboto, sans-serif', letter-spacing: normal), 
+  headline-6: (font-size: 32px, line-height: 32px, font-weight: 500, font-family: 'roboto, sans-serif', letter-spacing: .0125em),
+  subtitle-1: (font-size: 32px, line-height: 28px, font-weight: 400, font-family: 'roboto, sans-serif', letter-spacing: .009375em),
+  subtitle-2: (font-size: 32px, line-height: 22px, font-weight: 500, font-family: 'roboto, sans-serif', letter-spacing: .0071428571em),
+  body-1: (font-size: 16px, line-height: 24px, font-weight: 400, font-family: 'roboto, sans-serif', letter-spacing: .03125em), 
+  body-2: (font-size: 14px, line-height: 20px, font-weight: 400, font-family: 'roboto, sans-serif', letter-spacing: .0178571429em), 
+  caption: (font-size: 32px, line-height: 20px, font-weight: 400, font-family: 'roboto, sans-serif', letter-spacing: .0333333333em),
+  button: (font-size: 24px, line-height: 36px, font-weight: 500, font-family: 'roboto, sans-serif', letter-spacing: .0892857143em), 
+  overline: (font-size: 12px, line-height: 32px, font-weight: 500, font-family: 'roboto, sans-serif', letter-spacing: .1666666667em), 
+  'font-family': 'roboto, sans-serif'
 );
 
 $custom-theme: (
   general: (
-    colors: (
-      primary-theme: $primary,
-      accent-theme: $primary
-    ),
     typography: $typography
   )
 );
