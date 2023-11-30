@@ -362,9 +362,19 @@ It contains of following properties:
 ### 1. Cells
 
 Contains properties related to individual cells in a table:
+- `edge-gap` specifies control of both the left and right table paddings, affecting the **first and last cells** to achieve the desired spacing (4px by default)
+- `padding` allows adding top, right, bottom and left paddings for **all cells in table**. By default, there is no value. It's worth mentioning that edge-gap padding will override padding values for the first and last table cell.
 
-- `edge-gap` specifies the gap between cell edges.
-- `padding` allows customization of cell padding.
+```scss
+$custom-theme: (
+  tables: (
+    cells: (
+      edge-gap: 10px,
+      padding: 15px 30px 10px 35px
+    )
+  )
+)
+```
 
 ### 2. Rows
 
@@ -372,7 +382,7 @@ Handles the appearance of table rows:
 
 - `selected-color` sets the background color for selected rows.
 - `disabled-color` defines the background color for disabled rows.
-- `odd-even-row` determines whether odd or even rows are styled differently.
+- `odd-even-row` row can be either odd or even, nothing else.
 - `odd-even-background` sets the background color for odd or even rows.
 
 ### 3. Contents
