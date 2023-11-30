@@ -4,13 +4,16 @@
 
 - [Overview](#overview)
 - [Prerequisites](#prerequisites)
-- [Angular Material Documentation](#angular-material-documentation)
+  - [Angular Material Documentation](#angular-material-documentation)
 - [Project Structure](#project-structure)
 - [Styles Configuration](#styles-configuration)
 - [Create custom theme](#create-custom-theme)
-- [Importing fonts](#importing-fonts)
-  - [Use default font](#1-use-default-roboto-font) 
-  - [Preparing custom fonts](#2-preparing-custom-fonts)
+- [Fonts Prerequisites](#fonts-prerequisites)
+  - [Importing fonts](#importing-fonts)
+    - [Use default font](#1-use-default-roboto-font) 
+    - [Preparing custom fonts](#2-preparing-custom-fonts)
+  - [Adding Material classes](#adding-material-classes)  
+  - [Configuring typography](#differences-between-configuring-typography)  
 - [Configuration Properties](#configuration-properties)
 - [Theme Configuration Approaches](#theme-configuration-approaches)
   - [Custom Configuration](#1-custom-configuration)
@@ -19,6 +22,10 @@
       - [Dialogs Configuration](#dialogs-configuration)
   - [Native Angular Material Configuration](#2-native-angular-material-configuration)
 - [Default values table](#default-values-table)
+
+
+
+
 
 ## Overview
 
@@ -159,6 +166,12 @@ Based on the project need we choose one of two configuration options.
 By default, default-theme will be applied if our custom-theme object is empty. If fonts are not specified 
 body fonts will be used for everything. 
 
+### Differences between configuring typography
+
+The configuration of typography for headers, paragraphs, and other elements exhibits slight differences depending on the chosen [configuration approach](#theme-configuration-approaches). Explore the following subsections for more details:
+- [Configure typography for custom approach](#3-fonts)
+- [Configure typography based Angular Material Typography](#1-typography-configuration)
+
 ## Configuration Properties
 
 The new **custom theme map** should replace the library's default theme. The structure is nested and defines various aspects of a theme. It can be extended and customized for project needs by passing on different key parameters. The structure consists of three main sections: **general**, **tables**, and **dialogs**. Each section contains a specific configuration.
@@ -191,15 +204,8 @@ The theme can be configured in two ways, depending on the specific case, depende
 1. [Custom Configuration](#1-custom-configuration)
 2. [The native Angular Material Configuration](#2-native-angular-material-configuration)
 
-We highly recommend using the initial, **simplified approach** because it's straightforward, comprehensible, and easy to understand and maintain.
-If there are specific needs that cannot be met with simple theming [the native Angular Material approach](#2-native-angular-material-configuration) is inevitable. 
-[Custom Configuration]
-
-### Differences between configuring typography
-
-The configuration of typography for headers, paragraphs, and other elements exhibits slight differences depending on the chosen approach. Explore the following subsections for more details:
-- [Configure typography for simple approach](#3-fonts)
-- [Configure typography based Angular Material Typography](#1-typography-configuration)
+We highly recommend using the initial, **custom configuration** because it's straightforward, comprehensible, and easy to understand and maintain.
+If there are specific needs that cannot be met with simple theming [the native Angular Material approach](#2-native-angular-material-configuration) is inevitable.
 
 ## 1. Custom Configuration
 
@@ -217,7 +223,7 @@ It contains of following properties:
 
 ### 1. Density
 
-The density property typically accepts values like **-1**, **0**  (default), and **1**, which correspond to different levels of density. For  [more info check](https://m2.material.io/design/layout/applying-density.html#usage):
+The density property typically accepts values like **-1**, **0**  (default), and **1**, which correspond to different levels of density. Check for [more info](https://m2.material.io/design/layout/applying-density.html#usage):
 
 - `-1`: Reduces the spacing and makes elements more compact.
 - `0`: Default density according to the Material Design guidelines.
@@ -319,9 +325,6 @@ We utilize the background value within the inputs configuration to establish the
 ```scss
 $custom-theme: (
   general: (
-    spacing: (
-      default: 15px
-    ),
     inputs: (
       background: #f4f4f4
     ),
@@ -468,7 +471,7 @@ $custom-theme: (
 
 ### 2. Color Themes
 
-By default Angular Material expects colors palettes (primary, accent, warn) with darker and lighter variations. Primary and accent are must. 
+By default Angular Material expects colors palettes (primary, accent, warn) with darker and lighter variations. Primary and accent are mandatory.
 
 ```scss
 $primary: (
