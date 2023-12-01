@@ -17,15 +17,11 @@
 - [Configuration Properties](#configuration-properties)
 - [Theme Configuration Approaches](#theme-configuration-approaches)
   - [Custom Configuration](#1-custom-configuration)
-      - [General Configuration](#general-configuration)
-      - [Tables Configuration](#tables-configuration)
-      - [Dialogs Configuration](#dialogs-configuration)
+    - [General Configuration](#general-configuration)
+    - [Tables Configuration](#tables-configuration)
+    - [Dialogs Configuration](#dialogs-configuration)
   - [Native Angular Material Configuration](#2-native-angular-material-configuration)
 - [Default values table](#default-values-table)
-
-
-
-
 
 ## Overview
 
@@ -48,7 +44,7 @@ To gain a comprehensive understanding of theming configurations, it is highly re
 
 ## Project structure
 
-We require a dedicated file to include theme-related style configurations. Adhering to our [SCSS coding standard](https://wiki.enigmatry.com/en/standards-and-guidelines/sass-coding-standard), this file should be within the `styles/partials/vendors/libraries` subfolder. If the `entry` subfolder is not already defined in the project, create it. Within the `entry` subfolder, the following SCSS partials should be created:
+We require a dedicated file to include theme-related style configurations. Adhering to our [SCSS coding standard](https://wiki.enigmatry.com/en/standards-and-guidelines/sass-coding-standard), this file should be within the `styles/partials/vendors/libraries` subfolder. If the `entry` subfolder is not already defined in the project, create it. Within the `entry` subfolder, the following Sass partials should be created:
 
 ```diff
 ├── libraries
@@ -58,7 +54,7 @@ We require a dedicated file to include theme-related style configurations. Adher
 ```
 
 - `general.scss` -Imports necessary library generator files for configuring theming.
-- `index.scss` entry point for maintaining good SCSS structure
+- `index.scss` entry point for maintaining good Sass structure
 
 ## Styles Configuration
 
@@ -126,7 +122,7 @@ There are 2 possibilities of using fonts in theming:
 Ensure that the following steps are completed:
 
 1. Place custom font files in the `assets/fonts/` folder of project.
-2. Create a dedicated SCSS file (e.g., `partials/core/fonts.scss`)
+2. Create a dedicated Sass file (e.g., `partials/core/fonts.scss`)
 3. Use the `@font-face` rule in `fonts.scss` to define custom fonts with an absolute path.
 
 ```scss
@@ -155,7 +151,7 @@ First necessary step is to apply it on whole body of the app, add `.mat-body` or
 </body>
 ```
 
-Since we're overriding Angular Material, it is important to add CSS classes for mixin that emits styles for native header elements scoped within the .mat-typography CSS class. 
+We're overriding Angular Material, so it is important to add CSS classes for mixin that emits styles for native header elements scoped within the .mat-typography CSS class. 
 
 ```html
 <!-- Example of adding material class -->
@@ -164,9 +160,9 @@ Since we're overriding Angular Material, it is important to add CSS classes for 
 </section>
 ```
 
-Based on the project need we choose one of two configuration options. 
-By default, default-theme will be applied if our custom-theme object is empty. If fonts are not specified 
-body fonts will be used for everything. 
+Based on the project need we choose one of two configuration options.
+By default, default-theme will be applied if our custom-theme object is empty. If fonts are not specified
+body fonts will be used for everything.
 
 ### Differences between configuring typography
 
@@ -178,7 +174,7 @@ The configuration of typography for headers, paragraphs, and other elements exhi
 
 The new **custom theme map** should replace the library's default theme. The structure is nested and defines various aspects of a theme. It can be extended and customized for project needs by passing on different key parameters. The structure consists of three main sections: **general**, **tables**, and **dialogs**. Each section contains a specific configuration.
 
-> **_NOTE:_**  Any property in the theming configuration can be skipped, and if omitted, the **default value** for that property will be used (unless it's specified differently, [as for fonts](#differences-between-configuring-typography)). This provides flexibility for developers to customize only the specific aspects of the theme that are relevant to their project. See table with default values [here](#default-values-table)
+> **_NOTE:_**  Any property in the theming configuration can be skipped, and if omitted, the **default value** for that property will be used (unless it's specified differently, as for [fonts](#differences-between-configuring-typography)). This provides flexibility for developers to customize only the specific aspects of the theme that are relevant to their project. See table with default values [here](#default-values-table)
 
 | Submap       | Description                                                             | Possible Options                      |
 |--------------|-------------------------------------------------------------------------|----------------------------------------|
@@ -494,17 +490,17 @@ Typography configuration enables us to create a set of typographic styles based 
 
 There are few steps to follow to implement this:
 
--In `_general.scss` partial define SCSS map that defines various typographic styles for different elements. Each style includes properties like font size, line height, font weight, font family, and letter spacing.
+-In `_general.scss` partial define Sass map that defines various typographic styles for different elements. Each style includes properties like font size, line height, font weight, font family, and letter spacing.
 ```scss
 $typography: (
   headline-1: (font-size: 96px, line-height: 96px, font-weight: 300, font-family: 'roboto, sans-serif', letter-spacing: -.015625em),
   headline-2: (font-size: 60px, line-height: 60px, font-weight: 300, font-family: 'roboto, sans-serif', letter-spacing: -.0083333333em), 
     // ... (include other styles)
-  'font-family': 'roboto, sans-serif'
+  'font-family': 'Roboto, sans-serif'
 );
 ```
 
-Next, we define our own SCSS map that includes the previously defined $typography map. It is part of a broader theme definition. It consists of general submap, with
+Next, we define our own Sass map that includes the previously defined $typography map. It is part of a broader theme definition. It consists of general submap, with
 property `typography`. It's associating the typographic styles ($typography) with the broader theme ($custom-theme), making those styles part of the overall design theme for the project.  By default it's set to `null`
 
 ```scss
