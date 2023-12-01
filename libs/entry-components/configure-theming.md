@@ -147,7 +147,7 @@ First necessary step is to apply it on whole body of the app, add `.mat-body` or
 ```html
 <!-- Applying mat-body class to the root component in index.html -->
 <body class="mat-body">
-<app-root></app-root>
+  <app-root></app-root>
 </body>
 ```
 
@@ -517,51 +517,51 @@ By default Angular Material expects colors palettes (primary, accent, warn) with
 
 ```scss
 $primary: (
-	50 : #E6E6E6,
-	100 : #C0C0C0,
-	200 : #2B95DB,
-	300 : #7FE2F3,
-	400 : #B5D117,
-	500 : hsl(78 78% 47%),
-	600 : #C953EC,
-	700 : #1A81C5,
-	800 : #209E94,
-	900 : #2FC955,
-	A100 : #209E94,
-	A200 : #1A81C5,
-	A400 : #C953EC,
-	A700 : #B5D117,
-	contrast: (
-		50 : #000,
-		100 : #000,
-		200 : #000,
-		300 : #FFF,
-		400 : #FFF,
-		500 : #FFF,
-		600 : #FFF,
-		700 : #FFF,
-		800 : #FFF,
-		900 : #FFF,
-		A100 : #000,
-		A200 : #FFF,
-		A400 : #FFF,
-		A700 : #FFF,
-	)
+  50 : #E6E6E6,
+  100 : #C0C0C0,
+  200 : #2B95DB,
+  300 : #7FE2F3,
+  400 : #B5D117,
+  500 : hsl(78 78% 47%),
+  600 : #C953EC,
+  700 : #1A81C5,
+  800 : #209E94,
+  900 : #2FC955,
+  A100 : #209E94,
+  A200 : #1A81C5,
+  A400 : #C953EC,
+  A700 : #B5D117,
+  contrast: (
+    50 : #000,
+    100 : #000,
+    200 : #000,
+    300 : #FFF,
+    400 : #FFF,
+    500 : #FFF,
+    600 : #FFF,
+    700 : #FFF,
+    800 : #FFF,
+    900 : #FFF,
+    A100 : #000,
+    A200 : #FFF,
+    A400 : #FFF,
+    A700 : #FFF,
+  )
 );
 
 $accent: (
-	// put here accent color values...
+  // put here accent color values...
 );
 
 
 $custom-theme: (
-	general: (
-		colors: (
-			primary-theme: $primary,
-			accent-theme: $accent
-		),
-		typography: $typography
-	)
+  general: (
+    colors: (
+      primary-theme: $primary,
+      accent-theme: $accent
+    ),
+    typography: $typography
+  )
 );
 ```
 
