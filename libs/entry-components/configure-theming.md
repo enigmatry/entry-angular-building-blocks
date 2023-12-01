@@ -72,7 +72,7 @@ In summary, the generator:
 
 ## Create custom theme
 
-Next, define the $custom-theme map that will be expanded with various customisation options based on specific needs. 
+Define the $custom-theme map that will be expanded with various customisation options based on specific needs. 
 
 ```scss
 $custom-theme: ();
