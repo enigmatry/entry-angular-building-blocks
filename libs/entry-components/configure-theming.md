@@ -155,12 +155,14 @@ First necessary step is to apply it on whole body of the app, add `.mat-body` or
 </body>
 ```
 
-Since we're overriding Angular Material, it is important to add CSS classes for mixin that emits styles for native header elements scoped within the .mat-typography CSS class
+Since we're overriding Angular Material, it is important to add CSS classes for mixin that emits styles for native header elements scoped within the .mat-typography CSS class. 
 
-| CSS class      | Example                                       |
-| -------------- | --------------------------------------------- |
-| .mat-headline-1   | `<h1 class="mat-headline-1">{{title}}</h1>`|
-| .mat-headline-2   | `<h2 class="mat-headline-2">{{title}}</h2>`|
+```html
+<!-- Example of adding material class -->
+<section>
+  <h1 class="mat-headline-1">Main header</h1>
+</section>
+```
 
 Based on the project need we choose one of two configuration options. 
 By default, default-theme will be applied if our custom-theme object is empty. If fonts are not specified 
@@ -267,37 +269,56 @@ $custom-theme: (
 
 ### 3. Fonts
 
-Allow customization of typography and font styles based od Angular Material typography levels. Each font related property in configuration can have **family** and **size** values.
+Allow customization of typography and font styles based on Angular Material typography levels. `body` property is the most important and **mandatory** to set because that one is **default** and font family will be applied on all headers and buttons, check [this section](#adding-material-classes). If we want to additionally customize some other typography elements, properties, we can include other font properties.
+Each font related property in configuration can have **family** and **size** values.
 
-- `hero-titles`: Define typography for h1, h2, h3, h4 elements.
-- `titles`: Typography for h5 and h6 material subtitles
 - `body`: Define typography for base body text.
 - `buttons`: Typography for buttons and anchors
-
-> **_NOTE:_**  Properties from list above are only applied if we use this method. If we do it on Native angular material way, properties are different, based on Typography material guidelines. Check [this subsection](#1-typography-configuration) for that scenario: 
-
-> **_NOTE:_**  Don't forget to check whether font is being applied by checking font families.
 
 ```scss
 $custom-theme: (
   general: (
-    density: 0,
     fonts: (
-      hero-titles: (
-        family: 'Helvetica',
-        size: 40px
-      ),
-      titles: (
-        family: 'Roboto',
-        size: 25px
-      ),
       body: (
         family: 'Helvetica',
         size: 20px
       ),
       buttons: (
-        family: 'Roboto',
         size: 10px
+      )
+    ),
+  )
+);
+```
+
+#### **OPTIONAL**
+
+- `hero-titles`: Define typography for h1, h2, h3, h4 elements.
+- `titles`: Typography for h5 and h6 material subtitles
+
+> **_NOTE:_**  Properties from list above are only applied if we use this method. If we do it on Native angular material way, properties are different, based on Typography material guidelines. Check [this subsection](#1-typography-configuration) for that scenario: 
+
+> **_NOTE:_**  Don't forget to check whether font is being applied.
+
+```scss
+$custom-theme: (
+  general: (
+    fonts: (
+      body: (
+        family: 'Helvetica',
+        size: 20px
+      ),
+      buttons: (
+        family: 'Montserrat',
+        size: 10px
+      ),
+      titles: (
+        family: 'Open Sans',
+        size: 25px
+      ),
+      hero-titles: (
+        family: 'Open Sans',
+        size: 40px
       )
     ),
   )
@@ -363,7 +384,7 @@ It contains of following properties:
 
 Contains properties related to individual cells in a table:
 - `edge-gap` specifies control of both the left and right table paddings, affecting the **first and last cells** to achieve the desired spacing (4px by default)
-- `padding` allows adding top, right, bottom and left paddings for **all cells in table**. By default, there is no value. It's worth mentioning that edge-gap padding will override padding values for the first and last table cell.
+- `padding` allows adding top, right, bottom and left paddings for **all cells in table**. By default, there is no value.  It's worth mentioning that edge-gap padding will override padding values for the first and last table cell.
 
 ```scss
 $custom-theme: (
@@ -380,10 +401,23 @@ $custom-theme: (
 
 Handles the appearance of table rows:
 
-- `selected-color` sets the background color for selected rows.
+- `selected-color` sets the text color of cells within a selected row
 - `disabled-color` defines the background color for disabled rows.
 - `odd-even-row` row can be either odd or even, nothing else.
 - `odd-even-background` sets the background color for odd or even rows.
+
+```scss
+$custom-theme: (
+  tables: (
+    rows: (
+      selected-color: #FFF,
+      disabled-color: #F5F5F5,
+      odd-even-row: odd,
+      odd-even-background: #F0F0F0
+    )
+  )
+);
+```
 
 ### 3. Contents
 
@@ -533,9 +567,6 @@ $custom-theme: (
 );
 ```
 
-
-
-
 Don't foget to call generator at the end of file
 
 ```scss
@@ -558,7 +589,7 @@ $typography: (
   caption: (font-size: 32px, line-height: 20px, font-weight: 400, font-family: 'roboto, sans-serif', letter-spacing: .0333333333em),
   button: (font-size: 24px, line-height: 36px, font-weight: 500, font-family: 'roboto, sans-serif', letter-spacing: .0892857143em), 
   overline: (font-size: 12px, line-height: 32px, font-weight: 500, font-family: 'roboto, sans-serif', letter-spacing: .1666666667em), 
-  'font-family': 'roboto, sans-serif'
+  'font-family': 'Roboto, sans-serif'
 );
 
 $custom-theme: (
