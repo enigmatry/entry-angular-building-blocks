@@ -269,7 +269,7 @@ $custom-theme: (
 
 ### 3. Fonts
 
-Allow customization of typography and font styles based on Angular Material typography levels. `body` property is the most important and **mandatory** to set because that one is **default** and font family will be applied on all headers and buttons, check [this section](#adding-material-classes). If we want to additionally customize some other typography elements, properties, we can include other font properties.
+Allow customization of typography and font styles based on Angular Material typography levels. `body` property is the most important and **mandatory** to set because that one is **default** and font family will be applied on all headers and buttons. If we want to additionally customize some other typography elements, properties, we can include other font properties.
 Each font related property in configuration can have **family** and **size** values.
 
 - `body`: Define typography for base body text.
@@ -292,6 +292,8 @@ $custom-theme: (
 ```
 
 #### **OPTIONAL**
+
+For customizing headers, check [this section](#adding-material-classes)
 
 - `hero-titles`: Define typography for h1, h2, h3, h4 elements.
 - `titles`: Typography for h5 and h6 material subtitles
