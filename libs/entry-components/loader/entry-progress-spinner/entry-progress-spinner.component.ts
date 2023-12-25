@@ -2,9 +2,9 @@ import { Component, inject } from '@angular/core';
 import { EntryLoadingService } from '../entry-loading.service';
 
 @Component({
-  selector: 'entry-progress-bar',
-  templateUrl: './entry-progress-bar.component.html'
+  selector: 'entry-progress-spinner',
+  templateUrl: './entry-progress-spinner.component.html',
 })
-export class EntryProgressBarComponent {
+export class EntryProgressSpinnerComponent {
   loading$ = inject(EntryLoadingService).loading$;
 }

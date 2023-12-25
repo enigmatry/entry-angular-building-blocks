@@ -8,7 +8,7 @@ import { finalize } from 'rxjs/operators';
 export class EntryLoadingInterceptor implements HttpInterceptor {
   private requestsCount = 0;
 
-  constructor(private pageLoaderService: EntryLoadingService) { }
+  constructor(private loadingService: EntryLoadingService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     this.registerRequest(1);
@@ -19,6 +19,6 @@ export class EntryLoadingInterceptor implements HttpInterceptor {
 
   registerRequest(increment: number) {
     this.requestsCount += increment;
-    this.pageLoaderService.setLoading(this.requestsCount > 0);
+    this.loadingService.setLoading(this.requestsCount > 0);
   }
 }

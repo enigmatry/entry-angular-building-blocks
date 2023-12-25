@@ -1,69 +1,88 @@
-import { Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { Overlay, OverlayContainer, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
-import { Component, Input, OnDestroy, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy, Component, ElementRef, Input,
+  OnDestroy,
+  OnInit, TemplateRef, ViewChild, ViewContainerRef
+} from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
-import { Subject, combineLatest } from 'rxjs';
-import { EntryLoadingService } from '../entry-loading.service';
-import { takeUntil } from 'rxjs/operators';
+import { SpinnerOverlayContainer } from '../spinner-overlay-container';
 
 @Component({
   selector: 'entry-spinner',
-  templateUrl: './entry-spinner.component.html'
+  templateUrl: './entry-spinner.component.html',
+  providers: [
+    Overlay,
+    {
+      provide: OverlayContainer,
+      useClass: SpinnerOverlayContainer
+    }
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EntrySpinnerComponent implements OnDestroy, OnInit {
+export class EntrySpinnerComponent implements OnInit, OnDestroy {
 
   @Input() color: ThemePalette = 'primary';
-  @Input() diameter = 20;
-  @Input() backdropEnabled = true;
+  @Input() diameter = 30;
+  @Input() hasBackdrop = true;
+  @Input() appendTo: 'container' | 'body' | HTMLElement = 'container';
 
-  @ViewChild('spinnerRef', { static: true })
-  private spinnerRef: TemplateRef<any>;
-
-  private overlayRef: OverlayRef = this.createOverlay();
-
-  private _destroy$ = new Subject<void>();
+  @ViewChild('matSpinner', { static: true }) private templateRef: TemplateRef<any>;
+  private portalRef: TemplatePortal<any>;
+  private overlayRef: OverlayRef;
 
   constructor(
     private overlay: Overlay,
     private viewContainerRef: ViewContainerRef,
-    private loadingService: EntryLoadingService) {
+    private overlayContainer: OverlayContainer,
+    private elementRef: ElementRef<HTMLElement>) {
   }
 
   ngOnInit(): void {
-    combineLatest({
-      enabled: this.loadingService.enabled$,
-      loading: this.loadingService.loading$
-    }).pipe(
-      takeUntil(this._destroy$)
-    ).subscribe(({ enabled, loading }) => {
-      if (enabled && loading) {
-        this.showSpinner();
-      } else {
-        this.hideSpinner();
-      }
-    });
-  }
-
-  showSpinner() {
-    this.overlayRef.attach(new TemplatePortal(this.spinnerRef, this.viewContainerRef));
-  }
-
-  hideSpinner() {
-    this.overlayRef.detach();
+    this.createOverlay();
+    this.overlayRef.attach(this.portalRef);
   }
 
   ngOnDestroy(): void {
-    this._destroy$.next();
-    this._destroy$.complete();
+    this.disposeOverlayRef();
   }
 
   private createOverlay() {
-    return this.overlay.create({
+    const overlayConfig = {
+      hasBackdrop: this.hasBackdrop,
       positionStrategy: this.overlay.position()
         .global()
         .centerHorizontally()
-        .centerVertically(),
-      hasBackdrop: true
-    });
+        .centerVertically()
+    };
+
+    this.appendToContainer(this.appendTo);
+    this.overlayRef = this.overlay.create(overlayConfig);
+    this.portalRef = new TemplatePortal(this.templateRef, this.viewContainerRef);
+  }
+
+  private appendToContainer(appendTo: 'container' | 'body' | HTMLElement) {
+    let container: HTMLElement | undefined;
+
+    if (appendTo === 'container') {
+      // set container to component containing the <entry-spinner>
+      container = this.elementRef.nativeElement.parentElement;
+    } else if (appendTo === 'body') {
+      // default cdk overlay container is body, no need to set it explicitly
+      // container = document.body;
+    }
+    else if (appendTo instanceof HTMLElement) {
+      container = appendTo;
+    }
+
+    (this.overlayContainer as SpinnerOverlayContainer)
+      .setContainer(container);
+  }
+
+  private disposeOverlayRef() {
+    if (this.overlayRef) {
+      this.overlayRef.detach();
+      this.overlayRef.dispose();
+    }
   }
 }
