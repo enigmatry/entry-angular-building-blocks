@@ -9,8 +9,8 @@ import { timer } from 'rxjs';
 })
 export class LoaderExampleComponent {
   loading = false;
-  appendTo: 'container' | 'body' = 'container';
   color: ThemePalette = 'primary';
+  fullscreen = true;
   hasBackdrop = true;
 
   showSpinner() {

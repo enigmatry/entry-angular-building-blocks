@@ -24,8 +24,8 @@ export class EntrySpinnerComponent implements OnInit, OnDestroy {
 
   @Input() color: ThemePalette = 'primary';
   @Input() diameter = 30;
+  @Input() fullscreen = true;
   @Input() hasBackdrop = true;
-  @Input() appendTo: 'container' | 'body' | HTMLElement = 'container';
 
   @ViewChild('matSpinner', { static: true }) private templateRef: TemplateRef<any>;
   private portalRef: TemplatePortal<any>;
@@ -56,27 +56,21 @@ export class EntrySpinnerComponent implements OnInit, OnDestroy {
         .centerVertically()
     };
 
-    this.appendToContainer(this.appendTo);
+    this.appendToContainer();
     this.overlayRef = this.overlay.create(overlayConfig);
     this.portalRef = new TemplatePortal(this.templateRef, this.viewContainerRef);
   }
 
-  private appendToContainer(appendTo: 'container' | 'body' | HTMLElement) {
-    let container: HTMLElement | undefined;
+  private appendToContainer() {
+    let container: HTMLElement = document.body;
 
-    if (appendTo === 'container') {
+    if (!this.fullscreen) {
       // set container to component containing the <entry-spinner>
       container = this.elementRef.nativeElement.parentElement;
-    } else if (appendTo === 'body') {
-      // default cdk overlay container is body, no need to set it explicitly
-      // container = document.body;
-    }
-    else if (appendTo instanceof HTMLElement) {
-      container = appendTo;
     }
 
     (this.overlayContainer as SpinnerOverlayContainer)
-      .setContainer(container);
+      .appendTo(container, this.fullscreen);
   }
 
   private disposeOverlayRef() {
