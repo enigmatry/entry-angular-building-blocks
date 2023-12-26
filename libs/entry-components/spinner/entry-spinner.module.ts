@@ -25,4 +25,4 @@ import { EntryProgressSpinnerComponent } from './entry-progress-spinner/entry-pr
     EntrySpinnerComponent
   ]
 })
-export class EntryLoaderModule { }
+export class EntrySpinnerModule { }

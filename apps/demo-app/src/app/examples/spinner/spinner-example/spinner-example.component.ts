@@ -3,19 +3,17 @@ import { ThemePalette } from '@angular/material/core';
 import { timer } from 'rxjs';
 
 @Component({
-  selector: 'app-loader-example',
-  templateUrl: './loader-example.component.html',
-  styleUrls: ['./loader-example.component.scss']
+  selector: 'app-spinner-example',
+  templateUrl: './spinner-example.component.html'
 })
-export class LoaderExampleComponent {
+export class SpinnerExampleComponent {
   loading = false;
   color: ThemePalette = 'primary';
-  fullscreen = true;
+  fullscreen = false;
   hasBackdrop = true;
 
   showSpinner() {
     this.loading = true;
-    timer(3000)
-      .subscribe(_ => this.loading = false);
+    timer(3000).subscribe(_ => this.loading = false);
   }
 }

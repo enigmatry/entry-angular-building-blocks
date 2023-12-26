@@ -5,4 +5,4 @@ export { EntryProgressBarComponent } from './entry-progress-bar/entry-progress-b
 export { EntryProgressSpinnerComponent } from './entry-progress-spinner/entry-progress-spinner.component';
 export { EntrySpinnerComponent } from './entry-spinner/entry-spinner.component';
 
-export { EntryLoaderModule } from './entry-loader.module';
+export { EntrySpinnerModule } from './entry-spinner.module';

@@ -8,5 +8,5 @@ export class RouteSegments {
     static validation = `validation`;
     static permissions = `permissions`;
     static form = `form`;
-    static loader = `loader`;
+    static spinner = `spinner`;
 }

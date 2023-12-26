@@ -62,15 +62,15 @@ export class EntrySpinnerComponent implements OnInit, OnDestroy {
   }
 
   private appendToContainer() {
-    let container: HTMLElement = document.body;
+    // set container to component containing the <entry-spinner>
+    const container = this.elementRef.nativeElement.parentElement;
 
-    if (!this.fullscreen) {
-      // set container to component containing the <entry-spinner>
-      container = this.elementRef.nativeElement.parentElement;
+    if (this.fullscreen) {
+      // container = document.body;
     }
 
     (this.overlayContainer as SpinnerOverlayContainer)
-      .appendTo(container, this.fullscreen);
+      .setAppendTo(container, this.fullscreen);
   }
 
   private disposeOverlayRef() {

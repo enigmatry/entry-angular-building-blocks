@@ -13,11 +13,7 @@ export class SpinnerOverlayContainer extends OverlayContainer implements OnDestr
     super(document, platform);
   }
 
-  ngOnDestroy() {
-    this._containerElement?.remove();
-  }
-
-  appendTo(element: HTMLElement, fullscreen: boolean): void {
+  setAppendTo(element: HTMLElement, fullscreen: boolean): void {
     this._appendToElement = element;
     this._fullscreen = fullscreen;
   }
@@ -29,12 +25,17 @@ export class SpinnerOverlayContainer extends OverlayContainer implements OnDestr
     return this._containerElement;
   }
 
+  ngOnDestroy() {
+    this._containerElement?.remove();
+  }
+
   private createContainer(): void {
-    const containerClass = 'cdk-overlay-container';
+    const containerClass = ['cdk-overlay-container', 'entry-spinner-overlay-container'];
+    const position = this._fullscreen ? 'fixed' : 'absolute';
 
     const container = this._document.createElement('div');
-    container.classList.add(containerClass);
-    container.style.position = this._fullscreen ? 'fixed' : 'absolute';
+    container.classList.add(...containerClass);
+    container.style.position = position;
 
     this._appendToElement.appendChild(container);
     this._containerElement = container;
