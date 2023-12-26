@@ -11,6 +11,7 @@ export class SpinnerExampleComponent {
   color: ThemePalette = 'primary';
   fullscreen = false;
   hasBackdrop = true;
+  appendTo: 'container' | 'body' = 'container';
 
   showSpinner() {
     this.loading = true;

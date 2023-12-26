@@ -24,8 +24,9 @@ export class EntrySpinnerComponent implements OnInit, OnDestroy {
 
   @Input() color: ThemePalette = 'primary';
   @Input() diameter = 30;
-  @Input() fullscreen = true;
+  @Input() fullscreen = false;
   @Input() hasBackdrop = true;
+  @Input() appendTo: 'container' | 'body' = 'container';
 
   @ViewChild('matSpinner', { static: true }) private templateRef: TemplateRef<any>;
   private portalRef: TemplatePortal<any>;
@@ -62,11 +63,10 @@ export class EntrySpinnerComponent implements OnInit, OnDestroy {
   }
 
   private appendToContainer() {
-    // set container to component containing the <entry-spinner>
-    const container = this.elementRef.nativeElement.parentElement;
+    let container = this.elementRef.nativeElement;
 
-    if (this.fullscreen) {
-      // container = document.body;
+    if (this.fullscreen && this.appendTo === 'body') {
+      container = document.body;
     }
 
     (this.overlayContainer as SpinnerOverlayContainer)
