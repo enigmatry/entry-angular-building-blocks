@@ -25,7 +25,7 @@ export class EntryLoaderComponent implements OnInit, OnDestroy {
   @Input() color: ThemePalette = 'primary';
   @Input() diameter = 30;
   @Input() fullscreen = false;
-  @Input() hasBackdrop = true;
+  @Input() backgroundOverlay = true;
 
   @ViewChild('matSpinner', { static: true })
   private templateRef: TemplateRef<any>;
@@ -49,7 +49,7 @@ export class EntryLoaderComponent implements OnInit, OnDestroy {
 
   private createOverlay() {
     const overlayConfig = new OverlayConfig({
-      hasBackdrop: this.hasBackdrop,
+      hasBackdrop: this.backgroundOverlay,
       positionStrategy: this.overlay.position()
         .global()
         .centerHorizontally()

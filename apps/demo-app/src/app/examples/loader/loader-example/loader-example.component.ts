@@ -10,7 +10,7 @@ export class LoaderExampleComponent {
   loading = false;
   color: ThemePalette = 'primary';
   fullscreen = false;
-  hasBackdrop = true;
+  backgroundOverlay = true;
 
   showLoader() {
     this.loading = true;

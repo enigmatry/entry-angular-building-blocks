@@ -1,5 +1,5 @@
 <section>
-  <entry-loader [fullscreen]="fullscreen" [color]="color" [hasBackdrop]="false"></entry-loader>
+  <entry-loader *ngIf="loading" [fullscreen]="fullscreen" [color]="color" [backgroundOverlay]="backgroundOverlay"></entry-loader>
 </section>
 
 <section>
@@ -19,15 +19,13 @@
     </mat-radio-group>
   </p>
   <p>
-    <label>Backdrop: </label>
-    <mat-radio-group aria-label="Backdrop" name="backdrop" [(ngModel)]="hasBackdrop">
+    <label>Background overlay: </label>
+    <mat-radio-group aria-label="Backdrop" name="backdrop" [(ngModel)]="backgroundOverlay">
       <mat-radio-button [value]="true">True (default)</mat-radio-button>
       <mat-radio-button [value]="false">False</mat-radio-button>
     </mat-radio-group>
   </p>
   <p>
-    <button mat-button entry-submit-button (click)="showLoader()">
-      Show loader
-    </button>
+    <button mat-button entry-submit-button (click)="showLoader()">Show loader</button>
   </p>
 </section>
