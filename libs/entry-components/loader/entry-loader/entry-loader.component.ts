@@ -1,35 +1,34 @@
-import { Overlay, OverlayContainer, OverlayRef } from '@angular/cdk/overlay';
+import { Overlay, OverlayConfig, OverlayContainer, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import {
-  ChangeDetectionStrategy, Component, ElementRef, Input,
-  OnDestroy,
+  ChangeDetectionStrategy, Component,
+  ElementRef, Input, OnDestroy,
   OnInit, TemplateRef, ViewChild, ViewContainerRef
 } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
-import { SpinnerOverlayContainer } from '../spinner-overlay-container';
+import { DynamicOverlayContainer } from '../dynamic-overlay-container';
 
 @Component({
-  selector: 'entry-spinner',
-  templateUrl: './entry-spinner.component.html',
+  selector: 'entry-loader',
+  templateUrl: './entry-loader.component.html',
   providers: [
     Overlay,
     {
       provide: OverlayContainer,
-      useClass: SpinnerOverlayContainer
+      useClass: DynamicOverlayContainer
     }
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EntrySpinnerComponent implements OnInit, OnDestroy {
+export class EntryLoaderComponent implements OnInit, OnDestroy {
 
   @Input() color: ThemePalette = 'primary';
   @Input() diameter = 30;
   @Input() fullscreen = false;
   @Input() hasBackdrop = true;
-  @Input() appendTo: 'container' | 'body' = 'container';
 
-  @ViewChild('matSpinner', { static: true }) private templateRef: TemplateRef<any>;
-  private portalRef: TemplatePortal<any>;
+  @ViewChild('matSpinner', { static: true })
+  private templateRef: TemplateRef<any>;
   private overlayRef: OverlayRef;
 
   constructor(
@@ -41,7 +40,7 @@ export class EntrySpinnerComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.createOverlay();
-    this.overlayRef.attach(this.portalRef);
+    this.overlayRef.attach(new TemplatePortal(this.templateRef, this.viewContainerRef));
   }
 
   ngOnDestroy(): void {
@@ -49,28 +48,24 @@ export class EntrySpinnerComponent implements OnInit, OnDestroy {
   }
 
   private createOverlay() {
-    const overlayConfig = {
+    const overlayConfig = new OverlayConfig({
       hasBackdrop: this.hasBackdrop,
       positionStrategy: this.overlay.position()
         .global()
         .centerHorizontally()
         .centerVertically()
-    };
-
-    this.appendToContainer();
+    });
+    this.configureOverlayContainer();
     this.overlayRef = this.overlay.create(overlayConfig);
-    this.portalRef = new TemplatePortal(this.templateRef, this.viewContainerRef);
   }
 
-  private appendToContainer() {
+  private configureOverlayContainer() {
     let container = this.elementRef.nativeElement;
-
-    if (this.fullscreen && this.appendTo === 'body') {
+    if (this.fullscreen) {
       container = document.body;
     }
-
-    (this.overlayContainer as SpinnerOverlayContainer)
-      .setAppendTo(container, this.fullscreen);
+    (this.overlayContainer as DynamicOverlayContainer)
+      .configureOverlayContainer(container, { fullscreen: this.fullscreen });
   }
 
   private disposeOverlayRef() {

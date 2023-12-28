@@ -1,4 +1,6 @@
-<entry-spinner *ngIf="loading" [fullscreen]="fullscreen" [color]="color" [appendTo]="appendTo" [hasBackdrop]="hasBackdrop"></entry-spinner>
+<section>
+  <entry-loader [fullscreen]="fullscreen" [color]="color" [hasBackdrop]="false"></entry-loader>
+</section>
 
 <section>
   <p>
@@ -17,13 +19,6 @@
     </mat-radio-group>
   </p>
   <p>
-    <label>Append to: </label>
-    <mat-radio-group aria-label="Append to" name="appendTo" [(ngModel)]="appendTo">
-      <mat-radio-button value="body">Body</mat-radio-button>
-      <mat-radio-button value="container">Container (default)</mat-radio-button>
-    </mat-radio-group>
-  </p>
-  <p>
     <label>Backdrop: </label>
     <mat-radio-group aria-label="Backdrop" name="backdrop" [(ngModel)]="hasBackdrop">
       <mat-radio-button [value]="true">True (default)</mat-radio-button>
@@ -31,6 +26,8 @@
     </mat-radio-group>
   </p>
   <p>
-    <button mat-button entry-submit-button (click)="showSpinner()">Show spinner</button>
+    <button mat-button entry-submit-button (click)="showLoader()">
+      Show loader
+    </button>
   </p>
 </section>
