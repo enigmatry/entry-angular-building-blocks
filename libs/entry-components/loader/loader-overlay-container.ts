@@ -10,7 +10,7 @@ export interface OverlayContainerOptions {
 }
 
 @Injectable()
-export class DynamicOverlayContainer extends OverlayContainer implements OnDestroy {
+export class LoaderOverlayContainer extends OverlayContainer implements OnDestroy {
 
   private _appendTo: HTMLElement = this._document.body;
   private _options: OverlayContainerOptions;
@@ -19,7 +19,7 @@ export class DynamicOverlayContainer extends OverlayContainer implements OnDestr
     super(document, platform);
   }
 
-  configureOverlayContainer(appendTo: HTMLElement, options: OverlayContainerOptions): void {
+  configure(appendTo: HTMLElement, options: OverlayContainerOptions): void {
     this._appendTo = appendTo;
     this._options = options;
   }

@@ -1,5 +1,5 @@
-export { EntryLoadingService } from './entry-loading.service';
-export { EntryLoadingInterceptor } from './entry-loading.interceptor';
-export { EntryLoaderComponent } from './entry-loader/entry-loader.component';
+export { EntryLoadingService } from './loading.service';
+export { EntryLoadingInterceptor } from './loading.interceptor';
+export { EntryLoaderComponent } from './entry-loader/loader.component';
 
-export { EntryLoaderModule } from './entry-loader.module';
+export { EntryLoaderModule } from './loader.module';

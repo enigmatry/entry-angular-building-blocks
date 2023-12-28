@@ -6,16 +6,16 @@ import {
   OnInit, TemplateRef, ViewChild, ViewContainerRef
 } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
-import { DynamicOverlayContainer } from '../dynamic-overlay-container';
+import { LoaderOverlayContainer } from '../loader-overlay-container';
 
 @Component({
   selector: 'entry-loader',
-  templateUrl: './entry-loader.component.html',
+  templateUrl: './loader.component.html',
   providers: [
     Overlay,
     {
       provide: OverlayContainer,
-      useClass: DynamicOverlayContainer
+      useClass: LoaderOverlayContainer
     }
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -60,12 +60,12 @@ export class EntryLoaderComponent implements OnInit, OnDestroy {
   }
 
   private configureOverlayContainer() {
-    let container = this.elementRef.nativeElement;
+    let appendTo = this.elementRef.nativeElement;
     if (this.fullscreen) {
-      container = document.body;
+      appendTo = document.body;
     }
-    (this.overlayContainer as DynamicOverlayContainer)
-      .configureOverlayContainer(container, { fullscreen: this.fullscreen });
+    (this.overlayContainer as LoaderOverlayContainer)
+      .configure(appendTo, { fullscreen: this.fullscreen });
   }
 
   private disposeOverlayRef() {
