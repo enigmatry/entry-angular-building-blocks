@@ -3,23 +3,17 @@ import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable, OnDestroy } from '@angular/core';
 
-export interface OverlayContainerOptions {
-  fullscreen: boolean;
-  offsetTop?: string;
-  offsetLeft?: string;
-}
-
 @Injectable()
 export class LoaderOverlayContainer extends OverlayContainer implements OnDestroy {
 
   private _appendTo: HTMLElement = this._document.body;
-  private _options: OverlayContainerOptions;
+  private _options: { fullscreen: boolean };
 
   constructor(@Inject(DOCUMENT) document: Document, platform: Platform) {
     super(document, platform);
   }
 
-  configure(appendTo: HTMLElement, options: OverlayContainerOptions): void {
+  configure(appendTo: HTMLElement, options: { fullscreen: boolean }): void {
     this._appendTo = appendTo;
     this._options = options;
   }
@@ -37,15 +31,12 @@ export class LoaderOverlayContainer extends OverlayContainer implements OnDestro
 
   private createContainer(): void {
     const containerClass = 'cdk-overlay-container';
-    const { fullscreen, offsetTop, offsetLeft } = this._options;
+    const { fullscreen } = this._options;
 
     const container = this._document.createElement('div');
     container.classList.add(containerClass);
 
     container.style.position = fullscreen ? 'fixed' : 'absolute';
-    if (offsetTop) { container.style.top = offsetTop; }
-    if (offsetLeft) { container.style.left = offsetLeft; }
-
     this._appendTo.appendChild(container);
     this._containerElement = container;
   }

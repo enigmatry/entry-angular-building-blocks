@@ -9,7 +9,7 @@ import { EntryLoadingBarComponent } from './entry-loading-bar/loading-bar.compon
 @NgModule({
   declarations: [
     EntryLoaderComponent,
-    EntryLoadingBarComponent,
+    EntryLoadingBarComponent
   ],
   imports: [
     CommonModule,
@@ -18,7 +18,8 @@ import { EntryLoadingBarComponent } from './entry-loading-bar/loading-bar.compon
     MatProgressSpinnerModule
   ],
   exports: [
-    EntryLoaderComponent
+    EntryLoaderComponent,
+    EntryLoadingBarComponent
   ]
 })
 export class EntryLoaderModule { }

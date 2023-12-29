@@ -8,13 +8,12 @@ import { distinctUntilChanged } from 'rxjs/operators';
 export class EntryLoadingService {
 
   private _loading$ = new BehaviorSubject<boolean>(false);
-  private _loadingObservable = this._loading$.asObservable().pipe(distinctUntilChanged());
 
   private _enableRequestTracking = false;
   private _urlMap: Map<string, boolean> = new Map<string, boolean>();
 
   get loading$(): Observable<boolean> {
-    return this._loadingObservable;
+    return this._loading$.asObservable().pipe(distinctUntilChanged());
   }
 
   get enableRequestTracking(): boolean {
