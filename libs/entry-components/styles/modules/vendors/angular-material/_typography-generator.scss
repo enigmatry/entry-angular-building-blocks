@@ -23,6 +23,12 @@
 	$typography: -set-font-size-for('titles', $typography, $fonts, ('subtitle-1', 'subtitle-2'));
 	$typography: -set-font-family($typography, $fonts);
 
+	$typography: -set-letter-spacing-for('body', $typography, $fonts, ('body-1', 'body-2'));
+	$typography: -set-letter-spacing-for('buttons', $typography, $fonts, ('button'));
+	$typography: -set-letter-spacing-for('hero-titles',$typography,$fonts,('headline-1', 'headline-2',
+	'headline-3', 'headline-4', 'headline-5', 'headline-6'));
+	$typography: -set-letter-spacing-for('titles', $typography, $fonts, ('subtitle-1', 'subtitle-2'));
+
 	@return $typography;
 }
 
@@ -32,6 +38,19 @@
 	@if $desired-size != 0 {
 		@each $setting in $desired-size-settings {
 			$typography: map.set($typography, $setting, 'font-size', $desired-size);
+		}
+	}
+
+	@return $typography;
+}
+
+@function -set-letter-spacing-for($selector, $typography, $fonts, $desired-spacing-settings) {
+	$desired-spacing: map.get($fonts, $selector, 'letter-spacing');
+
+	/* stylelint-disable-next-line scss/at-if-no-null */
+	@if $desired-spacing != null {
+		@each $setting in $desired-spacing-settings {
+			$typography: map.set($typography, $setting, 'letter-spacing', $desired-spacing);
 		}
 	}
 
