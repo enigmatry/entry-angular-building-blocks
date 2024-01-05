@@ -28,7 +28,7 @@ The **entry-components** library comes with a generator that simplifies the proj
 Before diving into theming configurations, make sure to address the following prerequisites:
 
 - Ensure that the latest version of the [`entry-components`](https://www.npmjs.com/package/@enigmatry/entry-components) library is installed
-- Prepare custom fonts if customers require them, follow the instructions [`here`](https://github.com/enigmatry/entry-blueprint/blob/master/enigmatry-entry-blueprint-app/theming-setup.md#fonts)
+- Prepare custom fonts if customers require them, follow the instructions [here](https://github.com/enigmatry/entry-blueprint/blob/master/enigmatry-entry-blueprint-app/theming-setup.md#fonts)
 - For a deeper understanding of theming concepts and customization options, refer to the [Angular Material documentation](#angular-material-documentation)
 
 ### Angular Material Documentation
@@ -94,7 +94,7 @@ $custom-theme: (
 
 The new **custom theme map** should replace the library's default theme. The structure is nested and defines various aspects of a theme. It can be extended and customized for project needs by passing on different key parameters. The structure consists of three main sections: **general**, **tables**, and **dialogs**. Each section contains a specific configuration.
 
-> **_NOTE:_**  Any property in the theming configuration can be skipped, and if omitted, the **default value** for that property will be used ( unless it's specified differently, as for [fonts](#differences-between-configuring-typography) ). This provides flexibility for developers to customize only the specific aspects of the theme that are relevant to their project. See table with default values [`here`](https://github.com/enigmatry/entry-blueprint/blob/master/enigmatry-entry-blueprint-app/theming-setup.md#default-values-table)
+> **_NOTE:_**  Any property in the theming configuration can be skipped, and if omitted, the **default value** for that property will be used ( unless it's specified differently, as for [fonts](#differences-between-configuring-typography) ). This provides flexibility for developers to customize only the specific aspects of the theme that are relevant to their project. See table with default values [here](https://github.com/enigmatry/entry-blueprint/blob/master/enigmatry-entry-blueprint-app/theming-setup.md#default-values-table)
 
 | Submap       | Description                                                             | Possible Options                      |
 |--------------|-------------------------------------------------------------------------|----------------------------------------|
@@ -125,7 +125,7 @@ There are 2 options using fonts in theming:
 1) Use default Roboto font
 2) Use custom fonts
 
-More information about fonts can be found [`here`](https://github.com/enigmatry/entry-blueprint/blob/master/enigmatry-entry-blueprint-app/theming-setup.md#fonts).
+More information about fonts can be found [here](https://github.com/enigmatry/entry-blueprint/blob/master/enigmatry-entry-blueprint-app/theming-setup.md#fonts).
 
 ### Differences between configuring typography
 
@@ -539,4 +539,4 @@ $custom-theme: (
 ```
 
 ## Theme default values
-All default values from the default theme can be found [`here`](https://github.com/enigmatry/entry-blueprint/blob/master/enigmatry-entry-blueprint-app/theming-setup.md#default-values-table).
+All default values from the default theme can be found [here](https://github.com/enigmatry/entry-blueprint/blob/master/enigmatry-entry-blueprint-app/theming-setup.md#default-values-table).
