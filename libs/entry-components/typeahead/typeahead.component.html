@@ -1,1 +1,13 @@
-<p>entry-typeahead works!</p>
+<mat-form-field class="entry-typeahead">
+  <mat-label>Label</mat-label>
+  <input type="text"
+      matInput
+      [placeholder]="placeholder"
+      [formControl]="searchField"
+      [matAutocomplete]="auto">
+  <mat-autocomplete #auto="matAutocomplete">
+    <mat-option *ngFor="let option of options | async" [value]="option.key">
+      {{option.label}}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
