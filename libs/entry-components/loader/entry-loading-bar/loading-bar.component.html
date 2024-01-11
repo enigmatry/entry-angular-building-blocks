@@ -1,7 +1,0 @@
-<div *ngIf="type === 'progress-bar'; else loader">
-  <mat-progress-bar mode="indeterminate" [color]="color"></mat-progress-bar>
-</div>
-
-<ng-template #loader>
-  <entry-loader [color]="color" [diameter]="diameter" [backgroundOverlay]="backgroundOverlay"></entry-loader>
-</ng-template>
