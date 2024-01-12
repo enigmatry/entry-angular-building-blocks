@@ -1,4 +1,5 @@
 import { FormControl } from '@angular/forms';
+import { ControlType } from './control-type';
 
 /**
  * Base Entry search filter input component.
@@ -27,7 +28,7 @@ export class SearchFilterBase<T> {
     this.label = options.label || '';
     this.placeholder = options.placeholder || '';
     this.controlType = options.controlType || '';
-    this.type = options.type || '';
+    this.type = options.type || ControlType.text;
     this.maxLength = options.maxLength || 256;
   }
 

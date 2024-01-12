@@ -2,7 +2,11 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, OnInit
 import { UntypedFormGroup } from '@angular/forms';
 import { SearchFilterParams } from './search-filter-params.type';
 import { ENTRY_SEARCH_FILTER_CONFIG, EntrySearchFilterConfig } from './search-filter-config.model';
-import { SearchFilterBase } from './search-filter-input/search-filter-base.model';
+import { SearchFilterBase } from './search-filter-base.model';
+import { TextSearchFilter } from './text-search-filter/text-search-filter.model';
+import { SelectSearchFilter } from './select-search-filter/select-search-filter.model';
+import { AutocompleteSearchFilter } from './autocomplete-search-filter/autocomplete-search-filter.model';
+import { ControlType } from './control-type';
 
 /**
  * Entry SearchFilter component.
@@ -23,6 +27,7 @@ export class EntrySearchFilterComponent implements OnInit {
   @Output() searchFilterChange = new EventEmitter<SearchFilterParams>();
 
   searchFilterForm!: UntypedFormGroup;
+  controlType = ControlType;
 
   constructor(@Inject(ENTRY_SEARCH_FILTER_CONFIG) public config: EntrySearchFilterConfig) { }
 
@@ -43,6 +48,17 @@ export class EntrySearchFilterComponent implements OnInit {
       searchFilter.formControl = formControl;
     });
     return new UntypedFormGroup(group);
+  }
+
+  asTextSearchFilter(searchFilter: SearchFilterBase<any>): TextSearchFilter {
+    return searchFilter as TextSearchFilter;
+  }
+  asSelectSearchFilter<T>(searchFilter: SearchFilterBase<T>): SelectSearchFilter<T> {
+    return searchFilter as SelectSearchFilter<T>;
+  }
+
+  asAutocompleteSearchFilter<T>(searchFilter: SearchFilterBase<T>): AutocompleteSearchFilter<T>{
+    return searchFilter as AutocompleteSearchFilter<T>;
   }
 }
 

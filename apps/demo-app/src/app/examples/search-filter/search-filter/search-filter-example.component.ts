@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { UsersService } from './users.service';
 import {
+  AutocompleteSearchFilter,
   SearchFilterBase,
   SearchFilterParams,
-  SelectFilterOption,
+  SelectOption,
   SelectSearchFilter,
   TextSearchFilter,
 } from '@enigmatry/entry-components/search-filter';
@@ -54,18 +55,26 @@ export class SearchFilterExampleComponent {
         multiSelect: true,
         options: Object.values(Occupation)
           .filter(value => typeof(value) === 'number')
-          .map((value: number) => new SelectFilterOption(
+          .map((value: number) => new SelectOption(
             value, Occupation[value].replace(/^[a-z]/, x => x.toUpperCase())))
       }),
-      new SelectSearchFilter({
+      new AutocompleteSearchFilter({
         key: 'username',
         label: 'Username',
         placeholder: 'Select username',
-        multiSelect: false,
-        options$: this._usersService
+        searchFunction: (input: string) => this._usersService
           .getUsernames()
-          .pipe(map(usernames => usernames.map(un => new SelectFilterOption(un, un))))
+          .pipe(map(usernames => usernames.filter(un => un.includes(input)).map(un => new SelectOption(un, un))))
       })
+      // new SelectSearchFilter({
+      //   key: 'username',
+      //   label: 'Username',
+      //   placeholder: 'Select username',
+      //   multiSelect: false,
+      //   options$: this._usersService
+      //     .getUsernames()
+      //     .pipe(map(usernames => usernames.map(un => new SelectOption(un, un))))
+      // })
     ];
   }
 }

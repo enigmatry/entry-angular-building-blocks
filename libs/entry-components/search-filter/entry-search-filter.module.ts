@@ -7,12 +7,17 @@ import { MatSelectModule } from '@angular/material/select';
 import { EntryButtonModule } from '@enigmatry/entry-components/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { EntrySearchFilterComponent } from './entry-search-filter.component';
-import { EntrySearchFilterInputComponent } from './search-filter-input/search-filter-input.component';
+import { TextSearchFilterComponent } from './text-search-filter/text-search-filter.component';
+import { SelectSearchFilterComponent } from './select-search-filter/select-search-filter.component';
+import { AutocompleteSearchFilterComponent } from './autocomplete-search-filter/autocomplete-search-filter.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
     EntrySearchFilterComponent,
-    EntrySearchFilterInputComponent
+    TextSearchFilterComponent,
+    SelectSearchFilterComponent,
+    AutocompleteSearchFilterComponent
   ],
   imports: [
     CommonModule,
@@ -22,7 +27,8 @@ import { EntrySearchFilterInputComponent } from './search-filter-input/search-fi
     MatButtonModule,
     EntryButtonModule,
     MatSelectModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatAutocompleteModule
   ],
   exports: [
     EntrySearchFilterComponent

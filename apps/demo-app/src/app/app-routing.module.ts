@@ -42,10 +42,6 @@ const routes: Routes = [
     loadComponent: () => import('./features/table/table-documentation.component').then(m => m.TableDocumentationComponent)
   },
   {
-    path: RouteSegments.typeahead,
-    loadComponent: () => import('./features/typeahead/typeahead-documentation.component').then(m => m.TypeaheadDocumentationComponent)
-  },
-  {
     path: RouteSegments.validation,
     loadComponent: () => import('./features/validation/validation-documentation.component').then(m => m.ValidationDocumentationComponent)
   }
