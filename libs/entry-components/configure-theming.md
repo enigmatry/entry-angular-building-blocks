@@ -122,7 +122,7 @@ $custom-theme: (
 
 There are 2 options using fonts in theming:
 
-1) Use default Roboto font
+1) Use default font
 2) Use custom fonts
 
 More information about fonts can be found [here](https://github.com/enigmatry/entry-blueprint/blob/master/enigmatry-entry-blueprint-app/theming-setup.md#fonts).
