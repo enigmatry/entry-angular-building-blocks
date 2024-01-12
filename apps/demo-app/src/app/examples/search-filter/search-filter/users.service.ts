@@ -42,6 +42,10 @@ export class UsersService {
         : searchParams.username === x.userName);
     }
 
+    if(!this.noFilterParam(searchParams, 'country')){
+      users = users.filter(x => x.country === searchParams.country);
+    }
+
     return users;
   }
 
