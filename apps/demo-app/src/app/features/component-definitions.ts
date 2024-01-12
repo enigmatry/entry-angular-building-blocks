@@ -74,10 +74,10 @@ const COMPONENT_DEFINITIONS: IComponentDefinition[] = [
         apiDocsPath: ''
     },
     {
-        label: 'Loader',
+        label: 'Spinner',
         shortDescription: `Loading spinner`,
-        route: RouteSegments.loader,
-        readmePath: '/entry-components/loader/README.md',
+        route: RouteSegments.spinner,
+        readmePath: '/entry-components/spinner/README.md',
         apiDocsPath: ''
     }
 ];

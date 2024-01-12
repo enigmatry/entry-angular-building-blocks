@@ -2,11 +2,11 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { EntryLoaderComponent } from './entry-loader/loader.component';
+import { EntrySpinnerComponent } from './entry-spinner/spinner.component';
 
 @NgModule({
   declarations: [
-    EntryLoaderComponent
+    EntrySpinnerComponent
   ],
   imports: [
     CommonModule,
@@ -14,7 +14,7 @@ import { EntryLoaderComponent } from './entry-loader/loader.component';
     MatProgressSpinnerModule
   ],
   exports: [
-    EntryLoaderComponent
+    EntrySpinnerComponent
   ]
 })
-export class EntryLoaderModule { }
+export class EntrySpinnerModule { }

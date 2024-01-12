@@ -6,26 +6,26 @@ import {
   OnInit, TemplateRef, ViewChild, ViewContainerRef
 } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
-import { LoaderOverlayContainer } from '../loader-overlay-container';
+import { SpinnerOverlayContainer } from '../spinner-overlay-container';
 
 @Component({
-  selector: 'entry-loader',
-  templateUrl: './loader.component.html',
+  selector: 'entry-spinner',
+  templateUrl: './spinner.component.html',
   providers: [
     Overlay,
     {
       provide: OverlayContainer,
-      useClass: LoaderOverlayContainer
+      useClass: SpinnerOverlayContainer
     }
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EntryLoaderComponent implements OnInit, OnDestroy {
+export class EntrySpinnerComponent implements OnInit, OnDestroy {
 
   @Input() color: ThemePalette = 'primary';
   @Input() diameter = 30;
   @Input() fullscreen = false;
-  @Input() backgroundOverlay = true;
+  @Input() hasBackgroundOverlay = true;
 
   @ViewChild('matSpinner', { static: true })
   private templateRef: TemplateRef<any>;
@@ -49,7 +49,7 @@ export class EntryLoaderComponent implements OnInit, OnDestroy {
 
   private createOverlay() {
     const overlayConfig = new OverlayConfig({
-      hasBackdrop: this.backgroundOverlay,
+      hasBackdrop: this.hasBackgroundOverlay,
       positionStrategy: this.overlay.position()
         .global()
         .centerHorizontally()
@@ -64,7 +64,7 @@ export class EntryLoaderComponent implements OnInit, OnDestroy {
     if (this.fullscreen) {
       appendTo = document.body;
     }
-    (this.overlayContainer as LoaderOverlayContainer)
+    (this.overlayContainer as SpinnerOverlayContainer)
       .configure(appendTo, { fullscreen: this.fullscreen });
   }
 
