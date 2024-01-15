@@ -29,7 +29,7 @@ export class AutocompleteSearchFilterComponent<T> implements OnInit, AfterViewIn
     this.searchField
       .valueChanges
       .pipe(filter(value => value?.length >= this.searchFilter.minimumCharacters))
-      .pipe(throttleTime(500))
+      .pipe(throttleTime(this.searchFilter.toggleTime))
       .subscribe(value => this.options$ = this.searchFilter.searchFunction(value).pipe(tap(result => this.options = result)));
   }
 

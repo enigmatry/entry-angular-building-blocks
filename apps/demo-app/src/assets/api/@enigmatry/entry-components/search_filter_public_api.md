@@ -40,8 +40,7 @@ Base Entry search filter input component.
 
 - [`TextSearchFilter`](search_filter_public_api.md#textsearchfilter)
 - [`SelectSearchFilter`](search_filter_public_api.md#selectsearchfilter)
-- [`SelectSearchFilter`](search_filter_public_api.md#selectsearchfilter)
-- [`TextSearchFilter`](search_filter_public_api.md#textsearchfilter)
+- [`AutocompleteSearchFilter`](search_filter_public_api.md#autocompletesearchfilter)
 
 #### Properties
 
@@ -99,11 +98,31 @@ or observable (dynamic) list (`options$`).
 
 ### TextSearchFilter
 
-Search filter text input filed configuration.
+Search filter text input field configuration.
 
 #### Extends
 
-- [`SearchFilterBase`](search_filter_public_api.md#searchfilterbase)\< `string` \>
+- [`SearchFilterBase`](search_filter_public_api.md#searchfilterbase)\< `T` \>
+
+#### Properties
+
+| Property | Type | Description |
+| :------ | :------ | :------ |
+| `formControl` | `FormControl`\< `T` \> | A reference to the form control it represents |
+| `key` | `string` | Unique search-filter input key |
+| `label` | `string` | Label text to be displayed for the search-filter input control |
+| `maxLength` | `number` | Max text length to be entered in the input component (default is 256) |
+| `placeholder` | `string` | Placeholder text for search-filter input control |
+| `type` | `string` | Type of input control e.g. 'email' |
+| `value` | `T` | Default value to be displayed/selected in the input control |
+
+### AutocompleteSearchFilter
+
+Search filter autocomplete field configuration
+
+#### Extends
+
+- [`SearchFilterBase`](search_filter_public_api.md#searchfilterbase)\< `T` \>
 
 #### Properties
 
@@ -116,6 +135,9 @@ Search filter text input filed configuration.
 | `placeholder` | `string` | Placeholder text for search-filter input control |
 | `type` | `string` | Type of input control e.g. 'email' |
 | `value` | `string` | Default value to be displayed/selected in the input control |
+| `searchFunction` | `(input: string) => Observable<SelectOption<T>[]>` | Callback function used to fill the autocomplete options |
+| `minimumCharacters` | `string` | Number of characters entered required to trigger the searchFunction(defaults to 3) |
+| `toggleTime` | `number` | Number of milliseconds between calls to the searchFunction(defaults to 500ms) |
 
 ## Type Aliases
 
