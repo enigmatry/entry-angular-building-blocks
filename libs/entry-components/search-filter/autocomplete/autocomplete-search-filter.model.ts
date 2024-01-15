@@ -1,4 +1,3 @@
-import { FormControl } from '@angular/forms';
 import { ControlType } from '../control-type';
 import { SearchFilterBase } from '../search-filter-base.model';
 import { SelectOption } from '../select-option.model';
