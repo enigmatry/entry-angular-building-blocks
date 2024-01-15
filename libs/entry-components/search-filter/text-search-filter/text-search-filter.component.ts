@@ -4,8 +4,7 @@ import { TextSearchFilter } from './text-search-filter.model';
 
 @Component({
   selector: 'entry-text-search-filter',
-  templateUrl: './text-search-filter.component.html',
-  styleUrls: ['./text-search-filter.component.scss']
+  templateUrl: './text-search-filter.component.html'
 })
 export class TextSearchFilterComponent {
   @Input() searchFilter: TextSearchFilter;

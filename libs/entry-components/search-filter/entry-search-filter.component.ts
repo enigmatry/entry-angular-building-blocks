@@ -14,7 +14,6 @@ import { ControlType } from './control-type';
 @Component({
   selector: 'entry-search-filter',
   templateUrl: './entry-search-filter.component.html',
-  styleUrls: ['./entry-search-filter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EntrySearchFilterComponent implements OnInit {
@@ -56,8 +55,7 @@ export class EntrySearchFilterComponent implements OnInit {
   asSelectSearchFilter<T>(searchFilter: SearchFilterBase<T>): SelectSearchFilter<T> {
     return searchFilter as SelectSearchFilter<T>;
   }
-
-  asAutocompleteSearchFilter<T>(searchFilter: SearchFilterBase<T>): AutocompleteSearchFilter<T>{
+  asAutocompleteSearchFilter<T>(searchFilter: SearchFilterBase<T>): AutocompleteSearchFilter<T> {
     return searchFilter as AutocompleteSearchFilter<T>;
   }
 }

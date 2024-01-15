@@ -7,8 +7,7 @@ import { AutocompleteSearchFilter } from './autocomplete-search-filter.model';
 
 @Component({
   selector: 'entry-autocomplete-search-filter',
-  templateUrl: './autocomplete-search-filter.component.html',
-  styleUrls: ['./autocomplete-search-filter.component.scss']
+  templateUrl: './autocomplete-search-filter.component.html'
 })
 export class AutocompleteSearchFilterComponent<T> implements OnInit, AfterViewInit {
   @Input() searchFilter: AutocompleteSearchFilter<T>;

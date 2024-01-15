@@ -5,8 +5,7 @@ import { ENTRY_SEARCH_FILTER_CONFIG, EntrySearchFilterConfig } from '../search-f
 
 @Component({
   selector: 'entry-select-search-filter',
-  templateUrl: './select-search-filter.component.html',
-  styleUrls: ['./select-search-filter.component.scss']
+  templateUrl: './select-search-filter.component.html'
 })
 export class SelectSearchFilterComponent<T> {
   /** Configuration of the search filters inputs that will be displayed in the search-filter component. */
