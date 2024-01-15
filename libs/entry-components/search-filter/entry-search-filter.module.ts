@@ -5,7 +5,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { EntryButtonModule } from '@enigmatry/entry-components/button';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { EntrySearchFilterComponent } from './entry-search-filter.component';
 import { TextSearchFilterComponent } from './text/text-search-filter.component';
 import { SelectSearchFilterComponent } from './select/select-search-filter.component';
@@ -27,7 +26,6 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatButtonModule,
     EntryButtonModule,
     MatSelectModule,
-    MatTooltipModule,
     MatAutocompleteModule
   ],
   exports: [
