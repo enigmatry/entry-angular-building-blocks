@@ -3,9 +3,9 @@ import { UntypedFormGroup } from '@angular/forms';
 import { SearchFilterParams } from './search-filter-params.type';
 import { ENTRY_SEARCH_FILTER_CONFIG, EntrySearchFilterConfig } from './search-filter-config.model';
 import { SearchFilterBase } from './search-filter-base.model';
-import { TextSearchFilter } from './text-search-filter/text-search-filter.model';
-import { SelectSearchFilter } from './select-search-filter/select-search-filter.model';
-import { AutocompleteSearchFilter } from './autocomplete-search-filter/autocomplete-search-filter.model';
+import { TextSearchFilter } from './text/text-search-filter.model';
+import { SelectSearchFilter } from './select/select-search-filter.model';
+import { AutocompleteSearchFilter } from './autocomplete/autocomplete-search-filter.model';
 import { ControlType } from './control-type';
 
 /**

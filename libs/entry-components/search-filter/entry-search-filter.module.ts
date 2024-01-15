@@ -7,9 +7,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { EntryButtonModule } from '@enigmatry/entry-components/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { EntrySearchFilterComponent } from './entry-search-filter.component';
-import { TextSearchFilterComponent } from './text-search-filter/text-search-filter.component';
-import { SelectSearchFilterComponent } from './select-search-filter/select-search-filter.component';
-import { AutocompleteSearchFilterComponent } from './autocomplete-search-filter/autocomplete-search-filter.component';
+import { TextSearchFilterComponent } from './text/text-search-filter.component';
+import { SelectSearchFilterComponent } from './select/select-search-filter.component';
+import { AutocompleteSearchFilterComponent } from './autocomplete/autocomplete-search-filter.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
