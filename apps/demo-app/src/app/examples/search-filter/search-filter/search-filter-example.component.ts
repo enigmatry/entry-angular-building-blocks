@@ -72,7 +72,8 @@ export class SearchFilterExampleComponent {
         key: 'country',
         label: 'Country',
         placeholder: 'Select country',
-        searchFunction: (input: string) => of(Object.values(Country)
+        minimumCharacters: 0,
+        search: (input: string) => of(Object.values(Country)
           .filter(value => value.toLocaleLowerCase().includes(input.toLocaleLowerCase()))
           .map((country => new SelectOption(country, country))))
       })

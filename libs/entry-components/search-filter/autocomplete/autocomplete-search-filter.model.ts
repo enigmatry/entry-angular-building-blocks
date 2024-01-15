@@ -11,17 +11,18 @@ import { Observable } from 'rxjs';
 export class AutocompleteSearchFilter<T> extends SearchFilterBase<T>{
   controlType = ControlType.autocomplete;
   /** Callback function for autocomplete options */
-  searchFunction: (input: string) => Observable<SelectOption<T>[]>;
+  search: (input: string) => Observable<SelectOption<T>[]>;
   /** Minimum number of characters that must enter to trigger the search function(default is 3) */
-  minimumCharacters = 3;
-  /** Delay in typing between trigger the search function in milliseconds(default is 500) */
-  toggleTime = 500;
+  minimumCharacters: number;
+  /** Delay in typing before triggering the search function in milliseconds(default is 300) */
+  debounceTime: number;
 
   constructor(options: Partial<AutocompleteSearchFilter<T>> = {}) {
     super(options);
-    this.searchFunction = options.searchFunction;
+    this.search = options.search;
     this.placeholder = options.placeholder;
     this.label = options.label;
+    this.debounceTime = options.debounceTime ?? 300;
     this.minimumCharacters = options.minimumCharacters ?? 3;
   }
 }

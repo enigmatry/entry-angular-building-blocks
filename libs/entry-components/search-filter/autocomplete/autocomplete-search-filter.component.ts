@@ -1,7 +1,7 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, ViewChild } from '@angular/core';
 import { FormControlName, UntypedFormGroup } from '@angular/forms';
-import { Observable, of } from 'rxjs';
-import { filter, throttleTime, tap } from 'rxjs/operators';
+import { Observable, Subject, of } from 'rxjs';
+import { filter, tap, takeUntil, debounceTime } from 'rxjs/operators';
 import { SelectOption } from '../select-option.model';
 import { AutocompleteSearchFilter } from './autocomplete-search-filter.model';
 
@@ -10,28 +10,43 @@ import { AutocompleteSearchFilter } from './autocomplete-search-filter.model';
   templateUrl: './autocomplete-search-filter.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AutocompleteSearchFilterComponent<T> implements OnInit, AfterViewInit {
+export class AutocompleteSearchFilterComponent<T> implements AfterViewInit, OnDestroy {
   @Input() searchFilter: AutocompleteSearchFilter<T>;
   @Input() form: UntypedFormGroup;
 
-  @ViewChild(FormControlName, { static: true }) searchField: FormControlName;
+  @ViewChild(FormControlName) searchField: FormControlName;
 
   options$: Observable<SelectOption<T>[]> = of([]);
   options: SelectOption<T>[] = [];
 
-  ngOnInit(): void {
-    if (this.searchFilter.minimumCharacters === 0) {
-      this.options$ = this.searchFilter.searchFunction('');
-    }
-  }
+  destroy$ = new Subject<void>();
+
+  constructor(private cdr: ChangeDetectorRef) { }
 
   ngAfterViewInit(): void {
     this.searchField
       .valueChanges
-      .pipe(filter(value => value?.length >= this.searchFilter.minimumCharacters))
-      .pipe(throttleTime(this.searchFilter.toggleTime))
-      .subscribe(value => this.options$ = this.searchFilter.searchFunction(value).pipe(tap(result => this.options = result)));
+      .pipe(
+        takeUntil(this.destroy$),
+        filter(value => value?.length >= this.searchFilter.minimumCharacters),
+        debounceTime(this.searchFilter.debounceTime)
+      )
+      .subscribe(searchValue => {
+        // call search and retrieve options
+        this.options$ = this.searchFilter.search(searchValue)
+          .pipe(
+            tap(options => this.options = options)
+          );
+
+        // mark for check because of the debounce
+        this.cdr.markForCheck();
+      });
   }
 
-  displayFn = (selectedKey: T): string => this.options.filter(x => x.key === selectedKey)[0]?.label;
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  displayFn = (selectedKey: T): string => this.options.find(x => x.key === selectedKey)?.label;
 }

@@ -1,8 +1,8 @@
 <mat-form-field [formGroup]="form" subscriptSizing="dynamic">
     <mat-label>{{searchFilter.label}}</mat-label>
-    <input #searchField type="text" matInput [placeholder]="searchFilter.placeholder"
+    <input type="text" matInput [placeholder]="searchFilter.placeholder"
         [formControlName]="searchFilter.key" [id]="searchFilter.key" [matAutocomplete]="auto">
-    <mat-autocomplete autoActiveFirstOption [displayWith]="displayFn" #auto="matAutocomplete">
+    <mat-autocomplete [displayWith]="displayFn" #auto="matAutocomplete">
         <mat-option *ngFor="let option of options$ | async" [value]="option.key">
             {{option.label}}
         </mat-option>
