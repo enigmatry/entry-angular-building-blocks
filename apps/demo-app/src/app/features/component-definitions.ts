@@ -53,13 +53,6 @@ const COMPONENT_DEFINITIONS: IComponentDefinition[] = [
         apiDocsPath: ''
     },
     {
-        label: 'Typeahead',
-        shortDescription: `Typeahead`,
-        route: RouteSegments.typeahead,
-        readmePath: '/entry-components/typeahead/README.md',
-        apiDocsPath: ''
-    },
-    {
         label: 'Form',
         shortDescription: `Form demo with entry configuration`,
         route: RouteSegments.form,
