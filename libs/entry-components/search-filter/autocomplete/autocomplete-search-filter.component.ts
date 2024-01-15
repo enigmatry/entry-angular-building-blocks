@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControlName, UntypedFormGroup } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { filter, throttleTime, tap } from 'rxjs/operators';
@@ -7,7 +7,8 @@ import { AutocompleteSearchFilter } from './autocomplete-search-filter.model';
 
 @Component({
   selector: 'entry-autocomplete-search-filter',
-  templateUrl: './autocomplete-search-filter.component.html'
+  templateUrl: './autocomplete-search-filter.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AutocompleteSearchFilterComponent<T> implements OnInit, AfterViewInit {
   @Input() searchFilter: AutocompleteSearchFilter<T>;

@@ -1,11 +1,12 @@
-import { Component, Inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, Input } from '@angular/core';
 import { SelectSearchFilter } from './select-search-filter.model';
 import { UntypedFormGroup } from '@angular/forms';
 import { ENTRY_SEARCH_FILTER_CONFIG, EntrySearchFilterConfig } from '../search-filter-config.model';
 
 @Component({
   selector: 'entry-select-search-filter',
-  templateUrl: './select-search-filter.component.html'
+  templateUrl: './select-search-filter.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SelectSearchFilterComponent<T> {
   /** Configuration of the search filters inputs that will be displayed in the search-filter component. */

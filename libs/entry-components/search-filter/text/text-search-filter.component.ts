@@ -1,10 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
 import { TextSearchFilter } from './text-search-filter.model';
 
 @Component({
   selector: 'entry-text-search-filter',
-  templateUrl: './text-search-filter.component.html'
+  templateUrl: './text-search-filter.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TextSearchFilterComponent {
   @Input() searchFilter: TextSearchFilter;
