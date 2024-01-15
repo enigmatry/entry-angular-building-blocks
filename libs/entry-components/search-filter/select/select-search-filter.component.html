@@ -4,10 +4,10 @@
         <mat-option *ngIf="!searchFilter.multiSelect" [value]="undefined">
             {{config.noneSelectedOptionText}}
         </mat-option>
-        <div *ngIf="searchFilter.options$ !== undefined; else fixedSelectValues">
+        <ng-container *ngIf="searchFilter.options$ !== undefined; else fixedSelectValues">
             <mat-option *ngFor="let option of searchFilter.options$ | async"
                 [value]="option.key">{{option.label}}</mat-option>
-        </div>
+        </ng-container>
         <ng-template #fixedSelectValues>
             <mat-option *ngFor="let option of searchFilter.options" [value]="option.key">{{option.label}}</mat-option>
         </ng-template>
