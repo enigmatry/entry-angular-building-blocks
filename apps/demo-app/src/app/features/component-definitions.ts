@@ -72,6 +72,13 @@ const COMPONENT_DEFINITIONS: IComponentDefinition[] = [
         route: RouteSegments.permissions,
         readmePath: '/entry-components/permissions/README.md',
         apiDocsPath: ''
+    },
+    {
+        label: 'Spinner',
+        shortDescription: `Loading spinner`,
+        route: RouteSegments.spinner,
+        readmePath: '/entry-components/spinner/README.md',
+        apiDocsPath: ''
     }
 ];
 

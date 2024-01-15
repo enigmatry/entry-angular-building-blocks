@@ -30,6 +30,10 @@ const routes: Routes = [
     loadComponent: () => import('./features/form/form-documentation.component').then(m => m.FormDocumentationComponent)
   },
   {
+    path: RouteSegments.spinner,
+    loadComponent: () => import('./features/spinner/spinner-documentation.component').then(m => m.SpinnerDocumentationComponent)
+  },
+  {
     path: RouteSegments.permissions,
     loadComponent: () => import('./features/permissions/permissions-documentation.component').then(m => m.PermissionsDocumentationComponent)
   },
