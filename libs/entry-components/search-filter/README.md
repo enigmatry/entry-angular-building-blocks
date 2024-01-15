@@ -4,12 +4,9 @@ Entry component for providing standard filtering capabilities that can be consum
 
 * Text filter
 * Select filter (supports fixed and dynamic (Observable) options)
+* Autocomplete filter
 
 ## Integration
-
-```npm
-npm i @enigmatry/entry-components
-```
 
 Import component package:
 
@@ -17,30 +14,60 @@ Import component package:
 import { EntrySearchFilterModule } from '@enigmatry/entry-components/search-filter';
 ```
 
-Styles import:
-
-```scss
-@use 'entry-components/styles/generate' as entry;
-
-@include entry.generate(APP_THEME, APP_TYPOGRAPHY);
-```
-
-Where `APP_THEME` represents application theming configuration, while `APP_TYPOGRAPHY` represents application fonts configuration.
-
 ## Basic usage
 
-`entry-search-filter` is used to provide simple configuration and usage of data filtering:
+Provide filters
+
+```ts
+import {
+  AutocompleteSearchFilter,
+  SelectOption,
+  SelectSearchFilter,
+  TextSearchFilter,
+} from '@enigmatry/entry-components/search-filter';
+
+@Component({...})
+export class ExampleComponent {
+
+filters = [
+      new TextSearchFilter({
+        key: 'name',
+        label: 'Name',
+        placeholder: 'Name',
+        maxLength: 25
+      }),
+      new SelectSearchFilter({
+        key: 'username',
+        label: 'Username',
+        placeholder: 'Select username',
+        multiSelect: false,
+        options$: this._usersService
+          .getUsernames()
+          .pipe(map(usernames => usernames.map(un => new SelectOption(un, un))))
+      }),
+      new AutocompleteSearchFilter({
+        key: 'country',
+        label: 'Country',
+        placeholder: 'Select country',
+        minimumCharacters: 0,
+        search: (input: string) => of(Object.values(Country)
+          .filter(value => value.toLocaleLowerCase().includes(input.toLocaleLowerCase()))
+          .map((country => new SelectOption(country, country))))
+      })
+];
+}
+```
 
 ```html
 <entry-search-filter
-    [searchFilters]="query.filters"
+    [searchFilters]="filters"
     (searchFilterChange)="searchFilterChange($event)">
 </entry-search-filter>
 ```
 
 ## Configuration
 
-`ENTRY_SEARCH_FILTER_CONFIG`: `InjectionToken<EntrySearchFilterConfig>` - Optional configuration used to override defaults.
+Optional configuration used to override defaults.
 
 ```ts
 import { EntrySearchFilterModule, provideEntrySearchFilterConfig } from '@enigmatry/entry-components/search-filter';
@@ -52,7 +79,8 @@ import { EntrySearchFilterModule, provideEntrySearchFilterConfig } from '@enigma
   ],
   providers: [
     provideEntrySearchFilterConfig({
-      applyButtonText: 'Filter'
+      applyButtonText: 'Filter',
+      noneSelectedOptionText: '-'
     })
   ]
 })

@@ -186,7 +186,6 @@ Defines horizontal alignment of dialog buttons.
 > `const` **ENTRY\_DIALOG\_CONFIG**: `InjectionToken`\< [`EntryDialogConfig`](dialog_public_api.md#entrydialogconfig) \>
 
 Entry dialog injection token of EntryDialogConfig type containing dialog default configurations.
-Can be updated with custom configuration.
 
 Defaults:
 - confirmButtonText: 'Ok'
@@ -194,3 +193,21 @@ Defaults:
 - buttonsAlignment: 'end'
 - hideClose: true
 - disableClose: false
+
+## Functions
+
+### provideEntryDialogConfig
+
+> **provideEntryDialogConfig**(`config`): `Provider`
+
+Can be used to provide entry dialog configuration.
+
+#### Parameters
+
+| Parameter | Type |
+| :------ | :------ |
+| `config` | `Partial`\< [`EntryDialogConfig`](dialog_public_api.md#entrydialogconfig) \> |
+
+#### Returns
+
+`Provider`

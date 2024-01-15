@@ -10,6 +10,11 @@ npm install @enigmatry/entry-components
 
 ## Basic Usage
 
+### Theming configuration guide
+
+For detailed instructions on configuring the theming of entry components, refer to the
+[Theming Configuration Guide](configure-theming.md)
+
 ## Compatibility with Angular Versions
 
 | @enigmatry/entry-components | Angular version

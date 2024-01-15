@@ -1,0 +1,5 @@
+<mat-form-field [formGroup]="form" subscriptSizing="dynamic">
+    <mat-label [attr.for]="searchFilter.key">{{searchFilter.label}}</mat-label>
+    <input [formControlName]="searchFilter.key" [id]="searchFilter.key" [type]="searchFilter.type" matInput
+        [placeholder]="searchFilter.placeholder" [maxlength]="searchFilter.maxLength">
+</mat-form-field>

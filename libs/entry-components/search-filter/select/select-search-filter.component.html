@@ -1,0 +1,15 @@
+<mat-form-field [formGroup]="form" subscriptSizing="dynamic">
+    <mat-label [attr.for]="searchFilter.key">{{searchFilter.label}}</mat-label>
+    <mat-select [formControlName]="searchFilter.key" [id]="searchFilter.key" [multiple]="searchFilter.multiSelect">
+        <mat-option *ngIf="!searchFilter.multiSelect" [value]="undefined">
+            {{config.noneSelectedOptionText}}
+        </mat-option>
+        <ng-container *ngIf="searchFilter.options$ !== undefined; else fixedSelectValues">
+            <mat-option *ngFor="let option of searchFilter.options$ | async"
+                [value]="option.key">{{option.label}}</mat-option>
+        </ng-container>
+        <ng-template #fixedSelectValues>
+            <mat-option *ngFor="let option of searchFilter.options" [value]="option.key">{{option.label}}</mat-option>
+        </ng-template>
+    </mat-select>
+</mat-form-field>

@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
-import { ControlType } from '../control-type.model';
 import { SearchFilterBase } from '../search-filter-base.model';
-import { SelectFilterOption } from './select-filter-option.model';
+import { ControlType } from '../control-type';
+import { SelectOption } from '../select-option.model';
 
 /**
  * Search filter select input field configuration. Select options can be provided as fixed list (`options`)
@@ -10,9 +10,9 @@ import { SelectFilterOption } from './select-filter-option.model';
 export class SelectSearchFilter<T> extends SearchFilterBase<T> {
   override controlType = ControlType.select;
   /** Fixed list of select filter options (default is empty list) */
-  options: SelectFilterOption<T>[] = [];
+  options: SelectOption<T>[] = [];
   /** Observable (dynamic) list of select filter options */
-  options$: Observable<SelectFilterOption<T>[]> | undefined;
+  options$: Observable<SelectOption<T>[]> | undefined;
   /**
    * Enables selection of multiple options (default is true).
    * If it is set to false, 'none selected' option becomes available as a first option.
