@@ -1,7 +1,6 @@
 {
     "cSpell.words": [
-        "stylelint",
-        "Typeahead"
+        "stylelint"
     ],
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": true
