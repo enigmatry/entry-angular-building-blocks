@@ -269,10 +269,14 @@ $custom-theme: (
 ### 3. Fonts
 
 Allow customisation of typography and font styles based on Angular Material typography levels. `body` property is the most important and **mandatory** to set because that one is **default** and font family will be applied on all headers and buttons. If we want to additionally customize some other typography elements and properties, we can include other font properties.
-Each font related property in configuration can have **family** and **size** values.
 
-- `body`: Define typography for base body text.
-- `buttons`: Typography for buttons and anchors
+Each font related property in configuration can have: **family**, **size** and **letter-spacing** values.
+
+- `body`: Defines typography for base body text.
+  - `family`: Sets custom font family
+  - `size`: Sets custom font size
+  - `letter-spacing`: Sets custom letter spacing; if we leave default value or set it to `null` manually, Angular Material's default values will be applied
+- `buttons`: Typography for buttons and anchors.
 
 ```scss
 $custom-theme: (
@@ -280,10 +284,12 @@ $custom-theme: (
     fonts: (
       body: (
         family: 'Helvetica',
-        size: 20px
+        size: 20px,
+        letter-spacing: 5px
       ),
       buttons: (
-        size: 10px
+        size: 10px,
+        letter-spacing: 2px
       )
     ),
   )
@@ -307,19 +313,23 @@ $custom-theme: (
     fonts: (
       body: (
         family: 'Helvetica',
-        size: 20px
+        size: 20px,
+        letter-spacing: normal
       ),
       buttons: (
         family: 'Montserrat',
-        size: 10px
+        size: 10px,
+        letter-spacing: 2px
       ),
       titles: (
         family: 'Open Sans',
-        size: 25px
+        size: 25px,
+        letter-spacing: 10px
       ),
       hero-titles: (
         family: 'Open Sans',
-        size: 40px
+        size: 40px,
+        letter-spacing: 10px
       )
     ),
   )
