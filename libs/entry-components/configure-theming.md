@@ -272,11 +272,11 @@ Allow customisation of typography and font styles based on Angular Material typo
 
 Each font related property in configuration can have: **family**, **size** and **letter-spacing** values.
 
-- `body`: Define typography for base body text.
-  - `family`: Set custom font family
-  - `size`: Specify a custom font size.
-  - `letter-spacing`:  Customize the letter spacing;  set to `null` by default, inheriting Angular Material's values.
-- `buttons`: Typography for buttons and anchors
+- `body`: Defines typography for base body text.
+  - `family`: Sets custom font family
+  - `size`: Sets custom font size
+  - `letter-spacing`: Sets custom letter spacing; if we leave default value or set it to `null` manually, Angular Material's default values will be applied
+- `buttons`: Typography for buttons and anchors.
 
 ```scss
 $custom-theme: (
