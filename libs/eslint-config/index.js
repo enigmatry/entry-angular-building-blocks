@@ -97,7 +97,7 @@ module.exports = {
         "@stylistic/max-len": [
           "error",
           {
-            "code": 120,
+            "code": 150,
             "ignoreComments": true
           }
         ],
@@ -161,7 +161,7 @@ module.exports = {
         "@stylistic/space-in-parens": "error",
         "@stylistic/space-infix-ops": "off",
         "@stylistic/space-unary-ops": "error",
-        "@stylistic/spaced-comment": "error",
+        "@stylistic/spaced-comment": "off",
         "@stylistic/switch-colon-spacing": "error",
         "@stylistic/template-curly-spacing": "error",
         "@stylistic/template-tag-spacing": "error",
@@ -228,13 +228,6 @@ module.exports = {
         ],
         "@typescript-eslint/keyword-spacing": [
           "error"
-        ],
-        "@typescript-eslint/lines-between-class-members": [
-          "error",
-          "always",
-          {
-            "exceptAfterSingleLine": true
-          }
         ],
         "@typescript-eslint/naming-convention": "off",
         "@typescript-eslint/no-array-constructor": [
@@ -362,16 +355,10 @@ module.exports = {
           "error"
         ],
         "array-callback-return": "error",
-        "arrow-body-style": [
-          "error",
-          "as-needed",
-          {
-            "requireReturnForObjectLiteral": true
-          }
-        ],
+        "arrow-body-style": "off",
         "block-scoped-var": "error",
         "camelcase": "warn",
-        "capitalized-comments": "error",
+        "capitalized-comments": "off",
         "class-methods-use-this": "off",
         "complexity": "error",
         "consistent-return": "error",
@@ -625,7 +612,7 @@ module.exports = {
         "no-lone-blocks": "error",
         "no-lonely-if": "error",
         "no-loop-func": "off",
-        "no-loops/no-loops": 2,
+        "no-loops/no-loops": 0,
         "no-loss-of-precision": "off",
         "no-magic-numbers": "off",
         "no-misleading-character-class": "error",
