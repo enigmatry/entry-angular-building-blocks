@@ -1,4 +1,5 @@
 import { FormControl } from '@angular/forms';
+import { ControlType } from './control-type';
 
 /**
  * Base Entry search filter input component.
@@ -12,10 +13,10 @@ export class SearchFilterBase<T> {
   label: string;
   /** Placeholder text for search-filter input control  */
   placeholder: string;
-  /** Type of input control e.g. 'email' */
+  /** Type of input control e.g. 'text' or 'email' */
   type: string;
   /** Control type to be overridden in implementing class, used to render the proper input type e.g. 'text-input' */
-  controlType: string;
+  controlType: ControlType;
   /** Max text length to be entered in the input component (default is 256) */
   maxLength: number;
   /** A reference to the form control it represents */
@@ -26,8 +27,8 @@ export class SearchFilterBase<T> {
     this.key = options.key || '';
     this.label = options.label || '';
     this.placeholder = options.placeholder || '';
-    this.controlType = options.controlType || '';
-    this.type = options.type || '';
+    this.controlType = options.controlType || ControlType.text;
+    this.type = options.type || ControlType.text;
     this.maxLength = options.maxLength || 256;
   }
 

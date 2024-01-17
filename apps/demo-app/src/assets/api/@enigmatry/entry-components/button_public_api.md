@@ -19,8 +19,26 @@ Used to provide button configuration on module or application level.
 
 > `const` **ENTRY\_BUTTON\_CONFIG**: `InjectionToken`\< [`EntryButtonConfig`](button_public_api.md#entrybuttonconfig) \>
 
-Entry button config injection token. Can be used to provide custom button configuration.
+Entry button config injection token.
 
 Defaults:
 - submit: type: 'flat', color: 'primary'
 - cancel: type: 'basic', color: 'accent'
+
+## Functions
+
+### provideEntryButtonConfig
+
+> **provideEntryButtonConfig**(`config`): `Provider`
+
+Can be used to provide custom button configuration.
+
+#### Parameters
+
+| Parameter | Type |
+| :------ | :------ |
+| `config` | `Partial`\< [`EntryButtonConfig`](button_public_api.md#entrybuttonconfig) \> |
+
+#### Returns
+
+`Provider`

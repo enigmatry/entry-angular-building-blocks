@@ -1,6 +1,4 @@
-<entry-search-filter
-    [searchFilters]="filters"
-    (searchFilterChange)="searchFilterChange($event)">
+<entry-search-filter [searchFilters]="filters" (searchFilterChange)="searchFilterChange($event)">
 </entry-search-filter>
 
 <table mat-table [dataSource]="users" class="mat-elevation-z8">
@@ -23,6 +21,11 @@
     <ng-container matColumnDef="occupation">
         <th mat-header-cell *matHeaderCellDef> Occupation </th>
         <td mat-cell *matCellDef="let user"> {{user.occupation | enumToString}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="country">
+        <th mat-header-cell *matHeaderCellDef> Country </th>
+        <td mat-cell *matCellDef="let user"> {{ user.country }}</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

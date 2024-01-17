@@ -2,6 +2,33 @@
 
 ## Classes
 
+### AutocompleteSearchFilter
+
+Search filter autocomplete field configuration. Options for the autocomplete are provided
+indirectly via the search function that takes a string and returns an observable array of
+SelectOption`<T>` 
+
+#### Extends
+
+- [`SearchFilterBase`](search_filter_public_api.md#searchfilterbase)\< `T` \>
+
+#### Properties
+
+| Property | Type | Description |
+| :------ | :------ | :------ |
+| `debounceTime` | `number` | Delay in typing before triggering the search function in milliseconds(default is 300) |
+| `formControl` | `FormControl`\< `T` \> | A reference to the form control it represents |
+| `key` | `string` | Unique search-filter input key |
+| `label` | `string` | Label text to be displayed for the search-filter input control |
+| `maxLength` | `number` | Max text length to be entered in the input component (default is 256) |
+| `minimumCharacters` | `number` | Minimum number of characters that must enter to trigger the search function(default is 3) |
+| `placeholder` | `string` | Placeholder text for search-filter input control |
+| `search` | (`input`) => `Observable`\< [`SelectOption`](search_filter_public_api.md#selectoption)\< `T` \>[] \> | Callback function for autocomplete options |
+| `type` | `string` | Type of input control e.g. 'text' or 'email' |
+| `value` | `T` | Default value to be displayed/selected in the input control |
+
+***
+
 ### EntrySearchFilterComponent
 
 Entry SearchFilter component.
@@ -21,7 +48,7 @@ Entry SearchFilter component.
 
 ### EntrySearchFilterConfig
 
-Used to provide default configurations on module level.
+Used to provide entry search filter configuration on module level.
 
 #### Properties
 
@@ -40,6 +67,8 @@ Base Entry search filter input component.
 
 - [`TextSearchFilter`](search_filter_public_api.md#textsearchfilter)
 - [`SelectSearchFilter`](search_filter_public_api.md#selectsearchfilter)
+- [`AutocompleteSearchFilter`](search_filter_public_api.md#autocompletesearchfilter)
+- [`AutocompleteSearchFilter`](search_filter_public_api.md#autocompletesearchfilter)
 - [`SelectSearchFilter`](search_filter_public_api.md#selectsearchfilter)
 - [`TextSearchFilter`](search_filter_public_api.md#textsearchfilter)
 
@@ -47,20 +76,20 @@ Base Entry search filter input component.
 
 | Property | Type | Description |
 | :------ | :------ | :------ |
-| `controlType` | `string` | Control type to be overridden in implementing class, used to render the proper input type e.g. 'text-input' |
+| `controlType` | `ControlType` | Control type to be overridden in implementing class, used to render the proper input type e.g. 'text-input' |
 | `formControl` | `FormControl`\< `T` \> | A reference to the form control it represents |
 | `key` | `string` | Unique search-filter input key |
 | `label` | `string` | Label text to be displayed for the search-filter input control |
 | `maxLength` | `number` | Max text length to be entered in the input component (default is 256) |
 | `placeholder` | `string` | Placeholder text for search-filter input control |
-| `type` | `string` | Type of input control e.g. 'email' |
+| `type` | `string` | Type of input control e.g. 'text' or 'email' |
 | `value` | `T` | Default value to be displayed/selected in the input control |
 
 ***
 
-### SelectFilterOption
+### SelectOption
 
-Model used to populate select filter options.
+Model used to populate select or autocomplete options.
 
 #### Properties
 
@@ -89,10 +118,10 @@ or observable (dynamic) list (`options$`).
 | `label` | `string` | Label text to be displayed for the search-filter input control |
 | `maxLength` | `number` | Max text length to be entered in the input component (default is 256) |
 | `multiSelect` | `boolean` | Enables selection of multiple options (default is true).<br />If it is set to false, 'none selected' option becomes available as a first option. |
-| `options` | [`SelectFilterOption`](search_filter_public_api.md#selectfilteroption)\< `T` \>[] | Fixed list of select filter options (default is empty list) |
-| `options$` | `Observable`\< [`SelectFilterOption`](search_filter_public_api.md#selectfilteroption)\< `T` \>[] \> | Observable (dynamic) list of select filter options |
+| `options` | [`SelectOption`](search_filter_public_api.md#selectoption)\< `T` \>[] | Fixed list of select filter options (default is empty list) |
+| `options$` | `Observable`\< [`SelectOption`](search_filter_public_api.md#selectoption)\< `T` \>[] \> | Observable (dynamic) list of select filter options |
 | `placeholder` | `string` | Placeholder text for search-filter input control |
-| `type` | `string` | Type of input control e.g. 'email' |
+| `type` | `string` | Type of input control e.g. 'text' or 'email' |
 | `value` | `T` | Default value to be displayed/selected in the input control |
 
 ***
@@ -114,7 +143,7 @@ Search filter text input filed configuration.
 | `label` | `string` | Label text to be displayed for the search-filter input control |
 | `maxLength` | `number` | Max text length to be entered in the input component (default is 256) |
 | `placeholder` | `string` | Placeholder text for search-filter input control |
-| `type` | `string` | Type of input control e.g. 'email' |
+| `type` | `string` | Type of input control e.g. 'text' or 'email' |
 | `value` | `string` | Default value to be displayed/selected in the input control |
 
 ## Type Aliases
@@ -129,3 +158,21 @@ containing a collection of query URL parameters for easy integration.
 #### Index signature
 
  \[`key`: `string`\]: `any`
+
+## Functions
+
+### provideEntrySearchFilterConfig
+
+> **provideEntrySearchFilterConfig**(`config`): `Provider`
+
+Can be used to provide entry search filter configuration.
+
+#### Parameters
+
+| Parameter | Type |
+| :------ | :------ |
+| `config` | `Partial`\< [`EntrySearchFilterConfig`](search_filter_public_api.md#entrysearchfilterconfig) \> |
+
+#### Returns
+
+`Provider`

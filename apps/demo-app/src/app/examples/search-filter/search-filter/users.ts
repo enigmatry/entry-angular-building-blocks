@@ -9,6 +9,29 @@ enum Occupation {
     plumber = 7
 }
 
+enum Country {
+    unitedStates = 'United States',
+    china = 'China',
+    india = 'India',
+    brazil = 'Brazil',
+    russia = 'Russia',
+    japan = 'Japan',
+    germany = 'Germany',
+    unitedKingdom = 'United Kingdom',
+    france = 'France',
+    italy = 'Italy',
+    canada = 'Canada',
+    australia = 'Australia',
+    southKorea = 'South Korea',
+    mexico = 'Mexico',
+    indonesia = 'Indonesia',
+    argentina = 'Argentina',
+    spain = 'Spain',
+    netherlands = 'Netherlands',
+    serbia = 'Serbia',
+    southAfrica = 'South Africa'
+}
+
 class User {
     id?: string;
     userName?: string;
@@ -17,6 +40,7 @@ class User {
     dateOfBirth?: Date;
     occupation: Occupation;
     lastLogin?: Date;
+    country?: Country;
 
     constructor(data?: Partial<User>) {
         if (data) {
@@ -35,7 +59,8 @@ const LIST_OF_USERS = [
         lastName: 'O\'Connell',
         dateOfBirth: new Date(1992, 3, 3),
         occupation: Occupation.electrician,
-        lastLogin: new Date()
+        lastLogin: new Date(),
+        country: Country.netherlands
     }),
     new User({
         id: '2',
@@ -44,7 +69,8 @@ const LIST_OF_USERS = [
         lastName: 'Fairbanks',
         dateOfBirth: new Date(1985, 5, 26),
         occupation: Occupation.unknown,
-        lastLogin: new Date()
+        lastLogin: new Date(),
+        country: Country.serbia
     }),
     new User({
         id: '3',
@@ -53,7 +79,8 @@ const LIST_OF_USERS = [
         lastName: 'McAllister',
         dateOfBirth: new Date(1977, 9, 14),
         occupation: Occupation.baker,
-        lastLogin: new Date()
+        lastLogin: new Date(),
+        country: Country.argentina
     }),
     new User({
         id: '4',
@@ -62,7 +89,8 @@ const LIST_OF_USERS = [
         lastName: 'Monroe',
         dateOfBirth: new Date(2000, 2, 8),
         occupation: Occupation.plumber,
-        lastLogin: new Date()
+        lastLogin: new Date(),
+        country: Country.netherlands
     }),
     new User({
         id: '5',
@@ -71,7 +99,8 @@ const LIST_OF_USERS = [
         lastName: 'Harrington',
         dateOfBirth: new Date(1965, 11, 11),
         occupation: Occupation.teacher,
-        lastLogin: new Date()
+        lastLogin: new Date(),
+        country: Country.india
     }),
     new User({
         id: '6',
@@ -80,7 +109,8 @@ const LIST_OF_USERS = [
         lastName: 'Whitmore',
         dateOfBirth: new Date(1996, 7, 22),
         occupation: Occupation.baker,
-        lastLogin: new Date()
+        lastLogin: new Date(),
+        country: Country.unitedKingdom
     }),
     new User({
         id: '7',
@@ -89,7 +119,8 @@ const LIST_OF_USERS = [
         lastName: 'Sullivan',
         dateOfBirth: new Date(1983, 0, 15),
         occupation: Occupation.soldier,
-        lastLogin: new Date()
+        lastLogin: new Date(),
+        country: Country.unitedStates
     }),
     new User({
         id: '8',
@@ -98,7 +129,8 @@ const LIST_OF_USERS = [
         lastName: 'Espinoza',
         dateOfBirth: new Date(1973, 4, 19),
         occupation: Occupation.baker,
-        lastLogin: new Date()
+        lastLogin: new Date(),
+        country: Country.france
     }),
     new User({
         id: '9',
@@ -107,7 +139,8 @@ const LIST_OF_USERS = [
         lastName: 'Baxter',
         dateOfBirth: new Date(1987, 6, 30),
         occupation: Occupation.doctor,
-        lastLogin: new Date()
+        lastLogin: new Date(),
+        country: Country.germany
     }),
     new User({
         id: '10',
@@ -116,7 +149,8 @@ const LIST_OF_USERS = [
         lastName: 'Underwood',
         dateOfBirth: new Date(1994, 1, 21),
         occupation: Occupation.painter,
-        lastLogin: new Date()
+        lastLogin: new Date(),
+        country: Country.spain
     }),
     new User({
         id: '11',
@@ -125,12 +159,14 @@ const LIST_OF_USERS = [
         lastName: 'Underwood',
         dateOfBirth: new Date(1951, 1, 1),
         occupation: Occupation.teacher,
-        lastLogin: new Date()
+        lastLogin: new Date(),
+        country: Country.indonesia
     })
 ];
 
 export {
     Occupation,
+    Country,
     User,
     LIST_OF_USERS
 };

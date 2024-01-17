@@ -98,6 +98,24 @@ A key used to map server side validation errors on form field level
 
 ## Functions
 
+### provideEntryValidationConfig
+
+> **provideEntryValidationConfig**(`config`): `Provider`
+
+Can be used to provide entry validation configuration.
+
+#### Parameters
+
+| Parameter | Type |
+| :------ | :------ |
+| `config` | `Partial`\< [`EntryValidationConfig`](validation_public_api.md#entryvalidationconfig) \> |
+
+#### Returns
+
+`Provider`
+
+***
+
 ### setServerSideValidationErrors
 
 > **setServerSideValidationErrors**(`error`, `form`): `void`

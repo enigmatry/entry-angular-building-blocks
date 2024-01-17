@@ -7,6 +7,7 @@ import { EntryValidationModule } from '@enigmatry/entry-components/validation';
 import { EntryFileInputModule } from '@enigmatry/entry-components/file-input';
 import { EntryTableModule } from '@enigmatry/entry-components/table';
 import { EntryCommonModule, NG_EVENT_PLUGINS } from '@enigmatry/entry-components/common';
+import { EntrySpinnerModule } from '@enigmatry/entry-components/spinner';
 
 interface EntryComponentsModuleOptions {
   permissionService?: Type<any>;
@@ -29,6 +30,7 @@ interface EntryComponentsModuleOptions {
     EntryValidationModule,
     EntryPermissionModule,
     EntrySearchFilterModule,
+    EntrySpinnerModule,
     EntryTableModule
   ]
 })

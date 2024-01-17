@@ -13,7 +13,7 @@ export class PagedQuery implements OnPage, OnSort {
   sortChange(sort: SortEvent): void {
     if (sort.active) {
       this.sortBy = sort.active;
-      this.sortDirection = sort.direction;
+      this.sortDirection = this.getValueIfNotEmpty(sort.direction);
       this.pageNumber = defaultPageNumber;
     }
   }
@@ -26,8 +26,8 @@ export class PagedQuery implements OnPage, OnSort {
   applyRouteChanges(queryParams: Params): void {
     this.pageNumber = queryParams.pageNumber ? Number(queryParams.pageNumber) : defaultPageNumber;
     this.pageSize = queryParams.pageSize ? Number(queryParams.pageSize) : this.pageSize;
-    this.sortBy = queryParams.sortBy ?? this.sortBy;
-    this.sortDirection = queryParams.sortDirection ?? this.sortDirection;
+    this.sortBy = this.getValueIfNotEmpty(queryParams.sortBy ?? this.sortBy);
+    this.sortDirection = this.getValueIfNotEmpty(queryParams.sortDirection ?? this.sortDirection);
   }
 
   getRouteQueryParams(): Params {
@@ -37,5 +37,9 @@ export class PagedQuery implements OnPage, OnSort {
       sortBy: this.sortBy,
       sortDirection: this.sortDirection
     };
+  }
+
+  private getValueIfNotEmpty<T>(value: T): T | undefined {
+    return value ? value : undefined;
   }
 }

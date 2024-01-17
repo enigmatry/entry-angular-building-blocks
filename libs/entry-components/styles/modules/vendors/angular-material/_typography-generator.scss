@@ -16,22 +16,29 @@
 	$fonts: map.get($theme, 'general', 'fonts');
 	$typography: theming.define-typography-config();
 
-	$typography: -set-font-size-for('body', $typography, $fonts, ('body-1', 'body-2'));
-	$typography: -set-font-size-for('buttons', $typography, $fonts, ('button'));
-	$typography: -set-font-size-for('hero-titles',$typography,$fonts,('headline-1', 'headline-2',
+	$typography: -set-font-for('body', $typography, $fonts, ('body-1', 'body-2'));
+	$typography: -set-font-for('buttons', $typography, $fonts, ('button'));
+	$typography: -set-font-for('hero-titles',$typography,$fonts,('headline-1', 'headline-2',
 	'headline-3', 'headline-4', 'headline-5', 'headline-6'));
-	$typography: -set-font-size-for('titles', $typography, $fonts, ('subtitle-1', 'subtitle-2'));
+	$typography: -set-font-for('titles', $typography, $fonts, ('subtitle-1', 'subtitle-2'));
 	$typography: -set-font-family($typography, $fonts);
 
 	@return $typography;
 }
 
-@function -set-font-size-for($selector, $typography, $fonts, $desired-size-settings) {
+@function -set-font-for($selector, $typography, $fonts, $desired-size-settings) {
 	$desired-size: map.get($fonts, $selector, 'size');
+	$desired-spacing: map.get($fonts, $selector, 'letter-spacing');
 
-	@if $desired-size != 0 {
-		@each $setting in $desired-size-settings {
+	@each $setting in $desired-size-settings {
+		/* stylelint-disable-next-line scss/at-if-no-null */
+		@if $desired-size != null {
 			$typography: map.set($typography, $setting, 'font-size', $desired-size);
+		}
+
+		/* stylelint-disable-next-line scss/at-if-no-null */
+		@if $desired-spacing != null {
+			$typography: map.set($typography, $setting, 'letter-spacing', $desired-spacing);
 		}
 	}
 
