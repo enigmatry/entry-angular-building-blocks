@@ -137,17 +137,14 @@ export class MyDateAdapter extends DateAdapter<Date, Locale> {
             throw Error(`Invalid date "${date}" for month with index "${month}".`);
         }
 
-        console.log('createDate', result);
         return result;
     }
 
     today(): Date {
-        console.log('today');
         return new Date();
     }
 
     parse(value: any, parseFormat: string | string[]): Date | null {
-        console.log('parse', value);
         if (typeof value == 'string' && value.length > 0) {
             const iso8601Date = parseISO(value);
 
@@ -155,18 +152,12 @@ export class MyDateAdapter extends DateAdapter<Date, Locale> {
                 return iso8601Date;
             }
 
-            // const formats = Array.isArray(parseFormat) ? parseFormat : [parseFormat];
-            const formats = ['dd/MM/yyyy HH:mm', 'dd/MM/yyyy'];
-
-            // if (!parseFormat.length) {
-            //     throw Error('Formats array must not be empty.');
-            // }
+             const formats = Array.isArray(parseFormat) ? parseFormat : [parseFormat];
 
             for (const currentFormat of formats) {
-                const fromFormat = parse(value, currentFormat, new Date(), { locale: this.locale });
+                const fromFormat = parse(value, currentFormat, new Date(), {  });
 
                 if (this.isValid(fromFormat)) {
-                    console.log('date:', fromFormat);
                     return fromFormat as Date;
                 }
             }
@@ -182,17 +173,8 @@ export class MyDateAdapter extends DateAdapter<Date, Locale> {
     }
 
     format(date: Date, displayFormat: any): string {
-        console.log('format', date, displayFormat);
         if (!this.isValid(date)) {
             throw Error('DateFnsAdapter: Cannot format invalid date.');
-        }
-
-        if (typeof (displayFormat) !== 'string') {
-            if (displayFormat.month === 'short' && displayFormat.year === 'numeric') {
-                displayFormat = 'LLL yyyy';
-            } else {
-                displayFormat = 'dd/MM/yyyy HH:mm';
-            }
         }
 
         return format(date, displayFormat, {});
@@ -214,33 +196,8 @@ export class MyDateAdapter extends DateAdapter<Date, Locale> {
         return formatISO(date, { representation: 'date' });
     }
 
-    /**
-     * Returns the given value if given a valid Date or null. Deserializes valid ISO 8601 strings
-     * (https://www.ietf.org/rfc/rfc3339.txt) into valid Dates and empty string into null. Returns an
-     * invalid date for all other values.
-     */
-    override deserialize(value: any): Date | null {
-        console.log('deserialize', value);
-        if (typeof value === 'string') {
-            if (!value) {
-                return null;
-            }
-            const date = parseISO(value);
-            if (this.isValid(date)) {
-                return date;
-            }
-        }
-        return super.deserialize(value);
-    }
-
     override compareDate(first: Date, second: Date): number {
-        console.log('compareDate', first, second);
         return first.getTime() - second.getTime();
-    }
-
-    override sameDate(first: Date, second: Date): boolean {
-        console.log('sameDate', first, second);
-        return first != null && second != null && this.compareDate(first, second) === 0;
     }
 
     isDateInstance(obj: any): boolean {
