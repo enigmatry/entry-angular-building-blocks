@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { UsersService } from './users.service';
 import {
   AutocompleteSearchFilter,
+  DateTimeSearchFilter,
   SearchFilterBase,
   SearchFilterParams,
   SelectOption,
@@ -76,6 +77,10 @@ export class SearchFilterExampleComponent {
         search: (input: string) => of(Object.values(Country)
           .filter(value => value.toLocaleLowerCase().includes(input.toLocaleLowerCase()))
           .map((country => new SelectOption(country, country))))
+      }),
+      new DateTimeSearchFilter({
+        key: 'date',
+        label: 'some date'
       })
     ];
   }

@@ -7,6 +7,7 @@ import { TextSearchFilter } from './text/text-search-filter.model';
 import { SelectSearchFilter } from './select/select-search-filter.model';
 import { AutocompleteSearchFilter } from './autocomplete/autocomplete-search-filter.model';
 import { ControlType } from './control-type';
+import { DateTimeSearchFilter } from './public-api';
 
 /**
  * Entry SearchFilter component.
@@ -57,6 +58,10 @@ export class EntrySearchFilterComponent implements OnInit {
   }
   asAutocompleteSearchFilter<T>(searchFilter: SearchFilterBase<T>): AutocompleteSearchFilter<T> {
     return searchFilter as AutocompleteSearchFilter<T>;
+  }
+
+  asDatetimeSearchFilter<T>(searchFilter: SearchFilterBase<T>): DateTimeSearchFilter{
+    return searchFilter as DateTimeSearchFilter;
   }
 }
 
