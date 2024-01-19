@@ -17,6 +17,7 @@ import {
     parseISO,
     parse,
 } from 'date-fns';
+import { de, enUS, fr, nl } from 'date-fns/locale';
 
 /** Creates an array and fills it with values. */
 function range<T>(length: number, valueFunction: (index: number) => T): T[] {
@@ -47,8 +48,21 @@ export class MyDateAdapter extends DateAdapter<Date, Locale> {
     // eslint-disable-next-line @typescript-eslint/ban-types
     constructor(@Optional() @Inject(MAT_DATE_LOCALE) matDateLocale: {}) {
         super();
-        this.setLocale(matDateLocale as Locale);
+        this.setLocale(this.getMatDateLocale(matDateLocale as string));
     }
+
+    getMatDateLocale = (locale: string): Locale => {
+        switch (locale) {
+            case 'nl-NL':
+                return nl;
+            case 'fr-FR':
+                return fr;
+            case 'de-DE':
+                return de;
+            default:
+                return enUS;
+        }
+    };
 
     getYear(date: Date): number {
         return getYear(date);
@@ -152,10 +166,10 @@ export class MyDateAdapter extends DateAdapter<Date, Locale> {
                 return iso8601Date;
             }
 
-             const formats = Array.isArray(parseFormat) ? parseFormat : [parseFormat];
+            const formats = Array.isArray(parseFormat) ? parseFormat : [parseFormat];
 
             for (const currentFormat of formats) {
-                const fromFormat = parse(value, currentFormat, new Date(), {  });
+                const fromFormat = parse(value, currentFormat, new Date(), { locale: this.locale });
 
                 if (this.isValid(fromFormat)) {
                     return fromFormat as Date;
@@ -177,7 +191,7 @@ export class MyDateAdapter extends DateAdapter<Date, Locale> {
             throw Error('DateFnsAdapter: Cannot format invalid date.');
         }
 
-        return format(date, displayFormat, {});
+        return format(date, displayFormat, { locale: this.locale });
     }
 
     addCalendarYears(date: Date, years: number): Date {

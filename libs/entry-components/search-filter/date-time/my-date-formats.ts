@@ -1,5 +1,6 @@
 import { MatDateFormats } from '@angular/material/core';
 
+// https://date-fns.org/v2.16.1/docs/format
 export const MY_DATE_FORMATS: MatDateFormats = {
     parse: {
         dateInput: ['Pp', 'P']
