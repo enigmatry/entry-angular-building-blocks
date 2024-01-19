@@ -17,7 +17,6 @@ import {
     parseISO,
     parse,
 } from 'date-fns';
-import { de, enUS, fr, nl } from 'date-fns/locale';
 
 /** Creates an array and fills it with values. */
 function range<T>(length: number, valueFunction: (index: number) => T): T[] {
@@ -48,21 +47,8 @@ export class MyDateAdapter extends DateAdapter<Date, Locale> {
     // eslint-disable-next-line @typescript-eslint/ban-types
     constructor(@Optional() @Inject(MAT_DATE_LOCALE) matDateLocale: {}) {
         super();
-        this.setLocale(this.getMatDateLocale(matDateLocale as string));
+        this.setLocale(matDateLocale as Locale);
     }
-
-    getMatDateLocale = (locale: string): Locale => {
-        switch (locale) {
-            case 'nl-NL':
-                return nl;
-            case 'fr-FR':
-                return fr;
-            case 'de-DE':
-                return de;
-            default:
-                return enUS;
-        }
-    };
 
     getYear(date: Date): number {
         return getYear(date);
