@@ -6,5 +6,3 @@ export declare type EntryMatDateTime<D> = {
 };
 
 export const ENTRY_MAT_DATE_TIME = new InjectionToken<EntryMatDateTime<any>>('');
-// eslint-disable-next-line @typescript-eslint/naming-convention, @typescript-eslint/ban-types
-export declare function ENTRY_MAT_DATE_TIME_FACTORY(): {};

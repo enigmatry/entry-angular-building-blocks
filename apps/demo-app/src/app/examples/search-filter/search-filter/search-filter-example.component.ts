@@ -44,12 +44,6 @@ export class SearchFilterExampleComponent {
         placeholder: 'User name or last name',
         maxLength: 25
       }),
-      new TextSearchFilter({
-        key: 'email',
-        label: 'E-mail',
-        placeholder: 'user@example.com',
-        type: 'email'
-      }),
       new SelectSearchFilter({
         key: 'occupation',
         label: 'Occupation',

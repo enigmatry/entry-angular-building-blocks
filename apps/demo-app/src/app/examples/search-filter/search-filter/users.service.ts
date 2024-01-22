@@ -28,9 +28,6 @@ export class UsersService {
       users = users?.filter(x => x.firstName?.toLowerCase().includes(searchParams.name.toLowerCase())
         || x.lastName?.toLowerCase().includes(searchParams.name.toLowerCase()));
     }
-    if (!this.noFilterParam(searchParams, 'email')) {
-      users = users?.filter(x => x.userName?.toLowerCase().includes(searchParams.email.toLowerCase()));
-    }
     if (!this.noFilterParam(searchParams, 'occupation')) {
       users = users?.filter(x => searchParams.occupation instanceof Array
         ? searchParams.occupation.includes(x.occupation)

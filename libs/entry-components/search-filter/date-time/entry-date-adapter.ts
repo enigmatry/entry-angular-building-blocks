@@ -3,7 +3,7 @@ import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { ENTRY_MAT_DATE_TIME, EntryMatDateTime } from './entry-date-time';
 
 @Injectable()
-export class MyDateAdapter<D, L> extends DateAdapter<D, L> {
+export class EntryDateAdapter<D, L> extends DateAdapter<D, L> {
     private compareFunction: (first: D, second: D) => number;
 
     constructor(@Optional() @Inject(MAT_DATE_LOCALE) matDateLocale,
