@@ -1,3 +1,4 @@
+import { EntryMatDateTime } from 'libs/entry-components/search-filter/date-time/entry-date-time';
 import { environment } from './environments/environment';
 import { de, enUS, fr, nl } from 'date-fns/locale';
 
@@ -11,6 +12,13 @@ export const getMatDateLocale = (): Locale => {
             return de;
         default:
             return enUS;
+    }
+};
+
+export const entryMatDateTime: EntryMatDateTime<Date> = {
+    dateTimeFormat: 'Pp',
+    compareDate(first: Date, second: Date): number {
+        return first.getTime() - second.getTime();
     }
 };
 

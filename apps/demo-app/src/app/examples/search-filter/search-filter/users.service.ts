@@ -46,14 +46,17 @@ export class UsersService {
       users = users.filter(x => x.country === searchParams.country);
     }
 
+    if(!this.noFilterParam(searchParams, 'dateOfBirth')){
+      users = users.filter(x => x.dateOfBirth >= searchParams.dateOfBirth);
+    }
+
     return users;
   }
 
   private noFilterParam(searchParams: SearchFilterParams, paramName: string): boolean {
     return searchParams[paramName] === undefined
       || searchParams[paramName] === null
-      || searchParams[paramName]?.length === 0
-      || searchParams[paramName][0] === undefined;
+      || searchParams[paramName]?.length === 0;
   }
 }
 

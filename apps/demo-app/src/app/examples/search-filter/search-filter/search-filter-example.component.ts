@@ -79,8 +79,9 @@ export class SearchFilterExampleComponent {
           .map((country => new SelectOption(country, country))))
       }),
       new DateTimeSearchFilter({
-        key: 'date',
-        label: 'some date'
+        key: 'dateOfBirth',
+        label: 'Born after',
+        placeholder: 'Born after'
       })
     ];
   }

@@ -1,214 +1,108 @@
-import { Inject, Injectable, Optional } from '@angular/core';
+import { Inject, Injectable, Optional, SkipSelf, inject } from '@angular/core';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
-import {
-    Locale,
-    getMonth,
-    getYear,
-    getDate,
-    getDay,
-    getDaysInMonth,
-    formatISO,
-    addYears,
-    addMonths,
-    addDays,
-    isValid,
-    isDate,
-    format,
-    parseISO,
-    parse,
-} from 'date-fns';
+import { ENTRY_MAT_DATE_TIME, EntryMatDateTime } from './entry-date-time';
 
-/** Creates an array and fills it with values. */
-function range<T>(length: number, valueFunction: (index: number) => T): T[] {
-    const valuesArray = Array(length);
-    for (let i = 0; i < length; i++) {
-        valuesArray[i] = valueFunction(i);
-    }
-    return valuesArray;
-}
-
-// date-fns doesn't have a way to read/print month names or days of the week directly,
-// so we get them by formatting a date with a format that produces the desired month/day.
-const MONTH_FORMATS = {
-    long: 'LLLL',
-    short: 'LLL',
-    narrow: 'LLLLL',
-};
-
-const DAY_OF_WEEK_FORMATS = {
-    long: 'EEEE',
-    short: 'EEE',
-    narrow: 'EEEEE',
-};
-
-/** Adds date-fns support to Angular Material. */
 @Injectable()
-export class MyDateAdapter extends DateAdapter<Date, Locale> {
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    constructor(@Optional() @Inject(MAT_DATE_LOCALE) matDateLocale: {}) {
+export class MyDateAdapter<D, L> extends DateAdapter<D, L> {
+    private compareFunction: (first: D, second: D) => number;
+
+    constructor(@Optional() @Inject(MAT_DATE_LOCALE) matDateLocale,
+        @Inject(ENTRY_MAT_DATE_TIME) entryMateDateTime: EntryMatDateTime<D>,
+        @SkipSelf() private dateAdapter: DateAdapter<D, L>) {
         super();
-        this.setLocale(matDateLocale as Locale);
+        this.compareFunction = entryMateDateTime.compareDate;
+        this.dateAdapter.setLocale(matDateLocale as L);
     }
 
-    getYear(date: Date): number {
-        return getYear(date);
+    getYear(date: D): number {
+        return this.dateAdapter.getYear(date);
     }
 
-    getMonth(date: Date): number {
-        return getMonth(date);
+    getMonth(date: D): number {
+        return this.dateAdapter.getMonth(date);
     }
 
-    getDate(date: Date): number {
-        return getDate(date);
+    getDate(date: D): number {
+        return this.dateAdapter.getDate(date);
     }
 
-    getDayOfWeek(date: Date): number {
-        return getDay(date);
+    getDayOfWeek(date: D): number {
+        return this.dateAdapter.getDayOfWeek(date);
     }
 
     getMonthNames(style: 'long' | 'short' | 'narrow'): string[] {
-        const pattern = MONTH_FORMATS[style];
-        return range(12, i => this.format(new Date(2017, i, 1), pattern));
+        return this.dateAdapter.getMonthNames(style);
     }
 
     getDateNames(): string[] {
-        const dtf =
-            typeof Intl !== 'undefined'
-                ? new Intl.DateTimeFormat(this.locale.code, {
-                    day: 'numeric',
-                    timeZone: 'utc',
-                })
-                : null;
-
-        return range(31, i => {
-            if (dtf) {
-                // date-fns doesn't appear to support this functionality.
-                // Fall back to `Intl` on supported browsers.
-                const date = new Date();
-                date.setUTCFullYear(2017, 0, i + 1);
-                date.setUTCHours(0, 0, 0, 0);
-                return dtf.format(date).replace(/[\u200e\u200f]/g, '');
-            }
-
-            return i + '';
-        });
+        return this.dateAdapter.getDateNames();
     }
 
     getDayOfWeekNames(style: 'long' | 'short' | 'narrow'): string[] {
-        const pattern = DAY_OF_WEEK_FORMATS[style];
-        return range(7, i => this.format(new Date(2017, 0, i + 1), pattern));
+        return this.dateAdapter.getDayOfWeekNames(style);
     }
 
-    getYearName(date: Date): string {
-        return this.format(date, 'y');
+    getYearName(date: D): string {
+        return this.dateAdapter.getYearName(date);
     }
 
     getFirstDayOfWeek(): number {
-        return this.locale.options?.weekStartsOn ?? 0;
+        return this.dateAdapter.getFirstDayOfWeek();
     }
 
-    getNumDaysInMonth(date: Date): number {
-        return getDaysInMonth(date);
+    getNumDaysInMonth(date: D): number {
+        return this.dateAdapter.getNumDaysInMonth(date);
     }
 
-    clone(date: Date): Date {
-        return new Date(date.getTime());
+    clone(date: D): D {
+        return this.dateAdapter.clone(date);
     }
 
-    createDate(year: number, month: number, date: number): Date {
-        // Check for invalid month and date (except upper bound on date which we have to check after
-        // creating the Date).
-        if (month < 0 || month > 11) {
-            throw Error(`Invalid month index "${month}". Month index has to be between 0 and 11.`);
-        }
-
-        if (date < 1) {
-            throw Error(`Invalid date "${date}". Date has to be greater than 0.`);
-        }
-
-        // Passing the year to the constructor causes year numbers <100 to be converted to 19xx.
-        // To work around this we use `setFullYear` and `setHours` instead.
-        const result = new Date();
-        result.setFullYear(year, month, date);
-        result.setHours(0, 0, 0, 0);
-
-        // Check that the date wasn't above the upper bound for the month, causing the month to overflow
-        if (result.getMonth() !== month) {
-            throw Error(`Invalid date "${date}" for month with index "${month}".`);
-        }
-
-        return result;
+    createDate(year: number, month: number, date: number): D {
+        return this.dateAdapter.createDate(year, month, date);
     }
 
-    today(): Date {
-        return new Date();
+    today(): D {
+        return this.dateAdapter.today();
     }
 
-    parse(value: any, parseFormat: string | string[]): Date | null {
-        if (typeof value == 'string' && value.length > 0) {
-            const iso8601Date = parseISO(value);
-
-            if (this.isValid(iso8601Date)) {
-                return iso8601Date;
-            }
-
-            const formats = Array.isArray(parseFormat) ? parseFormat : [parseFormat];
-
-            for (const currentFormat of formats) {
-                const fromFormat = parse(value, currentFormat, new Date(), { locale: this.locale });
-
-                if (this.isValid(fromFormat)) {
-                    return fromFormat as Date;
-                }
-            }
-
-            return this.invalid();
-        } else if (typeof value === 'number') {
-            return new Date(value);
-        } else if (value instanceof Date) {
-            return this.clone(value);
-        }
-
-        return null;
+    parse(value: any, parseFormat: any): D {
+        return this.dateAdapter.parse(value, parseFormat);
     }
 
-    format(date: Date, displayFormat: any): string {
-        if (!this.isValid(date)) {
-            throw Error('DateFnsAdapter: Cannot format invalid date.');
-        }
-
-        return format(date, displayFormat, { locale: this.locale });
+    format(date: D, displayFormat: any): string {
+        return this.dateAdapter.format(date, displayFormat);
     }
 
-    addCalendarYears(date: Date, years: number): Date {
-        return addYears(date, years);
+    addCalendarYears(date: D, years: number): D {
+        return this.dateAdapter.addCalendarYears(date, years);
     }
 
-    addCalendarMonths(date: Date, months: number): Date {
-        return addMonths(date, months);
+    addCalendarMonths(date: D, months: number): D {
+        return this.dateAdapter.addCalendarMonths(date, months);
     }
 
-    addCalendarDays(date: Date, days: number): Date {
-        return addDays(date, days);
+    addCalendarDays(date: D, days: number): D {
+        return this.dateAdapter.addCalendarDays(date, days);
     }
 
-    toIso8601(date: Date): string {
-        return formatISO(date, { representation: 'date' });
-    }
-
-    override compareDate(first: Date, second: Date): number {
-        return first.getTime() - second.getTime();
+    toIso8601(date: D): string {
+        return this.dateAdapter.toIso8601(date);
     }
 
     isDateInstance(obj: any): boolean {
-        return isDate(obj);
+        return this.dateAdapter.isDateInstance(obj);
     }
 
-    isValid(date: Date): boolean {
-        return isValid(date);
+    isValid(date: D): boolean {
+        return this.dateAdapter.isValid(date);
     }
 
-    invalid(): Date {
-        return new Date(NaN);
+    invalid(): D {
+        return this.dateAdapter.invalid();
+    }
+
+    override compareDate(first: D, second: D): number {
+        return this.compareFunction(first, second);
     }
 }

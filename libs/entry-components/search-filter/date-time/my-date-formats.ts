@@ -1,14 +1,18 @@
-import { MatDateFormats } from '@angular/material/core';
+import { MAT_DATE_FORMATS } from '@angular/material/core';
+import { ENTRY_MAT_DATE_TIME } from './entry-date-time';
+import { inject } from '@angular/core';
 
-// https://date-fns.org/v2.16.1/docs/format
-export const MY_DATE_FORMATS: MatDateFormats = {
-    parse: {
-        dateInput: ['Pp', 'P']
-    },
-    display: {
-        dateInput: 'Pp',
-        monthYearLabel: 'LLL uuuu',
-        dateA11yLabel: 'PP',
-        monthYearA11yLabel: 'LLLL uuuu',
-    }
+
+export const EXTENDED_DATE_FORMATS = () => {
+    const formats = inject(MAT_DATE_FORMATS, { skipSelf: true });
+    const entryMatDateTime = inject(ENTRY_MAT_DATE_TIME);
+    const result = ({
+        ...formats
+    });
+    result.display.dateInput = entryMatDateTime.dateTimeFormat;
+    const parseFormat = result.parse.dateInput;
+    result.parse.dateInput = Array.isArray(parseFormat)
+        ? [...parseFormat, entryMatDateTime.dateTimeFormat]
+        : [parseFormat, entryMatDateTime.dateTimeFormat];
+    return result;
 };

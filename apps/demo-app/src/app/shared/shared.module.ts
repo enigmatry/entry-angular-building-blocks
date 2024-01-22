@@ -10,8 +10,10 @@ import { CodeViewComponent } from './example-viewer/code-view/code-view.componen
 import { EntryButtonModule, provideEntryButtonConfig } from '@enigmatry/entry-components/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EntryCommonModule } from '@enigmatry/entry-components/common';
-import { MAT_DATE_LOCALE } from '@angular/material/core';
-import { getMatDateLocale } from '../../localizaiton';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { entryMatDateTime, getMatDateLocale } from '../../localizaiton';
+import { ENTRY_MAT_DATE_TIME } from 'libs/entry-components/search-filter/date-time/entry-date-time';
+import { DateFnsAdapter, MAT_DATE_FNS_FORMATS } from '@angular/material-date-fns-adapter';
 
 @NgModule({
   declarations: [
@@ -47,6 +49,19 @@ import { getMatDateLocale } from '../../localizaiton';
       provide: MAT_DATE_LOCALE,
       useFactory: () => getMatDateLocale()
     },
+    {
+      provide: DateAdapter,
+      useClass: DateFnsAdapter,
+      deps: [MAT_DATE_LOCALE],
+    },
+    {
+      provide: MAT_DATE_FORMATS,
+      useValue: MAT_DATE_FNS_FORMATS
+    },
+    {
+      provide: ENTRY_MAT_DATE_TIME,
+      useValue: entryMatDateTime
+    }
   ]
 })
 export class SharedModule { }
