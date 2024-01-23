@@ -2,17 +2,16 @@
 
 ### Table of Contents
 
-- [Overview](#overview)
+- [Overview](#top)
 - [Prerequisites](#prerequisites)
   - [Angular Material Documentation](#angular-material-documentation)
 - [Project Structure](#project-structure)
 - [Styles Configuration](#styles-configuration)
 - [Create custom theme](#create-custom-theme)
 - [Fonts Prerequisites](#fonts-prerequisites)
-  - [Importing fonts](#importing-fonts)
-    - [Use default font](#1-use-default-roboto-font) 
-    - [Preparing custom fonts](#2-preparing-custom-fonts)
-  - [Adding Material classes](#adding-material-classes)  
+  - [Use default font](#1-use-default-font)
+  - [Custom fonts](#2-custom-fonts)
+  - [Set Angular Material typography](#set-angular-material-typography)  
   - [Configuring typography](#differences-between-configuring-typography)  
 - [Configuration Properties](#configuration-properties)
 - [Theme Configuration Approaches](#theme-configuration-approaches)
@@ -31,6 +30,7 @@ The **entry-components** library comes with a generator which simplifies the pro
 
 Before diving into theming configurations, make sure to address the following prerequisites:
 
+- Complete steps from [`Theming setup guide`](./theming-setup.md) before configuring theme
 - Ensure that the latest version of the [`entry-components`](https://www.npmjs.com/package/@enigmatry/entry-components) library is installed
 - Prepare custom fonts  if customers require them, follow the instructions [`here`](#2-preparing-custom-fonts)
 - For a deeper understanding of theming concepts and customisation options, refer to the [Angular Material documentation](#angular-material-documentation)
@@ -98,13 +98,11 @@ $custom-theme: (
 
 ## Fonts Prerequisites
 
-### Importing Fonts
-
 There are 2 possibilities of using fonts in theming:
 
-### 1. Use default Roboto font
+### 1. Use default font
 
-**Entry-components** library comes with the default **Roboto** font family. To utilise it, configuration in the `angular.json` file at the root of the app is necessary. The font is imported from the library's node modules as follows:  
+**Entry-components** library comes with the default font family. To utilise it, configuration in the `angular.json` file at the root of the app is necessary. The font is imported from the library's node modules as follows:  
 
 ```json
 "assets": [
@@ -118,7 +116,7 @@ There are 2 possibilities of using fonts in theming:
 ],
 ```
 
-### 2. Preparing custom fonts
+### 2. Custom fonts
 
 Ensure that the following steps are completed:
 
@@ -136,14 +134,13 @@ Ensure that the following steps are completed:
 }
 ```
 
-### Adding Material classes
+### Set Angular Material typography
 
 Since Angular Material is using different typography levels, to be able to read values from a theme it's needed to add those typography level cases to corresponding native elements. So the right font configurations will be applied. Check the full list here  [Material Typography Guide](https://material.angular.io/guide/typography). 
 
 In another case, if we don't provide those classes for custom components, our typography configurations will not be applied. It depends on the situation and customer needs.
 
 The first necessary step is to apply it to the whole body of the app, add `.mat-body` or `.mat-body-2` class to the body element in index.html file in app root. 
-
 
 ```html
 <!-- Applying mat-body class to the root component in index.html -->
@@ -615,30 +612,33 @@ $custom-theme: (
 
 ## Default values table
 
-The table below outlines the default values for various configuration properties. If a specific value is not explicitly defined in your project's configuration, the system will default to the values listed here.
+The table below outlines the default values for all supported configuration properties. If a specific value is not explicitly defined in your project's configuration, the system will default to the values listed here.
 
 | Category         | Property                        | Default Value                       |
 |------------------|---------------------------------|-------------------------------------|
 | **general**      | density                         | 0                                   |
-|                  | primary-theme                   | null                                |
-|                  | accent-theme                    | null                                |
-|                  | primary                         | #2581C4                             |
-|                  | accent                          | #EA518D                             |
-|                  | font                            | #323232                             |
+|                  | colors/primary-theme            | null                                |
+|                  | colors/accent-theme             | null                                |
+|                  | colors/primary                  | #2581C4                             |
+|                  | colors/accent                   | #EA518D                             |
+|                  | colors/font                     | #323232                             |
 |                  | disabled/foreground             | rgb(0 0 0 / .38)                    |
 |                  | disabled/background             | rgb(0 0 0 / .12)                    |
 |                  | typography                      | null                                |
-|                  | family                          | ''                                  |
-|                  | size                            | 0                                   |
-|                  | default                         | 15px                                |
+|                  | fonts/family                    | ''                                  |
+|                  | fonts/size                      | 0                                   |
+|                  | fonts/letter-spacing            | null                                |
+|                  | spacing/default                 | 15px                                |
 |                  | inputs/background               | null                                |
-|                  | icon-size                       | 48px                                |
-| **tables**       | edge-gap                        | 4px                                 |
-|                  | padding                         | null                                |
-|                  | selected-color                  | #FFF                                |
-|                  | disabled-color                  | #F5F5F5                             |
-|                  | odd-even-row                    | odd                                 |
-|                  | odd-even-background             | #F0F0F0                             |
-|                  | font-size                       | 13px                                |
-|                  | font-weight                     | 500                                 |
-| **dialogs**      | size                            | 20px                                |
+|                  | buttons/icon-size               | 48px                                |
+| **tables**       | cells/edge-gap                  | 4px                                 |
+|                  | cells/padding                   | null                                |
+|                  | rows/selected-color             | #FFF                                |
+|                  | rows/disabled-color             | #F5F5F5                             |
+|                  | rows/odd-even-row               | odd                                 |
+|                  | rows/odd-even-background        | #F0F0F0                             |
+|                  | no-result/font-size             | 13px                                |
+|                  | no-result/font-weight           | 500                                 |
+| **dialogs**      | title/size                      | 20px                                |
+
+[Back to Top](#top)
