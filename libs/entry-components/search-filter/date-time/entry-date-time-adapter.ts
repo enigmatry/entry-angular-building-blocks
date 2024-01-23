@@ -3,15 +3,15 @@ import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { ENTRY_MAT_DATE_TIME, EntryMatDateTime } from './entry-date-time';
 
 @Injectable()
-export class EntryDateAdapter<D, L> extends DateAdapter<D, L> {
+export class EntryDateTimeAdapter<D, L> extends DateAdapter<D, L> {
     private compareFunction: (first: D, second: D) => number;
 
-    constructor(@Optional() @Inject(MAT_DATE_LOCALE) matDateLocale,
+    constructor(@Optional() @Inject(MAT_DATE_LOCALE) matDateLocale: L,
         @Inject(ENTRY_MAT_DATE_TIME) entryMateDateTime: EntryMatDateTime<D>,
         @SkipSelf() private dateAdapter: DateAdapter<D, L>) {
         super();
         this.compareFunction = entryMateDateTime.compareDate;
-        this.dateAdapter.setLocale(matDateLocale as L);
+        this.dateAdapter.setLocale(matDateLocale);
     }
 
     getYear(date: D): number {
