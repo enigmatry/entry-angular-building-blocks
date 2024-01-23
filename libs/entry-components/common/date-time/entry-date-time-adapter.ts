@@ -2,15 +2,18 @@ import { Inject, Injectable, Optional, SkipSelf, inject } from '@angular/core';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { ENTRY_MAT_DATE_TIME, EntryMatDateTime } from './entry-date-time';
 
+/**
+ * Extends provided DateAdapter with date time support
+ */
 @Injectable()
 export class EntryDateTimeAdapter<D, L> extends DateAdapter<D, L> {
     private compareFunction: (first: D, second: D) => number;
 
     constructor(@Optional() @Inject(MAT_DATE_LOCALE) matDateLocale: L,
-        @Inject(ENTRY_MAT_DATE_TIME) entryMateDateTime: EntryMatDateTime<D>,
+        @Inject(ENTRY_MAT_DATE_TIME) entryMatDateTime: EntryMatDateTime<D>,
         @SkipSelf() private dateAdapter: DateAdapter<D, L>) {
         super();
-        this.compareFunction = entryMateDateTime.compareDate;
+        this.compareFunction = entryMatDateTime.compareDate;
         this.dateAdapter.setLocale(matDateLocale);
     }
 

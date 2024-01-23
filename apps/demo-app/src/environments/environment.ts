@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   documentationUri: 'https://raw.githubusercontent.com/enigmatry/entry-angular-building-blocks/master/libs/',
-  defaultCulture: 'en-US'
+  defaultCulture: 'nl-NL'
 };
 
 /*

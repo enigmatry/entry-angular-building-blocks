@@ -9,10 +9,9 @@ import { SortPipe } from './pipes/sort.pipe';
 import { CodeViewComponent } from './example-viewer/code-view/code-view.component';
 import { EntryButtonModule, provideEntryButtonConfig } from '@enigmatry/entry-components/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { EntryCommonModule } from '@enigmatry/entry-components/common';
+import { ENTRY_MAT_DATE_TIME, EntryCommonModule } from '@enigmatry/entry-components/common';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { entryMatDateTime, getMatDateLocale } from '../../localizaiton';
-import { ENTRY_MAT_DATE_TIME } from 'libs/entry-components/search-filter/date-time/entry-date-time';
 import { DateFnsAdapter, MAT_DATE_FNS_FORMATS } from '@angular/material-date-fns-adapter';
 
 @NgModule({

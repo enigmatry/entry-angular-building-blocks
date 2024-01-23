@@ -1,9 +1,14 @@
-import { MAT_DATE_FORMATS } from '@angular/material/core';
-import { ENTRY_MAT_DATE_TIME } from './entry-date-time';
-import { inject } from '@angular/core';
+import { InjectionToken, inject } from '@angular/core';
+import { MAT_DATE_FORMATS, MatDateFormats } from '@angular/material/core';
 
+export declare type EntryMatDateTime<D> = {
+    dateTimeFormat: string;
+    compareDate(first: D, second: D): number;
+};
 
-export const EXTENDED_DATE_FORMATS = () => {
+export const ENTRY_MAT_DATE_TIME = new InjectionToken<EntryMatDateTime<any>>('');
+
+export const EXTEND_MAT_DATE_FORMAT_WITH_DATE_TIME = (): MatDateFormats => {
     const formats = inject(MAT_DATE_FORMATS, { skipSelf: true });
     const dateTimeFormat = inject(ENTRY_MAT_DATE_TIME).dateTimeFormat;
     const result = { ...formats };
