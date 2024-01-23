@@ -14,5 +14,6 @@ import { EXTEND_MAT_DATE_FORMAT_WITH_DATE_TIME, EntryDateTimeAdapter } from '@en
 })
 export class DateTimeSearchFilterComponent<D> {
   @Input() searchFilter: DateTimeSearchFilter<D>;
+  /** Form group to which the search-filter input component will be added. */
   @Input() form: UntypedFormGroup;
 }

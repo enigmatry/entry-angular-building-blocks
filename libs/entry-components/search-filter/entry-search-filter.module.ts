@@ -13,6 +13,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { DateTimeSearchFilterComponent } from './date-time/date-time-search-filter.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { DateSearchFilterComponent } from './date/date-search-filter.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     TextSearchFilterComponent,
     SelectSearchFilterComponent,
     AutocompleteSearchFilterComponent,
-    DateTimeSearchFilterComponent
+    DateTimeSearchFilterComponent,
+    DateSearchFilterComponent
   ],
   imports: [
     CommonModule,

@@ -7,6 +7,7 @@ export { SelectSearchFilter } from './select/select-search-filter.model';
 export { AutocompleteSearchFilter } from './autocomplete/autocomplete-search-filter.model';
 export { SelectOption } from './select-option.model';
 export { DateTimeSearchFilter } from './date-time/date-time-search-filter.model';
+export { DateSearchFilter } from './date/date-search-filter.model';
 
 export { EntrySearchFilterModule } from './entry-search-filter.module';
 

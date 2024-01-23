@@ -5,6 +5,8 @@ Entry component for providing standard filtering capabilities that can be consum
 * Text filter
 * Select filter (supports fixed and dynamic (Observable) options)
 * Autocomplete filter
+* Date filter
+* DateTime filter
 
 ## Integration
 
