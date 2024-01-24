@@ -50,16 +50,16 @@ import { EntryFormModule } from '@enigmatry/entry-form';
 To enable the import of `@enigmatry` packages from any location within your project without the requirement of a relative path, it is necessary to make modifications to the `angular.json` configuration file.
 Add the following snippet to the `stylePreprocessorOptions`:
 
-```json
-  "architect": {
-    "options": {
-      "stylePreprocessorOptions": {
-        "includePaths": [
-          "node_modules/@enigmatry"
-        ]
-      }
+```diff
+"architect": {
+  "options": {
+    "stylePreprocessorOptions": {
+      "includePaths": [
++        "node_modules/@enigmatry"
+      ]
     }
   }
+}
 ```
 
 Call the generator in your SCSS files dedicated to theming in order to apply these styles.
@@ -67,6 +67,21 @@ Call the generator in your SCSS files dedicated to theming in order to apply the
 ```scss
 @use 'entry-components/styles/generator';
 ```
+
+## Remove prebuilt Material themes
+
+To ensure proper theming customization, it's essential to remove all built-in Angular Material themes from the angular.json file as demonstrated below:
+
+```diff
+"architect": {
+  "options": {
+    "styles": [
+-     "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+    ]
+  }
+}
+```
+
 
 ## Theming Configuration Sections
 
