@@ -5,3 +5,4 @@ export * from './utils';
 export * from './directives';
 export * from './event-plugins';
 export * from './interceptors';
+export * from './date-time';

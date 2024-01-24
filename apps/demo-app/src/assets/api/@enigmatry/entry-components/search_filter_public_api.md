@@ -29,6 +29,50 @@ SelectOption`<T>`
 
 ***
 
+### DateSearchFilter
+
+Search filter date input filed configuration.
+
+#### Extends
+
+- [`SearchFilterBase`](search_filter_public_api.md#searchfilterbase)\< `D` \>
+
+#### Properties
+
+| Property | Type | Description |
+| :------ | :------ | :------ |
+| `formControl` | `FormControl`\< `D` \> | A reference to the form control it represents |
+| `key` | `string` | Unique search-filter input key |
+| `label` | `string` | Label text to be displayed for the search-filter input control |
+| `maxLength` | `number` | Max text length to be entered in the input component (default is 256) |
+| `placeholder` | `string` | Placeholder text for search-filter input control |
+| `type` | `string` | Type of input control e.g. 'text' or 'email' |
+| `value` | `D` | Default value to be displayed/selected in the input control |
+
+***
+
+### DateTimeSearchFilter
+
+Search filter date time input filed configuration.
+
+#### Extends
+
+- [`SearchFilterBase`](search_filter_public_api.md#searchfilterbase)\< `D` \>
+
+#### Properties
+
+| Property | Type | Description |
+| :------ | :------ | :------ |
+| `formControl` | `FormControl`\< `D` \> | A reference to the form control it represents |
+| `key` | `string` | Unique search-filter input key |
+| `label` | `string` | Label text to be displayed for the search-filter input control |
+| `maxLength` | `number` | Max text length to be entered in the input component (default is 256) |
+| `placeholder` | `string` | Placeholder text for search-filter input control |
+| `type` | `string` | Type of input control e.g. 'text' or 'email' |
+| `value` | `D` | Default value to be displayed/selected in the input control |
+
+***
+
 ### EntrySearchFilterComponent
 
 Entry SearchFilter component.
@@ -68,7 +112,11 @@ Base Entry search filter input component.
 - [`TextSearchFilter`](search_filter_public_api.md#textsearchfilter)
 - [`SelectSearchFilter`](search_filter_public_api.md#selectsearchfilter)
 - [`AutocompleteSearchFilter`](search_filter_public_api.md#autocompletesearchfilter)
+- [`DateTimeSearchFilter`](search_filter_public_api.md#datetimesearchfilter)
+- [`DateSearchFilter`](search_filter_public_api.md#datesearchfilter)
 - [`AutocompleteSearchFilter`](search_filter_public_api.md#autocompletesearchfilter)
+- [`DateSearchFilter`](search_filter_public_api.md#datesearchfilter)
+- [`DateTimeSearchFilter`](search_filter_public_api.md#datetimesearchfilter)
 - [`SelectSearchFilter`](search_filter_public_api.md#selectsearchfilter)
 - [`TextSearchFilter`](search_filter_public_api.md#textsearchfilter)
 

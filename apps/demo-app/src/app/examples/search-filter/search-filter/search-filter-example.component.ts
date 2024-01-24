@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { UsersService } from './users.service';
 import {
   AutocompleteSearchFilter,
+  DateTimeSearchFilter,
   SearchFilterBase,
   SearchFilterParams,
   SelectOption,
@@ -43,12 +44,6 @@ export class SearchFilterExampleComponent {
         placeholder: 'User name or last name',
         maxLength: 25
       }),
-      new TextSearchFilter({
-        key: 'email',
-        label: 'E-mail',
-        placeholder: 'user@example.com',
-        type: 'email'
-      }),
       new SelectSearchFilter({
         key: 'occupation',
         label: 'Occupation',
@@ -76,6 +71,11 @@ export class SearchFilterExampleComponent {
         search: (input: string) => of(Object.values(Country)
           .filter(value => value.toLocaleLowerCase().includes(input.toLocaleLowerCase()))
           .map((country => new SelectOption(country, country))))
+      }),
+      new DateTimeSearchFilter({
+        key: 'dateOfBirth',
+        label: 'Born after',
+        placeholder: 'Born after'
       })
     ];
   }

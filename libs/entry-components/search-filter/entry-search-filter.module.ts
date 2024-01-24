@@ -10,13 +10,19 @@ import { TextSearchFilterComponent } from './text/text-search-filter.component';
 import { SelectSearchFilterComponent } from './select/select-search-filter.component';
 import { AutocompleteSearchFilterComponent } from './autocomplete/autocomplete-search-filter.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { DateTimeSearchFilterComponent } from './date-time/date-time-search-filter.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { DateSearchFilterComponent } from './date/date-search-filter.component';
 
 @NgModule({
   declarations: [
     EntrySearchFilterComponent,
     TextSearchFilterComponent,
     SelectSearchFilterComponent,
-    AutocompleteSearchFilterComponent
+    AutocompleteSearchFilterComponent,
+    DateTimeSearchFilterComponent,
+    DateSearchFilterComponent
   ],
   imports: [
     CommonModule,
@@ -26,7 +32,9 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatButtonModule,
     EntryButtonModule,
     MatSelectModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatDatepickerModule,
+    MatFormFieldModule
   ],
   exports: [
     EntrySearchFilterComponent

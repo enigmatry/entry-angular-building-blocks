@@ -28,9 +28,6 @@ export class UsersService {
       users = users?.filter(x => x.firstName?.toLowerCase().includes(searchParams.name.toLowerCase())
         || x.lastName?.toLowerCase().includes(searchParams.name.toLowerCase()));
     }
-    if (!this.noFilterParam(searchParams, 'email')) {
-      users = users?.filter(x => x.userName?.toLowerCase().includes(searchParams.email.toLowerCase()));
-    }
     if (!this.noFilterParam(searchParams, 'occupation')) {
       users = users?.filter(x => searchParams.occupation instanceof Array
         ? searchParams.occupation.includes(x.occupation)
@@ -46,14 +43,17 @@ export class UsersService {
       users = users.filter(x => x.country === searchParams.country);
     }
 
+    if(!this.noFilterParam(searchParams, 'dateOfBirth')){
+      users = users.filter(x => x.dateOfBirth >= searchParams.dateOfBirth);
+    }
+
     return users;
   }
 
   private noFilterParam(searchParams: SearchFilterParams, paramName: string): boolean {
     return searchParams[paramName] === undefined
       || searchParams[paramName] === null
-      || searchParams[paramName]?.length === 0
-      || searchParams[paramName][0] === undefined;
+      || searchParams[paramName]?.length === 0;
   }
 }
 
