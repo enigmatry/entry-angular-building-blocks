@@ -7,7 +7,7 @@ import { MatTableModule } from '@angular/material/table';
 import { EnumToStringPipe } from './search-filter/enum-to-string.pipe';
 import { DateFnsAdapter } from '@angular/material-date-fns-adapter';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
-import { ENTRY_MAT_DATE_TIME } from '@enigmatry/entry-components';
+import { ENTRY_MAT_DATE_TIME } from '@enigmatry/entry-components/common';
 
 @NgModule({
   declarations: [
