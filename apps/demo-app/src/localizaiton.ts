@@ -15,13 +15,6 @@ export const getMatDateLocale = (): Locale => {
     }
 };
 
-export const entryMatDateTime: EntryMatDateTime<Date> = {
-    dateTimeFormat: 'Pp',
-    compareDate(first: Date, second: Date): number {
-        return first.getTime() - second.getTime();
-    }
-};
-
 const getCulture = (): string => {
     const culture = localStorage.getItem('language');
     if (!culture) {
