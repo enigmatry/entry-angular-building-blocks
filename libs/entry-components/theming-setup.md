@@ -8,7 +8,8 @@ This guide explains how to set up your project to begin using theming. The Entry
 
 1. Install required [`@enigmatry packages`](#required-packages)
 2. Including [`generator`](#include-styles-generator) for theming setup
-3. Check further steps [`here`](#theming-configuration-sections)
+3. Remove Angular Material [`prebuilt themes`](#remove-prebuilt-themes)
+4. Check further steps [`here`](#theming-configuration-sections)
 
 ## Required packages
 
@@ -68,9 +69,9 @@ Call the generator in your SCSS files dedicated to theming in order to apply the
 @use 'entry-components/styles/generator';
 ```
 
-## Remove prebuilt Material themes
+## Remove prebuilt themes
 
-To ensure proper theming customization, it's essential to remove all built-in Angular Material themes from the angular.json file as demonstrated below:
+In order to achieve optimal theming customization, it is crucial to eliminate all pre-existing Angular Material themes from the `angular.json` file, as illustrated in the example provided below.
 
 ```diff
 "architect": {
