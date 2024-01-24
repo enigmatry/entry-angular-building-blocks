@@ -10,6 +10,8 @@ import { CodeViewComponent } from './example-viewer/code-view/code-view.componen
 import { EntryButtonModule, provideEntryButtonConfig } from '@enigmatry/entry-components/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EntryCommonModule } from '@enigmatry/entry-components/common';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { getMatDateLocale } from '../../localizaiton';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,11 @@ import { EntryCommonModule } from '@enigmatry/entry-components/common';
     provideEntryButtonConfig({
       submit: { type: 'raised', color: 'primary' },
       cancel: { type: 'basic' }
-    })
+    }),
+    {
+      provide: MAT_DATE_LOCALE,
+      useFactory: () => getMatDateLocale()
+    }
   ]
 })
 export class SharedModule { }
