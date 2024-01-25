@@ -4,7 +4,7 @@
 	$row-edge-gap: map.get($theme, 'tables', 'cells', 'edge-gap');
 	$cell-padding: map.get($theme, 'tables', 'cells', 'padding');
 
-	.mat-mdc-cell {
+	.mat-mdc-cell, .mat-mdc-header-cell {
 		color: map.get($theme, 'general', 'colors', 'font');
 
 		@if $cell-padding {
