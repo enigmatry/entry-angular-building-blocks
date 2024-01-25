@@ -52,6 +52,6 @@ export class AutocompleteSearchFilterComponent<T> implements AfterViewInit, OnDe
 
   onSelected = (event: MatAutocompleteSelectedEvent) => {
     this.searchFilter.formControl.patchValue(event.option.value);
-    this.searchField.patchValue(event.option.value.label);
+    this.searchField.patchValue(event.option.value.label, { emitEvent: false });
   };
 }
