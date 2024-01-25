@@ -58,7 +58,7 @@ export class EntrySearchFilterComponent implements OnInit {
     return searchFilter as SelectSearchFilter<T>;
   }
   asAutocompleteSearchFilter<T>(searchFilter: SearchFilterBase<T>): AutocompleteSearchFilter<T> {
-    return searchFilter as AutocompleteSearchFilter<T>;
+    return searchFilter as unknown as AutocompleteSearchFilter<T>;
   }
 
   asDateTimeSearchFilter<T>(searchFilter: SearchFilterBase<T>): DateTimeSearchFilter<T> {

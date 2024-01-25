@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
  * indirectly via the search function that takes a string and returns an observable array of
  * SelectOption<T>
  */
-export class AutocompleteSearchFilter<T> extends SearchFilterBase<T>{
+export class AutocompleteSearchFilter<T> extends SearchFilterBase<SelectOption<T>>{
   controlType = ControlType.autocomplete;
   /** Callback function for autocomplete options */
   search: (input: string) => Observable<SelectOption<T>[]>;
