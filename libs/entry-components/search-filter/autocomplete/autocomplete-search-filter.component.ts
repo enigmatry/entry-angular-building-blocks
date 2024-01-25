@@ -1,9 +1,10 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, ViewChild } from '@angular/core';
-import { FormControlName, UntypedFormGroup } from '@angular/forms';
+import { FormControl, FormControlName, FormGroup, UntypedFormGroup } from '@angular/forms';
 import { Observable, Subject, of } from 'rxjs';
 import { filter, tap, takeUntil, debounceTime } from 'rxjs/operators';
 import { SelectOption } from '../select-option.model';
 import { AutocompleteSearchFilter } from './autocomplete-search-filter.model';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'entry-autocomplete-search-filter',
@@ -12,9 +13,8 @@ import { AutocompleteSearchFilter } from './autocomplete-search-filter.model';
 })
 export class AutocompleteSearchFilterComponent<T> implements AfterViewInit, OnDestroy {
   @Input() searchFilter: AutocompleteSearchFilter<T>;
-  @Input() form: UntypedFormGroup;
 
-  @ViewChild(FormControlName) searchField: FormControlName;
+  searchField = new FormControl('');
 
   options$: Observable<SelectOption<T>[]> = of([]);
   options: SelectOption<T>[] = [];
@@ -48,5 +48,10 @@ export class AutocompleteSearchFilterComponent<T> implements AfterViewInit, OnDe
     this.destroy$.complete();
   }
 
-  displayFn = (selectedKey: T): string => this.options.find(x => x.key === selectedKey)?.label;
+  displayFn = (_selectedValue: SelectOption<T>): string => this.searchFilter.formControl.value?.label;
+
+  onSelected = (event: MatAutocompleteSelectedEvent) => {
+    this.searchFilter.formControl.patchValue(event.option.value);
+    this.searchField.patchValue(event.option.value.label, { emitEvent: false });
+  };
 }

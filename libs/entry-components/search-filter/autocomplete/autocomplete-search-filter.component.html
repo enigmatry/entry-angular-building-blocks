@@ -1,9 +1,9 @@
-<mat-form-field [formGroup]="form" subscriptSizing="dynamic">
+<mat-form-field subscriptSizing="dynamic">
     <mat-label>{{searchFilter.label}}</mat-label>
     <input type="text" matInput [placeholder]="searchFilter.placeholder"
-        [formControlName]="searchFilter.key" [id]="searchFilter.key" [matAutocomplete]="auto">
-    <mat-autocomplete [displayWith]="displayFn" #auto="matAutocomplete">
-        <mat-option *ngFor="let option of options$ | async" [value]="option.key">
+        [formControl]="searchField" [id]="searchFilter.key" [matAutocomplete]="auto">
+    <mat-autocomplete [displayWith]="displayFn" #auto="matAutocomplete" (optionSelected)="onSelected($event)">
+        <mat-option *ngFor="let option of options$ | async" [value]="option">
             {{option.label}}
         </mat-option>
     </mat-autocomplete>
