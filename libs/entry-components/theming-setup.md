@@ -38,12 +38,6 @@ Form components and helper methods used by entry-code-generation.
 npm install @enigmatry/entry-form
 ```
 
-Import the `EntryFormModule` in your `feature.module` or `shared.module`
-
-```typescript
-import { EntryFormModule } from '@enigmatry/entry-form';
-```
-
 ## Include styles generator
 
 [`Entry components library`](#required-packages) comes with a generator file. The generator includes multiple generator files for supported components (dialog, table, button, form...).
