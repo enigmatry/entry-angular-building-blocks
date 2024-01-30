@@ -3,7 +3,7 @@
         <ng-container [ngSwitch]="searchFilter.controlType">
             <entry-text-search-filter *ngSwitchCase="controlType.text" [searchFilter]="asTextSearchFilter(searchFilter)" [form]="searchFilterForm"></entry-text-search-filter>
             <entry-select-search-filter *ngSwitchCase="controlType.select" [searchFilter]="asSelectSearchFilter(searchFilter)" [form]="searchFilterForm"></entry-select-search-filter>
-            <entry-autocomplete-search-filter *ngSwitchCase="controlType.autocomplete" [searchFilter]="asAutocompleteSearchFilter(searchFilter)" [form]="searchFilterForm"></entry-autocomplete-search-filter>
+            <entry-autocomplete-search-filter *ngSwitchCase="controlType.autocomplete" [searchFilter]="asAutocompleteSearchFilter(searchFilter)"></entry-autocomplete-search-filter>
             <entry-date-time-search-filter *ngSwitchCase="controlType.dateTime" [searchFilter]="asDateTimeSearchFilter(searchFilter)" [form]="searchFilterForm"></entry-date-time-search-filter>
             <entry-date-search-filter *ngSwitchCase="controlType.date" [searchFilter]="asDateSearchFilter(searchFilter)" [form]="searchFilterForm"></entry-date-search-filter>
         </ng-container>
