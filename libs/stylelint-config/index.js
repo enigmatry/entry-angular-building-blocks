@@ -7,7 +7,7 @@ module.exports = {
     "stylelint-scss",
     "stylelint-use-nesting",
     //"stylelint-selector-no-empty",  => uncomment this line once this library is again compatible with stylelint v15+
-    //"stylelint-group-selectors",    => uncomment this line once this library is again compatible with stylelint v15+
+    "stylelint-group-selectors",
     "stylelint-max-lines",
     "stylelint-declaration-block-no-ignored-properties"
   ],
@@ -179,6 +179,8 @@ module.exports = {
     "scss/at-import-no-partial-leading-underscore": true,
     "scss/at-import-partial-extension": "never",
     "scss/at-mixin-argumentless-call-parentheses": "always",
+    "scss/at-use-no-redundant-alias": true,
+    "scss/at-root-no-redundant": true,
     "scss/at-mixin-parentheses-space-before": "never",
     "scss/dollar-variable-colon-space-after": "always",
     "scss/dollar-variable-colon-space-before": "never",
@@ -189,6 +191,7 @@ module.exports = {
       { "ignoreFunctions": ["/^-/", "/^mat\\./", "/^theming\\.mat/"] }
     ],
     "scss/function-quote-no-quoted-strings-inside": true,
+    "scss/function-calculation-no-interpolation": null,
     "scss/function-unquote-no-unquoted-strings-inside": true,
     "scss/operator-no-newline-after": true,
     "scss/operator-no-newline-before": true,
@@ -216,7 +219,7 @@ module.exports = {
       { "ignoreAtRules": ["use"] }
     ],
     "plugin/declaration-block-no-ignored-properties": true,
-    //"plugin/stylelint-group-selectors": true,   => uncomment this line once this library is again compatible with stylelint v15+
+    "plugin/stylelint-group-selectors": true,
     //"plugin/stylelint-selector-no-empty": true, => uncomment this line once this library is again compatible with stylelint v15+
     "csstools/use-nesting": ["always",
       { "syntax": "scss" }
