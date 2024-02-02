@@ -5,7 +5,6 @@
 - [Overview](#top)
 - [Prerequisites](#prerequisites)
   - [Angular Material Documentation](#angular-material-documentation)
-- [Project Structure](#project-structure)
 - [Styles Configuration](#styles-configuration)
 - [Create custom theme](#create-custom-theme)
 - [Fonts Prerequisites](#fonts-prerequisites)
@@ -43,20 +42,6 @@ To gain a comprehensive understanding of theming configurations, it is highly re
 - [Theming your own components](https://material.angular.io/guide/theming-your-components)
 - [Typography Guide](https://material.angular.io/guide/typography)
 
-## Project structure
-
-We require a dedicated file to include theme-related style configurations. Adhering to our [SCSS coding standard](https://wiki.enigmatry.com/en/standards-and-guidelines/sass-coding-standard), this file should be within the `styles/partials/vendors/libraries` subfolder. If the `entry` subfolder is not already defined in the project, create it. Within the `entry` subfolder, the following Sass partials should be created:
-
-```diff
-├── libraries
-+    └── entry
-+      ├── _general.scss
-+      └── _index.scss
-```
-
-- `general.scss` -Imports necessary library generator files for configuring theming.
-- `index.scss` entry point for maintaining a good Sass structure
-
 ## Styles Configuration
 
 In summary, the generator:
@@ -72,7 +57,7 @@ In summary, the generator:
 
 ## Create custom theme
 
-Define the $custom-theme map that will be expanded with various customization options based on specific needs. 
+Define the `$custom-theme` map that will be expanded with various customization options based on specific needs.
 
 ```scss
 $custom-theme: ();
@@ -93,8 +78,9 @@ $custom-theme: (
 );
 
 @include generator.generate-from($custom-theme);
-
 ```
+
+> **_NOTE:_**  In case you have an existing theme and wish to modify certain options, locate the usage of the theming generator within your codebase.
 
 ## Fonts Prerequisites
 
