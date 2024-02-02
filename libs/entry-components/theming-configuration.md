@@ -483,7 +483,7 @@ $custom-theme: (
 ## 2. Native Angular Material Configuration
 
 In this approach, we carefully set up every little detail within entry components. Angular Material offers a predefined color palette for application, covering a range of  primary, accent, and warn colors.
-When a project necessitates many illogical Angular Material overrides that we don't want to support with regular theming, this approach is necessary. It can also be useful in situations where we need more granular control over the variations of primary and accent colors, as well as their shadows.
+When a project necessitates many specific Angular Material overrides that we don't want to support with regular theming, this approach is necessary. It can also be useful in situations where we need more granular control over the variations of primary and accent colors, as well as their shadows.
 
 All properties for native configuration are set to `null` in default theme, meaning that they will not be applied the other related properties will take presence unless we redeclare or customize them. 
 

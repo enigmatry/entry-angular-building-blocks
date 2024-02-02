@@ -18,24 +18,10 @@ Ensure that the latest version of the[`@enigmatry packages`](#enigmatry-packages
 - [`entry-components`](https://github.com/enigmatry/entry-angular-building-blocks/tree/master/libs/entry-components)
 - [`entry-form`](https://github.com/enigmatry/entry-angular-building-blocks/tree/master/libs/entry-form)
 
-### @enigmatry/entry-components
-
-Reusable Entry components for Angular material. It comes with the default Roboto font. There are plenty of components that this library includes: button, dialog, file-input, search-filter, spinner, table, and many more. <br>
-Visit components demo app to check what is currently supported [here](https://entry-demo.enigmatry.com/).
-
 #### Installation
 
 ```ts
-npm install @enigmatry/entry-components
-```
-
-### @enigmatry/entry-form
-Form components and helper methods used by entry-code-generation.
-
-#### Installation
-
-```ts
-npm install @enigmatry/entry-form
+npm install @enigmatry/entry-components @enigmatry/entry-form
 ```
 
 ## Include styles generator
