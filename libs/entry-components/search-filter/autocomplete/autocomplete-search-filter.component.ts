@@ -1,5 +1,5 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, ViewChild } from '@angular/core';
-import { FormControl, FormControlName, FormGroup, UntypedFormGroup } from '@angular/forms';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Observable, Subject, of } from 'rxjs';
 import { filter, tap, takeUntil, debounceTime } from 'rxjs/operators';
 import { SelectOption } from '../select-option.model';
@@ -17,7 +17,6 @@ export class AutocompleteSearchFilterComponent<T> implements AfterViewInit, OnDe
   searchField = new FormControl('');
 
   options$: Observable<SelectOption<T>[]> = of([]);
-  options: SelectOption<T>[] = [];
 
   destroy$ = new Subject<void>();
 
@@ -28,16 +27,13 @@ export class AutocompleteSearchFilterComponent<T> implements AfterViewInit, OnDe
       .valueChanges
       .pipe(
         takeUntil(this.destroy$),
+        tap(value => this.clearFilterIfLabelMismatch(value)),
         filter(value => value?.length >= this.searchFilter.minimumCharacters),
         debounceTime(this.searchFilter.debounceTime)
       )
       .subscribe(searchValue => {
         // call search and retrieve options
-        this.options$ = this.searchFilter.search(searchValue)
-          .pipe(
-            tap(options => this.options = options)
-          );
-
+        this.options$ = this.searchFilter.search(searchValue);
         // mark for check because of the debounce
         this.cdr.markForCheck();
       });
@@ -54,4 +50,12 @@ export class AutocompleteSearchFilterComponent<T> implements AfterViewInit, OnDe
     this.searchFilter.formControl.patchValue(event.option.value);
     this.searchField.patchValue(event.option.value.label, { emitEvent: false });
   };
+
+  private clearFilterIfLabelMismatch(value: string) {
+    const label = this.searchFilter.formControl.value?.label;
+    if (label && label !== value) {
+      this.searchFilter.formControl.patchValue(undefined);
+      this.searchField.patchValue(null, { emitEvent: false });
+    }
+  }
 }
