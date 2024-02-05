@@ -135,7 +135,7 @@ The first necessary step is to apply it to the whole body of the app, add `.mat-
 </body>
 ```
 
-We're overriding Angular Material, so it is important to add CSS classes for mixin that emits styles for native header elements scoped within the .mat-typography CSS class.
+In order for the expected styling to be implemented, there may be occasions where it is necessary to put adequate Angular Material classes.
 
 ```html
 <!-- Example of adding material class -->
