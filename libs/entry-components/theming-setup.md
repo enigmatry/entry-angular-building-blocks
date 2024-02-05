@@ -48,9 +48,9 @@ Call the generator in your SCSS files dedicated to theming in order to apply the
 @use 'entry-components/styles/generator';
 ```
 
-### Optional: Remove Angular Material prebuilt themes
+### Optional: Remove Angular Material themes
 
-If the [Angular Material](https://material.angular.io/) library is set up in your project, it is recommended to remove the prebuilt theme that comes with it from the `angular.json` file. This can be done by following the example provided below.
+If the [Angular Material](https://material.angular.io/) library has been configured in your project, it is recommended to remove the prebuilt theme that comes with it from the `angular.json` file, as demonstrated in the following example:
 
 ```diff
 "architect": {
@@ -62,6 +62,7 @@ If the [Angular Material](https://material.angular.io/) library is set up in you
 }
 ```
 
+In case you have specified these themes in any other location within your styles, it is also recommended to remove them.
 
 ## Theming Configuration Sections
 
