@@ -42,10 +42,12 @@ Add the following snippet to the `stylePreprocessorOptions`:
 }
 ```
 
-Call the generator in your SCSS files dedicated to theming in order to apply these styles.
+Call the generator in your SCSS files dedicated for theming in order to apply these styles and include default theme. 
 
 ```scss
 @use 'entry-components/styles/generator';
+
+@include generator.generate-from();
 ```
 
 ### Optional: Remove Angular Material themes
