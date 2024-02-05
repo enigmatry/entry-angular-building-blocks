@@ -486,7 +486,7 @@ Typography configuration enables us to create a set of typographic styles based 
 
 There are few steps to follow to implement this:
 
--In `_general.scss` partial defined Sass map that defines various typographic styles for different elements. Each style includes properties like font size, line height, font weight, font family, and letter spacing.
+-In your dedicated file for theming styles add Sass map that defines various typographic styles for different elements. Each style includes properties like font size, line height, font weight, font family, and letter spacing.
 
 ```scss
 $typography: (
