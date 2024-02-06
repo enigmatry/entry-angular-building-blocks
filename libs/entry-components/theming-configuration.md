@@ -29,7 +29,8 @@ The **entry-components** library comes with a generator which simplifies the pro
 
 Before diving into theming configurations, make sure to address the following prerequisites:
 
-- Complete steps from [`Theming setup guide`](./theming-setup.md) before configuring theme
+
+- Complete steps from <a href="https://github.com/enigmatry/entry-angular-building-blocks/blob/master/libs/entry-components/theming-setup.md" target="_blank">Theming Setup guide</a> before configuring theme
 - Ensure that the latest version of the [`entry-components`](https://www.npmjs.com/package/@enigmatry/entry-components) library is installed
 - Prepare custom fonts  if customers require them, follow the instructions [`here`](#2-preparing-custom-fonts)
 - For a deeper understanding of theming concepts and customization options, refer to the [Angular Material documentation](#angular-material-documentation)
