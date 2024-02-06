@@ -68,10 +68,10 @@ In case you have specified these themes in any other location within your styles
 
 ## Theming Configuration Sections
 
-For further steps and advanced theming options, refer to our <a href="https://github.com/enigmatry/entry-angular-building-blocks/blob/master/libs/entry-components/configure-theming.md" target="_blank">**Theming Configuration guide**</a>. Key sections include:
+For further steps and advanced theming options, refer to our <a href="https://github.com/enigmatry/entry-angular-building-blocks/blob/master/libs/entry-components/theming-configuration.md" target="_blank">**Theming Configuration guide**</a>. Key sections include:
 
-- <a href="https://github.com/enigmatry/entry-angular-building-blocks/blob/master/libs/entry-components/configure-theming.md#create-custom-theme" target="_blank">**Create Custom Theme**</a>: Create your own theme
-- <a href="https://github.com/enigmatry/entry-angular-building-blocks/blob/master/libs/entry-components/configure-theming.md#configuration-properties" target="_blank">**Configuration Properties**</a>: Customize your theme settings
-- <a href="https://github.com/enigmatry/entry-angular-building-blocks/blob/master/libs/entry-components/configure-theming.md#fonts-prerequisitess" target="_blank">**Font Prerequisites**</a>
-- <a href="https://github.com/enigmatry/entry-angular-building-blocks/blob/master/libs/entry-components/configure-theming.md#set-angular-material-typography" target="_blank">**Set Up Angular Material Typography**</a>: Instructions for Angular Material Typography
-- <a href="https://github.com/enigmatry/entry-angular-building-blocks/blob/master/libs/entry-components/configure-theming.md#default-values-table" target="_blank">**Table of all configuration properties and default values**</a>
+- <a href="https://github.com/enigmatry/entry-angular-building-blocks/blob/master/libs/entry-components/theming-configuration.md#create-custom-theme" target="_blank">**Create Custom Theme**</a>: Create your own theme
+- <a href="https://github.com/enigmatry/entry-angular-building-blocks/blob/master/libs/entry-components/theming-configuration.md#configuration-properties" target="_blank">**Configuration Properties**</a>: Customize your theme settings
+- <a href="https://github.com/enigmatry/entry-angular-building-blocks/blob/master/libs/entry-components/theming-configuration.md#fonts-prerequisites" target="_blank">**Font Prerequisites**</a>
+- <a href="https://github.com/enigmatry/entry-angular-building-blocks/blob/master/libs/entry-components/theming-configuration.md#set-angular-material-typography" target="_blank">**Set Up Angular Material Typography**</a>: Instructions for Angular Material Typography
+- <a href="https://github.com/enigmatry/entry-angular-building-blocks/blob/master/libs/entry-components/theming-configuration.md#default-values-table" target="_blank">**Table of all configuration properties and default values**</a>
