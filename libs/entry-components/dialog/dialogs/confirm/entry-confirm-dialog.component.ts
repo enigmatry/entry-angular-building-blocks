@@ -7,7 +7,6 @@ import { ENTRY_DIALOG_CONFIG, EntryDialogConfig } from '../../entry-dialog-confi
 @Component({
   selector: 'entry-confirm-dialog',
   templateUrl: './entry-confirm-dialog.component.html',
-  styleUrls: ['./entry-confirm-dialog.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EntryConfirmDialogComponent extends EntryDialogComponent {
