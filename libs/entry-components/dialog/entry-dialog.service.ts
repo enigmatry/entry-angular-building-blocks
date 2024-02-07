@@ -8,6 +8,8 @@ import { Observable } from 'rxjs';
 import { EntryConfirmDialogComponent } from './dialogs/confirm/entry-confirm-dialog.component';
 import { IEntryConfirmDialogData } from './dialogs/confirm/entry-confirm-dialog-data.interface';
 import { ENTRY_DIALOG_CONFIG, EntryDialogConfig } from './entry-dialog-config.model';
+import { IEntryErrorDialogData } from './dialogs/error/entry-error-dialog-data.interface';
+import { EntryErrorDialogComponent } from './dialogs/error/entry-error-dialog.component';
 
 /**
  * Used to open built-in and custom entry dialogs.
@@ -38,6 +40,17 @@ export class EntryDialogService {
   openConfirm = (data: Partial<IEntryConfirmDialogData>): Observable<boolean | undefined> => {
     data.disableClose = data.disableClose === undefined ? this.config.disableClose : data.disableClose;
     return this.open(EntryConfirmDialogComponent, data, data.disableClose);
+  };
+
+  /**
+   * Opens error dialog.
+   *
+   * @param data - Contains title, errors and optional confirm button text
+   * @returns `true` if confirmed, `undefined` if closed by clicking on backdrop or pressing escape
+   */
+  openError = (data: Partial<IEntryErrorDialogData>): Observable<true | undefined> => {
+    data.disableClose = data.disableClose === undefined ? this.config.disableClose : data.disableClose;
+    return this.open(EntryErrorDialogComponent, data, data.disableClose);
   };
 
   /**

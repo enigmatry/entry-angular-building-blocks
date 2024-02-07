@@ -5,6 +5,9 @@ export { IEntryAlertDialogData } from './dialogs/alert/entry-alert-dialog-data.i
 export { EntryConfirmDialogComponent } from './dialogs/confirm/entry-confirm-dialog.component';
 export { IEntryConfirmDialogData } from './dialogs/confirm/entry-confirm-dialog-data.interface';
 
+export { EntryErrorDialogComponent } from './dialogs/error/entry-error-dialog.component';
+export { IEntryErrorDialogData } from './dialogs/error/entry-error-dialog-data.interface';
+
 export { EntryDialogComponent } from './dialogs/entry-dialog.component';
 
 export { EntryDialogButtonsAlignment } from './entry-dialog-buttons-alignment.type';
