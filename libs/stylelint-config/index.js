@@ -9,7 +9,7 @@ module.exports = {
     // "stylelint-use-nesting",     => uncomment this line once this library is again compatible with stylelint v16+
     //"stylelint-selector-no-empty",  => uncomment this line once this library is again compatible with stylelint v16+
     "stylelint-group-selectors",
-    "stylelint-max-lines",
+    "stylelint-file-max-lines",
     "stylelint-declaration-block-no-ignored-properties"
   ],
   rules: {
@@ -241,6 +241,6 @@ module.exports = {
     // "csstools/use-nesting": ["always", => uncomment this line once this library is again compatible with stylelint v16+
     //   { "syntax": "scss" }
     // ],
-    "pitcher/max-lines": 135
+    "plugin/file-max-lines": 135
   }
 };
