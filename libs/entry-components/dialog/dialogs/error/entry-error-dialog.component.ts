@@ -25,8 +25,10 @@ export class EntryErrorDialogComponent extends EntryDialogComponent {
     } else if (this.data.errors.errors) {
       const validationErrors = this.data.errors.errors;
       this.errors = Object.entries(validationErrors)
-        .map(entry => entry[1])
+        .map(values => values[1])
         .reduce((a, b) => a.concat(b), []);
+    } else if (this.data.message) {
+      this.errors = [this.data.message];
     }
   }
 }
