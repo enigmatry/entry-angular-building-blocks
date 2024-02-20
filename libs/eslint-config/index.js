@@ -322,14 +322,7 @@ module.exports = {
         "@typescript-eslint/parameter-properties": "off",
         "@typescript-eslint/prefer-optional-chain": "error",
         "@typescript-eslint/prefer-readonly": "off",
-        "@typescript-eslint/prefer-readonly-parameter-types": [
-          "error",
-          {
-            "checkParameterProperties": false,
-            "ignoreInferredTypes": true,
-            "treatMethodsAsReadonly": true
-          }
-        ],
+        "@typescript-eslint/prefer-readonly-parameter-types": "off",
         "@typescript-eslint/quotes": [
           "error",
           "single",
