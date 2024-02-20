@@ -4,7 +4,6 @@ import { IEntryConfirmDialogData, EntryDialogButtonsAlignment, EntryDialogServic
 @Component({
   selector: 'app-confirm-example',
   templateUrl: './confirm-example.component.html',
-  styleUrls: ['./confirm-example.component.scss']
 })
 export class ConfirmExampleComponent {
   confirmData: Partial<IEntryConfirmDialogData> = {

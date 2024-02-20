@@ -7,7 +7,6 @@ import { ENTRY_DIALOG_CONFIG, EntryDialogConfig } from '../../entry-dialog-confi
 @Component({
   selector: 'entry-alert-dialog',
   templateUrl: './entry-alert-dialog.component.html',
-  styleUrls: ['./entry-alert-dialog.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EntryAlertDialogComponent extends EntryDialogComponent {

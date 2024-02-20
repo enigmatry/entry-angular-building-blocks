@@ -127,6 +127,26 @@ Opens confirm dialog.
 
 `true` if confirmed, `false` if canceled or closed, `undefined` if closed by clicking on backdrop or pressing escape
 
+***
+
+##### openError
+
+> **openError**(`data`): `Observable`\< `true` \>
+
+Opens error dialog.
+
+###### Parameters
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `data` | `Partial`\< [`IEntryErrorDialogData`](dialog_public_api.md#ientryerrordialogdata) \> | Contains title, errors and optional confirm button text |
+
+###### Returns
+
+`Observable`\< `true` \>
+
+`true` if confirmed, `undefined` if closed by clicking on backdrop or pressing escape
+
 ## Interfaces
 
 ### IEntryAlertDialogData
@@ -136,7 +156,9 @@ Alert dialog data.
 #### Extended By
 
 - [`IEntryConfirmDialogData`](dialog_public_api.md#ientryconfirmdialogdata)
+- [`IEntryErrorDialogData`](dialog_public_api.md#ientryerrordialogdata)
 - [`IEntryConfirmDialogData`](dialog_public_api.md#ientryconfirmdialogdata)
+- [`IEntryErrorDialogData`](dialog_public_api.md#ientryerrordialogdata)
 
 #### Properties
 
@@ -167,6 +189,28 @@ Confirm dialog data. Extends IEntryAlertDialogData.
 | `cancelText`? | `string` | Optional dialog cancel text label |
 | `confirmText`? | `string` | Optional dialog confirm text label |
 | `disableClose`? | `boolean` | Optionally disable closing dialog when pressing escape or clicking on backdrop |
+| `hideClose` | `boolean` | Optionally show or hide dialog close button |
+| `message` | `string` | Dialog content message |
+| `title` | `string` | Dialog header title |
+
+***
+
+### IEntryErrorDialogData
+
+Error dialog data.
+
+#### Extends
+
+- [`IEntryAlertDialogData`](dialog_public_api.md#ientryalertdialogdata)
+
+#### Properties
+
+| Property | Type | Description |
+| :------ | :------ | :------ |
+| `buttonsAlignment` | [`EntryDialogButtonsAlignment`](dialog_public_api.md#entrydialogbuttonsalignment) | Optional dialog buttons horizontal alignment |
+| `confirmText`? | `string` | Optional dialog confirm text label |
+| `disableClose`? | `boolean` | Optionally disable closing dialog when pressing escape or clicking on backdrop |
+| `errors` | `string`[] \| [`IValidationProblemDetails`](validation_public_api.md#ivalidationproblemdetails) | Errors to display |
 | `hideClose` | `boolean` | Optionally show or hide dialog close button |
 | `message` | `string` | Dialog content message |
 | `title` | `string` | Dialog header title |

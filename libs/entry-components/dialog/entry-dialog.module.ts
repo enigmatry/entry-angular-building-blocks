@@ -8,12 +8,14 @@ import { EntryConfirmDialogComponent } from './dialogs/confirm/entry-confirm-dia
 import { EntryDialogComponent } from './dialogs/entry-dialog.component';
 import { EntryButtonModule } from '@enigmatry/entry-components/button';
 import { EntryDialogService } from './entry-dialog.service';
+import { EntryErrorDialogComponent } from './dialogs/error/entry-error-dialog.component';
 
 @NgModule({
   declarations: [
     EntryDialogComponent,
     EntryAlertDialogComponent,
-    EntryConfirmDialogComponent
+    EntryConfirmDialogComponent,
+    EntryErrorDialogComponent
   ],
   imports: [
     CommonModule,
@@ -25,7 +27,8 @@ import { EntryDialogService } from './entry-dialog.service';
   exports: [
     EntryDialogComponent,
     EntryAlertDialogComponent,
-    EntryConfirmDialogComponent
+    EntryConfirmDialogComponent,
+    EntryErrorDialogComponent
   ],
   providers: [EntryDialogService]
 })

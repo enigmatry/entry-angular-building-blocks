@@ -10,14 +10,14 @@ SelectOption`<T>`
 
 #### Extends
 
-- [`SearchFilterBase`](search_filter_public_api.md#searchfilterbase)\< `T` \>
+- [`SearchFilterBase`](search_filter_public_api.md#searchfilterbase)\< [`SelectOption`](search_filter_public_api.md#selectoption)\< `T` \> \>
 
 #### Properties
 
 | Property | Type | Description |
 | :------ | :------ | :------ |
 | `debounceTime` | `number` | Delay in typing before triggering the search function in milliseconds(default is 300) |
-| `formControl` | `FormControl`\< `T` \> | A reference to the form control it represents |
+| `formControl` | `FormControl`\< [`SelectOption`](search_filter_public_api.md#selectoption)\< `T` \> \> | A reference to the form control it represents |
 | `key` | `string` | Unique search-filter input key |
 | `label` | `string` | Label text to be displayed for the search-filter input control |
 | `maxLength` | `number` | Max text length to be entered in the input component (default is 256) |
@@ -25,7 +25,7 @@ SelectOption`<T>`
 | `placeholder` | `string` | Placeholder text for search-filter input control |
 | `search` | (`input`) => `Observable`\< [`SelectOption`](search_filter_public_api.md#selectoption)\< `T` \>[] \> | Callback function for autocomplete options |
 | `type` | `string` | Type of input control e.g. 'text' or 'email' |
-| `value` | `T` | Default value to be displayed/selected in the input control |
+| `value` | [`SelectOption`](search_filter_public_api.md#selectoption)\< `T` \> | Default value to be displayed/selected in the input control |
 
 ***
 

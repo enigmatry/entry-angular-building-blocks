@@ -7,13 +7,15 @@ import { ConfirmExampleComponent } from './confirm/confirm-example.component';
 import { CustomDialogExampleComponent } from './custom/custom-dialog-example.component';
 import { CustomDialogComponent } from './custom/custom-dialog.component';
 import { EntryDialogModule } from '@enigmatry/entry-components/dialog';
+import { ErrorDialogExampleComponent } from './error/error-example.component';
 
 @NgModule({
   declarations: [
     AlertExampleComponent,
     ConfirmExampleComponent,
     CustomDialogExampleComponent,
-    CustomDialogComponent
+    CustomDialogComponent,
+    ErrorDialogExampleComponent
   ],
   imports: [
     CommonModule,
@@ -26,6 +28,7 @@ import { EntryDialogModule } from '@enigmatry/entry-components/dialog';
     AlertExampleComponent,
     ConfirmExampleComponent,
     CustomDialogExampleComponent,
+    ErrorDialogExampleComponent
   ]
 })
 export class DialogExamplesModule { }

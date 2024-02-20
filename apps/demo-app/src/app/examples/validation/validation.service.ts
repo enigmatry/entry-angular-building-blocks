@@ -14,12 +14,10 @@ export class ValidationService {
     return throwError({
       errors: {
         '': [
-          'The combination of First & Last name already exists.',
-          'Too many John Doe names in the system.'
+          'The combination of First & Last name already exists.'
         ],
         firstName: [
-          'This name is not cool enough.',
-          'Second error on field level, just in case.'
+          'First name is not cool enough.'
         ],
         lastName: ['Last name is also not cool.']
       }
