@@ -4,7 +4,7 @@
 <mat-menu #menu="matMenu" class="entry-table-menu">
     <button *ngFor="let item of menuItems" mat-menu-item [disabled]="item.disabled" (click)="selected.emit(item.id)"
         class="context-menu-item">
-        <mat-icon *ngIf="item.icon">{{item.icon}}</mat-icon>
-        <span>{{item.name}}</span>
+        <mat-icon class="icon" *ngIf="item.icon">{{item.icon}}</mat-icon>
+        <span class="description">{{item.name}}</span>
     </button>
 </mat-menu>
