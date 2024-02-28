@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { IComponentDefinition, COMPONENT_DEFINITIONS } from '../../features/component-definitions';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -9,7 +9,7 @@ import { Clipboard } from '@angular/cdk/clipboard';
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.scss']
 })
-export class LandingComponent implements OnInit {
+export class LandingComponent {
   menuItems = COMPONENT_DEFINITIONS;
 
   constructor(
@@ -17,9 +17,6 @@ export class LandingComponent implements OnInit {
     private _activatedRoute: ActivatedRoute,
     private _clipboard: Clipboard,
     private _snackBar: MatSnackBar) { }
-
-  ngOnInit(): void {
-  }
 
   redirect = (item: IComponentDefinition) => {
     this._router.navigate([item.route], { relativeTo: this._activatedRoute });

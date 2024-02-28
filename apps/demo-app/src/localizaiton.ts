@@ -1,4 +1,3 @@
-import { EntryMatDateTime } from '@enigmatry/entry-components/common';
 import { environment } from './environments/environment';
 import { de, enUS, fr, nl } from 'date-fns/locale';
 

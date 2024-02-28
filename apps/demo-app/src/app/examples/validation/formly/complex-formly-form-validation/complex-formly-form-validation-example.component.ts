@@ -68,7 +68,7 @@ export class ComplexFormlyFormValidationExampleComponent {
       }
     }
   ];
-  validationResult: any;
+  validationResult: IValidationProblemDetails;
 
   constructor(private _validationService: ValidationService) {}
 

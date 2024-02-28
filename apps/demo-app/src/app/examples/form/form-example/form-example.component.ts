@@ -1,6 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
-import { Subject, timer } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-form-example',

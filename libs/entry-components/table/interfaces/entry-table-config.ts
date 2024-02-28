@@ -7,7 +7,7 @@ export class EntryTableConfig {
   public pageSizeOptions = [20, 50, 100];
   public hidePageSize = false;
   public noResultsText = 'No results found';
-};
+}
 
 export const ENTRY_TABLE_CONFIG = new InjectionToken<EntryTableConfig>(
   'ENTRY_TABLE_CONFIG',

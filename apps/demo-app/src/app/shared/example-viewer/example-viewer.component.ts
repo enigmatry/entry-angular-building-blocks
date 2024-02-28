@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy } from '@angular/core';
-import { Observable, Subject, Subscriber, forkJoin, of } from 'rxjs';
+import { Observable, Subject, forkJoin, of } from 'rxjs';
 import { catchError, map, takeUntil } from 'rxjs/operators';
 import { FileExtension } from '../models/file-extension.type';
 import { FileLoadService } from '../services/file-load.service';

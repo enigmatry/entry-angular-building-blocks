@@ -66,7 +66,7 @@ export class EntryDialogService {
     component: Type<EntryDialogComponent>,
     data: unknown = undefined,
     disableClose: boolean | undefined = undefined,
-    cssClass: string = ''): Observable<any> => {
+    cssClass = ''): Observable<any> => {
     const configuration = new MatDialogConfig<unknown>();
     configuration.data = data;
     configuration.disableClose = disableClose === undefined
