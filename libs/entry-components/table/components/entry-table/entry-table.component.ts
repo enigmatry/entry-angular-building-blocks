@@ -5,7 +5,6 @@ import {
   Input,
   Output,
   EventEmitter,
-  ViewEncapsulation,
   ChangeDetectionStrategy,
   OnChanges,
   TemplateRef,

@@ -169,9 +169,13 @@ export class EntryFileInputComponent implements OnInit, OnDestroy, ControlValueA
 
   // implements ControlValueAccessor interface
 
-  onChange = (_: any) => { };
+  onChange = (_: any) => { 
+    // set by registerOnChange
+  };
 
-  onTouched = () => { };
+  onTouched = () => {
+    // set by registerOnTouched
+  };
 
   writeValue(value: any): void {
     this.value = value;

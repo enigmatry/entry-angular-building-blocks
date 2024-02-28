@@ -36,7 +36,7 @@ export class SearchFilterExampleComponent {
     this.users = this._usersService.getUsers(searchParams);
   }
 
-  private createSearchFilters(): SearchFilterBase<any>[] {
+  private createSearchFilters(): SearchFilterBase<unknown>[] {
     return [
       new TextSearchFilter({
         key: 'name',

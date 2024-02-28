@@ -1,4 +1,4 @@
-import { Inject, Injectable, Optional, SkipSelf, inject } from '@angular/core';
+import { Inject, Injectable, Optional, SkipSelf } from '@angular/core';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { ENTRY_MAT_DATE_TIME, EntryMatDateTime } from './entry-date-time';
 

@@ -14,7 +14,7 @@ export class ReactiveFormExampleComponent implements OnInit {
     lastName: FormControl<string>;
   }> | undefined;
 
-  validationResult: any;
+  validationResult: IValidationProblemDetails;
 
   constructor(
     private _formBuilder: FormBuilder,

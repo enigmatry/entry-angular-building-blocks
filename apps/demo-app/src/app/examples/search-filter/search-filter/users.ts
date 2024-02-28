@@ -32,7 +32,7 @@ enum Country {
     southAfrica = 'South Africa'
 }
 
-class User {
+interface User {
     id?: string;
     userName?: string;
     firstName?: string;
@@ -41,18 +41,10 @@ class User {
     occupation: Occupation;
     lastLogin?: Date;
     country?: Country;
-
-    constructor(data?: Partial<User>) {
-        if (data) {
-            for (const property in data) {
-                if (data.hasOwnProperty(property)) { (this)[property] = (data)[property]; }
-            }
-        }
-    }
 }
 
 const LIST_OF_USERS = [
-    new User({
+    {
         id: '1',
         userName: 'emmett.oconnell@example.com',
         firstName: 'Emmett',
@@ -61,8 +53,8 @@ const LIST_OF_USERS = [
         occupation: Occupation.electrician,
         lastLogin: new Date(),
         country: Country.netherlands
-    }),
-    new User({
+    },
+    {
         id: '2',
         userName: 'lila.fairbanks@example.com',
         firstName: 'Lila',
@@ -71,8 +63,8 @@ const LIST_OF_USERS = [
         occupation: Occupation.unknown,
         lastLogin: new Date(),
         country: Country.serbia
-    }),
-    new User({
+    },
+    {
         id: '3',
         userName: 'preston.mcallister@example.com',
         firstName: 'Preston',
@@ -81,8 +73,8 @@ const LIST_OF_USERS = [
         occupation: Occupation.baker,
         lastLogin: new Date(),
         country: Country.argentina
-    }),
-    new User({
+    },
+    {
         id: '4',
         userName: 'gracie.monroe@example.com',
         firstName: 'Gracie',
@@ -91,8 +83,8 @@ const LIST_OF_USERS = [
         occupation: Occupation.plumber,
         lastLogin: new Date(),
         country: Country.netherlands
-    }),
-    new User({
+    },
+    {
         id: '5',
         userName: 'silas.harrington@example.com',
         firstName: 'Silas',
@@ -101,8 +93,8 @@ const LIST_OF_USERS = [
         occupation: Occupation.teacher,
         lastLogin: new Date(),
         country: Country.india
-    }),
-    new User({
+    },
+    {
         id: '6',
         userName: 'elodie.whitmore@example.com',
         firstName: 'Elodie',
@@ -111,8 +103,8 @@ const LIST_OF_USERS = [
         occupation: Occupation.baker,
         lastLogin: new Date(),
         country: Country.unitedKingdom
-    }),
-    new User({
+    },
+    {
         id: '7',
         userName: 'conrad.sullivan@example.com',
         firstName: 'Conrad',
@@ -121,8 +113,8 @@ const LIST_OF_USERS = [
         occupation: Occupation.soldier,
         lastLogin: new Date(),
         country: Country.unitedStates
-    }),
-    new User({
+    },
+    {
         id: '8',
         userName: 'rosalind.espinoza@example.com',
         firstName: 'Rosalind',
@@ -131,8 +123,8 @@ const LIST_OF_USERS = [
         occupation: Occupation.baker,
         lastLogin: new Date(),
         country: Country.france
-    }),
-    new User({
+    },
+    {
         id: '9',
         userName: 'nolan.baxter@example.com',
         firstName: 'Nolan',
@@ -141,8 +133,8 @@ const LIST_OF_USERS = [
         occupation: Occupation.doctor,
         lastLogin: new Date(),
         country: Country.germany
-    }),
-    new User({
+    },
+    {
         id: '10',
         userName: 'greta.underwood@example.com',
         firstName: 'Greta',
@@ -151,8 +143,8 @@ const LIST_OF_USERS = [
         occupation: Occupation.painter,
         lastLogin: new Date(),
         country: Country.spain
-    }),
-    new User({
+    },
+    {
         id: '11',
         userName: 'clair.underwood@example.com',
         firstName: 'Clair',
@@ -161,7 +153,7 @@ const LIST_OF_USERS = [
         occupation: Occupation.teacher,
         lastLogin: new Date(),
         country: Country.indonesia
-    })
+    }
 ];
 
 export {

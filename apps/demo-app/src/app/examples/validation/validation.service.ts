@@ -10,7 +10,7 @@ import { Observable, throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class ValidationService {
-  submitWithValidationErrors(): Observable<any> {
+  submitWithValidationErrors(): Observable<void> {
     return throwError({
       errors: {
         '': [
@@ -24,7 +24,7 @@ export class ValidationService {
     } as IValidationProblemDetails);
   }
 
-  submitWithComplexValidationErrors(): Observable<any> {
+  submitWithComplexValidationErrors(): Observable<void> {
     return throwError({
       errors: {
         '': ['Personal & Partner info do not match.'],

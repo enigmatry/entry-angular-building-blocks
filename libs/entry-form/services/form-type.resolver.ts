@@ -6,7 +6,7 @@ export declare type FieldTypeResolver = (type: string, isReadonly: boolean) => s
 export const ENTRY_FIELD_TYPE_RESOLVER = new InjectionToken<FieldTypeResolver>('ENTRY_FIELD_TYPE_RESOLVER');
 
 export const fieldTypeResolverFactory = (service: FieldTypeResolverService) =>
-  (type: string, isReadonly: boolean = false): string => service?.resolveFieldType(type, isReadonly) ?? type;
+  (type: string, isReadonly = false): string => service?.resolveFieldType(type, isReadonly) ?? type;
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +27,7 @@ export class FieldTypeResolverService {
     return this.resolverConfig.fieldTypeMappings || {};
   }
 
-  resolveFieldType(type: string, isReadonly: boolean = false): string {
+  resolveFieldType(type: string, isReadonly = false): string {
     if (isReadonly) {
       return this.readonlyFieldTypeMappings[type]
         ?? `${this.resolverConfig.readonlyDefaultPrefix || ''}${type}`;

@@ -18,6 +18,6 @@ export class ErrorDialogExampleComponent {
           errors: err
         })
       });
-    ;
-  };
+    
+  }
 }

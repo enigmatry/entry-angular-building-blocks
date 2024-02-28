@@ -27,7 +27,7 @@ export class FormlyFormValidationExampleComponent {
       templateOptions: { label: 'Last name', required: true, minLength: 3 }
     }
   ];
-  validationResult: any;
+  validationResult: IValidationProblemDetails;
 
   constructor(private _validationService: ValidationService) {}
 
