@@ -43,7 +43,7 @@ interface User {
     country?: Country;
 }
 
-const LIST_OF_USERS = [
+const LIST_OF_USERS: User[] = [
     {
         id: '1',
         userName: 'emmett.oconnell@example.com',
