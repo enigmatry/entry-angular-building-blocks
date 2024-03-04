@@ -2,6 +2,7 @@
 
 @mixin generate-from($theme) {
 	$input-background: map.get($theme, 'general', 'inputs', 'background');
+	$paginator-input-background: map.get($theme, 'general', 'paginators', 'background');
 
 	@if $input-background {
 		.mat-mdc-form-field .mat-mdc-text-field-wrapper.mdc-text-field {
@@ -9,6 +10,18 @@
 
 			&.mdc-text-field--outlined {
 				border-radius: 4px;
+			}
+		}
+
+		.mat-form-field-appearance-fill .mat-mdc-form-field-focus-overlay {
+			background-color: $input-background;
+		}
+	}
+
+	@if $paginator-input-background {
+		.mat-mdc-form-field.mat-mdc-paginator-page-size-select {
+			.mat-mdc-text-field-wrapper.mdc-text-field {
+				background-color: $paginator-input-background;
 			}
 		}
 	}
