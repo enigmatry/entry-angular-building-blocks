@@ -50,13 +50,13 @@ $theme: (
 		)
 	),
 	tables: (
+		header: (
+			font-size: null,
+			font-weight: null
+		),
 		cells: (
 			edge-gap: 4px,
-			padding: null,
-			header: (
-				font-size: null,
-				font-weight: null
-			)
+			padding: null
 		),
 		rows: (
 			selected-color: #FFF,
