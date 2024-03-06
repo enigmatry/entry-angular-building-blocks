@@ -52,7 +52,11 @@ $theme: (
 	tables: (
 		cells: (
 			edge-gap: 4px,
-			padding: null
+			padding: null,
+			header: (
+				font-size: null,
+				font-weight: null
+			)
 		),
 		rows: (
 			selected-color: #FFF,
