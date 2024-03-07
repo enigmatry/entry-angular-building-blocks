@@ -46,7 +46,10 @@ $theme: (
 			background: null
 		),
 		buttons: (
-			icon-size: 48px
+			icon-size: 48px,
+			radio: (
+				background: null
+			)
 		)
 	),
 	tables: (
