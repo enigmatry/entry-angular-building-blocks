@@ -1,0 +1,9 @@
+@use 'sass:map';
+
+@mixin generate-from($theme) {
+	$cell-font-size: map.get($theme, 'tables', 'header', 'font-size');
+
+	.mat-mdc-header-cell {
+		font-size: $cell-font-size;
+	}
+}
