@@ -1,21 +1,24 @@
 @use 'sass:map';
 
+/* stylelint-disable-next-line max-line-length */
+$checkbox-selector: '.mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not([data-indeterminate = "true"]) ~ .mdc-checkbox__background';
+
 @mixin generate-from($theme) {
 	$background-color: map.get($theme, 'general', 'checkboxes', 'background');
-	$hover-border-color: map.get($theme, 'general', 'checkboxes', 'border');
+	$border-hover-color: map.get($theme, 'general', 'checkboxes', 'border-hover-color');
 
 	.mat-mdc-checkbox.mat-accent, .mat-mdc-checkbox.mat-primary {
-		/* stylelint-disable-next-line selector-max-combinators, selector-max-compound-selectors, selector-max-pseudo-class, selector-max-attribute, max-line-length, max-nesting-depth,no-descending-specificity */
-		.mdc-checkbox .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not([data-indeterminate = 'true']) ~ .mdc-checkbox__background {
-			background-color: $background-color;
+		.mdc-checkbox {
+			#{$checkbox-selector} {
+				background-color: $background-color;
+			}
 		}
 
 		:hover {
 			/* stylelint-disable-next-line selector-max-pseudo-class */
 			.mdc-checkbox:hover {
-				/* stylelint-disable-next-line selector-max-combinators, selector-max-compound-selectors, selector-max-pseudo-class, selector-max-attribute, max-line-length, max-nesting-depth,no-descending-specificity */
-				.mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not([data-endeterminate = 'true']) ~ .mdc-checkbox__background, .mdc-checkbox__native-control:enabled:indeterminate ~ .mdc-checkbox__background {
-					border-color: $hover-border-color;
+				#{$checkbox-selector} {
+					border-color: $border-hover-color;
 					background-color: $background-color;
 				}
 			}
