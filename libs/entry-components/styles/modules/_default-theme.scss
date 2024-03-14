@@ -50,9 +50,6 @@ $theme: (
 		)
 	),
 	tables: (
-		header: (
-			font-size: null
-		),
 		cells: (
 			edge-gap: 4px,
 			padding: null
@@ -61,7 +58,8 @@ $theme: (
 			selected-color: #FFF,
 			disabled-color: #F5F5F5,
 			odd-even-row: odd,
-			odd-even-background: #F0F0F0
+			odd-even-background: #F0F0F0,
+			odd-even-background-selected: transparent
 		),
 		contents: (
 			no-result: (
