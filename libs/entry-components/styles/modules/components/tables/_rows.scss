@@ -2,7 +2,6 @@
 @use '@enigmatry/scss-foundation/src/modules/lists/row-coloring' as list;
 
 @mixin generate-from($theme) {
-
 	$selected-row-background: map.get($theme, 'tables', 'rows', 'odd-even-background-selected');
 
 	.mat-mdc-row {
