@@ -16,7 +16,7 @@ $checkbox-selector: '.mdc-checkbox__native-control:enabled:not(:checked):not(:in
 			}
 		}
 
-		:hover {
+		&:hover {
 			/* stylelint-disable-next-line selector-max-pseudo-class */
 			.mdc-checkbox:hover {
 				#{$checkbox-selector} {
