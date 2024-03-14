@@ -4,13 +4,15 @@
 $checkbox-selector: '.mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not([data-indeterminate = "true"]) ~ .mdc-checkbox__background';
 
 @mixin generate-from($theme) {
-	$background-color: map.get($theme, 'general', 'checkboxes', 'background');
+	$background: map.get($theme, 'general', 'checkboxes', 'background');
 	$border-hover-color: map.get($theme, 'general', 'checkboxes', 'border-hover-color');
 
-	.mat-mdc-checkbox.mat-accent, .mat-mdc-checkbox.mat-primary {
-		.mdc-checkbox {
-			#{$checkbox-selector} {
-				background-color: $background-color;
+	.mat-mdc-checkbox {
+		.mdc-form-field {
+			.mdc-checkbox {
+				#{$checkbox-selector} {
+					background-color: $background;
+				}
 			}
 		}
 
@@ -19,7 +21,7 @@ $checkbox-selector: '.mdc-checkbox__native-control:enabled:not(:checked):not(:in
 			.mdc-checkbox:hover {
 				#{$checkbox-selector} {
 					border-color: $border-hover-color;
-					background-color: $background-color;
+					background-color: $background;
 				}
 			}
 		}
