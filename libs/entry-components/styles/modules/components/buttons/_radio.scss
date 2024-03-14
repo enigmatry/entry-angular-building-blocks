@@ -1,12 +1,22 @@
 @use 'sass:map';
 
 @mixin generate-from($theme) {
-	.mat-mdc-radio-button {
+	.mat-mdc-radio-group .mat-mdc-radio-button {
 		.mdc-radio {
 			.mdc-radio__native-control:enabled:checked + .mdc-radio__background {
 				.mdc-radio__outer-circle, .mdc-radio__inner-circle {
-					border-color: map.get($theme, 'general', 'buttons', 'radio', 'background') !important;
+					border-color: map.get($theme, 'general', 'buttons', 'radio', 'background');
 				}
+			}
+
+			&:not(:disabled):active .mdc-radio__native-control:enabled:checked + .mdc-radio__background .mdc-radio__outer-circle {
+				border-color: map.get($theme, 'general', 'buttons', 'radio', 'background');
+			}
+		}
+
+		&.mat-mdc-radio-checked .mdc-radio .mdc-radio__native-control:enabled:checked + .mdc-radio__background {
+			.mdc-radio__outer-circle, .mdc-radio__inner-circle {
+				border-color: map.get($theme, 'general', 'buttons', 'radio', 'background');
 			}
 		}
 	}

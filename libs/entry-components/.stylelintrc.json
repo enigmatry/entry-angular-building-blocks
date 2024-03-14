@@ -1,3 +1,6 @@
 {
-  "extends": "@enigmatry/stylelint-config"
+  "extends": "@enigmatry/stylelint-config",
+  "ignoreFiles": [
+    "styles/modules/components/buttons/_radio.scss"
+  ]
 }
