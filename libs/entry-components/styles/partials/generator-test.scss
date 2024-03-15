@@ -20,6 +20,10 @@ $custom-theme: (
 		),
 		inputs: (
 			background: yellow
+		),
+		checkboxes: (
+			background: red,
+			border-hover-color: green
 		)
 	),
 	tables: (
