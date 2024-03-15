@@ -4,6 +4,7 @@
 @use 'modules/components/tables/generator' as tables;
 @use 'modules/components/inputs/generator' as inputs;
 @use 'modules/components/buttons/generator' as buttons;
+@use 'modules/components/checkboxes/generator' as checkboxes;
 @use 'modules/default-theme' as default;
 @use 'modules/vendors/angular-material/generator' as material-theme;
 @use 'sass:map';
@@ -19,4 +20,5 @@
 	@include forms.generate-from($merged-theme);
 	@include search-filters.generate-from($merged-theme);
 	@include dialogs.generate-from($merged-theme);
+	@include checkboxes.generate-from($merged-theme);
 }
