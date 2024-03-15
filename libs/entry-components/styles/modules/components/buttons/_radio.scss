@@ -5,12 +5,10 @@ $radio-circles-selector: '.mdc-radio__outer-circle, .mdc-radio__inner-circle';
 
 @mixin generate-from($theme) {
 	.mat-mdc-radio-group .mat-mdc-radio-button {
-		$radio-border: map.get($theme, 'general', 'buttons', 'radio', 'background');
-
 		&.mat-mdc-radio-checked .mdc-radio {
 			&:not(:disabled):active #{$radio-selector}, #{$radio-selector} {
 				#{$radio-circles-selector} {
-					border-color: $radio-border;
+					border-color: map.get($theme, 'general', 'buttons', 'radio', 'background');
 				}
 			}
 		}
