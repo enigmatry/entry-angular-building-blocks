@@ -1,22 +1,17 @@
 @use 'sass:map';
 
+$radio-selector: '.mdc-radio__native-control:enabled:checked + .mdc-radio__background';
+$radio-circles-selector: '.mdc-radio__outer-circle, .mdc-radio__inner-circle';
+
 @mixin generate-from($theme) {
 	.mat-mdc-radio-group .mat-mdc-radio-button {
-		.mdc-radio {
-			.mdc-radio__native-control:enabled:checked + .mdc-radio__background {
-				.mdc-radio__outer-circle, .mdc-radio__inner-circle {
-					border-color: map.get($theme, 'general', 'buttons', 'radio', 'background');
+		$radio-border: map.get($theme, 'general', 'buttons', 'radio', 'background');
+
+		&.mat-mdc-radio-checked .mdc-radio {
+			&:not(:disabled):active #{$radio-selector}, #{$radio-selector} {
+				#{$radio-circles-selector} {
+					border-color: $radio-border;
 				}
-			}
-
-			&:not(:disabled):active .mdc-radio__native-control:enabled:checked + .mdc-radio__background .mdc-radio__outer-circle {
-				border-color: map.get($theme, 'general', 'buttons', 'radio', 'background');
-			}
-		}
-
-		&.mat-mdc-radio-checked .mdc-radio .mdc-radio__native-control:enabled:checked + .mdc-radio__background {
-			.mdc-radio__outer-circle, .mdc-radio__inner-circle {
-				border-color: map.get($theme, 'general', 'buttons', 'radio', 'background');
 			}
 		}
 	}
