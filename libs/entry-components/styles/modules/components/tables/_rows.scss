@@ -9,7 +9,12 @@
 
 			&.selected {
 				background-color: map.get($theme, 'general', 'colors', 'primary');
-
+				$selected-row-background: map.get($theme, 'tables', 'rows', 'selected-background');
+				
+				@if $selected-row-background and $selected-row-background != transparent {
+					background-color: $selected-row-background;
+				}
+				
 				.mat-mdc-cell {
 					color: map.get($theme, 'tables', 'rows', 'selected-color');
 				}
