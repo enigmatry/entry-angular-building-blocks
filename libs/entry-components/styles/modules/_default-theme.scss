@@ -58,11 +58,13 @@ $theme: (
 			padding: null
 		),
 		rows: (
-			selected-color: #FFF,
 			disabled-color: #F5F5F5,
 			odd-even-row: odd,
 			odd-even-background: #F0F0F0,
-			odd-even-background-selected: null
+			selected: (
+				foreground: #FFF,
+				background: null
+			),
 		),
 		contents: (
 			no-result: (
