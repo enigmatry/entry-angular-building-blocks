@@ -1,0 +1,29 @@
+@use 'sass:map';
+
+/* stylelint-disable-next-line max-line-length */
+$checkbox-selector: '.mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not([data-indeterminate = "true"]) ~ .mdc-checkbox__background';
+
+@mixin generate-from($theme) {
+	$background: map.get($theme, 'general', 'checkboxes', 'background');
+	$border-hover-color: map.get($theme, 'general', 'checkboxes', 'border-hover-color');
+
+	.mat-mdc-checkbox {
+		.mdc-form-field {
+			.mdc-checkbox {
+				#{$checkbox-selector} {
+					background-color: $background;
+				}
+			}
+		}
+
+		&:hover {
+			/* stylelint-disable-next-line selector-max-pseudo-class */
+			.mdc-checkbox:hover {
+				#{$checkbox-selector} {
+					border-color: $border-hover-color;
+					background-color: $background;
+				}
+			}
+		}
+	}
+}
