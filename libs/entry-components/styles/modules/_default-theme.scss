@@ -54,7 +54,25 @@ $theme: (
 		checkboxes: (
 			background: null,
 			border-hover-color: null
-		)
+		),
+		slide-togglers: (
+			on: (
+				track: (
+					background: null
+				),
+				handle: (
+					background: null
+				)
+			),
+			off: (
+				track: (
+					background: null
+				),
+				handle: (
+					background: null
+				)
+			)
+		),
 	),
 	tables: (
 		header: (

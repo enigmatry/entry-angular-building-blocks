@@ -1,0 +1,49 @@
+@use 'sass:map';
+
+@mixin generate-from($theme) {
+	.mat-mdc-slide-toggle {
+		$switch-selector: '.mdc-switch:enabled';
+		$switch-unselected-selector: '.mdc-switch.mdc-switch--unselected:enabled';
+		$switch-selected-selector: '.mdc-switch.mdc-switch--selected:enabled';
+
+		$track-before-element-selector: '.mdc-switch__track::before';
+		$track-after-element-selector: '.mdc-switch__track::after';
+
+		$handle-after-element-selector: '.mdc-switch__handle::after';
+
+		$non-interactive-hover-state: 'hover:not(:focus):not(:active)';
+
+		$track-on: map.get($theme, 'general', 'slide-togglers', 'on', 'track', 'background');
+		$track-off: map.get($theme, 'general', 'slide-togglers', 'off', 'track', 'background');
+		$handle-on: map.get($theme, 'general', 'slide-togglers', 'on', 'handle', 'background');
+		$handle-off: map.get($theme, 'general', 'slide-togglers', 'off', 'handle', 'background');
+
+		#{$switch-selector}:enabled #{$track-after-element-selector},
+		#{$switch-selector}:focus:not(:active) #{$track-after-element-selector},
+		#{$switch-selector}:active #{$track-after-element-selector},
+		#{$switch-selector}:#{$non-interactive-hover-state} #{$track-after-element-selector} {
+			background: $track-on;
+		}
+
+		#{$switch-selector} #{$track-before-element-selector},
+		#{$switch-selector}:focus:not(:active) #{$track-before-element-selector},
+		#{$switch-selector}:active #{$track-before-element-selector},
+		#{$switch-selector}:#{$non-interactive-hover-state} #{$track-before-element-selector} {
+			background: $track-off;
+		}
+
+		#{$switch-selected-selector} #{$handle-after-element-selector},
+		#{$switch-selected-selector}:focus:not(:active) #{$handle-after-element-selector},
+		#{$switch-selected-selector}:active #{$handle-after-element-selector},
+		#{$switch-selected-selector}:#{$non-interactive-hover-state} #{$handle-after-element-selector} {
+			background: $handle-on;
+		}
+		
+		#{$switch-unselected-selector}:focus:not(:active) #{$handle-after-element-selector},
+		#{$switch-unselected-selector} #{$handle-after-element-selector},
+		#{$switch-unselected-selector}:active #{$handle-after-element-selector},
+		#{$switch-unselected-selector}:#{$non-interactive-hover-state} #{$handle-after-element-selector} {
+			background: $handle-off;
+		}
+	}
+}

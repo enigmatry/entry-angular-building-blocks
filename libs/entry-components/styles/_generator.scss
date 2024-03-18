@@ -5,6 +5,7 @@
 @use 'modules/components/inputs/generator' as inputs;
 @use 'modules/components/buttons/generator' as buttons;
 @use 'modules/components/checkboxes/generator' as checkboxes;
+@use 'modules/components/slide-togglers/generator' as slide-togglers;
 @use 'modules/default-theme' as default;
 @use 'modules/vendors/angular-material/generator' as material-theme;
 @use 'sass:map';
@@ -21,4 +22,5 @@
 	@include search-filters.generate-from($merged-theme);
 	@include dialogs.generate-from($merged-theme);
 	@include checkboxes.generate-from($merged-theme);
+	@include slide-togglers.generate-from($merged-theme);
 }
