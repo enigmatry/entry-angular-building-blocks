@@ -48,6 +48,7 @@ export class EntryTableComponent<T> implements OnChanges {
   // Pagination
 
   @Input() showPaginator: boolean;
+  @Input() showPaginatorIfNoData: boolean
   @Input() pageDisabled = false;
   @Input() showFirstLastButtons: boolean;
   @Input() pageIndex = 0;
@@ -226,6 +227,10 @@ export class EntryTableComponent<T> implements OnChanges {
 
   scrollToTop(): void {
     this._elementRef.nativeElement.scrollTop = 0;
+  }
+
+  get shouldShowPaginator(){
+    return this.showPaginator && (this.showPaginatorIfNoData || this._data.length > 0);
   }
 
   private convertToKebabCase(value: string): string {
