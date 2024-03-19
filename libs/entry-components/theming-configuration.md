@@ -204,6 +204,7 @@ It contains of following properties:
 4. [Spacing](#4-spacing)
 5. [Inputs](#5-inputs)
 6. [Buttons](#6-buttons)
+7. [Checkboxes](#7-checkboxes)
 
 ### 1. Density
 
@@ -350,17 +351,38 @@ $custom-theme: (
 
 ### 6. Buttons
 
-Additional customization  for buttons:
+Additional customization capabilities for buttons:
 
-- `icon-size` - sets the default size for icons on buttons when icons are present.
-
-Code Example of general submap configuration:
+- `icon-size`:  sets the default size for icons on buttons when icons are present.
+- `radio`:  Contains properties for radio buttons
+  - `background`: sets the background color for the inner and outer circles of radio buttons
 
 ```scss
 $custom-theme: (
   general: (
     buttons: (
-      icon-size: 48px
+      icon-size: 48px,
+      radio: (
+        background: #333
+      )
+    )
+  )
+)
+```
+
+### 7. Checkboxes
+
+Submap provides customization of checkboxes background and border colors on hover for **unchecked state**.
+
+- `background`:  sets the background color for checkbox.
+- `border-hover-color`: sets the border color on hover.
+
+```scss
+$custom-theme: (
+  general: (
+    checkboxes: (
+      background: blue,
+      border-hover-color: darkblue
     )
   )
 )
@@ -371,11 +393,28 @@ $custom-theme: (
 The `tables` section in the `$custom-theme` configuration handles how table components are styled and themed.
 
 It contains of following properties:
-1. [Cells](#1-cells)
-2. [Rows](#2-rows)
-3. [Contents](#3-contents)
+1. [Header](#1-header)
+2. [Cells](#2-cells)
+3. [Rows](#3-rows)
+4. [Contents](#4-contents)
 
-### 1. Cells
+### 1. Header
+
+Contains property for styling the table header.
+
+- `size` determines the font size of the header cells in the table.
+
+```scss
+$custom-theme: (
+  tables: (
+    header: (
+      font-size: 20px
+    )
+  )
+)
+```
+
+### 2. Cells
 
 Contains properties related to individual cells in a table:
 - `edge-gap` specifies control of both the left and right table paddings, affecting the **first and last cells** to achieve the desired spacing (4px by default)
@@ -392,11 +431,12 @@ $custom-theme: (
 )
 ```
 
-### 2. Rows
+### 3. Rows
 
 Handles the appearance of table rows:
 
 - `selected-color` sets the text color of cells within a selected row
+- `selected-background` sets the background color for selected row. If transparent is passed, it will be ignored and primary background will be applied
 - `disabled-color` defines the background color for disabled rows.
 - `odd-even-row` row can be either odd or even, nothing else.
 - `odd-even-background` sets the background color for odd or even rows.
@@ -406,6 +446,7 @@ $custom-theme: (
   tables: (
     rows: (
       selected-color: #FFF,
+      selected-background: #0CF0EC,
       disabled-color: #F5F5F5,
       odd-even-row: odd,
       odd-even-background: #F0F0F0
@@ -414,7 +455,7 @@ $custom-theme: (
 );
 ```
 
-### 3. Contents
+### 4. Contents
 
 Manages the styling of table content:
 
@@ -425,6 +466,9 @@ Manages the styling of table content:
 ```scss
 $custom-theme: (
   tables: (
+    header: (
+      font-size: 20px
+    )
     cells: (
       edge-gap: 4px,
       padding: null
@@ -618,9 +662,14 @@ The table below outlines the default values for all supported configuration prop
 |                  | spacing/default                 | 15px                                |
 |                  | inputs/background               | null                                |
 |                  | buttons/icon-size               | 48px                                |
-| **tables**       | cells/edge-gap                  | 4px                                 |
+|                  | buttons/radio/background        | null                                |
+|                  | checkboxes/background           | null                                |
+|                  | checkboxes/border-hover-color   | null                                |
+| **tables**       | header/font-size                | null                                |
+|                  | cells/edge-gap                  | 4px                                 |
 |                  | cells/padding                   | null                                |
 |                  | rows/selected-color             | #FFF                                |
+|                  | rows/selected-background        | #2581C4                             |
 |                  | rows/disabled-color             | #F5F5F5                             |
 |                  | rows/odd-even-row               | odd                                 |
 |                  | rows/odd-even-background        | #F0F0F0                             |
