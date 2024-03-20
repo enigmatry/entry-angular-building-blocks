@@ -228,6 +228,10 @@ export class EntryTableComponent<T> implements OnChanges {
     this._elementRef.nativeElement.scrollTop = 0;
   }
 
+  get shouldShowPaginator(){
+    return this.showPaginator && this._data.length > 0;
+  }
+
   private convertToKebabCase(value: string): string {
     return value?.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
   }
