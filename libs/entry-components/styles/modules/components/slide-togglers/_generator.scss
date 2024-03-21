@@ -11,20 +11,12 @@
 
 		@each $state in $enabled-states {
 			.mdc-switch:#{$state} {
-				& .mdc-switch__track::after {
-					background: $track-on-background;
-				}
-
-				& .mdc-switch__track::before {
-					background: $track-off-background;
-				}
-
-				&.mdc-switch--selected .mdc-switch__handle::after {
+				&.mdc-switch--selected .mdc-switch__handle::after, & .mdc-switch__track::after {
 					background: $handle-on-background;
 				}
 
 				/* stylelint-disable-next-line selector-max-pseudo-class */
-				&:not(.mdc-switch--selected) .mdc-switch__handle::after {
+				&:not(.mdc-switch--selected) .mdc-switch__handle::after, & .mdc-switch__track::before {
 					background: $handle-off-background;
 				}
 			}
