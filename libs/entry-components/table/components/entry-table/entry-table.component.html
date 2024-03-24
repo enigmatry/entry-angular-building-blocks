@@ -1,5 +1,5 @@
 <!-- Table content -->
-<table mat-table 
+<table mat-table
         [ngClass]="{'mat-table-hover': rowHover, 'mat-table-striped': rowStriped, 'mat-table-with-data': !hasNoResult }"
         [dataSource]="dataSource"
         matSort
@@ -141,7 +141,7 @@
   <ng-template [ngTemplateOutlet]="paginationTemplate"></ng-template>
 </ng-template>
 <ng-template #defaultPaginationTemplate>
-  <mat-paginator class="pagination" *ngIf="showPaginator"
+  <mat-paginator class="pagination" *ngIf="shouldShowPaginator"
                   [showFirstLastButtons]="showFirstLastButtons"
                   [length]="total"
                   [pageIndex]="pageIndex"
