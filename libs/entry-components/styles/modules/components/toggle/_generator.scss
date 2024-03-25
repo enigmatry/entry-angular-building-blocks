@@ -1,4 +1,3 @@
-/* stylelint-disable scss/selector-no-redundant-nesting-selector */
 @use 'sass:map';
 @use 'sass:color';
 
@@ -33,11 +32,11 @@
 					background-color: $handle-off-background;
 				}
 
-				& #{$track-selector}::after {
+				#{$track-selector}::after {
 					background-color: -adjust-lightness($handle-on-background);
 				}
-
-				& #{$track-selector}::before {
+		
+				#{$track-selector}::before {
 					background-color: -adjust-lightness($handle-off-background);
 				}
 			}
