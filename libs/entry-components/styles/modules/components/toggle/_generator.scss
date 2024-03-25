@@ -2,6 +2,15 @@
 @use 'sass:map';
 @use 'sass:color';
 
+@function -adjust-lightness($color, $percentage: 10%) {
+	@if not $color or $color == transparent {
+		@return null;
+	}
+	$current-lightness: color.lightness($color);
+	$adjustment: if($current-lightness > 50%, -$percentage, $percentage);
+	@return color.adjust($color, $lightness: $adjustment);
+}
+
 @mixin generate-from($theme) {
 	.mat-mdc-slide-toggle {
 		$enabled-states: 'enabled', 'enabled:focus:not(:active)', 'enabled:active', 'enabled:hover:not(:focus):not(:active)';
@@ -34,13 +43,4 @@
 			}
 		}
 	}
-}
-
-@function -adjust-lightness($color, $percentage: 10%) {
-	@if not $color or $color == transparent {
-		@return null;
-	}
-	$current-lightness: color.lightness($color);
-	$adjustment: if($current-lightness > 50%, -$percentage, $percentage);
-	@return color.adjust($color, $lightness: $adjustment);
 }
