@@ -1,4 +1,3 @@
-/* stylelint-disable scss/function-no-unknown */
 /* stylelint-disable scss/selector-no-redundant-nesting-selector */
 @use 'sass:map';
 @use 'sass:color';
@@ -10,32 +9,34 @@
 		$track-selector: '.mdc-switch__track';
 
 		$toggle: map.get($theme, 'general', 'toggle');
-		$handle-on-background: map.get($toggle, 'on');
-		$handle-off-background: map.get($toggle, 'off');
+		$handle-on: map.get($toggle, 'on');
+		$handle-off: map.get($toggle, 'off');
+		$handle-on-background: map.get($handle-on, 'background');
+		$handle-off-background: map.get($handle-off, 'background');
 
 		@each $state in $enabled-states {
 			.mdc-switch:#{$state} {
 				&.mdc-switch--selected #{$handle-selector} {
-					background-color: map.get($handle-on-background, 'background');
+					background-color: $handle-on-background;
 				}
 
 				&:not(.mdc-switch--selected) #{$handle-selector} {
-					background-color: map.get($handle-off-background, 'background');
+					background-color: $handle-off-background;
 				}
 
 				& #{$track-selector}::after {
-					background-color: adjust-lightness(map.get($handle-on-background, 'background'));
+					background-color: -adjust-lightness($handle-on-background);
 				}
 
 				& #{$track-selector}::before {
-					background-color: adjust-lightness(map.get($handle-off-background, 'background'));
+					background-color: -adjust-lightness($handle-off-background);
 				}
 			}
 		}
 	}
 }
 
-@function adjust-lightness($color, $percentage: 10%) {
+@function -adjust-lightness($color, $percentage: 10%) {
 	@if not $color or $color == transparent {
 		@return null;
 	}
