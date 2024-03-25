@@ -1,33 +1,45 @@
+/* stylelint-disable scss/function-no-unknown */
 /* stylelint-disable scss/selector-no-redundant-nesting-selector */
 @use 'sass:map';
+@use 'sass:color';
+
 @mixin generate-from($theme) {
 	.mat-mdc-slide-toggle {
 		$enabled-states: 'enabled', 'enabled:focus:not(:active)', 'enabled:active', 'enabled:hover:not(:focus):not(:active)';
+		$handle-selector: '.mdc-switch__handle::after';
+		$track-selector: '.mdc-switch__track';
 
-		$track-on-background: map.get($theme, 'general', 'toggle', 'on', 'track', 'background');
-		$track-off-background: map.get($theme, 'general', 'toggle', 'off', 'track', 'background');
-		$handle-on-background: map.get($theme, 'general', 'toggle', 'on', 'handle', 'background');
-		$handle-off-background: map.get($theme, 'general', 'toggle', 'off', 'handle', 'background');
+		$toggle: map.get($theme, 'general', 'toggle');
+		$handle-on-background: map.get($toggle, 'on');
+		$handle-off-background: map.get($toggle, 'off');
 
 		@each $state in $enabled-states {
 			.mdc-switch:#{$state} {
-				& .mdc-switch__track::after {
-					background-color: $track-on-background;
+				&.mdc-switch--selected #{$handle-selector} {
+					background-color: map.get($handle-on-background, 'background');
 				}
 
-				& .mdc-switch__track::before {
-					background-color: $track-off-background;
+				&:not(.mdc-switch--selected) #{$handle-selector} {
+					background-color: map.get($handle-off-background, 'background');
 				}
 
-				&.mdc-switch--selected .mdc-switch__handle::after {
-					background-color: $handle-on-background;
+				& #{$track-selector}::after {
+					background-color: adjust-lightness(map.get($handle-on-background, 'background'));
 				}
 
-				/* stylelint-disable-next-line selector-max-pseudo-class */
-				&:not(.mdc-switch--selected) .mdc-switch__handle::after {
-					background-color: $handle-off-background;
+				& #{$track-selector}::before {
+					background-color: adjust-lightness(map.get($handle-off-background, 'background'));
 				}
 			}
 		}
 	}
+}
+
+@function adjust-lightness($color, $percentage: 10%) {
+	@if not $color or $color == transparent {
+		@return null;
+	}
+	$current-lightness: color.lightness($color);
+	$adjustment: if($current-lightness > 50%, -$percentage, $percentage);
+	@return color.adjust($color, $lightness: $adjustment);
 }
