@@ -2,5 +2,5 @@
   <input matInput [ngxMatDatetimePicker]="picker" [formControl]="control" class="datetime-picker">
   <mat-datepicker-toggle matSuffix [for]="$any(picker)">
   </mat-datepicker-toggle>
-  <ngx-mat-datetime-picker #picker color="primary" (opened)="setOpenedDate(picker)"></ngx-mat-datetime-picker>
+  <ngx-mat-datetime-picker #picker color="primary" (opened)="setOpenedDate()"></ngx-mat-datetime-picker>
 </div>

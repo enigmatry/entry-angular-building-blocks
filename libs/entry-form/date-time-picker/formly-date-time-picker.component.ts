@@ -14,11 +14,9 @@ export class FormlyDateTimePickerComponent extends FieldType<FormlyFieldConfig> 
     return this.formControl as UntypedFormControl;
   }
 
-  setOpenedDate(datePicker: any) {
+  setOpenedDate() {
     const now = new Date();
     now.setSeconds(0);
     this.control.setValue(this.control.value || now);
-    datePicker._selected = this.control.value;
-    datePicker.startAt = datePicker._selected;
   }
 }
