@@ -1,0 +1,45 @@
+@use 'sass:map';
+@use 'sass:color';
+
+@function -adjust-lightness($color, $percentage: 10%) {
+	@if not $color or $color == transparent {
+		@return null;
+	}
+	$current-lightness: color.lightness($color);
+	$adjustment: if($current-lightness > 50%, -$percentage, $percentage);
+	@return color.adjust($color, $lightness: $adjustment);
+}
+
+@mixin generate-from($theme) {
+	.mat-mdc-slide-toggle {
+		$enabled-states: 'enabled', 'enabled:focus:not(:active)', 'enabled:active', 'enabled:hover:not(:focus):not(:active)';
+		$handle-selector: '.mdc-switch__handle::after';
+		$track-selector: '.mdc-switch__track';
+
+		$toggle: map.get($theme, 'general', 'toggle');
+		$handle-on: map.get($toggle, 'on');
+		$handle-off: map.get($toggle, 'off');
+		$handle-on-background: map.get($handle-on, 'background');
+		$handle-off-background: map.get($handle-off, 'background');
+
+		@each $state in $enabled-states {
+			.mdc-switch:#{$state} {
+				&.mdc-switch--selected #{$handle-selector} {
+					background-color: $handle-on-background;
+				}
+
+				&:not(.mdc-switch--selected) #{$handle-selector} {
+					background-color: $handle-off-background;
+				}
+
+				#{$track-selector}::after {
+					background-color: -adjust-lightness($handle-on-background);
+				}
+		
+				#{$track-selector}::before {
+					background-color: -adjust-lightness($handle-off-background);
+				}
+			}
+		}
+	}
+}

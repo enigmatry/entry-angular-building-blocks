@@ -54,7 +54,15 @@ $theme: (
 		checkboxes: (
 			background: null,
 			border-hover-color: null
-		)
+		),
+		toggle: (
+			on: (
+				background: null
+			),
+			off: (
+				background: null
+			),
+		),
 	),
 	tables: (
 		header: (
