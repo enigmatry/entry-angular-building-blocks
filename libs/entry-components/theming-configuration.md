@@ -205,6 +205,7 @@ It contains of following properties:
 5. [Inputs](#5-inputs)
 6. [Buttons](#6-buttons)
 7. [Checkboxes](#7-checkboxes)
+8. [Toggles](#7-toggles)
 
 ### 1. Density
 
@@ -354,7 +355,7 @@ $custom-theme: (
 Additional customization capabilities for buttons:
 
 - `icon-size`:  sets the default size for icons on buttons when icons are present.
-- `radio`:  Contains properties for radio buttons
+- `radio`:  Contains property for radio buttons
   - `background`: sets the background color for the inner and outer circles of radio buttons
 
 ```scss
@@ -372,10 +373,10 @@ $custom-theme: (
 
 ### 7. Checkboxes
 
-Submap provides customization of checkboxes background and border colors on hover for **unchecked state**.
+Submap provides customization of checkboxes background and border color for **unchecked state**.
 
 - `background`:  sets the background color for checkbox.
-- `border-hover-color`: sets the border color on hover.
+- `border-hover-color`: sets the checkbox border color on hovering while its unchecked.
 
 ```scss
 $custom-theme: (
@@ -384,6 +385,29 @@ $custom-theme: (
       background: blue,
       border-hover-color: darkblue
     )
+  )
+)
+```
+
+### 7. Toggles
+
+Modify the toggle components' appearance by defining background colors for the **on** and **off** states, making adjustments to track according to the lightness of the colors.
+
+- `on`: Contains property for the toggle in its active state.
+- `off`: Contains property for the toggle in its inactive state.
+  - `background`: Sets the toggle's handler and track background color based on activated(on) or deactivated(off) state of toggle
+
+```scss
+$custom-theme: (
+  general: (
+    toggle: (
+      on: (
+        background: orange
+      ),
+      off: (  
+        background: green
+      ),
+    ),
   )
 )
 ```
@@ -665,6 +689,8 @@ The table below outlines the default values for all supported configuration prop
 |                  | buttons/radio/background        | null                                |
 |                  | checkboxes/background           | null                                |
 |                  | checkboxes/border-hover-color   | null                                |
+|                  | toggle/on/background            | null                                |
+|                  | toggle/off/background           | null                                |
 | **tables**       | header/font-size                | null                                |
 |                  | cells/edge-gap                  | 4px                                 |
 |                  | cells/padding                   | null                                |
