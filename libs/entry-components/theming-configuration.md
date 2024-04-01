@@ -352,7 +352,7 @@ $custom-theme: (
 
 ### 6. Buttons
 
-Additional customization capabilities for buttons:
+Additional customization for buttons:
 
 - `icon-size`:  sets the default size for icons on buttons when icons are present.
 - `radio`:  Contains property for radio buttons
@@ -395,7 +395,7 @@ Modify the toggle components' appearance by defining background colors for the *
 
 - `on`: Contains property for the toggle in its active state.
 - `off`: Contains property for the toggle in its inactive state.
-  - `background`: Sets the toggle's handler and track background color based on activated(on) or deactivated(off) state of toggle
+  - `background`: Sets the toggle's handler and track background color based on activated(on) or deactivated(off) state of toggle. If transparent is passed, it will be ignored and primary background will be applied.
 
 ```scss
 $custom-theme: (
