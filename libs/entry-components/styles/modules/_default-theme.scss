@@ -18,25 +18,21 @@ $theme: (
 				family: '',
 				size: null,
 				letter-spacing: null
-
 			),
 			titles: (
 				family: '',
 				size: null,
 				letter-spacing: null
-
 			),
 			body: (
 				family: '',
 				size: null,
 				letter-spacing: null
-
 			),
 			buttons: (
 				family: '',
 				size: null,
 				letter-spacing: null
-
 			)
 		),
 		spacing: (
@@ -54,7 +50,15 @@ $theme: (
 		checkboxes: (
 			background: null,
 			border-hover-color: null
-		)
+		),
+		toggle: (
+			on: (
+				background: null
+			),
+			off: (
+				background: null
+			),
+		),
 	),
 	tables: (
 		header: (
