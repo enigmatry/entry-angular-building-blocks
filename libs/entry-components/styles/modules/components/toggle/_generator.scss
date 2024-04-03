@@ -22,21 +22,27 @@
 
 		@each $state in $enabled-states {
 			.mdc-switch:#{$state} {
-				&.mdc-switch--selected #{$handle-selector} {
-					background-color: $handle-on-background;
-				}
-
-				&:not(.mdc-switch--selected) #{$handle-selector} {
-					background-color: $handle-off-background;
-				}
-
-				.mdc-switch__track {
-					&::after {
-						background-color: -adjust-lightness($handle-on-background);
+				@if $handle-on-background {
+					&.mdc-switch--selected #{$handle-selector} {
+						background-color: $handle-on-background;
 					}
-			
-					&::before {
-						background-color: -adjust-lightness($handle-off-background);
+				}
+
+				@if $handle-off-background {
+					&:not(.mdc-switch--selected) #{$handle-selector} {
+						background-color: $handle-off-background;
+					}
+				}
+
+				@if $handle-on-background and $handle-off-background {
+					.mdc-switch__track {
+						&::after {
+							background-color: -adjust-lightness($handle-on-background);
+						}
+				
+						&::before {
+							background-color: -adjust-lightness($handle-off-background);
+						}
 					}
 				}
 			}

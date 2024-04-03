@@ -10,8 +10,10 @@ $checkbox-selector: '.mdc-checkbox__native-control:enabled:not(:checked):not(:in
 	.mat-mdc-checkbox {
 		.mdc-form-field {
 			.mdc-checkbox {
-				#{$checkbox-selector} {
-					background-color: $background;
+				@if $background {
+					#{$checkbox-selector} {
+						background-color: $background;
+					}
 				}
 			}
 		}
@@ -19,9 +21,11 @@ $checkbox-selector: '.mdc-checkbox__native-control:enabled:not(:checked):not(:in
 		&:hover {
 			/* stylelint-disable-next-line selector-max-pseudo-class */
 			.mdc-checkbox:hover {
-				#{$checkbox-selector} {
-					border-color: $border-hover-color;
-					background-color: $background;
+				@if $background and $border-hover-color {
+					#{$checkbox-selector} {
+						border-color: $border-hover-color;
+						background-color: $background;
+					}
 				}
 			}
 		}

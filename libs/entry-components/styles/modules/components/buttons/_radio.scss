@@ -9,7 +9,7 @@ $radio-circles-selector: '.mdc-radio__outer-circle, .mdc-radio__inner-circle';
 			&:not(:disabled):active #{$radio-selector}, #{$radio-selector} {
 				$radio-border: map.get($theme, 'general', 'buttons', 'radio', 'background');
 
-				@if $radio-border and $radio-border != transparent {
+				@if $radio-border {
 					#{$radio-circles-selector} {
 						border-color: $radio-border;
 					}
