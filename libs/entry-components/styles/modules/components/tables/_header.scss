@@ -3,7 +3,10 @@
 @mixin generate-from($theme) {
 	$cell-font-size: map.get($theme, 'tables', 'header', 'font-size');
 
-	.mat-mdc-header-cell {
-		font-size: $cell-font-size;
+	/* stylelint-disable-next-line scss/at-if-no-null */
+	@if $cell-font-size != null {
+		.mat-mdc-header-cell {
+			font-size: $cell-font-size;
+		}
 	}
 }
