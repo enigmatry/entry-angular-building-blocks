@@ -12,17 +12,17 @@
 }
 
 @mixin generate-from($theme) {
-	.mat-mdc-slide-toggle {
-		$enabled-states: 'enabled', 'enabled:focus:not(:active)', 'enabled:active', 'enabled:hover:not(:focus):not(:active)';
-		$handle-selector: '.mdc-switch__handle::after';
+	$enabled-states: 'enabled', 'enabled:focus:not(:active)', 'enabled:active', 'enabled:hover:not(:focus):not(:active)';
+	$handle-selector: '.mdc-switch__handle::after';
+	
+	$toggle: map.get($theme, 'general', 'toggle');
+	$handle-on-background: map.get($toggle, 'on', 'background');
+	$handle-off-background: map.get($toggle, 'off', 'background');
 
-		$toggle: map.get($theme, 'general', 'toggle');
-		$handle-on-background: map.get($toggle, 'on', 'background');
-		$handle-off-background: map.get($toggle, 'off', 'background');
-
-		@each $state in $enabled-states {
-			.mdc-switch:#{$state} {
-				@if $handle-on-background and $handle-off-background {
+	@if $handle-on-background and $handle-off-background {
+		.mat-mdc-slide-toggle {
+			@each $state in $enabled-states {
+				.mdc-switch:#{$state} {
 					&.mdc-switch--selected #{$handle-selector} {
 						background-color: $handle-on-background;
 					}
