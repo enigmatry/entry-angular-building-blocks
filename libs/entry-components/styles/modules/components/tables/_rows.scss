@@ -1,25 +1,48 @@
+/* stylelint-disable max-nesting-depth */
 @use 'sass:map';
-@use '@enigmatry/scss-foundation/src/modules/lists/row-coloring' as list;
+
+@mixin row-coloring($color-map) {
+	@if map.has-key($color-map, 'odd') {
+		&:nth-child(odd) {
+			background-color: map.get($color-map, 'odd');
+		}
+	}
+	@if map.has-key($color-map, 'even') {
+		&:nth-child(even) {
+			background-color: map.get($color-map, 'even');
+		}
+	}
+}
 
 @mixin generate-from($theme) {
+	$odd-background: map.get($theme, 'tables', 'rows', 'odd-even-background', 'odd');
+	$even-background: map.get($theme, 'tables', 'rows', 'odd-even-background', 'even');
+	
 	.mat-mdc-row {
 		&.mdc-data-table__row {
-			@include list.row-coloring(map.get($theme, 'tables', 'rows', 'odd-even-background'),
-			map.get($theme, 'tables', 'rows', 'odd-even-row'));
-
+			@include row-coloring(map.get($theme, 'tables', 'rows', 'odd-even-background'));
+		
 			&.selected {
-				background-color: map.get($theme, 'general', 'colors', 'primary');
 				$selected-row-background: map.get($theme, 'tables', 'rows', 'selected-background');
-				
-				@if $selected-row-background and $selected-row-background != transparent {
+		  
+				@if $selected-row-background == transparent {
+					&:nth-child(odd) {
+						background-color: $odd-background;
+					}
+
+					&:nth-child(even) {
+						background-color: $even-background;
+					}
+				}
+				@else {
 					background-color: $selected-row-background;
 				}
-				
+		  
 				.mat-mdc-cell {
 					color: map.get($theme, 'tables', 'rows', 'selected-color');
 				}
 			}
-
+		
 			&.mat-row-disabled {
 				background-color: map.get($theme, 'tables', 'rows', 'disabled-color');
 			}

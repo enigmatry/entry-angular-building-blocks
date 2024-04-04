@@ -66,25 +66,27 @@ $theme: (
 		),
 		cells: (
 			edge-gap: 4px,
-			padding: null
+			padding: null,
 		),
 		rows: (
+			odd-even-background: (
+				odd: #F0F0F0, 
+				even: null,
+			),
 			selected-color: #FFF,
-			selected-background: null,
+			selected-background: #2581C4,
 			disabled-color: #F5F5F5,
-			odd-even-row: odd,
-			odd-even-background: #F0F0F0
 		),
 		contents: (
 			no-result: (
-				font-size: 13px,
-				font-weight: 500
+				size: 13px,
+				font-weight: 500,
+			),
+		),
+		dialogs: (
+			title: (
+				size: 20px
 			)
-		)
-	),
-	dialogs: (
-		title: (
-			size: 20px
 		)
 	)
 );
