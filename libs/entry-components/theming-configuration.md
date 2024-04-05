@@ -426,7 +426,7 @@ It contains of following properties:
 
 Contains property for styling the table header.
 
-- `size` determines the font size of the header cells in the table.
+- `size`: determines the font size of the header cells in the table.
 
 ```scss
 $custom-theme: (
@@ -441,8 +441,8 @@ $custom-theme: (
 ### 2. Cells
 
 Contains properties related to individual cells in a table:
-- `edge-gap` specifies control of both the left and right table paddings, affecting the **first and last cells** to achieve the desired spacing (4px by default).
-- `padding` allows adding top, right, bottom and left paddings for **all cells in table**. By default, there is no value.  It's worth mentioning that edge-gap padding will override padding values for the first and last table cell.
+- `edge-gap`: specifies control of both the left and right table paddings, affecting the **first and last cells** to achieve the desired spacing (4px by default).
+- `padding`: allows adding top, right, bottom and left paddings for **all cells in table**. By default, there is no value.  It's worth mentioning that edge-gap padding will override padding values for the first and last table cell.
 
 ```scss
 $custom-theme: (
@@ -459,22 +459,25 @@ $custom-theme: (
 
 Handles the appearance of table rows:
 
-- `selected-color` sets the text color of cells within a selected row.
-- `selected-background` sets the background color for selected row. If 'transparent' value is passed, it will be ignored and primary color will be applied.
-- `disabled-color` defines the background color for disabled rows.
-- `odd-even-row` row can be either odd or even, nothing else.
-- `odd-even-background` sets the background color for odd or even rows.
+- `odd-even-background`: sets the background color for odd and even rows.
+  - `odd`: sets the background color for rows in odd positions.
+  - `even`: sets the background color for rows in even positions
+- `selected-color`: sets the text color of cells within a selected row.
+- `selected-background`: sets the background color for selected row. If the value 'transparent' is provided, the background will be applied based on whether the row is odd or even.
+- `disabled-color`: defines the background color for disabled rows.
 
 ```scss
 $custom-theme: (
   tables: (
     rows: (
+      odd-even-background: (
+        odd: #F0F0F0, 
+        even: #FFF,
+      ),
       selected-color: #FFF,
-      selected-background: #0CF0EC,
+      selected-background: null,
       disabled-color: #F5F5F5,
-      odd-even-row: odd,
-      odd-even-background: #F0F0F0
-    )
+    ),
   )
 );
 ```
@@ -483,9 +486,9 @@ $custom-theme: (
 
 Manages the styling of table content:
 
-- `no-result` contains properties for the appearance of a message displayed when there are no search results:
-  - `font-size` specifies the font size of the message.
-  - `font-weight` controls the font weight of the message.
+- `no-result`": contains properties for the appearance of a message displayed when there are no search results:
+  - `font-size`: specifies the font size of the message.
+  - `font-weight`: controls the font weight of the message.
 
 ```scss
 $custom-theme: (
@@ -498,10 +501,13 @@ $custom-theme: (
       padding: null
     ),
     rows: (
+       odd-even-background: (
+        odd: #F0F0F0, 
+        even: #FFF,
+      ),
       selected-color: #FFF,
+      selected-background: null,
       disabled-color: #F5F5F5,
-      odd-even-row: odd,
-      odd-even-background: #F0F0F0
     ),
     contents: (
       no-result: (
@@ -697,8 +703,8 @@ The table below outlines the default values for all supported configuration prop
 |                  | rows/selected-color             | #FFF                                |
 |                  | rows/selected-background        | null                                |
 |                  | rows/disabled-color             | #F5F5F5                             |
-|                  | rows/odd-even-row               | odd                                 |
-|                  | rows/odd-even-background        | #F0F0F0                             |
+|                  | rows/odd-even-background/odd    | #F0F0F0                             |
+|                  | rows/odd-even-background/even   | #FFF                                |
 |                  | no-result/font-size             | 13px                                |
 |                  | no-result/font-weight           | 500                                 |
 | **dialogs**      | title/size                      | 20px                                |

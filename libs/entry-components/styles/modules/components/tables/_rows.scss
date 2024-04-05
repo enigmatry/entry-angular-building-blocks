@@ -1,51 +1,41 @@
+/* stylelint-disable scss/at-else-closing-brace-space-after */
+/* stylelint-disable scss/at-else-closing-brace-newline-after */
 /* stylelint-disable max-nesting-depth */
 @use 'sass:map';
-
-@mixin row-coloring($color-map) {
-	@if map.has-key($color-map, 'odd') {
-		&:nth-child(odd) {
-			background-color: map.get($color-map, 'odd');
-		}
-	}
-	@if map.has-key($color-map, 'even') {
-		&:nth-child(even) {
-			background-color: map.get($color-map, 'even');
-		}
-	}
-}
+@use '@enigmatry/scss-foundation/src/modules/lists/row-coloring' as list;
 
 @mixin generate-from($theme) {
 	$odd-background: map.get($theme, 'tables', 'rows', 'odd-even-background', 'odd');
 	$even-background: map.get($theme, 'tables', 'rows', 'odd-even-background', 'even');
+	$primary-color: map.get($theme, 'general', 'colors', 'primary');
 	
 	.mat-mdc-row {
 		&.mdc-data-table__row {
-			@include row-coloring(map.get($theme, 'tables', 'rows', 'odd-even-background'));
-		
+			@include list.row-coloring($odd-background, 'odd');
+			@include list.row-coloring($even-background, 'even');
+ 
 			&.selected {
 				$selected-row-background: map.get($theme, 'tables', 'rows', 'selected-background');
-		  
-				@if $selected-row-background == transparent {
-					&:nth-child(odd) {
-						background-color: $odd-background;
-					}
 
-					&:nth-child(even) {
-						background-color: $even-background;
-					}
+				@if $selected-row-background == transparent {
+					@include list.row-coloring($odd-background, 'odd');
+					@include list.row-coloring($even-background, 'even');
+				}
+				@else if $selected-row-background == null {
+					background-color: $primary-color;
 				}
 				@else {
 					background-color: $selected-row-background;
 				}
-		  
+				  
 				.mat-mdc-cell {
 					color: map.get($theme, 'tables', 'rows', 'selected-color');
 				}
 			}
+		}
 		
-			&.mat-row-disabled {
-				background-color: map.get($theme, 'tables', 'rows', 'disabled-color');
-			}
+		&.mat-row-disabled {
+			background-color: map.get($theme, 'tables', 'rows', 'disabled-color');
 		}
 	}
 }
