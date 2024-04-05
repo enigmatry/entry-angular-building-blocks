@@ -7,8 +7,7 @@
 @mixin generate-from($theme) {
 	$odd-background: map.get($theme, 'tables', 'rows', 'odd-even-background', 'odd');
 	$even-background: map.get($theme, 'tables', 'rows', 'odd-even-background', 'even');
-	$primary-color: map.get($theme, 'general', 'colors', 'primary');
-	
+
 	.mat-mdc-row {
 		&.mdc-data-table__row {
 			@include list.row-coloring($odd-background, 'odd');
@@ -22,7 +21,7 @@
 					@include list.row-coloring($even-background, 'even');
 				}
 				@else if $selected-row-background == null {
-					background-color: $primary-color;
+					background-color: map.get($theme, 'general', 'colors', 'primary');
 				}
 				@else {
 					background-color: $selected-row-background;
