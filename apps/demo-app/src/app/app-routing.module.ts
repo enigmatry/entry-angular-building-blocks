@@ -48,6 +48,10 @@ const routes: Routes = [
   {
     path: RouteSegments.validation,
     loadComponent: () => import('./features/validation/validation-documentation.component').then(m => m.ValidationDocumentationComponent)
+  },
+  {
+    path: RouteSegments.datetimePicker,
+    loadComponent: () => import('./features/date-time-picker/date-time-picker-documentation.component').then(m => m.DateTimePickerDocumentationComponent)
   }
 ];
 

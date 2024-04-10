@@ -1,0 +1,35 @@
+<mat-form-field>
+    <mat-label>{{label}}</mat-label>
+    <input matInput [matDatepicker]="hiddenPicker" [formControl]="datetimeControl">
+    <mat-datepicker #hiddenPicker [hidden]="true"></mat-datepicker>
+    <input [hidden]="true" matInput [matDatepicker]="picker" [formControl]="calendarControl">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker>
+        <mat-datepicker-actions>
+            <mat-form-field>
+                <mat-select [formControl]="hours">
+                    <mat-option *ngFor="let hour of possibleHours" [value]="hour">{{hour}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-select [formControl]="minutes">
+                    <mat-option *ngFor="let minute of possibleMinutesAndSeconds"
+                        [value]="minute">{{minute}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field *ngIf="showSeconds">
+                <mat-select [formControl]="seconds">
+                    <mat-option *ngFor="let second of possibleMinutesAndSeconds"
+                        [value]="second">{{second}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field *ngIf="hasAmPm">
+              <mat-select [formControl]="amPm">
+                <mat-option [value]="false">AM</mat-option>
+                <mat-option [value]="true">PM</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <button mat-raised-button color="primary" matDateRangePickerApply>Apply</button>
+        </mat-datepicker-actions>
+    </mat-datepicker>
+</mat-form-field>

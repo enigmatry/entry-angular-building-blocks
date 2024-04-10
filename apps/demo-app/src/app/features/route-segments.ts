@@ -9,4 +9,5 @@ export class RouteSegments {
     static permissions = `permissions`;
     static form = `form`;
     static spinner = `spinner`;
+    static datetimePicker = `datetime-picker`;
 }
