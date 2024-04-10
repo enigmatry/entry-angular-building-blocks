@@ -27,7 +27,7 @@ $custom-breakpoints: () !default;
 					flex-wrap: wrap;
 				}
 
-				.row [class ^= 'col-'], .row [class ^= 'offset-'] {
+				.row [class *= 'col-'], .row [class *= 'offset-'] {
 					box-sizing: border-box;
 					flex-shrink: 0;
 					max-width: 100%;

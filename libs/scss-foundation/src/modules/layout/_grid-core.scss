@@ -11,7 +11,7 @@ $breakpoints: () !default;
 			margin: 0 -#{$spacing};
 		}
 
-		[class ^= #{$column-prefix}], [class ^= #{$offset-prefix}] {
+		[class*='#{$column-prefix}'], [class*='#{$offset-prefix}'] {
 			box-sizing: border-box;
 			flex-shrink: 0;
 			max-width: 100%;
