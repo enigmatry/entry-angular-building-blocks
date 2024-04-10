@@ -127,7 +127,7 @@ vars.$testing: true;
 					flex-wrap: wrap;
 				}
 
-				.row [class ^= 'col-'], .row [class ^= 'offset-'] {
+				.row [class *= 'col-'], .row [class *= 'offset-'] {
 					box-sizing: border-box;
 					flex-shrink: 0;
 					max-width: 100%;
@@ -925,7 +925,7 @@ vars.$testing: true;
 					flex-wrap: wrap;
 					margin: 0 -8px;
 
-					[class ^= 'col-'], [class ^= 'offset-'] {
+					[class *= 'col-'], [class *= 'offset-'] {
 						box-sizing: border-box;
 						flex-shrink: 0;
 						max-width: 100%;

@@ -58,7 +58,7 @@ $custom-breakpoints: () !default;
 					margin: 0 -8px;
 				}
 
-				.row [class ^= 'column-'], .row [class ^= 'gap-'] {
+				.row [class *= 'column-'], .row [class *= 'gap-'] {
 					box-sizing: border-box;
 					flex-shrink: 0;
 					max-width: 100%;
