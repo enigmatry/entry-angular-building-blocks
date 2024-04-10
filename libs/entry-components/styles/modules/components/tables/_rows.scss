@@ -1,28 +1,40 @@
+/* stylelint-disable scss/at-else-closing-brace-space-after */
+/* stylelint-disable scss/at-else-closing-brace-newline-after */
+/* stylelint-disable max-nesting-depth */
 @use 'sass:map';
 @use '@enigmatry/scss-foundation/src/modules/lists/row-coloring' as list;
 
 @mixin generate-from($theme) {
+	$odd-background: map.get($theme, 'tables', 'rows', 'odd-even-background', 'odd');
+	$even-background: map.get($theme, 'tables', 'rows', 'odd-even-background', 'even');
+
 	.mat-mdc-row {
 		&.mdc-data-table__row {
-			@include list.row-coloring(map.get($theme, 'tables', 'rows', 'odd-even-background'),
-			map.get($theme, 'tables', 'rows', 'odd-even-row'));
-
+			@include list.row-coloring($odd-background, 'odd');
+			@include list.row-coloring($even-background, 'even');
+ 
 			&.selected {
-				background-color: map.get($theme, 'general', 'colors', 'primary');
 				$selected-row-background: map.get($theme, 'tables', 'rows', 'selected-background');
-				
-				@if $selected-row-background and $selected-row-background != transparent {
+
+				@if $selected-row-background == transparent {
+					@include list.row-coloring($odd-background, 'odd');
+					@include list.row-coloring($even-background, 'even');
+				}
+				@else if $selected-row-background == null {
+					background-color: map.get($theme, 'general', 'colors', 'primary');
+				}
+				@else {
 					background-color: $selected-row-background;
 				}
-				
+				  
 				.mat-mdc-cell {
 					color: map.get($theme, 'tables', 'rows', 'selected-color');
 				}
 			}
-
-			&.mat-row-disabled {
-				background-color: map.get($theme, 'tables', 'rows', 'disabled-color');
-			}
+		}
+		
+		&.mat-row-disabled {
+			background-color: map.get($theme, 'tables', 'rows', 'disabled-color');
 		}
 	}
 }

@@ -7,21 +7,26 @@ $checkbox-selector: '.mdc-checkbox__native-control:enabled:not(:checked):not(:in
 	$background: map.get($theme, 'general', 'checkboxes', 'background');
 	$border-hover-color: map.get($theme, 'general', 'checkboxes', 'border-hover-color');
 
-	.mat-mdc-checkbox {
-		.mdc-form-field {
-			.mdc-checkbox {
-				#{$checkbox-selector} {
-					background-color: $background;
+	@if $background or $border-hover-color {
+		.mat-mdc-checkbox {
+			@if $background {
+				.mdc-form-field .mdc-checkbox {
+					#{$checkbox-selector} {
+						background-color: $background;
+					}
 				}
 			}
-		}
 
-		&:hover {
-			/* stylelint-disable-next-line selector-max-pseudo-class */
-			.mdc-checkbox:hover {
-				#{$checkbox-selector} {
-					border-color: $border-hover-color;
-					background-color: $background;
+			&:hover {
+				/* stylelint-disable-next-line selector-max-pseudo-class */
+				.mdc-checkbox:hover {
+					/* stylelint-disable-next-line max-nesting-depth */
+					@if $background and $border-hover-color {
+						#{$checkbox-selector} {
+							border-color: $border-hover-color;
+							background-color: $background;
+						}
+					}
 				}
 			}
 		}

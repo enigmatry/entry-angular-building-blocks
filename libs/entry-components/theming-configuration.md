@@ -204,6 +204,8 @@ It contains of following properties:
 4. [Spacing](#4-spacing)
 5. [Inputs](#5-inputs)
 6. [Buttons](#6-buttons)
+7. [Checkboxes](#7-checkboxes)
+8. [Toggles](#8-toggles)
 
 ### 1. Density
 
@@ -226,12 +228,12 @@ $custom-theme: (
 Pass a single, hexadecimal color and theming will do the rest. It will create darker and lighter variations of that color, so we don't need to specify any more complex color palettes.
 Defines various color properties:
 
-- `primary`: Main color used in application, it sets the tone for the overall theme
-- `accent`: Highlight certain elements and create visual interest
+- `primary`: Main color used in application, it sets the tone for the overall theme.
+- `accent`: Highlight certain elements and create visual interest.
 - `font`: Specifies the default font color.
 - `disabled`: Style elements that are in a disabled state:
-  - `foreground`: Text color for disabled elements
-  - `background`: Background color for disabled elements
+  - `foreground`: Text color for disabled elements.
+  - `background`: Background color for disabled elements.
 
 ```scss
 $custom-theme: (
@@ -257,9 +259,9 @@ Allow customization of typography and font styles based on Angular Material typo
 Each font related property in configuration can have: **family**, **size** and **letter-spacing** values.
 
 - `body`: Defines typography for base body text.
-  - `family`: Sets custom font family
-  - `size`: Sets custom font size
-  - `letter-spacing`: Sets custom letter spacing; if we leave default value or set it to `null` manually, Angular Material's default values will be applied
+  - `family`: Sets custom font family.
+  - `size`: Sets custom font size.
+  - `letter-spacing`: Sets custom letter spacing; if we leave default value or set it to `null` manually, Angular Material's default values will be applied.
 - `buttons`: Typography for buttons and anchors.
 
 ```scss
@@ -350,18 +352,62 @@ $custom-theme: (
 
 ### 6. Buttons
 
-Additional customization  for buttons:
+Additional customization for buttons:
 
-- `icon-size` - sets the default size for icons on buttons when icons are present.
-
-Code Example of general submap configuration:
+- `icon-size`:  sets the default size for icons on buttons when icons are present.
+- `radio`:  Contains property for radio buttons.
+  - `background`: sets the background color for the inner and outer circles of radio buttons.
 
 ```scss
 $custom-theme: (
   general: (
     buttons: (
-      icon-size: 48px
+      icon-size: 48px,
+      radio: (
+        background: #333
+      )
     )
+  )
+)
+```
+
+### 7. Checkboxes
+
+Provides customization of checkboxes background and border color for **unchecked state**.
+
+- `background`:  sets the background color for the checkboxes.
+- `border-hover-color`: sets the border color of unchecked checkbox while in hover state.
+
+```scss
+$custom-theme: (
+  general: (
+    checkboxes: (
+      background: blue,
+      border-hover-color: darkblue
+    )
+  )
+)
+```
+
+### 8. Toggles
+
+Modifies the toggle components' appearance by defining background colors for the **on** and **off** states, making adjustments to track according to the lightness of the colors.
+
+- `on`: Contains property for the toggle in its active state.
+- `off`: Contains property for the toggle in its inactive state.
+  - `background`: Sets the toggle's handler and track background color based on activated(on) or deactivated(off) state of toggle. If 'transparent' value is passed, it will be ignored and primary background will be applied.
+
+```scss
+$custom-theme: (
+  general: (
+    toggle: (
+      on: (
+        background: orange
+      ),
+      off: (  
+        background: green
+      ),
+    ),
   )
 )
 ```
@@ -371,15 +417,32 @@ $custom-theme: (
 The `tables` section in the `$custom-theme` configuration handles how table components are styled and themed.
 
 It contains of following properties:
-1. [Cells](#1-cells)
-2. [Rows](#2-rows)
-3. [Contents](#3-contents)
+1. [Header](#1-header)
+2. [Cells](#2-cells)
+3. [Rows](#3-rows)
+4. [Contents](#4-contents)
 
-### 1. Cells
+### 1. Header
+
+Contains property for styling the table header.
+
+- `size`: determines the font size of the header cells in the table.
+
+```scss
+$custom-theme: (
+  tables: (
+    header: (
+      font-size: 20px
+    )
+  )
+)
+```
+
+### 2. Cells
 
 Contains properties related to individual cells in a table:
-- `edge-gap` specifies control of both the left and right table paddings, affecting the **first and last cells** to achieve the desired spacing (4px by default)
-- `padding` allows adding top, right, bottom and left paddings for **all cells in table**. By default, there is no value.  It's worth mentioning that edge-gap padding will override padding values for the first and last table cell.
+- `edge-gap`: specifies control of both the left and right table paddings, affecting the **first and last cells** to achieve the desired spacing (4px by default).
+- `padding`: allows adding top, right, bottom and left paddings for **all cells in table**. By default, there is no value.  It's worth mentioning that edge-gap padding will override padding values for the first and last table cell.
 
 ```scss
 $custom-theme: (
@@ -392,48 +455,59 @@ $custom-theme: (
 )
 ```
 
-### 2. Rows
+### 3. Rows
 
 Handles the appearance of table rows:
 
-- `selected-color` sets the text color of cells within a selected row
-- `disabled-color` defines the background color for disabled rows.
-- `odd-even-row` row can be either odd or even, nothing else.
-- `odd-even-background` sets the background color for odd or even rows.
+- `odd-even-background`: sets the background color for odd and even rows.
+  - `odd`: sets the background color for rows in odd positions.
+  - `even`: sets the background color for rows in even positions
+- `selected-color`: sets the text color of cells within a selected row.
+- `selected-background`: sets the background color for selected row. If the value 'transparent' is provided, the background will be applied based on whether the row is odd or even.
+- `disabled-color`: defines the background color for disabled rows.
 
 ```scss
 $custom-theme: (
   tables: (
     rows: (
+      odd-even-background: (
+        odd: #F0F0F0, 
+        even: #FFF,
+      ),
       selected-color: #FFF,
+      selected-background: null,
       disabled-color: #F5F5F5,
-      odd-even-row: odd,
-      odd-even-background: #F0F0F0
-    )
+    ),
   )
 );
 ```
 
-### 3. Contents
+### 4. Contents
 
 Manages the styling of table content:
 
-- `no-result` contains properties for the appearance of a message displayed when there are no search results:
-- `font-size` specifies the font size of the message.
-- `font-weight` controls the font weight of the message.
+- `no-result`": contains properties for the appearance of a message displayed when there are no search results:
+  - `font-size`: specifies the font size of the message.
+  - `font-weight`: controls the font weight of the message.
 
 ```scss
 $custom-theme: (
   tables: (
+    header: (
+      font-size: 20px
+    )
     cells: (
       edge-gap: 4px,
       padding: null
     ),
     rows: (
+       odd-even-background: (
+        odd: #F0F0F0, 
+        even: #FFF,
+      ),
       selected-color: #FFF,
+      selected-background: null,
       disabled-color: #F5F5F5,
-      odd-even-row: odd,
-      odd-even-background: #F0F0F0
     ),
     contents: (
       no-result: (
@@ -472,7 +546,7 @@ $custom-theme: (
 In this approach, we carefully set up every little detail within entry components. Angular Material offers a predefined color palette for application, covering a range of  primary, accent, and warn colors.
 When a project necessitates many specific Angular Material overrides that we don't want to support with regular theming, this approach is necessary. It can also be useful in situations where we need more granular control over the variations of primary and accent colors, as well as their shadows.
 
-All properties for native configuration are set to `null` in default theme, meaning that they will not be applied the other related properties will take presence unless we redeclare or customize them. 
+All properties for native configuration are set to `null` in default theme, meaning that they will not be applied the other related properties will take presence unless we redeclare or customize them.
 
 ### General Configuration
 
@@ -618,12 +692,19 @@ The table below outlines the default values for all supported configuration prop
 |                  | spacing/default                 | 15px                                |
 |                  | inputs/background               | null                                |
 |                  | buttons/icon-size               | 48px                                |
-| **tables**       | cells/edge-gap                  | 4px                                 |
+|                  | buttons/radio/background        | null                                |
+|                  | checkboxes/background           | null                                |
+|                  | checkboxes/border-hover-color   | null                                |
+|                  | toggle/on/background            | null                                |
+|                  | toggle/off/background           | null                                |
+| **tables**       | header/font-size                | null                                |
+|                  | cells/edge-gap                  | 4px                                 |
 |                  | cells/padding                   | null                                |
 |                  | rows/selected-color             | #FFF                                |
+|                  | rows/selected-background        | null                                |
 |                  | rows/disabled-color             | #F5F5F5                             |
-|                  | rows/odd-even-row               | odd                                 |
-|                  | rows/odd-even-background        | #F0F0F0                             |
+|                  | rows/odd-even-background/odd    | #F0F0F0                             |
+|                  | rows/odd-even-background/even   | #FFF                                |
 |                  | no-result/font-size             | 13px                                |
 |                  | no-result/font-weight           | 500                                 |
 | **dialogs**      | title/size                      | 20px                                |
