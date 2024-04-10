@@ -46,8 +46,20 @@ import { ENTRY_MAT_DATE_TIME } from '@enigmatry/entry-components/common';
             monthYearA11yLabel: 'LLLL uuuu',
           },
         },
-        compareDate(first: Date, second: Date): number {
-          return first.getTime() - second.getTime();
+        getHours(date: Date): number {
+          return date.getHours();
+        },
+        getMinutes(date: Date): number {
+          return date.getMinutes();
+        },
+        getSeconds(date: Date): number {
+          return date.getSeconds();
+        },
+        setTime(date: Date, hours: number, minutes: number, seconds: number): Date {
+          date.setHours(hours);
+          date.setMinutes(minutes);
+          date.setSeconds(seconds);
+          return date;
         }
       }
     }

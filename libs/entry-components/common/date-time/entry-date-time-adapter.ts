@@ -7,13 +7,19 @@ import { ENTRY_MAT_DATE_TIME, EntryMatDateTime } from './entry-date-time';
  */
 @Injectable()
 export class EntryDateTimeAdapter<D, L> extends DateAdapter<D, L> {
-    private compareFunction: (first: D, second: D) => number;
+    private getHoursFunction: (date: D) => number;
+    private getMinutesFunction: (date: D) => number;
+    private getSecondsFunction: (date: D) => number;
+    private setTimeFunction: (date: D, hours: number, minutes: number, seconds: number) => D;
 
     constructor(@Optional() @Inject(MAT_DATE_LOCALE) matDateLocale: L,
         @Inject(ENTRY_MAT_DATE_TIME) entryMatDateTime: EntryMatDateTime<D>,
         @SkipSelf() private dateAdapter: DateAdapter<D, L>) {
         super();
-        this.compareFunction = entryMatDateTime.compareDate;
+        this.getHoursFunction = entryMatDateTime.getHours;
+        this.getMinutesFunction = entryMatDateTime.getMinutes;
+        this.getSecondsFunction = entryMatDateTime.getSeconds;
+        this.setTimeFunction = entryMatDateTime.setTime;
         this.dateAdapter.setLocale(matDateLocale);
     }
 
@@ -105,7 +111,26 @@ export class EntryDateTimeAdapter<D, L> extends DateAdapter<D, L> {
         return this.dateAdapter.invalid();
     }
 
+    getHours(date: D): number {
+        return this.getHoursFunction(date);
+    }
+
+    getMinutes(date: D): number {
+        return this.getMinutesFunction(date);
+    }
+
+    getSeconds(date: D): number {
+        return this.getSecondsFunction(date);
+    }
+
+    setTime(date: D, hours: number, minutes: number, seconds: number): D {
+        return this.setTimeFunction(date, hours, minutes, seconds);
+    }
+
     override compareDate(first: D, second: D): number {
-        return this.compareFunction(first, second);
+        return this.getDate(first) - this.getDate(second) +
+            this.getHours(first) - this.getHours(second) +
+            this.getMinutes(first) - this.getMinutes(second) +
+            this.getSeconds(first) - this.getSeconds(second);
     }
 }
