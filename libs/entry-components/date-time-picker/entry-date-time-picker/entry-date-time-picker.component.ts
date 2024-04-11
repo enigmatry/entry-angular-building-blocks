@@ -29,10 +29,12 @@ export class EntryDateTimePickerComponent<D> implements OnInit {
   constructor() {
     const format = inject(ENTRY_MAT_DATE_TIME).matDateFormats;
     this.dateAdapter = inject(DateAdapter) as EntryDateTimeAdapter<D, any>;
+    const today = this.dateAdapter.today();
     if (this.datetimeControl.value === null) {
-      this.datetimeControl.setValue(this.dateAdapter.today());
+      this.datetimeControl.setValue(today);
+      this.calendarControl.setValue(today);
     }
-    const nowString = this.dateAdapter.format(this.dateAdapter.today(), format.display.dateInput);
+    const nowString = this.dateAdapter.format(today, format.display.dateInput);
     this.hasAmPm = nowString.toUpperCase().includes('AM') || nowString.toUpperCase().includes('PM');
     this.minutes = new FormControl<number>(this.dateAdapter.getMinutes(this.datetimeControl.value));
     this.hours = new FormControl<number>(this.dateAdapter.getHours(this.datetimeControl.value));
