@@ -128,7 +128,9 @@ export class EntryDateTimeAdapter<D, L> extends DateAdapter<D, L> {
     }
 
     override compareDate(first: D, second: D): number {
-        return this.getDate(first) - this.getDate(second) +
+        return this.getYear(first) - this.getYear(second) +
+            this.getMonth(first) - this.getMonth(second) +
+            this.getDate(first) - this.getDate(second) +
             this.getHours(first) - this.getHours(second) +
             this.getMinutes(first) - this.getMinutes(second) +
             this.getSeconds(first) - this.getSeconds(second);
