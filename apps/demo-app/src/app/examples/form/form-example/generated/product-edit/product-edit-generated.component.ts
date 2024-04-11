@@ -175,7 +175,7 @@ className: `entry-amount-field entry-input`,
         },
         {
         key: 'expiresOn',
-        type: this.resolveFieldType('datepicker', false),
+        type: this.resolveFieldType('datetimepicker', false),
         focus: false,
 className: `entry-expires-on-field entry-datepicker`,
         hideExpression: this.fieldsHideExpressions?.expiresOn ?? false,

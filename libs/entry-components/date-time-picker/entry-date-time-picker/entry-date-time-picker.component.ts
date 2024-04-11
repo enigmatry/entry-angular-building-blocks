@@ -24,11 +24,11 @@ export class EntryDateTimePickerComponent<D> implements OnInit {
   hasAmPm: boolean;
   possibleHours: number[];
   possibleMinutesAndSeconds = Array.from({ length: 60 }, (_, i) => i);
-  dateAdapter: EntryDateTimeAdapter<D, any>;
+  dateAdapter: EntryDateTimeAdapter<D, unknown>;
 
   constructor() {
     const format = inject(ENTRY_MAT_DATE_TIME).matDateFormats;
-    this.dateAdapter = inject(DateAdapter) as EntryDateTimeAdapter<D, any>;
+    this.dateAdapter = inject(DateAdapter) as EntryDateTimeAdapter<D, unknown>;
     const today = this.dateAdapter.today();
     if (this.datetimeControl.value === null) {
       this.datetimeControl.setValue(today);

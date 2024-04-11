@@ -18,6 +18,7 @@ import { ProductsGeneratedModule } from './form-example/generated/products-gener
 import { RichTextExampleComponent } from './rich-text/rich-text-example.component';
 import { ENTRY_CKEDITOR_OPTIONS, FormlyCkeditorModule } from '@enigmatry/entry-form/ckeditor';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { FormlyDateTimePickerModule } from '@enigmatry/entry-form/date-time-picker';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
     FormlyAutocompleteModule,
     FormlyMatDatepickerModule,
     FormlyCkeditorModule,
+    FormlyDateTimePickerModule,
     FormlyModule.forChild({
       types: [
         {

@@ -6,7 +6,10 @@
     "declaration": true,
     "declarationMap": true,
     "inlineSources": true,
-    "types": []
+    "types": [],
+    "paths": {
+      "@enigmatry/entry-components/date-time-picker": ["dist/engimatry/entry-components/date-time-picker"],
+    }
   },
   "exclude": [
     "src/test.ts",
