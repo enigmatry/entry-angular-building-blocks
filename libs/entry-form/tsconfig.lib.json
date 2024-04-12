@@ -8,7 +8,8 @@
     "inlineSources": true,
     "types": [],
     "paths": {
-      "@enigmatry/entry-components/date-time-picker": ["dist/engimatry/entry-components/date-time-picker"],
+      "@enigmatry/entry-components/date-time-picker": ["dist/enigmatry/entry-components/date-time-picker"],
+      "@enigmatry/entry-components/common": ["dist/enigmatry/entry-components/common"]
     }
   },
   "exclude": [
