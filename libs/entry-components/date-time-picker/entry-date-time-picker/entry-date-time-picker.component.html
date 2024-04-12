@@ -6,30 +6,36 @@
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker>
         <mat-datepicker-actions>
-            <mat-form-field>
-                <mat-select [formControl]="hours">
-                    <mat-option *ngFor="let hour of possibleHours" [value]="hour">{{hour}}</mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field>
-                <mat-select [formControl]="minutes">
-                    <mat-option *ngFor="let minute of possibleMinutesAndSeconds"
-                        [value]="minute">{{minute}}</mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field *ngIf="showSeconds">
-                <mat-select [formControl]="seconds">
-                    <mat-option *ngFor="let second of possibleMinutesAndSeconds"
-                        [value]="second">{{second}}</mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field *ngIf="hasAmPm">
-              <mat-select [formControl]="amPm">
-                <mat-option [value]="false">AM</mat-option>
-                <mat-option [value]="true">PM</mat-option>
-              </mat-select>
-            </mat-form-field>
-            <button mat-raised-button color="primary" matDateRangePickerApply>Apply</button>
+            <div class="time-picker-actions-container" [class.multiple-time-controls]="hasMultipleControls">
+                <mat-form-field #timeField>
+                    <mat-select [formControl]="hours">
+                        <mat-option *ngFor="let hour of possibleHours" [value]="hour">{{hour}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <span class="time-separator">&#58;</span>
+                <mat-form-field>
+                    <mat-select [formControl]="minutes">
+                        <mat-option *ngFor="let minute of possibleMinutesAndSeconds"
+                            [value]="minute">{{minute}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <span *ngIf="showSeconds" class="time-separator">&#58;</span>
+                <mat-form-field *ngIf="showSeconds">
+                    <mat-select [formControl]="seconds">
+                        <mat-option *ngFor="let second of possibleMinutesAndSeconds"
+                            [value]="second">{{second}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field *ngIf="hasAmPm">
+                  <mat-select [formControl]="amPm">
+                    <mat-option [value]="false">AM</mat-option>
+                    <mat-option [value]="true">PM</mat-option>
+                  </mat-select>
+                </mat-form-field>
+            </div>
+            <button mat-raised-button color="primary" matDateRangePickerApply class="entry-submit-button">
+                <mat-icon aria-hidden="false" aria-label="Apply icon" fontIcon="done" class="icon"></mat-icon>
+            </button>
         </mat-datepicker-actions>
     </mat-datepicker>
 </mat-form-field>

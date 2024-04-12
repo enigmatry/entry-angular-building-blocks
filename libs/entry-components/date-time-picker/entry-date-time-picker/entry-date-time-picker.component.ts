@@ -16,6 +16,7 @@ export class EntryDateTimePickerComponent<D> implements OnInit {
   @Input() datetimeControl = new FormControl<D>(null);
   @Input() showSeconds = false;
   @Input() label: string;
+  hasMultipleControls = false;
   minutes: FormControl<number>;
   hours: FormControl<number>;
   seconds: FormControl<number>;
@@ -40,6 +41,7 @@ export class EntryDateTimePickerComponent<D> implements OnInit {
     this.hours = new FormControl<number>(this.dateAdapter.getHours(this.datetimeControl.value));
     this.seconds = new FormControl<number>(this.dateAdapter.getSeconds(this.datetimeControl.value));
     this.amPm = new FormControl<boolean>(this.hours.value >= 12);
+    this.hasMultipleControls = this.showSeconds && this.hasAmPm;
     this.possibleHours = this.hasAmPm ? Array.from({ length: 12 }, (_, i) => i + 1) : Array.from({ length: 24 }, (_, i) => i);
   }
 
