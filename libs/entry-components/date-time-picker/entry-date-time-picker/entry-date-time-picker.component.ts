@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, HostBinding, Input, OnInit, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MAT_DATE_FORMATS, DateAdapter } from '@angular/material/core';
 import { ENTRY_MAT_DATE_TIME, EntryDateTimeAdapter } from '@enigmatry/entry-components/common';
@@ -16,6 +16,7 @@ export class EntryDateTimePickerComponent<D> implements OnInit {
   @Input() datetimeControl = new FormControl<D>(null);
   @Input() showSeconds: boolean;
   @Input() label: string;
+  @HostBinding('class') class = 'time-picker-control';
   hasMultipleControls: boolean;
   minutes: FormControl<number>;
   hours: FormControl<number>;
