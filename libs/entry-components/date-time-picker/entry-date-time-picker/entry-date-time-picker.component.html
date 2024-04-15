@@ -6,7 +6,7 @@
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker>
         <mat-datepicker-actions>
-            <div class="time-picker-actions-container" [class.multiple-time-controls]="hasMultipleControls">
+            <div class="time-picker-actions-container" [ngClass]="hasMultipleControls ? 'multiple-time-controls' : ''">
                 <mat-form-field #timeField>
                     <mat-select [formControl]="hours">
                         <mat-option *ngFor="let hour of possibleHours" [value]="hour">{{hour}}</mat-option>
