@@ -12,13 +12,13 @@ import { InputExampleComponent } from './input/input-example.component';
 import { SelectExampleComponent } from './select/select-example.component';
 import { TextareaExampleComponent } from './textarea/textarea-example.component';
 import { CheckboxExampleComponent } from './checkbox/checkbox-example.component';
-import { DatepickerExampleComponent } from './datepicker/datepicker-example.component';
 import { RadioExampleComponent } from './radio/radio-example.component';
 import { ProductsGeneratedModule } from './form-example/generated/products-generated.module';
 import { RichTextExampleComponent } from './rich-text/rich-text-example.component';
 import { ENTRY_CKEDITOR_OPTIONS, FormlyCkeditorModule } from '@enigmatry/entry-form/ckeditor';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { FormlyDateTimePickerModule } from '@enigmatry/entry-form/date-time-picker';
+import { DateTimePickerExampleComponent } from './date-time-picker/date-time-picker-example.component';
 
 @NgModule({
   declarations: [
@@ -27,9 +27,9 @@ import { FormlyDateTimePickerModule } from '@enigmatry/entry-form/date-time-pick
     SelectExampleComponent,
     TextareaExampleComponent,
     CheckboxExampleComponent,
-    DatepickerExampleComponent,
     RadioExampleComponent,
     RichTextExampleComponent,
+    DateTimePickerExampleComponent
   ],
   imports: [
     CommonModule,
@@ -65,9 +65,9 @@ import { FormlyDateTimePickerModule } from '@enigmatry/entry-form/date-time-pick
     SelectExampleComponent,
     TextareaExampleComponent,
     CheckboxExampleComponent,
-    DatepickerExampleComponent,
     RadioExampleComponent,
-    RichTextExampleComponent
+    RichTextExampleComponent,
+    DateTimePickerExampleComponent
   ],
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } },

@@ -2,14 +2,14 @@ import { Component } from '@angular/core';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 
 @Component({
-  selector: 'app-datepicker-example',
-  templateUrl: './datepicker-example.component.html'
+  selector: 'app-date-time-picker-example',
+  templateUrl: './date-time-picker-example.component.html'
 })
-export class DatepickerExampleComponent {
+export class DateTimePickerExampleComponent {
   fields: FormlyFieldConfig[] = [
     {
       key: 'expiresOn',
-      type: 'datepicker',
+      type: 'datetimepicker',
       className: `entry-expires-on-field entry-datepicker`,
       templateOptions: {
         label: `Expires on`,
