@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { DateTimePickerExampleComponent } from "./date-time-picker-example.component";
 import { CommonModule } from "@angular/common";
-import { EntryDateTimePickerModule } from "libs/entry-components/date-time-picker/entry-date-time-picker.module";
+import { EntryDateTimePickerModule } from "@enigmatry/entry-components/date-time-picker";
 import { SharedModule } from "../../shared/shared.module";
 
 @NgModule({
