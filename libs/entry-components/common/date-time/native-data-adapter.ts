@@ -1,5 +1,7 @@
+import { Injectable } from "@angular/core";
 import { EntryDateAdapter } from "./entry-date-adapter";
 
+@Injectable()
 export class EntryNativeDateAdapter extends EntryDateAdapter<Date> {
     getHours(date: Date): number {
         return date.getHours();
