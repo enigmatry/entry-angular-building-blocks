@@ -44,6 +44,10 @@
 	}
 }
 
+.time-picker-control, .mat-mdc-form-field {
+	width: 100%;
+}
+
 .time-picker-actions-container {
 	display: flex;
 	flex-wrap: nowrap;
