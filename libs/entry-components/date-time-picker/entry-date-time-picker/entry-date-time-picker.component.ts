@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MAT_DATE_FORMATS, DateAdapter } from '@angular/material/core';
-import { ENTRY_MAT_DATE_TIME, EntryDateTimeAdapter } from '@enigmatry/entry-components/common';
+import { MAT_DATE_FORMATS, DateAdapter, MatDateFormats } from '@angular/material/core';
+import { ENTRY_MAT_DATE_TIME, EntryDateTimeAdapter, NgControlAccessorDirective, NoopControlValueAccessorDirective } from '@enigmatry/entry-components/common';
 
 @Component({
   selector: 'entry-date-time-picker',
@@ -10,10 +10,11 @@ import { ENTRY_MAT_DATE_TIME, EntryDateTimeAdapter } from '@enigmatry/entry-comp
   providers: [
     { provide: MAT_DATE_FORMATS, useFactory: () => inject(ENTRY_MAT_DATE_TIME).matDateFormats },
     { provide: DateAdapter, useClass: EntryDateTimeAdapter }
-  ]
+  ],
+  hostDirectives: [NoopControlValueAccessorDirective, NgControlAccessorDirective]
 })
 export class EntryDateTimePickerComponent<D> implements OnInit {
-  @Input() datetimeControl = new FormControl<D>(null);
+  ngControlAccessor: NgControlAccessorDirective;
   @Input() showSeconds: boolean;
   @Input() label: string;
   hasMultipleControls: boolean;
@@ -21,30 +22,34 @@ export class EntryDateTimePickerComponent<D> implements OnInit {
   hours: FormControl<number>;
   seconds: FormControl<number>;
   amPm: FormControl<boolean>;
-  calendarControl = new FormControl<D>(this.datetimeControl.value);
+  calendarControl: FormControl<D>;
   hasAmPm: boolean;
   possibleHours: number[];
   possibleMinutesAndSeconds = Array.from({ length: 60 }, (_, i) => i);
   dateAdapter: EntryDateTimeAdapter<D, unknown>;
+  format: MatDateFormats;
+
 
   constructor() {
-    const format = inject(ENTRY_MAT_DATE_TIME).matDateFormats;
+    this.ngControlAccessor = inject(NgControlAccessorDirective);
+    this.format = inject(ENTRY_MAT_DATE_TIME).matDateFormats;
     this.dateAdapter = inject(DateAdapter) as EntryDateTimeAdapter<D, unknown>;
+  }
+
+  ngOnInit(): void {    
     const today = this.dateAdapter.today();
     if (this.datetimeControl.value === null) {
       this.datetimeControl.setValue(today);
-      this.calendarControl.setValue(today);
     }
-    const nowString = this.dateAdapter.format(today, format.display.dateInput);
+    this.calendarControl = new FormControl<D>(this.datetimeControl.value);
+    const nowString = this.dateAdapter.format(today, this.format.display.dateInput);
     this.hasAmPm = nowString.toUpperCase().includes('AM') || nowString.toUpperCase().includes('PM');
     this.minutes = new FormControl<number>(this.dateAdapter.getMinutes(this.datetimeControl.value));
     this.hours = new FormControl<number>(this.dateAdapter.getHours(this.datetimeControl.value));
     this.seconds = new FormControl<number>(this.dateAdapter.getSeconds(this.datetimeControl.value));
     this.amPm = new FormControl<boolean>(this.hours.value >= 12);
     this.possibleHours = this.hasAmPm ? Array.from({ length: 12 }, (_, i) => i + 1) : Array.from({ length: 24 }, (_, i) => i);
-  }
 
-  ngOnInit(): void {
     this.hasMultipleControls = this.showSeconds || this.hasAmPm;
 
     this.datetimeControl.valueChanges.subscribe(value => {
@@ -60,5 +65,9 @@ export class EntryDateTimePickerComponent<D> implements OnInit {
       }
       this.datetimeControl.setValue(value, { emitEvent: false });
     });
+  }
+
+  get datetimeControl(): FormControl<D> {
+    return this.ngControlAccessor.control;
   }
 }

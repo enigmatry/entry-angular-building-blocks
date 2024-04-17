@@ -5,10 +5,14 @@ import { CommonModule } from '@angular/common';
 
 import { AutoDisableButtonDirective } from './directives/auto-disable-button.directive';
 import { ScrollToInvalidControlDirective } from './directives/scroll-to-invalid-control.directive';
+import { NoopControlValueAccessorDirective } from './directives/noop-control-value-accessor';
+import { NgControlAccessorDirective } from './directives/ng-control-accessor.directive';
 
 const DIRECTIVES = [
   AutoDisableButtonDirective,
   ScrollToInvalidControlDirective,
+  NoopControlValueAccessorDirective,
+  NgControlAccessorDirective
 ];
 
 /** Event plugins */
