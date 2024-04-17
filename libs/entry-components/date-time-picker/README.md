@@ -20,7 +20,7 @@ export class MyModule {}
 
 ## Usage
 
-Provide ENTRY_MAT_DATE_TIME in a feature or shared module:
+Provide ENTRY_MAT_DATE_TIME and EntryDateAdapter in a feature or shared module:
 
 ```typescript
 @NgModule({
@@ -28,34 +28,18 @@ Provide ENTRY_MAT_DATE_TIME in a feature or shared module:
     {
       provide: ENTRY_MAT_DATE_TIME,
       useValue: {
-        matDateFormats: {
-          parse: {
-            dateInput: ['dd-MM-yyyy', 'dd-MM-yyyy HH', 'dd-MM-yyyy HH:mm'],
-          },
-          display: {
-            dateInput: 'dd-MM-yyyy HH:mm',
-            monthYearLabel: 'LLL uuuu',
-            dateA11yLabel: 'PP',
-            monthYearA11yLabel: 'LLLL uuuu',
-          },
+        parse: {
+          dateInput: ['dd-MM-yyyy', 'dd-MM-yyyy HH', 'dd-MM-yyyy HH:mm'],
         },
-        getHours(date: Date): number {
-          return date.getHours();
-        },
-        getMinutes(date: Date): number {
-          return date.getMinutes();
-        },
-        getSeconds(date: Date): number {
-          return date.getSeconds();
-        },
-        setTime(date: Date, hours: number, minutes: number, seconds: number): Date {
-          date.setHours(hours);
-          date.setMinutes(minutes);
-          date.setSeconds(seconds);
-          return date;
+        display: {
+          dateInput: 'dd-MM-yyyy HH:mm',
+          monthYearLabel: 'LLL uuuu',
+          dateA11yLabel: 'PP',
+          monthYearA11yLabel: 'LLLL uuuu',
         }
       }
     },
+    { provide: EntryDateAdapter, useClass: EntryNativeDateAdapter },
     ...
   ],
   ...
@@ -66,5 +50,5 @@ export class SharedModule { }
 Use the component
 
 ```html
-<entry-date-time-picker [datetimeControl]="expiresOn" label="Expires on"></entry-date-time-picker>
+<entry-date-time-picker [formControl]="expiresOn" label="Expires on"></entry-date-time-picker>
 ```

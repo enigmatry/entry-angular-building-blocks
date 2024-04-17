@@ -1,25 +1,19 @@
 import { Inject, Injectable, Optional, SkipSelf } from '@angular/core';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
-import { ENTRY_MAT_DATE_TIME, EntryMatDateTime } from './entry-date-time';
+import { EntryDateAdapter } from './entry-date-adapter';
 
 /**
  * Extends provided DateAdapter with date time support
  */
 @Injectable()
-export class EntryDateTimeAdapter<D, L> extends DateAdapter<D, L> {
-    private getHoursFunction: (date: D) => number;
-    private getMinutesFunction: (date: D) => number;
-    private getSecondsFunction: (date: D) => number;
-    private setTimeFunction: (date: D, hours: number, minutes: number, seconds: number) => D;
+export class InternalDateTimeAdapter<D, L> extends DateAdapter<D, L> {
+    entryDateAdapter: EntryDateAdapter<D>;
 
     constructor(@Optional() @Inject(MAT_DATE_LOCALE) matDateLocale: L,
-        @Inject(ENTRY_MAT_DATE_TIME) entryMatDateTime: EntryMatDateTime<D>,
+        entryDateAdapter: EntryDateAdapter<D>,
         @SkipSelf() private dateAdapter: DateAdapter<D, L>) {
         super();
-        this.getHoursFunction = entryMatDateTime.getHours;
-        this.getMinutesFunction = entryMatDateTime.getMinutes;
-        this.getSecondsFunction = entryMatDateTime.getSeconds;
-        this.setTimeFunction = entryMatDateTime.setTime;
+        this.entryDateAdapter = entryDateAdapter;
         this.dateAdapter.setLocale(matDateLocale);
     }
 
@@ -112,19 +106,19 @@ export class EntryDateTimeAdapter<D, L> extends DateAdapter<D, L> {
     }
 
     getHours(date: D): number {
-        return this.getHoursFunction(date);
+        return this.entryDateAdapter.getHours(date);
     }
 
     getMinutes(date: D): number {
-        return this.getMinutesFunction(date);
+        return this.entryDateAdapter.getMinutes(date);
     }
 
     getSeconds(date: D): number {
-        return this.getSecondsFunction(date);
+        return this.entryDateAdapter.getSeconds(date);
     }
 
     setTime(date: D, hours: number, minutes: number, seconds: number): D {
-        return this.setTimeFunction(date, hours, minutes, seconds);
+        return this.entryDateAdapter.setTime(date, hours, minutes, seconds);
     }
 
     override compareDate(first: D, second: D): number {

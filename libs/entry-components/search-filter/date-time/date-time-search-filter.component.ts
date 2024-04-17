@@ -2,14 +2,14 @@ import { Component, Input, inject } from '@angular/core';
 import { DateTimeSearchFilter } from './date-time-search-filter.model';
 import { UntypedFormGroup } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import { ENTRY_MAT_DATE_TIME, EntryDateTimeAdapter } from '@enigmatry/entry-components/common';
+import { ENTRY_MAT_DATE_TIME, InternalDateTimeAdapter } from '@enigmatry/entry-components/common';
 
 @Component({
   selector: 'entry-date-time-search-filter',
   templateUrl: './date-time-search-filter.component.html',
   providers: [
-    { provide: MAT_DATE_FORMATS, useFactory: () => inject(ENTRY_MAT_DATE_TIME).matDateFormats },
-    { provide: DateAdapter, useClass: EntryDateTimeAdapter }
+    { provide: MAT_DATE_FORMATS, useFactory: () => inject(ENTRY_MAT_DATE_TIME) },
+    { provide: DateAdapter, useClass: InternalDateTimeAdapter }
   ]
 })
 export class DateTimeSearchFilterComponent<D> {

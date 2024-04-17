@@ -1,15 +1,15 @@
 import { Component, HostBinding, Input, OnInit, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MAT_DATE_FORMATS, DateAdapter, MatDateFormats } from '@angular/material/core';
-import { ENTRY_MAT_DATE_TIME, EntryDateTimeAdapter, NgControlAccessorDirective, NoopControlValueAccessorDirective } from '@enigmatry/entry-components/common';
+import { ENTRY_MAT_DATE_TIME, InternalDateTimeAdapter, NgControlAccessorDirective, NoopControlValueAccessorDirective } from '@enigmatry/entry-components/common';
 
 @Component({
   selector: 'entry-date-time-picker',
   templateUrl: './entry-date-time-picker.component.html',
   styleUrls: ['./entry-date-time-picker.component.scss'],
   providers: [
-    { provide: MAT_DATE_FORMATS, useFactory: () => inject(ENTRY_MAT_DATE_TIME).matDateFormats },
-    { provide: DateAdapter, useClass: EntryDateTimeAdapter }
+    { provide: MAT_DATE_FORMATS, useFactory: () => inject(ENTRY_MAT_DATE_TIME) },
+    { provide: DateAdapter, useClass: InternalDateTimeAdapter }
   ],
   hostDirectives: [NoopControlValueAccessorDirective, NgControlAccessorDirective]
 })
@@ -27,19 +27,19 @@ export class EntryDateTimePickerComponent<D> implements OnInit {
   hasAmPm: boolean;
   possibleHours: number[];
   possibleMinutesAndSeconds = Array.from({ length: 60 }, (_, i) => i);
-  dateAdapter: EntryDateTimeAdapter<D, unknown>;
+  dateAdapter: InternalDateTimeAdapter<D, unknown>;
   format: MatDateFormats;
 
 
   constructor() {
     this.ngControlAccessor = inject(NgControlAccessorDirective);
-    this.format = inject(ENTRY_MAT_DATE_TIME).matDateFormats;
-    this.dateAdapter = inject(DateAdapter) as EntryDateTimeAdapter<D, unknown>;
+    this.format = inject(ENTRY_MAT_DATE_TIME);
+    this.dateAdapter = inject(DateAdapter) as InternalDateTimeAdapter<D, unknown>;
   }
 
   ngOnInit(): void {    
     const today = this.dateAdapter.today();
-    if (this.datetimeControl.value === null) {
+    if (!this.datetimeControl.value) {
       this.datetimeControl.setValue(today);
     }
     this.calendarControl = new FormControl<D>(this.datetimeControl.value);
