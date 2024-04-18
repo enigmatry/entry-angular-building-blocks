@@ -43,8 +43,7 @@ export class EntryDateTimePickerComponent<D> implements OnInit {
       this.datetimeControl.setValue(today);
     }
     this.calendarControl = new FormControl<D>(this.datetimeControl.value);
-    const nowString = this.dateAdapter.format(today, this.format.display.dateInput);
-    this.hasAmPm = nowString.toUpperCase().includes('AM') || nowString.toUpperCase().includes('PM');
+    this.hasAmPm = this.dateAdapter.is12hClock(this.format.display.dateInput);
     this.minutes = new FormControl<number>(this.dateAdapter.getMinutes(this.datetimeControl.value));
     this.hours = new FormControl<number>(this.dateAdapter.getHours(this.datetimeControl.value));
     this.seconds = new FormControl<number>(this.dateAdapter.getSeconds(this.datetimeControl.value));
