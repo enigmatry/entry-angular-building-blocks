@@ -1,19 +1,18 @@
 import { Inject, Injectable, Optional, SkipSelf } from '@angular/core';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
-import { EntryDateAdapter } from './entry-date-adapter';
+import { EntryTimeAdapter } from './entry-time-adapter';
 
 /**
- * Extends provided DateAdapter with date time support
+ * Extends provided DateAdapter with time support
  */
 @Injectable()
-export class InternalDateTimeAdapter<D, L> extends DateAdapter<D, L> {
-    entryDateAdapter: EntryDateAdapter<D>;
+export class EntryDateTimeAdapter<D, L> extends DateAdapter<D, L> implements EntryTimeAdapter<D> {
 
-    constructor(@Optional() @Inject(MAT_DATE_LOCALE) matDateLocale: L,
-        entryDateAdapter: EntryDateAdapter<D>,
-        @SkipSelf() private dateAdapter: DateAdapter<D, L>) {
+    constructor(
+        @Optional() @Inject(MAT_DATE_LOCALE) matDateLocale: L,
+        @SkipSelf() private readonly dateAdapter: DateAdapter<D, L>,
+        private readonly timeAdapter: EntryTimeAdapter<D>) {
         super();
-        this.entryDateAdapter = entryDateAdapter;
         this.dateAdapter.setLocale(matDateLocale);
     }
 
@@ -106,19 +105,19 @@ export class InternalDateTimeAdapter<D, L> extends DateAdapter<D, L> {
     }
 
     getHours(date: D): number {
-        return this.entryDateAdapter.getHours(date);
+        return this.timeAdapter.getHours(date);
     }
 
     getMinutes(date: D): number {
-        return this.entryDateAdapter.getMinutes(date);
+        return this.timeAdapter.getMinutes(date);
     }
 
     getSeconds(date: D): number {
-        return this.entryDateAdapter.getSeconds(date);
+        return this.timeAdapter.getSeconds(date);
     }
 
     setTime(date: D, hours: number, minutes: number, seconds: number): D {
-        return this.entryDateAdapter.setTime(date, hours, minutes, seconds);
+        return this.timeAdapter.setTime(date, hours, minutes, seconds);
     }
 
     override compareDate(first: D, second: D): number {

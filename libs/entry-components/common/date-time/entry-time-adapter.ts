@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 
 @Injectable()
-export abstract class EntryDateAdapter<D> {
+export abstract class EntryTimeAdapter<D> {
     abstract getHours(date: D): number;
     abstract getMinutes(date: D): number;
     abstract getSeconds(date: D): number;

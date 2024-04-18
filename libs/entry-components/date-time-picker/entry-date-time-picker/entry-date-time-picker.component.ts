@@ -1,15 +1,15 @@
 import { Component, HostBinding, Input, OnInit, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MAT_DATE_FORMATS, DateAdapter, MatDateFormats } from '@angular/material/core';
-import { ENTRY_MAT_DATE_TIME, InternalDateTimeAdapter, NgControlAccessorDirective, NoopControlValueAccessorDirective } from '@enigmatry/entry-components/common';
+import { ENTRY_MAT_DATE_TIME_FORMATS, EntryDateTimeAdapter, NgControlAccessorDirective, NoopControlValueAccessorDirective } from '@enigmatry/entry-components/common';
 
 @Component({
   selector: 'entry-date-time-picker',
   templateUrl: './entry-date-time-picker.component.html',
   styleUrls: ['./entry-date-time-picker.component.scss'],
   providers: [
-    { provide: MAT_DATE_FORMATS, useFactory: () => inject(ENTRY_MAT_DATE_TIME) },
-    { provide: DateAdapter, useClass: InternalDateTimeAdapter }
+    { provide: MAT_DATE_FORMATS, useFactory: () => inject(ENTRY_MAT_DATE_TIME_FORMATS) },
+    { provide: DateAdapter, useClass: EntryDateTimeAdapter }
   ],
   hostDirectives: [NoopControlValueAccessorDirective, NgControlAccessorDirective]
 })
@@ -27,14 +27,14 @@ export class EntryDateTimePickerComponent<D> implements OnInit {
   hasAmPm: boolean;
   possibleHours: number[];
   possibleMinutesAndSeconds = Array.from({ length: 60 }, (_, i) => i);
-  dateAdapter: InternalDateTimeAdapter<D, unknown>;
+  dateAdapter: EntryDateTimeAdapter<D, unknown>;
   format: MatDateFormats;
 
 
   constructor() {
     this.ngControlAccessor = inject(NgControlAccessorDirective);
-    this.format = inject(ENTRY_MAT_DATE_TIME);
-    this.dateAdapter = inject(DateAdapter) as InternalDateTimeAdapter<D, unknown>;
+    this.format = inject(ENTRY_MAT_DATE_TIME_FORMATS);
+    this.dateAdapter = inject(DateAdapter) as EntryDateTimeAdapter<D, unknown>;
   }
 
   ngOnInit(): void {    

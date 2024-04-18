@@ -9,7 +9,7 @@ import { SortPipe } from './pipes/sort.pipe';
 import { CodeViewComponent } from './example-viewer/code-view/code-view.component';
 import { EntryButtonModule, provideEntryButtonConfig } from '@enigmatry/entry-components/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ENTRY_MAT_DATE_TIME, EntryCommonModule, EntryDateAdapter, EntryNativeDateAdapter } from '@enigmatry/entry-components/common';
+import { EntryCommonModule, provideEntryNativeDateAdapter } from '@enigmatry/entry-components/common';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { getMatDateLocale } from '../../localizaiton';
 import { DateFnsAdapter } from '@angular/material-date-fns-adapter';
@@ -53,22 +53,17 @@ import { DateFnsAdapter } from '@angular/material-date-fns-adapter';
       useClass: DateFnsAdapter,
       deps: [MAT_DATE_LOCALE],
     },
-    {
-      provide: ENTRY_MAT_DATE_TIME,
-      useValue: {
-        parse: {
-          dateInput: ['dd-MM-yyyy', 'dd-MM-yyyy HH', 'dd-MM-yyyy HH:mm'],
-        },
-        display: {
-          dateInput: 'dd-MM-yyyy HH:mm',
-          monthYearLabel: 'LLL uuuu',
-          dateA11yLabel: 'PP',
-          monthYearA11yLabel: 'LLLL uuuu',
-        }
+    provideEntryNativeDateAdapter({
+      parse: {
+        dateInput: ['dd-MM-yyyy', 'dd-MM-yyyy HH', 'dd-MM-yyyy HH:mm'],
+      },
+      display: {
+        dateInput: 'dd-MM-yyyy HH:mm',
+        monthYearLabel: 'LLL uuuu',
+        dateA11yLabel: 'PP',
+        monthYearA11yLabel: 'LLLL uuuu',
       }
-    },
-    { provide: EntryDateAdapter, useClass: EntryNativeDateAdapter }
-
+    })
   ]
 })
 export class SharedModule { }
