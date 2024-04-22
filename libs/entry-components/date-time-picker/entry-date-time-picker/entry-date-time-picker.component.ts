@@ -14,10 +14,11 @@ import { ENTRY_MAT_DATE_TIME_FORMATS, EntryDateTimeAdapter, NgControlAccessorDir
   hostDirectives: [NoopControlValueAccessorDirective, NgControlAccessorDirective]
 })
 export class EntryDateTimePickerComponent<D> implements OnInit {
+  @HostBinding('class') class = 'entry-date-time-picker';
+
   ngControlAccessor: NgControlAccessorDirective;
   @Input() showSeconds: boolean;
   @Input() label: string;
-  @HostBinding('class') class = 'time-picker-control';
   hasMultipleControls: boolean;
   minutes: FormControl<number>;
   hours: FormControl<number>;
