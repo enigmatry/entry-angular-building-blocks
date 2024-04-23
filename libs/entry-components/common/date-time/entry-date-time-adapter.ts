@@ -122,7 +122,7 @@ export class EntryDateTimeAdapter<D, L> extends DateAdapter<D, L> implements Ent
 
 	is12HoursFormat(displayFormat: any): boolean {
 		const now = this.format(this.today(), displayFormat).toLowerCase();
-		return now.includes('am') || now.includes('pm');
+		return now.includes('a') || now.includes('p');
 	} 
 
 	override compareDate(first: D, second: D): number {

@@ -50,7 +50,7 @@ const routes: Routes = [
     loadComponent: () => import('./features/validation/validation-documentation.component').then(m => m.ValidationDocumentationComponent)
   },
   {
-    path: RouteSegments.datetimePicker,
+    path: RouteSegments.dateTimePicker,
     loadComponent: () => import('./features/date-time-picker/date-time-picker-documentation.component').then(m => m.DateTimePickerDocumentationComponent)
   }
 ];

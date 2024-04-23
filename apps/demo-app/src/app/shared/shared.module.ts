@@ -55,10 +55,10 @@ import { DateFnsAdapter } from '@angular/material-date-fns-adapter';
     },
     provideEntryNativeDateAdapter({
       parse: {
-        dateInput: ['dd-MM-yyyy', 'dd-MM-yyyy HH', 'dd-MM-yyyy h:mm aaa'],
+        dateInput: ['dd-MM-yyyy', 'dd-MM-yyyy HH', 'dd-MM-yyyy HH:mm:ss'],
       },
       display: {
-        dateInput: 'dd-MM-yyyy h:mm aaa',
+        dateInput: 'dd-MM-yyyy HH:mm:ss',
         monthYearLabel: 'LLL uuuu',
         dateA11yLabel: 'PP',
         monthYearA11yLabel: 'LLLL uuuu',
