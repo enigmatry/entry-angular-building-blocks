@@ -1,17 +1,19 @@
 import { NgModule } from "@angular/core";
-import { ReactiveFormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatFormFieldModule } from "@angular/material/form-field";
-import { EntryDateTimePickerComponent } from "./entry-date-time-picker/entry-date-time-picker.component";
+import { EntryDateTimePickerComponent } from "./date-time-picker.component";
 import { CommonModule } from "@angular/common";
 import { MatSelectModule } from "@angular/material/select";
 import { MatButtonModule } from "@angular/material/button";
 import { MatInputModule } from "@angular/material/input";
 import { MatIconModule } from "@angular/material/icon";
+import { EntryTimePickerComponent } from './time-picker.component';
 
 @NgModule({
     imports: [
         CommonModule,
+        FormsModule,
         ReactiveFormsModule,
         MatFormFieldModule,
         MatDatepickerModule,
@@ -21,7 +23,8 @@ import { MatIconModule } from "@angular/material/icon";
         MatIconModule
     ],
     declarations: [
-        EntryDateTimePickerComponent
+        EntryDateTimePickerComponent,
+        EntryTimePickerComponent
     ],
     exports: [
         EntryDateTimePickerComponent

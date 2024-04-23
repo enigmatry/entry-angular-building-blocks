@@ -26,8 +26,21 @@
 .entry-date-time-picker {
 	@include items.fully-align(baseline, space-between, row, nowrap);
 
-	.hidden, .mat-mdc-text-field-wrapper.mdc-text-field--outlined .hidden.mdc-text-field__input {
+	.hidden,
+	.mat-mdc-text-field-wrapper.mdc-text-field--outlined .hidden.mdc-text-field__input {
 		display: none;
+	}
+
+
+	.time-separator {
+		@include items.align-center();
+		transform: translate(-7px, -10px);
+	}
+
+	.multiple-time-controls {
+		.time-separator {
+			transform: translate(-2px, -10px);
+		}
 	}
 }
 

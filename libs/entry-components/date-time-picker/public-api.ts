@@ -1,2 +1,2 @@
-export { EntryDateTimePickerComponent } from './entry-date-time-picker/entry-date-time-picker.component';
-export { EntryDateTimePickerModule } from './entry-date-time-picker.module';
+export { EntryDateTimePickerComponent } from './date-time-picker.component';
+export { EntryDateTimePickerModule } from './date-time-picker.module';
