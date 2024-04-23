@@ -1,8 +1,9 @@
-import { Component, HostBinding, Input, OnInit, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, Input, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MAT_DATE_FORMATS, DateAdapter, MatDateFormats } from '@angular/material/core';
 import { ENTRY_MAT_DATE_TIME_FORMATS, EntryDateTimeAdapter, NgControlAccessorDirective, NoopControlValueAccessorDirective } from '@enigmatry/entry-components/common';
 import { EntryTimePickerComponent } from './time-picker.component';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'entry-date-time-picker',
@@ -11,9 +12,11 @@ import { EntryTimePickerComponent } from './time-picker.component';
     { provide: MAT_DATE_FORMATS, useFactory: () => inject(ENTRY_MAT_DATE_TIME_FORMATS) },
     { provide: DateAdapter, useClass: EntryDateTimeAdapter }
   ],
-  hostDirectives: [NoopControlValueAccessorDirective, NgControlAccessorDirective]
+  hostDirectives: [NoopControlValueAccessorDirective, NgControlAccessorDirective],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EntryDateTimePickerComponent<D> implements OnInit {
+export class EntryDateTimePickerComponent<D> implements OnInit, OnDestroy {
+
   @HostBinding('class') class = 'entry-date-time-picker';
 
   @Input() label: string;
@@ -35,6 +38,8 @@ export class EntryDateTimePickerComponent<D> implements OnInit {
 
   @ViewChild(EntryTimePickerComponent, { static: true }) timePicker: EntryTimePickerComponent<D>;
 
+  private $destroy = new Subject<void>();
+
   ngOnInit(): void {
     if (!this.formControl.value) {
       this.formControl.setValue(this.dateTimeAdapter.today());
@@ -42,13 +47,22 @@ export class EntryDateTimePickerComponent<D> implements OnInit {
 
     this.calendarControl.setValue(this.formControl.value);
 
-    this.formControl.valueChanges.subscribe(value =>
-      this.calendarControl.setValue(value, { emitEvent: false })
-    );
+    this.formControl.valueChanges
+      .pipe(takeUntil(this.$destroy))
+      .subscribe(value =>
+        this.calendarControl.setValue(value, { emitEvent: false })
+      );
 
-    this.calendarControl.valueChanges.subscribe(value => {
-      this.dateTimeAdapter.setTime(value, this.timePicker.hours, this.timePicker.minutes ?? 0, this.timePicker.seconds ?? 0);
-      this.formControl.setValue(value);
-    });
+    this.calendarControl.valueChanges
+      .pipe(takeUntil(this.$destroy))
+      .subscribe(value => {
+        this.dateTimeAdapter.setTime(value, this.timePicker.hours, this.timePicker.minutes ?? 0, this.timePicker.seconds ?? 0);
+        this.formControl.setValue(value);
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.$destroy.next();
+    this.$destroy.complete();
   }
 }

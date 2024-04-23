@@ -1,10 +1,9 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
 import { EntryTimeAdapter } from '@enigmatry/entry-components';
 
 @Component({
   selector: 'entry-time-picker',
   templateUrl: './time-picker.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EntryTimePickerComponent<D> implements OnChanges {
 
@@ -40,6 +39,10 @@ export class EntryTimePickerComponent<D> implements OnChanges {
   }
 
   ngOnChanges(_changes: SimpleChanges): void {
+    this.update();
+  }
+
+  update() {
     this.hoursMeridian = this.timeAdapter.getHours(this.date) ?? 0;
     this.minutes = this.timeAdapter.getMinutes(this.date) ?? 0;
     this.seconds = this.timeAdapter.getSeconds(this.date) ?? 0;
