@@ -1,3 +1,9 @@
 <section>
-    <entry-date-time-picker [formControl]="myDate" label="My date time" [showSeconds]="true"></entry-date-time-picker>
+    <mat-checkbox [(ngModel)]="disabled">Disabled</mat-checkbox>
+    <br />
+    <mat-checkbox [(ngModel)]="showSeconds">Show seconds</mat-checkbox>
+    <entry-date-time-picker [formControl]="myDate" label="My date time" 
+        [showSeconds]="showSeconds" 
+        [disabled]="disabled">
+    </entry-date-time-picker>
 </section>

@@ -7,4 +7,6 @@ import { FormControl } from '@angular/forms';
 })
 export class DateTimePickerExampleComponent {
   myDate = new FormControl(new Date());
+  disabled = false;
+  showSeconds = true;
 }

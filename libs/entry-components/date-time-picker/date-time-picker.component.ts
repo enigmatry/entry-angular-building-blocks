@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, HostBinding, Input, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MAT_DATE_FORMATS, DateAdapter, MatDateFormats } from '@angular/material/core';
 import { ENTRY_MAT_DATE_TIME_FORMATS, EntryDateTimeAdapter, NgControlAccessorDirective, NoopControlValueAccessorDirective } from '@enigmatry/entry-components/common';
@@ -15,12 +15,12 @@ import { Subject, takeUntil } from 'rxjs';
   hostDirectives: [NoopControlValueAccessorDirective, NgControlAccessorDirective],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EntryDateTimePickerComponent<D> implements OnInit, OnDestroy {
-
+export class EntryDateTimePickerComponent<D> implements OnInit, OnDestroy, OnChanges {
   @HostBinding('class') class = 'entry-date-time-picker';
 
   @Input() label: string;
   @Input() showSeconds: boolean;
+  @Input() disabled: boolean;
 
   ngControlAccessor = inject(NgControlAccessorDirective);
   dateTimeAdapter: EntryDateTimeAdapter<D, unknown> = inject(DateAdapter) as EntryDateTimeAdapter<D, unknown>;
@@ -59,6 +59,16 @@ export class EntryDateTimePickerComponent<D> implements OnInit, OnDestroy {
         this.dateTimeAdapter.setTime(value, this.timePicker.hours, this.timePicker.minutes ?? 0, this.timePicker.seconds ?? 0);
         this.formControl.setValue(value);
       });
+  }
+
+  ngOnChanges(_changes: SimpleChanges): void {
+    if (this.disabled) {
+      this.formControl.disable();
+      this.calendarControl.disable();
+    } else {
+      this.formControl.enable();
+      this.calendarControl.enable();
+    }
   }
 
   ngOnDestroy(): void {

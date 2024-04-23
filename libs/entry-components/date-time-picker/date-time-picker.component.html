@@ -6,7 +6,8 @@
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker (opened)="timePicker.update()">
         <mat-datepicker-actions>
-            <entry-time-picker [date]="formControl.value" [showSeconds]="showSeconds" [is12HoursFormat]="is12HoursFormat"></entry-time-picker>
+            <entry-time-picker [date]="formControl.value" [showSeconds]="showSeconds"
+                [is12HoursFormat]="is12HoursFormat"></entry-time-picker>
             <button mat-raised-button color="primary" matDateRangePickerApply class="entry-submit-button">
                 <mat-icon aria-hidden="false" aria-label="Apply" fontIcon="done" class="icon"></mat-icon>
             </button>
