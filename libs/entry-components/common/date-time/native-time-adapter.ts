@@ -22,7 +22,7 @@ export class EntryNativeTimeAdapter extends EntryTimeAdapter<Date> {
   }
 }
 
-export function provideEntryNativeDateAdapter(dateTimeFormats: EntryDateTimeFormats = defaultDateTimeFormats): Provider[] {
+export function provideEntryNativeTimeAdapter(dateTimeFormats: EntryDateTimeFormats = defaultDateTimeFormats): Provider[] {
   return [
     { provide: EntryTimeAdapter, useClass: EntryNativeTimeAdapter },
     { provide: ENTRY_MAT_DATE_TIME_FORMATS, useValue: dateTimeFormats }

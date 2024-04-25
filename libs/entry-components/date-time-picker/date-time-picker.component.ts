@@ -43,13 +43,19 @@ export class EntryDateTimePickerComponent<D> implements OnInit, OnDestroy, OnCha
   private $destroy = new Subject<void>();
 
   get minDate() {
-    const result = this.dateTimeAdapter.clone(this.min as D);
+    if (!this.min) {
+      return undefined;
+    }
+    const result = this.dateTimeAdapter.clone(this.min);
     this.dateTimeAdapter.setTime(result, 0, 0, 0);
     return result;
   }
 
   get maxDate() {
-    const result = this.dateTimeAdapter.clone(this.max as D);
+    if (!this.max) {
+      return undefined;
+    }
+    const result = this.dateTimeAdapter.clone(this.max);
     this.dateTimeAdapter.setTime(result, 0, 0, 0);
     return result;
   }
