@@ -1,25 +1,23 @@
-<div class="time-picker-controls">
-  <mat-form-field appearance="fill">
-    <mat-select [(ngModel)]="hours" [hideSingleSelectionIndicator]="true" [panelWidth]="null">
-      <mat-option *ngFor="let hour of possibleHours" [value]="hour">{{hour}}</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <span class="time-separator">&#58;</span>
-  <mat-form-field appearance="fill">
-    <mat-select [(ngModel)]="minutes" [hideSingleSelectionIndicator]="true" [panelWidth]="null">
-      <mat-option *ngFor="let minute of sixty" [value]="minute">{{minute}}</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <span *ngIf="showSeconds" class="time-separator">&#58;</span>
-  <mat-form-field *ngIf="showSeconds" appearance="fill">
-    <mat-select [(ngModel)]="seconds" [hideSingleSelectionIndicator]="true" [panelWidth]="null">
-      <mat-option *ngFor="let second of sixty" [value]="second">{{second}}</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field *ngIf="is12HourClock" appearance="fill">
-    <mat-select [(ngModel)]="meridiem" [hideSingleSelectionIndicator]="true" [panelWidth]="null">
-      <mat-option value="am">AM</mat-option>
-      <mat-option value="pm">PM</mat-option>
-    </mat-select>
-  </mat-form-field>
-</div>
+<mat-form-field appearance="fill">
+  <mat-select [(ngModel)]="hours" [hideSingleSelectionIndicator]="true" [panelWidth]="null">
+    <mat-option *ngFor="let hour of possibleHours" [value]="hour">{{hour}}</mat-option>
+  </mat-select>
+</mat-form-field>
+<span class="time-separator">&#58;</span>
+<mat-form-field appearance="fill">
+  <mat-select [(ngModel)]="minutes" [hideSingleSelectionIndicator]="true" [panelWidth]="null">
+    <mat-option *ngFor="let minute of sixty" [value]="minute">{{minute}}</mat-option>
+  </mat-select>
+</mat-form-field>
+<span *ngIf="showSeconds" class="time-separator">&#58;</span>
+<mat-form-field *ngIf="showSeconds" appearance="fill">
+  <mat-select [(ngModel)]="seconds" [hideSingleSelectionIndicator]="true" [panelWidth]="null">
+    <mat-option *ngFor="let second of sixty" [value]="second">{{second}}</mat-option>
+  </mat-select>
+</mat-form-field>
+<mat-form-field *ngIf="is12HourClock" appearance="fill">
+  <mat-select [(ngModel)]="meridiem" [hideSingleSelectionIndicator]="true" [panelWidth]="null">
+    <mat-option value="am">AM</mat-option>
+    <mat-option value="pm">PM</mat-option>
+  </mat-select>
+</mat-form-field>

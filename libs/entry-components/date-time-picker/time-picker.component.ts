@@ -1,13 +1,14 @@
-import { Component, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
+import { Component, HostBinding, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
 import { EntryTimeAdapter } from '@enigmatry/entry-components';
 
 export type meridiem = 'am' | 'pm';
 
 @Component({
   selector: 'entry-time-picker',
-  templateUrl: './time-picker.component.html',
+  templateUrl: './time-picker.component.html'
 })
 export class EntryTimePickerComponent<D> implements OnChanges {
+  @HostBinding('class') class = 'entry-time-picker';
 
   readonly timeAdapter: EntryTimeAdapter<D> = inject(EntryTimeAdapter);
 
