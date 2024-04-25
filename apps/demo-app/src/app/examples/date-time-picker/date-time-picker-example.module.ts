@@ -34,7 +34,8 @@ import { MatInputModule } from "@angular/material/input";
   exports: [
     BasicDateTimePickerComponent,
     DisableComponent,
-    MinMaxComponent
+    MinMaxComponent,
+    MeridiemComponent
   ],
   providers: [
     {
