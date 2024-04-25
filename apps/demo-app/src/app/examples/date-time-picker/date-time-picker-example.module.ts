@@ -6,9 +6,10 @@ import { BasicDateTimePickerComponent } from './basic/basic.component';
 import { DisableComponent } from './disable/disable.component';
 import { MeridiemComponent } from './meridiem/meridiem.component';
 import { provideEntryNativeTimeAdapter } from "@enigmatry/entry-components/common";
-import { ReactiveFormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { DateFnsAdapter } from "@angular/material-date-fns-adapter";
 import { DateAdapter, MAT_DATE_LOCALE } from "@angular/material/core";
+import { MatCheckboxModule } from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [
@@ -19,11 +20,14 @@ import { DateAdapter, MAT_DATE_LOCALE } from "@angular/material/core";
   ],
   imports: [
     CommonModule,
+    FormsModule,
     ReactiveFormsModule,
-    EntryDateTimePickerModule
+    EntryDateTimePickerModule,
+    MatCheckboxModule
   ],
   exports: [
-    BasicDateTimePickerComponent
+    BasicDateTimePickerComponent,
+    DisableComponent
   ],
   providers: [
     {
