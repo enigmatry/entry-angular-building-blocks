@@ -1,41 +1,31 @@
 import { Component, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
 import { EntryTimeAdapter } from '@enigmatry/entry-components';
 
+export type meridiem = 'am' | 'pm';
+
 @Component({
   selector: 'entry-time-picker',
   templateUrl: './time-picker.component.html',
 })
 export class EntryTimePickerComponent<D> implements OnChanges {
 
+  readonly timeAdapter: EntryTimeAdapter<D> = inject(EntryTimeAdapter);
+
   @Input() date: D;
-  @Input() is12HoursFormat: boolean;
   @Input() showSeconds: boolean;
+  @Input() is12HourClock: boolean;
 
-  timeAdapter: EntryTimeAdapter<D> = inject(EntryTimeAdapter);
+  hours = 0;
+  minutes = 0;
+  seconds = 0;
+  meridiem: meridiem = 'am';
 
-  hoursMeridian: number;
-  minutes: number;
-  seconds: number;
-  isPm: boolean;
-
-  private _12Hours = Array.from(Array(12), (_, i) => i + 1);
-  private _24Hours = Array.from(Array(24), (_, i) => i);
-
-  possibleMinutesAndSeconds = Array.from(Array(60), (_, i) => i);
+  readonly hours12 = Array.from(Array(12), (_, i) => i + 1);
+  readonly hours24 = Array.from(Array(24), (_, i) => i);
+  readonly sixty = Array.from(Array(60), (_, i) => i);
 
   get possibleHours() {
-    return this.is12HoursFormat ? this._12Hours : this._24Hours;
-  }
-
-  get hours(): number {
-    if (!this.is12HoursFormat) {
-      return this.hoursMeridian;
-    }
-    if (this.isPm) {
-      return this.hoursMeridian === 12 ? 12 : this.hoursMeridian + 12;
-    } else {
-      return this.hoursMeridian === 12 ? 0 : this.hoursMeridian;
-    }
+    return this.is12HourClock ? this.hours12 : this.hours24;
   }
 
   ngOnChanges(_changes: SimpleChanges): void {
@@ -43,17 +33,34 @@ export class EntryTimePickerComponent<D> implements OnChanges {
   }
 
   update() {
-    this.hoursMeridian = this.timeAdapter.getHours(this.date) ?? 0;
+    this.hours = this.timeAdapter.getHours(this.date) ?? 0;
     this.minutes = this.timeAdapter.getMinutes(this.date) ?? 0;
     this.seconds = this.timeAdapter.getSeconds(this.date) ?? 0;
-    this.isPm = this.hoursMeridian >= 12;
+    this.meridiem = this.hours >= 12 ? 'pm' : 'am';
 
-    if (this.is12HoursFormat) {
-      if (this.hoursMeridian > 12) {
-        this.hoursMeridian = this.hoursMeridian - 12;
-      } else if (this.hoursMeridian === 0) {
-        this.hoursMeridian = 12;
-      }
+    if (this.is12HourClock) {
+      this.to12HourClock();
+    }
+  }
+
+  to12HourClock() {
+    if (this.hours > 12) {
+      this.hours = this.hours - 12;
+    }
+    if (this.hours === 0) {
+      this.hours = 12;
+    }
+  }
+
+  to24HourClock() {
+    if (!this.is12HourClock) {
+      return;
+    }
+    if (this.meridiem === "am" && this.hours === 12) {
+      this.hours = 0;
+    }
+    if (this.meridiem == "pm" && this.hours != 12) {
+      this.hours = this.hours + 12;
     }
   }
 }

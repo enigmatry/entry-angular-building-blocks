@@ -120,7 +120,7 @@ export class EntryDateTimeAdapter<D, L> extends DateAdapter<D, L> implements Ent
 		return this.timeAdapter.setTime(date, hours, minutes, seconds);
 	}
 
-	is12HoursFormat(displayFormat: any): boolean {
+	is12HoursClock(displayFormat: any): boolean {
 		const now = this.format(this.today(), displayFormat).toLowerCase();
 		return now.includes('a') || now.includes('p');
 	} 

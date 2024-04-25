@@ -34,7 +34,7 @@ export class EntryDateTimePickerComponent<D> implements OnInit, OnDestroy, OnCha
   // Control that is connected to calendar 
   calendarControl: FormControl<D> = new FormControl<D>(undefined);
 
-  is12HoursFormat = this.dateTimeAdapter.is12HoursFormat(this.format.display.dateInput);
+  is12HourClock = this.dateTimeAdapter.is12HoursClock(this.format.display.dateInput);
 
   @ViewChild(EntryTimePickerComponent, { static: true }) timePicker: EntryTimePickerComponent<D>;
 
@@ -56,7 +56,8 @@ export class EntryDateTimePickerComponent<D> implements OnInit, OnDestroy, OnCha
     this.calendarControl.valueChanges
       .pipe(takeUntil(this.$destroy))
       .subscribe(value => {
-        this.dateTimeAdapter.setTime(value, this.timePicker.hours, this.timePicker.minutes ?? 0, this.timePicker.seconds ?? 0);
+        this.timePicker.to24HourClock();
+        this.dateTimeAdapter.setTime(value, this.timePicker.hours, this.timePicker.minutes, this.timePicker.seconds);
         this.formControl.setValue(value);
       });
   }
