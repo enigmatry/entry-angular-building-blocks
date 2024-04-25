@@ -7,10 +7,14 @@ import { FormControl } from '@angular/forms';
 })
 export class DateTimePickerExampleComponent {
   tenDays = 10 * 24 * 60 * 60 * 1000;
+  disabled: boolean;
   now = new Date().getTime();
   myDate = new FormControl(new Date());
-  disabled = false;
   showSeconds = true;
   minDate = new Date(this.now - this.tenDays);
   maxDate = new Date(this.now + this.tenDays);
+
+  setDisabled(disabled: boolean){
+    disabled ? this.myDate.disable() : this.myDate.enable();
+  }
 }

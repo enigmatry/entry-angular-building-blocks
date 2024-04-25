@@ -22,7 +22,7 @@ export class EntryDateTimePickerComponent<D> implements OnInit, OnDestroy, OnCha
   @Input() showSeconds: boolean;
   @Input() disabled: boolean;
   @Input() min: D;
-  @Input() max: D;  
+  @Input() max: D;
 
   ngControlAccessor = inject(NgControlAccessorDirective);
   dateTimeAdapter: EntryDateTimeAdapter<D, unknown> = inject(DateAdapter) as EntryDateTimeAdapter<D, unknown>;
@@ -56,10 +56,20 @@ export class EntryDateTimePickerComponent<D> implements OnInit, OnDestroy, OnCha
 
   ngOnInit(): void {
     if (!this.formControl.value) {
-      this.formControl.setValue(this.dateTimeAdapter.today());
+      this.formControl.setValue(this.dateTimeAdapter.today(), { emitEvent: false });
     }
 
-    this.calendarControl.setValue(this.formControl.value);
+    this.calendarControl.setValue(this.formControl.value, { emitEvent: false });
+
+    this.formControl.statusChanges
+      .pipe(takeUntil(this.$destroy))
+      .subscribe(status => {
+        if (status === 'DISABLED') {
+          this.calendarControl.disable({ emitEvent: false });
+        } else {
+          this.calendarControl.enable({ emitEvent: false });
+        }
+      })
 
     this.formControl.valueChanges
       .pipe(takeUntil(this.$destroy))

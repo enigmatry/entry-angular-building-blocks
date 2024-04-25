@@ -1,10 +1,9 @@
 <section>
-    <mat-checkbox [(ngModel)]="disabled">Disabled</mat-checkbox>
+    <mat-checkbox (ngModelChange)="setDisabled($event)" [(ngModel)]="disabled">Disabled</mat-checkbox>
     <br />
     <mat-checkbox [(ngModel)]="showSeconds">Show seconds</mat-checkbox>
     <entry-date-time-picker [formControl]="myDate" label="My date time" 
         [showSeconds]="showSeconds" 
-        [disabled]="disabled"
         [min]="minDate"
         [max]="maxDate">
     </entry-date-time-picker>
