@@ -9,7 +9,6 @@ import { provideEntryNativeTimeAdapter } from "@enigmatry/entry-components/commo
 import { ReactiveFormsModule } from "@angular/forms";
 import { DateFnsAdapter } from "@angular/material-date-fns-adapter";
 import { DateAdapter, MAT_DATE_LOCALE } from "@angular/material/core";
-import { SharedModule } from "../../shared/shared.module";
 
 @NgModule({
   declarations: [
@@ -20,7 +19,6 @@ import { SharedModule } from "../../shared/shared.module";
   ],
   imports: [
     CommonModule,
-    SharedModule,
     ReactiveFormsModule,
     EntryDateTimePickerModule
   ],
@@ -28,22 +26,22 @@ import { SharedModule } from "../../shared/shared.module";
     BasicDateTimePickerComponent
   ],
   providers: [
-    // {
-    //   provide: DateAdapter,
-    //   useClass: DateFnsAdapter,
-    //   deps: [MAT_DATE_LOCALE],
-    // },
-    // provideEntryNativeTimeAdapter({
-    //   parse: {
-    //     dateInput: ['dd-MM-yyyy', 'dd-MM-yyyy HH', 'dd-MM-yyyy HH:mm:ss'],
-    //   },
-    //   display: {
-    //     dateInput: 'dd-MM-yyyy HH:mm:ss',
-    //     monthYearLabel: 'LLL uuuu',
-    //     dateA11yLabel: 'PP',
-    //     monthYearA11yLabel: 'LLLL uuuu',
-    //   }
-    // })
+    {
+      provide: DateAdapter,
+      useClass: DateFnsAdapter,
+      deps: [MAT_DATE_LOCALE],
+    },
+    provideEntryNativeTimeAdapter({
+      parse: {
+        dateInput: ['dd-MM-yyyy', 'dd-MM-yyyy HH', 'dd-MM-yyyy HH:mm'],
+      },
+      display: {
+        dateInput: 'dd-MM-yyyy HH:mm',
+        monthYearLabel: 'LLL uuuu',
+        dateA11yLabel: 'PP',
+        monthYearA11yLabel: 'LLLL uuuu',
+      }
+    })
   ]
 })
 export class DateTimePickerExampleModule { }
