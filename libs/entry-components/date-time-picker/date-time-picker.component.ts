@@ -36,7 +36,7 @@ export class EntryDateTimePickerComponent<D> implements OnInit, OnDestroy, OnCha
     return this.ngControlAccessor.control;
   }
 
-  // Control that is connected to calendar 
+  // Control that is connected to calendar
   calendarControl: FormControl<D> = new FormControl<D>(undefined);
 
   is12HourClock = this.dateTimeAdapter.is12HoursClock(this.format.display.dateInput);

@@ -165,7 +165,7 @@ or observable (dynamic) list (`options$`).
 | `key` | `string` | Unique search-filter input key |
 | `label` | `string` | Label text to be displayed for the search-filter input control |
 | `maxLength` | `number` | Max text length to be entered in the input component (default is 256) |
-| `multiSelect` | `boolean` | Enables selection of multiple options (default is true).<br />If it is set to false, 'none selected' option becomes available as a first option. |
+| `multiSelect` | `boolean` | Enables selection of multiple options (default is true).<br />If it is set to false, 'none selected' option becomes available as a first option. |
 | `options` | [`SelectOption`](search_filter_public_api.md#selectoption)\< `T` \>[] | Fixed list of select filter options (default is empty list) |
 | `options$` | `Observable`\< [`SelectOption`](search_filter_public_api.md#selectoption)\< `T` \>[] \> | Observable (dynamic) list of select filter options |
 | `placeholder` | `string` | Placeholder text for search-filter input control |

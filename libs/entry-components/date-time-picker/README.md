@@ -18,9 +18,9 @@ import { EntryDateTimePickerModule } from "@enigmatry/entry-components/date-time
 export class MyModule {}
 ```
 
-## Usage
+## Configuration
 
-Provide ENTRY_MAT_DATE_TIME and EntryDateAdapter in a feature or shared module:
+Provide ENTRY_MAT_DATE_TIME and EntryTimeAdapter in a feature or shared module:
 
 ```typescript
 @NgModule({
@@ -47,8 +47,20 @@ Provide ENTRY_MAT_DATE_TIME and EntryDateAdapter in a feature or shared module:
 export class SharedModule { }
 ```
 
+Inputs:
+  - label: Label for the control
+  - placeholder: Placeholder for the control
+  - hint: Hint text for the control
+  - disabled: Whether the control is disabled, when not used with ReactiveForms  cannot be used in combination with reactive forms )
+  - showSeconds: Whether to show seconds in the time picker ( default: false )
+  - min: Minimum selectable date
+  - max: Maximum selectable date
+
+Outputs:
+  - dateTimeChanged: Event emitted when the date time value changes
+
 Use the component
 
 ```html
-<entry-date-time-picker [formControl]="expiresOn" label="Expires on"></entry-date-time-picker>
+<entry-date-time-picker [formControl]="dateTime" label="Expires on"></entry-date-time-picker>
 ```

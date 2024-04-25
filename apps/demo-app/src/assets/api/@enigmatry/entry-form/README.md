@@ -1,4 +1,4 @@
-# @enigmatry/entry-form
+# Entry Form
 
 Form components and helper methods used by [entry-code-generation](https://github.com/enigmatry/entry-code-generation)
 
@@ -83,12 +83,13 @@ Run
 entry-codegen --source-assembly ../MyProject.CodeGeneration.Setup/bin/Debug/net7.0/MyProject.CodeGeneration.Setup.dll --destination-directory ./src/app/features
 ```
 
-## Compatibility with Angular Versions
+## Compatibility with Angular versions
 
 | @enigmatry/entry-form | Angular version
 |-|-|
-|1.14.x| = 14
-|1.15.x| = 15
+|14.x| = 14
+|15.x| = 15
+|16.x| = 16
 
 ## License
 
