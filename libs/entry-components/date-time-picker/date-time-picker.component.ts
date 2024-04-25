@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, HostBinding, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MAT_DATE_FORMATS, DateAdapter, MatDateFormats } from '@angular/material/core';
 import { ENTRY_MAT_DATE_TIME_FORMATS, EntryDateTimeAdapter, NgControlAccessorDirective, NoopControlValueAccessorDirective } from '@enigmatry/entry-components/common';
@@ -23,6 +23,9 @@ export class EntryDateTimePickerComponent<D> implements OnInit, OnDestroy, OnCha
   @Input() disabled: boolean;
   @Input() min: D;
   @Input() max: D;
+  @Input() placeholder: string | undefined;
+  @Input() hint: string | undefined;
+  @Output() dateTimeChanged = new Subject<D>();
 
   ngControlAccessor = inject(NgControlAccessorDirective);
   dateTimeAdapter: EntryDateTimeAdapter<D, unknown> = inject(DateAdapter) as EntryDateTimeAdapter<D, unknown>;
@@ -80,7 +83,10 @@ export class EntryDateTimePickerComponent<D> implements OnInit, OnDestroy, OnCha
     this.formControl.valueChanges
       .pipe(takeUntil(this.$destroy))
       .subscribe(value =>
-        this.calendarControl.setValue(value, { emitEvent: false })
+        {
+          this.calendarControl.setValue(value, { emitEvent: false });
+          this.dateTimeChanged.next(value);
+        }
       );
 
     this.calendarControl.valueChanges
