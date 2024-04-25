@@ -21,6 +21,8 @@ export class EntryDateTimePickerComponent<D> implements OnInit, OnDestroy, OnCha
   @Input() label: string;
   @Input() showSeconds: boolean;
   @Input() disabled: boolean;
+  @Input() min: D;
+  @Input() max: D;  
 
   ngControlAccessor = inject(NgControlAccessorDirective);
   dateTimeAdapter: EntryDateTimeAdapter<D, unknown> = inject(DateAdapter) as EntryDateTimeAdapter<D, unknown>;
@@ -39,6 +41,18 @@ export class EntryDateTimePickerComponent<D> implements OnInit, OnDestroy, OnCha
   @ViewChild(EntryTimePickerComponent, { static: true }) timePicker: EntryTimePickerComponent<D>;
 
   private $destroy = new Subject<void>();
+
+  get minDate() {
+    const result = this.dateTimeAdapter.clone(this.min as D);
+    this.dateTimeAdapter.setTime(result, 0, 0, 0);
+    return result;
+  }
+
+  get maxDate() {
+    const result = this.dateTimeAdapter.clone(this.max as D);
+    this.dateTimeAdapter.setTime(result, 0, 0, 0);
+    return result;
+  }
 
   ngOnInit(): void {
     if (!this.formControl.value) {

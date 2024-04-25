@@ -2,7 +2,7 @@
     <mat-label>{{ label }}</mat-label>
     <input matInput [matDatepicker]="hiddenPicker" [formControl]="formControl">
     <mat-datepicker #hiddenPicker class="hidden"></mat-datepicker>
-    <input class="hidden" matInput [matDatepicker]="picker" [formControl]="calendarControl">
+    <input class="hidden" matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" [formControl]="calendarControl">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker (opened)="timePicker.update()">
         <mat-datepicker-actions>

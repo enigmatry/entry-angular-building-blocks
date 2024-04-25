@@ -13,8 +13,11 @@ export class EntryNativeTimeAdapter extends EntryTimeAdapter<Date> {
   getSeconds(date: Date): number {
     return date?.getSeconds();
   }
+  getUnixTimestamp(date: Date): number {
+    return date?.getTime();
+  }
   setTime(date: Date, hours: number, minutes: number, seconds: number): Date {
-    date?.setHours(hours, minutes, seconds);
+    date?.setHours(hours, minutes, seconds, 0);
     return date;
   }
 }

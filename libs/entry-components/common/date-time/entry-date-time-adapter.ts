@@ -120,17 +120,16 @@ export class EntryDateTimeAdapter<D, L> extends DateAdapter<D, L> implements Ent
 		return this.timeAdapter.setTime(date, hours, minutes, seconds);
 	}
 
-	is12HoursClock(displayFormat: any): boolean {
+	getUnixTimestamp(date: D): number {
+		return this.timeAdapter.getUnixTimestamp(date);
+	}
+
+  is12HoursClock(displayFormat: any): boolean {
 		const now = this.format(this.today(), displayFormat).toLowerCase();
 		return now.includes('a') || now.includes('p');
-	} 
+	}
 
 	override compareDate(first: D, second: D): number {
-		return this.getYear(first) - this.getYear(second) +
-			this.getMonth(first) - this.getMonth(second) +
-			this.getDate(first) - this.getDate(second) +
-			this.getHours(first) - this.getHours(second) +
-			this.getMinutes(first) - this.getMinutes(second) +
-			this.getSeconds(first) - this.getSeconds(second);
+		return this.getUnixTimestamp(first) - this.getUnixTimestamp(second);
 	}
 }

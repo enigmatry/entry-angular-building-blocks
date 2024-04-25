@@ -4,6 +4,8 @@
     <mat-checkbox [(ngModel)]="showSeconds">Show seconds</mat-checkbox>
     <entry-date-time-picker [formControl]="myDate" label="My date time" 
         [showSeconds]="showSeconds" 
-        [disabled]="disabled">
+        [disabled]="disabled"
+        [min]="minDate"
+        [max]="maxDate">
     </entry-date-time-picker>
 </section>
