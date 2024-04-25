@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
-  selector: 'app-disable',
+  selector: 'app-date-picker-disable',
   templateUrl: './disable.component.html'
 })
 export class DisableComponent {

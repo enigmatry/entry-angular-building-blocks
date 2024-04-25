@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { EntryDateTimePickerModule } from "@enigmatry/entry-components/date-time-picker";
 import { MinMaxComponent } from './min-max/min-max.component';
-import { BasicDateTimePickerComponent } from './basic/basic.component';
+import { BasicComponent } from './basic/basic.component';
 import { DisableComponent } from './disable/disable.component';
 import { MeridiemComponent } from './meridiem/meridiem.component';
 import { provideEntryNativeTimeAdapter } from "@enigmatry/entry-components/common";
@@ -13,13 +13,15 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
+import { SecondsComponent } from './seconds/seconds.component';
 
 @NgModule({
   declarations: [
-    BasicDateTimePickerComponent,
+    BasicComponent,
     MinMaxComponent,
     DisableComponent,
-    MeridiemComponent
+    MeridiemComponent,
+    SecondsComponent
   ],
   imports: [
     CommonModule,
@@ -32,10 +34,11 @@ import { MatInputModule } from "@angular/material/input";
     MatInputModule
   ],
   exports: [
-    BasicDateTimePickerComponent,
+    BasicComponent,
     DisableComponent,
     MinMaxComponent,
-    MeridiemComponent
+    MeridiemComponent,
+    SecondsComponent
   ],
   providers: [
     {

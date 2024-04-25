@@ -5,6 +5,6 @@ import { FormControl } from '@angular/forms';
   selector: 'app-basic-date-time-picker',
   templateUrl: './basic.component.html'
 })
-export class BasicDateTimePickerComponent {
+export class BasicComponent {
   dateTime = new FormControl(new Date());
 }
