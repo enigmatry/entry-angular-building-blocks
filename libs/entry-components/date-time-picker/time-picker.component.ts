@@ -1,5 +1,5 @@
 import { Component, HostBinding, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
-import { EntryTimeAdapter } from '@enigmatry/entry-components';
+import { EntryTimeAdapter } from '@enigmatry/entry-components/common';
 
 export type meridiem = 'am' | 'pm';
 
