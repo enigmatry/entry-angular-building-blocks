@@ -4,18 +4,19 @@ import { EntryDateTimeFormats, defaultDateTimeFormats, ENTRY_MAT_DATE_TIME_FORMA
 
 @Injectable()
 export class EntryNativeTimeAdapter extends EntryTimeAdapter<Date> {
+
   getHours(date: Date): number {
     return date?.getHours();
   }
+
   getMinutes(date: Date): number {
     return date?.getMinutes();
   }
+
   getSeconds(date: Date): number {
     return date?.getSeconds();
   }
-  getUnixTimestamp(date: Date): number {
-    return date?.getTime();
-  }
+
   setTime(date: Date, hours: number, minutes: number, seconds: number): Date {
     date?.setHours(hours, minutes, seconds, 0);
     return date;
