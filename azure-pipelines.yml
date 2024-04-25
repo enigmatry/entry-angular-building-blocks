@@ -91,16 +91,16 @@ stages:
         customCommand: 'run lint'
 
     - task: Npm@1
-      displayName: 'Build entry form'
-      inputs:
-        command: 'custom'
-        customCommand: 'run build @enigmatry/entry-form'
-
-    - task: Npm@1
       displayName: 'Build entry components'
       inputs:
         command: 'custom'
         customCommand: 'run build @enigmatry/entry-components'
+
+    - task: Npm@1
+      displayName: 'Build entry form'
+      inputs:
+        command: 'custom'
+        customCommand: 'run build @enigmatry/entry-form'
 
     - task: Npm@1
       displayName: 'Run unit tests'
