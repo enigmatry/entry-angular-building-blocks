@@ -1,1 +1,13 @@
-<p>min-max works!</p>
+<mat-form-field>
+    <input matInput [matDatepicker]="minDatepicker" placeholder="Min date" [formControl]="minDate">
+    <mat-label>Min date</mat-label>
+    <mat-datepicker-toggle matSuffix [for]="minDatepicker"></mat-datepicker-toggle>
+    <mat-datepicker #minDatepicker></mat-datepicker>
+</mat-form-field>
+<mat-form-field>
+    <input matInput [matDatepicker]="maxDatepicker" placeholder="Max date" [formControl]="maxDate">
+    <mat-label>Max date</mat-label>
+    <mat-datepicker-toggle matSuffix [for]="maxDatepicker"></mat-datepicker-toggle>
+    <mat-datepicker #maxDatepicker></mat-datepicker>
+</mat-form-field>
+<entry-date-time-picker [formControl]="dateTime" label="Date time" [min]="minDate.value" [max]="maxDate.value"></entry-date-time-picker>
