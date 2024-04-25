@@ -78,13 +78,6 @@ stages:
         command: custom
         customCommand: version $(theLatestVersion) --no-git-tag-version
         workingDir: 'libs/scss-foundation'
-    
-    - task: FileTransform@1
-      inputs:
-        folderPath: '$(System.DefaultWorkingDirectory)/**/*.zip'
-        enableXmlTransform: true
-        fileType: 'xml'
-        targetFiles: '*.xml'
 
     - task: Npm@1
       displayName: 'npm install'
@@ -114,6 +107,13 @@ stages:
       inputs:
         command: 'custom'
         customCommand: 'run automated-tests'
+
+    - task: FileTransform@1
+      displayName: 'File transformation: package.json'
+      inputs:
+        folderPath: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+        targetFiles: '**/package.json'
+        fileType: json
     
     - task: PublishBuildArtifacts@1
       displayName: Publish artifacts
