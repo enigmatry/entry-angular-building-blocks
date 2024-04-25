@@ -111,7 +111,7 @@ stages:
     - task: FileTransform@1
       displayName: 'File transformation: package.json'
       inputs:
-        folderPath: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+        folderPath: 'dist'
         targetFiles: '**/package.json'
         fileType: json
     
