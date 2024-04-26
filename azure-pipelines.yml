@@ -9,6 +9,7 @@ variables:
   artifactName: entry-angular-building-blocks
   PackageVersion: $version
   peerDependencies.@enigmatry/entry-components: testValue
+  someValue: anotherValue
 
 stages:
 - stage: ci_build

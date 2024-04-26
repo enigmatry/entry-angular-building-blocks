@@ -2,6 +2,7 @@
   "name": "@enigmatry/entry-form",
   "version": "0.0.1",
   "author": "Enigmatry",
+  "someValue": "__someValue__",
   "description": "Entry form components and types",
   "homepage": "https://github.com/enigmatry/entry-angular-building-blocks/tree/master/libs/entry-form#readme",
   "repository": {
