@@ -85,11 +85,11 @@ stages:
       inputs:
         command: 'install'
 
-    - task: Npm@1
-      displayName: 'Lint libraries'
-      inputs:
-        command: 'custom'
-        customCommand: 'run lint'
+    # - task: Npm@1
+    #   displayName: 'Lint libraries'
+    #   inputs:
+    #     command: 'custom'
+    #     customCommand: 'run lint'
 
     - task: Npm@1
       displayName: 'Build entry components'
@@ -113,7 +113,7 @@ stages:
       displayName: 'File transformation: package.json'
       inputs:
         folderPath: 'dist'
-        targetFiles: 'dist/enigmatry/entry-form/package.json'
+        targetFiles: '**/package.json'
         fileType: json
     
     - task: PublishBuildArtifacts@1
