@@ -7,9 +7,7 @@ pr: none
 variables:
   theLatestVersion: ''
   artifactName: entry-angular-building-blocks
-  PackageVersion: $version
-  peerDependencies.@enigmatry/entry-components: testValue
-  someValue: anotherValue
+  peerDependencies.@enigmatry/entry-components: $(theLatestVersion)
 
 stages:
 - stage: ci_build
@@ -86,11 +84,11 @@ stages:
       inputs:
         command: 'install'
 
-    # - task: Npm@1
-    #   displayName: 'Lint libraries'
-    #   inputs:
-    #     command: 'custom'
-    #     customCommand: 'run lint'
+    - task: Npm@1
+      displayName: 'Lint libraries'
+      inputs:
+        command: 'custom'
+        customCommand: 'run lint'
 
     - task: Npm@1
       displayName: 'Build entry components'
