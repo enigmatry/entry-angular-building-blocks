@@ -14,6 +14,7 @@ import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { SecondsComponent } from './seconds/seconds.component';
+import { DefaultTimeComponent } from './default-time/default-time.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { SecondsComponent } from './seconds/seconds.component';
     MinMaxComponent,
     DisableComponent,
     MeridiemComponent,
-    SecondsComponent
+    SecondsComponent,
+    DefaultTimeComponent
   ],
   imports: [
     CommonModule,
@@ -38,7 +40,8 @@ import { SecondsComponent } from './seconds/seconds.component';
     DisableComponent,
     MinMaxComponent,
     MeridiemComponent,
-    SecondsComponent
+    SecondsComponent,
+    DefaultTimeComponent
   ],
   providers: [
     {

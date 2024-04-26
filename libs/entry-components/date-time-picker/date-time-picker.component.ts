@@ -25,6 +25,7 @@ export class EntryDateTimePickerComponent<D> implements OnInit, OnDestroy, OnCha
   @Input() max: D;
   @Input() placeholder: string | undefined;
   @Input() hint: string | undefined;
+  @Input() defaultTime: D | undefined;
   @Output() dateTimeChanged = new Subject<D>();
 
   ngControlAccessor = inject(NgControlAccessorDirective);
@@ -64,10 +65,6 @@ export class EntryDateTimePickerComponent<D> implements OnInit, OnDestroy, OnCha
   }
 
   ngOnInit(): void {
-    if (!this.formControl.value) {
-      this.formControl.setValue(this.dateTimeAdapter.today(), { emitEvent: false });
-    }
-
     this.calendarControl.setValue(this.formControl.value, { emitEvent: false });
 
     this.formControl.statusChanges
