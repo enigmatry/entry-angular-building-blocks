@@ -8,7 +8,7 @@ variables:
   theLatestVersion: ''
   artifactName: entry-angular-building-blocks
   PackageVersion: $version
-  __packageVersion__: $version
+  peerDependencies.@enigmatry/entry-components: $version
 
 stages:
 - stage: ci_build
