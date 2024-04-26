@@ -8,7 +8,7 @@ variables:
   theLatestVersion: ''
   artifactName: entry-angular-building-blocks
   PackageVersion: $version
-  peerDependencies.@enigmatry/entry-components: $version
+  peerDependencies.@enigmatry/entry-components: testValue
 
 stages:
 - stage: ci_build
@@ -113,7 +113,7 @@ stages:
       displayName: 'File transformation: package.json'
       inputs:
         folderPath: 'dist'
-        targetFiles: '**/package.json'
+        targetFiles: 'dist/enigmatry/entry-form/package.json'
         fileType: json
     
     - task: PublishBuildArtifacts@1
