@@ -60,8 +60,6 @@
     "@angular/material-date-fns-adapter": "17.3.6",
     "@ckeditor/ckeditor5-angular": "^5.2.0",
     "@ckeditor/ckeditor5-build-classic": "^37.0.0",
-    "@enigmatry/scss-foundation": "15.0.0-preview.5",
-    "@enigmatry/stylelint-config": "15.0.0-preview.5",
     "@ngx-formly/core": "~6.3.0",
     "@ngx-formly/material": "~6.3.0",
     "@types/jasmine": "^5.1.0",
