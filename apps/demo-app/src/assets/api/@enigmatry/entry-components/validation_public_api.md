@@ -55,7 +55,7 @@ Used to provide default configurations on module level.
 
 | Property | Type | Description |
 | :------ | :------ | :------ |
-| `validationMessages` | [`IEntryValidationMessage`](validation_public_api.md#ientryvalidationmessage)[] | Validation key to message configuration on module level. Used to configure client side validation messages<br />for standard validators (_required_, _minLength_, _email_, etc.).<br /><br />**NOTE:** If using _Formly_ package to render forms, this configuration should not be used.<br />Instead, use `FormlyModule` to configure validation messages.<br /><br />**Example**<br /><br />` new EntryValidationConfig() {   validationMessages: [     { name: 'required': message: 'This field is mandatory' },     { name: 'minlength', message: (control: AbstractControl) => `Minimal length is ${control.errors.minlength.requiredLength}`}   ] } ` |
+| `validationMessages` | [`IEntryValidationMessage`](validation_public_api.md#ientryvalidationmessage)[] | Validation key to message configuration on module level. Used to configure client side validation messages<br />for standard validators (_required_, _minLength_, _email_, etc.).<br /><br />**NOTE:** If using _Formly_ package to render forms, this configuration should not be used.<br />Instead, use `FormlyModule` to configure validation messages.<br /><br />**Example**<br /><br />` new EntryValidationConfig() {   validationMessages: [     { name: 'required': message: 'This field is mandatory' },     { name: 'minlength', message: (control: AbstractControl) => `Minimal length is ${control.errors.minlength.requiredLength}`}   ] } ` |
 
 ## Interfaces
 
@@ -67,7 +67,7 @@ Used to configure mapping between validation keys and messages
 
 | Property | Type | Description |
 | :------ | :------ | :------ |
-| `message` | `string` \| (`control`) => `string` | Validation message. Can be static string or expression returning string<br /> (when messages need to be resolved dynamically: parametrization, localization, etc.). |
+| `message` | `string` \| (`control`) => `string` | Validation message. Can be static string or expression returning string<br /> (when messages need to be resolved dynamically: parametrization, localization, etc.). |
 | `name` | `string` | Validation key (e.g. '_required_', '_minlength_', '_email_', etc.) |
 
 ***

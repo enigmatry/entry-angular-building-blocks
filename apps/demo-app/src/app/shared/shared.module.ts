@@ -9,9 +9,10 @@ import { SortPipe } from './pipes/sort.pipe';
 import { CodeViewComponent } from './example-viewer/code-view/code-view.component';
 import { EntryButtonModule, provideEntryButtonConfig } from '@enigmatry/entry-components/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { EntryCommonModule } from '@enigmatry/entry-components/common';
-import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { EntryCommonModule, provideEntryNativeTimeAdapter } from '@enigmatry/entry-components/common';
+import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { getMatDateLocale } from '../../localizaiton';
+import { DateFnsAdapter } from '@angular/material-date-fns-adapter';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,23 @@ import { getMatDateLocale } from '../../localizaiton';
     {
       provide: MAT_DATE_LOCALE,
       useFactory: () => getMatDateLocale()
-    }
+    },
+    {
+      provide: DateAdapter,
+      useClass: DateFnsAdapter,
+      deps: [MAT_DATE_LOCALE],
+    },
+    provideEntryNativeTimeAdapter({
+      parse: {
+        dateInput: ['dd-MM-yyyy', 'dd-MM-yyyy HH', 'dd-MM-yyyy HH:mm:ss'],
+      },
+      display: {
+        dateInput: 'dd-MM-yyyy HH:mm:ss',
+        monthYearLabel: 'LLL uuuu',
+        dateA11yLabel: 'PP',
+        monthYearA11yLabel: 'LLLL uuuu',
+      }
+    })
   ]
 })
 export class SharedModule { }

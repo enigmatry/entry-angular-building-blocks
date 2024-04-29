@@ -79,6 +79,13 @@ const COMPONENT_DEFINITIONS: IComponentDefinition[] = [
         route: RouteSegments.spinner,
         readmePath: '/entry-components/spinner/README.md',
         apiDocsPath: ''
+    },
+    {
+        label: 'Date time picker',
+        shortDescription: `Date time picker component`,
+        route: RouteSegments.dateTimePicker,
+        readmePath: '/entry-components/date-time-picker/README.md',
+        apiDocsPath: ''
     }
 ];
 

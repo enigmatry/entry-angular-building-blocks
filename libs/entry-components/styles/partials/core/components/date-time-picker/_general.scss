@@ -1,0 +1,65 @@
+@use '@angular/material' as mat;
+@use '@enigmatry/scss-foundation/src/modules/display/items';
+
+.entry-date-time-picker {
+	@include items.fully-align(baseline, space-between, row, nowrap);
+
+	.hidden,
+	.mat-mdc-text-field-wrapper.mdc-text-field--outlined .hidden.mdc-text-field__input {
+		display: none;
+	}
+}
+
+.mat-datepicker-actions {
+	flex-direction: column;
+	border-top: 1px solid #D1D1D1;
+
+	.entry-submit-button {
+		min-width: 48px;
+		align-self: flex-end;
+
+		.icon {
+			margin: 0;
+		}
+	}
+}
+
+.entry-time-picker {
+	@include mat.form-field-density(-3);
+
+	display: flex;
+	flex-wrap: nowrap;
+	margin-top: 20px;
+
+	.mat-mdc-form-field {
+		flex: 1 1 calc(50% - 15px);
+		margin-right: 15px;
+		width: 50px;
+
+		&:last-of-type {
+			margin-right: 0;
+		}
+
+		.mdc-text-field {
+			padding-left: 12px;
+			padding-right: 0;
+		}
+
+		.mat-mdc-select-value-text {
+			font-size: 13px;
+		}
+
+		.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+			background-color: transparent;
+		}
+
+		&:hover .mat-mdc-form-field-focus-overlay {
+			opacity: 0;
+		}
+	}
+
+	.time-separator {
+		@include items.align-center();
+		transform: translate(-7px, -10px);
+	}
+}
