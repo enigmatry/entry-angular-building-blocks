@@ -170,10 +170,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "@enigmatry/demo-app:build:production"
+              "buildTarget": "@enigmatry/demo-app:build:production"
             },
             "development": {
-              "browserTarget": "@enigmatry/demo-app:build:development"
+              "buildTarget": "@enigmatry/demo-app:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -181,7 +181,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "@enigmatry/demo-app:build"
+            "buildTarget": "@enigmatry/demo-app:build"
           }
         },
         "test": {
