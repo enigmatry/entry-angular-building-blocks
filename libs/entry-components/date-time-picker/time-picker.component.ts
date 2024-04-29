@@ -1,31 +1,26 @@
 import { Component, HostBinding, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
-import { MAT_DATE_FORMATS, DateAdapter } from '@angular/material/core';
-import { ENTRY_MAT_DATE_TIME_FORMATS, EntryDateTimeAdapter, EntryTimeAdapter } from '@enigmatry/entry-components/common';
+import { DateAdapter } from '@angular/material/core';
+import { EntryDateTimeAdapter } from '@enigmatry/entry-components/common';
 
 export type meridiem = 'am' | 'pm';
 
 @Component({
   selector: 'entry-time-picker',
-  templateUrl: './time-picker.component.html',
-  providers: [
-    { provide: MAT_DATE_FORMATS, useFactory: () => inject(ENTRY_MAT_DATE_TIME_FORMATS) },
-    { provide: DateAdapter, useClass: EntryDateTimeAdapter }
-  ]
+  templateUrl: './time-picker.component.html'
 })
 export class EntryTimePickerComponent<D> implements OnChanges {
   @HostBinding('class') class = 'entry-time-picker';
 
-  readonly timeAdapter: EntryTimeAdapter<D> = inject(EntryTimeAdapter);
-  readonly dateAdapter = inject(DateAdapter) as EntryDateTimeAdapter<D, unknown>;
+  readonly timeAdapter = inject(DateAdapter) as EntryDateTimeAdapter<D, unknown>;
 
   @Input() date: D | undefined;
   @Input() showSeconds: boolean;
   @Input() is12HourClock: boolean;
   @Input() defaultTime: D | undefined;
 
-  hours: number
-  minutes: number;
-  seconds: number
+  hours = 0;
+  minutes = 0;
+  seconds = 0;
   meridiem: meridiem = 'am';
 
   readonly hours12 = Array.from(Array(12), (_, i) => i + 1);
@@ -41,17 +36,18 @@ export class EntryTimePickerComponent<D> implements OnChanges {
   }
 
   update() {
-    const now = this.dateAdapter.today();
-    this.hours = this.date ?
-      this.timeAdapter.getHours(this.date)
+    const now = this.timeAdapter.today();
+
+    this.hours = this.date
+      ? this.timeAdapter.getHours(this.date)
       : this.timeAdapter.getHours(this.defaultTime ?? now);
 
-    this.minutes = this.date ?
-      this.timeAdapter.getMinutes(this.date)
+    this.minutes = this.date
+      ? this.timeAdapter.getMinutes(this.date)
       : this.timeAdapter.getMinutes(this.defaultTime ?? now);
 
-    this.seconds = this.date === undefined ?
-      this.timeAdapter.getSeconds(this.date)
+    this.seconds = (this.showSeconds && this.date)
+      ? this.timeAdapter.getSeconds(this.date)
       : this.timeAdapter.getSeconds(this.defaultTime ?? now);
 
     this.meridiem = this.hours >= 12 ? 'pm' : 'am';

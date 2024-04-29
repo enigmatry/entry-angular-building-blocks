@@ -6,5 +6,5 @@ import { FormControl } from '@angular/forms';
   templateUrl: './basic.component.html'
 })
 export class BasicComponent {
-  dateTime = new FormControl(new Date());
+  dateTime = new FormControl();
 }
