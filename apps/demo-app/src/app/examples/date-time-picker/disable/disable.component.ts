@@ -8,6 +8,7 @@ import { FormControl } from '@angular/forms';
 export class DisableComponent {
   disabled: boolean;
   dateTime = new FormControl(new Date());
+  anotherDateTime = new Date();
 
   setDisabled(disabled: boolean) {
     disabled ? this.dateTime.disable() : this.dateTime.enable();
