@@ -20,13 +20,13 @@ export class MyModule {}
 
 ## Configuration
 
-Provide ENTRY_MAT_DATE_TIME and EntryTimeAdapter in a feature or shared module:
+Provide ENTRY_MAT_DATE_TIME_FORMATS and EntryTimeAdapter in a feature or shared module:
 
 ```typescript
 @NgModule({
   providers: [
     {
-      provide: ENTRY_MAT_DATE_TIME,
+      provide: ENTRY_MAT_DATE_TIME_FORMATS,
       useValue: {
         parse: {
           dateInput: ['dd-MM-yyyy', 'dd-MM-yyyy HH', 'dd-MM-yyyy HH:mm'],
@@ -39,7 +39,7 @@ Provide ENTRY_MAT_DATE_TIME and EntryTimeAdapter in a feature or shared module:
         }
       }
     },
-    { provide: EntryDateAdapter, useClass: EntryNativeDateAdapter },
+    { provide: EntryTimeAdapter, useClass: EntryNativeTimeAdapter },
     ...
   ],
   ...
