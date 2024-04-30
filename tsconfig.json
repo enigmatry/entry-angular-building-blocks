@@ -35,7 +35,7 @@
     "target": "ES2022",
     "module": "ES2022",
     "lib": [
-      "es2018",
+      "ES2022",
       "dom"
     ],
     "strictPropertyInitialization": false,
