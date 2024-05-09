@@ -1,6 +1,6 @@
 import { Component, ElementRef, Input, NgZone, OnInit, Renderer2, SecurityContext } from '@angular/core';
 import { FileLoadService } from '../services/file-load.service';
-import * as MarkdownIt from 'markdown-it';
+import MarkdownIt from 'markdown-it';
 import { map } from 'rxjs/operators';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import hljs from 'highlight.js';

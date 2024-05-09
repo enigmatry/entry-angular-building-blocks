@@ -21,6 +21,7 @@ Visit components demo application. [Website](https://entry-demo.enigmatry.com/)
 |14.x| = 14
 |15.x| = 15
 |16.x| = 16
+|17.x| = 17
 
 ## Migrate project to entry
 
