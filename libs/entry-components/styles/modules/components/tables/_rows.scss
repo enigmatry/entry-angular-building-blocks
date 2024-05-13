@@ -2,7 +2,7 @@
 /* stylelint-disable scss/at-else-closing-brace-newline-after */
 /* stylelint-disable max-nesting-depth */
 @use 'sass:map';
-@use '@enigmatry/scss-foundation/src/modules/lists/row-coloring' as list;
+@use 'scss-foundation/src/modules/lists/row-coloring' as list;
 
 @mixin generate-from($theme) {
 	$odd-background: map.get($theme, 'tables', 'rows', 'odd-even-background', 'odd');
