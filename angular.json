@@ -112,7 +112,7 @@
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
-                "libs", "node_modules/@enigmatry"
+                "libs"
               ]
             },
             "scripts": []

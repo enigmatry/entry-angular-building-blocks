@@ -10,8 +10,8 @@
   },
   "license": "Apache-2.0",
   "scripts": {
-    "compile-scss": "sass --load-path=../../node_modules --load-path=../../node_modules/@enigmatry styles/partials/theming.scss styles/dist/theming.css",
-    "compile-generator": "sass --load-path=../../node_modules --load-path=../../node_modules/@enigmatry styles/partials/generator-test.scss styles/dist/generator-test.css",
+    "compile-scss": "sass --load-path=../../node_modules --load-path=../../libs styles/partials/theming.scss styles/dist/theming.css",
+    "compile-generator": "sass --load-path=../../node_modules --load-path=../../libs styles/partials/generator-test.scss styles/dist/generator-test.css",
     "lint": "stylelint --fix styles/**/*.scss"
   },
   "peerDependencies": {
