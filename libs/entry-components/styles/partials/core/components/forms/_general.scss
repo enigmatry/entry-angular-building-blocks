@@ -14,11 +14,9 @@
 	}
 }
 
-.datetimepicker {
-	.mat-form-field-appearance-outline .mat-mdc-form-field-infix {
-		padding: {
-			top: 8px;
-			bottom: 8px;
-		}
+.datetimepicker .mat-form-field-appearance-outline .mat-mdc-form-field-infix {
+	padding: {
+		top: 8px;
+		bottom: 8px;
 	}
 }
