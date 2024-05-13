@@ -1,5 +1,5 @@
 {
-  "extends": "@enigmatry/stylelint-config",
+  "extends": "./libs/stylelint-config",
   "rules": {
     "value-keyword-case": [
       "lower",

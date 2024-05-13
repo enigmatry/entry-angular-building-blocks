@@ -1,5 +1,7 @@
 /* stylelint-disable declaration-block-no-redundant-longhand-properties */
 /* stylelint-disable declaration-empty-line-before */
+@use 'sass:meta';
+
 @mixin set-position($position, $top, $right, $bottom, $left) {
 
 	$positions: (
@@ -10,7 +12,7 @@
 	);
 
 	@each $position in $positions {
-		@if (($position != 'unset') and (type-of($position) != number)) {
+		@if (($position != 'unset') and (meta.type-of($position) != number)) {
 			@error 'Please provide the right parameters for position (number or 'unset')! Given value: ' + $position;
 		}
 	}
