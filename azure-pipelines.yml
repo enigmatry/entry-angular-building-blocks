@@ -15,7 +15,7 @@ stages:
   jobs:
   - job: build
     pool:
-      vmImage: ubuntu-latest
+      vmImage: windows-latest
     steps:
     - checkout: self
       fetchDepth: 50
@@ -80,9 +80,9 @@ stages:
         workingDir: 'libs/scss-foundation'
 
     - task: Npm@1
-      displayName: 'npm install'
+      displayName: 'npm ci'
       inputs:
-        command: 'install'
+        command: 'ci'
 
     - task: Npm@1
       displayName: 'Lint libraries'
@@ -136,7 +136,7 @@ stages:
   - deployment: Deploy
     environment: npm
     pool:
-      vmImage: ubuntu-latest
+      vmImage: windows-latest
     strategy:
       runOnce:
         deploy:
