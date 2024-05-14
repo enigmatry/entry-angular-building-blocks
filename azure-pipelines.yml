@@ -136,7 +136,7 @@ stages:
   - deployment: Deploy
     environment: npm
     pool:
-      vmImage: ubuntu-latest
+      vmImage: windows-latest
     strategy:
       runOnce:
         deploy:
