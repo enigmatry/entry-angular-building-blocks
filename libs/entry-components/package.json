@@ -12,7 +12,7 @@
   "scripts": {
     "compile-scss": "sass --load-path=../../node_modules --load-path=../../libs styles/partials/theming.scss styles/dist/theming.css",
     "compile-generator": "sass --load-path=../../node_modules --load-path=../../libs styles/partials/generator-test.scss styles/dist/generator-test.css",
-    "lint": "stylelint --fix styles/**/*.scss"
+    "lint": "stylelint --fix styles/**/*.scss --config ../../.stylelintrc.json"
   },
   "peerDependencies": {
     "@angular/animations": "^17.0.0",
@@ -25,7 +25,7 @@
     "lodash-es": "^4.17.21"
   },
   "dependencies": {
-    "tslib": "^2.6.2"
+    "tslib": "^2.6.3"
   },
   "publishConfig": {
     "access": "public"

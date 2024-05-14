@@ -8,17 +8,17 @@ $breakpoints: () !default;
 @use '../../modules/variables' as variables;
 
 // Had to be done this way due to current limitations of collection initialization in Sass.
-@if length($breakpoints) == 0 {
+@if list.length($breakpoints) == 0 {
 	$breakpoints: variables.$default-breakpoints;
 }
 
 @function -get-size($size) {
-	@if (map-has-key($breakpoints, $size)) {
+	@if (map.has-key($breakpoints, $size)) {
 		$gotten-size: map.get($breakpoints, $size);
 		@return map.get($gotten-size, size);
 	}
 
-	@error 'Size must be any of following values: ' + map-keys($breakpoints) + '. Given size: ' + $size;
+	@error 'Size must be any of following values: ' + map.keys($breakpoints) + '. Given size: ' + $size;
 }
 
 @function -presentation($string, $with-capitalization) {
