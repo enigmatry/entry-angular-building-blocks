@@ -13,7 +13,6 @@
     "index.js"
   ],
   "dependencies": {
-    "eslint": "^8.57.0",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",
     "@stylistic/eslint-plugin": "^2.1.0",
@@ -33,24 +32,7 @@
     "@angular-eslint/template-parser": "^17.0.0"
   },
   "peerDependencies": {
-    "eslint": "^8.57.0",
-    "@typescript-eslint/eslint-plugin": "^7.2.0",
-    "@typescript-eslint/parser": "^7.2.0",
-    "@stylistic/eslint-plugin": "^2.1.0",
-    "eslint-plugin-deprecation": "^2.0.0",
-    "eslint-plugin-import": "^2.29.0",
-    "eslint-plugin-no-loops": "^0.3.0",
-    "eslint-plugin-no-secrets": "^0.9.1",
-    "eslint-plugin-no-unsanitized": "^4.0.2",
-    "eslint-plugin-prefer-arrow": "^1.2.3",
-    "eslint-plugin-promise": "^6.1.1",
-    "eslint-plugin-unused-imports": "^3.2.0",
-    "eslint-plugin-xss": "^0.1.12",
-    "@angular-eslint/builder": "^17.0.0",
-    "@angular-eslint/eslint-plugin": "^17.0.0",
-    "@angular-eslint/eslint-plugin-template": "^17.0.0",
-    "@angular-eslint/schematics": "^17.0.0",
-    "@angular-eslint/template-parser": "^17.0.0"
+    "eslint": "^8.57.0"
   },
   "publishConfig": {
     "access": "public"

@@ -10,7 +10,7 @@
     "automated-tests": "npm run entry-components:compile-fixed-theme && npm run entry-components:compile-theme && npm run scss-foundation:build && npm run scss-foundation:build-modules && npm run scss-foundation:test",
     "lint": "ng lint && npm run entry-components:stylelint && npm run scss-foundation:stylelint && npm run demo-app:stylelint",
     "typedoc": "typedoc",
-    "demo-app:stylelint": "cd apps/demo-app && stylelint --fix src/**/*.scss",
+    "demo-app:stylelint": "cd apps/demo-app && stylelint --fix src/**/*.scss --config ../../.stylelintrc.json",
     "entry-components:build": "ng build @enigmatry/entry-components",
     "entry-components:watch": "ng build @enigmatry/entry-components --watch --configuration development",
     "entry-components:compile-fixed-theme": "cd libs/entry-components && npm run compile-scss",
@@ -37,14 +37,7 @@
     "highlight.js": "^11.9.0",
     "lodash-es": "^4.17.21",
     "markdown-it": "^14.1.0",
-    "postcss-scss": "4.0.6",
     "rxjs": "7.8.1",
-    "stylelint": "15.7.0",
-    "stylelint-config-property-sort-order-smacss": "9.1.0",
-    "stylelint-declaration-block-no-ignored-properties": "2.7.0",
-    "stylelint-max-lines": "0.1.0",
-    "stylelint-scss": "5.0.1",
-    "stylelint-use-nesting": "4.1.0",
     "tslib": "^2.6.2",
     "zone.js": "~0.14.4"
   },
@@ -60,7 +53,6 @@
     "@angular/material-date-fns-adapter": "17.3.8",
     "@ckeditor/ckeditor5-angular": "^5.2.0",
     "@ckeditor/ckeditor5-build-classic": "^37.0.0",
-    "@enigmatry/stylelint-config": "15.0.0-preview.5",
     "@ngx-formly/core": "~6.3.0",
     "@ngx-formly/material": "~6.3.0",
     "@types/markdown-it": "^14.1.1",
@@ -78,6 +70,18 @@
     "sass-true": "7.0.0",
     "typedoc": "^0.25.13",
     "typedoc-plugin-markdown": "^4.0.1",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "stylelint": "^16.5.0",
+    "postcss-scss": "^4.0.9",
+    "stylelint-config-property-sort-order-smacss": "^10.0.0",
+    "@stylistic/stylelint-plugin": "^2.1.2",
+    "stylelint-use-nesting": "^5.1.1",
+    "stylelint-declaration-block-no-ignored-properties": "^2.8.0",
+    "stylelint-file-max-lines": "^1.0.0",
+    "stylelint-scss": "^6.1.0",
+    "stylelint-group-selectors": "^1.0.10"
+  },
+  "dependenciesComments": {
+    "stylelint-related-deps": "Keep them in line with the ones in libs/stylelint-config/package.json"
   }
 }
