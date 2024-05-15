@@ -15,7 +15,7 @@ stages:
   jobs:
   - job: build
     pool:
-      vmImage: windows-latest
+      vmImage: ubuntu-latest
     steps:
     - checkout: self
       fetchDepth: 50
@@ -136,7 +136,7 @@ stages:
   - deployment: Deploy
     environment: npm
     pool:
-      vmImage: windows-latest
+      vmImage: ubuntu-latest
     strategy:
       runOnce:
         deploy:
