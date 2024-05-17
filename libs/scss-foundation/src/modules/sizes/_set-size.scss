@@ -31,7 +31,7 @@
 			not list.index($valid-keywords, $size) and
 			($size != 'unset')
 		) {
-			@error 'Please provide the right parameters for position (number, percentage, or valid property keyword). Given value: ' + $size;
+			@error 'Please provide the right parameters for size (number, percentage, or valid property keyword). Given value: ' + $size;
 		}
 	}
 }
