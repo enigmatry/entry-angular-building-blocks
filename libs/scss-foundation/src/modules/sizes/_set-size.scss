@@ -1,0 +1,37 @@
+@use 'sass:meta';
+@use 'sass:string';
+@use 'sass:list';
+@use 'width' as width;
+@use 'height' as height;
+
+@mixin generate($width, $height: $width, $min-width: null, $max-width: null, $min-height: null, $max-height: null) {
+	@include width.set-width($width, $min-width, $max-width);
+	@include height.set-height($height, $min-height, $max-height);
+
+	$sizes: (
+		$width,
+		$height,
+		$min-width,
+		$max-width,
+		$min-height,
+		$max-height
+	);
+
+	$valid-keywords: (
+		max-content,
+		min-content,
+		fit-content,
+		auto
+	);
+
+	@each $size in $sizes {
+		@if (
+			(meta.type-of($size) != number) and
+			(string.slice($size, -1) != '%') and
+			not list.index($valid-keywords, $size) and
+			($size != 'unset')
+		) {
+			@error 'Please provide the right parameters for position (number, percentage, or valid property keyword). Given value: ' + $size;
+		}
+	}
+}

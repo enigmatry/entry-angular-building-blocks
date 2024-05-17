@@ -1,0 +1,18 @@
+@mixin set-height($height, $min-height: null, $max-height: null) {
+	height: $height;
+
+	@if $min-height {
+		min-height: $min-height;
+	}
+	@if $max-height {
+		max-height: $max-height;
+	}
+}
+
+@mixin set-height-limits($min-height, $max-height: null) {
+	min-height: $min-height;
+
+	@if $max-height {
+		max-height: $max-height;
+	}
+}
