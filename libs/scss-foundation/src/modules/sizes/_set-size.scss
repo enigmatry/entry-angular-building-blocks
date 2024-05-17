@@ -1,8 +1,8 @@
 @use 'sass:meta';
 @use 'sass:string';
 @use 'sass:list';
-@use 'width' as width;
-@use 'height' as height;
+@use 'width';
+@use 'height';
 
 @mixin generate($width, $height: $width, $min-width: null, $max-width: null, $min-height: null, $max-height: null) {
 	@include width.set-width($width, $min-width, $max-width);
