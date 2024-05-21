@@ -39,6 +39,29 @@
         }
     }
 
+    @include true.it('should set the height of box and min-height') {
+        @include true.assert() {
+            @include true.output() {
+                @include set-size.box-dimensions(height, 300px, 3rem);
+            }
+            @include true.expect() {
+                height: 300px;
+                min-height: 3rem;
+            }
+        }
+    }
+    @include true.it('should set the width of box and min-width') {
+        @include true.assert() {
+            @include true.output() {
+                @include set-size.box-dimensions(width, 300px, 3rem);
+            }
+            @include true.expect() {
+                width: 300px;
+                min-width: 3rem;
+            }
+        }
+    }
+
     @include true.it('should set the width of box and min-width and max-width in given order') {
         @include true.assert() {
             @include true.output() {
