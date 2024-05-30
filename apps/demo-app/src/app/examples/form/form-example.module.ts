@@ -14,9 +14,6 @@ import { TextareaExampleComponent } from './textarea/textarea-example.component'
 import { CheckboxExampleComponent } from './checkbox/checkbox-example.component';
 import { RadioExampleComponent } from './radio/radio-example.component';
 import { ProductsGeneratedModule } from './form-example/generated/products-generated.module';
-import { RichTextExampleComponent } from './rich-text/rich-text-example.component';
-import { ENTRY_CKEDITOR_OPTIONS, FormlyCkeditorModule } from '@enigmatry/entry-form/ckeditor';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { FormlyDateTimePickerModule } from '@enigmatry/entry-form/date-time-picker';
 import { DateTimePickerExampleComponent } from './date-time-picker/date-time-picker-example.component';
 
@@ -28,7 +25,6 @@ import { DateTimePickerExampleComponent } from './date-time-picker/date-time-pic
     TextareaExampleComponent,
     CheckboxExampleComponent,
     RadioExampleComponent,
-    RichTextExampleComponent,
     DateTimePickerExampleComponent
   ],
   imports: [
@@ -40,7 +36,6 @@ import { DateTimePickerExampleComponent } from './date-time-picker/date-time-pic
     FormlyMaterialModule,
     FormlyAutocompleteModule,
     FormlyMatDatepickerModule,
-    FormlyCkeditorModule,
     FormlyDateTimePickerModule,
     FormlyModule.forChild({
       types: [
@@ -66,20 +61,10 @@ import { DateTimePickerExampleComponent } from './date-time-picker/date-time-pic
     TextareaExampleComponent,
     CheckboxExampleComponent,
     RadioExampleComponent,
-    RichTextExampleComponent,
     DateTimePickerExampleComponent
   ],
   providers: [
-    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } },
-    {
-      provide: ENTRY_CKEDITOR_OPTIONS,
-      useValue: {
-        build: ClassicEditor,
-        config: {
-          toolbar: ['bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote', 'link']
-        }
-      }
-    }
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } }
   ]
 })
 export class FormExampleModule { }
