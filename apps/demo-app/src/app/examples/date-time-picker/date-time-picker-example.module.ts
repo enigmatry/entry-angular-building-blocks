@@ -13,8 +13,10 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
+import { provideEntryValidationConfig } from "@enigmatry/entry-components/validation";
 import { SecondsComponent } from './seconds/seconds.component';
 import { DefaultTimeComponent } from './default-time/default-time.component';
+import { WithValidationComponent } from "./with-validation/with-validation.component";
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import { DefaultTimeComponent } from './default-time/default-time.component';
     DisableComponent,
     MeridiemComponent,
     SecondsComponent,
-    DefaultTimeComponent
+    DefaultTimeComponent,
+    WithValidationComponent
   ],
   imports: [
     CommonModule,
@@ -41,7 +44,8 @@ import { DefaultTimeComponent } from './default-time/default-time.component';
     MinMaxComponent,
     MeridiemComponent,
     SecondsComponent,
-    DefaultTimeComponent
+    DefaultTimeComponent,
+    WithValidationComponent
   ],
   providers: [
     {
@@ -63,6 +67,11 @@ import { DefaultTimeComponent } from './default-time/default-time.component';
         dateA11yLabel: 'PP',
         monthYearA11yLabel: 'LLLL uuuu',
       }
+    }),
+    provideEntryValidationConfig({
+      validationMessages: [
+        { name: 'required', message: 'This field is required.' }
+      ]
     })
   ]
 })
