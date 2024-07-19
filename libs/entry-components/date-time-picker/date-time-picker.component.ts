@@ -92,6 +92,7 @@ export class EntryDateTimePickerComponent<D> implements OnInit, OnDestroy, OnCha
         this.dateTimeAdapter.setTime(value, this.timePicker.hours, this.timePicker.minutes, this.timePicker.seconds);
         this.formControl.setValue(value);
         this.formControl.markAsDirty();
+        this.formControl.markAsTouched();
       });
   }
 
