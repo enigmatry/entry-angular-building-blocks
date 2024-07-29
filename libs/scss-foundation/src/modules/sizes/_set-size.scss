@@ -1,8 +1,4 @@
-/* stylelint-disable scss/block-no-redundant-nesting, scss/no-unused-private-members, scss/load-no-partial-leading-underscore, scss/block-no-redundant-nesting */
-@use 'sass:meta';
-@use 'sass:string';
-@use 'sass:list';
-
+/* stylelint-disable scss/block-no-redundant-nesting */
 @mixin box-dimensions($property, $value, $min-value: null, $max-value: null) {
 	#{$property}: $value;
   
