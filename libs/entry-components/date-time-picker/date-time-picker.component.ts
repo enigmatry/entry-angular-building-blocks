@@ -79,11 +79,10 @@ export class EntryDateTimePickerComponent<D> implements OnInit, OnDestroy, OnCha
 
     this.formControl.valueChanges
       .pipe(takeUntil(this.$destroy))
-      .subscribe(value =>
-        {
-          this.calendarControl.setValue(value, { emitEvent: false });
-          this.dateTimeChanged.next(value);
-        }
+      .subscribe(value => {
+        this.calendarControl.setValue(value, { emitEvent: false });
+        this.dateTimeChanged.next(value);
+      }
       );
 
     this.calendarControl.valueChanges
@@ -92,6 +91,8 @@ export class EntryDateTimePickerComponent<D> implements OnInit, OnDestroy, OnCha
         this.timePicker.to24HourClock();
         this.dateTimeAdapter.setTime(value, this.timePicker.hours, this.timePicker.minutes, this.timePicker.seconds);
         this.formControl.setValue(value);
+        this.formControl.markAsDirty();
+        this.formControl.markAsTouched();
       });
   }
 
