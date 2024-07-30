@@ -17,6 +17,7 @@
       "@enigmatry/entry-components/permissions":["libs/entry-components/permissions/public-api.ts"],
       "@enigmatry/entry-components/table": ["libs/entry-components/table/public-api.ts"],
       "@enigmatry/entry-components/date-time-picker": ["libs/entry-components/date-time-picker/public-api.ts"],
+      "@enigmatry/entry-components/chat": ["libs/entry-components/chat/public-api.ts"],
 
       "@enigmatry/entry-form": ["libs/entry-form/public-api.ts"],
       "@enigmatry/entry-form/autocomplete": ["libs/entry-form/autocomplete/public-api.ts"],

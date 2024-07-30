@@ -18,6 +18,10 @@ const routes: Routes = [
     loadComponent: () => import('./features/common/common-documentation.component').then(m => m.CommonDocumentationComponent)
   },
   {
+    path: RouteSegments.chat,
+    loadComponent: () => import('./features/chat/chat-documentation.component').then(m => m.ChatDocumentationComponent)
+  },
+  {
     path: RouteSegments.dialog,
     loadComponent: () => import('./features/dialog/dialog-documentation.component').then(m => m.DialogDocumentationComponent)
   },

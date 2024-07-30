@@ -25,6 +25,13 @@ const COMPONENT_DEFINITIONS: IComponentDefinition[] = [
         apiDocsPath: ''
     },
     {
+        label: 'Chat',
+        shortDescription: `Chat`,
+        route: RouteSegments.chat,
+        readmePath: '/entry-components/chat/README.md',
+        apiDocsPath: ''
+    },
+    {
         label: 'Dialog',
         shortDescription: `Enables built-in dialogs and adds support for building custom ones.`,
         route: RouteSegments.dialog,
