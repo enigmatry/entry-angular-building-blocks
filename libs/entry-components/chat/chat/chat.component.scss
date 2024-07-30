@@ -1,0 +1,35 @@
+.chat-area {
+	display: flex;
+	flex-direction: column;
+	/* stylelint-disable-next-line unit-allowed-list */
+	height: calc(75vh - 70px);
+	padding-top: 16px;
+	overflow: auto;
+}
+
+.chat-area > :first-child {
+	margin-top: auto;
+}
+
+.chat-bubble-container {
+	display: flex;
+	justify-content: flex-start;
+	width: 100%;
+}
+
+.chat-bubble-container.sender {
+	justify-content: flex-end;
+}
+
+.messages-header > h2 {
+	margin: 0;
+}
+
+.spinner-container {
+	display: flex;
+	align-items: center;
+}
+  
+.spinner-message {
+	margin-left: 10px;
+}

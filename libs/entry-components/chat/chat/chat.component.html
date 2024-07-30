@@ -1,1 +1,18 @@
-<p>Chat component in the library</p>
+<entry-chat-header></entry-chat-header>
+
+<div class="chat-area">
+    <div *ngFor="let message of messages$ | async" class="chat-bubble-container"
+        [ngClass]="{'sender' : message.role?.label=== userRole.label}">
+        <entry-assistant-message [message]="message"></entry-assistant-message>
+    </div>
+
+    <div #endOfChat></div>
+
+    <div *ngIf="loading" class="spinner-container">
+        <mat-progress-spinner color="primary" [diameter]="30" mode="indeterminate">
+        </mat-progress-spinner>
+        <div class="spinner-message"> Thinking... </div>
+    </div>
+</div>
+
+<entry-user-message (send)="send($event)"></entry-user-message>

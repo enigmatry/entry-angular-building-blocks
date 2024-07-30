@@ -1,0 +1,14 @@
+<div class="chat-bubble" *ngIf="message" [ngClass]="{'sender-message': message.role?.label === role.label}">
+    <div [innerHTML]="message.content | markdown | safeHtml"></div>
+
+    <mat-expansion-panel *ngIf="message.sources && message.sources.length" (opened)="panelOpenState.set(true)"
+        (closed)="panelOpenState.set(false)">
+        <mat-expansion-panel-header>
+            <mat-panel-title> Sources </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <mat-list *ngFor="let source of message.sources" role="list">
+            {{ source.page }}
+        </mat-list>
+    </mat-expansion-panel>
+</div>
