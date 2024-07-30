@@ -1,4 +1,3 @@
-/* stylelint-disable scss/block-no-redundant-nesting */
 @mixin box-dimensions($property, $value, $min-value: null, $max-value: null) {
 	#{$property}: $value;
   
