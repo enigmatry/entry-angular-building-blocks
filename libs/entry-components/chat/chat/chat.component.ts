@@ -5,6 +5,7 @@ import { AuthorRole } from '../model/author-role';
 import { Source } from '../model/source';
 import { BehaviorSubject, distinctUntilChanged, finalize, map, tap } from 'rxjs';
 import { StreamService } from '../services/stream.service';
+import { MessageRequest } from '../model/message-request';
 
 @Component({
   selector: 'entry-chat',
@@ -33,7 +34,7 @@ export class ChatComponent implements OnInit {
     const currentMessages = this.messagesSubject$.getValue();
     this.messagesSubject$.next([...currentMessages, new Message({ content: question.content, role: question.role })]);
 
-    this.streamService.post<Message>(this.messagesSubject$.getValue())
+    this.streamService.post<Message>(new MessageRequest({ messages: this.messagesSubject$.getValue() }))
       .pipe(
         distinctUntilChanged(),
         tap(() => this.loading = true),
