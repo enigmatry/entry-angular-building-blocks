@@ -15,23 +15,9 @@ export class UserMessageComponent {
 
   constructor(
     private readonly snackBar: MatSnackBar,
-    // private readonly azureSearchClient: AzureSearchClient
   ) {
     this.form = this.createForm();
   }
-
-  readonly filesSelected = (file: File | FileList) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file as File);
-    reader.onloadend = _ => {
-      // this.upload(file);
-    };
-  };
-
-  // private readonly upload = (file: File) =>
-  //   this.azureSearchClient
-  //     .uploadFile({ data: file, fileName: file.name })
-  //     .subscribe(_ => this.snackBar.open('File successfully uploaded', '', { duration: 400 }));
 
   public sendMessage() {
     const messageCtrl = this.form.get('message');
@@ -53,7 +39,6 @@ export class UserMessageComponent {
   private createForm(): FormGroup {
     return new FormGroup({
       message: new FormControl(),
-      file: new FormControl()
     });
   }
 }

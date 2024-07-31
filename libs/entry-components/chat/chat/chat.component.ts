@@ -1,10 +1,10 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { getAssistant, getUser } from '../model/author-role-extensions';
 import { Message } from '../model/message';
 import { AuthorRole } from '../model/author-role';
 import { Source } from '../model/source';
 import { BehaviorSubject, distinctUntilChanged, finalize, map, tap } from 'rxjs';
-import { ChatService } from '../services/chat.service';
+import { StreamService } from '../services/stream.service';
 
 @Component({
   selector: 'entry-chat',
@@ -12,6 +12,8 @@ import { ChatService } from '../services/chat.service';
   styleUrl: './chat.component.scss'
 })
 export class ChatComponent implements OnInit {
+  @Input() greetingMessage: string;
+
   @ViewChild('endOfChat') scrollToBottomEl: ElementRef;
 
   private messagesSubject$ = new BehaviorSubject<Message[]>([]);
@@ -20,7 +22,7 @@ export class ChatComponent implements OnInit {
   public loading: boolean = false;
 
   constructor(
-    private readonly chatsClient: ChatService
+    private readonly streamService: StreamService
   ) { }
 
   ngOnInit(): void {
@@ -31,7 +33,7 @@ export class ChatComponent implements OnInit {
     const currentMessages = this.messagesSubject$.getValue();
     this.messagesSubject$.next([...currentMessages, new Message({ content: question.content, role: question.role })]);
 
-    this.chatsClient.getStreamData(this.messagesSubject$.getValue())
+    this.streamService.post<Message>(this.messagesSubject$.getValue())
       .pipe(
         distinctUntilChanged(),
         tap(() => this.loading = true),
@@ -71,9 +73,13 @@ export class ChatComponent implements OnInit {
   }
 
   private addGreetingMessage() {
+    if (this.greetingMessage === undefined) {
+      return;
+    }
+
     const currentMessages = this.messagesSubject$.getValue();
     this.messagesSubject$.next([...currentMessages, new Message({
-      // content: $localize`:@@chat.greeting-message:Hi there, I'm Enigmatry AI Chat Bot. Ask me a question about the PDF file you have uploaded! :)`,
+      content: this.greetingMessage,
       role: getAssistant()
     })]);
   }
