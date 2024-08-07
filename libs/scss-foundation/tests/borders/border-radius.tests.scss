@@ -1,0 +1,40 @@
+@use 'sass-true/sass/true';
+@use '../../src/modules/borders/border-radius' as border;
+
+@include true.describe('partial-border-radius($top-left, $top-right, $bottom-right, $bottom-left)') {
+	@include true.it('should set border-radius with default values') {
+		@include true.assert() {
+			@include true.output() {
+				@include border.partial-border-radius();
+			}
+			@include true.expect() {
+				border: {
+					/* stylelint-disable scss/declaration-nested-properties */
+					top-left-radius: 0;
+					top-right-radius: 0;
+					bottom-right-radius: 0;
+					bottom-left-radius: 0;
+					/* stylelint-enable scss/declaration-nested-properties */
+				}
+			}
+		}
+	}
+
+	@include true.it('should set border-radius with all values') {
+		@include true.assert() {
+			@include true.output() {
+				@include border.partial-border-radius(4px, 4px, 8px, 8px);
+			}
+			@include true.expect() {
+				border: {
+					/* stylelint-disable scss/declaration-nested-properties */
+					top-left-radius: 4px;
+					top-right-radius: 4px;
+					bottom-right-radius: 8px;
+					bottom-left-radius: 8px;
+					/* stylelint-enable scss/declaration-nested-properties */
+				}
+			}
+		}
+	}
+}
