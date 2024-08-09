@@ -1,0 +1,78 @@
+/* stylelint-disable scss/no-unused-private-members */
+/* stylelint-disable scss/load-no-partial-leading-underscore */
+/* stylelint-disable scss/block-no-redundant-nesting */
+@use 'sass-true/sass/true';
+@use '../../src/modules/sizes/set-size';
+
+@include true.describe('box-definition()') {
+
+	@include true.it('should handle only width and height.') {
+		@include true.assert() {
+			@include true.output() {
+				@include set-size.box-definition(200px, 3rem);
+			}
+			@include true.expect() {
+				width: 200px;
+				height: 3rem;
+			}
+		}
+	}
+  
+	@include true.it('should handle equal width and height with min and max values.') {
+		@include true.assert() {
+			@include true.output() {
+				@include set-size.box-definition(100%, 150px, 100px, 200px, 100px, 200px);
+			}
+			@include true.expect() {
+				width: 100%;
+				min-width: 100px;
+				max-width: 200px;
+				height: 150px;
+				min-height: 100px;
+				max-height: 200px;
+			}
+		}
+	}
+  
+	@include true.it('should handle only width with min and max values.') {
+		@include true.assert() {
+			@include true.output() {
+				@include set-size.box-definition($width: 300px, $min-width: 200px, $max-width: 400px);
+			}
+			@include true.expect() {
+				width: 300px;
+				min-width: 200px;
+				max-width: 400px;
+			}
+		}
+	}
+  
+	@include true.it('should handle only height with min and max values.') {
+		@include true.assert() {
+			@include true.output() {
+				@include set-size.box-definition($height: 150px, $min-height: 100px, $max-height: 200px);
+			}
+			@include true.expect() {
+				height: 150px;
+				min-height: 100px;
+				max-height: 200px;
+			}
+		}
+	}
+  
+	@include true.it('should handle all parameters with different width and height values.') {
+		@include true.assert() {
+			@include true.output() {
+				@include set-size.box-definition($width: 250px, $height: auto, $min-width: 3em, $max-width: 350px, $min-height: 200px, $max-height: 400px);
+			}
+			@include true.expect() {
+				width: 250px;
+				min-width: 3em;
+				max-width: 350px;
+				height: auto;
+				min-height: 200px;
+				max-height: 400px;
+			}
+		}
+	}
+}
