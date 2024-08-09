@@ -1,3 +1,6 @@
+/* stylelint-disable scss/no-unused-private-members */
+/* stylelint-disable scss/load-no-partial-leading-underscore */
+/* stylelint-disable scss/block-no-redundant-nesting */
 @use 'sass-true/sass/true';
 @use '../../src/modules/sizes/set-size';
 
@@ -34,7 +37,7 @@
 	@include true.it('should handle only width with min and max values.') {
 		@include true.assert() {
 			@include true.output() {
-				@include set-size.box-definition(300px, null, $min-width: 200px, $max-width: 400px);
+				@include set-size.box-definition($width: 300px, $min-width: 200px, $max-width: 400px);
 			}
 			@include true.expect() {
 				width: 300px;
@@ -47,7 +50,7 @@
 	@include true.it('should handle only height with min and max values.') {
 		@include true.assert() {
 			@include true.output() {
-				@include set-size.box-definition(null, 150px, null, null, $min-height: 100px, $max-height: 200px);
+				@include set-size.box-definition($height: 150px, $min-height: 100px, $max-height: 200px);
 			}
 			@include true.expect() {
 				height: 150px;
@@ -60,7 +63,7 @@
 	@include true.it('should handle all parameters with different width and height values.') {
 		@include true.assert() {
 			@include true.output() {
-				@include set-size.box-definition(250px, auto, $min-width: 3em, $max-width: 350px, $min-height: 200px, $max-height: 400px);
+				@include set-size.box-definition($width: 250px, $height: auto, $min-width: 3em, $max-width: 350px, $min-height: 200px, $max-height: 400px);
 			}
 			@include true.expect() {
 				width: 250px;
