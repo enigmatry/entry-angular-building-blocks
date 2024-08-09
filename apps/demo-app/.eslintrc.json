@@ -10,6 +10,7 @@
       ],
       "parserOptions": {
         "project": [
+          "tsconfig.json",
           "apps/demo-app/tsconfig.app.json",
           "apps/demo-app/tsconfig.spec.json"
         ],

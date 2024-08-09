@@ -7,6 +7,7 @@ pr: none
 variables:
   theLatestVersion: ''
   artifactName: entry-angular-building-blocks
+  peerDependencies.@enigmatry/entry-components: $(theLatestVersion)
 
 stages:
 - stage: ci_build
@@ -79,9 +80,9 @@ stages:
         workingDir: 'libs/scss-foundation'
 
     - task: Npm@1
-      displayName: 'npm install'
+      displayName: 'npm ci'
       inputs:
-        command: 'install'
+        command: 'ci'
 
     - task: Npm@1
       displayName: 'Lint libraries'
@@ -90,22 +91,29 @@ stages:
         customCommand: 'run lint'
 
     - task: Npm@1
-      displayName: 'Build entry form'
-      inputs:
-        command: 'custom'
-        customCommand: 'run build @enigmatry/entry-form'
-
-    - task: Npm@1
       displayName: 'Build entry components'
       inputs:
         command: 'custom'
         customCommand: 'run build @enigmatry/entry-components'
 
     - task: Npm@1
+      displayName: 'Build entry form'
+      inputs:
+        command: 'custom'
+        customCommand: 'run build @enigmatry/entry-form'
+
+    - task: Npm@1
       displayName: 'Run unit tests'
       inputs:
         command: 'custom'
         customCommand: 'run automated-tests'
+
+    - task: FileTransform@1
+      displayName: 'File transformation: package.json'
+      inputs:
+        folderPath: 'dist'
+        targetFiles: '**/package.json'
+        fileType: json
     
     - task: PublishBuildArtifacts@1
       displayName: Publish artifacts

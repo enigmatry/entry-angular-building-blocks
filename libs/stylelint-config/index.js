@@ -4,13 +4,13 @@ module.exports = {
   ignoreAtRules: ["else"],
   extends: "stylelint-config-property-sort-order-smacss",
   plugins: [
-    "stylelint-scss",
     "@stylistic/stylelint-plugin",
-    // "stylelint-use-nesting",     => uncomment this line once this library is again compatible with stylelint v16+
-    //"stylelint-selector-no-empty",  => uncomment this line once this library is again compatible with stylelint v16+
-    "stylelint-group-selectors",
+    "stylelint-use-nesting",
+    "stylelint-declaration-block-no-ignored-properties",
     "stylelint-file-max-lines",
-    "stylelint-declaration-block-no-ignored-properties"
+    "stylelint-scss",
+    "stylelint-group-selectors",
+    // "stylelint-selector-no-empty",  => uncomment this line once this library is again compatible with stylelint v16+
   ],
   rules: {
     "@stylistic/at-rule-name-case": "lower",

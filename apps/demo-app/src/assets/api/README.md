@@ -1,7 +1,5 @@
 # Entry Angular Building Blocks
 
-This project is compatible with Angular 15.
-
 ## Projects
 
 | Project | Description |
@@ -14,7 +12,16 @@ This project is compatible with Angular 15.
 
 ## Components Demo
 
-Visit [Components Demo](https://entry-demo.enigmatry.com/) application.
+Visit components demo application. [Website](https://entry-demo.enigmatry.com/)
+
+## Compatibility with Angular versions
+
+| @enigmatry/entry-components | Angular version
+|-|-|
+|14.x| = 14
+|15.x| = 15
+|16.x| = 16
+|17.x| = 17
 
 ## Migrate project to entry
 

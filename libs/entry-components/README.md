@@ -26,6 +26,7 @@ These guides provides detailed steps for setting up and configuring theming with
 |14.x| = 14
 |15.x| = 15
 |16.x| = 16
+|17.x| = 17
 
 ## License
 

@@ -8,5 +8,6 @@
   ],
   "lib": {
     "entryFile": "./public-api.ts"
-  }
+  },
+  "allowedNonPeerDependencies": ["lodash-es"]
 }

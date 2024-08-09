@@ -7,13 +7,14 @@ $breakpoints: () !default;
 @use 'sass-true';
 @use 'sass-true/sass/throw';
 @use '../../modules/variables' as vars;
+@use 'sass:list';
 @forward '../../modules/responsiveness/breakpoints' with (
 	$breakpoints: $breakpoints
 );
 @use '../../modules/responsiveness/breakpoints';
 @use 'grid-core';
 
-@if length($breakpoints) == 0 {
+@if list.length($breakpoints) == 0 {
 	$breakpoints: vars.$default-breakpoints;
 }
 

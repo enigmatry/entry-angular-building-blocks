@@ -1,6 +1,8 @@
-# @enigmatry/entry-components
+# Entry Components
 
-Reusable entry components for Angular material.
+Set of reusable components based on Angular material.
+
+Visit components demo application. [Website](https://entry-demo.enigmatry.com/)
 
 ## Installation
 
@@ -8,19 +10,22 @@ Reusable entry components for Angular material.
 npm install @enigmatry/entry-components
 ```
 
-## Basic Usage
+### Theming Guidelines
 
-### Theming configuration guide
+These guides provides detailed steps for setting up and configuring theming within your project.
 
-For detailed instructions on configuring the theming of entry components, refer to the
-[Theming Configuration Guide](configure-theming.md)
+[**Theming Setup Guide**](https://github.com/enigmatry/entry-angular-building-blocks/blob/master/libs/entry-components/theming-setup.md)
 
-## Compatibility with Angular Versions
+[**Theming Configuration Guide**](https://github.com/enigmatry/entry-angular-building-blocks/blob/master/libs/entry-components/theming-configuration.md)
+
+## Compatibility with Angular versions
 
 | @enigmatry/entry-components | Angular version
 |-|-|
-|1.14.x| = 14
-|1.15.x| = 15
+|14.x| = 14
+|15.x| = 15
+|16.x| = 16
+|17.x| = 17
 
 ## License
 

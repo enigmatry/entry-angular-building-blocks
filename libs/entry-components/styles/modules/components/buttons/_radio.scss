@@ -7,13 +7,11 @@ $radio-circles-selector: '.mdc-radio__outer-circle, .mdc-radio__inner-circle';
 	$radio-border: map.get($theme, 'general', 'buttons', 'radio', 'background');
 
 	@if $radio-border {
-		.mat-mdc-radio-group .mat-mdc-radio-button {
-			&.mat-mdc-radio-checked .mdc-radio {
+		.mat-mdc-radio-group .mat-mdc-radio-button.mat-mdc-radio-checked .mdc-radio {
 				
-				&:not(:disabled):active #{$radio-selector}, #{$radio-selector} {
-					#{$radio-circles-selector} {
-						border-color: $radio-border;
-					}
+			&:not(:disabled):active #{$radio-selector}, #{$radio-selector} {
+				#{$radio-circles-selector} {
+					border-color: $radio-border;
 				}
 			}
 		}

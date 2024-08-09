@@ -54,6 +54,7 @@ const setServerSideValidationErrors = (error: IValidationProblemDetails, form: U
 };
 
 export {
+    FORM_ERROR_KEY,
     FORM_FIELD_ERROR_KEY,
     setServerSideValidationErrors
 };
