@@ -9,12 +9,10 @@
 			}
 			@include true.expect() {
 				border: {
-					/* stylelint-disable scss/declaration-nested-properties */
 					top-left-radius: 0;
 					top-right-radius: 0;
 					bottom-right-radius: 0;
 					bottom-left-radius: 0;
-					/* stylelint-enable scss/declaration-nested-properties */
 				}
 			}
 		}
@@ -22,22 +20,19 @@
 
 	@include true.it('should set border-radius with $top-right and $bottom-right values') {
 		@include true.assert() {
-		  @include true.output() {
-			@include border.partial-border-radius($top-right: 10px, $bottom-right: 1.2em);
-		  }
-		  @include true.expect() {
-			border: {
-			  /* stylelint-disable scss/declaration-nested-properties */
-			  top-left-radius: 0;
-			  top-right-radius: 10px;
-			  bottom-right-radius: 1.2em;
-			  bottom-left-radius: 0;
-			  /* stylelint-enable scss/declaration-nested-properties */
+			@include true.output() {
+				@include border.partial-border-radius($top-right: 10px, $bottom-right: 1.2em);
 			}
-		  }
+			@include true.expect() {
+				border: {
+					top-left-radius: 0;
+					top-right-radius: 10px;
+					bottom-right-radius: 1.2em;
+					bottom-left-radius: 0;
+				}
+			}
 		}
-	  }
-
+	}
 
 	@include true.it('should set border-radius with all values') {
 		@include true.assert() {
@@ -46,12 +41,10 @@
 			}
 			@include true.expect() {
 				border: {
-					/* stylelint-disable scss/declaration-nested-properties */
 					top-left-radius: 4px;
 					top-right-radius: 4px;
 					bottom-right-radius: 8px;
 					bottom-left-radius: 8px;
-					/* stylelint-enable scss/declaration-nested-properties */
 				}
 			}
 		}
