@@ -10,12 +10,10 @@
 			}
 			@include true.expect() {
 				font-family: 'Arial';
-				font-size: 16px;
-				font-weight: 400;
 			}
 		}
 	}
-
+  
 	@include true.it('should set the font family and size') {
 		@include true.assert() {
 			@include true.output() {
@@ -24,11 +22,10 @@
 			@include true.expect() {
 				font-family: 'Arial';
 				font-size: 14px;
-				font-weight: 400;
 			}
 		}
 	}
-
+  
 	@include true.it('should set the font family, size, and weight') {
 		@include true.assert() {
 			@include true.output() {
@@ -41,16 +38,37 @@
 			}
 		}
 	}
-
-	@include true.it('should use the default size and weight if not provided') {
+    
+	@include true.it('should set only the font size and weight') {
 		@include true.assert() {
 			@include true.output() {
-				@include fonts.define-font('Verdana');
+				@include fonts.define-font($size: 30px, $weight: 700);
 			}
 			@include true.expect() {
-				font-family: 'Verdana';
-				font-size: 16px;
-				font-weight: 400;
+				font-size: 30px;
+				font-weight: 700;
+			}
+		}
+	}
+  
+	@include true.it('should set only the font weight') {
+		@include true.assert() {
+			@include true.output() {
+				@include fonts.define-font($weight: 700);
+			}
+			@include true.expect() {
+				font-weight: 700;
+			}
+		}
+	}
+  
+	@include true.it('should set only the font size') {
+		@include true.assert() {
+			@include true.output() {
+				@include fonts.define-font($size: 20px);
+			}
+			@include true.expect() {
+				font-size: 20px;
 			}
 		}
 	}
