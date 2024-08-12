@@ -51,8 +51,6 @@
     "@angular/cli": "^17.3.7",
     "@angular/compiler-cli": "^17.3.6",
     "@angular/material-date-fns-adapter": "17.3.9",
-    "@ckeditor/ckeditor5-angular": "^5.2.0",
-    "@ckeditor/ckeditor5-build-classic": "^37.0.0",
     "@ngx-formly/core": "~6.3.0",
     "@ngx-formly/material": "~6.3.0",
     "@types/markdown-it": "^14.1.1",
