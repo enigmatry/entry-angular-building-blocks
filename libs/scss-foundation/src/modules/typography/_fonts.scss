@@ -1,0 +1,7 @@
+@mixin set-font($family, $size: 16px, $weight: 400) {
+	font: {
+		family: $family;
+		size: $size;
+		weight: $weight;
+	};
+}
