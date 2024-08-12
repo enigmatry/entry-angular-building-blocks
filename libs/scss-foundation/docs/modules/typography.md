@@ -7,6 +7,7 @@ Utilities for setting font properties for elements.
 @use scss-foundation/src/modules/typography/fonts;
 
 ### Set fonts
+
 Mixin for easily applying font properties such as family, size, and weight to an element. This mixin offers flexibility by allowing customization of each property, with sensible defaults for size and weight.
 
 ```
