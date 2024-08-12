@@ -1,10 +1,8 @@
 @mixin partial-border-radius($top-left: 0, $top-right: 0,  $bottom-right: 0, $bottom-left: 0) {
 	border: {
-		/* stylelint-disable scss/declaration-nested-properties */
 		top-left-radius: $top-left;
 		top-right-radius: $top-right;
 		bottom-right-radius: $bottom-right;
 		bottom-left-radius: $bottom-left;
-		/* stylelint-enable scss/declaration-nested-properties */
 	}
 }
