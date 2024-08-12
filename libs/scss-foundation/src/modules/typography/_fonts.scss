@@ -1,7 +1,13 @@
-@mixin define-font($family, $size: 16px, $weight: 400) {
+@mixin define-font($family: null, $size: null, $weight: null) {
 	font: {
-		family: $family;
-		size: $size;
-		weight: $weight;
+		@if $family {
+			family: $family;
+		}
+		@if $size {
+			size: $size;
+		}
+		@if $weight {
+			weight: $weight;
+		}
 	};
 }
