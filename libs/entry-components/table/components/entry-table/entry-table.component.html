@@ -12,7 +12,7 @@
 
   <!-- Selection column -->
   <ng-container *ngIf="rowSelectable" [matColumnDef]="selectionColumn">
-    <th mat-header-cell *matHeaderCellDef class="selection-cell" aria-label="Select All Rows">
+    <th mat-header-cell *matHeaderCellDef class="selection-cell" aria-label="Select rows">
       <mat-checkbox aria-label="Select all" *ngIf="multiSelectable && showSelectAllCheckbox"
                     [checked]="rowSelection.hasValue() && isAllSelected()"
                     [indeterminate]="rowSelection.hasValue() && !isAllSelected()"
