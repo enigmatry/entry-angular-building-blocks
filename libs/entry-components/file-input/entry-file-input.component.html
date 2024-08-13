@@ -1,9 +1,11 @@
-<button 
- #fileButton 
- mat-button 
- entry-submit-button 
- type="button" 
- [disabled]="disabled || readonly">
+<button
+ #fileButton
+ mat-button
+ entry-submit-button
+ type="button"
+ [disabled]="disabled || readonly"
+ aria-controls="fileInput"
+ aria-label="Upload Files">
   <mat-icon *ngIf="matIcon">{{matIcon}}</mat-icon>
   <span>{{label}}</span>
 </button>
@@ -19,4 +21,6 @@
  [disabled]="disabled"
  [readonly]="readonly"
  (change)="onFileSelect($event)"
+ aria-label="File Upload"
+ id="fileInput"
 />
