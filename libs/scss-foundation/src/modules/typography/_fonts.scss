@@ -1,13 +1,17 @@
 @mixin define-font($family: null, $size: null, $weight: null) {
-	font: {
-		@if $family {
-			family: $family;
+	@if not $family and not $size and not $weight {
+		@error 'At least one of the font properties (family, size, weight) must be provided.';
+	}
+
+	$properties: (
+		'family': $family,
+		'size': $size,
+		'weight': $weight
+	);
+
+	@each $property, $value in $properties {
+		@if $value {
+			font-#{$property}: $value;
 		}
-		@if $size {
-			size: $size;
-		}
-		@if $weight {
-			weight: $weight;
-		}
-	};
+	}
 }
