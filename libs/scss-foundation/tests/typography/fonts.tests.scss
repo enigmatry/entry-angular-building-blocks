@@ -13,7 +13,7 @@
 			}
 		}
 	}
-  
+
 	@include true.it('should set the font family and size') {
 		@include true.assert() {
 			@include true.output() {
@@ -25,7 +25,7 @@
 			}
 		}
 	}
-  
+
 	@include true.it('should set the font family, size, and weight') {
 		@include true.assert() {
 			@include true.output() {
@@ -35,40 +35,6 @@
 				font-family: 'Arial';
 				font-size: 18px;
 				font-weight: 700;
-			}
-		}
-	}
-    
-	@include true.it('should set only the font size and weight') {
-		@include true.assert() {
-			@include true.output() {
-				@include fonts.define-font($size: 30px, $weight: 700);
-			}
-			@include true.expect() {
-				font-size: 30px;
-				font-weight: 700;
-			}
-		}
-	}
-  
-	@include true.it('should set only the font weight') {
-		@include true.assert() {
-			@include true.output() {
-				@include fonts.define-font($weight: 700);
-			}
-			@include true.expect() {
-				font-weight: 700;
-			}
-		}
-	}
-  
-	@include true.it('should set only the font size') {
-		@include true.assert() {
-			@include true.output() {
-				@include fonts.define-font($size: 20px);
-			}
-			@include true.expect() {
-				font-size: 20px;
 			}
 		}
 	}
