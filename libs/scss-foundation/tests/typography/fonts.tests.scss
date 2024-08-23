@@ -42,7 +42,7 @@ vars.$testing: true;
 		}
 	}
 
-	@include true.it('should throw if only one property is defined') {
+	@include true.it('should throw an error if only one property is defined') {
 		@include true.assert() {
 			@include true.output() {
 				@include fonts.define-font('Arial');
