@@ -8,7 +8,7 @@ Utilities for setting font properties for elements.
 
 ### Set fonts
 
-The mixin provides a simple way to apply font properties such as family, size, and weight to an element. It allows for flexibility by enabling customization of each property through optional arguments.
+The `define-font` mixin provides a simple way to apply font properties such as family, size, and weight to an element. It allows for flexibility by enabling customization of each property. It requires **at least two** of the font properties to be provided. If this condition is not met, an error will be thrown.
 
 ```
 @include fonts.define-font('Roboto', 18px, 700);
