@@ -1,11 +1,9 @@
 @use 'sass-true';
+@use 'sass-true/sass/throw';
 @use '../../modules/variables' as vars;
 
 @mixin define-font($family: null, $size: null, $weight: null) {
-	@if not $family and not $size and not $weight {
-		@include sass-true.error('At least one of the font properties (family, size, weight) must be provided.');
-	}
-	@else {
+	@if ($family and $size) or ($family and $weight) or ($size and $weight) {
 		$properties: (
 			'family': $family,
 			'size': $size,
@@ -17,5 +15,12 @@
 				font-#{$property}: $value;
 			}
 		}
+	}
+	@else {
+		@include throw.error(
+			$message: 'At least two of the font properties must be provided.',
+			$source: 'define-font($family, $size, $weight)',
+			$catch: vars.$testing
+		);
 	}
 }
