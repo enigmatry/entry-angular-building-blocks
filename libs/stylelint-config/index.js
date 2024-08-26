@@ -118,7 +118,9 @@ module.exports = {
     "declaration-block-no-duplicate-custom-properties": true,
     "declaration-block-no-duplicate-properties": true,
     "declaration-block-no-shorthand-property-overrides": true,
-    "declaration-block-no-redundant-longhand-properties": true,
+    "declaration-block-no-redundant-longhand-properties": [
+      true, { "ignoreShorthands": [] }
+    ],
     "declaration-block-single-line-max-declarations": 1,
     "declaration-no-important": true,
     "declaration-property-max-values": {},
@@ -146,11 +148,11 @@ module.exports = {
     "no-descending-specificity": true,
     "no-duplicate-at-import-rules": true,
     "no-duplicate-selectors": true,
+    "no-unknown-custom-media": true,
     "no-invalid-double-slash-comments": true,
     "no-unknown-animations": true,
     "no-unknown-custom-properties": null,
     "number-max-precision": 2,
-    "property-no-unknown": true,
     "property-no-vendor-prefix": true,
     "rule-empty-line-before": [
       "always",
@@ -161,7 +163,9 @@ module.exports = {
     "selector-disallowed-list": null,
     "selector-max-attribute": 0,
     "selector-max-combinators": 2,
-    "selector-max-compound-selectors": 3,
+    "selector-max-compound-selectors": [3,
+      { ignoreSelectors: ["::ng-deep"] }
+    ],
     "selector-max-id": 0,
     "selector-max-pseudo-class": 1,
     "selector-max-type": 2,
@@ -188,6 +192,7 @@ module.exports = {
     "scss/at-else-empty-line-before": "never",
     "scss/at-else-if-parentheses-space-before": "never",
     "scss/at-extend-no-missing-placeholder": true,
+    "scss/at-mixin-no-risky-nesting-selector": true,
     "scss/at-function-parentheses-space-before": "never",
     "scss/at-function-named-arguments": [
       "never",
@@ -196,7 +201,6 @@ module.exports = {
     "scss/at-if-closing-brace-newline-after": null,
     "scss/at-if-closing-brace-space-after": null,
     "scss/at-if-no-null": true,
-    "scss/at-import-partial-extension": "never",
     "scss/at-mixin-argumentless-call-parentheses": "always",
     "scss/at-mixin-parentheses-space-before": "never",
     "scss/at-root-no-redundant": true,
@@ -224,6 +228,8 @@ module.exports = {
     "scss/partial-no-import": true,
     "scss/selector-no-redundant-nesting-selector": true,
     "scss/selector-no-union-class-name": true,
+    "load-partial-extension": "never",
+    "scss/property-no-unknown": true,
     "scss/no-duplicate-dollar-variables": [
       true,
       {
