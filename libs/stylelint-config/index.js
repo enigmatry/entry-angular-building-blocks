@@ -228,7 +228,7 @@ module.exports = {
     "scss/selector-no-redundant-nesting-selector": true,
     "scss/selector-no-union-class-name": true,
     "scss/at-import-partial-extension-allowed-list": ["scss"],
-    "scss/at-import-partial-extension-disallowed-list": ["sass", /less/],
+    "scss/at-import-partial-extension-disallowed-list": ["sass"],
     "scss/load-partial-extension": "never",
     "scss/declaration-property-value-no-unknown": null,
     "scss/property-no-unknown": true,
