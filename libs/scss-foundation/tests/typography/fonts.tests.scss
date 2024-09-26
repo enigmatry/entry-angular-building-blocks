@@ -17,6 +17,18 @@ vars.$testing: true;
 		}
 	}
 
+	@include true.it('should set the font family and weight') {
+		@include true.assert() {
+			@include true.output() {
+				@include fonts.define-font($family: 'Arial', $weight: 400);
+			}
+			@include true.expect() {
+				font-family: 'Arial';
+				font-weight: 400;
+			}
+		}
+	}
+
 	@include true.it('should set the font family, size, and weight') {
 		@include true.assert() {
 			@include true.output() {
