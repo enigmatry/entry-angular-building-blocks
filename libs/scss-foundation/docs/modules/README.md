@@ -17,4 +17,5 @@ Utilities are nothing more than just sass mixins that won't be included in your 
 - [Text Hover utilities](./text-hover.md)
 - [Border Radius utilities](./border-radius.md)
 - [Row Coloring utilities](./row-coloring.md)
+- [Sizing utilities](./sizes.md)
 - [Visibility utilities](./visibility.md)
