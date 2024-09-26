@@ -13,6 +13,7 @@ Utilities are nothing more than just sass mixins that won't be included in your 
 - [Absolute Positioning utilities](./absolute-positioning.md)
 - [Fixed Positioning utilities](./fixed-positioning.md)
 - [Text Modification utilities](./text-modification.md)
+- [Typography utilities](./typography.md)
 - [Text Hover utilities](./text-hover.md)
 - [Border Radius utilities](./border-radius.md)
 - [Row Coloring utilities](./row-coloring.md)
