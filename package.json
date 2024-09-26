@@ -71,14 +71,14 @@
     "typedoc": "^0.25.13",
     "typedoc-plugin-markdown": "^4.0.1",
     "typescript": "^5.4.5",
-    "stylelint": "^16.5.0",
+    "stylelint": "^16.9.0",
     "postcss-scss": "^4.0.9",
     "stylelint-config-property-sort-order-smacss": "^10.0.0",
-    "@stylistic/stylelint-plugin": "^2.1.2",
+    "@stylistic/stylelint-plugin": "^3.1.0",
     "stylelint-use-nesting": "^5.1.1",
     "stylelint-declaration-block-no-ignored-properties": "^2.8.0",
     "stylelint-file-max-lines": "^1.0.0",
-    "stylelint-scss": "^6.1.0",
+    "stylelint-scss": "^6.7.0",
     "stylelint-group-selectors": "^1.0.10"
   },
   "dependenciesComments": {
