@@ -15,11 +15,11 @@
   "dependencies": {
     "postcss-scss": "^4.0.9",
     "stylelint-config-property-sort-order-smacss": "^10.0.0",
-    "@stylistic/stylelint-plugin": "^3.0.1",
+    "@stylistic/stylelint-plugin": "^3.1.0",
     "stylelint-use-nesting": "^5.1.1",
     "stylelint-declaration-block-no-ignored-properties": "^2.8.0",
     "stylelint-file-max-lines": "^1.0.0",
-    "stylelint-scss": "^6.5.1",
+    "stylelint-scss": "^6.7.0",
     "stylelint-group-selectors": "^1.0.10"
   },
   "peerDependencies": {

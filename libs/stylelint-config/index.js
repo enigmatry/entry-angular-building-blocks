@@ -43,6 +43,7 @@ module.exports = {
     "@stylistic/function-comma-space-after": "always-single-line",
     "@stylistic/function-comma-space-before": "never",
     "@stylistic/function-max-empty-lines": 0,
+    "@stylistic/named-grid-areas-alignment": "always",
     "@stylistic/function-parentheses-newline-inside": "never-multi-line",
     "@stylistic/function-parentheses-space-inside": "never",
     "@stylistic/function-whitespace-after": "always",
