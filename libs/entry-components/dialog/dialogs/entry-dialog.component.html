@@ -1,8 +1,9 @@
-<div class="entry-dialog">
+<div class="entry-dialog" role="dialog">
     <div class="dialog-header">
-        <h1 class="title" [ngClass]="{'without-close-icon': hideClose === true}" mat-dialog-title>{{ title }}</h1>
-        <button mat-icon-button *ngIf="!hideClose" type="button" class="close-button" (click)="cancel()">
-            <mat-icon>close</mat-icon>
+        <h1 class="title" [class.without-close-icon]="hideClose" mat-dialog-title>{{ title }}</h1>
+        <button mat-icon-button *ngIf="!hideClose" type="button" class="close-button" (click)="cancel()"
+            aria-label="Close dialog">
+            <mat-icon aria-hidden="true">close</mat-icon>
         </button>
     </div>
 
@@ -14,7 +15,7 @@
         <ng-container *ngIf="buttonsTemplate; then buttonsTemplate; else defaultButtonsTemplate">
         </ng-container>
     </mat-dialog-actions>
-    
+
     <ng-template #defaultButtonsTemplate>
         <button cdkFocusInitial mat-button entry-submit-button (click)="onSubmit()">
             <span>{{confirmButtonText}}</span>
