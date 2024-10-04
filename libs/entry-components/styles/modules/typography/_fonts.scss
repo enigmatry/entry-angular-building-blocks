@@ -47,8 +47,8 @@ $font-sources: (
 			@font-face {
 				font: {
 					style: '#{$style}';
-		
-					/* stylelint-disable property-no-unknown, max-nesting-depth */
+
+					/* stylelint-disable scss/property-no-unknown, max-nesting-depth */
 					@if $weight {
 						family: '#{$name}';
 						weight: $weight;
