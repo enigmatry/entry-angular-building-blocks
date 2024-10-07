@@ -71,7 +71,7 @@ export class EntryTableComponent<T> implements OnChanges {
 
   @Input() rowHover = false;
   @Input() rowStriped = false;
-  @Input() rowFocusVisible = false;
+  @Input() rowFocusVisible: boolean;
   @Output() rowClick = new EventEmitter<T>();
 
   // Row selection
@@ -151,6 +151,7 @@ export class EntryTableComponent<T> implements OnChanges {
     this.pageSizeOptions = this.pageSizeOptions ?? this._config.pageSizeOptions;
     this.hidePageSize = this.hidePageSize ?? this._config.hidePageSize;
     this.noResultText = this.noResultText ?? this._config.noResultsText;
+    this.rowFocusVisible = this.rowFocusVisible ?? this._config.rowFocusVisible;
 
     this.displayedColumns = this.columns.filter(item => !item.hide).map(item => item.field);
 
