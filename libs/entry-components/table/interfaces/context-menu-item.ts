@@ -3,4 +3,5 @@ export interface ContextMenuItem {
   name: string;
   icon?: string;
   disabled?: boolean;
+  items?: ContextMenuItem[];
 }
