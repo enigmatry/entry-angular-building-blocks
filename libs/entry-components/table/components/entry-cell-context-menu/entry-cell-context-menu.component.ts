@@ -12,6 +12,8 @@ export class EntryCellContextMenuComponent implements OnInit {
   @Input() items: ContextMenuItem[] = [];
   @Input() rowMenuFormatter: RowContextMenuFormatter;
   @Input() rowData: any;
+  @Input() icon: string = 'more_vert';
+  @Input() subMenuIcon: string = 'keyboard_arrow_right';
   @Output() selected = new EventEmitter<string>();
 
   menuItems: ContextMenuItem[] = [];
@@ -21,4 +23,8 @@ export class EntryCellContextMenuComponent implements OnInit {
       ? this.rowMenuFormatter.items(this.rowData)
       : this.items;
   }
+
+  hasItems = (menuItem: ContextMenuItem) : boolean => menuItem.items?.length > 0;
+
+  subMenuSelected = (item: string) => this.selected.emit(item);
 }

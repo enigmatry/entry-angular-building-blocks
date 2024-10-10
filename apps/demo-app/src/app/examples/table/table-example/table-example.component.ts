@@ -29,7 +29,22 @@ export class TableExampleComponent implements OnInit {
       { field: 'lastLogin', header: 'Last login', hide: false, sortable: true, type: 'date' }
     ];
     this.contextMenuItems = [
-      { id: 'edit', name: `Edit`, icon: 'edit' }
+      {
+        id: 'edit', name: `Edit`, icon: 'edit'
+      },
+      {
+        id: 'subMenu', name: 'Sub menu', icon: 'menu', items:
+          [{
+            id: 'add',
+            name: 'Add',
+            icon: 'add'
+          },
+          {
+            id: 'delete',
+            name: 'Delete',
+            icon: 'delete'
+          }]
+      }
     ];
   }
 }
