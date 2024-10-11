@@ -1,5 +1,4 @@
 @use 'scss-foundation/src/modules/display/items';
-@use 'scss-foundation/src/modules/position/set-position' as default;
 
 .entry-table {
 	display: flex;
@@ -15,8 +14,4 @@
 		flex: 1;
 		min-height: 50px;
 	}
-}
-
-.entry-table-menu .sub-menu .description {
-	@include default.set-position(relative, unset, unset, 6px, unset);
 }
