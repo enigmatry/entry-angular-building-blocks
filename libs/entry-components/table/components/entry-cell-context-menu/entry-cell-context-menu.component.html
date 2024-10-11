@@ -1,10 +1,10 @@
 <button mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()">
     <mat-icon>{{icon}}</mat-icon>
 </button>
-<mat-menu #menu="matMenu" class="entry-table-menu">
+<mat-menu #menu="matMenu" class="entry-table-menu" role="menu">
     <ng-container *ngFor="let item of menuItems">
         <button mat-menu-item [disabled]="item.disabled" *ngIf="hasItems(item); else menuItem"
-            (click)="selected.emit(item.id)" class="context-menu-item">
+            (click)="selected.emit(item.id)" class="context-menu-item sub-menu">
             <mat-icon class="icon" *ngIf="item.icon">{{item.icon}}</mat-icon>
             <span class="description">{{item.name}}</span>
             <entry-cell-context-menu [icon]="subMenuIcon" [items]="item.items" [rowData]="rowData"
