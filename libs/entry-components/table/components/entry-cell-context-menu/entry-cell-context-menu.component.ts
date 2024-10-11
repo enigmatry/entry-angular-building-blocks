@@ -26,6 +26,4 @@ export class EntryCellContextMenuComponent implements OnInit {
       ? this.rowMenuFormatter.items(this.rowData)
       : this.items;
   }
-
-  hasSubItems = (menuItem: ContextMenuItem): boolean => menuItem.items?.length > 0;
 }
