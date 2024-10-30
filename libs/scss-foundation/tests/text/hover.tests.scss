@@ -1,0 +1,19 @@
+@use 'sass-true/sass/true';
+@use '../../src/modules/text/hover' as default;
+
+@include true.describe('font-hover($regular-state, $hover-state)') {
+	@include true.it('should set regular and hover states for text color') {
+		@include true.assert() {
+			@include true.output() {
+				@include default.font-hover(#000, #F00);
+			}
+			@include true.expect() {
+				color: #000;
+
+				&:hover, &:hover::before {
+					color: #F00;
+				}
+			}
+		}
+	}
+}

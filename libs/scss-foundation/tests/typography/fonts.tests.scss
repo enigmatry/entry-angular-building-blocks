@@ -1,0 +1,69 @@
+@use 'sass-true' as true;
+@use '../../src/modules/typography/fonts';
+@use '../../src/modules/variables' as vars;
+
+vars.$testing: true;
+
+@include true.describe('define-font($family, $size, $weight)') {
+	@include true.it('should set the font family and size') {
+		@include true.assert() {
+			@include true.output() {
+				@include fonts.define-font('Arial', 14px);
+			}
+			@include true.expect() {
+				font-family: 'Arial';
+				font-size: 14px;
+			}
+		}
+	}
+
+	@include true.it('should set the font family and weight') {
+		@include true.assert() {
+			@include true.output() {
+				@include fonts.define-font($family: 'Arial', $weight: 400);
+			}
+			@include true.expect() {
+				font-family: 'Arial';
+				font-weight: 400;
+			}
+		}
+	}
+
+	@include true.it('should set the font family, size, and weight') {
+		@include true.assert() {
+			@include true.output() {
+				@include fonts.define-font('Arial', 18px, 700);
+			}
+			@include true.expect() {
+				font-family: 'Arial';
+				font-size: 18px;
+				font-weight: 700;
+			}
+		}
+	}
+
+	@include true.it('should set the font size and weight') {
+		@include true.assert() {
+			@include true.output() {
+				@include fonts.define-font($size: 18px, $weight: 700);
+			}
+			@include true.expect() {
+				font-size: 18px;
+				font-weight: 700;
+			}
+		}
+	}
+
+	@include true.it('should throw an error if only one property is defined') {
+		@include true.assert() {
+			@include true.output() {
+				@include fonts.define-font('Arial');
+			}
+	  
+			@include true.contains() {
+				/* ERROR [define-font($family, $size, $weight)]: */
+				/*   At least two of the font properties must be provided. */
+			}
+		}
+	}
+}

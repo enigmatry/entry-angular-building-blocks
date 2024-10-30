@@ -1,0 +1,19 @@
+@use 'sass-true/sass/true';
+@use '../../src/modules/states/hover';
+
+@include true.describe('background-hover($regular-state, $hover-state)') {
+	@include true.it('should set regular and hover states for background color') {
+		@include true.assert() {
+			@include true.output() {
+				@include hover.background-hover(#FFF, #CCC);
+			}
+			@include true.expect() {
+				background-color: #FFF;
+
+				&:hover, &:hover::before {
+					background-color: #CCC;
+				}
+			}
+		}
+	}
+}

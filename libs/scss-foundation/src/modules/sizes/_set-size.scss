@@ -1,0 +1,15 @@
+@mixin box-dimensions($property, $value, $min-value: null, $max-value: null) {
+	#{$property}: $value;
+  
+	@if $min-value {
+		min-#{$property}: $min-value;
+	}
+	@if $max-value {
+		max-#{$property}: $max-value;
+	}
+}
+
+@mixin box-definition($width: null, $height: null, $min-width: null, $max-width: null, $min-height: null, $max-height: null) {
+	@include box-dimensions(width, $width, $min-width, $max-width);
+	@include box-dimensions(height, $height, $min-height, $max-height);
+}

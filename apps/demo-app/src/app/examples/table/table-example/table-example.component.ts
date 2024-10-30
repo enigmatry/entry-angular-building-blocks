@@ -28,8 +28,28 @@ export class TableExampleComponent implements OnInit {
       { field: 'occupation', header: 'Occupation', hide: false, sortable: true },
       { field: 'lastLogin', header: 'Last login', hide: false, sortable: true, type: 'date' }
     ];
-    this.contextMenuItems = [
-      { id: 'edit', name: `Edit`, icon: 'edit' }
-    ];
+
+    this.contextMenuItems = [{
+      id: 'edit',
+      name: 'Edit',
+    },
+    {
+      id: 'delete',
+      name: 'Delete',
+    },
+    {
+      id: 'export',
+      name: `Export`,
+      items: [
+        {
+          id: 'export_csv',
+          name: 'CSV',
+        },
+        {
+          id: 'export_json',
+          name: 'JSON',
+        }
+      ]
+    }];
   }
 }

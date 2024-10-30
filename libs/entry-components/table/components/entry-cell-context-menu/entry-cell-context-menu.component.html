@@ -1,10 +1,28 @@
-<button mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()">
-    <mat-icon>more_vert</mat-icon>
+<button *ngIf="!isSubMenu" mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()">
+    <mat-icon>{{triggerIcon}}</mat-icon>
 </button>
-<mat-menu #menu="matMenu" class="entry-table-menu">
-    <button *ngFor="let item of menuItems" mat-menu-item [disabled]="item.disabled" (click)="selected.emit(item.id)"
-        class="context-menu-item">
-        <mat-icon class="icon" *ngIf="item.icon">{{item.icon}}</mat-icon>
-        <span class="description">{{item.name}}</span>
-    </button>
+<mat-menu #menu="matMenu" class="entry-table-menu" role="menu">
+    <ng-container *ngFor="let item of menuItems">
+        <ng-container 
+            *ngIf="item.items?.length; then menuSubItems; else menuItem">
+        </ng-container>
+
+        <ng-template #menuSubItems>
+            <button mat-menu-item [disabled]="item.disabled" [matMenuTriggerFor]="subMenu.menu"
+                class="context-menu-item">
+                <mat-icon class="icon" *ngIf="item.icon">{{item.icon}}</mat-icon>
+                <span class="description">{{item.name}}</span>
+                <entry-cell-context-menu #subMenu [items]="item.items" [rowData]="rowData" [isSubMenu]="true"
+                    (selected)="selected.emit($event)">
+                </entry-cell-context-menu>
+            </button>
+        </ng-template>
+
+        <ng-template #menuItem>
+            <button mat-menu-item [disabled]="item.disabled" (click)="selected.emit(item.id)" class="context-menu-item">
+                <mat-icon class="icon" *ngIf="item.icon">{{item.icon}}</mat-icon>
+                <span class="description">{{item.name}}</span>
+            </button>
+        </ng-template>
+    </ng-container>
 </mat-menu>
