@@ -24,5 +24,5 @@
 	@include dialogs.generate-from($merged-theme);
 	@include checkboxes.generate-from($merged-theme);
 	@include toggle.generate-from($merged-theme);
-	@include redactor.generate-from($merged-theme);
+	@include redactor.generate-from($custom-theme);
 }

@@ -1,36 +1,19 @@
 @use 'sass:map';
+@use 'typography-generator';
 
 $redactor-checkboxes-selector: '[data-rx-type = 'todoitem'] input:checked::before';
 
 @mixin generate-from($theme) {
-	$theming-fonts: map.get($theme, 'general', 'fonts');
 	$theming-colors: map.get($theme, 'general', 'colors');
 	$theming-checkboxes: map.get($theme, 'general', 'checkboxes');
 
+	@include typography-generator.generate-from($theme);
+
 	.entry-redactor {
-		.rx-content {
+		.rx-editor, .rx-content {
 			@if $theming-colors {
-				p, li, h1, h2, h3, h4, h5, h6 {
+				p, b, a, span, sup, sub, small, em, i, strong, li, h1, h2, h3, h4, h5, h6 {
 					color: map.get($theming-colors, 'font');
-				}
-	
-				blockquote {
-					border-left-color: map.get($theming-colors, 'primary');
-				}
-			}
-	
-			@if $theming-fonts {
-				p, li {
-					font-family: map.get($theming-fonts, 'body', 'family');
-					font-size: map.get($theming-fonts, 'body', 'size');
-				}
-			
-				h1, h2, h3, h4 {
-					font-family: map.get($theming-fonts, 'hero-titles', 'family');
-				}
-			
-				h5, h6 {
-					font-family: map.get($theming-fonts, 'titles', 'family');
 				}
 			}
 		}
