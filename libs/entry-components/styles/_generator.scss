@@ -8,6 +8,7 @@
 @use 'modules/components/toggle/generator' as toggle;
 @use 'modules/default-theme' as default;
 @use 'modules/vendors/angular-material/generator' as material-theme;
+@use 'modules/vendors/redactor/generator' as redactor;
 @use 'sass:map';
 @use 'partials/theming';
 
@@ -23,4 +24,5 @@
 	@include dialogs.generate-from($merged-theme);
 	@include checkboxes.generate-from($merged-theme);
 	@include toggle.generate-from($merged-theme);
+	@include redactor.generate-from($merged-theme);
 }
