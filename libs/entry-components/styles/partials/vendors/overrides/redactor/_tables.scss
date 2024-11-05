@@ -1,0 +1,28 @@
+$redactor-first-row: 'tr:first-child';
+$redactor-last-row: 'tr:last-child';
+
+.enigmatry-redactor-content table {
+	th {
+		font-weight: 500;
+	}
+
+	#{$redactor-first-row} {
+		th, td {
+			border-top: none;
+		}
+	}
+
+	#{$redactor-last-row} td {
+		border-bottom: none;
+	}
+
+	th, td {
+		&:first-child {
+			border-left: none;
+		}
+
+		&:last-child {
+			border-right: none;
+		}
+	}
+}

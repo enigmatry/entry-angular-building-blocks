@@ -1,0 +1,19 @@
+@use 'sass:map';
+
+$material-text-color: rgb(0 0 0 / .87);
+$material-border: rgb(0 0 0 / .38);
+$material-icon-color: rgb(0 0 0 / .54);
+
+.enigmatry-redactor-content {
+	.rx-editor, .rx-content {
+		color: $material-text-color;
+	}
+
+	.rx-button-icon svg {
+		fill: $material-icon-color;
+	}
+
+	.rx-main-container {
+		border-color: $material-border;
+	}
+}

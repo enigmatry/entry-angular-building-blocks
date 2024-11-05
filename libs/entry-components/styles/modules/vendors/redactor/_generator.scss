@@ -1,19 +1,36 @@
 @use 'sass:map';
-@use 'typography-generator';
+@use 'tables-generator' as tables;
+@use 'buttons-generator' as buttons;
+@use 'typography-generator' as typography;
 
 $redactor-checkboxes-selector: '[data-rx-type = 'todoitem'] input:checked::before';
+$default-material-checkbox: #E94887;
 
 @mixin generate-from($theme) {
+	@include typography.generate-from($theme);
+	@include tables.generate-from($theme);
+	@include buttons.generate-from($theme);
+
 	$theming-colors: map.get($theme, 'general', 'colors');
 	$theming-checkboxes: map.get($theme, 'general', 'checkboxes');
 
-	@include typography-generator.generate-from($theme);
+	.enigmatry-redactor-content {
+		.rx-main-container, .rx-toolbox-container {
+			@if map.get($theme, 'general', 'inputs', 'background') {
+				background: map.get($theme, 'general', 'inputs', 'background');
+			}
+			@else {
+				background: transparent;
+			}
+		}
 
-	.entry-redactor {
-		.rx-editor, .rx-content {
-			@if $theming-colors {
-				p, b, a, span, sup, sub, small, em, i, strong, li, h1, h2, h3, h4, h5, h6 {
-					color: map.get($theming-colors, 'font');
+		.rx-toolbar-buttons .rx-button {
+			&.active, &:hover {
+				@if map.get($theme, 'general', 'inputs', 'background') {
+					background: map.get($theme, 'general', 'inputs', 'background');
+				}
+				@else {
+					background: transparent;
 				}
 			}
 		}
@@ -22,6 +39,12 @@ $redactor-checkboxes-selector: '[data-rx-type = 'todoitem'] input:checked::befor
 			.rx-editor #{$redactor-checkboxes-selector} {
 				border-color: map.get($theming-checkboxes, 'background');
 				background-color: map.get($theming-checkboxes, 'background');
+			}
+		}
+		@else {
+			.rx-editor #{$redactor-checkboxes-selector} {
+				border-color: $default-material-checkbox;
+				background-color: $default-material-checkbox;
 			}
 		}
 	}

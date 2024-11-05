@@ -1,26 +1,28 @@
 @use 'sass:map';
 
 @mixin generate-from($theme) {
-
 	$theming-fonts: map.get($theme, 'general', 'fonts');
 	$redactor-th-selector: 'thead th';
 
-	.entry-redactor {
+	.enigmatry-redactor-content {
 		.rx-editor, .rx-content {
 			@if $theming-fonts {
 				$body-font-family: map.get($theming-fonts, 'body', 'family');
 
-				p, li {
-					font-family: map.get($theming-fonts, 'body', 'family');
-					font-size: map.get($theming-fonts, 'body', 'size');
+				font: {
+					family: map.get($theming-fonts, 'body', 'family');
+					size: map.get($theming-fonts, 'body', 'size');
 				}
-
+				letter-spacing: map.get($theming-fonts, 'body', 'letter-spacing');
+				
 				h1, h2, h3, h4 {
 					font-family: map.get($theming-fonts, 'hero-titles', 'family');
+					letter-spacing: map.get($theming-fonts, 'hero-titles', 'letter-spacing');
 				}
 
 				h5, h6 {
 					font-family: map.get($theming-fonts, 'titles', 'family');
+					letter-spacing: map.get($theming-fonts, 'titles', 'letter-spacing');
 				}
 
 				table {
@@ -30,6 +32,10 @@
 						font-size: map.get($theme, 'tables', 'header', 'font-size');
 					}
 				}
+			}
+			@else {
+				color: rgb(0 0 0 / .6);
+				font-family: 'Roboto', sans-serif;
 			}
 		}
 	}
