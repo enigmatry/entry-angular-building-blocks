@@ -2,17 +2,15 @@
 @use 'tables-generator' as tables;
 @use 'buttons-generator' as buttons;
 @use 'typography-generator' as typography;
-
-$redactor-checkboxes-selector: '[data-rx-type = 'todoitem'] input:checked::before';
-$default-material-checkbox: #E94887;
+@use 'checkboxes-generator' as checkboxes;
 
 @mixin generate-from($theme) {
 	@include typography.generate-from($theme);
 	@include tables.generate-from($theme);
 	@include buttons.generate-from($theme);
+	@include checkboxes.generate-from($theme);
 
 	$theming-colors: map.get($theme, 'general', 'colors');
-	$theming-checkboxes: map.get($theme, 'general', 'checkboxes');
 
 	.enigmatry-redactor-content {
 		.rx-main-container, .rx-toolbox-container {
@@ -32,19 +30,6 @@ $default-material-checkbox: #E94887;
 				@else {
 					background: transparent;
 				}
-			}
-		}
-
-		@if $theming-checkboxes {
-			.rx-editor #{$redactor-checkboxes-selector} {
-				border-color: map.get($theming-checkboxes, 'background');
-				background-color: map.get($theming-checkboxes, 'background');
-			}
-		}
-		@else {
-			.rx-editor #{$redactor-checkboxes-selector} {
-				border-color: $default-material-checkbox;
-				background-color: $default-material-checkbox;
 			}
 		}
 	}
