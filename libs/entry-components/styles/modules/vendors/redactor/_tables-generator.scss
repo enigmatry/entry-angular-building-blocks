@@ -1,12 +1,7 @@
 @use 'sass:map';
+@use '../../../../../scss-foundation/src/modules/lists/row-coloring' as list;
 
 $material-odd-background: #F0F0F0;
-
-@mixin row-coloring($color, $rows) {
-	&:nth-child(#{$rows}) {
-		background-color: $color;
-	}
-}
 
 @mixin generate-from($theme) {
 	$theming-table: map.get($theme, 'tables', 'rows', 'odd-even-background');
@@ -14,14 +9,14 @@ $material-odd-background: #F0F0F0;
 	.enigmatry-redactor-content table {
 		@if $theming-table {
 			tr {
-				@include row-coloring(map.get($theming-table, 'odd'), 'odd');
-				@include row-coloring(map.get($theming-table, 'even'), 'even');
+				@include list.odd-row-coloring(map.get($theming-table, 'odd'));
+				@include list.even-row-coloring(map.get($theming-table, 'even'));
 			}
 		}
 		@else {
 			tr {
-				@include row-coloring($material-odd-background, 'even');
-				@include row-coloring(transparent, 'odd');
+				@include list.even-row-coloring($material-odd-background);
+				@include list.odd-row-coloring(transparent);
 			}
 		}
 
