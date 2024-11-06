@@ -1,23 +1,30 @@
 @use 'sass:map';
 
-$redactor-checkboxes-selector: '[data-rx-type = 'todoitem'] input:checked::before';
+$redactor-checkboxes-selector: '[data-rx-type = 'todoitem'] ';
 $default-material-checkbox: #E94887;
 
 @mixin generate-from($theme) {
-    
+
 	$theming-checkboxes: map.get($theme, 'general', 'checkboxes');
 
 	.enigmatry-redactor-content {
-		@if $theming-checkboxes {
-			.rx-editor #{$redactor-checkboxes-selector} {
-				border-color: map.get($theming-checkboxes, 'background');
-				background-color: map.get($theming-checkboxes, 'background');
+		
+		@if map.get($theme, 'general', 'colors', 'accent') {
+			.rx-editor #{$redactor-checkboxes-selector} input:checked::before {
+				border-color: map.get($theme, 'general', 'colors', 'accent');
+				background-color: map.get($theme, 'general', 'colors', 'accent');
 			}
 		}
 		@else {
-			.rx-editor #{$redactor-checkboxes-selector} {
+			.rx-editor #{$redactor-checkboxes-selector} input:checked::before {
 				border-color: $default-material-checkbox;
 				background-color: $default-material-checkbox;
+			}
+		}
+
+		@if $theming-checkboxes {
+			.rx-editor #{$redactor-checkboxes-selector} input::before {
+				background-color: map.get($theming-checkboxes, 'background');
 			}
 		}
 	}

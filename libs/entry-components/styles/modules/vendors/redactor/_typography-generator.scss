@@ -1,5 +1,8 @@
 @use 'sass:map';
 
+$material-input-text: rgb(0 0 0 / .87);
+$material-font-family: 'Roboto', sans-serif;
+
 @mixin generate-from($theme) {
 	$theming-fonts: map.get($theme, 'general', 'fonts');
 	$redactor-th-selector: 'thead th';
@@ -34,8 +37,8 @@
 				}
 			}
 			@else {
-				color: rgb(0 0 0 / .6);
-				font-family: 'Roboto', sans-serif;
+				color: $material-input-text;
+				font-family: $material-font-family;
 			}
 		}
 	}

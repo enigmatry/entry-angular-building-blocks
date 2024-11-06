@@ -1,21 +1,44 @@
+@use 'scss-foundation/src/modules/display/items';
+
 $material-box-shadow: 0 3px 1px -2px rgb(0 0 0 / .2), 0 2px 2px 0 rgb(0 0 0 / .14), 0 1px 5px 0 rgb(0 0 0 / .12);
 $material-box-shadow-hovered: 0 2px 4px -1px rgb(0 0 0 / .2), 0 4px 5px 0 rgb(0 0 0 / .14), 0 1px 10px 0 rgb(0 0 0 / .12);
+$redactor-link-selectors: 'a, a:visited, a:focus, a:hover';
 
-.enigmatry-redactor-content button {
-	height: 36px;
-	margin: 8px 8px 8px 0;
-	padding: 0 16px;
-	border: none;
-	border-radius: 4px;
-	box-shadow: $material-box-shadow;
-	color: #FFF;
-	font: {
-		family: 'Roboto', sans-serif;
-		weight: 500;
-		size: 14px;
+.enigmatry-redactor-content .rx-content {
+	#{$redactor-link-selectors} {
+		@include items.fully-align(center, center);
+		display: inline-flex;
+		cursor: pointer;
 	}
 
-	&:hover {
-		box-shadow: $material-box-shadow-hovered;
+	button, #{$redactor-link-selectors} {
+		@include items.fully-align(center, flex-start);
+		height: 36px;
+		margin: 8px 8px 8px 0;
+		padding: 0 16px;
+		border: none;
+		color: #000;
+		text-decoration: none;
+        
+		font: {
+			family: 'Roboto', sans-serif;
+			weight: 500;
+			size: 14px;
+		}
+	}
+
+	a:hover {
+		background-color: #F0F0F0;
+	}
+
+	button {
+		height: 36px;
+		border-radius: 4px;
+		box-shadow: $material-box-shadow;
+		color: #FFF;
+    
+		&:hover {
+			box-shadow: $material-box-shadow-hovered;
+		}
 	}
 }

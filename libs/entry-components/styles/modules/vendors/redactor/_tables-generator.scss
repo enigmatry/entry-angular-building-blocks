@@ -9,16 +9,26 @@ $material-odd-background: #F0F0F0;
 }
 
 @mixin generate-from($theme) {
-	$theming-rows: map.get($theme, 'tables', 'rows', 'odd-even-background');
+	$theming-table: map.get($theme, 'tables', 'rows', 'odd-even-background');
 
-	.enigmatry-redactor-content table tr {
-		@if (map.get($theme, 'tables', 'rows')) {
-			@include row-coloring(map.get($theming-rows, 'odd'), 'odd');
-			@include row-coloring(map.get($theming-rows, 'even'), 'even');
+	.enigmatry-redactor-content table {
+		@if $theming-table {
+			tr {
+				@include row-coloring(map.get($theming-table, 'odd'), 'odd');
+				@include row-coloring(map.get($theming-table, 'even'), 'even');
+			}
 		}
 		@else {
-			@include row-coloring($material-odd-background, 'odd');
-			@include row-coloring(transparent, 'even');
+			tr {
+				@include row-coloring($material-odd-background, 'even');
+				@include row-coloring(transparent, 'odd');
+			}
+		}
+
+		@if (map.get($theme, 'tables', 'header', 'font-size')) {
+			th {
+				font-size: map.get($theme, 'tables', 'header', 'font-size');
+			}
 		}
 	}
 }

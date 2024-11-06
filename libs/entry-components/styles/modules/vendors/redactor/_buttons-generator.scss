@@ -6,17 +6,19 @@ $material-button-background: #237BBB;
 
 	$theming-buttons: map.get($theme, 'general', 'fonts', 'buttons');
 
-	.enigmatry-redactor-content button {
-		@if $theming-buttons {
-			background-color: map.get($theme, 'general', 'colors', 'primary');
-			font: {
-				family: map.get($theming-buttons, 'family');
-				size: map.get($theming-buttons, 'size');
+	.enigmatry-redactor-content {
+		button, .rx-content button {
+			@if $theming-buttons {
+				background-color: map.get($theme, 'general', 'colors', 'primary');
+				font: {
+					family: map.get($theming-buttons, 'family');
+					size: map.get($theming-buttons, 'size');
+				}
+				letter-spacing: map.get($theming-buttons, 'letter-spacing');
 			}
-			letter-spacing: map.get($theming-buttons, 'letter-spacing');
-		}
-		@else {
-			background-color: $material-button-background;
+			@else {
+				background-color: $material-button-background;
+			}
 		}
 	}
 }
