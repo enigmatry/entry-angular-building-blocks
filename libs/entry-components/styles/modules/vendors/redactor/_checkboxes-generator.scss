@@ -1,7 +1,8 @@
 @use 'sass:map';
+@use '@angular/material' as mat;
 
 $redactor-checkboxes-selector: '[data-rx-type = 'todoitem'] ';
-$default-material-checkbox: #E94887;
+$default-material-checkbox: mat.get-color-from-palette(mat.define-palette(mat.$pink-palette), 500);
 
 @mixin generate-from($theme) {
 
