@@ -1,6 +1,3 @@
-$redactor-first-row: 'tr:first-child';
-$redactor-last-row: 'tr:last-child';
-
 .enigmatry-redactor-content table {
 	th {
 		font-weight: 500;
@@ -14,13 +11,13 @@ $redactor-last-row: 'tr:last-child';
 		border: 1px solid rgb(0 0 0 / .12);
 	}
 
-	#{$redactor-first-row} {
+	tr:first-child {
 		th, td {
 			border-top: none;
 		}
 	}
 
-	#{$redactor-last-row} td {
+	tr:last-child td {
 		border-bottom: none;
 	}
 

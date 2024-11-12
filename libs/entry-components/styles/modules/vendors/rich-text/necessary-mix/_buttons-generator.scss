@@ -1,0 +1,34 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+
+@mixin generate-from($theme) {
+	$theming-buttons: map.get($theme, 'general', 'fonts', 'buttons');
+	$default-material-button: map.get(mat.define-typography-config(), 'button');
+
+	.enigmatry-redactor-content {
+		button, .rx-content button {
+			
+			@if (theming-buttons, 'colors', 'primary') {
+				background-color: map.get($theme, 'general', 'colors', 'primary');
+			}
+			@else {
+				background-color: mat.get-color-from-palette(mat.$primary-palette, 500);
+			}
+
+			@if (theming-buttons, 'family') and map.get($theming-buttons, 'family') != '' {
+				font-family: map.get($theming-buttons, 'family');
+			}
+			@else {
+				font-family: map.get($default-material-button, 'font-family');
+				font-weight: map.get($default-material-button, 'font-weight');
+			}
+
+			@if (theming-buttons, 'size') {
+				font-size: map.get($theming-buttons, 'size');
+			}
+			@else {
+				font-size: map.get($default-material-button, 'font-size');
+			}
+		}
+	}
+}

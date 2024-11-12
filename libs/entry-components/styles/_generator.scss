@@ -8,7 +8,7 @@
 @use 'modules/components/toggle/generator' as toggle;
 @use 'modules/default-theme' as default;
 @use 'modules/vendors/angular-material/generator' as material-theme;
-@use 'modules/vendors/redactor/generator' as rich-text;
+@use 'modules/vendors/rich-text/generator' as rich-text;
 @use 'sass:map';
 @use 'partials/theming';
 

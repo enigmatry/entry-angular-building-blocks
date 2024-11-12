@@ -1,0 +1,41 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+
+@mixin generate-from($theme) {
+	$redactor-th-selector: 'thead th';
+
+	$theming-fonts: map.get($theme, 'general', 'fonts');
+
+	$default-typography: mat.define-typography-config();
+	$body-typography: map.get($default-typography, 'body-1');
+	$hero-typography: map.get($default-typography, 'headline-1');
+	$title-typography: map.get($default-typography, 'subtitle-1');
+	$caption-typography: map.get($default-typography, 'caption');
+
+	.enigmatry-redactor-content {
+		.rx-editor, .rx-content, .rx-editor, .rx-content p {
+			color: if($theming-fonts and map.has-key($theming-fonts, 'body') and map.get($theming-fonts, 'body', 'color') != null, map.get($theming-fonts, 'body', 'color'), map.get($body-typography, 'color'));
+			font-family: if($theming-fonts and map.has-key($theming-fonts, 'body') and map.get($theming-fonts, 'body', 'family') != null and map.get($theming-fonts, 'body', 'family') != '', map.get($theming-fonts, 'body', 'family'), map.get($body-typography, 'font-family'));
+			font-size: if($theming-fonts and map.has-key($theming-fonts, 'body') and map.get($theming-fonts, 'body', 'size') != null, map.get($theming-fonts, 'body', 'size'), map.get($body-typography, 'font-size'));
+			letter-spacing: if($theming-fonts and map.has-key($theming-fonts, 'body') and map.get($theming-fonts, 'body', 'letter-spacing') != null, map.get($theming-fonts, 'body', 'letter-spacing'), map.get($body-typography, 'letter-spacing'));
+
+			h1, h2, h3, h4 {
+				font-family: if($theming-fonts and map.has-key($theming-fonts, 'hero-titles') and map.get($theming-fonts, 'hero-titles', 'family') != null and map.get($theming-fonts, 'hero-titles', 'family') != '', map.get($theming-fonts, 'hero-titles', 'family'), map.get($hero-typography, 'font-family'));
+				letter-spacing: if($theming-fonts and map.has-key($theming-fonts, 'hero-titles') and map.get($theming-fonts, 'hero-titles', 'letter-spacing') != null, map.get($theming-fonts, 'hero-titles', 'letter-spacing'), map.get($hero-typography, 'letter-spacing'));
+			}
+
+			h5, h6 {
+				font-family: if($theming-fonts and map.has-key($theming-fonts, 'titles') and map.get($theming-fonts, 'titles', 'family') != null and map.get($theming-fonts, 'titles', 'family') != '', map.get($theming-fonts, 'titles', 'family'), map.get($title-typography, 'font-family'));
+				letter-spacing: if($theming-fonts and map.has-key($theming-fonts, 'titles') and map.get($theming-fonts, 'titles', 'letter-spacing') != null, map.get($theming-fonts, 'titles', 'letter-spacing'), map.get($title-typography, 'letter-spacing'));
+			}
+
+			table, table td, table th {
+				font-size: if($theming-fonts and map.has-key($theming-fonts, 'body') and map.get($theming-fonts, 'body', 'size') != null, map.get($theming-fonts, 'body', 'size'), map.get($body-typography, 'font-size'));
+
+				#{$redactor-th-selector} {
+					font-size: if(map.has-key($theme, 'tables') and map.has-key(map.get($theme, 'tables', 'header'), 'font-size') and map.get($theme, 'tables', 'header', 'font-size') != null, map.get($theme, 'tables', 'header', 'font-size'), map.get($caption-typography, 'font-size'));
+				}
+			}
+		}
+	}
+}

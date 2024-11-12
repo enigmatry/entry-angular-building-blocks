@@ -1,8 +1,8 @@
 @use 'sass:map';
-@use 'tables-generator' as tables;
-@use 'buttons-generator' as buttons;
-@use 'typography-generator' as typography;
-@use 'checkboxes-generator' as checkboxes;
+@use 'necessary-mix/tables-generator' as tables;
+@use 'necessary-mix/buttons-generator' as buttons;
+@use 'necessary-mix/typography-generator' as typography;
+@use 'necessary-mix/checkboxes-generator' as checkboxes;
 
 @mixin generate-from($theme) {
 	@include typography.generate-from($theme);
