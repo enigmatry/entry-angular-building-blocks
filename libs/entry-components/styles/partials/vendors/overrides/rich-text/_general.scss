@@ -1,6 +1,6 @@
 @use 'sass:map';
+@use '@angular/material' as mat;
 
-$material-text-color: rgb(0 0 0 / .87);
 $material-border: rgb(0 0 0 / .38);
 $material-border-radius: 2px;
 $material-icon-color: rgb(0 0 0 / .54);
@@ -11,7 +11,7 @@ $redactor-todoitem-selector: '.rx-editor [data-rx-type = 'todoitem']';
 
 .enigmatry-redactor-content {
 	.rx-editor, .rx-content {
-		color: $material-text-color;
+		color: map.get(mat.typography-level(mat.define-typography-config(), 'body-1'), 'color');
 	}
 
 	#{$redactor-todoitem-selector} {
