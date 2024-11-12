@@ -1,7 +1,6 @@
 @use 'sass:map';
+@use '@angular/material' as mat;
 @use 'scss-foundation/src/modules/lists/row-coloring' as list;
-
-$material-odd-background: #F0F0F0;
 
 @mixin generate-from($theme) {
 	$theming-table: map.get($theme, 'tables', 'rows', 'odd-even-background');
@@ -15,8 +14,8 @@ $material-odd-background: #F0F0F0;
 		}
 		@else {
 			tr {
-				@include list.even-row-coloring($material-odd-background);
-				@include list.odd-row-coloring(transparent);
+				@include list.even-row-coloring(mat.get-color-from-palette(mat.$grey-palette, 100));
+				@include list.odd-row-coloring(mat.get-color-from-palette(mat.$grey-palette, 50));
 			}
 		}
 
