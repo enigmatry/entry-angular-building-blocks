@@ -3,34 +3,12 @@
 @use 'necessary-mix/buttons-generator' as buttons;
 @use 'necessary-mix/typography-generator' as typography;
 @use 'necessary-mix/checkboxes-generator' as checkboxes;
+@use 'necessary-mix/layout-generator' as layout;
 
 @mixin generate-from($theme) {
 	@include typography.generate-from($theme);
 	@include tables.generate-from($theme);
 	@include buttons.generate-from($theme);
 	@include checkboxes.generate-from($theme);
-
-	$theming-colors: map.get($theme, 'general', 'colors');
-
-	.enigmatry-redactor-content {
-		.rx-main-container, .rx-toolbox-container {
-			@if map.get($theme, 'general', 'inputs', 'background') {
-				background: map.get($theme, 'general', 'inputs', 'background');
-			}
-			@else {
-				background: transparent;
-			}
-		}
-
-		.rx-toolbar-buttons .rx-button {
-			&.active, &:hover {
-				@if map.get($theme, 'general', 'inputs', 'background') {
-					background: map.get($theme, 'general', 'inputs', 'background');
-				}
-				@else {
-					background: transparent;
-				}
-			}
-		}
-	}
+	@include layout.generate-from($theme);
 }

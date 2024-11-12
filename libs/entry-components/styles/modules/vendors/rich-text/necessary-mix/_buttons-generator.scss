@@ -31,5 +31,16 @@ $default-material-button: map.get(mat.define-typography-config(), 'button');
 				font-size: map.get($default-material-button, 'font-size');
 			}
 		}
+
+		.rx-toolbar-buttons .rx-button {
+			&.active, &:hover {
+				@if map.get($theme, 'general', 'inputs', 'background') {
+					background: map.get($theme, 'general', 'inputs', 'background');
+				}
+				@else {
+					background: transparent;
+				}
+			}
+		}
 	}
 }
