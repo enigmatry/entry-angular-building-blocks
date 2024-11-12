@@ -1,9 +1,10 @@
 @use 'sass:map';
 @use '@angular/material' as mat;
 
+$default-material-button: map.get(mat.define-typography-config(), 'button');
+
 @mixin generate-from($theme) {
 	$theming-buttons: map.get($theme, 'general', 'fonts', 'buttons');
-	$default-material-button: map.get(mat.define-typography-config(), 'button');
 
 	.enigmatry-redactor-content {
 		button, .rx-content button {

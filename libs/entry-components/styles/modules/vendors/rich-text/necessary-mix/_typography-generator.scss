@@ -1,19 +1,20 @@
 @use 'sass:map';
 @use '@angular/material' as mat;
 
-@mixin generate-from($theme) {
-	$redactor-th-selector: 'thead th';
+$redactor-th-selector: 'thead th';
 
+$default-typography: mat.define-typography-config();
+$body-typography: map.get($default-typography, 'body-1');
+$hero-typography: map.get($default-typography, 'headline-1');
+$title-typography: map.get($default-typography, 'subtitle-1');
+$caption-typography: map.get($default-typography, 'caption');
+
+@mixin generate-from($theme) {
+	
 	$theming-fonts: map.get($theme, 'general', 'fonts');
 
-	$default-typography: mat.define-typography-config();
-	$body-typography: map.get($default-typography, 'body-1');
-	$hero-typography: map.get($default-typography, 'headline-1');
-	$title-typography: map.get($default-typography, 'subtitle-1');
-	$caption-typography: map.get($default-typography, 'caption');
-
 	.enigmatry-redactor-content {
-		.rx-editor, .rx-content, .rx-editor, .rx-content p {
+		.rx-editor, .rx-content, .rx-content p {
 			color: if($theming-fonts and map.has-key($theming-fonts, 'body') and map.get($theming-fonts, 'body', 'color') != null, map.get($theming-fonts, 'body', 'color'), map.get($body-typography, 'color'));
 			font-family: if($theming-fonts and map.has-key($theming-fonts, 'body') and map.get($theming-fonts, 'body', 'family') != null and map.get($theming-fonts, 'body', 'family') != '', map.get($theming-fonts, 'body', 'family'), map.get($body-typography, 'font-family'));
 			font-size: if($theming-fonts and map.has-key($theming-fonts, 'body') and map.get($theming-fonts, 'body', 'size') != null, map.get($theming-fonts, 'body', 'size'), map.get($body-typography, 'font-size'));
