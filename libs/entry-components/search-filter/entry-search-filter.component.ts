@@ -55,9 +55,11 @@ export class EntrySearchFilterComponent implements OnInit {
   asTextSearchFilter(searchFilter: SearchFilterBase<any>): TextSearchFilter {
     return searchFilter as TextSearchFilter;
   }
+
   asSelectSearchFilter<T>(searchFilter: SearchFilterBase<T>): SelectSearchFilter<T> {
     return searchFilter as SelectSearchFilter<T>;
   }
+  
   asAutocompleteSearchFilter<T>(searchFilter: SearchFilterBase<SelectOption<T>>): AutocompleteSearchFilter<T> {
     return searchFilter as AutocompleteSearchFilter<T>;
   }
