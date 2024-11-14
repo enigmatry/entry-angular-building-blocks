@@ -1,4 +1,5 @@
 <form (ngSubmit)="onSubmit()" [formGroup]="searchFilterForm" class="search-form-container entry-form">
+    <entry-form-errors [form]="searchFilterForm"></entry-form-errors>
     <div *ngFor="let searchFilter of searchFilters" class="form-field">
         <ng-container [ngSwitch]="searchFilter.controlType">
             <entry-text-search-filter *ngSwitchCase="controlType.text" [searchFilter]="asTextSearchFilter(searchFilter)" [form]="searchFilterForm"></entry-text-search-filter>
