@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { UsersService } from './users.service';
 import {
   AutocompleteSearchFilter,
   DateTimeSearchFilter,
+  EntrySearchFilterComponent,
   SearchFilterBase,
   SearchFilterParams,
   SelectOption,
@@ -19,6 +20,8 @@ import { of } from 'rxjs';
   styleUrls: ['./search-filter-example.component.scss']
 })
 export class SearchFilterExampleComponent {
+  @ViewChild(EntrySearchFilterComponent) entrySearchFilterComponent: EntrySearchFilterComponent;
+
   users: Array<User>;
   displayedColumns: string[] = ['name', 'email', 'dateOfBirth', 'occupation', 'country'];
   filters = [];
@@ -29,7 +32,30 @@ export class SearchFilterExampleComponent {
   }
 
   searchFilterChange(searchParams: SearchFilterParams) {
-    this.fetchUsers(searchParams);
+    const errors: { [key: string]: string[] } = {};
+
+    // Simulate a backend validation error for dateOfBirth
+    if (searchParams.dateOfBirth && this.isInvalidDate(searchParams.dateOfBirth)) {
+      errors.dateOfBirth = ["The date cannot be in the future."];
+    }
+
+    if (Object.keys(errors).length > 0) {
+      this.setServerErrors(errors);
+    } else {
+      this.fetchUsers(searchParams);
+    }
+  }
+
+  private isInvalidDate(date: string): boolean {
+    const selectedDate = new Date(date);
+    const maxDate = new Date();
+    return selectedDate > maxDate;
+  }
+
+  setServerErrors(errors: { [key: string]: string[] }) {
+    if (this.entrySearchFilterComponent) {
+      this.entrySearchFilterComponent.setServerErrors(errors);
+    }
   }
 
   private fetchUsers(searchParams: SearchFilterParams = {}): void {
