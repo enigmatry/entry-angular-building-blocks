@@ -1,21 +1,12 @@
 @use 'sass:map';
 @use '@angular/material' as mat;
 
-$material-border: rgb(0 0 0 / .38);
-$material-icon-color: rgb(0 0 0 / .54);
-
-$default-typography: mat.define-typography-config();
-$body-1-typography: map.get($default-typography, 'body-1');
-$body-1-color: map.get($body-1-typography, 'color');
-
-$typography: mat.define-typography-config();
-
 .enigmatry-redactor-content {
 	.rx-button-icon svg {
-		fill: $material-icon-color;
+		fill: rgb(0 0 0 / .54);
 	}
 
 	.rx-main-container {
-		border-color: $material-border;
+		border-color: rgb(0 0 0 / .38);
 	}
 }
