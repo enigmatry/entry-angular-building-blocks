@@ -1,0 +1,18 @@
+$redactor-todoitem-selector: '.rx-editor [data-rx-type = 'todoitem']';
+$material-checkbox-width: 18px;
+$material-border-radius: 2px;
+$material-checkbox-height: 18px;
+
+.enigmatry-redactor-content #{$redactor-todoitem-selector} {
+	input {
+		width: $material-checkbox-width;
+		height: $material-checkbox-height;
+	}
+
+	input::before, input:checked::before {
+		width: $material-checkbox-width;
+		height: $material-checkbox-height;
+		border-radius: $material-border-radius;
+		border-color: rgb(0 0 0 / .54);
+	}
+}

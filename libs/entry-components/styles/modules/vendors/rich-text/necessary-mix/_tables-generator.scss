@@ -2,26 +2,54 @@
 @use '@angular/material' as mat;
 @use 'scss-foundation/src/modules/lists/row-coloring' as list;
 
+$redactor-th-selector: 'thead th';
+$body-typography: map.get(mat.define-typography-config(), 'body-1');
+$caption-typography: map.get(mat.define-typography-config(), 'caption');
+
 @mixin generate-from($theme) {
 	$theming-table: map.get($theme, 'tables', 'rows', 'odd-even-background');
+	$theming-fonts: map.get($theme, 'general', 'fonts');
 
-	.enigmatry-redactor-content table {
-		@if $theming-table {
-			tr {
-				@include list.odd-row-coloring(map.get($theming-table, 'odd'));
-				@include list.even-row-coloring(map.get($theming-table, 'even'));
+	.enigmatry-redactor-content {
+		table {
+			@if $theming-table {
+				tr {
+					@include list.odd-row-coloring(map.get($theming-table, 'odd'));
+					@include list.even-row-coloring(map.get($theming-table, 'even'));
+				}
+			}
+			@else {
+				tr {
+					@include list.even-row-coloring(mat.get-color-from-palette(mat.$grey-palette, 100));
+					@include list.odd-row-coloring(mat.get-color-from-palette(mat.$grey-palette, 50));
+				}
+			}
+	
+			@if (map.get($theme, 'tables', 'header', 'font-size')) {
+				th {
+					font-size: map.get($theme, 'tables', 'header', 'font-size');
+				}
 			}
 		}
-		@else {
-			tr {
-				@include list.even-row-coloring(mat.get-color-from-palette(mat.$grey-palette, 100));
-				@include list.odd-row-coloring(mat.get-color-from-palette(mat.$grey-palette, 50));
-			}
-		}
 
-		@if (map.get($theme, 'tables', 'header', 'font-size')) {
-			th {
-				font-size: map.get($theme, 'tables', 'header', 'font-size');
+		table, table td, table th {
+			/* stylelint-disable-next-line scss/at-if-no-null */
+			@if $theming-fonts and map.has-key($theming-fonts, 'body') and map.get($theming-fonts, 'body', 'size') != null {
+				font-size: map.get($theming-fonts, 'body', 'size');
+			}
+			@else {
+				font-size: map.get($body-typography, 'font-size');
+			}
+
+			#{$redactor-th-selector} {
+				/* stylelint-disable-next-line scss/at-if-no-null */
+				@if map.has-key($theme, 'tables') and map.has-key(map.get($theme, 'tables', 'header'), 'font-size')
+					and map.get($theme, 'tables', 'header', 'font-size') != null {
+					font-size: map.get($theme, 'tables', 'header', 'font-size');
+				}
+				@else {
+					font-size: map.get($caption-typography, 'font-size');
+				}
 			}
 		}
 	}

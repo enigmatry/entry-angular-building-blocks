@@ -1,14 +1,11 @@
-/* stylelint-disable scss/at-if-no-null */
+/* stylelint-disable selector-max-compound-selectors, scss/at-if-no-null */
 @use 'sass:map';
 @use '@angular/material' as mat;
 
-$redactor-th-selector: 'thead th';
-
-$default-typography: mat.define-typography-config();
-$body-typography: map.get($default-typography, 'body-1');
-$hero-typography: map.get($default-typography, 'headline-1');
-$title-typography: map.get($default-typography, 'subtitle-1');
-$caption-typography: map.get($default-typography, 'caption');
+$body-typography: map.get(mat.define-typography-config(), 'body-1');
+$hero-typography: map.get(mat.define-typography-config(), 'headline-1');
+$title-typography: map.get(mat.define-typography-config(), 'subtitle-1');
+$caption-typography: map.get(mat.define-typography-config(), 'caption');
 
 @mixin generate-from($theme) {
 	$theming-fonts: map.get($theme, 'general', 'fonts');
@@ -43,6 +40,7 @@ $caption-typography: map.get($default-typography, 'caption');
 				letter-spacing: map.get($body-typography, 'letter-spacing');
 			}
 
+			/* stylelint-disable-next-line selector-max-combinators */
 			h1, h2, h3, h4 {
 				@if $theming-fonts and map.has-key($theming-fonts, 'hero-titles') and map.get($theming-fonts, 'hero-titles', 'family') != '' {
 					font-family: map.get($theming-fonts, 'hero-titles', 'family');
@@ -59,6 +57,7 @@ $caption-typography: map.get($default-typography, 'caption');
 				}
 			}
 
+			/* stylelint-disable-next-line selector-max-combinators */
 			h5, h6 {
 				@if $theming-fonts and map.has-key($theming-fonts, 'titles') and map.get($theming-fonts, 'titles', 'family') != '' {
 					font-family: map.get($theming-fonts, 'titles', 'family');
@@ -72,24 +71,6 @@ $caption-typography: map.get($default-typography, 'caption');
 				}
 				@else {
 					letter-spacing: map.get($title-typography, 'letter-spacing');
-				}
-			}
-
-			table, table td, table th {
-				@if $theming-fonts and map.has-key($theming-fonts, 'body') and map.get($theming-fonts, 'body', 'size') != null {
-					font-size: map.get($theming-fonts, 'body', 'size');
-				}
-				@else {
-					font-size: map.get($body-typography, 'font-size');
-				}
-
-				#{$redactor-th-selector} {
-					@if map.has-key($theme, 'tables') and map.has-key(map.get($theme, 'tables', 'header'), 'font-size') and map.get($theme, 'tables', 'header', 'font-size') != null {
-						font-size: map.get($theme, 'tables', 'header', 'font-size');
-					}
-					@else {
-						font-size: map.get($caption-typography, 'font-size');
-					}
 				}
 			}
 		}
