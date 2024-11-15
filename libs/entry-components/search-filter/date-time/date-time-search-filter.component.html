@@ -1,4 +1,4 @@
-<mat-form-field [formGroup]="form" subscriptSizing="dynamic">
+<mat-form-field class="date-time-search-field" [formGroup]="form" subscriptSizing="dynamic">
     <mat-label [attr.for]="searchFilter.key">{{searchFilter.label}}</mat-label>
     <input matInput [formControlName]="searchFilter.key" [matDatepicker]="picker" [id]="searchFilter.key">
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
