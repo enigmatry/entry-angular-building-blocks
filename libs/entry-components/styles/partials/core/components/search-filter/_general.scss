@@ -1,6 +1,6 @@
 @use 'scss-foundation/src/modules/display/items';
 
 .search-form-container {
-	padding-bottom: 10px;
 	@include items.align-center();
+	padding-bottom: 10px;
 }
