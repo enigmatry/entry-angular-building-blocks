@@ -10,9 +10,10 @@ import {
   SelectSearchFilter,
   TextSearchFilter,
 } from '@enigmatry/entry-components/search-filter';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { Country, Occupation, User } from './users';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { IValidationProblemDetails, setServerSideValidationErrors } from '@enigmatry/entry-components';
 
 @Component({
   selector: 'app-search-filter-example',
@@ -20,46 +21,32 @@ import { of } from 'rxjs';
   styleUrls: ['./search-filter-example.component.scss']
 })
 export class SearchFilterExampleComponent {
-  @ViewChild(EntrySearchFilterComponent) entrySearchFilterComponent: EntrySearchFilterComponent;
+  @ViewChild(EntrySearchFilterComponent, { static: true }) entrySearchFilterComponent: EntrySearchFilterComponent;
 
   users: Array<User>;
   displayedColumns: string[] = ['name', 'email', 'dateOfBirth', 'occupation', 'country'];
   filters = [];
 
   constructor(private _usersService: UsersService) {
-    this.fetchUsers();
+    this.fetchUsers({}).subscribe();
     this.filters = this.createSearchFilters();
   }
 
-  searchFilterChange(searchParams: SearchFilterParams) {
-    const errors: { [key: string]: string[] } = {};
-
-    // Simulate a backend validation error for dateOfBirth
-    if (searchParams.dateOfBirth && this.isInvalidDate(searchParams.dateOfBirth)) {
-      errors.dateOfBirth = ["The date cannot be in the future."];
-    }
-
-    if (Object.keys(errors).length > 0) {
-      this.setServerErrors(errors);
-    } else {
-      this.fetchUsers(searchParams);
-    }
+  searchFilterChange(searchParams: SearchFilterParams): void {
+    this.fetchUsers(searchParams).subscribe();
   }
 
-  private isInvalidDate(date: string): boolean {
-    const selectedDate = new Date(date);
-    const maxDate = new Date();
-    return selectedDate > maxDate;
-  }
-
-  setServerErrors(errors: { [key: string]: string[] }) {
-    if (this.entrySearchFilterComponent) {
-      this.entrySearchFilterComponent.setServerErrors(errors);
-    }
-  }
-
-  private fetchUsers(searchParams: SearchFilterParams = {}): void {
-    this.users = this._usersService.getUsers(searchParams);
+  private fetchUsers(searchParams: SearchFilterParams = {}): Observable<User[]> {
+    return this._usersService.getUsers(searchParams).pipe(
+      tap({
+        next: (users: User[]) => {
+          this.users = users;
+        },
+        error: (error: IValidationProblemDetails) => {
+          setServerSideValidationErrors(error, this.entrySearchFilterComponent.searchFilterForm);
+        }
+      })
+    );
   }
 
   private createSearchFilters(): SearchFilterBase<unknown>[] {

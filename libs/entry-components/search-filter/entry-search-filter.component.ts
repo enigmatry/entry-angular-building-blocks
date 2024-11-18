@@ -10,7 +10,6 @@ import { ControlType } from './control-type';
 import { DateTimeSearchFilter } from './date-time/date-time-search-filter.model';
 import { DateSearchFilter } from './date/date-search-filter.model';
 import { SelectOption } from './select-option.model';
-import { FORM_FIELD_ERROR_KEY } from '@enigmatry/entry-components/validation';
 
 /**
  * Entry SearchFilter component.
@@ -71,14 +70,5 @@ export class EntrySearchFilterComponent implements OnInit {
 
   asDateSearchFilter<T>(searchFilter: SearchFilterBase<T>): DateSearchFilter<T> {
     return searchFilter as DateSearchFilter<T>;
-  }
-
-  setServerErrors(errors: { [key: string]: string[] }) {
-    Object.keys(errors).forEach((key) => {
-      const control = this.searchFilterForm.get(key)
-      if (control) {
-        control.setErrors({ [FORM_FIELD_ERROR_KEY]: errors[key] });
-      }
-    });
   }
 }

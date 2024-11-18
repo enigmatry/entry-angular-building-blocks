@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { SearchFilterParams } from '@enigmatry/entry-components/search-filter';
-import { Observable, of } from 'rxjs';
+import { delay, Observable, of, throwError } from 'rxjs';
 import { User, LIST_OF_USERS } from './users';
+import { IValidationProblemDetails } from '@enigmatry/entry-components/validation';
 
 /**
  * A service that provides some example user data to help showcase the filtering.
@@ -21,7 +22,12 @@ export class UsersService {
 
   getUsernames = (): Observable<string[]> => of(this.data.map(x => x.userName));
 
-  getUsers(searchParams: SearchFilterParams): Array<User> {
+  getUsers(searchParams: SearchFilterParams): Observable<Array<User>> {
+    const validationError = this.validateSearchParams(searchParams);
+    if (validationError) {
+      return validationError;
+    }
+
     let users = this.data;
 
     if (!this.noFilterParam(searchParams, 'name')) {
@@ -39,15 +45,15 @@ export class UsersService {
         : searchParams.username === x.userName);
     }
 
-    if(!this.noFilterParam(searchParams, 'country')){
+    if (!this.noFilterParam(searchParams, 'country')) {
       users = users.filter(x => x.country === searchParams.country.key);
     }
 
-    if(!this.noFilterParam(searchParams, 'dateOfBirth')){
+    if (!this.noFilterParam(searchParams, 'dateOfBirth')) {
       users = users.filter(x => x.dateOfBirth >= searchParams.dateOfBirth);
     }
 
-    return users;
+    return of(users);
   }
 
   private noFilterParam(searchParams: SearchFilterParams, paramName: string): boolean {
@@ -55,7 +61,18 @@ export class UsersService {
       || searchParams[paramName] === null
       || searchParams[paramName]?.length === 0;
   }
+
+  private validateSearchParams(searchParams: SearchFilterParams): Observable<never> | null {
+    if (searchParams.dateOfBirth && new Date(searchParams.dateOfBirth) > new Date()) {
+      const validationProblemDetails: IValidationProblemDetails = {
+        title: "Validation Error",
+        status: 400,
+        errors: {
+          dateOfBirth: ["The date cannot be in the future."]
+        }
+      };
+      return throwError(() => validationProblemDetails);
+    }
+    return null;
+  }
 }
-
-
-

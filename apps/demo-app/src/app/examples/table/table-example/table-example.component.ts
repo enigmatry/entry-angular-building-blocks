@@ -15,7 +15,14 @@ export class TableExampleComponent implements OnInit {
   contextMenuItems: ContextMenuItem[] = [];
 
   constructor(usersService: UsersService) {
-    this.users = usersService.getUsers({});
+    usersService.getUsers({}).subscribe({
+      next: (users: User[]) => {
+        this.users = users;
+      },
+      error: (err) => {
+        console.error('Failed to fetch users', err);
+      }
+    });
   }
 
   ngOnInit(): void {
