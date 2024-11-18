@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SearchFilterParams } from '@enigmatry/entry-components/search-filter';
-import { delay, Observable, of, throwError } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { User, LIST_OF_USERS } from './users';
 import { IValidationProblemDetails } from '@enigmatry/entry-components/validation';
 
