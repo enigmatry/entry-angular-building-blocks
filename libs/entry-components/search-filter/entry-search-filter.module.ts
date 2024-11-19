@@ -14,6 +14,7 @@ import { DateTimeSearchFilterComponent } from './date-time/date-time-search-filt
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { DateSearchFilterComponent } from './date/date-search-filter.component';
+import { EntryValidationModule } from '@enigmatry/entry-components/validation';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { DateSearchFilterComponent } from './date/date-search-filter.component';
     MatSelectModule,
     MatAutocompleteModule,
     MatDatepickerModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    EntryValidationModule
   ],
   exports: [
     EntrySearchFilterComponent

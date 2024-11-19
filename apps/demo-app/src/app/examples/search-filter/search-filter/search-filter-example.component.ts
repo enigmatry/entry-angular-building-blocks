@@ -1,17 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { UsersService } from './users.service';
 import {
   AutocompleteSearchFilter,
   DateTimeSearchFilter,
+  EntrySearchFilterComponent,
   SearchFilterBase,
   SearchFilterParams,
   SelectOption,
   SelectSearchFilter,
   TextSearchFilter,
 } from '@enigmatry/entry-components/search-filter';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { Country, Occupation, User } from './users';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { IValidationProblemDetails, setServerSideValidationErrors } from '@enigmatry/entry-components';
 
 @Component({
   selector: 'app-search-filter-example',
@@ -19,21 +21,32 @@ import { of } from 'rxjs';
   styleUrls: ['./search-filter-example.component.scss']
 })
 export class SearchFilterExampleComponent {
+  @ViewChild(EntrySearchFilterComponent, { static: true }) entrySearchFilterComponent: EntrySearchFilterComponent;
+
   users: Array<User>;
   displayedColumns: string[] = ['name', 'email', 'dateOfBirth', 'occupation', 'country'];
   filters = [];
 
   constructor(private _usersService: UsersService) {
-    this.fetchUsers();
+    this.fetchUsers({}).subscribe();
     this.filters = this.createSearchFilters();
   }
 
-  searchFilterChange(searchParams: SearchFilterParams) {
-    this.fetchUsers(searchParams);
+  searchFilterChange(searchParams: SearchFilterParams): void {
+    this.fetchUsers(searchParams).subscribe();
   }
 
-  private fetchUsers(searchParams: SearchFilterParams = {}): void {
-    this.users = this._usersService.getUsers(searchParams);
+  private fetchUsers(searchParams: SearchFilterParams = {}): Observable<User[]> {
+    return this._usersService.getUsers(searchParams).pipe(
+      tap({
+        next: (users: User[]) => {
+          this.users = users;
+        },
+        error: (error: IValidationProblemDetails) => {
+          setServerSideValidationErrors(error, this.entrySearchFilterComponent.searchFilterForm);
+        }
+      })
+    );
   }
 
   private createSearchFilters(): SearchFilterBase<unknown>[] {

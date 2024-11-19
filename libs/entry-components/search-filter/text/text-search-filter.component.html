@@ -2,4 +2,5 @@
     <mat-label [attr.for]="searchFilter.key">{{searchFilter.label}}</mat-label>
     <input [formControlName]="searchFilter.key" [id]="searchFilter.key" [type]="searchFilter.type" matInput
         [placeholder]="searchFilter.placeholder" [maxlength]="searchFilter.maxLength">
+    <mat-error entryDisplayControlValidation [control]="form.get(searchFilter.key)"></mat-error>
 </mat-form-field>

@@ -2,8 +2,5 @@
 
 .search-form-container {
 	@include items.align-center();
-
-	.form-field {
-		width: 200px;
-	}
+	padding-bottom: 10px;
 }
