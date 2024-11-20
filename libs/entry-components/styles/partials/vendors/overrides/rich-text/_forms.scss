@@ -14,6 +14,7 @@ $redactor-todoitem-selector: '.rx-editor [data-rx-type = 'todoitem']';
 	input::before, input:checked::before {
 		width: $checkbox-width;
 		height: $checkbox-height;
+		border-width: 2px;
 		border-radius: $border-radius;
 		border-color: rgb(0 0 0 / .54);
 	}

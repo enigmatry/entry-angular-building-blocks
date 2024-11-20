@@ -2,24 +2,22 @@
 @use '@angular/material' as mat;
 
 $redactor-checkboxes-selector: '[data-rx-type = 'todoitem'] ';
-$default-material-checkbox: mat.get-color-from-palette(mat.define-palette(mat.$pink-palette), 500);
 
 @mixin generate-from($theme) {
 
 	$theming-checkboxes: map.get($theme, 'general', 'checkboxes');
-
+	$theming-checkboxes-accent: map.get($theme, 'general', 'colors', 'accent');
+	
 	.enigmatry-redactor-content {
-		
-		@if map.get($theme, 'general', 'colors', 'accent') {
-			.rx-editor #{$redactor-checkboxes-selector} input:checked::before {
-				border-color: map.get($theme, 'general', 'colors', 'accent');
-				background-color: map.get($theme, 'general', 'colors', 'accent');
+
+		.rx-editor #{$redactor-checkboxes-selector} input:checked::before {
+			@if $theming-checkboxes-accent {
+				border-color: $theming-checkboxes-accent;
+				background-color: $theming-checkboxes-accent;
 			}
-		}
-		@else {
-			.rx-editor #{$redactor-checkboxes-selector} input:checked::before {
-				border-color: $default-material-checkbox;
-				background-color: $default-material-checkbox;
+			@else {
+				border-color: mat.get-color-from-palette(mat.$primary-palette, 500);
+				background-color: mat.get-color-from-palette(mat.$primary-palette, 500);
 			}
 		}
 
