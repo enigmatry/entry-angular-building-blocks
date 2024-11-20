@@ -1,10 +1,12 @@
 @use 'sass:map';
 
 @mixin generate-from($theme) {
+	$theming-input-background: map.get($theme, 'general', 'inputs', 'background');
+
 	.enigmatry-redactor-content {
 		.rx-main-container, .rx-toolbox-container {
-			@if map.get($theme, 'general', 'inputs', 'background') {
-				background: map.get($theme, 'general', 'inputs', 'background');
+			@if $theming-input-background {
+				background: $theming-input-background;
 			}
 			@else {
 				background: transparent;
