@@ -1,1 +1,1 @@
-export { AcceptLanguageInterceptor } from './accept-language.interceptor';
+export { AcceptLanguageInterceptor, acceptLanguageInterceptor } from './accept-language.interceptor';

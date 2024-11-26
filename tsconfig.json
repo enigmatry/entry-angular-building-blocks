@@ -23,12 +23,12 @@
       "@enigmatry/entry-form/ckeditor": ["libs/entry-form/ckeditor/public-api.ts"],
       "@enigmatry/entry-form/date-time-picker": ["libs/entry-form/date-time-picker/public-api.ts"]
     },
+    "esModuleInterop": true,
     "strict": false,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
     "declaration": false,
-    "downlevelIteration": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
@@ -39,8 +39,7 @@
       "dom"
     ],
     "strictPropertyInitialization": false,
-    "useDefineForClassFields": false,
-    "allowSyntheticDefaultImports": true
+    "useDefineForClassFields": false
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

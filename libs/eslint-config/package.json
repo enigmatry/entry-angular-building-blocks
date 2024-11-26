@@ -13,9 +13,9 @@
     "index.js"
   ],
   "dependencies": {
-    "@typescript-eslint/eslint-plugin": "^7.2.0",
-    "@typescript-eslint/parser": "^7.2.0",
-    "@stylistic/eslint-plugin": "^2.1.0",
+    "@typescript-eslint/eslint-plugin": "^8.16.0",
+    "@typescript-eslint/parser": "^8.16.0",
+    "@stylistic/eslint-plugin": "^3.1.1",
     "eslint-plugin-deprecation": "^2.0.0",
     "eslint-plugin-import": "^2.29.0",
     "eslint-plugin-no-loops": "^0.3.0",
@@ -25,11 +25,11 @@
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-unused-imports": "^3.2.0",
     "eslint-plugin-xss": "^0.1.12",
-    "@angular-eslint/builder": "^17.0.0",
-    "@angular-eslint/eslint-plugin": "^17.0.0",
-    "@angular-eslint/eslint-plugin-template": "^17.0.0",
-    "@angular-eslint/schematics": "^17.0.0",
-    "@angular-eslint/template-parser": "^17.0.0"
+    "@angular-eslint/builder": "^18.0.0",
+    "@angular-eslint/eslint-plugin": "^18.0.0",
+    "@angular-eslint/eslint-plugin-template": "^18.0.0",
+    "@angular-eslint/schematics": "^18.0.0",
+    "@angular-eslint/template-parser": "^18.0.0"
   },
   "peerDependencies": {
     "eslint": "^8.57.0"
