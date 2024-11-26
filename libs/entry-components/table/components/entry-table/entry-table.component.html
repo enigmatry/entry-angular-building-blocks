@@ -124,7 +124,7 @@
       [ngClass]="getRowClassList(row, getIndex(index, dataIndex))"
       [attr.tabindex]="rowFocusVisible ? 0 : -1"
       (click)="rowClick.emit(row)"
-      (keyup.enter)="rowClick.emit(row)">
+      (keydown.enter)="rowClick.emit(row)">
   </tr>
 </table>
 
