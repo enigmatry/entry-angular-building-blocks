@@ -44,13 +44,6 @@ export class EntryDialogComponent {
     @Input() confirm: () => Observable<unknown> = () => of(true);
     @Input() cancel = () => this.close(false);
 
-    // @HostListener('keydown.esc')
-    // onEsc = () => {
-    //     if (!this.disableClose) {
-    //         this.cancel();
-    //     }
-    // };
-
     onSubmit = () =>
         this.confirm().subscribe({
             next: closeDialog => {
