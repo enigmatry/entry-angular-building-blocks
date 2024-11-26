@@ -5,6 +5,7 @@ $default-material-button: map.get(mat.define-typography-config(), 'button');
 
 @mixin generate-from($theme) {
 	$theming-buttons: map.get($theme, 'general', 'fonts', 'buttons');
+	$theming-input-background: map.get($theme, 'general', 'inputs', 'background');
 
 	.enigmatry-redactor-content {
 		button, .rx-content button {
@@ -34,12 +35,7 @@ $default-material-button: map.get(mat.define-typography-config(), 'button');
 
 		.rx-toolbar-buttons .rx-button {
 			&.active, &:hover {
-				@if map.get($theme, 'general', 'inputs', 'background') {
-					background: map.get($theme, 'general', 'inputs', 'background');
-				}
-				@else {
-					background: transparent;
-				}
+				background: if($theming-input-background != null, $theming-input-background, transparent);
 			}
 		}
 	}

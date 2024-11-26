@@ -3,6 +3,7 @@
 $checkbox-width: 18px;
 $checkbox-height: 18px;
 $border-radius: 2px;
+
 $redactor-todoitem-selector: '.rx-editor [data-rx-type = 'todoitem']';
 
 .enigmatry-redactor-content #{$redactor-todoitem-selector} {

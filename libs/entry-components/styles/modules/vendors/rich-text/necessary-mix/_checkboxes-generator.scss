@@ -4,7 +4,6 @@
 $redactor-checkboxes-selector: '[data-rx-type = 'todoitem'] ';
 
 @mixin generate-from($theme) {
-
 	$theming-checkboxes: map.get($theme, 'general', 'checkboxes');
 	$theming-checkboxes-accent: map.get($theme, 'general', 'colors', 'accent');
 	
