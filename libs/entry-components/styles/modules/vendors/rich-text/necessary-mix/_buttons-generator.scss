@@ -4,39 +4,30 @@
 $default-material-button: map.get(mat.define-typography-config(), 'button');
 
 @mixin generate-from($theme) {
-	$theming-buttons: map.get($theme, 'general', 'fonts', 'buttons');
-	$theming-input-background: map.get($theme, 'general', 'inputs', 'background');
+  $theming-primary: map.get($theme, 'general', 'colors', 'primary');
+  $theming-font-family: map.get($theme, 'general', 'fonts', 'buttons', 'family');
+  $theming-font-weight: map.get($theme, 'general', 'fonts', 'buttons', 'weight');
+  $theming-font-size: map.get($theme, 'general', 'fonts', 'buttons', 'size');
 
-	.enigmatry-redactor-content {
-		button, .rx-content button {
-			
-			@if ($theming-buttons, 'colors', 'primary') {
-				background-color: map.get($theme, 'general', 'colors', 'primary');
-			}
-			@else {
-				background-color: mat.get-color-from-palette(mat.$primary-palette, 500);
-			}
+  $primary-color: if($theming-primary == '' or $theming-primary == null, mat.get-color-from-palette(mat.$primary-palette, 500), $theming-primary);
+  $font-family: if($theming-font-family == '' or $theming-font-family == null, map.get($default-material-button, 'font-family'), $theming-font-family);
+  $font-weight: if($theming-font-weight == '' or $theming-font-weight == null, map.get($default-material-button, 'font-weight'), $theming-font-weight);
+  $font-size: if($theming-font-size == '' or $theming-font-size == null, map.get($default-material-button, 'font-size'), $theming-font-size);
 
-			@if ($theming-buttons, 'family') and map.get($theming-buttons, 'family') != '' {
-				font-family: map.get($theming-buttons, 'family');
-			}
-			@else {
-				font-family: map.get($default-material-button, 'font-family');
-				font-weight: map.get($default-material-button, 'font-weight');
-			}
-
-			@if ($theming-buttons, 'size') {
-				font-size: map.get($theming-buttons, 'size');
-			}
-			@else {
-				font-size: map.get($default-material-button, 'font-size');
-			}
+  .enigmatry-redactor-content {
+    button, .rx-content button {
+		background-color: $primary-color;
+		font: {
+			family: $font-family;
+			weight: $font-weight;
+			size: $font-size;
 		}
+    }
 
-		.rx-toolbar-buttons .rx-button {
-			&.active, &:hover {
-				background: if($theming-input-background != null, $theming-input-background, transparent);
-			}
+    .rx-toolbar-buttons .rx-button {
+		&.active, &:hover {
+			background: $primary-color;
 		}
-	}
+    }
+  }
 }
