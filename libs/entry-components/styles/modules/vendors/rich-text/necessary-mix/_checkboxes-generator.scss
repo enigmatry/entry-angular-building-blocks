@@ -4,25 +4,21 @@
 $redactor-checkboxes-selector: '[data-rx-type = 'todoitem'] ';
 
 @mixin generate-from($theme) {
-	$theming-checkboxes: map.get($theme, 'general', 'checkboxes');
-	$theming-checkboxes-accent: map.get($theme, 'general', 'colors', 'accent');
+	$theming-accent-color: map.get($theme, 'general', 'colors', 'accent');
 	
 	.enigmatry-redactor-content {
 
+		$checkbox-color: if($theming-accent-color == '' or $theming-accent-color == null,
+			mat.get-color-from-palette(mat.$primary-palette, 500), $theming-accent-color);
+
 		.rx-editor #{$redactor-checkboxes-selector} input:checked::before {
-			@if $theming-checkboxes-accent {
-				border-color: $theming-checkboxes-accent;
-				background-color: $theming-checkboxes-accent;
-			}
-			@else {
-				border-color: mat.get-color-from-palette(mat.$primary-palette, 500);
-				background-color: mat.get-color-from-palette(mat.$primary-palette, 500);
-			}
+			border-color: $checkbox-color;
+			background-color: $checkbox-color;
 		}
 
-		@if $theming-checkboxes {
+		@if map.get($theme, 'general', 'checkboxes') {
 			.rx-editor #{$redactor-checkboxes-selector} input::before {
-				background-color: map.get($theming-checkboxes, 'background');
+				background-color: map.get($theme, 'general', 'checkboxes', 'background');
 			}
 		}
 	}
