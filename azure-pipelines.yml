@@ -108,12 +108,12 @@ stages:
         command: 'custom'
         customCommand: 'run automated-tests'
 
-    - task: FileTransform@1
+    - task: FileTransform@2
       displayName: 'File transformation: package.json'
       inputs:
         folderPath: 'dist'
-        targetFiles: '**/package.json'
-        fileType: json
+        jsonTargetFiles: '**/package.json'
+        xmlTransformationRules:
     
     - task: PublishBuildArtifacts@1
       displayName: Publish artifacts
