@@ -4,23 +4,55 @@ trigger:
 # no PR triggers
 pr: none
 
-pool:
-  vmImage: ubuntu-latest
+stages:
+- stage: deploy_demo
+  displayName: Deploy demo application
+  jobs:
+  - job: build
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - checkout: self
+      fetchDepth: 50
+      fetchTags: true
 
-steps:
-- task: Npm@1
-  displayName: 'npm ci'
-  inputs:
-    command: 'ci'
-- task: Npm@1
-  displayName: 'Build docs application'
-  inputs:
-    command: 'custom'
-    customCommand: 'run build @enigmatry/demo-app'
+    - task: DotNetCoreCLI@2
+      displayName: Add Manifest for tool installation
+      inputs:
+        command: 'custom'
+        custom: 'new '
+        arguments: tool-manifest
 
-- task: AzureStaticWebApp@0
-  inputs:
-    app_location: '/dist/enigmatry/apps/demo-app'
-    output_location: '/'
-    azure_static_web_apps_api_token: $(deployment_token)
-  displayName: 'Deploy docs application'
+    - task: DotNetCoreCLI@2
+      displayName: Install minver
+      inputs:
+        command: 'custom'
+        custom: 'tool '
+        arguments: install minver-cli
+
+    - task: PowerShell@2
+      displayName: 'Set MinVer Version'
+      inputs:
+        targetType: inline
+        script: |
+          $version = dotnet minver -p preview
+          echo "##vso[build.updatebuildnumber]$version"
+          Write-Host "Setting MinVer to '$version'"
+
+    - task: Npm@1
+      displayName: 'npm ci'
+      inputs:
+        command: 'ci'
+
+    - task: Npm@1
+      displayName: 'Build demo application'
+      inputs:
+        command: 'custom'
+        customCommand: 'run build @enigmatry/demo-app'
+
+    - task: AzureStaticWebApp@0
+      inputs:
+        app_location: '/dist/enigmatry/apps/demo-app'
+        output_location: '/'
+        azure_static_web_apps_api_token: $(deployment_token)
+      displayName: 'Deploy demo application'
