@@ -189,17 +189,6 @@ module.exports = {
         "@stylistic/wrap-regex": "off",
         "@stylistic/yield-star-spacing": "error",
         "@typescript-eslint/ban-ts-comments": "off",
-        "@typescript-eslint/ban-types": "error",
-        "@typescript-eslint/brace-style": [
-          "error"
-        ],
-        "@typescript-eslint/comma-dangle": [
-          "error",
-          "never"
-        ],
-        "@typescript-eslint/comma-spacing": [
-          "error"
-        ],
         "@typescript-eslint/consistent-type-definitions": "error",
         "@typescript-eslint/consistent-type-exports": [
           "error",
@@ -216,18 +205,12 @@ module.exports = {
         "@typescript-eslint/dot-notation": [
           "error"
         ],
-        "@typescript-eslint/func-call-spacing": [
-          "error"
-        ],
         "@typescript-eslint/indent": [
           "off",
           "tab"
         ],
         "@typescript-eslint/init-declarations": [
           "off"
-        ],
-        "@typescript-eslint/keyword-spacing": [
-          "error"
         ],
         "@typescript-eslint/naming-convention": "off",
         "@typescript-eslint/no-array-constructor": [
@@ -292,9 +275,6 @@ module.exports = {
         "@typescript-eslint/no-shadow": [
           "error"
         ],
-        "@typescript-eslint/no-throw-literal": [
-          "error"
-        ],
         "@typescript-eslint/no-unsafe-declaration-merging": [
           "error"
         ],
@@ -315,36 +295,15 @@ module.exports = {
         "@typescript-eslint/no-useless-constructor": [
           "error"
         ],
-        "@typescript-eslint/object-curly-spacing": [
-          "error",
-          "always"
-        ],
         "@typescript-eslint/parameter-properties": "off",
         "@typescript-eslint/prefer-optional-chain": "error",
         "@typescript-eslint/prefer-readonly": "off",
         "@typescript-eslint/prefer-readonly-parameter-types": "off",
-        "@typescript-eslint/quotes": [
-          "error",
-          "single",
-          {
-            "allowTemplateLiterals": true
-          }
-        ],
         "@typescript-eslint/require-await": [
           "error"
         ],
         "@typescript-eslint/restrict-plus-operands": "error",
         "@typescript-eslint/return-await": [
-          "error"
-        ],
-        "@typescript-eslint/semi": [
-          "error"
-        ],
-        "@typescript-eslint/space-before-function-paren": [
-          "error",
-          "never"
-        ],
-        "@typescript-eslint/space-infix-ops": [
           "error"
         ],
         "array-callback-return": "error",
