@@ -67,7 +67,7 @@
     "jest-environment-node-single-context": "29.4.0",
     "ng-packagr": "^18.2.1",
     "sass": "1.79.6",
-    "sass-true": "8.1.0",
+    "sass-true": "7.0.0",
     "typedoc": "^0.26.11",
     "typedoc-plugin-markdown": "^4.2.10",
     "typescript": "^5.4.5",
