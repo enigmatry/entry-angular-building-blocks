@@ -70,7 +70,7 @@
     "sass-true": "7.0.0",
     "typedoc": "^0.26.11",
     "typedoc-plugin-markdown": "^4.2.10",
-    "typescript": "^5.4.5",
+    "typescript": "5.5.4",
     "stylelint": "^16.10.0",
     "postcss-scss": "^4.0.9",
     "stylelint-config-property-sort-order-smacss": "^10.0.0",
