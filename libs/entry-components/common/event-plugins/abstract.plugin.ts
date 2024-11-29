@@ -29,7 +29,7 @@ export abstract class EventManagerPlugin {
    * event object as an argument.
    * @returns  A callback function that can be used to remove the handler.
    */
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+  // eslint-disable-next-line @typescript-eslint/ban-types
   abstract addEventListener(element: HTMLElement, eventName: string, handler: Function): Function;
 }
 

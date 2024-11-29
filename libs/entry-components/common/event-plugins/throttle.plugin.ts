@@ -14,7 +14,7 @@ export class ThrottleEventPlugin extends EntryEventManagerPlugin {
 
   modifier = '.throttle';
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+  // eslint-disable-next-line @typescript-eslint/ban-types
   addEventListener(element: HTMLElement, eventName: string, originalHandler: Function): Function {
     // e.g. (keyup.throttle.500)
     const [_modifier, milliseconds = 500] = this.unwrapParams(eventName);
