@@ -13,9 +13,6 @@
     "index.js"
   ],
   "dependencies": {
-    "@typescript-eslint/eslint-plugin": "^7.18.0",
-    "@typescript-eslint/parser": "^7.18.0",
-    "@typescript-eslint/utils": "^7.18.0",
     "@stylistic/eslint-plugin": "^2.11.0",
     "eslint-plugin-deprecation": "^3.0.0",
     "eslint-plugin-import": "^2.29.0",
@@ -30,7 +27,8 @@
     "@angular-eslint/eslint-plugin": "^18.4.2",
     "@angular-eslint/eslint-plugin-template": "^18.4.2",
     "@angular-eslint/schematics": "^18.4.2",
-    "@angular-eslint/template-parser": "^18.4.2"
+    "@angular-eslint/template-parser": "^18.4.2",
+    "typescript-eslint": "^7.18.0"
   },
   "peerDependencies": {
     "eslint": "^8.57.0"
