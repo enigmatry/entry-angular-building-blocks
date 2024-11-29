@@ -59,6 +59,7 @@
     "@types/node": "^22.10.1",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
+    "@typescript-eslint/utils": "^7.18.0",
     "eslint": "^8.57.0",
     "eslint-plugin-import": "^2.29.0",
     "eslint-plugin-jsdoc": "50.6.0",
