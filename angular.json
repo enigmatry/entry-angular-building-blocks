@@ -82,12 +82,15 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/enigmatry/apps/demo-app",
+            "outputPath": {
+              "base": "dist/enigmatry/apps/demo-app"
+            },
             "index": "apps/demo-app/src/index.html",
-            "main": "apps/demo-app/src/main.ts",
-            "polyfills": "apps/demo-app/src/polyfills.ts",
+            "polyfills": [
+              "apps/demo-app/src/polyfills.ts"
+            ],
             "tsConfig": "apps/demo-app/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -115,7 +118,8 @@
                 "libs"
               ]
             },
-            "scripts": []
+            "scripts": [],
+            "browser": "apps/demo-app/src/main.ts"
           },
           "configurations": {
             "production": {
@@ -140,9 +144,7 @@
               "outputHashing": "all"
             },
             "development": {
-              "buildOptimizer": false,
               "optimization": false,
-              "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true

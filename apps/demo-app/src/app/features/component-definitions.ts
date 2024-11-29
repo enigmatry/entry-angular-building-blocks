@@ -15,7 +15,7 @@ const COMPONENT_DEFINITIONS: IComponentDefinition[] = [
         shortDescription: `Used to provide button configuration on module or application level.`,
         route: RouteSegments.button,
         readmePath: '/entry-components/button/README.md',
-        apiDocsPath: 'assets/api/@enigmatry/entry-components/button_public_api.md'
+        apiDocsPath: 'assets/api/@enigmatry/entry-components/button/public-api.md'
     },
     {
         label: 'Common',
@@ -29,7 +29,7 @@ const COMPONENT_DEFINITIONS: IComponentDefinition[] = [
         shortDescription: `Enables built-in dialogs and adds support for building custom ones.`,
         route: RouteSegments.dialog,
         readmePath: '/entry-components/dialog/README.md',
-        apiDocsPath: 'assets/api/@enigmatry/entry-components/dialog_public_api.md'
+        apiDocsPath: 'assets/api/@enigmatry/entry-components/dialog/public-api.md'
     },
     {
         label: 'File input',
@@ -43,7 +43,7 @@ const COMPONENT_DEFINITIONS: IComponentDefinition[] = [
         shortDescription: `Search filter component with configurable input elements.`,
         route: RouteSegments.searchFilter,
         readmePath: '/entry-components/search-filter/README.md',
-        apiDocsPath: 'assets/api/@enigmatry/entry-components/search_filter_public_api.md'
+        apiDocsPath: 'assets/api/@enigmatry/entry-components/search-filter/public-api.md'
     },
     {
         label: 'Table',
@@ -64,7 +64,7 @@ const COMPONENT_DEFINITIONS: IComponentDefinition[] = [
         shortDescription: `Enables mapping server/client side validation messages to Reactive/Formly forms.`,
         route: RouteSegments.validation,
         readmePath: '/entry-components/validation/README.md',
-        apiDocsPath: 'assets/api/@enigmatry/entry-components/validation_public_api.md'
+        apiDocsPath: 'assets/api/@enigmatry/entry-components/validation/public-api.md'
     },
     {
         label: 'Permissions',

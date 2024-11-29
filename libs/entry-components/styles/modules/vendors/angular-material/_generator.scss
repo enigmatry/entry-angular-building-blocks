@@ -14,14 +14,14 @@
 		@include fonts.generate-default-font();
 	}
 
-	$primary-palette: theming.define-palette(-get-material-palette-for('primary', $entry-theme));
-	$accent-palette: theming.define-palette(-get-material-palette-for('accent', $entry-theme));
-	$warn-palette: theming.define-palette(theming.$red-palette);
+	$primary-palette: theming.m2-define-palette(-get-material-palette-for('primary', $entry-theme));
+	$accent-palette: theming.m2-define-palette(-get-material-palette-for('accent', $entry-theme));
+	$warn-palette: theming.m2-define-palette(theming.$m2-red-palette);
 
 	$typography: typography-generator.generate-from($entry-theme);
 	@include theming.typography-hierarchy($typography);
 
-	$material-theme: theming.define-light-theme((
+	$material-theme: theming.m2-define-light-theme((
 		color: (
 			primary: $primary-palette,
 			accent: $accent-palette,

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-types */
 import { Injectable } from '@angular/core';
 import { EntryEventManagerPlugin } from './abstract.plugin';
 import { throttle } from 'lodash-es';
@@ -15,6 +14,7 @@ export class ThrottleEventPlugin extends EntryEventManagerPlugin {
 
   modifier = '.throttle';
 
+  // eslint-disable-next-line @typescript-eslint/ban-types
   addEventListener(element: HTMLElement, eventName: string, originalHandler: Function): Function {
     // e.g. (keyup.throttle.500)
     const [_modifier, milliseconds = 500] = this.unwrapParams(eventName);

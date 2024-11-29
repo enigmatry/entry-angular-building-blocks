@@ -11,6 +11,10 @@ export class DisableComponent {
   anotherDateTime = new Date();
 
   setDisabled(disabled: boolean) {
-    disabled ? this.dateTime.disable() : this.dateTime.enable();
+    if (disabled) {
+      this.dateTime.disable();
+    } else {
+      this.dateTime.enable();
+    }
   }
 }

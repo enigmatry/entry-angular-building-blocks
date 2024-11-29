@@ -1,14 +1,9 @@
 import { Injectable, LOCALE_ID, inject } from '@angular/core';
-import {
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpInterceptor
-} from '@angular/common/http';
+import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpInterceptorFn, HttpHandlerFn } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 /**
- * Sets the Accept-Language HTTP request header using the value from LOCALE_ID.
+ * @deprecated switch to acceptLanguageInterceptor function (See: https://angular.dev/guide/http/interceptors#configuring-interceptors)
  */
 @Injectable()
 export class AcceptLanguageInterceptor implements HttpInterceptor {
@@ -20,4 +15,16 @@ export class AcceptLanguageInterceptor implements HttpInterceptor {
     });
     return next.handle(newRequest);
   }
+}
+
+/**
+ * Sets the Accept-Language HTTP request header using the value from LOCALE_ID.
+ */
+export const acceptLanguageInterceptor: HttpInterceptorFn = (request: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> => {
+  const localeId = inject(LOCALE_ID);
+
+  const newRequest = request.clone({
+    headers: request.headers.set('Accept-Language', localeId)
+  });
+  return next(newRequest);
 }
