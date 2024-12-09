@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, HostBinding, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MAT_DATE_FORMATS, DateAdapter, MatDateFormats } from '@angular/material/core';
 import { ENTRY_MAT_DATE_TIME_FORMATS, EntryDateTimeAdapter, NgControlAccessorDirective, NoopControlValueAccessorDirective } from '@enigmatry/entry-components/common';
@@ -28,9 +28,10 @@ export class EntryDateTimePickerComponent<D> implements OnInit, OnDestroy, OnCha
   @Input() defaultTime: D | undefined;
   @Output() dateTimeChanged = new Subject<D>();
 
-  ngControlAccessor = inject(NgControlAccessorDirective);
-  dateTimeAdapter: EntryDateTimeAdapter<D, unknown> = inject(DateAdapter) as EntryDateTimeAdapter<D, unknown>;
-  format: MatDateFormats = inject(ENTRY_MAT_DATE_TIME_FORMATS);
+  private ngControlAccessor = inject(NgControlAccessorDirective);
+  private dateTimeAdapter: EntryDateTimeAdapter<D, unknown> = inject(DateAdapter) as EntryDateTimeAdapter<D, unknown>;
+  private format: MatDateFormats = inject(ENTRY_MAT_DATE_TIME_FORMATS);
+  private changeDetectorRef = inject(ChangeDetectorRef);
 
   // Control bound to component using FormsApi (ngModel, formControl, formControlName)
   get formControl(): FormControl<D> {
@@ -75,6 +76,7 @@ export class EntryDateTimePickerComponent<D> implements OnInit, OnDestroy, OnCha
         } else {
           this.calendarControl.enable({ emitEvent: false });
         }
+        this.changeDetectorRef.markForCheck();
       })
 
     this.formControl.valueChanges
