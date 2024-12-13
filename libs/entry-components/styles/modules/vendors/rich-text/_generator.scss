@@ -1,0 +1,14 @@
+@use 'sass:map';
+@use 'necessary-mix/tables-generator' as tables;
+@use 'necessary-mix/buttons-generator' as buttons;
+@use 'necessary-mix/typography-generator' as typography;
+@use 'necessary-mix/checkboxes-generator' as checkboxes;
+@use 'necessary-mix/toolbar-generator' as toolbar;
+
+@mixin generate-from($theme) {
+	@include typography.generate-from($theme);
+	@include tables.generate-from($theme);
+	@include buttons.generate-from($theme);
+	@include checkboxes.generate-from($theme);
+	@include toolbar.generate-from($theme);
+}
