@@ -25,7 +25,7 @@ Just set your `stylelint` config to:
 
 Simply add a `"rules"` key to your config, then add your overrides and additions there.
 
-For example, to change the `at-rule-no-unknown` rule to use its `ignoreAtRules` option, change the `indentation` to tabs, turn off the `number-leading-zero` rule,and add the `unit-allowed-list` rule:
+For example, to change the `at-rule-no-unknown` rule to use its `ignoreAtRules` option, change the `indentation` to tabs, turn off the `number-leading-zero` rule, and add the `unit-allowed-list` rule:
 
 ```json
 {
