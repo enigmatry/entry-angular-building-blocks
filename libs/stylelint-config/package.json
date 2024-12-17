@@ -23,7 +23,7 @@
     "stylelint-group-selectors": "^1.0.10"
   },
   "peerDependencies": {
-    "stylelint": "^16.10.0"
+    "stylelint": "^16.12.0"
   },
   "deprecatedDependencies": {
     "stylelint-selector-no-empty": "1.0.9 is out of support. Add it back to the list if support for Stylelint v16+ is added"
