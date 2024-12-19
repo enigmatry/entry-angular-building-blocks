@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35431.28
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.Demo.Chat.Api", "Enigmatry.Entry.Demo.Chat.Api\Enigmatry.Entry.Demo.Chat.Api.csproj", "{75AC2080-2AF2-49BD-A896-90AB99CACA07}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{39D678DB-292F-47B0-A70B-0ECB0E7F7C80}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		Directory.Build.props = Directory.Build.props
+		Directory.Packages.props = Directory.Packages.props
+		nuget.config = nuget.config
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Entry.Demo.Chat.GenerateEmbeddings", "Enigmatry.Entry.Demo.Chat.GenerateEmbeddings\Enigmatry.Entry.Demo.Chat.GenerateEmbeddings.csproj", "{028C724C-8BAD-4F3D-AB7A-7050AEBA63CD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{75AC2080-2AF2-49BD-A896-90AB99CACA07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75AC2080-2AF2-49BD-A896-90AB99CACA07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75AC2080-2AF2-49BD-A896-90AB99CACA07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75AC2080-2AF2-49BD-A896-90AB99CACA07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{028C724C-8BAD-4F3D-AB7A-7050AEBA63CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{028C724C-8BAD-4F3D-AB7A-7050AEBA63CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{028C724C-8BAD-4F3D-AB7A-7050AEBA63CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{028C724C-8BAD-4F3D-AB7A-7050AEBA63CD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1D24CFA5-71B9-497E-B9CA-77D51AC8DE9D}
+	EndGlobalSection
+EndGlobal

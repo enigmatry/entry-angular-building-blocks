@@ -1,0 +1,13 @@
+<Project>
+  <PropertyGroup>
+    <Copyright>Copyright © copyrightYear Enigmatry. All rights reserved.</Copyright>
+    <Company>Enigmatry</Company>
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+	<TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <NoWarn>$(NoWarn);NU5110;NU5111</NoWarn><!-- Suppress warnings for the ps1 files in scripts folder -->
+  </PropertyGroup>
+</Project>
