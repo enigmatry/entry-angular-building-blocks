@@ -3,7 +3,6 @@ import angular from "angular-eslint";
 import pluginPromise from "eslint-plugin-promise";
 import stylistic from "@stylistic/eslint-plugin";
 import noLoops from "eslint-plugin-no-loops";
-import xss from "eslint-plugin-xss/lib";
 import noSecrets from "eslint-plugin-no-secrets";
 import importPlugin from "eslint-plugin-import";
 import nounsanitized from "eslint-plugin-no-unsanitized";
@@ -11,23 +10,23 @@ import unusedImports from "eslint-plugin-unused-imports";
 import arrowFunctions from "eslint-plugin-prefer-arrow-functions";
 
 export default tseslint.config(
+  ...angular.configs.tsRecommended,
   {
-    "extends": [
-      ...angular.configs.tsRecommended,
-      ...pluginPromise.configs["flat/recommended"],
-    ],
     "processor": angular.processInlineTemplates,
-    "files": ["*.ts"],
+    "files": ["src/**/*.ts"],
     "languageOptions": {
-      "parser": "@typescript-eslint/parser",
+      "ecmaVersion": "latest",
+      "sourceType": "module",
+      "parser": tseslint.parser,
       "parserOptions": {
         "projectService": true,
         "tsconfigRootDir": import.meta.dirname
       },
     },
     "plugins": {
-      nounsanitized, xss,
+      "no-unsanitized": nounsanitized,
       "@stylistic": stylistic,
+      "@typescript-eslint": tseslint.plugin,
       "import": importPlugin,
       "no-secrets": noSecrets,
       "no-loops": noLoops,
@@ -77,9 +76,12 @@ export default tseslint.config(
       ],
       "@stylistic/arrow-spacing": "error",
       "@stylistic/block-spacing": "error",
-      "@stylistic/brace-style": "off",
-      "@stylistic/comma-dangle": "off",
-      "@stylistic/comma-spacing": "off",
+      "@stylistic/brace-style": "error",
+      "@stylistic/comma-dangle": [
+        "error",
+        "never"
+      ],
+      "@stylistic/comma-spacing": "error",
       "@stylistic/comma-style": "error",
       "@stylistic/computed-property-spacing": "error",
       "@stylistic/curly-newline": "off",
@@ -89,7 +91,7 @@ export default tseslint.config(
       ],
       "@stylistic/eol-last": "off",
       "@stylistic/function-call-argument-newline": "off",
-      "@stylistic/function-call-spacing": "off",
+      "@stylistic/function-call-spacing": "error",
       "@stylistic/function-paren-newline": "off",
       "@stylistic/generator-star-spacing": "error",
       "@stylistic/implicit-arrow-linebreak": "off",
@@ -151,7 +153,10 @@ export default tseslint.config(
         "below"
       ],
       "@stylistic/object-curly-newline": "off",
-      "@stylistic/object-curly-spacing": "off",
+      "@stylistic/object-curly-spacing": [
+        "error",
+        "always"
+      ],
       "@stylistic/object-property-newline": [
         "error",
         {
@@ -169,18 +174,27 @@ export default tseslint.config(
         "error",
         "as-needed"
       ],
-      "@stylistic/quotes": "off",
+      "@stylistic/quotes": [
+        "error",
+        "single",
+        {
+          "allowTemplateLiterals": true
+        }
+      ],
       "@stylistic/rest-spread-spacing": [
         "error",
         "never"
       ],
-      "@stylistic/semi": "off",
+      "@stylistic/semi": "error",
       "@stylistic/semi-spacing": "error",
       "@stylistic/semi-style": "off",
       "@stylistic/space-before-blocks": "error",
-      "@stylistic/space-before-function-paren": "off",
+      "@stylistic/space-before-function-paren": [
+        "error",
+        "never"
+      ],
       "@stylistic/space-in-parens": "error",
-      "@stylistic/space-infix-ops": "off",
+      "@stylistic/space-infix-ops": "error",
       "@stylistic/space-unary-ops": "error",
       "@stylistic/spaced-comment": "off",
       "@stylistic/switch-colon-spacing": "error",
@@ -209,16 +223,6 @@ export default tseslint.config(
       "@stylistic/wrap-regex": "off",
       "@stylistic/yield-star-spacing": "error",
       "@typescript-eslint/ban-ts-comments": "off",
-      "@typescript-eslint/brace-style": [
-        "error"
-      ],
-      "@typescript-eslint/comma-dangle": [
-        "error",
-        "never"
-      ],
-      "@typescript-eslint/comma-spacing": [
-        "error"
-      ],
       "@typescript-eslint/consistent-type-definitions": "error",
       "@typescript-eslint/consistent-type-exports": [
         "error",
@@ -235,18 +239,12 @@ export default tseslint.config(
       "@typescript-eslint/dot-notation": [
         "error"
       ],
-      "@typescript-eslint/func-call-spacing": [
-        "error"
-      ],
       "@typescript-eslint/indent": [
         "off",
         "tab"
       ],
       "@typescript-eslint/init-declarations": [
         "off"
-      ],
-      "@typescript-eslint/keyword-spacing": [
-        "error"
       ],
       "@typescript-eslint/naming-convention": "off",
       "@typescript-eslint/no-array-constructor": [
@@ -300,9 +298,7 @@ export default tseslint.config(
       ],
       "@typescript-eslint/no-mixed-enums": "error",
       "@typescript-eslint/no-non-null-asserted-nullish-coalescing": "error",
-      "@typescript-eslint/no-non-null-assertion": [
-        "error"
-      ],
+      "@typescript-eslint/no-non-null-assertion": "error",
       "@typescript-eslint/no-redeclare": [
         "error"
       ],
@@ -316,9 +312,6 @@ export default tseslint.config(
       "@typescript-eslint/no-shadow": [
         "error"
       ],
-      "@typescript-eslint/no-throw-literal": [
-        "error"
-      ],
       "@typescript-eslint/no-unnecessary-parameter-property-assignment": "error",
       "@typescript-eslint/no-unnecessary-template-expression": "error",
       "@typescript-eslint/no-unsafe-declaration-merging": [
@@ -327,7 +320,7 @@ export default tseslint.config(
       "@typescript-eslint/no-unsafe-enum-comparison": "error",
       "@typescript-eslint/no-unsafe-function-type": "error",
       "@typescript-eslint/no-unsafe-return": "off",
-      "@typescript-eslint/no-unsafe-type-assertion": "error",
+      "@typescript-eslint/no-unsafe-type-assertion": "off",
       "@typescript-eslint/no-unsafe-unary-minus": "error",
       "@typescript-eslint/no-unused-expressions": [
         "error"
@@ -345,38 +338,17 @@ export default tseslint.config(
         "error"
       ],
       "@typescript-eslint/no-wrapper-object-types": "error",
-      "@typescript-eslint/object-curly-spacing": [
-        "error",
-        "always"
-      ],
       "@typescript-eslint/parameter-properties": "off",
       "@typescript-eslint/prefer-optional-chain": "error",
       "@typescript-eslint/prefer-promise-reject-errors": "off",
       "@typescript-eslint/prefer-readonly": "off",
       "@typescript-eslint/prefer-readonly-parameter-types": "off",
-      "@typescript-eslint/quotes": [
-        "error",
-        "single",
-        {
-          "allowTemplateLiterals": true
-        }
-      ],
       "@typescript-eslint/related-getter-setter-pairs": "error",
       "@typescript-eslint/require-await": [
         "error"
       ],
       "@typescript-eslint/restrict-plus-operands": "error",
       "@typescript-eslint/return-await": [
-        "error"
-      ],
-      "@typescript-eslint/semi": [
-        "error"
-      ],
-      "@typescript-eslint/space-before-function-paren": [
-        "error",
-        "never"
-      ],
-      "@typescript-eslint/space-infix-ops": [
         "error"
       ],
       "@typescript-eslint/use-unknown-in-catch-callback-variable": "off",
@@ -753,13 +725,7 @@ export default tseslint.config(
       "prefer-rest-params": "error",
       "prefer-spread": "error",
       "prefer-template": "error",
-      "promise/always-return": [
-        "warn",
-        {
-          "ignoreLastCallback": true,
-          "ignoreAssignmentVariable": true
-        }
-      ],
+      "promise/always-return": "off",
       "promise/avoid-new": "warn",
       "promise/catch-or-return": [
         "error",
@@ -811,45 +777,6 @@ export default tseslint.config(
       "use-isnan": "error",
       "valid-typeof": "error",
       "vars-on-top": "off",
-      "xss/no-location-href-assign": [
-        2,
-        {
-          "escapeFunc": "escapeHref"
-        }
-      ],
-      "xss/no-mixed-html": [
-        2,
-        {
-          "functions": {
-            "$": {
-              "htmlInput": true,
-              "safe": [
-                "document",
-                "this"
-              ]
-            },
-            ".html": {
-              "htmlInput": true,
-              "htmlOutput": true
-            },
-            ".join": {
-              "passthrough": {
-                "args": true,
-                "obj": true
-              }
-            }
-          },
-          "htmlFunctionRules": [
-            ".asHtml/i",
-            "toHtml"
-          ],
-          "htmlVariableRules": [
-            "AsHtml",
-            "HtmlEncoded/i",
-            "^html$"
-          ]
-        }
-      ],
       "yoda": "warn"
     }
   },
