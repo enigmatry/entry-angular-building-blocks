@@ -2,7 +2,6 @@ import tseslint from "typescript-eslint";
 import angular from "angular-eslint";
 import pluginPromise from "eslint-plugin-promise";
 import stylistic from "@stylistic/eslint-plugin";
-import noLoops from "eslint-plugin-no-loops";
 import noSecrets from "eslint-plugin-no-secrets";
 import importPlugin from "eslint-plugin-import";
 import nounsanitized from "eslint-plugin-no-unsanitized";
@@ -32,7 +31,6 @@ export default tseslint.config(
       "@typescript-eslint": tseslint.plugin,
       "import": importPlugin,
       "no-secrets": noSecrets,
-      "no-loops": noLoops,
       "prefer-arrow-functions": arrowFunctions,
       "promise": pluginPromise,
       "unused-imports": unusedImports,
@@ -617,7 +615,6 @@ export default tseslint.config(
       "no-lone-blocks": "error",
       "no-lonely-if": "error",
       "no-loop-func": "off",
-      "no-loops/no-loops": 0,
       "no-loss-of-precision": "off",
       "no-magic-numbers": "off",
       "no-misleading-character-class": "error",
