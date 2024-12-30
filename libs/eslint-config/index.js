@@ -12,6 +12,9 @@ import arrowFunctions from "eslint-plugin-prefer-arrow-functions";
 export default tseslint.config(
   ...angular.configs.tsRecommended,
   {
+    ignores: ["src/**/generated/", "src/polyfills.ts", "src/@enigmatry/**", "**/api-reference.ts"]
+  },
+  {
     "processor": angular.processInlineTemplates,
     "files": ["src/**/*.ts"],
     "languageOptions": {
