@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
+    <UserSecretsId>368c115e-e676-408b-a68c-5a50bfc96c26</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,6 +21,12 @@
     <PackageReference Include="Microsoft.KernelMemory.AI.AzureOpenAI" />
     <PackageReference Include="Microsoft.KernelMemory.Core" />
     <PackageReference Include="Microsoft.KernelMemory.MemoryDb.AzureAISearch" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Getting started with Entry.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

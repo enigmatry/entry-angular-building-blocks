@@ -1,0 +1,8 @@
+<div class="chat-bubble" *ngIf="message" [ngClass]="{'sender-message': message.role === role}">
+    <div [innerHTML]="message.content | markdown"></div>
+
+    @for (source of message.sources; track $index) {
+        <a [href]="source.sourceUrl">{{source.sourceUrl}}</a>
+        <br />
+    }
+</div>

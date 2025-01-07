@@ -1,0 +1,23 @@
+<h2 mat-dialog-title cdkDrag cdkDragRootElement=".cdk-overlay-pane" cdkDragHandle>
+    🤖 Entry AI assistant
+</h2>
+<mat-divider></mat-divider>
+
+<mat-dialog-content class="mat-typography">
+    <div class="chat-area">
+        <div *ngFor="let message of messages$ | async " class="chat-bubble-container"
+            [ngClass]="{'sender' : message.role === userRole}">
+            <app-assistant-message [message]="message"></app-assistant-message>
+        </div>
+
+        <div #endOfChat></div>
+
+        <div *ngIf="loading" class="spinner-container">
+            <mat-progress-spinner color="primary" [diameter]="30" mode="indeterminate">
+            </mat-progress-spinner>
+            <div class="spinner-message" i18n="@@chat.thinking"> Thinking... </div>
+        </div>
+    </div>
+</mat-dialog-content>
+
+<app-user-message (send)="send($event)"></app-user-message>

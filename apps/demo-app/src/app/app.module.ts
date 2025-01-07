@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { EntryCommonModule } from '@enigmatry/entry-components/common';
+import { ChatsModule } from './features/chat/chats.module';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { EntryCommonModule } from '@enigmatry/entry-components/common';
     imports: [
         SharedModule,
         BrowserModule,
+        ChatsModule,
         BrowserAnimationsModule,
         EntryCommonModule.forRoot(),
         AppRoutingModule

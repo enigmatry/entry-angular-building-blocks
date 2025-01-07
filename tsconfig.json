@@ -21,7 +21,7 @@
       "@enigmatry/entry-form": ["libs/entry-form/public-api.ts"],
       "@enigmatry/entry-form/autocomplete": ["libs/entry-form/autocomplete/public-api.ts"],
       "@enigmatry/entry-form/ckeditor": ["libs/entry-form/ckeditor/public-api.ts"],
-      "@enigmatry/entry-form/date-time-picker": ["libs/entry-form/date-time-picker/public-api.ts"]
+      "@enigmatry/entry-form/date-time-picker": ["libs/entry-form/date-time-picker/public-api.ts"],
     },
     "esModuleInterop": true,
     "strict": false,

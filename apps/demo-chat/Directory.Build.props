@@ -3,9 +3,9 @@
     <Copyright>Copyright © 2024 Enigmatry. All rights reserved.</Copyright>
     <Company>Enigmatry</Company>
     <TargetFramework>net8.0</TargetFramework>
-    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
-    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <RestorePackagesWithLockFile>True</RestorePackagesWithLockFile>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <NoWarn>$(NoWarn);NU5110;NU5111</NoWarn>

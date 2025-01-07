@@ -5,6 +5,10 @@
       <button mat-flat-button color="primary" class="header-element" [routerLink]="''">
         Components
       </button>
+
+      <button mat-flat-button color="primary" class="header-element" (click)="openChat()">
+        Chat
+      </button>
       <span *ngIf="selectedMenuItem" class="header-element"> {{selectedMenuItem.label}}</span>
     </div>
 

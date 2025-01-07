@@ -1,0 +1,8 @@
+<div class="input-area">
+    <form [formGroup]="form" class="input-form">
+        <div class="user-message">
+            <input formControlName="message" placeholder="Your question" autofocus (keydown.enter)="sendMessage()">
+            <mat-icon class=matSuffix (click)="sendMessage()">send</mat-icon>
+        </div>
+    </form>
+</div>

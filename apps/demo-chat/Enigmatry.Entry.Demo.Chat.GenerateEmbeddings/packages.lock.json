@@ -44,15 +44,6 @@
           "System.Linq.Async": "6.0.1"
         }
       },
-      "Azure.AI.OpenAI": {
-        "type": "Transitive",
-        "resolved": "2.1.0-beta.1",
-        "contentHash": "mbCkF0ORgHr7YAA3KntkCqlwSQFaffwvIktJGzbm+wwwzuMvSYsv6KjyX9jzrhgob44HAh6IlkGTKDdMUUfSjg==",
-        "dependencies": {
-          "Azure.Core": "1.43.0",
-          "OpenAI": "2.1.0-beta.1"
-        }
-      },
       "Azure.Core": {
         "type": "Transitive",
         "resolved": "1.44.1",
@@ -148,11 +139,6 @@
         "type": "Transitive",
         "resolved": "1.1.1",
         "contentHash": "MalY0Y/uM/LjXtHfX/26l2VtN4LDNZ2OE3aumNOHDLsT4fNYy2hiHXI4CXCqKpNUNm7iJ2brrc4J89UdaL56FA=="
-      },
-      "Microsoft.Extensions.AI.Abstractions": {
-        "type": "Transitive",
-        "resolved": "9.0.0-preview.9.24525.1",
-        "contentHash": "b5EntLa7aYjui129KSWQRZpXgUNn6l5G9OYQwVFlDXPiADMcmMEJCveD3BDBDxSbt1jkhIYs0eGuYKM0mXVkFw=="
       },
       "Microsoft.Extensions.Configuration": {
         "type": "Transitive",
@@ -690,6 +676,22 @@
         "type": "Transitive",
         "resolved": "4.5.4",
         "contentHash": "zteT+G8xuGu6mS+mzDzYXbzS7rd3K6Fjb9RiZlYlJPam2/hU7JCBZBVEcywNuR+oZ1ncTvc/cq0faRr3P01OVg=="
+      },
+      "Azure.AI.OpenAI": {
+        "type": "CentralTransitive",
+        "requested": "[2.1.0-beta.1, )",
+        "resolved": "2.1.0-beta.1",
+        "contentHash": "mbCkF0ORgHr7YAA3KntkCqlwSQFaffwvIktJGzbm+wwwzuMvSYsv6KjyX9jzrhgob44HAh6IlkGTKDdMUUfSjg==",
+        "dependencies": {
+          "Azure.Core": "1.43.0",
+          "OpenAI": "2.1.0-beta.1"
+        }
+      },
+      "Microsoft.Extensions.AI.Abstractions": {
+        "type": "CentralTransitive",
+        "requested": "[9.0.0-preview.9.24556.5, )",
+        "resolved": "9.0.0-preview.9.24525.1",
+        "contentHash": "b5EntLa7aYjui129KSWQRZpXgUNn6l5G9OYQwVFlDXPiADMcmMEJCveD3BDBDxSbt1jkhIYs0eGuYKM0mXVkFw=="
       }
     }
   }
