@@ -3,6 +3,10 @@
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
   <ItemGroup>
-    
+  </ItemGroup>
+  <ItemGroup>
+    <PackageVersion Include="Microsoft.KernelMemory.AI.AzureOpenAI" Version="0.95.241216.2" />
+    <PackageVersion Include="Microsoft.KernelMemory.Core" Version="0.95.241216.2" />
+    <PackageVersion Include="Microsoft.KernelMemory.MemoryDb.AzureAISearch" Version="0.95.241216.2" />
   </ItemGroup>
 </Project>
