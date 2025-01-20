@@ -19,7 +19,7 @@
     "stylelint-use-nesting": "^6.0.0",
     "stylelint-declaration-block-no-ignored-properties": "^2.8.0",
     "stylelint-file-max-lines": "^1.0.0",
-    "stylelint-scss": "^6.10.0",
+    "stylelint-scss": "^6.10.1",
     "stylelint-group-selectors": "^1.0.10"
   },
   "peerDependencies": {
