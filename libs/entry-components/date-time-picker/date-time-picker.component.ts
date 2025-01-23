@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding, Input, OnDestroy, OnInit, Output, ViewChild, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MAT_DATE_FORMATS, DateAdapter, MatDateFormats } from '@angular/material/core';
 import { ENTRY_MAT_DATE_TIME_FORMATS, EntryDateTimeAdapter, NgControlAccessorDirective, NoopControlValueAccessorDirective } from '@enigmatry/entry-components/common';
@@ -15,18 +15,29 @@ import { Subject, takeUntil } from 'rxjs';
   hostDirectives: [NoopControlValueAccessorDirective, NgControlAccessorDirective],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EntryDateTimePickerComponent<D> implements OnInit, OnDestroy, OnChanges {
+export class EntryDateTimePickerComponent<D> implements OnInit, OnDestroy {
   @HostBinding('class') class = 'entry-date-time-picker';
 
   @Input() label: string;
   @Input() showSeconds: boolean;
-  @Input() disabled: boolean;
   @Input() min: D;
   @Input() max: D;
   @Input() placeholder: string | undefined;
   @Input() hint: string | undefined;
   @Input() defaultTime: D | undefined;
   @Output() dateTimeChanged = new Subject<D>();
+
+  _disabled: boolean;
+
+  @Input()
+  get disabled(): boolean {
+    return this._disabled;
+  }
+
+  set disabled(value: boolean) {
+    this._disabled = value;
+    this.setDisabled();
+  }
 
   private ngControlAccessor = inject(NgControlAccessorDirective);
   private dateTimeAdapter: EntryDateTimeAdapter<D, unknown> = inject(DateAdapter) as EntryDateTimeAdapter<D, unknown>;
@@ -67,7 +78,7 @@ export class EntryDateTimePickerComponent<D> implements OnInit, OnDestroy, OnCha
 
   ngOnInit(): void {
     this.calendarControl.setValue(this.formControl.value, { emitEvent: false });
-
+    this.setDisabled();
     this.formControl.statusChanges
       .pipe(takeUntil(this.$destroy))
       .subscribe(status => {
@@ -98,18 +109,18 @@ export class EntryDateTimePickerComponent<D> implements OnInit, OnDestroy, OnCha
       });
   }
 
-  ngOnChanges(_changes: SimpleChanges): void {
-    if (this.disabled) {
-      this.formControl.disable();
-      this.calendarControl.disable();
-    } else {
-      this.formControl.enable();
-      this.calendarControl.enable();
-    }
-  }
-
   ngOnDestroy(): void {
     this.$destroy.next();
     this.$destroy.complete();
+  }
+
+  private setDisabled() {
+    if (this._disabled && this.formControl?.enabled) {
+      this.formControl?.disable();
+      this.calendarControl?.disable({ emitEvent: false });
+    } else if (this.formControl?.disabled) {
+      this.formControl?.enable();
+      this.calendarControl?.enable({ emitEvent: false });
+    }
   }
 }
