@@ -4,9 +4,10 @@ import { IValidationProblemDetails, setServerSideValidationErrors } from '@enigm
 import { ValidationService } from '../validation.service';
 
 @Component({
-  selector: 'app-reactive-form-validation-example',
-  templateUrl: './reactive-form-validation-example.component.html',
-  styleUrls: ['./reactive-form-validation-example.component.scss']
+    selector: 'app-reactive-form-validation-example',
+    templateUrl: './reactive-form-validation-example.component.html',
+    styleUrls: ['./reactive-form-validation-example.component.scss'],
+    standalone: false
 })
 export class ReactiveFormExampleComponent implements OnInit {
   form: FormGroup<{

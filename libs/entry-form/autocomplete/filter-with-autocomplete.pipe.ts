@@ -2,7 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { SelectOption } from './select-configuration.interface';
 
 @Pipe({
-  name: 'filterWithAutocomplete'
+    name: 'filterWithAutocomplete',
+    standalone: false
 })
 export class FilterWithAutocompletePipe implements PipeTransform {
 

@@ -45,6 +45,9 @@
             "argsIgnorePattern": "^_",
             "varsIgnorePattern": "^_"
           }
+        ],
+        "@angular-eslint/prefer-standalone": [
+          "warn"
         ]
       }
     },

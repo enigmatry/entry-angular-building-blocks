@@ -26,6 +26,7 @@ const providers = [
 ];
 
 @Component({
+  standalone: false,
   selector: 'entry-file-input',
   templateUrl: './entry-file-input.component.html',
   styleUrls: ['./entry-file-input.component.scss'],

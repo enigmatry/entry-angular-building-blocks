@@ -3,11 +3,10 @@ import { SearchFilterExamplesModule } from '../../examples/search-filter/search-
 import { SharedModule } from '../../shared/shared.module';
 
 @Component({
-  standalone: true,
-  templateUrl: './search-filter-documentation.component.html',
-  imports: [
-    SharedModule,
-    SearchFilterExamplesModule
-  ]
+    templateUrl: './search-filter-documentation.component.html',
+    imports: [
+        SharedModule,
+        SearchFilterExamplesModule
+    ]
 })
 export class SearchFilterDocumentationComponent { }

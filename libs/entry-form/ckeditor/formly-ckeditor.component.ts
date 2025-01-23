@@ -6,8 +6,9 @@ import { UntypedFormControl } from '@angular/forms';
 import { FieldType } from '@ngx-formly/material';
 
 @Component({
-  selector: 'entry-formly-ckeditor',
-  templateUrl: './formly-ckeditor.component.html'
+    selector: 'entry-formly-ckeditor',
+    templateUrl: './formly-ckeditor.component.html',
+    standalone: false
 })
 export class FormlyCkeditorComponent extends FieldType<FormlyFieldConfig> {
 

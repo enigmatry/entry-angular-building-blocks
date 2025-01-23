@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { IEntryConfirmDialogData, EntryDialogButtonsAlignment, EntryDialogService } from '@enigmatry/entry-components/dialog';
 
 @Component({
-  selector: 'app-confirm-example',
-  templateUrl: './confirm-example.component.html',
+    selector: 'app-confirm-example',
+    templateUrl: './confirm-example.component.html',
+    standalone: false
 })
 export class ConfirmExampleComponent {
   confirmData: Partial<IEntryConfirmDialogData> = {

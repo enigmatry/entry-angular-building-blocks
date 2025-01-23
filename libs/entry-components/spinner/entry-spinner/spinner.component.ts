@@ -9,16 +9,17 @@ import { ThemePalette } from '@angular/material/core';
 import { SpinnerOverlayContainer } from '../spinner-overlay-container';
 
 @Component({
-  selector: 'entry-spinner',
-  templateUrl: './spinner.component.html',
-  providers: [
-    Overlay,
-    {
-      provide: OverlayContainer,
-      useClass: SpinnerOverlayContainer
-    }
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'entry-spinner',
+    templateUrl: './spinner.component.html',
+    providers: [
+        Overlay,
+        {
+            provide: OverlayContainer,
+            useClass: SpinnerOverlayContainer
+        }
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class EntrySpinnerComponent implements OnInit, OnDestroy {
 

@@ -2,7 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { IComponentDefinition } from '../../features/component-definitions';
 
 @Pipe({
-  name: 'sort'
+    name: 'sort',
+    standalone: false
 })
 export class SortPipe implements PipeTransform {
   transform = (values: IComponentDefinition[], direction: 'asc' | 'desc' = 'asc'): IComponentDefinition[] =>
