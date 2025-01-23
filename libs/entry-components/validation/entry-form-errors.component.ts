@@ -12,15 +12,16 @@ import { UntypedFormGroup } from '@angular/forms';
  * ```
  */
 @Component({
-  selector: 'entry-form-errors',
-  template: `
+    selector: 'entry-form-errors',
+    template: `
     <div *ngIf="form.errors">
       <mat-error *ngFor="let error of form.errors.general">
         <span class="mat-body-2">{{error}}</span>
       </mat-error>
     </div>
   `,
-  changeDetection: ChangeDetectionStrategy.Default
+    changeDetection: ChangeDetectionStrategy.Default,
+    standalone: false
 })
 export class EntryFormErrorsComponent {
   /** A form group for which the validation errors are being displayed. */

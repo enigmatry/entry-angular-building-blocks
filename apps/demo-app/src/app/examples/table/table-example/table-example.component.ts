@@ -4,9 +4,10 @@ import { User } from '../../search-filter/search-filter/users';
 import { UsersService } from '../../search-filter/search-filter/users.service';
 
 @Component({
-  selector: 'app-table-example',
-  templateUrl: './table-example.component.html',
-  styleUrls: ['./table-example.component.scss']
+    selector: 'app-table-example',
+    templateUrl: './table-example.component.html',
+    styleUrls: ['./table-example.component.scss'],
+    standalone: false
 })
 export class TableExampleComponent implements OnInit {
   users: User[];

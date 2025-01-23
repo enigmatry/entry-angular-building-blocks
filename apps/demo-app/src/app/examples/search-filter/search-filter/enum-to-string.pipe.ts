@@ -2,7 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { Occupation } from './users';
 
 @Pipe({
-  name: 'enumToString'
+    name: 'enumToString',
+    standalone: false
 })
 export class EnumToStringPipe implements PipeTransform {
 

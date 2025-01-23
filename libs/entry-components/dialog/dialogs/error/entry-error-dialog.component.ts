@@ -5,9 +5,10 @@ import { IEntryErrorDialogData } from './entry-error-dialog-data.interface';
 import { ENTRY_DIALOG_CONFIG, EntryDialogConfig } from '../../entry-dialog-config.model';
 
 @Component({
-  selector: 'entry-error-dialog',
-  templateUrl: './entry-error-dialog.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'entry-error-dialog',
+    templateUrl: './entry-error-dialog.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class EntryErrorDialogComponent extends EntryDialogComponent {
   errors: string[] = [];

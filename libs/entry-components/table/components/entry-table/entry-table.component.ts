@@ -25,9 +25,10 @@ import {
 } from '../../interfaces';
 
 @Component({
-  selector: 'entry-table',
-  templateUrl: './entry-table.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'entry-table',
+    templateUrl: './entry-table.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class EntryTableComponent<T> implements OnChanges {
   @HostBinding('class') className = 'entry-table';

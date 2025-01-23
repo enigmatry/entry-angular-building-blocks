@@ -3,8 +3,9 @@ import { FormlyFieldConfig } from '@ngx-formly/core';
 import { of } from 'rxjs';
 
 @Component({
-  selector: 'app-radio-example',
-  templateUrl: './radio-example.component.html'
+    selector: 'app-radio-example',
+    templateUrl: './radio-example.component.html',
+    standalone: false
 })
 export class RadioExampleComponent {
 

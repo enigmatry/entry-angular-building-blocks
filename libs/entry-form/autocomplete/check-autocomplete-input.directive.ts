@@ -6,7 +6,8 @@ import { takeUntil } from 'rxjs/operators';
 import { SelectOption } from './select-configuration.interface';
 
 @Directive({
-  selector: '[entryCheckAutocompleteInput]'
+    selector: '[entryCheckAutocompleteInput]',
+    standalone: false
 })
 export class CheckAutocompleteInputDirective implements OnChanges, AfterViewInit, OnDestroy {
 

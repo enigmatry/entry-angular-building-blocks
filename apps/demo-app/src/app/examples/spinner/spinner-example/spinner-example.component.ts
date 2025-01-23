@@ -3,8 +3,9 @@ import { ThemePalette } from '@angular/material/core';
 import { timer } from 'rxjs';
 
 @Component({
-  selector: 'app-spinner-example',
-  templateUrl: './spinner-example.component.html'
+    selector: 'app-spinner-example',
+    templateUrl: './spinner-example.component.html',
+    standalone: false
 })
 export class SpinnerExampleComponent {
   loading = false;

@@ -5,8 +5,9 @@ import { EntryDateTimeAdapter } from '@enigmatry/entry-components/common';
 export type meridiem = 'am' | 'pm';
 
 @Component({
-  selector: 'entry-time-picker',
-  templateUrl: './time-picker.component.html'
+    selector: 'entry-time-picker',
+    templateUrl: './time-picker.component.html',
+    standalone: false
 })
 export class EntryTimePickerComponent<D> implements OnChanges {
   @HostBinding('class') class = 'entry-time-picker';

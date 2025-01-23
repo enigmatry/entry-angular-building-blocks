@@ -5,9 +5,10 @@ import { IEntryConfirmDialogData } from './entry-confirm-dialog-data.interface';
 import { ENTRY_DIALOG_CONFIG, EntryDialogConfig } from '../../entry-dialog-config.model';
 
 @Component({
-  selector: 'entry-confirm-dialog',
-  templateUrl: './entry-confirm-dialog.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'entry-confirm-dialog',
+    templateUrl: './entry-confirm-dialog.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class EntryConfirmDialogComponent extends EntryDialogComponent {
   constructor(

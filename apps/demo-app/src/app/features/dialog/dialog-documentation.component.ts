@@ -3,11 +3,10 @@ import { DialogExamplesModule } from '../../examples/dialog/dialog-examples.modu
 import { SharedModule } from '../../shared/shared.module';
 
 @Component({
-  standalone: true,
-  templateUrl: './dialog-documentation.component.html',
-  imports: [
-    SharedModule,
-    DialogExamplesModule,
-  ]
+    templateUrl: './dialog-documentation.component.html',
+    imports: [
+        SharedModule,
+        DialogExamplesModule,
+    ]
 })
 export class DialogDocumentationComponent { }

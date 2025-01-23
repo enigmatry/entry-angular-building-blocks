@@ -3,11 +3,10 @@ import { PermissionsExampleModule } from '../../examples/permissions/permissions
 import { SharedModule } from '../../shared/shared.module';
 
 @Component({
-  standalone: true,
-  templateUrl: './permissions-documentation.component.html',
-  imports: [
-    SharedModule,
-    PermissionsExampleModule,
-  ]
+    templateUrl: './permissions-documentation.component.html',
+    imports: [
+        SharedModule,
+        PermissionsExampleModule,
+    ]
 })
 export class PermissionsDocumentationComponent { }

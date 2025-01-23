@@ -3,8 +3,9 @@ import { UntypedFormGroup } from '@angular/forms';
 import { DateSearchFilter } from './date-search-filter.model';
 
 @Component({
-  selector: 'entry-date-search-filter',
-  templateUrl: './date-search-filter.component.html'
+    selector: 'entry-date-search-filter',
+    templateUrl: './date-search-filter.component.html',
+    standalone: false
 })
 export class DateSearchFilterComponent<D> {
   @Input() searchFilter: DateSearchFilter<D>;
