@@ -14,7 +14,6 @@ export class DebounceEventPlugin extends EntryEventManagerPlugin {
 
   modifier = '.debounce';
 
-  // eslint-disable-next-line @typescript-eslint/ban-types
   addEventListener(element: HTMLElement, eventName: string, originalHandler: Function): Function {
     // e.g. (click.debounce.500)
     const [_modifier, milliseconds = 500, option = 'leading'] = this.unwrapParams(eventName);
