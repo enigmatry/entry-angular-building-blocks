@@ -6,14 +6,15 @@ import { EntryTimePickerComponent } from './time-picker.component';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
-  selector: 'entry-date-time-picker',
-  templateUrl: './date-time-picker.component.html',
-  providers: [
-    { provide: MAT_DATE_FORMATS, useFactory: () => inject(ENTRY_MAT_DATE_TIME_FORMATS) },
-    { provide: DateAdapter, useClass: EntryDateTimeAdapter }
-  ],
-  hostDirectives: [NoopControlValueAccessorDirective, NgControlAccessorDirective],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'entry-date-time-picker',
+    templateUrl: './date-time-picker.component.html',
+    providers: [
+        { provide: MAT_DATE_FORMATS, useFactory: () => inject(ENTRY_MAT_DATE_TIME_FORMATS) },
+        { provide: DateAdapter, useClass: EntryDateTimeAdapter }
+    ],
+    hostDirectives: [NoopControlValueAccessorDirective, NgControlAccessorDirective],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class EntryDateTimePickerComponent<D> implements OnInit, OnDestroy, OnChanges {
   @HostBinding('class') class = 'entry-date-time-picker';

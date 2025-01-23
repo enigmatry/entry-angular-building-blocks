@@ -17,8 +17,9 @@ import { map, throttleTime } from 'rxjs/operators';
 type IGetProductDetailsResponse = {};
 
 @Component({
-  selector: 'app-g-product-edit',
-  templateUrl: './product-edit-generated.component.html'
+    selector: 'app-g-product-edit',
+    templateUrl: './product-edit-generated.component.html',
+    standalone: false
 })
 export class ProductEditGeneratedComponent implements OnInit, OnDestroy {
 

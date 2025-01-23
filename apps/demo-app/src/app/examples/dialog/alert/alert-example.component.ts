@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { EntryDialogService } from '@enigmatry/entry-components/dialog';
 
 @Component({
-  selector: 'app-alert-example',
-  templateUrl: './alert-example.component.html'
+    selector: 'app-alert-example',
+    templateUrl: './alert-example.component.html',
+    standalone: false
 })
 export class AlertExampleComponent {
 

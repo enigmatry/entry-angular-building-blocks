@@ -2,9 +2,10 @@ import { ChangeDetectionStrategy, Component, Inject, Input } from '@angular/core
 import { DEFAULT_PERCENTAGE_MULTIPLIER } from '../../interfaces/entry-table-config';
 
 @Component({
-  selector: 'entry-cell-formatted-value',
-  templateUrl: './entry-cell-formatted-value.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'entry-cell-formatted-value',
+    templateUrl: './entry-cell-formatted-value.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class EntryCellFormattedValueComponent {
 

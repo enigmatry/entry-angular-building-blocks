@@ -6,9 +6,10 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import hljs from 'highlight.js';
 
 @Component({
-  selector: 'app-markdown-viewer',
-  templateUrl: './markdown-viewer.component.html',
-  styleUrls: ['./markdown-viewer.component.scss']
+    selector: 'app-markdown-viewer',
+    templateUrl: './markdown-viewer.component.html',
+    styleUrls: ['./markdown-viewer.component.scss'],
+    standalone: false
 })
 export class MarkdownViewerComponent implements OnInit {
   @Input() fileUrl: string | undefined;

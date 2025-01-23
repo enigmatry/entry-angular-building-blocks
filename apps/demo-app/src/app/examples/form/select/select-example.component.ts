@@ -5,8 +5,9 @@ import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-select-example',
-  templateUrl: './select-example.component.html'
+    selector: 'app-select-example',
+    templateUrl: './select-example.component.html',
+    standalone: false
 })
 export class SelectExampleComponent {
 

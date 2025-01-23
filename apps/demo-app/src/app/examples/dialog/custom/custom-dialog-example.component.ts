@@ -8,7 +8,8 @@ export interface ICustomDialogData {
 
 @Component({
     selector: 'app-custom-dialog-example',
-    templateUrl: './custom-dialog-example.component.html'
+    templateUrl: './custom-dialog-example.component.html',
+    standalone: false
 })
 export class CustomDialogExampleComponent {
     question = 'Isn\'t this logo cute?';

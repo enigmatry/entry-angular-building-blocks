@@ -16,9 +16,10 @@ import { Observable, of } from 'rxjs';
 import { IValidationProblemDetails, setServerSideValidationErrors } from '@enigmatry/entry-components';
 
 @Component({
-  selector: 'app-search-filter-example',
-  templateUrl: './search-filter-example.component.html',
-  styleUrls: ['./search-filter-example.component.scss']
+    selector: 'app-search-filter-example',
+    templateUrl: './search-filter-example.component.html',
+    styleUrls: ['./search-filter-example.component.scss'],
+    standalone: false
 })
 export class SearchFilterExampleComponent {
   @ViewChild(EntrySearchFilterComponent, { static: true }) entrySearchFilterComponent: EntrySearchFilterComponent;

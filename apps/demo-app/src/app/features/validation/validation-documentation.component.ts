@@ -4,12 +4,11 @@ import { FormlyValidationExampleModule } from '../../examples/validation/formly/
 import { ReactiveFormValidationExampleModule } from '../../examples/validation/reactive-form/reactive-form-validation-example.module';
 
 @Component({
-  standalone: true,
-  templateUrl: './validation-documentation.component.html',
-  imports: [
-    SharedModule,
-    ReactiveFormValidationExampleModule,
-    FormlyValidationExampleModule
-  ]
+    templateUrl: './validation-documentation.component.html',
+    imports: [
+        SharedModule,
+        ReactiveFormValidationExampleModule,
+        FormlyValidationExampleModule
+    ]
 })
 export class ValidationDocumentationComponent { }

@@ -3,8 +3,9 @@ import { EntryDialogService } from '@enigmatry/entry-components/dialog';
 import { ValidationService } from '../../validation/validation.service';
 
 @Component({
-  selector: 'app-error-dialog-example',
-  templateUrl: './error-example.component.html',
+    selector: 'app-error-dialog-example',
+    templateUrl: './error-example.component.html',
+    standalone: false
 })
 export class ErrorDialogExampleComponent {
 
