@@ -21,7 +21,7 @@ export class EntryDateTimePickerComponent<D> implements OnInit, OnDestroy {
   @HostBinding('class') class = 'entry-date-time-picker';
 
   @Input() label: string;
-  @Input() showSeconds: boolean;
+  @Input() showSeconds: boolean | undefined;
   @Input() min: D;
   @Input() max: D;
   @Input() placeholder: string | undefined;
