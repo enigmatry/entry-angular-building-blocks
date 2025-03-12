@@ -47,7 +47,7 @@ Provide ENTRY_MAT_DATE_TIME_FORMATS and EntryTimeAdapter in a feature or shared 
 export class SharedModule { }
 ```
 
-Inputs:
+## Inputs
 
 - label: Label for the control
 - placeholder: Placeholder for the control
@@ -58,11 +58,25 @@ Inputs:
 - max: Maximum selectable date
 - defaultTime: Default time for time picker component, if undefined sets default values to now.
 
-Outputs:
+Configure seconds globally via `provideEntryDateTimePickerConfig` in feature or shared module:
+
+```typescript
+@NgModule({
+  providers: [
+    ...
+    provideEntryDateTimePickerConfig({ showSeconds: true })
+    ...
+  ],
+  ...
+})
+export class SharedModule { }
+```
+
+## Outputs
 
 - dateTimeChanged: Event emitted when the date time value changes
 
-Use the component
+## Use the component
 
 ```html
 <entry-date-time-picker [formControl]="dateTime" label="Expires on"></entry-date-time-picker>

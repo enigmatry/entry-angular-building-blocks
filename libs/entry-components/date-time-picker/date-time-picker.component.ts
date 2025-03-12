@@ -4,6 +4,7 @@ import { MAT_DATE_FORMATS, DateAdapter, MatDateFormats } from '@angular/material
 import { ENTRY_MAT_DATE_TIME_FORMATS, EntryDateTimeAdapter, NgControlAccessorDirective, NoopControlValueAccessorDirective } from '@enigmatry/entry-components/common';
 import { EntryTimePickerComponent } from './time-picker.component';
 import { Subject, takeUntil } from 'rxjs';
+import { ENTRY_DATE_TIME_PICKER_CONFIG, EntryDateTimePickerConfig } from './date-time-picker-config.model';
 
 @Component({
     selector: 'entry-date-time-picker',
@@ -44,6 +45,7 @@ export class EntryDateTimePickerComponent<D> implements OnInit, OnDestroy {
   private dateTimeAdapter: EntryDateTimeAdapter<D, unknown> = inject(DateAdapter) as EntryDateTimeAdapter<D, unknown>;
   private format: MatDateFormats = inject(ENTRY_MAT_DATE_TIME_FORMATS);
   private changeDetectorRef = inject(ChangeDetectorRef);
+  public config: EntryDateTimePickerConfig = inject(ENTRY_DATE_TIME_PICKER_CONFIG);
 
   // Control bound to component using FormsApi (ngModel, formControl, formControlName)
   get formControl(): FormControl<D> {
