@@ -5,9 +5,10 @@ import { FormlyFieldConfig } from '@ngx-formly/core';
 import { ValidationService } from '../../validation.service';
 
 @Component({
-  selector: 'app-complex-formly-form-validation-example',
-  templateUrl: './complex-formly-form-validation-example.component.html',
-  styleUrls: ['./complex-formly-form-validation-example.component.scss']
+    selector: 'app-complex-formly-form-validation-example',
+    templateUrl: './complex-formly-form-validation-example.component.html',
+    styleUrls: ['./complex-formly-form-validation-example.component.scss'],
+    standalone: false
 })
 export class ComplexFormlyFormValidationExampleComponent {
   form = new FormGroup({});

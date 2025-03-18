@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 
 @Component({
-  selector: 'app-rich-text-example',
-  templateUrl: './rich-text-example.component.html'
+    selector: 'app-rich-text-example',
+    templateUrl: './rich-text-example.component.html',
+    standalone: false
 })
 export class RichTextExampleComponent {
   model = { description: '' };

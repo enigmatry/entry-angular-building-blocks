@@ -6,10 +6,11 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import hljs from 'highlight.js';
 
 @Component({
-  selector: 'app-code-view',
-  templateUrl: './code-view.component.html',
-  styleUrls: ['./code-view.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-code-view',
+    templateUrl: './code-view.component.html',
+    styleUrls: ['./code-view.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class CodeViewComponent implements OnInit {
   @Input() codeContent: string;

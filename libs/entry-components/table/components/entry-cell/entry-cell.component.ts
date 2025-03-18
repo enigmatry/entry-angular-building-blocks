@@ -2,9 +2,10 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ColumnDef } from '../../interfaces';
 
 @Component({
-  selector: 'entry-cell',
-  templateUrl: './entry-cell.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'entry-cell',
+    templateUrl: './entry-cell.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class EntryCellComponent<T> {
 

@@ -15,7 +15,8 @@ import { EntryDialogButtonsAlignment } from '../entry-dialog-buttons-alignment.t
 @Component({
     selector: 'entry-dialog',
     templateUrl: './entry-dialog.component.html',
-    styleUrls: ['./entry-dialog.component.scss']
+    styleUrls: ['./entry-dialog.component.scss'],
+    standalone: false
 })
 export class EntryDialogComponent {
     /** Dialog header title  */

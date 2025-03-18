@@ -5,9 +5,10 @@ import { IEntryAlertDialogData } from './entry-alert-dialog-data.interface';
 import { ENTRY_DIALOG_CONFIG, EntryDialogConfig } from '../../entry-dialog-config.model';
 
 @Component({
-  selector: 'entry-alert-dialog',
-  templateUrl: './entry-alert-dialog.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'entry-alert-dialog',
+    templateUrl: './entry-alert-dialog.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class EntryAlertDialogComponent extends EntryDialogComponent {
   constructor(

@@ -3,7 +3,8 @@ import { PermissionType } from './permission-type';
 import { EntryPermissionService } from './permission.service';
 
 @Pipe({
-  name: 'entryHasPermissions'
+    name: 'entryHasPermissions',
+    standalone: false
 })
 export class EntryPermissionPipe<T extends PermissionType> implements PipeTransform {
   constructor(private permissionsService: EntryPermissionService<T>) { }

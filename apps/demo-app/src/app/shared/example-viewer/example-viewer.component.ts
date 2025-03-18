@@ -12,9 +12,10 @@ interface IExtraFile {
 }
 
 @Component({
-  selector: 'app-example-viewer',
-  templateUrl: './example-viewer.component.html',
-  styleUrls: ['./example-viewer.component.scss']
+    selector: 'app-example-viewer',
+    templateUrl: './example-viewer.component.html',
+    styleUrls: ['./example-viewer.component.scss'],
+    standalone: false
 })
 export class ExampleViewerComponent implements OnDestroy {
   @Input() component: string;

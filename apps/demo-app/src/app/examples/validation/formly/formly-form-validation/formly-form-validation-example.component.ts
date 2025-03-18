@@ -5,9 +5,10 @@ import { ValidationService } from '../../validation.service';
 import { IValidationProblemDetails, setServerSideValidationErrors } from '@enigmatry/entry-components/validation';
 
 @Component({
-  selector: 'app-formly-form-validation-example',
-  templateUrl: './formly-form-validation-example.component.html',
-  styleUrls: ['./formly-form-validation-example.component.scss']
+    selector: 'app-formly-form-validation-example',
+    templateUrl: './formly-form-validation-example.component.html',
+    styleUrls: ['./formly-form-validation-example.component.scss'],
+    standalone: false
 })
 export class FormlyFormValidationExampleComponent {
   form = new FormGroup({});

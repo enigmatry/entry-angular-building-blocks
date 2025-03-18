@@ -4,9 +4,10 @@ import { RowContextMenuFormatter } from '../../interfaces/row-context-menu-forma
 import { ContextMenuItem } from '../../interfaces/context-menu-item';
 
 @Component({
-  selector: 'entry-cell-context-menu',
-  templateUrl: './entry-cell-context-menu.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'entry-cell-context-menu',
+    templateUrl: './entry-cell-context-menu.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class EntryCellContextMenuComponent implements OnInit {
 

@@ -15,9 +15,10 @@ import { SelectOption } from './select-option.model';
  * Entry SearchFilter component.
  */
 @Component({
-  selector: 'entry-search-filter',
-  templateUrl: './entry-search-filter.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'entry-search-filter',
+    templateUrl: './entry-search-filter.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class EntrySearchFilterComponent implements OnInit {
 

@@ -4,10 +4,11 @@ import { PermissionType } from './permission-type';
 import { EntryPermissionService } from './permission.service';
 
 @Directive({
-  selector: '[entryPermissionsOnly],[entryPermissionsExcept]',
-  hostDirectives: [{
-    directive: NgIf
-  }]
+    selector: '[entryPermissionsOnly],[entryPermissionsExcept]',
+    hostDirectives: [{
+            directive: NgIf
+        }],
+    standalone: false
 })
 export class EntryPermissionDirective<T extends PermissionType> {
   private ngIfDirective = inject(NgIf);

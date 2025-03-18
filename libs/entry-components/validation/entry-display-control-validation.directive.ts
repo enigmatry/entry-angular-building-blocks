@@ -15,7 +15,8 @@ import { FORM_FIELD_ERROR_KEY } from './entry-validation';
  * ```
  */
 @Directive({
-  selector: '[entryDisplayControlValidation]'
+    selector: '[entryDisplayControlValidation]',
+    standalone: false
 })
 export class EntryDisplayControlValidationDirective implements OnInit, OnDestroy {
   /** Form control for which the validation messages are displayed for. */

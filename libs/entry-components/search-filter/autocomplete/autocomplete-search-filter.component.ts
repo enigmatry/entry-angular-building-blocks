@@ -7,9 +7,10 @@ import { AutocompleteSearchFilter } from './autocomplete-search-filter.model';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 @Component({
-  selector: 'entry-autocomplete-search-filter',
-  templateUrl: './autocomplete-search-filter.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'entry-autocomplete-search-filter',
+    templateUrl: './autocomplete-search-filter.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class AutocompleteSearchFilterComponent<T> implements AfterViewInit, OnDestroy {
   @Input() searchFilter: AutocompleteSearchFilter<T>;
