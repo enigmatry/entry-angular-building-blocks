@@ -42,5 +42,6 @@
 	}
 
 	$color: map.get($theme, 'general', 'colors', $key);
+
 	@return palette-generator.generate-from($color);
 }

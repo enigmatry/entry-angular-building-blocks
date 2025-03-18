@@ -83,6 +83,7 @@
 @function -set-text-groups-for($typography, $body-font, $buttons-font) {
 	$typography: -set-typography-group($typography, ('body-1', 'body-2', 'caption'), $body-font);
 	$typography: -set-typography-group($typography, ('button'), $buttons-font);
+
 	@return $typography;
 }
 
@@ -104,5 +105,6 @@
 
 @function -set-typography-font($typography, $section, $font) {
 	$typography: map.set($typography, $section, 'font-family', '"#{$font}"');
+
 	@return $typography;
 }
