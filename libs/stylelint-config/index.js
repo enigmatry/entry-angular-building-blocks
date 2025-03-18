@@ -5,12 +5,12 @@ module.exports = {
   extends: "stylelint-config-property-sort-order-smacss",
   plugins: [
     "@stylistic/stylelint-plugin",
-    "stylelint-use-nesting",
     "stylelint-declaration-block-no-ignored-properties",
     "stylelint-file-max-lines",
-    "stylelint-scss",
     "stylelint-group-selectors",
     // "stylelint-selector-no-empty",  => uncomment this line once this library is again compatible with stylelint v16+
+    "stylelint-use-nesting",
+    "stylelint-scss",
   ],
   rules: {
     "@stylistic/at-rule-name-case": "lower",
@@ -51,7 +51,9 @@ module.exports = {
     "@stylistic/max-empty-lines": 1,
     "@stylistic/max-line-length": [
       135,
-      { "ignore": ["comments"] }
+      {
+        ignore: ["comments"]
+      }
     ],
     "@stylistic/media-feature-colon-space-after": "always",
     "@stylistic/media-feature-colon-space-before": "never",
@@ -65,9 +67,12 @@ module.exports = {
     "@stylistic/media-query-list-comma-space-before": "never",
     "@stylistic/named-grid-areas-alignment": true,
     "@stylistic/no-empty-first-line": true,
-    "@stylistic/no-eol-whitespace": [true, {
-      ignore: ["empty-lines"]
-    }],
+    "@stylistic/no-eol-whitespace": [
+      true,
+      {
+        ignore: ["empty-lines"]
+      }
+     ],
     "@stylistic/no-extra-semicolons": true,
     "@stylistic/no-missing-end-of-source-newline": null,
     "@stylistic/number-leading-zero": "never",
@@ -79,213 +84,238 @@ module.exports = {
     "@stylistic/selector-combinator-space-after": "always",
     "@stylistic/selector-combinator-space-before": "always",
     "@stylistic/selector-descendant-combinator-no-non-space": true,
-    "@stylistic/selector-list-comma-space-after": "always",
-    "@stylistic/selector-list-comma-space-before": "never",
     "@stylistic/selector-list-comma-newline-after": null,
     "@stylistic/selector-list-comma-newline-before": null,
+    "@stylistic/selector-list-comma-space-after": "always",
+    "@stylistic/selector-list-comma-space-before": "never",
     "@stylistic/selector-max-empty-lines": 0,
     "@stylistic/selector-pseudo-class-case": "lower",
     "@stylistic/selector-pseudo-class-parentheses-space-inside": "never",
     "@stylistic/selector-pseudo-element-case": "lower",
     "@stylistic/string-quotes": "single",
+    "@stylistic/unicode-bom": null,
     "@stylistic/unit-case": "lower",
     "@stylistic/value-list-comma-newline-after": "never-multi-line",
     "@stylistic/value-list-comma-newline-before": "never-multi-line",
     "@stylistic/value-list-comma-space-after": "always-single-line",
     "@stylistic/value-list-comma-space-before": "never",
     "@stylistic/value-list-max-empty-lines": 0,
-    "@stylistic/unicode-bom": null,
     "alpha-value-notation": "number",
     "annotation-no-unknown": [
       true,
       {
-        "ignoreAnnotations": [
-          "default"
-        ]
+        ignoreAnnotations: ["default"]
       }
     ],
-    "at-rule-empty-line-before": null,
-    "at-rule-disallowed-list": null,
-    "at-rule-property-required-list": null,
+   "at-rule-allowed-list": ["use", "for", "if", "else", "include", "extend", "return", "error", "each", "mixin", "function", "keyframes", "font-face", "forward", "at-root", "while"],
     "at-rule-descriptor-no-unknown": null,
     "at-rule-descriptor-value-no-unknown": null,
-    "at-rule-allowed-list": ["use", "for", "if", "else", "include", "extend", "return", "error", "each", "mixin", "function", "keyframes", "font-face", "forward", "at-root", "while"],
+    "at-rule-disallowed-list": null,
+    "at-rule-empty-line-before": [
+      "always",
+      {
+        except: ["first-nested"],
+        ignore: ["after-comment"],
+        ignoreAtRules: ["use", "include", "else"]
+      }
+    ],
+    "at-rule-no-deprecated": null,
     "at-rule-no-unknown": null,
     "at-rule-no-vendor-prefix": true,
+    "at-rule-prelude-no-invalid": null,
+    "at-rule-property-required-list": null,
     "block-no-empty": true,
-    "comment-pattern": null,
-    "comment-no-empty": true,
-    "comment-whitespace-inside": "always",
-    "comment-word-disallowed-list": null,
     "color-function-notation": "modern",
     "color-hex-alpha": null,
-    "color-no-hex": null,
-    "comment-empty-line-before": null,
     "color-hex-length": "short",
     "color-named": "never",
+    "color-no-hex": null,
     "color-no-invalid-hex": true,
-    "custom-property-empty-line-before": "always",
-    "custom-property-pattern": null,
+    "comment-empty-line-before": null,
+    "comment-no-empty": true,
+    "comment-pattern": null,
+    "comment-whitespace-inside": "always",
+    "comment-word-disallowed-list": null,
     "custom-media-pattern": null,
+    "custom-property-empty-line-before": "always",
     "custom-property-no-missing-var-function": null,
-    "declaration-empty-line-before": "never",
+    "custom-property-pattern": null,
     "declaration-block-no-duplicate-custom-properties": true,
     "declaration-block-no-duplicate-properties": true,
-    "declaration-block-no-shorthand-property-overrides": true,
     "declaration-block-no-redundant-longhand-properties": [
-      true, { "ignoreShorthands": [] }
+      true,
+      {
+        ignoreShorthands: []
+      }
     ],
+    "declaration-block-no-shorthand-property-overrides": true,
     "declaration-block-single-line-max-declarations": 1,
+    "declaration-empty-line-before": "never",
     "declaration-no-important": true,
     "declaration-property-max-values": {},
-    "declaration-property-value-keyword-no-deprecated": null,
     "declaration-property-unit-allowed-list": null,
+    "declaration-property-unit-disallowed-list": null,
     "declaration-property-value-allowed-list": null,
     "declaration-property-value-disallowed-list": null,
-    " declaration-property-unit-disallowed-list": null,
+    "declaration-property-value-keyword-no-deprecated": true,
     "font-family-name-quotes": "always-unless-keyword",
     "font-family-no-duplicate-names": true,
     "font-family-no-missing-generic-family-keyword": true,
     "font-weight-notation": "numeric",
     "function-allowed-list": null,
-    "function-disallowed-list": null,
     "function-calc-no-unspaced-operator": true,
+    "function-disallowed-list": null,
     "function-linear-gradient-no-nonstandard-direction": true,
     "function-name-case": "lower",
     "function-no-unknown": null,
-    "function-url-scheme-allowed-list": null,
-    "function-url-scheme-disallowed-list": null,
     "function-url-no-scheme-relative": true,
     "function-url-quotes": "always",
+    "function-url-scheme-allowed-list": null,
+    "function-url-scheme-disallowed-list": null,
     "hue-degree-notation": "number",
     "import-notation": "string",
     "keyframe-block-no-duplicate-selectors": true,
     "keyframe-declaration-no-important": true,
-    "keyframe-selector-notation": null,
+    "keyframe-selector-notation": "percentage-unless-within-keyword-only-block",
     "keyframes-name-pattern": null,
     "length-zero-no-unit": true,
     "lightness-notation": "number",
-    "max-nesting-depth": 3,
+    "max-nesting-depth": [
+      3, {
+        "ignoreAtRules": ["include"]
+      }
+    ],
     "media-feature-name-allowed-list": ["min-width", "width", "-ms-high-contrast"],
     "media-feature-name-disallowed-list": null,
     "media-feature-name-no-unknown": true,
     "media-feature-name-no-vendor-prefix": null,
-    "media-feature-name-value-no-unknown": null,
     "media-feature-name-unit-allowed-list": null,
     "media-feature-name-value-allowed-list": null,
+    "media-feature-name-value-no-unknown": null,
     "media-feature-range-notation": "context",
     "media-query-no-invalid": true,
     "named-grid-areas-no-invalid": true,
     "no-descending-specificity": true,
     "no-duplicate-at-import-rules": true,
     "no-duplicate-selectors": true,
-    "no-unknown-custom-media": true,
+    "no-empty-source": null,
     "no-invalid-double-slash-comments": true,
-    "no-unknown-animations": true,
-    "no-unknown-custom-properties": null,
     "no-invalid-position-at-import-rule": true,
+    "no-irregular-whitespace": null,
+    "no-unknown-animations": true,
+    "no-unknown-custom-media": true,
+    "no-unknown-custom-properties": null,
     "number-max-precision": 2,
     "property-allowed-list": null,
     "property-disallowed-list": null,
     "property-no-vendor-prefix": true,
     "rule-empty-line-before": [
       "always",
-      { "except": ["after-single-line-comment", "first-nested"] }
+      {
+        except: ["after-single-line-comment", "first-nested"]
+      }
     ],
     "rule-selector-property-disallowed-list": null,
     "selector-anb-no-unmatchable": true,
     "selector-attribute-name-disallowed-list": null,
     "selector-attribute-operator-allowed-list": null,
-    "selector-attribute-operator-disallowed-lis": null,
-    "selector-class-pattern": null,
-    "selector-combinator-allowed-list": null,
+    "selector-attribute-operator-disallowed-list": null,
     "selector-attribute-quotes": "always",
+    "selector-class-pattern": null,
     "selector-combinator-allowed-list": null,
     "selector-combinator-disallowed-list": null,
     "selector-disallowed-list": null,
     "selector-id-pattern": null,
     "selector-max-attribute": 0,
-    "selector-max-class": null,
+    "selector-max-class": 5,
     "selector-max-combinators": 2,
-    "selector-max-compound-selectors": [3,
-      { ignoreSelectors: ["::ng-deep"] }
+    "selector-max-compound-selectors": [
+      3,
+      {
+        ignoreSelectors: ["::ng-deep"]
+      }
     ],
     "selector-max-id": 0,
     "selector-max-pseudo-class": 1,
+    "selector-max-specificity": "0,5,0",
     "selector-max-type": 2,
     "selector-max-universal": 0,
-    "selector-max-specificity": null,
     "selector-nested-pattern": null,
-    "selector-not-notation": null,
     "selector-no-qualifying-type": true,
     "selector-no-vendor-prefix": true,
+    "selector-not-notation": null,
     "selector-pseudo-class-allowed-list": null,
     "selector-pseudo-class-disallowed-list": null,
-    "selector-pseudo-element-allowed-list": null,
-    "selector-pseudo-element-disallowed-list": null,
     "selector-pseudo-class-no-unknown": true,
+    "selector-pseudo-element-allowed-list": null,
     "selector-pseudo-element-colon-notation": "double",
+    "selector-pseudo-element-disallowed-list": null,
     "selector-pseudo-element-no-unknown": [
       true,
-      { "ignorePseudoElements": ["host", "ng-deep"] }
+      {
+        ignorePseudoElements: ["host", "ng-deep"]
+      }
     ],
     "selector-type-case": "lower",
     "selector-type-no-unknown": true,
     "shorthand-property-no-redundant-values": true,
     "string-no-newline": true,
+    "syntax-string-no-invalid": true,
     "time-min-milliseconds": 100,
     "unit-allowed-list": ["px", "%", "em", "rem", "vw", "deg", "ms", "s"],
     "unit-disallowed-list": null,
     "unit-no-unknown": true,
     "value-keyword-case": "lower",
     "value-no-vendor-prefix": true,
-    "scss/comment-no-loud": null,
-    "scss/at-else-closing-brace-newline-after": "always-last-in-chain",
     "scss/at-each-key-value-single-line": null,
+    "scss/at-else-closing-brace-newline-after": "always-last-in-chain",
     "scss/at-else-closing-brace-space-after": "never-intermediate",
     "scss/at-else-empty-line-before": "never",
     "scss/at-else-if-parentheses-space-before": "never",
     "scss/at-extend-no-missing-placeholder": true,
-    "scss/media-feature-value-dollar-variable": null,
-    "scss/load-no-partial-leading-underscore": null,
-    "scss/no-dollar-variables": null,
-    "scss/at-import-no-partial-leading-underscore": null,
-    "scss/at-import-partial-extension": null,
-    "scss/at-import-partial-extension-blacklist": null,
-    "scss/at-import-partial-extension-whitelist": null,
-    "scss/at-mixin-no-risky-nesting-selector": true,
-    "scss/at-mixin-named-arguments": null,
-    "scss/at-mixin-pattern": null,
-    "scss/at-function-pattern": null,
-    "scss/at-function-parentheses-space-before": "never",
     "scss/at-function-named-arguments": [
       "never",
-      { "ignoreFunctions": ["color.adjust"] }
+      {
+        ignoreFunctions: ["color.adjust"]
+      }
     ],
-    "scss/function-color-channel": null,
-    "scss/function-color-relative": null,
-    "scss/function-disallowed-list": null,
+    "scss/at-function-parentheses-space-before": "never",
+    "scss/at-function-pattern": null,
     "scss/at-if-closing-brace-newline-after": null,
     "scss/at-if-closing-brace-space-after": null,
     "scss/at-if-no-null": true,
-    "scss/map-keys-quotes": null,
+    "scss/at-import-partial-extension-allowed-list": [
+      "scss"
+    ],
+    "scss/at-import-partial-extension-blacklist": null,
+    "scss/at-import-partial-extension-disallowed-list": [
+      "sass"
+    ],
+    "scss/at-import-partial-extension-whitelist": null,
     "scss/at-mixin-argumentless-call-parentheses": "always",
+    "scss/at-mixin-named-arguments": null,
+    "scss/at-mixin-no-risky-nesting-selector": true,
     "scss/at-mixin-parentheses-space-before": "never",
+    "scss/at-mixin-pattern": null,
     "scss/at-root-no-redundant": true,
-    "scss/at-rule-conditional-no-parentheses": null,
     "scss/at-rule-no-unknown": [
       true,
-      { "ignoreAtRules": ["use"] }
+      {
+        ignoreAtRules: ["use"]
+      }
     ],
     "scss/at-use-no-redundant-alias": true,
-    "scss/at-use-no-unnamespaced": null,
+    "scss/at-use-no-unnamespaced": true,
     "scss/block-no-redundant-nesting": true,
+    "scss/comment-no-empty": true,
+    "scss/comment-no-loud": null,
     "scss/declaration-nested-properties": null,
     "scss/declaration-nested-properties-no-divided-groups": null,
+    "scss/declaration-property-value-no-unknown": null,
     "scss/dimension-no-non-numeric-values": null,
+    "scss/dollar-variable-colon-newline-after": null,
     "scss/dollar-variable-colon-space-after": "always",
     "scss/dollar-variable-colon-space-before": "never",
-    "scss/dollar-variable-colon-newline-after": null,
     "scss/dollar-variable-default": null,
     "scss/dollar-variable-empty-line-after": null,
     "scss/dollar-variable-empty-line-before": null,
@@ -293,47 +323,50 @@ module.exports = {
     "scss/dollar-variable-no-missing-interpolation": null,
     "scss/dollar-variable-no-namespaced-assignment": null,
     "scss/dollar-variable-pattern": null,
-    "scss/selector-nest-combinators": null,
-    "scss/double-slash-comment-whitespace-inside": "always",
     "scss/double-slash-comment-empty-line-before": null,
     "scss/double-slash-comment-inline": null,
-    "scss/comment-no-empty": true,
+    "scss/double-slash-comment-whitespace-inside": "always",
+    "scss/function-calculation-no-interpolation": null,
+    "scss/function-color-channel": null,
+    "scss/function-color-relative": null,
+    "scss/function-disallowed-list": null,
     "scss/function-no-unknown": [
       true,
-      { "ignoreFunctions": ["/^-/", "/^mat\\./", "/^theming\\.mat/"] }
+      {
+        ignoreFunctions: ["/^-/", "/^mat\\./", "/^theming\\.mat/"]
+      }
     ],
     "scss/function-quote-no-quoted-strings-inside": true,
-    "scss/function-calculation-no-interpolation": null,
     "scss/function-unquote-no-unquoted-strings-inside": true,
     "scss/load-no-partial-leading-underscore": true,
-    "scss/operator-no-newline-after": true,
-    "scss/operator-no-newline-before": true,
-    "scss/operator-no-unspaced": true,
-    "scss/partial-no-import": true,
-    "scss/percent-placeholder-pattern": null,
-    "scss/selector-no-redundant-nesting-selector": true,
-    "scss/selector-no-union-class-name": true,
-    "scss/at-import-partial-extension-allowed-list": ["scss"],
-    "scss/at-import-partial-extension-disallowed-list": ["sass"],
     "scss/load-partial-extension": "never",
-    "scss/declaration-property-value-no-unknown": null,
-    "scss/property-no-unknown": true,
+    "scss/map-keys-quotes": null,
+    "scss/media-feature-value-dollar-variable": null,
+    "scss/no-dollar-variables": null,
     "scss/no-duplicate-dollar-variables": [
       true,
       {
-        "ignoreInsideAtRules": [
-          "each",
-          "while"
-        ]
+        ignoreInsideAtRules: ["each","while"]
       }
     ],
     "scss/no-duplicate-mixins": true,
     "scss/no-global-function-names": true,
     "scss/no-unused-private-members": null,
+    "scss/operator-no-newline-after": true,
+    "scss/operator-no-newline-before": true,
+    "scss/operator-no-unspaced": true,
+    "scss/partial-no-import": true,
+    "scss/percent-placeholder-pattern": null,
+    "scss/property-no-unknown": true,
+    "scss/selector-nest-combinators": null,
+    "scss/selector-no-redundant-nesting-selector": true,
+    "scss/selector-no-union-class-name": true,
     "plugin/declaration-block-no-ignored-properties": true,
+    "plugin/file-max-lines": 135,
     "plugin/stylelint-group-selectors": true,
     //"plugin/stylelint-selector-no-empty": true, => uncomment this line once this library is again compatible with stylelint v15+
-    "csstools/use-nesting": ["always", { "syntax": "scss" }],
-    "plugin/file-max-lines": 135
+    // "csstools/use-nesting": ["always", => uncomment this line once this library is again compatible with stylelint v16+
+    //   { "syntax": "scss" }
+    // ],
   }
 };
