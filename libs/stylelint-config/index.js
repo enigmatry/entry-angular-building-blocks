@@ -8,7 +8,6 @@ module.exports = {
     "stylelint-declaration-block-no-ignored-properties",
     "stylelint-file-max-lines",
     "stylelint-group-selectors",
-    // "stylelint-selector-no-empty",  => uncomment this line once this library is again compatible with stylelint v16+
     "stylelint-use-nesting",
     "stylelint-scss",
   ],
