@@ -8,6 +8,7 @@ $breakpoints: () !default;
 @use 'sass-true/sass/throw';
 @use '../../modules/variables' as vars;
 @use 'sass:list';
+
 @forward '../../modules/responsiveness/breakpoints' with (
 	$breakpoints: $breakpoints
 );
@@ -37,7 +38,6 @@ $offset-prefix: 'offset-';
 				$catch: vars.$testing
 			);
 		}
-		
 		@else {
 			@include grid-core.generate($column-prefix, $offset-prefix, $spacing);
 			@include grid-core.generate-reverse-row($breakpoints);
@@ -71,6 +71,7 @@ $offset-prefix: 'offset-';
 
 @mixin -responsive-grid-from($spacing, $divisions) {
 	$division-limit: $divisions + 1;
+
 	@each $item, $value in $breakpoints {
 		$size: map.get($value, description);
 
