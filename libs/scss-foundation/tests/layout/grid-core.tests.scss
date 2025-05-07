@@ -1,8 +1,4 @@
-/* stylelint-disable selector-max-attribute */
-/* stylelint-disable csstools/use-nesting */
-/* stylelint-disable shorthand-property-no-redundant-values */
-/* stylelint-disable max-nesting-depth */
-/* stylelint-disable at-rule-allowed-list */
+/* stylelint-disable shorthand-property-no-redundant-values, selector-max-attribute, at-rule-allowed-list */
 $custom-breakpoints: () !default;
 
 @use 'sass-true/sass/true';
@@ -83,29 +79,33 @@ $custom-breakpoints: () !default;
 			}
 
 			@include true.expect() {
+				/* stylelint-disable-next-line media-query-no-invalid */
 				@media only screen and (width >= 540px) {
 					.row.reverse-row-sm {
 						flex-direction: row-reverse;
 					}
 				}
-					
+
+				/* stylelint-disable-next-line media-query-no-invalid */
 				@media only screen and (width >= 800px) {
 					.row.reverse-row-md {
 						flex-direction: row-reverse;
 					}
 				}
-					
+
 				.row.reverse-row-under-sm {
 					flex-direction: row-reverse;
-					
+
+					/* stylelint-disable-next-line media-query-no-invalid */
 					@media only screen and (width >= 540px) {
 						flex-direction: row;
 					}
 				}
-					
+
 				.row.reverse-row-under-md {
 					flex-direction: row-reverse;
-					
+
+					/* stylelint-disable-next-line media-query-no-invalid */
 					@media only screen and (width >= 800px) {
 						flex-direction: row;
 					}
