@@ -1,4 +1,4 @@
-/* stylelint-disable at-rule-allowed-list */
+/* stylelint-disable at-rule-allowed-list, media-query-no-invalid */
 $breakpoints: () !default;
 
 @use 'sass:list';
@@ -35,7 +35,6 @@ $breakpoints: () !default;
 }
 
 @mixin apply-on($given-size) {
-	/* stylelint-disable-next-line media-query-no-invalid */
 	@media only screen and (width >= -get-size($given-size)) {
 		@content;
 	}
