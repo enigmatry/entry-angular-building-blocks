@@ -134,35 +134,30 @@ vars.$testing: true;
 					padding: 0 0;
 				}
 
-				/* stylelint-disable-next-line media-query-no-invalid */
 				@media only screen and (width >= 576px) {
 					.row.reverse-row-sm {
 						flex-direction: row-reverse;
 					}
 				}
 
-				/* stylelint-disable-next-line media-query-no-invalid */
 				@media only screen and (width >= 768px) {
 					.row.reverse-row-md {
 						flex-direction: row-reverse;
 					}
 				}
 
-				/* stylelint-disable-next-line media-query-no-invalid */
 				@media only screen and (width >= 992px) {
 					.row.reverse-row-lg {
 						flex-direction: row-reverse;
 					}
 				}
 
-				/* stylelint-disable-next-line media-query-no-invalid */
 				@media only screen and (width >= 1200px) {
 					.row.reverse-row-xl {
 						flex-direction: row-reverse;
 					}
 				}
 
-				/* stylelint-disable-next-line media-query-no-invalid */
 				@media only screen and (width >= 1400px) {
 					.row.reverse-row-xxl {
 						flex-direction: row-reverse;
@@ -172,7 +167,6 @@ vars.$testing: true;
 				.row.reverse-row-under-sm {
 					flex-direction: row-reverse;
 
-					/* stylelint-disable-next-line media-query-no-invalid */
 					@media only screen and (width >= 576px) {
 						flex-direction: row;
 					}
@@ -181,7 +175,6 @@ vars.$testing: true;
 				.row.reverse-row-under-md {
 					flex-direction: row-reverse;
 
-					/* stylelint-disable-next-line media-query-no-invalid */
 					@media only screen and (width >= 768px) {
 						flex-direction: row;
 					}
@@ -190,7 +183,6 @@ vars.$testing: true;
 				.row.reverse-row-under-lg {
 					flex-direction: row-reverse;
 
-					/* stylelint-disable-next-line media-query-no-invalid */
 					@media only screen and (width >= 992px) {
 						flex-direction: row;
 					}
@@ -199,7 +191,6 @@ vars.$testing: true;
 				.row.reverse-row-under-xl {
 					flex-direction: row-reverse;
 
-					/* stylelint-disable-next-line media-query-no-invalid */
 					@media only screen and (width >= 1200px) {
 						flex-direction: row;
 					}
@@ -208,7 +199,6 @@ vars.$testing: true;
 				.row.reverse-row-under-xxl {
 					flex-direction: row-reverse;
 
-					/* stylelint-disable-next-line media-query-no-invalid */
 					@media only screen and (width >= 1400px) {
 						flex-direction: row;
 					}
@@ -334,7 +324,6 @@ vars.$testing: true;
 					margin-left: 100%;
 				}
 
-				/* stylelint-disable-next-line media-query-no-invalid */
 				@media only screen and (width >= 576px) {
 					.col-sm-auto {
 						flex: 0 0 auto;
@@ -451,7 +440,6 @@ vars.$testing: true;
 					}
 				}
 
-				/* stylelint-disable-next-line media-query-no-invalid */
 				@media only screen and (width >= 768px) {
 					.col-md-auto {
 						flex: 0 0 auto;
@@ -568,7 +556,6 @@ vars.$testing: true;
 					}
 				}
 
-				/* stylelint-disable-next-line media-query-no-invalid */
 				@media only screen and (width >= 992px) {
 					.col-lg-auto {
 						flex: 0 0 auto;
@@ -685,7 +672,6 @@ vars.$testing: true;
 					}
 				}
 
-				/* stylelint-disable-next-line media-query-no-invalid */
 				@media only screen and (width >= 1200px) {
 					.col-xl-auto {
 						flex: 0 0 auto;
@@ -802,7 +788,6 @@ vars.$testing: true;
 					}
 				}
 
-				/* stylelint-disable-next-line media-query-no-invalid */
 				@media only screen and (width >= 1400px) {
 					.col-xxl-auto {
 						flex: 0 0 auto;
@@ -948,35 +933,30 @@ vars.$testing: true;
 					padding: 0 8px;
 				}
 
-				/* stylelint-disable-next-line media-query-no-invalid */
 				@media only screen and (width >= 576px) {
 					.row.reverse-row-sm {
 						flex-direction: row-reverse;
 					}
 				}
 
-				/* stylelint-disable-next-line media-query-no-invalid */
 				@media only screen and (width >= 768px) {
 					.row.reverse-row-md {
 						flex-direction: row-reverse;
 					}
 				}
 
-				/* stylelint-disable-next-line media-query-no-invalid */
 				@media only screen and (width >= 992px) {
 					.row.reverse-row-lg {
 						flex-direction: row-reverse;
 					}
 				}
 
-				/* stylelint-disable-next-line media-query-no-invalid */
 				@media only screen and (width >= 1200px) {
 					.row.reverse-row-xl {
 						flex-direction: row-reverse;
 					}
 				}
 
-				/* stylelint-disable-next-line media-query-no-invalid */
 				@media only screen and (width >= 1400px) {
 					.row.reverse-row-xxl {
 						flex-direction: row-reverse;
@@ -986,7 +966,6 @@ vars.$testing: true;
 				.row.reverse-row-under-sm {
 					flex-direction: row-reverse;
 
-					/* stylelint-disable-next-line media-query-no-invalid */
 					@media only screen and (width >= 576px) {
 						flex-direction: row;
 					}
@@ -995,7 +974,6 @@ vars.$testing: true;
 				.row.reverse-row-under-md {
 					flex-direction: row-reverse;
 
-					/* stylelint-disable-next-line media-query-no-invalid */
 					@media only screen and (width >= 768px) {
 						flex-direction: row;
 					}
@@ -1004,7 +982,6 @@ vars.$testing: true;
 				.row.reverse-row-under-lg {
 					flex-direction: row-reverse;
 
-					/* stylelint-disable-next-line media-query-no-invalid */
 					@media only screen and (width >= 992px) {
 						flex-direction: row;
 					}
@@ -1013,7 +990,6 @@ vars.$testing: true;
 				.row.reverse-row-under-xl {
 					flex-direction: row-reverse;
 
-					/* stylelint-disable-next-line media-query-no-invalid */
 					@media only screen and (width >= 1200px) {
 						flex-direction: row;
 					}
@@ -1022,7 +998,6 @@ vars.$testing: true;
 				.row.reverse-row-under-xxl {
 					flex-direction: row-reverse;
 
-					/* stylelint-disable-next-line media-query-no-invalid */
 					@media only screen and (width >= 1400px) {
 						flex-direction: row;
 					}
@@ -1048,7 +1023,6 @@ vars.$testing: true;
 					margin-left: 100%;
 				}
 
-				/* stylelint-disable-next-line media-query-no-invalid */
 				@media only screen and (width >= 576px) {
 					.col-sm-auto {
 						flex: 0 0 auto;
@@ -1075,7 +1049,6 @@ vars.$testing: true;
 					}
 				}
 
-				/* stylelint-disable-next-line media-query-no-invalid */
 				@media only screen and (width >= 768px) {
 					.col-md-auto {
 						flex: 0 0 auto;
@@ -1102,7 +1075,6 @@ vars.$testing: true;
 					}
 				}
 
-				/* stylelint-disable-next-line media-query-no-invalid */
 				@media only screen and (width >= 992px) {
 					.col-lg-auto {
 						flex: 0 0 auto;
@@ -1129,7 +1101,6 @@ vars.$testing: true;
 					}
 				}
 
-				/* stylelint-disable-next-line media-query-no-invalid */
 				@media only screen and (width >= 1200px) {
 					.col-xl-auto {
 						flex: 0 0 auto;
@@ -1156,7 +1127,6 @@ vars.$testing: true;
 					}
 				}
 
-				/* stylelint-disable-next-line media-query-no-invalid */
 				@media only screen and (width >= 1400px) {
 					.col-xxl-auto {
 						flex: 0 0 auto;
