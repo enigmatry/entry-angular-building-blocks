@@ -129,7 +129,7 @@ export class EntryTableComponent<T> implements OnChanges {
       selected: this.rowSelection.isSelected(rowData),
       // eslint-disable-next-line @typescript-eslint/naming-convention
       'mat-row-odd': index % 2,
-    };
+    } as Record<string, unknown>;
     if (this.rowClassFormatter) {
       for (const key of Object.keys(this.rowClassFormatter)) {
         classList[key] = this.rowClassFormatter[key](rowData);
@@ -188,7 +188,7 @@ export class EntryTableComponent<T> implements OnChanges {
 
     this.dataSource = new MatTableDataSource(this._data);
 
-    if (changes.data) {
+    if (changes['data']) {
       this.scrollToTop();
     }
   }

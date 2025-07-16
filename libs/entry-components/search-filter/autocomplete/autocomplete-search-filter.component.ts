@@ -29,7 +29,7 @@ export class AutocompleteSearchFilterComponent<T> implements AfterViewInit, OnDe
       .pipe(
         takeUntil(this.destroy$),
         tap(value => this.clearFilterIfLabelMismatch(value)),
-        filter(value => value?.length >= this.searchFilter.minimumCharacters),
+        filter(value => !!value && value.length >= this.searchFilter.minimumCharacters),
         debounceTime(this.searchFilter.debounceTime)
       )
       .subscribe(searchValue => {
@@ -45,14 +45,14 @@ export class AutocompleteSearchFilterComponent<T> implements AfterViewInit, OnDe
     this.destroy$.complete();
   }
 
-  displayFn = (_selectedValue: SelectOption<T>): string => this.searchFilter.formControl.value?.label;
+  displayFn = (_selectedValue: SelectOption<T>): string => this.searchFilter.formControl.value?.label ?? '';
 
   onSelected = (event: MatAutocompleteSelectedEvent) => {
     this.searchFilter.formControl.patchValue(event.option.value);
     this.searchField.patchValue(event.option.value.label, { emitEvent: false });
   };
 
-  private clearFilterIfLabelMismatch(value: string) {
+  private clearFilterIfLabelMismatch(value: string | null) {
     const label = this.searchFilter.formControl.value?.label;
     if (label && label !== value) {
       this.searchFilter.formControl.patchValue(undefined);

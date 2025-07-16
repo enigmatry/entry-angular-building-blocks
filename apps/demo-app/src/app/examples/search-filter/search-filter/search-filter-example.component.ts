@@ -26,7 +26,7 @@ export class SearchFilterExampleComponent {
 
   users: Array<User>;
   displayedColumns: string[] = ['name', 'email', 'dateOfBirth', 'occupation', 'country'];
-  filters = [];
+  filters: SearchFilterBase<unknown>[] = [];
 
   constructor(private _usersService: UsersService) {
     this.fetchUsers({}).subscribe();
@@ -82,8 +82,8 @@ export class SearchFilterExampleComponent {
         label: 'Country',
         placeholder: 'Select country',
         minimumCharacters: 0,
-        search: (input: string) => of(Object.values(Country)
-          .filter(value => value.toLocaleLowerCase().includes(input.toLocaleLowerCase()))
+        search: (input: string | null) => of(Object.values(Country)
+          .filter(value => value.toLocaleLowerCase().includes(input!.toLocaleLowerCase()))
           .map((country => new SelectOption(country, country))))
       }),
       new DateTimeSearchFilter({

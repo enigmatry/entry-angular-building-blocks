@@ -20,7 +20,7 @@ export class SearchFilterBase<T> {
   /** Max text length to be entered in the input component (default is 256) */
   maxLength: number;
   /** A reference to the form control it represents */
-  formControl: FormControl<T>;
+  formControl: FormControl<T | undefined>;
 
   constructor(options: Partial<SearchFilterBase<T>> = {}) {
     this.value = options.value;
@@ -39,7 +39,7 @@ export class SearchFilterBase<T> {
     }
   }
 
-  toFormControl(): FormControl<T> {
-    return new FormControl<T>(this.value);
+  toFormControl(): FormControl<T | null | undefined> {
+    return new FormControl<T | undefined>(this.value);
   }
 }

@@ -12,8 +12,13 @@
     </mat-dialog-content>
 
     <mat-dialog-actions class="dialog-actions" [align]="buttonsAlignment" *ngIf="!hideButtons">
-        <ng-container *ngIf="buttonsTemplate; then buttonsTemplate; else defaultButtonsTemplate">
-        </ng-container>
+            @if(buttonsTemplate) {
+                <ng-container *ngTemplateOutlet="buttonsTemplate"></ng-container>
+            }
+
+            @else {
+                <ng-container *ngTemplateOutlet="defaultButtonsTemplate"></ng-container>
+            }
     </mat-dialog-actions>
 
     <ng-template #defaultButtonsTemplate>

@@ -32,7 +32,7 @@ import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
           /** Map form fields client side validation errors */
           { name: 'required', message: 'Required field.' },
           { name: 'minlength', message: (_, config: FormlyFieldConfig) =>
-            `Minimal length is ${config.formControl.errors.minlength.requiredLength}` }
+            `Minimal length is ${config.formControl!.errors!['minlength'].requiredLength}` }
       ],
       types: [
         { name: 'field-set', component: FieldSetComponent },

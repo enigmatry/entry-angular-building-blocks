@@ -90,6 +90,6 @@ const COMPONENT_DEFINITIONS: IComponentDefinition[] = [
 ];
 
 export {
-    IComponentDefinition,
     COMPONENT_DEFINITIONS
 };
+export type { IComponentDefinition };

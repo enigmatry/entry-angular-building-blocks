@@ -23,7 +23,7 @@ import { SharedModule } from '../../../shared/shared.module';
     provideEntryValidationConfig({
       validationMessages: [
         { name: 'required', message: 'This field is mandatory!' },
-        { name: 'minlength', message: (control: AbstractControl) => `Minimal length is ${control.errors.minlength.requiredLength}!` }
+        { name: 'minlength', message: (control: AbstractControl) => `Minimal length is ${control!.errors!['minlength'].requiredLength}!` }
       ]
     })
   ]

@@ -37,7 +37,7 @@ export class AutoDisableButtonDirective implements OnInit, OnDestroy {
   ngOnInit(): void {
     const button = this.elementRef.nativeElement;
     const isTypeSubmit = button.getAttribute('type') === 'submit';
-    const form: HTMLFormElement = button.closest('form');
+    const form: HTMLFormElement | null = button.closest('form');
 
     if (isTypeSubmit && form) {
       // listen to form submit event

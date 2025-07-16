@@ -33,14 +33,14 @@ enum Country {
 }
 
 interface User {
-    id?: string;
-    userName?: string;
-    firstName?: string;
-    lastName?: string;
-    dateOfBirth?: Date;
+    id: string;
+    userName: string;
+    firstName: string;
+    lastName: string;
+    dateOfBirth: Date;
     occupation: Occupation;
-    lastLogin?: Date;
-    country?: Country;
+    lastLogin: Date;
+    country: Country;
 }
 
 const LIST_OF_USERS: User[] = [
@@ -158,7 +158,7 @@ const LIST_OF_USERS: User[] = [
 
 export {
     Occupation,
-    Country,
-    User,
-    LIST_OF_USERS
+    Country, LIST_OF_USERS
 };
+
+export type { User };

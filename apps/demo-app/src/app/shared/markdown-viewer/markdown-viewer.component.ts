@@ -36,7 +36,7 @@ export class MarkdownViewerComponent implements OnInit {
 
   private loadFileContent() {
     this._fileLoad
-      .loadDocumentationFile(this.fileUrl)
+      .loadDocumentationFile(this.fileUrl!)
       .pipe(
         map(response => this.convertMarkdownToHtml(response))
       ).subscribe({
@@ -55,7 +55,7 @@ export class MarkdownViewerComponent implements OnInit {
 
     const html = converter.render(markdown ?? '');
     const sanitizedHtml = this._domSanitizer.sanitize(SecurityContext.HTML, html);
-    const htmlWithHeadingIds = this.addIdsToHeadings(sanitizedHtml);
+    const htmlWithHeadingIds = this.addIdsToHeadings(sanitizedHtml!);
 
     return this._domSanitizer.bypassSecurityTrustHtml(htmlWithHeadingIds);
   }
@@ -63,7 +63,7 @@ export class MarkdownViewerComponent implements OnInit {
   private handleAnchorClicks() {
     this._ngZone.runOutsideAngular(() => {
       this._renderer.listen(this._elementRef.nativeElement, 'click', (event: MouseEvent) => {
-        const anchor: HTMLAnchorElement = (event.target as HTMLElement).closest('a[href]');
+        const anchor: HTMLAnchorElement | null = (event.target as HTMLElement).closest('a[href]');
 
         if (anchor && this.isHeadingLink(anchor)) {
           event.preventDefault();
@@ -91,7 +91,7 @@ export class MarkdownViewerComponent implements OnInit {
 
   private isHeadingLink(anchor: HTMLAnchorElement): boolean {
     const href = anchor.getAttribute('href');
-    return href && href.includes('#');
+    return !!href && href.includes('#');
   }
 
   private getHeadingId(str: string): string {
@@ -110,10 +110,10 @@ export class MarkdownViewerComponent implements OnInit {
       document
         .querySelectorAll('h1, h2, h3, h4, h5, h6')
         .forEach((heading: Element) => {
-          const id = this.getHeadingId(heading.textContent);
+          const id = this.getHeadingId(heading.textContent!);
           heading.setAttribute('id', id);
         });
-      return document.querySelector('body').innerHTML;
+      return document.querySelector('body')?.innerHTML ?? '';
     }
     return html;
   }

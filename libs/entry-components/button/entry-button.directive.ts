@@ -25,7 +25,7 @@ export class EntryButtonDirective implements OnInit {
   }
 
   ngOnInit(): void {
-    const entryButtonType = this.getEntryType();
+    const entryButtonType: 'submit' | 'cancel' = this.getEntryType();
     const buttonConfig: MatButtonConfig = this._config[entryButtonType];
 
     const entryClasses: string[] = ['entry-button', `entry-${entryButtonType}-button`];
@@ -40,8 +40,7 @@ export class EntryButtonDirective implements OnInit {
     }
   }
 
-  private getEntryType(): string {
-    return this._elementRef.nativeElement.hasAttribute('entry-submit-button')
-      ? 'submit' : 'cancel';
+  private readonly getEntryType = (): 'submit' | 'cancel' => {
+    return this._elementRef.nativeElement.hasAttribute('entry-submit-button') ? 'submit' : 'cancel';
   }
 }

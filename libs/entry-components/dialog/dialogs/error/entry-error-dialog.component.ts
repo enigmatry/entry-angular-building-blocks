@@ -13,8 +13,8 @@ import { ENTRY_DIALOG_CONFIG, EntryDialogConfig } from '../../entry-dialog-confi
 export class EntryErrorDialogComponent extends EntryDialogComponent {
   errors: string[] = [];
   constructor(
-    protected readonly mdDialogRef: MatDialogRef<EntryDialogComponent>,
-    @Inject(ENTRY_DIALOG_CONFIG) public readonly config: EntryDialogConfig,
+    protected override readonly mdDialogRef: MatDialogRef<EntryDialogComponent>,
+    @Inject(ENTRY_DIALOG_CONFIG) public override readonly config: EntryDialogConfig,
     @Inject(MAT_DIALOG_DATA) public data: IEntryErrorDialogData) {
     super(mdDialogRef, config);
     this.extractValidationErrors();

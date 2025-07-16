@@ -11,11 +11,11 @@ import { ValidationService } from '../validation.service';
 })
 export class ReactiveFormExampleComponent implements OnInit {
   form: FormGroup<{
-    firstName: FormControl<string>;
-    lastName: FormControl<string>;
-  }> | undefined;
+    firstName: FormControl<string | null>;
+    lastName: FormControl<string | null>;
+  }>;
 
-  validationResult: IValidationProblemDetails;
+  validationResult: IValidationProblemDetails | undefined;
 
   constructor(
     private _formBuilder: FormBuilder,

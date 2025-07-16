@@ -18,14 +18,14 @@ export class SpinnerOverlayContainer extends OverlayContainer implements OnDestr
     this._options = options;
   }
 
-  getContainerElement(): HTMLElement {
+  override getContainerElement(): HTMLElement {
     if (!this._containerElement) {
       this.createContainer();
     }
     return this._containerElement;
   }
 
-  ngOnDestroy() {
+  override ngOnDestroy() {
     this._containerElement?.remove();
   }
 

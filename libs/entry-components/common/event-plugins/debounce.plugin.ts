@@ -23,7 +23,7 @@ export class DebounceEventPlugin extends EntryEventManagerPlugin {
     const innerHandler = (event: any) => this.manager.getZone().runGuarded(() => originalHandler(event));
 
     // create debounced handler
-    const debouncedHandler = debounce(innerHandler, milliseconds,
+    const debouncedHandler = debounce(innerHandler, milliseconds as number,
       { leading: option === 'leading', trailing: option === 'trailing' });
 
     // register event with debounced handler

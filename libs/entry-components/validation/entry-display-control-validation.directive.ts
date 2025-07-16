@@ -48,7 +48,7 @@ export class EntryDisplayControlValidationDirective implements OnInit, OnDestroy
       return '';
     }
     const errorsString = this._config.validationMessages
-      .map(validationMessage => this.control.errors[validationMessage.name]
+      .map(validationMessage => this.control.errors![validationMessage.name]
         ? typeof(validationMessage.message) === 'string'
           ? validationMessage.message : validationMessage.message(this.control)
         : ''

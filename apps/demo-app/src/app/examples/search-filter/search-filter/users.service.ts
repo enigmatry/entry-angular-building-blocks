@@ -31,26 +31,26 @@ export class UsersService {
     let users = this.data;
 
     if (!this.noFilterParam(searchParams, 'name')) {
-      users = users?.filter(x => x.firstName?.toLowerCase().includes(searchParams.name.toLowerCase())
-        || x.lastName?.toLowerCase().includes(searchParams.name.toLowerCase()));
+      users = users?.filter(x => x.firstName?.toLowerCase().includes(searchParams['name'].toLowerCase())
+        || x.lastName?.toLowerCase().includes(searchParams['name'].toLowerCase()));
     }
     if (!this.noFilterParam(searchParams, 'occupation')) {
-      users = users?.filter(x => searchParams.occupation instanceof Array
-        ? searchParams.occupation.includes(x.occupation)
-        : searchParams.occupation === x.occupation);
+      users = users?.filter(x => searchParams['occupation'] instanceof Array
+        ? searchParams['occupation'].includes(x.occupation)
+        : searchParams['occupation'] === x.occupation);
     }
     if (!this.noFilterParam(searchParams, 'username')) {
-      users = users?.filter(x => searchParams.username instanceof Array
-        ? searchParams.username.includes(x.userName)
-        : searchParams.username === x.userName);
+      users = users?.filter(x => searchParams['username'] instanceof Array
+        ? searchParams['username'].includes(x.userName)
+        : searchParams['username'] === x.userName);
     }
 
     if (!this.noFilterParam(searchParams, 'country')) {
-      users = users.filter(x => x.country === searchParams.country.key);
+      users = users.filter(x => x.country === searchParams['country'].key);
     }
 
     if (!this.noFilterParam(searchParams, 'dateOfBirth')) {
-      users = users.filter(x => x.dateOfBirth >= searchParams.dateOfBirth);
+      users = users.filter(x => x.dateOfBirth >= searchParams['dateOfBirth']);
     }
 
     return of(users);
@@ -63,7 +63,7 @@ export class UsersService {
   }
 
   private validateSearchParams(searchParams: SearchFilterParams): Observable<never> | null {
-    if (searchParams.dateOfBirth && new Date(searchParams.dateOfBirth) > new Date()) {
+    if (searchParams['dateOfBirth'] && new Date(searchParams['dateOfBirth']) > new Date()) {
       const validationProblemDetails: IValidationProblemDetails = {
         title: "Validation Error",
         status: 400,

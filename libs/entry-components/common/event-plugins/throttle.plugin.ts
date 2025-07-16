@@ -23,7 +23,7 @@ export class ThrottleEventPlugin extends EntryEventManagerPlugin {
     const innerHandler = (event: any) => this.manager.getZone().runGuarded(() => originalHandler(event));
 
     // create throttled handler
-    const throttledHandler = throttle(innerHandler, milliseconds);
+    const throttledHandler = throttle(innerHandler, milliseconds as number);
 
     // register event with throttled handler
     return this.manager.addEventListener(element, this.unwrapEventName(eventName), throttledHandler);

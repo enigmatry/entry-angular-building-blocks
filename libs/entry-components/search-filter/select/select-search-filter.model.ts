@@ -22,9 +22,9 @@ export class SelectSearchFilter<T> extends SearchFilterBase<T> {
 
   constructor(options: Partial<SelectSearchFilter<T>> = {}) {
     super(options);
-    this.options = options.options;
+    this.options = options.options ?? [];
     this.options$ = options.options$;
-    this.multiSelect = options.multiSelect;
-    this.showNoneOption = options.showNoneOption;
+    this.multiSelect = !!options.multiSelect;
+    this.showNoneOption = !!options.showNoneOption;
   }
 }

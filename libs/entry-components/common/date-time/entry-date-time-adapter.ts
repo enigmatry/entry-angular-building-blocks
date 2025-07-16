@@ -69,7 +69,7 @@ export class EntryDateTimeAdapter<D, L> extends DateAdapter<D, L> implements Ent
 	}
 
 	parse(value: any, parseFormat: any): D {
-		return this.dateAdapter.parse(value, parseFormat);
+		return this.dateAdapter.parse(value, parseFormat) as D;
 	}
 
 	format(date: D, displayFormat: any): string {
@@ -104,19 +104,19 @@ export class EntryDateTimeAdapter<D, L> extends DateAdapter<D, L> implements Ent
 		return this.dateAdapter.invalid();
 	}
 
-	getHours(date: D): number {
+	override getHours(date: D): number {
 		return this.timeAdapter.getHours(date);
 	}
 
-	getMinutes(date: D): number {
+	override getMinutes(date: D): number {
 		return this.timeAdapter.getMinutes(date);
 	}
 
-	getSeconds(date: D): number {
+	override getSeconds(date: D): number {
 		return this.timeAdapter.getSeconds(date);
 	}
 
-	setTime(date: D, hours: number, minutes: number, seconds: number): D {
+	override setTime(date: D, hours: number, minutes: number, seconds: number): D {
 		return this.timeAdapter.setTime(date, hours, minutes, seconds);
 	}
 

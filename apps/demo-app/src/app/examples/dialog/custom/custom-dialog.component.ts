@@ -18,8 +18,8 @@ export class CustomDialogComponent extends EntryDialogComponent {
     comment: string;
 
     constructor(
-        protected mdDialogRef: MatDialogRef<EntryDialogComponent>,
-        @Inject(ENTRY_DIALOG_CONFIG) protected config: EntryDialogConfig,
+        protected override mdDialogRef: MatDialogRef<EntryDialogComponent>,
+        @Inject(ENTRY_DIALOG_CONFIG) protected override config: EntryDialogConfig,
         @Inject(MAT_DIALOG_DATA) public data: ICustomDialogData) {
         super(mdDialogRef, config);
     }

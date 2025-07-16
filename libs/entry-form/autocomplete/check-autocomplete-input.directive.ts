@@ -26,7 +26,7 @@ export class CheckAutocompleteInputDirective implements OnChanges, AfterViewInit
 
   ngOnChanges(_changes: SimpleChanges): void {
     if (this.options?.length) {
-      this.applySelectedValue(this.control.value);
+      this.applySelectedValue(this.control?.value);
     }
   }
 

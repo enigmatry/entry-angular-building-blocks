@@ -12,5 +12,5 @@
             <mat-option *ngFor="let option of searchFilter.options" [value]="option.key">{{option.label}}</mat-option>
         </ng-template>
     </mat-select>
-    <mat-error entryDisplayControlValidation [control]="form.get(searchFilter.key)"></mat-error>
+    <mat-error entryDisplayControlValidation [control]="form.get(searchFilter.key)!"></mat-error>
 </mat-form-field>

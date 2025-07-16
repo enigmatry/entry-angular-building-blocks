@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
     standalone: false
 })
 export class DocumentationContentComponent implements OnInit {
-  componentDefinition: IComponentDefinition;
+  componentDefinition: IComponentDefinition | undefined;
 
   constructor(private activatedRoute: ActivatedRoute) {
   }

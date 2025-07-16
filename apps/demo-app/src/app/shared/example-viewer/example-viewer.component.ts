@@ -27,10 +27,10 @@ export class ExampleViewerComponent implements OnDestroy {
   @Input() extraFiles: string[] = [];
 
   viewCode = false;
-  typescriptFile: string;
-  htmlFile: string;
-  stylesFile: string;
-  docsFile: string;
+  typescriptFile: string | null;
+  htmlFile: string | null;
+  stylesFile: string | null;
+  docsFile: string | null;
   extraFilesToDisplay: IExtraFile[] = [];
 
   private _destroy$ = new Subject<void>();
@@ -78,7 +78,7 @@ export class ExampleViewerComponent implements OnDestroy {
       .map(path => {
         const pathWithoutExtension = path.substring(0, path.lastIndexOf('.'));
         const extension = path.substring(path.lastIndexOf('.') + 1) as FileExtension;
-        const name = path.split('/').pop();
+        const name = path.split('/').pop() ?? '';
 
         return this.loadFile(pathWithoutExtension, extension)
           .pipe(map(fileContent => ({

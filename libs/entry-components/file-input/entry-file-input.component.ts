@@ -147,10 +147,10 @@ export class EntryFileInputComponent implements OnInit, OnDestroy, ControlValueA
 
   onFileSelect(event: Event): void {
     const fileInputEl = event.target as HTMLInputElement;
-    const files: FileList = fileInputEl.files;
+    const files: FileList = fileInputEl.files!;
 
     const value = this._multiple
-      ? files?.length > 1 ? files : files[0]
+      ? files.length > 1 ? files : files[0]
       : files[0];
 
     this.value = value;
@@ -170,7 +170,7 @@ export class EntryFileInputComponent implements OnInit, OnDestroy, ControlValueA
 
   // implements ControlValueAccessor interface
 
-  onChange = (_: any) => { 
+  onChange = (_: any) => {
     // set by registerOnChange
   };
 
@@ -196,7 +196,7 @@ export class EntryFileInputComponent implements OnInit, OnDestroy, ControlValueA
 
   // implements Validator interface
 
-  validate(control: AbstractControl<File | FileList | undefined>): ValidationErrors {
+  validate(control: AbstractControl<File | FileList | undefined>): ValidationErrors | null {
     const isSizeLimitExceeded = this.isFileSizeLimitExceeded(control.value);
     const isCountLimitExceeded = this.isFileCountLimitExceeded(control.value);
 
@@ -209,15 +209,15 @@ export class EntryFileInputComponent implements OnInit, OnDestroy, ControlValueA
     };
   }
 
-  private isFileCountLimitExceeded(files: File | FileList): boolean {
+  private isFileCountLimitExceeded(files: File | FileList | undefined): boolean {
     const isMultiple = this.multiple && files instanceof FileList;
     const maxFileCount = this.maxFileCount;
     const actualFileCount = (files as FileList)?.length;
 
-    return isMultiple && maxFileCount && actualFileCount > maxFileCount;
+    return isMultiple && !!maxFileCount && actualFileCount > maxFileCount;
   }
 
-  private isFileSizeLimitExceeded(files: File | FileList): boolean {
+  private isFileSizeLimitExceeded(files: File | FileList | undefined): boolean {
     if (!this.maxFileSizeInKb) {
       return false;
     }

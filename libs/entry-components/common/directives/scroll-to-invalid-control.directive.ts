@@ -36,7 +36,7 @@ export class ScrollToInvalidControlDirective implements OnInit, OnDestroy {
   }
 
   private scrollToInvalidControl() {
-    const firstInvalidControl: HTMLElement =
+    const firstInvalidControl: HTMLElement | null =
       this.elementRef.nativeElement.querySelector(NG_INVALID_CLASS);
 
     if (firstInvalidControl) {

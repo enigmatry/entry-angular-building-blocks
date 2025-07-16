@@ -9,6 +9,6 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class FileInputValidationExampleComponent {
   form = new FormGroup({
-    image: new FormControl<File>(undefined, { validators: [Validators.required] })
+    image: new FormControl<File | undefined>(undefined, { validators: [Validators.required] })
   });
 }

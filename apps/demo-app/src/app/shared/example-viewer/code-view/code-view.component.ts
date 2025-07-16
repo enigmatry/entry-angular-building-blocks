@@ -36,6 +36,6 @@ export class CodeViewComponent implements OnInit {
     const highlightedCode = hljs.highlight(this.codeContent, { language: this.codeType, });
     const sanitizedHtml = this._domSanitizer.sanitize(SecurityContext.HTML, highlightedCode.value);
 
-    this.highlightedCode = this._domSanitizer.bypassSecurityTrustHtml(sanitizedHtml);
+    this.highlightedCode = this._domSanitizer.bypassSecurityTrustHtml(sanitizedHtml!);
   }
 }
