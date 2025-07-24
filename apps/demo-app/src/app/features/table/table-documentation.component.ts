@@ -6,7 +6,7 @@ import { SharedModule } from '../../shared/shared.module';
     templateUrl: './table-documentation.component.html',
     imports: [
         SharedModule,
-        TableExampleModule,
+        TableExampleModule
     ]
 })
 export class TableDocumentationComponent { }

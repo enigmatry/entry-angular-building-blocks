@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ButtonExampleComponent } from './button-example/button-example.component';
-import { SharedModule } from '../../shared/shared.module';
+import { NgModule } from '@angular/core';
 import { EntryButtonModule, provideEntryButtonConfig } from '@enigmatry/entry-components/button';
+import { SharedModule } from '../../shared/shared.module';
+import { ButtonExampleComponent } from './button-example/button-example.component';
 
 @NgModule({
   declarations: [

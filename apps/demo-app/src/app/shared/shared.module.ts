@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { DateFnsAdapter } from '@angular/material-date-fns-adapter';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
+import { DateFnsAdapter } from '@angular/material-date-fns-adapter';
 import { EntryButtonModule, provideEntryButtonConfig } from '@enigmatry/entry-components/button';
 import { EntryCommonModule, provideEntryNativeTimeAdapter } from '@enigmatry/entry-components/common';
 import { getMatDateLocale } from '../../localization';
@@ -51,17 +51,17 @@ import { SortPipe } from './pipes/sort.pipe';
     {
       provide: DateAdapter,
       useClass: DateFnsAdapter,
-      deps: [MAT_DATE_LOCALE],
+      deps: [MAT_DATE_LOCALE]
     },
     provideEntryNativeTimeAdapter({
       parse: {
-        dateInput: ['dd-MM-yyyy', 'dd-MM-yyyy HH', 'dd-MM-yyyy HH:mm:ss'],
+        dateInput: ['dd-MM-yyyy', 'dd-MM-yyyy HH', 'dd-MM-yyyy HH:mm:ss']
       },
       display: {
         dateInput: 'dd-MM-yyyy HH:mm:ss',
         monthYearLabel: 'LLL uuuu',
         dateA11yLabel: 'PP',
-        monthYearA11yLabel: 'LLLL uuuu',
+        monthYearA11yLabel: 'LLLL uuuu'
       }
     })
   ]

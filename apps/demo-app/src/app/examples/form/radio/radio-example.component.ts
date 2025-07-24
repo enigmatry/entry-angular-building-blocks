@@ -8,7 +8,6 @@ import { of } from 'rxjs';
     standalone: false
 })
 export class RadioExampleComponent {
-
   @Input() typeOptions = [
     { value: 0, displayName: `Food` },
     { value: 1, displayName: `Drink` },
@@ -28,7 +27,7 @@ export class RadioExampleComponent {
         options: of(this.typeOptions),
         valueProp: 'value',
         labelProp: 'displayName'
-      },
-    },
+      }
+    }
   ];
 }

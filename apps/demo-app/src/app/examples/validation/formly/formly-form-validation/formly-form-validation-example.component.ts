@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { IValidationProblemDetails, setServerSideValidationErrors } from '@enigmatry/entry-components/validation';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { ValidationService } from '../../validation.service';
-import { IValidationProblemDetails, setServerSideValidationErrors } from '@enigmatry/entry-components/validation';
 
 @Component({
     selector: 'app-formly-form-validation-example',

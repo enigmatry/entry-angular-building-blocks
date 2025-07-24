@@ -1,9 +1,9 @@
 import { Component, ElementRef, Input, NgZone, OnInit, Renderer2, SecurityContext } from '@angular/core';
-import { FileLoadService } from '../services/file-load.service';
-import MarkdownIt from 'markdown-it';
-import { map } from 'rxjs/operators';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import hljs from 'highlight.js';
+import MarkdownIt from 'markdown-it';
+import { map } from 'rxjs/operators';
+import { FileLoadService } from '../services/file-load.service';
 
 @Component({
     selector: 'app-markdown-viewer',
@@ -39,7 +39,8 @@ export class MarkdownViewerComponent implements OnInit {
       .loadDocumentationFile(this.fileUrl!)
       .pipe(
         map(response => this.convertMarkdownToHtml(response))
-      ).subscribe({
+      )
+.subscribe({
         next: response => this.markdownContentHtml = response,
         error: _ => this.markdownContentHtml = `### No API documentation found :'(`
       });
@@ -89,12 +90,12 @@ export class MarkdownViewerComponent implements OnInit {
     return false;
   }
 
-  private isHeadingLink(anchor: HTMLAnchorElement): boolean {
+  isHeadingLink = (anchor: HTMLAnchorElement): boolean => {
     const href = anchor.getAttribute('href');
     return !!href && href.includes('#');
-  }
+  };
 
-  private getHeadingId(str: string): string {
+  getHeadingId = (str: string): string => {
     if (str) {
       return str
         .replace(/(_|-|\s)+/g, '')
@@ -102,7 +103,7 @@ export class MarkdownViewerComponent implements OnInit {
         .toLowerCase();
     }
     return '';
-  }
+  };
 
   private addIdsToHeadings(html: string): string {
     if (html) {
@@ -118,10 +119,10 @@ export class MarkdownViewerComponent implements OnInit {
     return html;
   }
 
-  private highlightCode(str: string, lang: string) {
+  highlightCode = (str: string, lang: string) => {
     if (lang && hljs.getLanguage(lang)) {
-      return hljs.highlight(str, { language: lang, }).value;
+      return hljs.highlight(str, { language: lang }).value;
     }
     return str;
-  }
+  };
 }

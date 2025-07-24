@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { IComponentDefinition, COMPONENT_DEFINITIONS } from './features/component-definitions';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { IComponentDefinition, COMPONENT_DEFINITIONS } from './features/component-definitions';
 
 @Component({
     selector: 'app-root',

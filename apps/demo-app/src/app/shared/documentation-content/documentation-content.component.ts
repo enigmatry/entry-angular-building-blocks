@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { COMPONENT_DEFINITIONS, IComponentDefinition } from '../../features/component-definitions';
 import { ActivatedRoute } from '@angular/router';
+import { COMPONENT_DEFINITIONS, IComponentDefinition } from '../../features/component-definitions';
 
 @Component({
     selector: 'app-documentation-content',

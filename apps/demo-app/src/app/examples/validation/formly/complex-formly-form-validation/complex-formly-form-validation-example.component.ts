@@ -21,7 +21,7 @@ export class ComplexFormlyFormValidationExampleComponent {
       firstName: 'Johanna',
       lastName: 'Doe'
     },
-    children: [ 'Dragana', 'Jovana', 'Mila' ]
+    children: ['Dragana', 'Jovana', 'Mila']
   };
   fields: FormlyFieldConfig[] = [
     {

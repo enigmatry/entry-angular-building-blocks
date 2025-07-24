@@ -18,7 +18,7 @@ export class CheckboxExampleComponent {
         placeholder: `Free shipping`,
         description: ``,
         typeFormatDef: { name: 'boolean' }
-      },
+      }
     }
   ];
 }

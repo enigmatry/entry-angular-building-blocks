@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { UsersService } from './users.service';
+import { IValidationProblemDetails, setServerSideValidationErrors } from '@enigmatry/entry-components';
 import {
   AutocompleteSearchFilter,
   DateTimeSearchFilter,
@@ -8,12 +8,12 @@ import {
   SearchFilterParams,
   SelectOption,
   SelectSearchFilter,
-  TextSearchFilter,
+  TextSearchFilter
 } from '@enigmatry/entry-components/search-filter';
+import { Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { Country, Occupation, User } from './users';
-import { Observable, of } from 'rxjs';
-import { IValidationProblemDetails, setServerSideValidationErrors } from '@enigmatry/entry-components';
+import { UsersService } from './users.service';
 
 @Component({
     selector: 'app-search-filter-example',
@@ -64,7 +64,7 @@ export class SearchFilterExampleComponent {
         placeholder: 'Select occupation',
         multiSelect: true,
         options: Object.values(Occupation)
-          .filter(value => typeof (value) === 'number')
+          .filter(value => typeof value === 'number')
           .map((value: number) => new SelectOption(
             value, Occupation[value].replace(/^[a-z]/, x => x.toUpperCase())))
       }),
@@ -84,7 +84,7 @@ export class SearchFilterExampleComponent {
         minimumCharacters: 0,
         search: (input: string | null) => of(Object.values(Country)
           .filter(value => value.toLocaleLowerCase().includes(input!.toLocaleLowerCase()))
-          .map((country => new SelectOption(country, country))))
+          .map(country => new SelectOption(country, country)))
       }),
       new DateTimeSearchFilter({
         key: 'dateOfBirth',

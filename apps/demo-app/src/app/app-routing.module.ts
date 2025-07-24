@@ -1,4 +1,4 @@
-/* eslint-disable max-len */
+
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RouteSegments } from './features/route-segments';

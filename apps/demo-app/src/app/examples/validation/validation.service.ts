@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/naming-convention */
+
 import { Injectable } from '@angular/core';
 import { IValidationProblemDetails } from '@enigmatry/entry-components/validation';
 import { Observable, throwError } from 'rxjs';
@@ -10,8 +10,7 @@ import { Observable, throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class ValidationService {
-  submitWithValidationErrors(): Observable<void> {
-    return throwError(() => ({
+  submitWithValidationErrors = (): Observable<void> => throwError(() => ({
       errors: {
         '': [
           'The combination of First & Last name already exists.'
@@ -22,10 +21,8 @@ export class ValidationService {
         lastName: ['Last name is also not cool.']
       }
     } as IValidationProblemDetails));
-  }
 
-  submitWithComplexValidationErrors(): Observable<void> {
-    return throwError(() => ({
+  submitWithComplexValidationErrors = (): Observable<void> => throwError(() => ({
       errors: {
         '': ['Personal & Partner info do not match.'],
         'personalInfo.firstName': ['This name is not cool enough.'],
@@ -37,5 +34,4 @@ export class ValidationService {
         'children.2': [`Last child name is not 'Mila'`]
       }
     } as IValidationProblemDetails));
-  }
 }

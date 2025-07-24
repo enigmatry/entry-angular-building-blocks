@@ -1,9 +1,9 @@
+import { Clipboard } from '@angular/cdk/clipboard';
 import { ChangeDetectionStrategy, Component, Input, OnInit, SecurityContext } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Clipboard } from '@angular/cdk/clipboard';
-import { FileExtension } from '../../models/file-extension.type';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import hljs from 'highlight.js';
+import { FileExtension } from '../../models/file-extension.type';
 
 @Component({
     selector: 'app-code-view',
@@ -33,7 +33,7 @@ export class CodeViewComponent implements OnInit {
   };
 
   private highlightCode() {
-    const highlightedCode = hljs.highlight(this.codeContent, { language: this.codeType, });
+    const highlightedCode = hljs.highlight(this.codeContent, { language: this.codeType });
     const sanitizedHtml = this._domSanitizer.sanitize(SecurityContext.HTML, highlightedCode.value);
 
     this.highlightedCode = this._domSanitizer.bypassSecurityTrustHtml(sanitizedHtml!);

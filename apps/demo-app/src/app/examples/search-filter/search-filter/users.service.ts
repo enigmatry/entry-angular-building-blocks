@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { SearchFilterParams } from '@enigmatry/entry-components/search-filter';
+import { IValidationProblemDetails } from '@enigmatry/entry-components/validation';
 import { Observable, of, throwError } from 'rxjs';
 import { User, LIST_OF_USERS } from './users';
-import { IValidationProblemDetails } from '@enigmatry/entry-components/validation';
 
 /**
  * A service that provides some example user data to help showcase the filtering.
@@ -12,7 +12,6 @@ import { IValidationProblemDetails } from '@enigmatry/entry-components/validatio
   providedIn: 'root'
 })
 export class UsersService {
-
   private data: Array<User>;
 
   constructor() {
@@ -56,23 +55,21 @@ export class UsersService {
     return of(users);
   }
 
-  private noFilterParam(searchParams: SearchFilterParams, paramName: string): boolean {
-    return searchParams[paramName] === undefined
+  noFilterParam = (searchParams: SearchFilterParams, paramName: string): boolean => searchParams[paramName] === undefined
       || searchParams[paramName] === null
       || searchParams[paramName]?.length === 0;
-  }
 
-  private validateSearchParams(searchParams: SearchFilterParams): Observable<never> | null {
+  validateSearchParams = (searchParams: SearchFilterParams): Observable<never> | null => {
     if (searchParams['dateOfBirth'] && new Date(searchParams['dateOfBirth']) > new Date()) {
       const validationProblemDetails: IValidationProblemDetails = {
-        title: "Validation Error",
+        title: 'Validation Error',
         status: 400,
         errors: {
-          dateOfBirth: ["The date cannot be in the future."]
+          dateOfBirth: ['The date cannot be in the future.']
         }
       };
       return throwError(() => validationProblemDetails);
     }
     return null;
-  }
+  };
 }

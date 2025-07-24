@@ -6,7 +6,6 @@ import { Occupation } from './users';
     standalone: false
 })
 export class EnumToStringPipe implements PipeTransform {
-
   transform = (value: Occupation): string =>
     value === Occupation.unknown
       ? '-'

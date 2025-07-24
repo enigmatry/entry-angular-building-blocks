@@ -20,7 +20,7 @@ export class TableExampleComponent implements OnInit {
       next: (users: User[]) => {
         this.users = users;
       },
-      error: (err) => {
+      error: err => {
         console.error('Failed to fetch users', err);
       }
     });
@@ -39,11 +39,11 @@ export class TableExampleComponent implements OnInit {
 
     this.contextMenuItems = [{
       id: 'edit',
-      name: 'Edit',
+      name: 'Edit'
     },
     {
       id: 'delete',
-      name: 'Delete',
+      name: 'Delete'
     },
     {
       id: 'export',
@@ -51,11 +51,11 @@ export class TableExampleComponent implements OnInit {
       items: [
         {
           id: 'export_csv',
-          name: 'CSV',
+          name: 'CSV'
         },
         {
           id: 'export_json',
-          name: 'JSON',
+          name: 'JSON'
         }
       ]
     }];

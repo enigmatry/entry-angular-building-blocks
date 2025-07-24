@@ -1,5 +1,5 @@
-import { environment } from './environments/environment';
 import { de, enUS, fr, nl, Locale } from 'date-fns/locale';
+import { environment } from './environments/environment';
 
 export const getMatDateLocale = (): Locale => {
     switch (getCulture()) {
