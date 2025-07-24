@@ -8,7 +8,6 @@ import { DEFAULT_PERCENTAGE_MULTIPLIER } from '../../interfaces/entry-table-conf
     standalone: false
 })
 export class EntryCellFormattedValueComponent {
-
   @Input() value: string | undefined;
   @Input() type: string;
   @Input() typeParameter: any | undefined;

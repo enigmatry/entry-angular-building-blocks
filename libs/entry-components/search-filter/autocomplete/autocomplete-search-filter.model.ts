@@ -1,14 +1,14 @@
+import { Observable } from 'rxjs';
 import { ControlType } from '../control-type';
 import { SearchFilterBase } from '../search-filter-base.model';
 import { SelectOption } from '../select-option.model';
-import { Observable } from 'rxjs';
 
 /**
  * Search filter autocomplete field configuration. Options for the autocomplete are provided
  * indirectly via the search function that takes a string and returns an observable array of
  * SelectOption<T>
  */
-export class AutocompleteSearchFilter<T> extends SearchFilterBase<SelectOption<T>>{
+export class AutocompleteSearchFilter<T> extends SearchFilterBase<SelectOption<T>> {
   override controlType = ControlType.autocomplete;
   /** Callback function for autocomplete options */
   search: (input: string | null) => Observable<SelectOption<T>[]>;

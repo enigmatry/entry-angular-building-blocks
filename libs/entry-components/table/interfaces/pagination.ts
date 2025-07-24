@@ -1,5 +1,5 @@
-import { Sort as SortEvent } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
+import { Sort as SortEvent } from '@angular/material/sort';
 
 export type { Sort as SortEvent, SortDirection } from '@angular/material/sort';
 export { PageEvent } from '@angular/material/paginator';

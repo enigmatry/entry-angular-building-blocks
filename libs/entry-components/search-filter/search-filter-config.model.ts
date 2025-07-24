@@ -20,6 +20,4 @@ export const ENTRY_SEARCH_FILTER_CONFIG = createInjectionToken(new EntrySearchFi
 /**
  * Can be used to provide entry search filter configuration.
  */
-export function provideEntrySearchFilterConfig(config: Partial<EntrySearchFilterConfig>): Provider {
-    return provideConfig(ENTRY_SEARCH_FILTER_CONFIG, () => new EntrySearchFilterConfig(config));
-}
+export const provideEntrySearchFilterConfig = (config: Partial<EntrySearchFilterConfig>): Provider => provideConfig(ENTRY_SEARCH_FILTER_CONFIG, () => new EntrySearchFilterConfig(config));

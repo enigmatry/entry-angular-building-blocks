@@ -1,17 +1,13 @@
 import { InjectionToken, Provider } from '@angular/core';
 
-export function createInjectionToken<T>(defaultValue: T): InjectionToken<T> {
-  return new InjectionToken<T>(defaultValue?.constructor.name ?? 'DefaultToken',
+export const createInjectionToken = <T>(defaultValue: T): InjectionToken<T> => new InjectionToken<T>(defaultValue?.constructor.name ?? 'DefaultToken',
     {
       providedIn: 'root',
       factory: () => defaultValue
     }
   );
-}
 
-export function provideConfig<T>(token: InjectionToken<T>, factory: () => T): Provider {
-  return {
+export const provideConfig = <T>(token: InjectionToken<T>, factory: () => T): Provider => ({
     provide: token,
     useFactory: factory
-  };
-}
+  });

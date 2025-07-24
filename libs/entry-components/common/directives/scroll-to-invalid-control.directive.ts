@@ -13,7 +13,6 @@ import { NG_INVALID_CLASS } from '../constants';
   selector: 'form[formGroup],form[ngForm]'
 })
 export class ScrollToInvalidControlDirective implements OnInit, OnDestroy {
-
   private destroy$ = new Subject<void>();
 
   constructor(
@@ -42,7 +41,7 @@ export class ScrollToInvalidControlDirective implements OnInit, OnDestroy {
     if (firstInvalidControl) {
       firstInvalidControl.scrollIntoView({
         behavior: 'smooth',
-        block: 'center'  // vertical alignment
+        block: 'center' // vertical alignment
       });
     }
   }

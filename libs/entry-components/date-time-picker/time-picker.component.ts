@@ -47,7 +47,7 @@ export class EntryTimePickerComponent<D> implements OnChanges {
       ? this.timeAdapter.getMinutes(this.date)
       : this.timeAdapter.getMinutes(this.defaultTime ?? now);
 
-    this.seconds = (this.showSeconds && this.date)
+    this.seconds = this.showSeconds && this.date
       ? this.timeAdapter.getSeconds(this.date)
       : this.timeAdapter.getSeconds(this.defaultTime ?? now);
 
@@ -60,7 +60,7 @@ export class EntryTimePickerComponent<D> implements OnChanges {
 
   to12HourClock() {
     if (this.hours > 12) {
-      this.hours = this.hours - 12;
+      this.hours -= 12;
     }
     if (this.hours === 0) {
       this.hours = 12;
@@ -71,11 +71,11 @@ export class EntryTimePickerComponent<D> implements OnChanges {
     if (!this.is12HourClock) {
       return;
     }
-    if (this.meridiem === "am" && this.hours === 12) {
+    if (this.meridiem === 'am' && this.hours === 12) {
       this.hours = 0;
     }
-    if (this.meridiem == "pm" && this.hours != 12) {
-      this.hours = this.hours + 12;
+    if (this.meridiem == 'pm' && this.hours != 12) {
+      this.hours += 12;
     }
   }
 }

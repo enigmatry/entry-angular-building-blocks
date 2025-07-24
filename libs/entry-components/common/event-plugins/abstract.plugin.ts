@@ -13,7 +13,6 @@ import { EventManager } from '@angular/platform-browser';
  * https://netbasal.com/lifting-the-veil-insights-into-angulars-eventmanagerplugin-ed9d14cbb31a
  */
 export abstract class EventManagerPlugin {
-
   // Using non-null assertion because it's set by EventManager's constructor
   manager!: EventManager;
 

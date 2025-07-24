@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
-import { EntryDialogComponent } from '../entry-dialog.component';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { IEntryErrorDialogData } from './entry-error-dialog-data.interface';
 import { ENTRY_DIALOG_CONFIG, EntryDialogConfig } from '../../entry-dialog-config.model';
+import { EntryDialogComponent } from '../entry-dialog.component';
+import { IEntryErrorDialogData } from './entry-error-dialog-data.interface';
 
 @Component({
     selector: 'entry-error-dialog',

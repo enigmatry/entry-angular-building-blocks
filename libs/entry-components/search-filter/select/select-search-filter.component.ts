@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Inject, Input } from '@angular/core';
-import { SelectSearchFilter } from './select-search-filter.model';
 import { UntypedFormGroup } from '@angular/forms';
 import { ENTRY_SEARCH_FILTER_CONFIG, EntrySearchFilterConfig } from '../search-filter-config.model';
+import { SelectSearchFilter } from './select-search-filter.model';
 
 @Component({
     selector: 'entry-select-search-filter',

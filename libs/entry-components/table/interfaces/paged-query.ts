@@ -39,7 +39,5 @@ export class PagedQuery implements OnPage, OnSort {
     };
   }
 
-  private getValueIfNotEmpty<T>(value: T): T | undefined {
-    return value ? value : undefined;
-  }
+  getValueIfNotEmpty = <T>(value: T): T | undefined => value ? value : undefined;
 }

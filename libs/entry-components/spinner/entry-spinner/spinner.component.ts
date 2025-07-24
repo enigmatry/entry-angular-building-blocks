@@ -22,7 +22,6 @@ import { SpinnerOverlayContainer } from '../spinner-overlay-container';
     standalone: false
 })
 export class EntrySpinnerComponent implements OnInit, OnDestroy {
-
   @Input() color: ThemePalette = 'primary';
   @Input() diameter = 30;
   @Input() fullscreen = false;

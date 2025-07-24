@@ -10,7 +10,6 @@ import { SelectOption } from './select-configuration.interface';
     standalone: false
 })
 export class CheckAutocompleteInputDirective implements OnChanges, AfterViewInit, OnDestroy {
-
   @Input() options: SelectOption[] = [];
   private destroy$ = new Subject<void>();
 
@@ -33,8 +32,8 @@ export class CheckAutocompleteInputDirective implements OnChanges, AfterViewInit
   ngAfterViewInit(): void {
     this.matAutocomplete.panelClosingActions
       .pipe(takeUntil(this.destroy$))
-      .subscribe((event) => {
-        if (!event || !event.source) {
+      .subscribe(event => {
+        if (!event?.source) {
           this.checkControlValue();
         }
       });

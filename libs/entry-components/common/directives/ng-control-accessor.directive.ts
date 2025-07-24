@@ -1,6 +1,6 @@
-import { Directive, OnDestroy, OnInit, inject } from "@angular/core";
-import { FormControlDirective, FormControlName, NgControl, NgModel, UntypedFormControl } from "@angular/forms";
-import { Subject, takeUntil } from "rxjs";
+import { Directive, OnDestroy, OnInit, inject } from '@angular/core';
+import { FormControlDirective, FormControlName, NgControl, NgModel, UntypedFormControl } from '@angular/forms';
+import { Subject, takeUntil } from 'rxjs';
 
 @Directive({
     standalone: true
@@ -32,7 +32,7 @@ export class NgControlAccessorDirective implements OnDestroy, OnInit {
                     if (ngModel.model !== newValue || ngModel.viewModel !== newValue) {
                         ngModel.viewToModelUpdate(newValue);
                     }
-                })
+                });
         }
     }
 

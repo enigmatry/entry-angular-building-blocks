@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { EntryEventManagerPlugin } from './abstract.plugin';
 import { debounce } from 'lodash-es';
+import { EntryEventManagerPlugin } from './abstract.plugin';
 
 /**
  * Provides event plugin for debouncing events.
@@ -11,7 +11,6 @@ import { debounce } from 'lodash-es';
  */
 @Injectable()
 export class DebounceEventPlugin extends EntryEventManagerPlugin {
-
   modifier = '.debounce';
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type

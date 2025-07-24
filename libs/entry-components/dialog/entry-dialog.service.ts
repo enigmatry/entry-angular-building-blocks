@@ -1,15 +1,15 @@
 import { Inject, Injectable, Type } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { EntryDialogComponent } from './dialogs/entry-dialog.component';
+import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { IEntryAlertDialogData } from './dialogs/alert/entry-alert-dialog-data.interface';
 import { EntryAlertDialogComponent } from './dialogs/alert/entry-alert-dialog.component';
-import { Observable } from 'rxjs';
-import { EntryConfirmDialogComponent } from './dialogs/confirm/entry-confirm-dialog.component';
 import { IEntryConfirmDialogData } from './dialogs/confirm/entry-confirm-dialog-data.interface';
-import { ENTRY_DIALOG_CONFIG, EntryDialogConfig } from './entry-dialog-config.model';
+import { EntryConfirmDialogComponent } from './dialogs/confirm/entry-confirm-dialog.component';
+import { EntryDialogComponent } from './dialogs/entry-dialog.component';
 import { IEntryErrorDialogData } from './dialogs/error/entry-error-dialog-data.interface';
 import { EntryErrorDialogComponent } from './dialogs/error/entry-error-dialog.component';
+import { ENTRY_DIALOG_CONFIG, EntryDialogConfig } from './entry-dialog-config.model';
 
 /**
  * Used to open built-in and custom entry dialogs.

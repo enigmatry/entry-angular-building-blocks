@@ -1,5 +1,5 @@
-import { Injectable, LOCALE_ID, inject } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpInterceptorFn, HttpHandlerFn } from '@angular/common/http';
+import { Injectable, LOCALE_ID, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /**
@@ -27,4 +27,4 @@ export const acceptLanguageInterceptor: HttpInterceptorFn = (request: HttpReques
     headers: request.headers.set('Accept-Language', localeId)
   });
   return next(newRequest);
-}
+};

@@ -23,6 +23,4 @@ export const ENTRY_DATE_TIME_PICKER_CONFIG = createInjectionToken(new EntryDateT
 /**
  * Can be used to provide entry date-time-picker configuration.
  */
-export function provideEntryDateTimePickerConfig(config: Partial<EntryDateTimePickerConfig>): Provider {
-    return provideConfig(ENTRY_DATE_TIME_PICKER_CONFIG, () => new EntryDateTimePickerConfig(config));
-}
+export const provideEntryDateTimePickerConfig = (config: Partial<EntryDateTimePickerConfig>): Provider => provideConfig(ENTRY_DATE_TIME_PICKER_CONFIG, () => new EntryDateTimePickerConfig(config));

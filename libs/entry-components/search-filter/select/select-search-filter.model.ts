@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
-import { SearchFilterBase } from '../search-filter-base.model';
 import { ControlType } from '../control-type';
+import { SearchFilterBase } from '../search-filter-base.model';
 import { SelectOption } from '../select-option.model';
 
 /**

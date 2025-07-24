@@ -1,5 +1,6 @@
-/* eslint-disable @typescript-eslint/member-ordering */
 
+
+import { SelectionModel } from '@angular/cdk/collections';
 import {
   Component,
   Input,
@@ -12,12 +13,11 @@ import {
   ElementRef,
   SimpleChanges,
   HostBinding,
-  Inject,
+  Inject
 } from '@angular/core';
-import { SelectionModel } from '@angular/cdk/collections';
-import { MatTableDataSource } from '@angular/material/table';
 import { PageEvent } from '@angular/material/paginator';
 import { Sort, SortDirection } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 import {
   ColumnDef, PagedData, RowSelectionFormatter, RowClassFormatter,
@@ -120,15 +120,13 @@ export class EntryTableComponent<T> implements OnChanges {
     this._changeDetectorRef.detectChanges();
   }
 
-  isTemplateRef(obj: any) {
-    return obj instanceof TemplateRef;
-  }
+  isTemplateRef = (obj: any) => obj instanceof TemplateRef;
 
   getRowClassList(rowData: T, index: number) {
     const classList = {
       selected: this.rowSelection.isSelected(rowData),
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      'mat-row-odd': index % 2,
+
+      'mat-row-odd': index % 2
     } as Record<string, unknown>;
     if (this.rowClassFormatter) {
       for (const key of Object.keys(this.rowClassFormatter)) {
@@ -193,9 +191,7 @@ export class EntryTableComponent<T> implements OnChanges {
     }
   }
 
-  getIndex(index: number, dataIndex: number) {
-    return typeof index === 'undefined' ? dataIndex : index;
-  }
+  getIndex = (index: number, dataIndex: number) => typeof index === 'undefined' ? dataIndex : index;
 
   isAllSelected() {
     const numSelected = this.rowSelection.selected.length;
@@ -230,11 +226,9 @@ export class EntryTableComponent<T> implements OnChanges {
     this._elementRef.nativeElement.scrollTop = 0;
   }
 
-  get shouldShowPaginator(){
+  get shouldShowPaginator() {
     return this.showPaginator && this._data.length > 0;
   }
 
-  private convertToKebabCase(value: string): string {
-    return value?.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
-  }
+  convertToKebabCase = (value: string): string => value?.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
 }

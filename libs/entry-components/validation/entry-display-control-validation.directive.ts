@@ -1,8 +1,8 @@
 import { Directive, ElementRef, Inject, Input, OnDestroy, OnInit } from '@angular/core';
-import { ENTRY_VALIDATION_CONFIG, EntryValidationConfig } from './entry-validation-config.model';
 import { AbstractControl, FormControlStatus } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { FORM_FIELD_ERROR_KEY } from './entry-validation';
+import { ENTRY_VALIDATION_CONFIG, EntryValidationConfig } from './entry-validation-config.model';
 
 /**
  * A directive that displays configured validation messages or server side validations for given form control.
@@ -49,7 +49,7 @@ export class EntryDisplayControlValidationDirective implements OnInit, OnDestroy
     }
     const errorsString = this._config.validationMessages
       .map(validationMessage => this.control.errors![validationMessage.name]
-        ? typeof(validationMessage.message) === 'string'
+        ? typeof validationMessage.message === 'string'
           ? validationMessage.message : validationMessage.message(this.control)
         : ''
       )

@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ENTRY_DIALOG_CONFIG, EntryDialogConfig } from '../../entry-dialog-config.model';
 import { EntryDialogComponent } from '../entry-dialog.component';
 import { IEntryConfirmDialogData } from './entry-confirm-dialog-data.interface';
-import { ENTRY_DIALOG_CONFIG, EntryDialogConfig } from '../../entry-dialog-config.model';
 
 @Component({
     selector: 'entry-confirm-dialog',

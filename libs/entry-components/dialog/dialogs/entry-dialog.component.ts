@@ -1,8 +1,8 @@
 import { Component, Inject, Input, TemplateRef } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Observable, of } from 'rxjs';
-import { ENTRY_DIALOG_CONFIG, EntryDialogConfig } from '../entry-dialog-config.model';
 import { EntryDialogButtonsAlignment } from '../entry-dialog-buttons-alignment.type';
+import { ENTRY_DIALOG_CONFIG, EntryDialogConfig } from '../entry-dialog-config.model';
 
 /**
  * Base Entry dialog component. Must be extended when building custom dialogs.

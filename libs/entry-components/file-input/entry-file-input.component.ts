@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/member-ordering */
+
 import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
 import {
   ChangeDetectionStrategy,
@@ -34,7 +34,6 @@ const providers = [
   providers
 })
 export class EntryFileInputComponent implements OnInit, OnDestroy, ControlValueAccessor, Validator {
-
   /**
    * Label for the select file button. Defaults to 'Choose file...'
    */
@@ -43,7 +42,7 @@ export class EntryFileInputComponent implements OnInit, OnDestroy, ControlValueA
   /**
    * MatIcon for the select file button. Defaults to 'insert_drive_file' (optional)
    */
-  @Input() matIcon?= 'insert_drive_file';
+  @Input() matIcon? = 'insert_drive_file';
 
   /**
    * Same as 'accept' attribute in <input/> element.
@@ -204,8 +203,8 @@ export class EntryFileInputComponent implements OnInit, OnDestroy, ControlValueA
       return null;
     }
     return {
-      ...(isSizeLimitExceeded ? { maxFileSize: true } : {}),
-      ...(isCountLimitExceeded ? { maxFileCount: true } : {})
+      ...isSizeLimitExceeded ? { maxFileSize: true } : {},
+      ...isCountLimitExceeded ? { maxFileCount: true } : {}
     };
   }
 

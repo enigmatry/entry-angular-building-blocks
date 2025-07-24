@@ -2,9 +2,9 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding, Inp
 import { FormControl } from '@angular/forms';
 import { MAT_DATE_FORMATS, DateAdapter, MatDateFormats } from '@angular/material/core';
 import { ENTRY_MAT_DATE_TIME_FORMATS, EntryDateTimeAdapter, NgControlAccessorDirective, NoopControlValueAccessorDirective } from '@enigmatry/entry-components/common';
-import { EntryTimePickerComponent } from './time-picker.component';
 import { Subject, takeUntil } from 'rxjs';
 import { ENTRY_DATE_TIME_PICKER_CONFIG, EntryDateTimePickerConfig } from './date-time-picker-config.model';
+import { EntryTimePickerComponent } from './time-picker.component';
 
 @Component({
     selector: 'entry-date-time-picker',
@@ -91,7 +91,7 @@ export class EntryDateTimePickerComponent<D> implements OnInit, OnDestroy {
           this.calendarControl.enable({ emitEvent: false });
         }
         this.changeDetectorRef.markForCheck();
-      })
+      });
 
     this.formControl.valueChanges
       .pipe(takeUntil(this.$destroy))

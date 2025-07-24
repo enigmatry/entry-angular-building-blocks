@@ -5,7 +5,6 @@ import { Inject, Injectable, OnDestroy } from '@angular/core';
 
 @Injectable()
 export class SpinnerOverlayContainer extends OverlayContainer implements OnDestroy {
-
   private _appendTo: HTMLElement = this._document.body;
   private _options: { fullscreen: boolean };
 

@@ -7,7 +7,6 @@ import { EntryTimeAdapter } from './entry-time-adapter';
  */
 @Injectable()
 export class EntryDateTimeAdapter<D, L> extends DateAdapter<D, L> implements EntryTimeAdapter<D> {
-
 	constructor(
 		@Optional() @Inject(MAT_DATE_LOCALE) matDateLocale: L,
 		@SkipSelf() private readonly dateAdapter: DateAdapter<D, L>,
@@ -133,5 +132,4 @@ export class EntryDateTimeAdapter<D, L> extends DateAdapter<D, L> implements Ent
 			this.getMinutes(first) - this.getMinutes(second) ||
 			this.getSeconds(first) - this.getSeconds(second);
 	}
-
 }

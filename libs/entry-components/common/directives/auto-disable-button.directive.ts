@@ -1,8 +1,8 @@
+import { NumberInput, coerceNumberProperty } from '@angular/cdk/coercion';
 import { Directive, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subject, fromEvent, timer } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { NG_VALID_CLASS } from '../constants';
-import { NumberInput, coerceNumberProperty } from '@angular/cdk/coercion';
 
 /**
  * Auto disable button after click or submit with entry-auto-disable directive.
@@ -20,7 +20,6 @@ import { NumberInput, coerceNumberProperty } from '@angular/cdk/coercion';
   selector: 'button[entry-auto-disable]:not([disabled])'
 })
 export class AutoDisableButtonDirective implements OnInit, OnDestroy {
-
   private _destroy$ = new Subject<void>();
   private _disableIntervalInMs = 2000;
 
