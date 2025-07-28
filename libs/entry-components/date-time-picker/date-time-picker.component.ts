@@ -1,7 +1,9 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding, Input, OnDestroy, OnInit, Output, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding, Input, OnDestroy, OnInit,
+   Output, ViewChild, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MAT_DATE_FORMATS, DateAdapter, MatDateFormats } from '@angular/material/core';
-import { ENTRY_MAT_DATE_TIME_FORMATS, EntryDateTimeAdapter, NgControlAccessorDirective, NoopControlValueAccessorDirective } from '@enigmatry/entry-components/common';
+import { ENTRY_MAT_DATE_TIME_FORMATS, EntryDateTimeAdapter, NgControlAccessorDirective,
+  NoopControlValueAccessorDirective } from '@enigmatry/entry-components/common';
 import { Subject, takeUntil } from 'rxjs';
 import { ENTRY_DATE_TIME_PICKER_CONFIG, EntryDateTimePickerConfig } from './date-time-picker-config.model';
 import { EntryTimePickerComponent } from './time-picker.component';
@@ -105,7 +107,9 @@ export class EntryDateTimePickerComponent<D> implements OnInit, OnDestroy {
       .pipe(takeUntil(this.$destroy))
       .subscribe(value => {
         this.timePicker.to24HourClock();
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         this.dateTimeAdapter.setTime(value!, this.timePicker.hours, this.timePicker.minutes, this.timePicker.seconds);
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         this.formControl.setValue(value!);
         this.formControl.markAsDirty();
         this.formControl.markAsTouched();

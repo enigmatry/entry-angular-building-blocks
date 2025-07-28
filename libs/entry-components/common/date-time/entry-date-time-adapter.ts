@@ -1,3 +1,4 @@
+/* eslint-disable @angular-eslint/prefer-inject */
 import { Inject, Injectable, Optional, SkipSelf } from '@angular/core';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { EntryTimeAdapter } from './entry-time-adapter';

@@ -19,10 +19,14 @@
     "@angular/platform-browser": "^20.1.0",
     "@ngx-formly/core": "^7.0.0",
     "@ngx-formly/material": "^7.0.0",
+    "rxjs": "7.8.1",
     "@enigmatry/entry-components": "0.0.0-PLACEHOLDER"
   },
   "dependencies": {
     "tslib": "^2.8.1"
+  },
+  "devDependencies": {
+    "@ckeditor/ckeditor5-angular": "^5.2.0"
   },
   "publishConfig": {
     "access": "public"

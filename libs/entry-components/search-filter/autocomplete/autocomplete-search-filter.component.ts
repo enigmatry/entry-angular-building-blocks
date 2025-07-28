@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnDestroy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { Observable, Subject, of } from 'rxjs';
@@ -7,10 +7,10 @@ import { SelectOption } from '../select-option.model';
 import { AutocompleteSearchFilter } from './autocomplete-search-filter.model';
 
 @Component({
-    selector: 'entry-autocomplete-search-filter',
-    templateUrl: './autocomplete-search-filter.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+  selector: 'entry-autocomplete-search-filter',
+  templateUrl: './autocomplete-search-filter.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false
 })
 export class AutocompleteSearchFilterComponent<T> implements AfterViewInit, OnDestroy {
   @Input() searchFilter: AutocompleteSearchFilter<T>;
@@ -20,8 +20,7 @@ export class AutocompleteSearchFilterComponent<T> implements AfterViewInit, OnDe
   options$: Observable<SelectOption<T>[]> = of([]);
 
   destroy$ = new Subject<void>();
-
-  constructor(private cdr: ChangeDetectorRef) { }
+  private readonly cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
 
   ngAfterViewInit(): void {
     this.searchField

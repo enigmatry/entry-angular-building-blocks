@@ -12,6 +12,7 @@ export class EntryDateTimePickerConfig {
     }
 }
 
+// eslint-disable-next-line no-secrets/no-secrets
 /**
  * Entry date-time-picker injection token of EntryDateTimePickerConfig type containing dialog default configurations.
  *
@@ -23,4 +24,5 @@ export const ENTRY_DATE_TIME_PICKER_CONFIG = createInjectionToken(new EntryDateT
 /**
  * Can be used to provide entry date-time-picker configuration.
  */
-export const provideEntryDateTimePickerConfig = (config: Partial<EntryDateTimePickerConfig>): Provider => provideConfig(ENTRY_DATE_TIME_PICKER_CONFIG, () => new EntryDateTimePickerConfig(config));
+export const provideEntryDateTimePickerConfig = (config: Partial<EntryDateTimePickerConfig>): Provider =>
+    provideConfig(ENTRY_DATE_TIME_PICKER_CONFIG, () => new EntryDateTimePickerConfig(config));

@@ -1,9 +1,11 @@
+/* eslint-disable max-lines */
 
 import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
 import {
   ChangeDetectionStrategy,
   Component, ElementRef, EventEmitter, Input, NgZone,
-  OnDestroy, OnInit, Output, Renderer2, ViewChild, forwardRef
+  OnDestroy, OnInit, Output, Renderer2, ViewChild, forwardRef,
+  inject
 } from '@angular/core';
 import {
   AbstractControl, ControlValueAccessor, NG_VALIDATORS,
@@ -15,11 +17,13 @@ import { takeUntil } from 'rxjs/operators';
 const providers = [
   {
     provide: NG_VALUE_ACCESSOR,
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
     useExisting: forwardRef(() => EntryFileInputComponent),
     multi: true
   },
   {
     provide: NG_VALIDATORS,
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
     useExisting: forwardRef(() => EntryFileInputComponent),
     multi: true
   }
@@ -34,6 +38,9 @@ const providers = [
   providers
 })
 export class EntryFileInputComponent implements OnInit, OnDestroy, ControlValueAccessor, Validator {
+    private readonly _ngZone: NgZone = inject(NgZone);
+    private readonly _renderer: Renderer2 = inject(Renderer2);
+
   /**
    * Label for the select file button. Defaults to 'Choose file...'
    */
@@ -114,11 +121,6 @@ export class EntryFileInputComponent implements OnInit, OnDestroy, ControlValueA
 
   private _destroy$ = new Subject<void>();
 
-  constructor(
-    private readonly _ngZone: NgZone,
-    private readonly _renderer: Renderer2) {
-  }
-
   get fileNames(): string {
     if (this.value instanceof File) {
       return this.value.name;
@@ -146,6 +148,7 @@ export class EntryFileInputComponent implements OnInit, OnDestroy, ControlValueA
 
   onFileSelect(event: Event): void {
     const fileInputEl = event.target as HTMLInputElement;
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const files: FileList = fileInputEl.files!;
 
     const value = this._multiple
@@ -220,7 +223,8 @@ export class EntryFileInputComponent implements OnInit, OnDestroy, ControlValueA
     if (!this.maxFileSizeInKb) {
       return false;
     }
-    const maxFileSizeInBytes = this.maxFileSizeInKb * 1024;
+    const kilobyte = 1024;
+    const maxFileSizeInBytes = this.maxFileSizeInKb * kilobyte;
 
     if (files instanceof File) {
       return files.size > maxFileSizeInBytes;

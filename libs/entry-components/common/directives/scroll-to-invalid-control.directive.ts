@@ -1,4 +1,4 @@
-import { Directive, ElementRef, OnDestroy, OnInit, Self } from '@angular/core';
+import { Directive, ElementRef, inject, OnDestroy, OnInit } from '@angular/core';
 import { ControlContainer } from '@angular/forms';
 import { Subject, fromEvent } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -10,14 +10,13 @@ import { NG_INVALID_CLASS } from '../constants';
  */
 @Directive({
   standalone: true,
+  // eslint-disable-next-line @angular-eslint/directive-selector
   selector: 'form[formGroup],form[ngForm]'
 })
 export class ScrollToInvalidControlDirective implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
-
-  constructor(
-    @Self() private form: ControlContainer,
-    private elementRef: ElementRef<HTMLFormElement>) { }
+  private readonly form = inject(ControlContainer, { self: true });
+  private readonly elementRef = inject(ElementRef<HTMLFormElement>);
 
   ngOnInit(): void {
     fromEvent(this.elementRef.nativeElement, 'submit')

@@ -21,6 +21,7 @@ export class SearchFilterBase<T> {
   maxLength: number;
   /** A reference to the form control it represents */
   formControl: FormControl<T | undefined>;
+  private readonly maxPossibleLength = 256;
 
   constructor(options: Partial<SearchFilterBase<T>> = {}) {
     this.value = options.value;
@@ -29,7 +30,7 @@ export class SearchFilterBase<T> {
     this.placeholder = options.placeholder || '';
     this.controlType = options.controlType || ControlType.text;
     this.type = options.type || ControlType.text;
-    this.maxLength = options.maxLength || 256;
+    this.maxLength = options.maxLength || this.maxPossibleLength;
   }
 
   setValue(value: T | undefined) {

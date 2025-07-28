@@ -1,4 +1,4 @@
-import { Inject, Injectable, Type } from '@angular/core';
+import { inject, Injectable, Type } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
@@ -16,9 +16,8 @@ import { ENTRY_DIALOG_CONFIG, EntryDialogConfig } from './entry-dialog-config.mo
  */
 @Injectable()
 export class EntryDialogService {
-  constructor(
-    @Inject(ENTRY_DIALOG_CONFIG) protected readonly config: EntryDialogConfig,
-    private readonly matDialog: MatDialog) { }
+  protected readonly config: EntryDialogConfig = inject(ENTRY_DIALOG_CONFIG);
+  private readonly matDialog: MatDialog = inject(MatDialog);
 
   /**
    * Opens alert dialog.

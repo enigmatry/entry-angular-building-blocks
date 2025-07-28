@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, Inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
+import { ColumnTypeParameter } from '../../interfaces';
 import { DEFAULT_PERCENTAGE_MULTIPLIER } from '../../interfaces/entry-table-config';
 
 @Component({
@@ -10,9 +11,7 @@ import { DEFAULT_PERCENTAGE_MULTIPLIER } from '../../interfaces/entry-table-conf
 export class EntryCellFormattedValueComponent {
   @Input() value: string | undefined;
   @Input() type: string;
-  @Input() typeParameter: any | undefined;
+  @Input() typeParameter: ColumnTypeParameter & { multiplier?: number } | undefined;
 
-  constructor(
-    @Inject(DEFAULT_PERCENTAGE_MULTIPLIER) public defaultPercentageMultiplier: number) {
-  }
+  public readonly defaultPercentageMultiplier: number = inject(DEFAULT_PERCENTAGE_MULTIPLIER);
 }

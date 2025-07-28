@@ -8,6 +8,7 @@ export class SpinnerOverlayContainer extends OverlayContainer implements OnDestr
   private _appendTo: HTMLElement = this._document.body;
   private _options: { fullscreen: boolean };
 
+  // eslint-disable-next-line @angular-eslint/prefer-inject
   constructor(@Inject(DOCUMENT) document: Document, platform: Platform) {
     super(document, platform);
   }

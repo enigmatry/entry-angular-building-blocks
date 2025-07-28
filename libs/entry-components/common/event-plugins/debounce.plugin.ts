@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { debounce } from 'lodash-es';
-import { EntryEventManagerPlugin } from './abstract.plugin';
+import { EntryEventManagerPlugin } from './entry-event-manager.plugin';
 
 /**
  * Provides event plugin for debouncing events.

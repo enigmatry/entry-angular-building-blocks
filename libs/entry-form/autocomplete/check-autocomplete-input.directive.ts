@@ -1,4 +1,4 @@
-import { AfterViewInit, Directive, ElementRef, Host, Input, OnChanges, OnDestroy, Self, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, inject, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { AbstractControl, NgControl } from '@angular/forms';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { Subject } from 'rxjs';
@@ -13,11 +13,9 @@ export class CheckAutocompleteInputDirective implements OnChanges, AfterViewInit
   @Input() options: SelectOption[] = [];
   private destroy$ = new Subject<void>();
 
-  constructor(
-    @Host() @Self() private matAutocomplete: MatAutocompleteTrigger,
-    private ngControl: NgControl,
-    private elemRef: ElementRef) {
-  }
+  private readonly matAutocomplete = inject(MatAutocompleteTrigger, { host: true, self: true });
+  private readonly ngControl = inject(NgControl);
+  private readonly elemRef = inject(ElementRef);
 
   get control(): AbstractControl | null {
     return this.ngControl.control;

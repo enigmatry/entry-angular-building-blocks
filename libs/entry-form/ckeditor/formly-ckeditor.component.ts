@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { CKEditor5 } from '@ckeditor/ckeditor5-angular';
 import { FormlyFieldConfig } from '@ngx-formly/core';
@@ -13,11 +13,13 @@ import { ENTRY_CKEDITOR_OPTIONS, EntryCkeditorOptions } from './ckeditor-options
 export class FormlyCkeditorComponent extends FieldType<FormlyFieldConfig> {
   editorBuild: CKEditor5.EditorConstructor;
   editorConfig: CKEditor5.Config = {};
+  readonly ckeditorOptions: EntryCkeditorOptions;
 
-  constructor(@Inject(ENTRY_CKEDITOR_OPTIONS) options: EntryCkeditorOptions) {
+  constructor() {
     super();
-    this.editorBuild = options.build;
-    this.editorConfig = { ...this.editorConfig, ...options.config };
+    this.ckeditorOptions = inject(ENTRY_CKEDITOR_OPTIONS);
+    this.editorBuild = this.ckeditorOptions.build;
+    this.editorConfig = { ...this.editorConfig, ...this.ckeditorOptions.config };
   }
 
   get control(): UntypedFormControl {

@@ -41,4 +41,5 @@ export const ENTRY_DIALOG_CONFIG = createInjectionToken(new EntryDialogConfig())
 /**
  * Can be used to provide entry dialog configuration.
  */
-export const provideEntryDialogConfig = (config: Partial<EntryDialogConfig>): Provider => provideConfig(ENTRY_DIALOG_CONFIG, () => new EntryDialogConfig(config));
+export const provideEntryDialogConfig = (config: Partial<EntryDialogConfig>): Provider =>
+    provideConfig(ENTRY_DIALOG_CONFIG, () => new EntryDialogConfig(config));
