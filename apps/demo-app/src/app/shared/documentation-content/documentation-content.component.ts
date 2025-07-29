@@ -1,18 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { COMPONENT_DEFINITIONS, IComponentDefinition } from '../../features/component-definitions';
 
 @Component({
-    selector: 'app-documentation-content',
-    templateUrl: './documentation-content.component.html',
-    styleUrls: ['./documentation-content.component.scss'],
-    standalone: false
+  selector: 'app-documentation-content',
+  templateUrl: './documentation-content.component.html',
+  styleUrls: ['./documentation-content.component.scss'],
+  standalone: false
 })
 export class DocumentationContentComponent implements OnInit {
   componentDefinition: IComponentDefinition | undefined;
-
-  constructor(private activatedRoute: ActivatedRoute) {
-  }
+  private readonly activatedRoute: ActivatedRoute = inject(ActivatedRoute);
 
   ngOnInit(): void {
     const componentRoute = this.activatedRoute.snapshot.url[0].path;

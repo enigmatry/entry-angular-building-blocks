@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ColumnDef, ContextMenuItem } from '@enigmatry/entry-components/table';
 import { User } from '../../search-filter/search-filter/users';
 import { UsersService } from '../../search-filter/search-filter/users.service';
@@ -14,13 +14,15 @@ export class TableExampleComponent implements OnInit {
 
   columns: ColumnDef[] = [];
   contextMenuItems: ContextMenuItem[] = [];
+  private readonly usersService: UsersService = inject(UsersService);
 
-  constructor(usersService: UsersService) {
-    usersService.getUsers({}).subscribe({
+  constructor() {
+    this.usersService.getUsers({}).subscribe({
       next: (users: User[]) => {
         this.users = users;
       },
       error: err => {
+        // eslint-disable-next-line no-console
         console.error('Failed to fetch users', err);
       }
     });

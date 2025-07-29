@@ -9,5 +9,5 @@ export class EnumToStringPipe implements PipeTransform {
   transform = (value: Occupation): string =>
     value === Occupation.unknown
       ? '-'
-      : Occupation[value].replace(/^[a-z]/, x => x.toUpperCase());
+      : Occupation[value].replace(/^[a-z]/u, x => x.toUpperCase());
 }

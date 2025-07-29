@@ -23,6 +23,7 @@ import { ReactiveFormExampleComponent } from './reactive-form-validation-example
     provideEntryValidationConfig({
       validationMessages: [
         { name: 'required', message: 'This field is mandatory!' },
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         { name: 'minlength', message: (control: AbstractControl) => `Minimal length is ${control!.errors!['minlength'].requiredLength}!` }
       ]
     })

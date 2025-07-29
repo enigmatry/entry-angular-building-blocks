@@ -1,3 +1,5 @@
+/* eslint-disable max-lines */
+/* eslint-disable @typescript-eslint/no-magic-numbers */
 enum Occupation {
     unknown = 0,
     electrician = 1,

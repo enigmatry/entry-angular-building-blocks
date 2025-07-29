@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy } from '@angular/core';
+import { Component, inject, Input, OnDestroy } from '@angular/core';
 import { Observable, Subject, forkJoin, of } from 'rxjs';
 import { catchError, map, takeUntil } from 'rxjs/operators';
 import { FileExtension } from '../models/file-extension.type';
@@ -12,10 +12,10 @@ interface IExtraFile {
 }
 
 @Component({
-    selector: 'app-example-viewer',
-    templateUrl: './example-viewer.component.html',
-    styleUrls: ['./example-viewer.component.scss'],
-    standalone: false
+  selector: 'app-example-viewer',
+  templateUrl: './example-viewer.component.html',
+  styleUrls: ['./example-viewer.component.scss'],
+  standalone: false
 })
 export class ExampleViewerComponent implements OnDestroy {
   @Input() component: string;
@@ -34,9 +34,7 @@ export class ExampleViewerComponent implements OnDestroy {
   extraFilesToDisplay: IExtraFile[] = [];
 
   private _destroy$ = new Subject<void>();
-
-  constructor(
-    private _fileLoad: FileLoadService) { }
+  private readonly _fileLoad: FileLoadService = inject(FileLoadService);
 
   ngOnDestroy(): void {
     this._destroy$.next();

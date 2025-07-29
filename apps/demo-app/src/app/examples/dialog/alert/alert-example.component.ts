@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { EntryDialogService } from '@enigmatry/entry-components/dialog';
 
 @Component({
@@ -7,7 +7,7 @@ import { EntryDialogService } from '@enigmatry/entry-components/dialog';
     standalone: false
 })
 export class AlertExampleComponent {
-  constructor(private _entryDialog: EntryDialogService) { }
+  private readonly _entryDialog: EntryDialogService = inject(EntryDialogService);
 
   openAlert = () => this._entryDialog.openAlert({
     title: `ALERT`,

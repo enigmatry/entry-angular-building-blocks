@@ -45,8 +45,12 @@ export const NG_EVENT_PLUGINS: Provider[] = EVENT_PLUGINS.map(useClass => ({
   ]
 })
 export class EntryCommonModule {
-  static forRoot = (): ModuleWithProviders<EntryCommonModule> => ({
+  // Has to be function since modules needs to work with statically defined providers
+  // eslint-disable-next-line prefer-arrow-functions/prefer-arrow-functions
+  static forRoot(): ModuleWithProviders<EntryCommonModule> {
+    return {
       ngModule: EntryCommonModule,
       providers: NG_EVENT_PLUGINS
-    });
+    };
+  }
 }

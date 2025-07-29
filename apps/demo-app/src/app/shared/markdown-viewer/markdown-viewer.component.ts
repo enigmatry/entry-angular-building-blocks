@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, NgZone, OnInit, Renderer2, SecurityContext } from '@angular/core';
+import { Component, ElementRef, inject, Input, NgZone, OnInit, Renderer2, SecurityContext } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import hljs from 'highlight.js';
 import MarkdownIt from 'markdown-it';
@@ -6,10 +6,10 @@ import { map } from 'rxjs/operators';
 import { FileLoadService } from '../services/file-load.service';
 
 @Component({
-    selector: 'app-markdown-viewer',
-    templateUrl: './markdown-viewer.component.html',
-    styleUrls: ['./markdown-viewer.component.scss'],
-    standalone: false
+  selector: 'app-markdown-viewer',
+  templateUrl: './markdown-viewer.component.html',
+  styleUrls: ['./markdown-viewer.component.scss'],
+  standalone: false
 })
 export class MarkdownViewerComponent implements OnInit {
   @Input() fileUrl: string | undefined;
@@ -17,12 +17,11 @@ export class MarkdownViewerComponent implements OnInit {
 
   markdownContentHtml: SafeHtml | undefined = '';
 
-  constructor(
-    private _fileLoad: FileLoadService,
-    private _domSanitizer: DomSanitizer,
-    private _elementRef: ElementRef,
-    private _renderer: Renderer2,
-    private _ngZone: NgZone) { }
+  private readonly _fileLoad: FileLoadService = inject(FileLoadService);
+  private _domSanitizer: DomSanitizer = inject(DomSanitizer);
+  private _elementRef: ElementRef = inject(ElementRef);
+  private _renderer: Renderer2 = inject(Renderer2);
+  private _ngZone: NgZone = inject(NgZone);
 
   ngOnInit(): void {
     if (this.fileUrl) {
@@ -36,11 +35,12 @@ export class MarkdownViewerComponent implements OnInit {
 
   private loadFileContent() {
     this._fileLoad
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       .loadDocumentationFile(this.fileUrl!)
       .pipe(
         map(response => this.convertMarkdownToHtml(response))
       )
-.subscribe({
+      .subscribe({
         next: response => this.markdownContentHtml = response,
         error: _ => this.markdownContentHtml = `### No API documentation found :'(`
       });
@@ -56,7 +56,7 @@ export class MarkdownViewerComponent implements OnInit {
 
     const html = converter.render(markdown ?? '');
     const sanitizedHtml = this._domSanitizer.sanitize(SecurityContext.HTML, html);
-    const htmlWithHeadingIds = this.addIdsToHeadings(sanitizedHtml!);
+    const htmlWithHeadingIds = this.addIdsToHeadings(sanitizedHtml);
 
     return this._domSanitizer.bypassSecurityTrustHtml(htmlWithHeadingIds);
   }
@@ -95,28 +95,28 @@ export class MarkdownViewerComponent implements OnInit {
     return !!href && href.includes('#');
   };
 
-  getHeadingId = (str: string): string => {
+  getHeadingId = (str: string | null): string => {
     if (str) {
       return str
-        .replace(/(_|-|\s)+/g, '')
-        .replace(/[&+$,/:;=?@"#{}|^¨~[\]`\\*)(%.!'<>]/g, '')
+        .replace(/(_|-|\s)+/gu, '')
+        .replace(/[&+$,/:;=?@"#{}|^¨~[\]`\\*)(%.!'<>]/gu, '')
         .toLowerCase();
     }
     return '';
   };
 
-  private addIdsToHeadings(html: string): string {
+  private addIdsToHeadings(html: string | null): string {
     if (html) {
       const document = new DOMParser().parseFromString(html, 'text/html');
       document
         .querySelectorAll('h1, h2, h3, h4, h5, h6')
         .forEach((heading: Element) => {
-          const id = this.getHeadingId(heading.textContent!);
+          const id = this.getHeadingId(heading.textContent);
           heading.setAttribute('id', id);
         });
       return document.querySelector('body')?.innerHTML ?? '';
     }
-    return html;
+    return html ?? '';
   }
 
   highlightCode = (str: string, lang: string) => {

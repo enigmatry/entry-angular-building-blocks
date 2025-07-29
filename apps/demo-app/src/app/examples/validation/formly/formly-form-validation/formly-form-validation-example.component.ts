@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { IValidationProblemDetails, setServerSideValidationErrors } from '@enigmatry/entry-components/validation';
 import { FormlyFieldConfig } from '@ngx-formly/core';
@@ -29,8 +29,7 @@ export class FormlyFormValidationExampleComponent {
     }
   ];
   validationResult: IValidationProblemDetails | undefined;
-
-  constructor(private _validationService: ValidationService) {}
+  private readonly _validationService: ValidationService = inject(ValidationService);
 
   submitForm() {
     this._validationService.submitWithValidationErrors()

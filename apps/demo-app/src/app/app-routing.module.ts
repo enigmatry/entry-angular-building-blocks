@@ -51,7 +51,8 @@ const routes: Routes = [
   },
   {
     path: RouteSegments.dateTimePicker,
-    loadComponent: () => import('./features/date-time-picker/date-time-picker-documentation.component').then(m => m.DateTimePickerDocumentationComponent)
+    loadComponent: () => import('./features/date-time-picker/date-time-picker-documentation.component')
+      .then(m => m.DateTimePickerDocumentationComponent)
   }
 ];
 
