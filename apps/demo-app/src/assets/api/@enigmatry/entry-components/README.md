@@ -33,3 +33,10 @@ These guides provides detailed steps for setting up and configuring theming with
 ## License
 
 Apache-2 © Enigmatry
+
+## Modules
+
+- [button/public-api](button/public-api.md)
+- [dialog/public-api](dialog/public-api.md)
+- [search-filter/public-api](search-filter/public-api.md)
+- [validation/public-api](validation/public-api.md)

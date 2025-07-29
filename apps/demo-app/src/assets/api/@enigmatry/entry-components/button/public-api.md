@@ -10,14 +10,14 @@ Used to provide button configuration on module or application level.
 
 | Property | Type | Description | Defined in |
 | ------ | ------ | ------ | ------ |
-| `cancel` | `MatButtonConfig` | Cancel button configuration |  |
-| `submit` | `MatButtonConfig` | Submit button configuration |  |
+| <a id="cancel"></a> `cancel` | `MatButtonConfig` | Cancel button configuration |  |
+| <a id="submit"></a> `submit` | `MatButtonConfig` | Submit button configuration |  |
 
 ## Variables
 
 ### ENTRY\_BUTTON\_CONFIG
 
-> `const` **ENTRY\_BUTTON\_CONFIG**: `InjectionToken`\<[`EntryButtonConfig`](public-api.md#entrybuttonconfig)\>
+> `const` **ENTRY\_BUTTON\_CONFIG**: `InjectionToken`\<[`EntryButtonConfig`](#entrybuttonconfig)\>
 
 Entry button config injection token.
 
@@ -35,7 +35,9 @@ Can be used to provide custom button configuration.
 
 #### Parameters
 
-• **config**: `Partial`\<[`EntryButtonConfig`](public-api.md#entrybuttonconfig)\>
+##### config
+
+`Partial`\<[`EntryButtonConfig`](#entrybuttonconfig)\>
 
 #### Returns
 
