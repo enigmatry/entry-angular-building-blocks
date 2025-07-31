@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { EntryEventManagerPlugin } from './abstract.plugin';
 import { throttle } from 'lodash-es';
+import { EntryEventManagerPlugin } from './entry-event-manager.plugin';
 
 /**
  * Provides event plugin for throttling events.
@@ -11,7 +11,6 @@ import { throttle } from 'lodash-es';
  */
 @Injectable()
 export class ThrottleEventPlugin extends EntryEventManagerPlugin {
-
   modifier = '.throttle';
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
@@ -23,7 +22,7 @@ export class ThrottleEventPlugin extends EntryEventManagerPlugin {
     const innerHandler = (event: any) => this.manager.getZone().runGuarded(() => originalHandler(event));
 
     // create throttled handler
-    const throttledHandler = throttle(innerHandler, milliseconds);
+    const throttledHandler = throttle(innerHandler, milliseconds as number);
 
     // register event with throttled handler
     return this.manager.addEventListener(element, this.unwrapEventName(eventName), throttledHandler);

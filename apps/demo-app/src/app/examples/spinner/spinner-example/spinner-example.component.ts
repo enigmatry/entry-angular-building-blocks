@@ -15,6 +15,7 @@ export class SpinnerExampleComponent {
 
   showSpinner() {
     this.loading = true;
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     timer(3000).subscribe(_ => this.loading = false);
   }
 }

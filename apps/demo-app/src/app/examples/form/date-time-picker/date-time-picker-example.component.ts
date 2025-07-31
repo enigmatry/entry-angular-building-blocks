@@ -18,7 +18,7 @@ export class DateTimePickerExampleComponent {
         description: ``,
         typeFormatDef: { name: 'date' }
       },
-      modelOptions: { updateOn: 'blur' },
-    },
+      modelOptions: { updateOn: 'blur' }
+    }
   ];
 }

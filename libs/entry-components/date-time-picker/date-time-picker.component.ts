@@ -1,10 +1,12 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding, Input, OnDestroy, OnInit, Output, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding, Input, OnDestroy, OnInit,
+   Output, ViewChild, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MAT_DATE_FORMATS, DateAdapter, MatDateFormats } from '@angular/material/core';
-import { ENTRY_MAT_DATE_TIME_FORMATS, EntryDateTimeAdapter, NgControlAccessorDirective, NoopControlValueAccessorDirective } from '@enigmatry/entry-components/common';
-import { EntryTimePickerComponent } from './time-picker.component';
+import { ENTRY_MAT_DATE_TIME_FORMATS, EntryDateTimeAdapter, NgControlAccessorDirective,
+  NoopControlValueAccessorDirective } from '@enigmatry/entry-components/common';
 import { Subject, takeUntil } from 'rxjs';
 import { ENTRY_DATE_TIME_PICKER_CONFIG, EntryDateTimePickerConfig } from './date-time-picker-config.model';
+import { EntryTimePickerComponent } from './time-picker.component';
 
 @Component({
     selector: 'entry-date-time-picker',
@@ -53,7 +55,7 @@ export class EntryDateTimePickerComponent<D> implements OnInit, OnDestroy {
   }
 
   // Control that is connected to calendar
-  calendarControl: FormControl<D> = new FormControl<D>(undefined);
+  calendarControl: FormControl<D | null | undefined> = new FormControl<D | undefined>(undefined);
 
   is12HourClock = this.dateTimeAdapter.is12HoursClock(this.format.display.dateInput);
 
@@ -91,7 +93,7 @@ export class EntryDateTimePickerComponent<D> implements OnInit, OnDestroy {
           this.calendarControl.enable({ emitEvent: false });
         }
         this.changeDetectorRef.markForCheck();
-      })
+      });
 
     this.formControl.valueChanges
       .pipe(takeUntil(this.$destroy))
@@ -105,8 +107,10 @@ export class EntryDateTimePickerComponent<D> implements OnInit, OnDestroy {
       .pipe(takeUntil(this.$destroy))
       .subscribe(value => {
         this.timePicker.to24HourClock();
-        this.dateTimeAdapter.setTime(value, this.timePicker.hours, this.timePicker.minutes, this.timePicker.seconds);
-        this.formControl.setValue(value);
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        this.dateTimeAdapter.setTime(value!, this.timePicker.hours, this.timePicker.minutes, this.timePicker.seconds);
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        this.formControl.setValue(value!);
         this.formControl.markAsDirty();
         this.formControl.markAsTouched();
       });

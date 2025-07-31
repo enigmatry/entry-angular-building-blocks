@@ -10,7 +10,6 @@ import { FieldType } from '@ngx-formly/material';
     standalone: false
 })
 export class FormlyDateTimePickerComponent extends FieldType<FormlyFieldConfig> implements OnInit {
-
   get control(): UntypedFormControl {
     return this.formControl as UntypedFormControl;
   }

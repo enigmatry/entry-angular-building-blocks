@@ -6,7 +6,7 @@ import { SharedModule } from '../../shared/shared.module';
     templateUrl: './permissions-documentation.component.html',
     imports: [
         SharedModule,
-        PermissionsExampleModule,
+        PermissionsExampleModule
     ]
 })
 export class PermissionsDocumentationComponent { }

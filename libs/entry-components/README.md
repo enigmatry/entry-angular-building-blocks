@@ -29,6 +29,7 @@ These guides provides detailed steps for setting up and configuring theming with
 |17.x| = 17
 |18.x| = 18
 |19.x| = 19
+|20.x| = 20
 
 ## License
 

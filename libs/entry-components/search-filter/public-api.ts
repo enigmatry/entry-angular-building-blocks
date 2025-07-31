@@ -1,6 +1,6 @@
 export { EntrySearchFilterComponent } from './entry-search-filter.component';
 
-export { SearchFilterParams } from './search-filter-params.type';
+export type { SearchFilterParams } from './search-filter-params.type';
 export { SearchFilterBase } from './search-filter-base.model';
 export { TextSearchFilter } from './text/text-search-filter.model';
 export { SelectSearchFilter } from './select/select-search-filter.model';

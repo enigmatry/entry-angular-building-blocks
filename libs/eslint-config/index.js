@@ -11,11 +11,12 @@ import arrowFunctions from "eslint-plugin-prefer-arrow-functions";
 export default tseslint.config(
   ...angular.configs.tsRecommended,
   {
-    ignores: ["src/**/generated/", "src/polyfills.ts", "src/@enigmatry/**", "**/api-reference.ts"]
+    ignores: ["src/**/generated/", "src/polyfills.ts", "src/@enigmatry/**", "**/api-reference.ts",
+      '.angular/**', '.vscode/**', 'bin/**', 'coverage/**', 'dist/**', 'node_modules/**', 'obj/**']
   },
   {
     "processor": angular.processInlineTemplates,
-    "files": ["src/**/*.ts"],
+    "files": ["src/**/*.ts", "libs/**/*.ts"],
     "languageOptions": {
       "ecmaVersion": "latest",
       "sourceType": "module",
@@ -329,7 +330,9 @@ export default tseslint.config(
       "@typescript-eslint/no-unused-vars": [
         "error",
         {
-          "argsIgnorePattern": "^_"
+          "argsIgnorePattern": "^_",
+          "destructuredArrayIgnorePattern": "^_",
+          "varsIgnorePattern": "^_"
         }
       ],
       "@typescript-eslint/no-use-before-define": [

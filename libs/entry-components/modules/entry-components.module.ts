@@ -1,13 +1,13 @@
 import { ModuleWithProviders, NgModule, Provider, Type } from '@angular/core';
 import { EntryButtonModule } from '@enigmatry/entry-components/button';
+import { EntryCommonModule, NG_EVENT_PLUGINS } from '@enigmatry/entry-components/common';
 import { EntryDialogModule } from '@enigmatry/entry-components/dialog';
+import { EntryFileInputModule } from '@enigmatry/entry-components/file-input';
 import { EntryPermissionModule, EntryPermissionService } from '@enigmatry/entry-components/permissions';
 import { EntrySearchFilterModule } from '@enigmatry/entry-components/search-filter';
-import { EntryValidationModule } from '@enigmatry/entry-components/validation';
-import { EntryFileInputModule } from '@enigmatry/entry-components/file-input';
-import { EntryTableModule } from '@enigmatry/entry-components/table';
-import { EntryCommonModule, NG_EVENT_PLUGINS } from '@enigmatry/entry-components/common';
 import { EntrySpinnerModule } from '@enigmatry/entry-components/spinner';
+import { EntryTableModule } from '@enigmatry/entry-components/table';
+import { EntryValidationModule } from '@enigmatry/entry-components/validation';
 
 interface EntryComponentsModuleOptions {
   permissionService?: Type<any>;
@@ -35,8 +35,7 @@ interface EntryComponentsModuleOptions {
   ]
 })
 export class EntryComponentsModule {
-  static forRoot(options: EntryComponentsModuleOptions = {}): ModuleWithProviders<EntryComponentsModule> {
-
+  static forRoot = (options: EntryComponentsModuleOptions = {}): ModuleWithProviders<EntryComponentsModule> => {
     const permissionServiceProvider: Provider[] = options.permissionService
       ? [{ provide: EntryPermissionService, useClass: options.permissionService }]
       : [];
@@ -46,5 +45,5 @@ export class EntryComponentsModule {
       ngModule: EntryComponentsModule,
       providers
     };
-  }
+  };
 }

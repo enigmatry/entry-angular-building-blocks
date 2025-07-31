@@ -1,5 +1,5 @@
-import { Component, ViewChild } from '@angular/core';
-import { UsersService } from './users.service';
+import { Component, inject, ViewChild } from '@angular/core';
+import { IValidationProblemDetails, setServerSideValidationErrors } from '@enigmatry/entry-components';
 import {
   AutocompleteSearchFilter,
   DateTimeSearchFilter,
@@ -8,12 +8,12 @@ import {
   SearchFilterParams,
   SelectOption,
   SelectSearchFilter,
-  TextSearchFilter,
+  TextSearchFilter
 } from '@enigmatry/entry-components/search-filter';
+import { Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { Country, Occupation, User } from './users';
-import { Observable, of } from 'rxjs';
-import { IValidationProblemDetails, setServerSideValidationErrors } from '@enigmatry/entry-components';
+import { UsersService } from './users.service';
 
 @Component({
     selector: 'app-search-filter-example',
@@ -26,9 +26,10 @@ export class SearchFilterExampleComponent {
 
   users: Array<User>;
   displayedColumns: string[] = ['name', 'email', 'dateOfBirth', 'occupation', 'country'];
-  filters = [];
+  filters: SearchFilterBase<unknown>[] = [];
+  private readonly usersService: UsersService = inject(UsersService);
 
-  constructor(private _usersService: UsersService) {
+  constructor() {
     this.fetchUsers({}).subscribe();
     this.filters = this.createSearchFilters();
   }
@@ -38,7 +39,7 @@ export class SearchFilterExampleComponent {
   }
 
   private fetchUsers(searchParams: SearchFilterParams = {}): Observable<User[]> {
-    return this._usersService.getUsers(searchParams).pipe(
+    return this.usersService.getUsers(searchParams).pipe(
       tap({
         next: (users: User[]) => {
           this.users = users;
@@ -50,6 +51,7 @@ export class SearchFilterExampleComponent {
     );
   }
 
+  // eslint-disable-next-line max-lines-per-function
   private createSearchFilters(): SearchFilterBase<unknown>[] {
     return [
       new TextSearchFilter({
@@ -64,16 +66,16 @@ export class SearchFilterExampleComponent {
         placeholder: 'Select occupation',
         multiSelect: true,
         options: Object.values(Occupation)
-          .filter(value => typeof (value) === 'number')
+          .filter(value => typeof value === 'number')
           .map((value: number) => new SelectOption(
-            value, Occupation[value].replace(/^[a-z]/, x => x.toUpperCase())))
+            value, Occupation[value].replace(/^[a-z]/u, x => x.toUpperCase())))
       }),
       new SelectSearchFilter({
         key: 'username',
         label: 'Username',
         placeholder: 'Select username',
         multiSelect: false,
-        options$: this._usersService
+        options$: this.usersService
           .getUsernames()
           .pipe(map(usernames => usernames.map(un => new SelectOption(un, un))))
       }),
@@ -82,9 +84,10 @@ export class SearchFilterExampleComponent {
         label: 'Country',
         placeholder: 'Select country',
         minimumCharacters: 0,
-        search: (input: string) => of(Object.values(Country)
-          .filter(value => value.toLocaleLowerCase().includes(input.toLocaleLowerCase()))
-          .map((country => new SelectOption(country, country))))
+        search: (input: string | null) => of(Object.values(Country)
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          .filter(value => value.toLocaleLowerCase().includes(input!.toLocaleLowerCase()))
+          .map(country => new SelectOption(country, country)))
       }),
       new DateTimeSearchFilter({
         key: 'dateOfBirth',

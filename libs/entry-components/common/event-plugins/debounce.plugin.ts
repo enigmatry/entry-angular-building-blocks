@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { EntryEventManagerPlugin } from './abstract.plugin';
 import { debounce } from 'lodash-es';
+import { EntryEventManagerPlugin } from './entry-event-manager.plugin';
 
 /**
  * Provides event plugin for debouncing events.
@@ -11,7 +11,6 @@ import { debounce } from 'lodash-es';
  */
 @Injectable()
 export class DebounceEventPlugin extends EntryEventManagerPlugin {
-
   modifier = '.debounce';
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
@@ -23,7 +22,7 @@ export class DebounceEventPlugin extends EntryEventManagerPlugin {
     const innerHandler = (event: any) => this.manager.getZone().runGuarded(() => originalHandler(event));
 
     // create debounced handler
-    const debouncedHandler = debounce(innerHandler, milliseconds,
+    const debouncedHandler = debounce(innerHandler, milliseconds as number,
       { leading: option === 'leading', trailing: option === 'trailing' });
 
     // register event with debounced handler

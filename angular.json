@@ -23,15 +23,6 @@
             }
           },
           "defaultConfiguration": "production"
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/entry-form/**/*.ts",
-              "libs/entry-form/**/*.html"
-            ]
-          }
         }
       }
     },
@@ -55,15 +46,6 @@
             }
           },
           "defaultConfiguration": "production"
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/entry-components/**/*.ts",
-              "libs/entry-components/**/*.html"
-            ]
-          }
         }
       }
     },
@@ -169,23 +151,8 @@
           "options": {
             "buildTarget": "@enigmatry/demo-app:build"
           }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "apps/demo-app/**/*.ts",
-              "apps/demo-app/**/*.html"
-            ]
-          }
         }
       }
     }
-  },
-  "cli": {
-    "schematicCollections": [
-      "@angular-eslint/schematics"
-    ],
-    "analytics": false
   }
 }

@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { IValidationProblemDetails, setServerSideValidationErrors } from '@enigmatry/entry-components/validation';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { ValidationService } from '../../validation.service';
-import { IValidationProblemDetails, setServerSideValidationErrors } from '@enigmatry/entry-components/validation';
 
 @Component({
     selector: 'app-formly-form-validation-example',
@@ -28,9 +28,8 @@ export class FormlyFormValidationExampleComponent {
       templateOptions: { label: 'Last name', required: true, minLength: 3 }
     }
   ];
-  validationResult: IValidationProblemDetails;
-
-  constructor(private _validationService: ValidationService) {}
+  validationResult: IValidationProblemDetails | undefined;
+  private readonly _validationService: ValidationService = inject(ValidationService);
 
   submitForm() {
     this._validationService.submitWithValidationErrors()

@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EntryButtonDirective } from './entry-button.directive';
+import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { EntryButtonDirective } from './entry-button.directive';
 
 @NgModule({
   declarations: [

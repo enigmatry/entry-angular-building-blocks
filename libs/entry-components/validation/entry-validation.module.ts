@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EntryFormErrorsComponent } from './entry-form-errors.component';
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { EntryDisplayControlValidationDirective } from './entry-display-control-validation.directive';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { EntryFormErrorsComponent } from './entry-form-errors.component';
 
 @NgModule({
   declarations: [

@@ -1,15 +1,15 @@
-import { Component, ElementRef, Input, NgZone, OnInit, Renderer2, SecurityContext } from '@angular/core';
-import { FileLoadService } from '../services/file-load.service';
-import MarkdownIt from 'markdown-it';
-import { map } from 'rxjs/operators';
+import { Component, ElementRef, inject, Input, NgZone, OnInit, Renderer2, SecurityContext } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import hljs from 'highlight.js';
+import MarkdownIt from 'markdown-it';
+import { map } from 'rxjs/operators';
+import { FileLoadService } from '../services/file-load.service';
 
 @Component({
-    selector: 'app-markdown-viewer',
-    templateUrl: './markdown-viewer.component.html',
-    styleUrls: ['./markdown-viewer.component.scss'],
-    standalone: false
+  selector: 'app-markdown-viewer',
+  templateUrl: './markdown-viewer.component.html',
+  styleUrls: ['./markdown-viewer.component.scss'],
+  standalone: false
 })
 export class MarkdownViewerComponent implements OnInit {
   @Input() fileUrl: string | undefined;
@@ -17,12 +17,11 @@ export class MarkdownViewerComponent implements OnInit {
 
   markdownContentHtml: SafeHtml | undefined = '';
 
-  constructor(
-    private _fileLoad: FileLoadService,
-    private _domSanitizer: DomSanitizer,
-    private _elementRef: ElementRef,
-    private _renderer: Renderer2,
-    private _ngZone: NgZone) { }
+  private readonly _fileLoad: FileLoadService = inject(FileLoadService);
+  private _domSanitizer: DomSanitizer = inject(DomSanitizer);
+  private _elementRef: ElementRef = inject(ElementRef);
+  private _renderer: Renderer2 = inject(Renderer2);
+  private _ngZone: NgZone = inject(NgZone);
 
   ngOnInit(): void {
     if (this.fileUrl) {
@@ -36,10 +35,12 @@ export class MarkdownViewerComponent implements OnInit {
 
   private loadFileContent() {
     this._fileLoad
-      .loadDocumentationFile(this.fileUrl)
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      .loadDocumentationFile(this.fileUrl!)
       .pipe(
         map(response => this.convertMarkdownToHtml(response))
-      ).subscribe({
+      )
+      .subscribe({
         next: response => this.markdownContentHtml = response,
         error: _ => this.markdownContentHtml = `### No API documentation found :'(`
       });
@@ -63,7 +64,7 @@ export class MarkdownViewerComponent implements OnInit {
   private handleAnchorClicks() {
     this._ngZone.runOutsideAngular(() => {
       this._renderer.listen(this._elementRef.nativeElement, 'click', (event: MouseEvent) => {
-        const anchor: HTMLAnchorElement = (event.target as HTMLElement).closest('a[href]');
+        const anchor: HTMLAnchorElement | null = (event.target as HTMLElement).closest('a[href]');
 
         if (anchor && this.isHeadingLink(anchor)) {
           event.preventDefault();
@@ -89,22 +90,22 @@ export class MarkdownViewerComponent implements OnInit {
     return false;
   }
 
-  private isHeadingLink(anchor: HTMLAnchorElement): boolean {
+  isHeadingLink = (anchor: HTMLAnchorElement): boolean => {
     const href = anchor.getAttribute('href');
-    return href && href.includes('#');
-  }
+    return !!href && href.includes('#');
+  };
 
-  private getHeadingId(str: string): string {
+  getHeadingId = (str: string | null): string => {
     if (str) {
       return str
-        .replace(/(_|-|\s)+/g, '')
-        .replace(/[&+$,/:;=?@"#{}|^¨~[\]`\\*)(%.!'<>]/g, '')
+        .replace(/(_|-|\s)+/gu, '')
+        .replace(/[&+$,/:;=?@"#{}|^¨~[\]`\\*)(%.!'<>]/gu, '')
         .toLowerCase();
     }
     return '';
-  }
+  };
 
-  private addIdsToHeadings(html: string): string {
+  private addIdsToHeadings(html: string | null): string {
     if (html) {
       const document = new DOMParser().parseFromString(html, 'text/html');
       document
@@ -113,15 +114,15 @@ export class MarkdownViewerComponent implements OnInit {
           const id = this.getHeadingId(heading.textContent);
           heading.setAttribute('id', id);
         });
-      return document.querySelector('body').innerHTML;
+      return document.querySelector('body')?.innerHTML ?? '';
     }
-    return html;
+    return html ?? '';
   }
 
-  private highlightCode(str: string, lang: string) {
+  highlightCode = (str: string, lang: string) => {
     if (lang && hljs.getLanguage(lang)) {
-      return hljs.highlight(str, { language: lang, }).value;
+      return hljs.highlight(str, { language: lang }).value;
     }
     return str;
-  }
+  };
 }

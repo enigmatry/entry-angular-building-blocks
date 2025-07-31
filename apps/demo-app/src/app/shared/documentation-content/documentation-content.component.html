@@ -2,7 +2,7 @@
     <mat-tab-group animationDuration="0ms" mat-stretch-tabs="false">
         <mat-tab label="Overview">
             <div class="doc-content-wrapper">
-                <app-markdown-viewer [fileUrl]="componentDefinition.readmePath"></app-markdown-viewer>
+                <app-markdown-viewer [fileUrl]="componentDefinition!.readmePath"></app-markdown-viewer>
             </div>
         </mat-tab>
         <mat-tab label="Examples">
@@ -10,9 +10,9 @@
                 <ng-content></ng-content>
             </div>
         </mat-tab>
-        <mat-tab label="API" *ngIf="componentDefinition.apiDocsPath">
+        <mat-tab label="API" *ngIf="componentDefinition!.apiDocsPath">
             <div class="doc-content-wrapper">
-                <app-markdown-viewer [fileUrl]="componentDefinition.apiDocsPath"></app-markdown-viewer>
+                <app-markdown-viewer [fileUrl]="componentDefinition!.apiDocsPath"></app-markdown-viewer>
             </div>
         </mat-tab>
     </mat-tab-group>

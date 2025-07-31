@@ -23,7 +23,7 @@ The messages are separated with coma(,) and displayed as _innerHTML_ value of ho
 
 | Property | Type | Description | Defined in |
 | ------ | ------ | ------ | ------ |
-| `control` | `AbstractControl`\<`any`, `any`\> | Form control for which the validation messages are displayed for. |  |
+| <a id="control"></a> `control` | `AbstractControl` | Form control for which the validation messages are displayed for. |  |
 
 #### Methods
 
@@ -78,7 +78,7 @@ The messages are displayed as a list, each message in a new row.
 
 | Property | Type | Description | Defined in |
 | ------ | ------ | ------ | ------ |
-| `form` | `UntypedFormGroup` | A form group for which the validation errors are being displayed. |  |
+| <a id="form"></a> `form` | `UntypedFormGroup` | A form group for which the validation errors are being displayed. |  |
 
 ***
 
@@ -90,7 +90,7 @@ Used to provide default configurations on module level.
 
 | Property | Type | Description | Defined in |
 | ------ | ------ | ------ | ------ |
-| `validationMessages` | [`IEntryValidationMessage`](public-api.md#ientryvalidationmessage)[] | Validation key to message configuration on module level. Used to configure client side validation messages for standard validators (_required_, _minLength_, _email_, etc.). **NOTE:** If using _Formly_ package to render forms, this configuration should not be used. Instead, use `FormlyModule` to configure validation messages. **Example** `new EntryValidationConfig() { validationMessages: [ { name: 'required': message: 'This field is mandatory' }, { name: 'minlength', message: (control: AbstractControl) => `Minimal length is ${control.errors.minlength.requiredLength}`} ] }` |  |
+| <a id="validationmessages"></a> `validationMessages` | [`IEntryValidationMessage`](#ientryvalidationmessage)[] | Validation key to message configuration on module level. Used to configure client side validation messages for standard validators (_required_, _minLength_, _email_, etc.). **NOTE:** If using _Formly_ package to render forms, this configuration should not be used. Instead, use `FormlyModule` to configure validation messages. **Example** `new EntryValidationConfig() { validationMessages: [ { name: 'required': message: 'This field is mandatory' }, { name: 'minlength', message: (control: AbstractControl) => `Minimal length is ${control.errors.minlength.requiredLength}`} ] }` |  |
 
 ## Interfaces
 
@@ -102,8 +102,8 @@ Used to configure mapping between validation keys and messages
 
 | Property | Type | Description | Defined in |
 | ------ | ------ | ------ | ------ |
-| `message` | `string` \| (`control`) => `string` | Validation message. Can be static string or expression returning string (when messages need to be resolved dynamically: parametrization, localization, etc.). |  |
-| `name` | `string` | Validation key (e.g. '_required_', '_minlength_', '_email_', etc.) |  |
+| <a id="message"></a> `message` | `string` \| (`control`) => `string` | Validation message. Can be static string or expression returning string (when messages need to be resolved dynamically: parametrization, localization, etc.). |  |
+| <a id="name"></a> `name` | `string` | Validation key (e.g. '_required_', '_minlength_', '_email_', etc.) |  |
 
 ***
 
@@ -115,7 +115,7 @@ Defines the api used as a container for server side validation errors.
 
 ### ENTRY\_VALIDATION\_CONFIG
 
-> `const` **ENTRY\_VALIDATION\_CONFIG**: `InjectionToken`\<[`EntryValidationConfig`](public-api.md#entryvalidationconfig)\>
+> `const` **ENTRY\_VALIDATION\_CONFIG**: `InjectionToken`\<[`EntryValidationConfig`](#entryvalidationconfig)\>
 
 Entry validation injection token of EntryValidationConfig type containing validation default configurations.
 Can be updated with custom configuration.
@@ -149,7 +149,9 @@ Can be used to provide entry validation configuration.
 
 #### Parameters
 
-• **config**: `Partial`\<[`EntryValidationConfig`](public-api.md#entryvalidationconfig)\>
+##### config
+
+`Partial`\<[`EntryValidationConfig`](#entryvalidationconfig)\>
 
 #### Returns
 
@@ -166,11 +168,15 @@ The errors are applied to multiple levels: form, form group, form array, and for
 
 #### Parameters
 
-• **error**: [`IValidationProblemDetails`](public-api.md#ivalidationproblemdetails)
+##### error
+
+[`IValidationProblemDetails`](#ivalidationproblemdetails)
 
 Server side validation errors response.
 
-• **form**: `UntypedFormGroup`
+##### form
+
+`UntypedFormGroup`
 
 Form to apply validation errors to.
 

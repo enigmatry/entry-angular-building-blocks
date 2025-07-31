@@ -6,7 +6,7 @@ import { SharedModule } from '../../shared/shared.module';
     templateUrl: './dialog-documentation.component.html',
     imports: [
         SharedModule,
-        DialogExamplesModule,
+        DialogExamplesModule
     ]
 })
 export class DialogDocumentationComponent { }

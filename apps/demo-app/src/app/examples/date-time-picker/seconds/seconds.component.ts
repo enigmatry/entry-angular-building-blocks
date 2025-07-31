@@ -8,13 +8,13 @@ import { provideEntryNativeTimeAdapter } from '@enigmatry/entry-components/commo
     providers: [
         provideEntryNativeTimeAdapter({
             parse: {
-                dateInput: ['dd-MM-yyyy', 'dd-MM-yyyy HH', 'dd-MM-yyyy HH:mm:ss'],
+                dateInput: ['dd-MM-yyyy', 'dd-MM-yyyy HH', 'dd-MM-yyyy HH:mm:ss']
             },
             display: {
                 dateInput: 'dd-MM-yyyy HH:mm:ss',
                 monthYearLabel: 'LLL uuuu',
                 dateA11yLabel: 'PP',
-                monthYearA11yLabel: 'LLLL uuuu',
+                monthYearA11yLabel: 'LLLL uuuu'
             }
         })
     ],
