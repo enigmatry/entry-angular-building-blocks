@@ -8,8 +8,7 @@ $redactor-checkboxes-selector: '[data-rx-type = 'todoitem'] ';
 	
 	.enigmatry-redactor-content {
 
-		$checkbox-color: if($theming-accent-color == '' or $theming-accent-color == null,
-			mat.get-color-from-palette(mat.$primary-palette, 500), $theming-accent-color);
+		$checkbox-color: if($theming-accent-color == '' or $theming-accent-color == null, mat.get-color-from-palette(mat.$primary-palette, 500), $theming-accent-color);
 
 		.rx-editor #{$redactor-checkboxes-selector} input:checked::before {
 			border-color: $checkbox-color;
