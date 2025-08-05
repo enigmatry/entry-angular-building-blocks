@@ -5,9 +5,10 @@ $default-material-button: map.get(mat.define-typography-config(), 'button');
 
 @mixin generate-from($theme) {
 	$theming-primary: map.get($theme, 'general', 'colors', 'primary');
-	$theming-font-family: map.get($theme, 'general', 'fonts', 'buttons', 'family');
-	$theming-font-weight: map.get($theme, 'general', 'fonts', 'buttons', 'weight');
-	$theming-font-size: map.get($theme, 'general', 'fonts', 'buttons', 'size');
+	$theming-button-fonts: map.get($theme, 'general', 'fonts', 'buttons');
+	$theming-font-family: map.get($theming-button-fonts, 'family');
+	$theming-font-weight: map.get($theming-button-fonts, 'weight');
+	$theming-font-size: map.get($theming-button-fonts, 'size');
 
 	$primary-color: if($theming-primary == '' or $theming-primary == null, mat.get-color-from-palette(mat.$primary-palette, 500), $theming-primary);
 	$font-family: if($theming-font-family == '' or $theming-font-family == null, map.get($default-material-button, 'font-family'), $theming-font-family);
@@ -16,7 +17,7 @@ $default-material-button: map.get(mat.define-typography-config(), 'button');
 
 	.enigmatry-redactor-content {
 		button, .rx-content button {
-		background-color: $primary-color;
+			background-color: $primary-color;
 			font: {
 				family: $font-family;
 				weight: $font-weight;

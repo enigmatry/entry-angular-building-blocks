@@ -10,7 +10,8 @@ $caption-typography: map.get(mat.define-typography-config(), 'caption');
 	$theming-table: map.get($theme, 'tables', 'rows', 'odd-even-background');
 	$theming-table-header: map.get($theme, 'tables', 'header', 'font-size');
 	$theming-fonts: map.get($theme, 'general', 'fonts');
-	
+	$body-font-family: map.get($theme, 'general', 'fonts', 'body', 'family');
+
 	.enigmatry-redactor-content {
 		table {
 			@if $theming-table {
@@ -25,29 +26,30 @@ $caption-typography: map.get(mat.define-typography-config(), 'caption');
 					@include list.odd-row-coloring(mat.get-color-from-palette(mat.$grey-palette, 50));
 				}
 			}
-	
+
 			@if $theming-table-header {
 				th {
-					font-family: map.get($theme, 'general', 'fonts', 'body', 'family');
+					font-family: $body-font-family;
 					font-size: $theming-table-header;
 				}
 			}
 		}
 
 		table, table td {
-			/* stylelint-disable-next-line scss/at-if-no-null */
-			@if $theming-fonts and map.has-key($theming-fonts, 'body') and map.get($theming-fonts, 'body', 'size') != null {
-				font-size: map.get($theming-fonts, 'body', 'size');
+			$body-size: if($theming-fonts != null, map.get($theming-fonts, 'body', 'size'), null);
+
+			@if $body-size {
+				font-size: $body-size;
 			}
 			@else {
 				font-size: map.get($body-typography, 'font-size');
 			}
 
 			#{$redactor-th-selector} {
-				/* stylelint-disable-next-line scss/at-if-no-null */
-				@if map.has-key($theme, 'tables') and map.has-key(map.get($theme, 'tables', 'header'), 'font-size')
-					and $theming-table-header != null {
-					font-size: $theming-table-header;
+				$header-font-size: map.get($theme, 'tables', 'header', 'font-size');
+
+				@if $header-font-size {
+					font-size: $header-font-size;
 				}
 				@else {
 					font-size: map.get($caption-typography, 'font-size');
