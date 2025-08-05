@@ -1,8 +1,8 @@
-import { Directive, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
+import { NumberInput, coerceNumberProperty } from '@angular/cdk/coercion';
+import { Directive, ElementRef, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subject, fromEvent, timer } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { NG_VALID_CLASS } from '../constants';
-import { NumberInput, coerceNumberProperty } from '@angular/cdk/coercion';
 
 /**
  * Auto disable button after click or submit with entry-auto-disable directive.
@@ -20,24 +20,23 @@ import { NumberInput, coerceNumberProperty } from '@angular/cdk/coercion';
   selector: 'button[entry-auto-disable]:not([disabled])'
 })
 export class AutoDisableButtonDirective implements OnInit, OnDestroy {
-
   private _destroy$ = new Subject<void>();
   private _disableIntervalInMs = 2000;
-
-  constructor(private elementRef: ElementRef<HTMLButtonElement>) { }
+  private readonly elementRef: ElementRef<HTMLButtonElement> = inject(ElementRef);
 
   @Input('entry-auto-disable')
   get disableIntervalInMs() {
     return this._disableIntervalInMs;
   }
   set disableIntervalInMs(value: NumberInput) {
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     this._disableIntervalInMs = coerceNumberProperty(value, 2000);
   }
 
   ngOnInit(): void {
     const button = this.elementRef.nativeElement;
     const isTypeSubmit = button.getAttribute('type') === 'submit';
-    const form: HTMLFormElement = button.closest('form');
+    const form: HTMLFormElement | null = button.closest('form');
 
     if (isTypeSubmit && form) {
       // listen to form submit event

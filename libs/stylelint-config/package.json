@@ -14,16 +14,14 @@
   ],
   "dependencies": {
     "postcss-scss": "^4.0.9",
+    "stylelint": "^16.16.0",
     "stylelint-config-property-sort-order-smacss": "^10.0.0",
-    "@stylistic/stylelint-plugin": "^3.1.0",
-    "stylelint-use-nesting": "^5.1.1",
+    "@stylistic/stylelint-plugin": "^3.1.2",
+    "stylelint-use-nesting": "^6.0.0",
     "stylelint-declaration-block-no-ignored-properties": "^2.8.0",
     "stylelint-file-max-lines": "^1.0.0",
-    "stylelint-scss": "^6.7.0",
+    "stylelint-scss": "^6.11.1",
     "stylelint-group-selectors": "^1.0.10"
-  },
-  "peerDependencies": {
-    "stylelint": "^16.9.0"
   },
   "deprecatedDependencies": {
     "stylelint-selector-no-empty": "1.0.9 is out of support. Add it back to the list if support for Stylelint v16+ is added"

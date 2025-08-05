@@ -1,21 +1,23 @@
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
-import { EntryDialogComponent } from '../entry-dialog.component';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { IEntryErrorDialogData } from './entry-error-dialog-data.interface';
 import { ENTRY_DIALOG_CONFIG, EntryDialogConfig } from '../../entry-dialog-config.model';
+import { EntryDialogComponent } from '../entry-dialog.component';
+import { IEntryErrorDialogData } from './entry-error-dialog-data.interface';
 
 @Component({
   selector: 'entry-error-dialog',
   templateUrl: './entry-error-dialog.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false
 })
 export class EntryErrorDialogComponent extends EntryDialogComponent {
   errors: string[] = [];
-  constructor(
-    protected readonly mdDialogRef: MatDialogRef<EntryDialogComponent>,
-    @Inject(ENTRY_DIALOG_CONFIG) public readonly config: EntryDialogConfig,
-    @Inject(MAT_DIALOG_DATA) public data: IEntryErrorDialogData) {
-    super(mdDialogRef, config);
+  protected override readonly mdDialogRef: MatDialogRef<EntryDialogComponent> = inject(MatDialogRef<EntryDialogComponent>);
+  override readonly config: EntryDialogConfig = inject(ENTRY_DIALOG_CONFIG);
+  readonly data: IEntryErrorDialogData = inject(MAT_DIALOG_DATA);
+
+  constructor() {
+    super();
     this.extractValidationErrors();
   }
 

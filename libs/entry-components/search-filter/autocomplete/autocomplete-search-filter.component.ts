@@ -1,15 +1,16 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnDestroy } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { Observable, Subject, of } from 'rxjs';
 import { filter, tap, takeUntil, debounceTime } from 'rxjs/operators';
 import { SelectOption } from '../select-option.model';
 import { AutocompleteSearchFilter } from './autocomplete-search-filter.model';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'entry-autocomplete-search-filter',
   templateUrl: './autocomplete-search-filter.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false
 })
 export class AutocompleteSearchFilterComponent<T> implements AfterViewInit, OnDestroy {
   @Input() searchFilter: AutocompleteSearchFilter<T>;
@@ -19,8 +20,7 @@ export class AutocompleteSearchFilterComponent<T> implements AfterViewInit, OnDe
   options$: Observable<SelectOption<T>[]> = of([]);
 
   destroy$ = new Subject<void>();
-
-  constructor(private cdr: ChangeDetectorRef) { }
+  private readonly cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
 
   ngAfterViewInit(): void {
     this.searchField
@@ -28,7 +28,7 @@ export class AutocompleteSearchFilterComponent<T> implements AfterViewInit, OnDe
       .pipe(
         takeUntil(this.destroy$),
         tap(value => this.clearFilterIfLabelMismatch(value)),
-        filter(value => value?.length >= this.searchFilter.minimumCharacters),
+        filter(value => !!value && value.length >= this.searchFilter.minimumCharacters),
         debounceTime(this.searchFilter.debounceTime)
       )
       .subscribe(searchValue => {
@@ -44,14 +44,14 @@ export class AutocompleteSearchFilterComponent<T> implements AfterViewInit, OnDe
     this.destroy$.complete();
   }
 
-  displayFn = (_selectedValue: SelectOption<T>): string => this.searchFilter.formControl.value?.label;
+  displayFn = (_selectedValue: SelectOption<T>): string => this.searchFilter.formControl.value?.label ?? '';
 
   onSelected = (event: MatAutocompleteSelectedEvent) => {
     this.searchFilter.formControl.patchValue(event.option.value);
     this.searchField.patchValue(event.option.value.label, { emitEvent: false });
   };
 
-  private clearFilterIfLabelMismatch(value: string) {
+  private clearFilterIfLabelMismatch(value: string | null) {
     const label = this.searchFilter.formControl.value?.label;
     if (label && label !== value) {
       this.searchFilter.formControl.patchValue(undefined);

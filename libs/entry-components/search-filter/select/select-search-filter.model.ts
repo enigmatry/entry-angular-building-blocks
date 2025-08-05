@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
-import { SearchFilterBase } from '../search-filter-base.model';
 import { ControlType } from '../control-type';
+import { SearchFilterBase } from '../search-filter-base.model';
 import { SelectOption } from '../select-option.model';
 
 /**
@@ -18,11 +18,13 @@ export class SelectSearchFilter<T> extends SearchFilterBase<T> {
    * If it is set to false, 'none selected' option becomes available as a first option.
    * */
   multiSelect = true;
+  showNoneOption = true;
 
   constructor(options: Partial<SelectSearchFilter<T>> = {}) {
     super(options);
-    this.options = options.options;
+    this.options = options.options ?? [];
     this.options$ = options.options$;
-    this.multiSelect = options.multiSelect;
+    this.multiSelect = !!options.multiSelect;
+    this.showNoneOption = !!options.showNoneOption;
   }
 }

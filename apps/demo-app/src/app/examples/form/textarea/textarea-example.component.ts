@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 
 @Component({
-  selector: 'app-textarea-example',
-  templateUrl: './textarea-example.component.html'
+    selector: 'app-textarea-example',
+    templateUrl: './textarea-example.component.html',
+    standalone: false
 })
 export class TextareaExampleComponent {
   fields: FormlyFieldConfig[] = [

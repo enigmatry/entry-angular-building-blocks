@@ -1,13 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { IValidationProblemDetails, setServerSideValidationErrors } from '@enigmatry/entry-components/validation';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { ValidationService } from '../../validation.service';
 
 @Component({
-  selector: 'app-complex-formly-form-validation-example',
-  templateUrl: './complex-formly-form-validation-example.component.html',
-  styleUrls: ['./complex-formly-form-validation-example.component.scss']
+    selector: 'app-complex-formly-form-validation-example',
+    templateUrl: './complex-formly-form-validation-example.component.html',
+    styleUrls: ['./complex-formly-form-validation-example.component.scss'],
+    standalone: false
 })
 export class ComplexFormlyFormValidationExampleComponent {
   form = new FormGroup({});
@@ -20,7 +21,7 @@ export class ComplexFormlyFormValidationExampleComponent {
       firstName: 'Johanna',
       lastName: 'Doe'
     },
-    children: [ 'Dragana', 'Jovana', 'Mila' ]
+    children: ['Dragana', 'Jovana', 'Mila']
   };
   fields: FormlyFieldConfig[] = [
     {
@@ -68,9 +69,8 @@ export class ComplexFormlyFormValidationExampleComponent {
       }
     }
   ];
-  validationResult: IValidationProblemDetails;
-
-  constructor(private _validationService: ValidationService) {}
+  validationResult: IValidationProblemDetails | undefined;
+  private readonly _validationService: ValidationService = inject(ValidationService);
 
   submitForm() {
     this._validationService.submitWithComplexValidationErrors()

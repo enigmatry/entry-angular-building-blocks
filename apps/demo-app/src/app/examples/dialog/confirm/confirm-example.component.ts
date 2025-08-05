@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { IEntryConfirmDialogData, EntryDialogButtonsAlignment, EntryDialogService } from '@enigmatry/entry-components/dialog';
 
 @Component({
   selector: 'app-confirm-example',
   templateUrl: './confirm-example.component.html',
+  standalone: false
 })
 export class ConfirmExampleComponent {
   confirmData: Partial<IEntryConfirmDialogData> = {
@@ -18,8 +19,7 @@ export class ConfirmExampleComponent {
   };
   confirmResponse: boolean | undefined;
   alignments: EntryDialogButtonsAlignment[] = ['start', 'center', 'end'];
-
-  constructor(private _entryDialog: EntryDialogService) { }
+  private readonly _entryDialog: EntryDialogService = inject(EntryDialogService);
 
   openConfirm = () => this._entryDialog
     .openConfirm(this.confirmData)

@@ -15,17 +15,19 @@
     "lint": "stylelint --fix styles/**/*.scss --config ../../.stylelintrc.json"
   },
   "peerDependencies": {
-    "@angular/animations": "^17.0.0",
-    "@angular/cdk": "^17.0.0",
-    "@angular/common": "^17.0.0",
-    "@angular/core": "^17.0.0",
-    "@angular/material": "^17.0.0",
-    "@angular/forms": "^17.0.0",
-    "@angular/platform-browser": "^17.0.0"
+    "@angular/animations": "^20.1.0",
+    "@angular/cdk": "^20.1.0",
+    "@angular/common": "^20.1.0",
+    "@angular/core": "^20.1.0",
+    "@angular/material": "^20.1.0",
+    "@angular/forms": "^20.1.0",
+    "@angular/platform-browser": "^20.1.0",
+    "@angular/router": "^20.1.0",
+    "rxjs": "7.8.1"
   },
   "dependencies": {
     "lodash-es": "^4.17.21",
-    "tslib": "^2.6.2"
+    "tslib": "^2.8.1"
   },
   "publishConfig": {
     "access": "public"

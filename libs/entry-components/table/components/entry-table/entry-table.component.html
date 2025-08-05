@@ -72,9 +72,9 @@
             </ng-template>
           </ng-template>
           <ng-template #headerTpl>
-            <ng-template [ngIf]="headerTemplate && isTemplateRef(headerTemplate[col.field])"
+            <ng-template [ngIf]="headerTemplate && isTemplateRef(toTemplateIndex(headerTemplate, col.field))"
                           [ngIfElse]="defaultHeaderTpl">
-              <ng-template [ngTemplateOutlet]="headerTemplate[col.field]"
+              <ng-template [ngTemplateOutlet]="toTemplateIndex(headerTemplate, col.field)"
                             [ngTemplateOutletContext]="{ $implicit: col, colDef: col }">
               </ng-template>
             </ng-template>
@@ -98,9 +98,9 @@
           </ng-template>
         </ng-template>
         <ng-template #cellTpl>
-          <ng-template [ngIf]="cellTemplate && isTemplateRef(cellTemplate[col.field])"
+          <ng-template [ngIf]="cellTemplate && isTemplateRef(toTemplateIndex(cellTemplate, col.field))"
                         [ngIfElse]="colDefCellTpl">
-            <ng-template [ngTemplateOutlet]="cellTemplate[col.field]"
+            <ng-template [ngTemplateOutlet]="toTemplateIndex(cellTemplate, col.field)"
                           [ngTemplateOutletContext]="{ $implicit: row, rowData: row, index: getIndex(index, dataIndex), colDef: col }">
             </ng-template>
           </ng-template>
@@ -124,7 +124,7 @@
       [ngClass]="getRowClassList(row, getIndex(index, dataIndex))"
       [attr.tabindex]="rowFocusVisible ? 0 : -1"
       (click)="rowClick.emit(row)"
-      (keyup.enter)="rowClick.emit(row)">
+      (keydown.enter)="rowClick.emit(row)">
   </tr>
 </table>
 

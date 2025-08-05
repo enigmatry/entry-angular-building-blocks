@@ -26,7 +26,17 @@ These guides provides detailed steps for setting up and configuring theming with
 |15.x| = 15
 |16.x| = 16
 |17.x| = 17
+|18.x| = 18
+|19.x| = 19
+|20.x| = 20
 
 ## License
 
 Apache-2 © Enigmatry
+
+## Modules
+
+- [button/public-api](button/public-api.md)
+- [dialog/public-api](dialog/public-api.md)
+- [search-filter/public-api](search-filter/public-api.md)
+- [validation/public-api](validation/public-api.md)

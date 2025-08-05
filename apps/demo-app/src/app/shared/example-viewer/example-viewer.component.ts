@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy } from '@angular/core';
+import { Component, inject, Input, OnDestroy } from '@angular/core';
 import { Observable, Subject, forkJoin, of } from 'rxjs';
 import { catchError, map, takeUntil } from 'rxjs/operators';
 import { FileExtension } from '../models/file-extension.type';
@@ -14,7 +14,8 @@ interface IExtraFile {
 @Component({
   selector: 'app-example-viewer',
   templateUrl: './example-viewer.component.html',
-  styleUrls: ['./example-viewer.component.scss']
+  styleUrls: ['./example-viewer.component.scss'],
+  standalone: false
 })
 export class ExampleViewerComponent implements OnDestroy {
   @Input() component: string;
@@ -26,16 +27,14 @@ export class ExampleViewerComponent implements OnDestroy {
   @Input() extraFiles: string[] = [];
 
   viewCode = false;
-  typescriptFile: string;
-  htmlFile: string;
-  stylesFile: string;
-  docsFile: string;
+  typescriptFile: string | null;
+  htmlFile: string | null;
+  stylesFile: string | null;
+  docsFile: string | null;
   extraFilesToDisplay: IExtraFile[] = [];
 
   private _destroy$ = new Subject<void>();
-
-  constructor(
-    private _fileLoad: FileLoadService) { }
+  private readonly _fileLoad: FileLoadService = inject(FileLoadService);
 
   ngOnDestroy(): void {
     this._destroy$.next();
@@ -77,7 +76,7 @@ export class ExampleViewerComponent implements OnDestroy {
       .map(path => {
         const pathWithoutExtension = path.substring(0, path.lastIndexOf('.'));
         const extension = path.substring(path.lastIndexOf('.') + 1) as FileExtension;
-        const name = path.split('/').pop();
+        const name = path.split('/').pop() ?? '';
 
         return this.loadFile(pathWithoutExtension, extension)
           .pipe(map(fileContent => ({

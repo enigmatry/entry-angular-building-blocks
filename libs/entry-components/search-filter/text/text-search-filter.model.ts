@@ -1,5 +1,5 @@
-import { SearchFilterBase } from '../search-filter-base.model';
 import { ControlType } from '../control-type';
+import { SearchFilterBase } from '../search-filter-base.model';
 
 /**
  * Search filter text input filed configuration.

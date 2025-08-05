@@ -2,7 +2,7 @@ import { Overlay, OverlayConfig, OverlayContainer, OverlayRef } from '@angular/c
 import { TemplatePortal } from '@angular/cdk/portal';
 import {
   ChangeDetectionStrategy, Component,
-  ElementRef, Input, OnDestroy,
+  ElementRef, inject, Input, OnDestroy,
   OnInit, TemplateRef, ViewChild, ViewContainerRef
 } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
@@ -18,10 +18,10 @@ import { SpinnerOverlayContainer } from '../spinner-overlay-container';
       useClass: SpinnerOverlayContainer
     }
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false
 })
 export class EntrySpinnerComponent implements OnInit, OnDestroy {
-
   @Input() color: ThemePalette = 'primary';
   @Input() diameter = 30;
   @Input() fullscreen = false;
@@ -31,12 +31,10 @@ export class EntrySpinnerComponent implements OnInit, OnDestroy {
   private templateRef: TemplateRef<any>;
   private overlayRef: OverlayRef;
 
-  constructor(
-    private overlay: Overlay,
-    private viewContainerRef: ViewContainerRef,
-    private overlayContainer: OverlayContainer,
-    private elementRef: ElementRef<HTMLElement>) {
-  }
+  private readonly overlay = inject(Overlay);
+  private readonly viewContainerRef = inject(ViewContainerRef);
+  private readonly overlayContainer = inject(OverlayContainer);
+  private readonly elementRef = inject(ElementRef<HTMLElement>);
 
   ngOnInit(): void {
     this.createOverlay();

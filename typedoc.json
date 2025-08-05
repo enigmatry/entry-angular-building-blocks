@@ -14,10 +14,11 @@
         "libs/eslint-config"
     ],
     "logLevel": "Info",
+    "readme": "none",
     "outputFileStrategy": "modules",
     "propertiesFormat": "table",
     "hideGenerator": true,
     "hidePageHeader": true,
     "hideBreadcrumbs": true,
-    "hideInPageTOC": true
+    "excludeExternals": true
 }

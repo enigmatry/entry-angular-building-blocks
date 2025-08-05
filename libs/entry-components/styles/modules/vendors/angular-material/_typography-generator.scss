@@ -14,7 +14,7 @@
 
 @function -generate-typography-from($theme) {
 	$fonts: map.get($theme, 'general', 'fonts');
-	$typography: theming.define-typography-config();
+	$typography: theming.m2-define-typography-config();
 
 	$typography: -set-font-for('body', $typography, $fonts, ('body-1', 'body-2'));
 	$typography: -set-font-for('buttons', $typography, $fonts, ('button'));
@@ -83,6 +83,7 @@
 @function -set-text-groups-for($typography, $body-font, $buttons-font) {
 	$typography: -set-typography-group($typography, ('body-1', 'body-2', 'caption'), $body-font);
 	$typography: -set-typography-group($typography, ('button'), $buttons-font);
+
 	@return $typography;
 }
 
@@ -104,5 +105,6 @@
 
 @function -set-typography-font($typography, $section, $font) {
 	$typography: map.set($typography, $section, 'font-family', '"#{$font}"');
+
 	@return $typography;
 }

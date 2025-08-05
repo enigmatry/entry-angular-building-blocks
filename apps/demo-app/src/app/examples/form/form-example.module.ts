@@ -1,24 +1,25 @@
-import { NgModule } from '@angular/core';
+/* eslint-disable import/max-dependencies */
 import { CommonModule } from '@angular/common';
-import { FormExampleComponent } from './form-example/form-example.component';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SharedModule } from '../../shared/shared.module';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { FormlyAutocompleteModule } from '@enigmatry/entry-form/autocomplete';
+import { ENTRY_CKEDITOR_OPTIONS, FormlyCkeditorModule } from '@enigmatry/entry-form/ckeditor';
+import { FormlyDateTimePickerModule } from '@enigmatry/entry-form/date-time-picker';
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyMaterialModule } from '@ngx-formly/material';
 import { FormlyMatDatepickerModule } from '@ngx-formly/material/datepicker';
-import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
-import { FormlyAutocompleteModule } from '@enigmatry/entry-form/autocomplete';
+import { SharedModule } from '../../shared/shared.module';
+import { CheckboxExampleComponent } from './checkbox/checkbox-example.component';
+import { DateTimePickerExampleComponent } from './date-time-picker/date-time-picker-example.component';
+import { FormExampleComponent } from './form-example/form-example.component';
+import { ProductsGeneratedModule } from './form-example/generated/products-generated.module';
 import { InputExampleComponent } from './input/input-example.component';
+import { RadioExampleComponent } from './radio/radio-example.component';
+import { RichTextExampleComponent } from './rich-text/rich-text-example.component';
 import { SelectExampleComponent } from './select/select-example.component';
 import { TextareaExampleComponent } from './textarea/textarea-example.component';
-import { CheckboxExampleComponent } from './checkbox/checkbox-example.component';
-import { RadioExampleComponent } from './radio/radio-example.component';
-import { ProductsGeneratedModule } from './form-example/generated/products-generated.module';
-import { RichTextExampleComponent } from './rich-text/rich-text-example.component';
-import { ENTRY_CKEDITOR_OPTIONS, FormlyCkeditorModule } from '@enigmatry/entry-form/ckeditor';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { FormlyDateTimePickerModule } from '@enigmatry/entry-form/date-time-picker';
-import { DateTimePickerExampleComponent } from './date-time-picker/date-time-picker-example.component';
 
 @NgModule({
   declarations: [

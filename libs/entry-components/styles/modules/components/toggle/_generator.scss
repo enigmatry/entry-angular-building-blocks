@@ -8,13 +8,14 @@
 	}
 	$current-lightness: color.lightness($color);
 	$adjustment: if($current-lightness > 50%, -$percentage, $percentage);
+
 	@return color.adjust($color, $lightness: $adjustment);
 }
 
 @mixin generate-from($theme) {
 	$enabled-states: 'enabled', 'enabled:focus:not(:active)', 'enabled:active', 'enabled:hover:not(:focus):not(:active)';
 	$handle-selector: '.mdc-switch__handle::after';
-	
+
 	$toggle: map.get($theme, 'general', 'toggle');
 	$handle-on-background: map.get($toggle, 'on', 'background');
 	$handle-off-background: map.get($toggle, 'off', 'background');
@@ -35,7 +36,7 @@
 						&::after {
 							background-color: -adjust-lightness($handle-on-background);
 						}
-					
+
 						&::before {
 							background-color: -adjust-lightness($handle-off-background);
 						}

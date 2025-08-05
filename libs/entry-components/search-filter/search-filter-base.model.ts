@@ -20,7 +20,8 @@ export class SearchFilterBase<T> {
   /** Max text length to be entered in the input component (default is 256) */
   maxLength: number;
   /** A reference to the form control it represents */
-  formControl: FormControl<T>;
+  formControl: FormControl<T | undefined>;
+  private readonly maxPossibleLength = 256;
 
   constructor(options: Partial<SearchFilterBase<T>> = {}) {
     this.value = options.value;
@@ -29,7 +30,7 @@ export class SearchFilterBase<T> {
     this.placeholder = options.placeholder || '';
     this.controlType = options.controlType || ControlType.text;
     this.type = options.type || ControlType.text;
-    this.maxLength = options.maxLength || 256;
+    this.maxLength = options.maxLength || this.maxPossibleLength;
   }
 
   setValue(value: T | undefined) {
@@ -39,7 +40,7 @@ export class SearchFilterBase<T> {
     }
   }
 
-  toFormControl(): FormControl<T> {
-    return new FormControl<T>(this.value);
+  toFormControl(): FormControl<T | null | undefined> {
+    return new FormControl<T | undefined>(this.value);
   }
 }

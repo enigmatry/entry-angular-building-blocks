@@ -1,9 +1,15 @@
+$datepicker-field-error: '.date-time-search-field .mat-mdc-form-field-subscript-dynamic-size .mat-mdc-form-field-error-wrapper';
+
 .search-filter {
 	display: block;
 	padding-bottom: 20px;
 	overflow: auto;
 
 	.mat-mdc-form-field {
-		width: 212px;
+		width: 225px;
+	}
+
+	#{$datepicker-field-error} {
+		position: absolute;
 	}
 }

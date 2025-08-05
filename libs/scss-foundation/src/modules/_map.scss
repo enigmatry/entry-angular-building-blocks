@@ -5,7 +5,6 @@
 @use 'variables' as vars;
 
 @function value-from($object, $path) {
-
 	@if meta.type-of($object) != map {
 		@return -error('Please provide valid object! Given value: ' + $object);
 	}
@@ -22,7 +21,7 @@
 		@if (map.has-key($result, $key) == false) {
 			@return -error('Path segment must be any of following values: ' + map.keys($result) + '. Given path segment: ' + $key);
 		}
-        
+
 		$result: map.get($result, $key);
 	}
 
@@ -32,6 +31,7 @@
 @function -split($string, $separator: '.') {
 	$result: ();
 	$current-index: string.index($string, $separator);
+
 	@while $current-index != null {
 		$key: string.slice($string, 1, $current-index - 1);
 		$result: list.append($result, $key);

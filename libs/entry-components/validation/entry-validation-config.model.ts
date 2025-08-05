@@ -53,6 +53,5 @@ export const ENTRY_VALIDATION_CONFIG = createInjectionToken(new EntryValidationC
 /**
  * Can be used to provide entry validation configuration.
  */
-export function provideEntryValidationConfig(config: Partial<EntryValidationConfig>): Provider {
-    return provideConfig(ENTRY_VALIDATION_CONFIG, () => new EntryValidationConfig(config));
-}
+export const provideEntryValidationConfig = (config: Partial<EntryValidationConfig>): Provider =>
+    provideConfig(ENTRY_VALIDATION_CONFIG, () => new EntryValidationConfig(config));

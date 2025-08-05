@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
-import { SharedModule } from '../../shared/shared.module';
 import { CommonExampleModule } from '../../examples/common/common-example.module';
+import { SharedModule } from '../../shared/shared.module';
 
 @Component({
-  standalone: true,
-  templateUrl: './common-documentation.component.html',
-  imports: [
-    SharedModule,
-    CommonExampleModule
-  ]
+    templateUrl: './common-documentation.component.html',
+    imports: [
+        SharedModule,
+        CommonExampleModule
+    ]
 })
 export class CommonDocumentationComponent {
 }

@@ -1,15 +1,15 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatMenuPanel } from '@angular/material/menu';
-import { RowContextMenuFormatter } from '../../interfaces/row-context-menu-formatter';
 import { ContextMenuItem } from '../../interfaces/context-menu-item';
+import { RowContextMenuFormatter } from '../../interfaces/row-context-menu-formatter';
 
 @Component({
-  selector: 'entry-cell-context-menu',
-  templateUrl: './entry-cell-context-menu.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'entry-cell-context-menu',
+    templateUrl: './entry-cell-context-menu.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class EntryCellContextMenuComponent implements OnInit {
-
   @Input() items: ContextMenuItem[] = [];
   @Input() rowMenuFormatter: RowContextMenuFormatter;
   @Input() rowData: any;

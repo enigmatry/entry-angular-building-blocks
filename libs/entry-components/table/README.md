@@ -102,9 +102,12 @@ export class EntryComponentsModule { }
 | @enigmatry/entry-components | Angular version |
 | --------------------------- | --------------- |
 | 1.14.x                      | = 14            |
-| 15.x                      | = 15            |
-| 16.x                      | = 16            |
-| 17.x                      | = 17            |
+| 15.x                        | = 15            |
+| 16.x                        | = 16            |
+| 17.x                        | = 17            |
+| 18.x                        | = 18            |
+| 19.x                        | = 19            |
+| 20.x                        | = 20            |
 
 ## License
 

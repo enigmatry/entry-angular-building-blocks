@@ -1,7 +1,7 @@
 import { TemplateRef } from '@angular/core';
 import { ColumnSortProp } from './column-sort-prop';
-import { ColumnTypeParameter } from './column-type-parameter';
 import { ColumnType } from './column-type';
+import { ColumnTypeParameter } from './column-type-parameter';
 
 
 export interface ColumnDef {

@@ -10,7 +10,7 @@
       "prefix": "entry",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "builder": "@angular/build:ng-packagr",
           "options": {
             "project": "libs/entry-form/ng-package.json"
           },
@@ -23,15 +23,6 @@
             }
           },
           "defaultConfiguration": "production"
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/entry-form/**/*.ts",
-              "libs/entry-form/**/*.html"
-            ]
-          }
         }
       }
     },
@@ -42,7 +33,7 @@
       "prefix": "entry",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "builder": "@angular/build:ng-packagr",
           "options": {
             "project": "libs/entry-components/ng-package.json"
           },
@@ -55,15 +46,6 @@
             }
           },
           "defaultConfiguration": "production"
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/entry-components/**/*.ts",
-              "libs/entry-components/**/*.html"
-            ]
-          }
         }
       }
     },
@@ -82,12 +64,15 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular/build:application",
           "options": {
-            "outputPath": "dist/enigmatry/apps/demo-app",
+            "outputPath": {
+              "base": "dist/enigmatry/apps/demo-app"
+            },
             "index": "apps/demo-app/src/index.html",
-            "main": "apps/demo-app/src/main.ts",
-            "polyfills": "apps/demo-app/src/polyfills.ts",
+            "polyfills": [
+              "apps/demo-app/src/polyfills.ts"
+            ],
             "tsConfig": "apps/demo-app/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -115,7 +100,8 @@
                 "libs"
               ]
             },
-            "scripts": []
+            "scripts": [],
+            "browser": "apps/demo-app/src/main.ts"
           },
           "configurations": {
             "production": {
@@ -140,9 +126,7 @@
               "outputHashing": "all"
             },
             "development": {
-              "buildOptimizer": false,
               "optimization": false,
-              "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
@@ -151,7 +135,7 @@
           "defaultConfiguration": "production"
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+          "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
               "buildTarget": "@enigmatry/demo-app:build:production"
@@ -163,27 +147,12 @@
           "defaultConfiguration": "development"
         },
         "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "builder": "@angular/build:extract-i18n",
           "options": {
             "buildTarget": "@enigmatry/demo-app:build"
-          }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "apps/demo-app/**/*.ts",
-              "apps/demo-app/**/*.html"
-            ]
           }
         }
       }
     }
-  },
-  "cli": {
-    "schematicCollections": [
-      "@angular-eslint/schematics"
-    ],
-    "analytics": false
   }
 }

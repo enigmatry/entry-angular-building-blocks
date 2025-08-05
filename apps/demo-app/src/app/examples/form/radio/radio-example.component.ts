@@ -3,11 +3,11 @@ import { FormlyFieldConfig } from '@ngx-formly/core';
 import { of } from 'rxjs';
 
 @Component({
-  selector: 'app-radio-example',
-  templateUrl: './radio-example.component.html'
+    selector: 'app-radio-example',
+    templateUrl: './radio-example.component.html',
+    standalone: false
 })
 export class RadioExampleComponent {
-
   @Input() typeOptions = [
     { value: 0, displayName: `Food` },
     { value: 1, displayName: `Drink` },
@@ -27,7 +27,7 @@ export class RadioExampleComponent {
         options: of(this.typeOptions),
         valueProp: 'value',
         labelProp: 'displayName'
-      },
-    },
+      }
+    }
   ];
 }

@@ -38,6 +38,5 @@ export const ENTRY_BUTTON_CONFIG = createInjectionToken(new EntryButtonConfig())
 /**
  * Can be used to provide custom button configuration.
  */
-export function provideEntryButtonConfig(config: Partial<EntryButtonConfig>): Provider {
-  return provideConfig(ENTRY_BUTTON_CONFIG, () => new EntryButtonConfig(config));
-}
+export const provideEntryButtonConfig = (config: Partial<EntryButtonConfig>): Provider =>
+  provideConfig(ENTRY_BUTTON_CONFIG, () => new EntryButtonConfig(config));

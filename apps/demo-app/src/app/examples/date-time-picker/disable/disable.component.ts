@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
-  selector: 'app-date-picker-disable',
-  templateUrl: './disable.component.html'
+    selector: 'app-date-picker-disable',
+    templateUrl: './disable.component.html',
+    standalone: false
 })
 export class DisableComponent {
   disabled: boolean;
@@ -11,6 +12,10 @@ export class DisableComponent {
   anotherDateTime = new Date();
 
   setDisabled(disabled: boolean) {
-    disabled ? this.dateTime.disable() : this.dateTime.enable();
+    if (disabled) {
+      this.dateTime.disable();
+    } else {
+      this.dateTime.enable();
+    }
   }
 }

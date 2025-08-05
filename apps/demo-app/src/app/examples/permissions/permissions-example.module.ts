@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PermissionsExampleComponent } from './permissions-example/permissions-example.component';
+import { NgModule } from '@angular/core';
 import { EntryPermissionModule, EntryPermissionService } from '@enigmatry/entry-components/permissions';
 import { PermissionExampleService } from './permissions-example/permission.service';
+import { PermissionsExampleComponent } from './permissions-example/permissions-example.component';
 
 @NgModule({
   declarations: [

@@ -3,9 +3,10 @@ import { UntypedFormGroup } from '@angular/forms';
 import { TextSearchFilter } from './text-search-filter.model';
 
 @Component({
-  selector: 'entry-text-search-filter',
-  templateUrl: './text-search-filter.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'entry-text-search-filter',
+    templateUrl: './text-search-filter.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class TextSearchFilterComponent {
   @Input() searchFilter: TextSearchFilter;

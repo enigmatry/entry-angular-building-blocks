@@ -1,18 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { IComponentDefinition, COMPONENT_DEFINITIONS } from './features/component-definitions';
+import { Component, inject, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { IComponentDefinition, COMPONENT_DEFINITIONS } from './features/component-definitions';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    standalone: false
 })
 export class AppComponent implements OnInit {
   menuItems = COMPONENT_DEFINITIONS;
   selectedMenuItem: IComponentDefinition | undefined = undefined;
-
-  constructor(private router: Router) { }
+  private readonly router: Router = inject(Router);
 
   ngOnInit(): void {
     this.router.events

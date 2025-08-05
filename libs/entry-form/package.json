@@ -10,19 +10,23 @@
   },
   "license": "Apache-2.0",
   "peerDependencies": {
-    "@angular/animations": "^17.0.0",
-    "@angular/cdk": "^17.0.0",
-    "@angular/common": "^17.0.0",
-    "@angular/core": "^17.0.0",
-    "@angular/material": "^17.0.0",
-    "@angular/forms": "^17.0.0",
-    "@angular/platform-browser": "^17.0.0",
-    "@ngx-formly/core": "^6.3.0",
-    "@ngx-formly/material": "^6.3.0",
+    "@angular/animations": "^20.1.0",
+    "@angular/cdk": "^20.1.0",
+    "@angular/common": "^20.1.0",
+    "@angular/core": "^20.1.0",
+    "@angular/material": "^20.1.0",
+    "@angular/forms": "^20.1.0",
+    "@angular/platform-browser": "^20.1.0",
+    "@ngx-formly/core": "^7.0.0",
+    "@ngx-formly/material": "^7.0.0",
+    "rxjs": "7.8.1",
     "@enigmatry/entry-components": "0.0.0-PLACEHOLDER"
   },
   "dependencies": {
-    "tslib": "^2.6.2"
+    "tslib": "^2.8.1"
+  },
+  "devDependencies": {
+    "@ckeditor/ckeditor5-angular": "^5.2.0"
   },
   "publishConfig": {
     "access": "public"
