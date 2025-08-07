@@ -1,7 +1,22 @@
 @use 'sass:map';
 
+/* stylelint-disable-next-line @stylistic/max-line-length */
+$focused-label: '.mat-mdc-form-field .mdc-text-field--filled:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-floating-label, .mat-mdc-form-field .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-floating-label';
+
+/* stylelint-disable-next-line @stylistic/max-line-length */
+$disabled-field: '.mat-mdc-form-field .mdc-text-field--filled.mdc-text-field--disabled, .mat-mdc-form-field .mdc-text-field--outlined.mdc-text-field--disabled';
+
+/* stylelint-disable-next-line @stylistic/max-line-length */
+$disabled-outline-border: '.mdc-notched-outline .mdc-notched-outline__leading, .mdc-notched-outline .mdc-notched-outline__notch, .mdc-notched-outline .mdc-notched-outline__trailing';
+
 @mixin generate-from($theme) {
 	$input-background: map.get($theme, 'general', 'inputs', 'background');
+	$input-hover-background: map.get($theme, 'general', 'inputs', 'hover-background');
+	$label-focus-color: map.get($theme, 'general', 'inputs', 'label-focus-color');
+	$arrow-focus-color: map.get($theme, 'general', 'inputs', 'arrow-focus-color');
+	$disabled-color: map.get($theme, 'general', 'inputs', 'disabled', 'color');
+	$disabled-background: map.get($theme, 'general', 'inputs', 'disabled', 'background-color');
+	$disabled-border: map.get($theme, 'general', 'inputs', 'disabled', 'border-color');
 
 	@if $input-background {
 		.mat-mdc-form-field .mat-mdc-text-field-wrapper.mdc-text-field {
@@ -9,6 +24,48 @@
 
 			&.mdc-text-field--outlined {
 				border-radius: 4px;
+			}
+		}
+	}
+
+	@if $input-hover-background {
+		.mat-mdc-form-field .mat-mdc-form-field-focus-overlay {
+			background-color: $input-hover-background;
+		}
+	}
+
+	@if $label-focus-color {
+		#{$focused-label} {
+			color: $label-focus-color;
+		}
+	}
+
+	@if $arrow-focus-color {
+		.mat-mdc-form-field.mat-focused .mat-mdc-select-arrow-wrapper .mat-mdc-select-arrow {
+			color: $arrow-focus-color;
+		}
+	}
+
+	@if $disabled-color or $disabled-background or $disabled-border {
+		#{$disabled-field} {
+			@if $disabled-background {
+				background-color: $disabled-background;
+			}
+
+			@if $disabled-color {
+				.mdc-floating-label {
+					color: $disabled-color;
+				}
+			}
+
+			@if $disabled-border {
+				.mdc-line-ripple::before {
+					border-bottom-color: $disabled-border;
+				}
+
+				#{$disabled-outline-border} {
+					border-color: $disabled-border;
+				}
 			}
 		}
 	}
