@@ -2,9 +2,9 @@
 @use 'radio';
 
 @mixin generate-from($theme) {
-	.entry-button.mdc-button:disabled {
-		background-color: map.get($theme, 'general', 'colors', 'disabled', 'background');
-		color: map.get($theme, 'general', 'colors', 'disabled', 'foreground');
+	.mdc-button.mat-mdc-button-base.mat-mdc-button-disabled {
+		background-color: map.get($theme, 'general', 'buttons', 'disabled', 'background');
+		color: map.get($theme, 'general', 'buttons', 'disabled', 'foreground');
 	}
 
 	@include radio.generate-from($theme);

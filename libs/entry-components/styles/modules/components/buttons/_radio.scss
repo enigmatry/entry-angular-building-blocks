@@ -5,13 +5,31 @@ $radio-circles-selector: '.mdc-radio__outer-circle, .mdc-radio__inner-circle';
 
 @mixin generate-from($theme) {
 	$radio-border: map.get($theme, 'general', 'buttons', 'radio', 'background');
+	$disabled-border-color: map.get($theme, 'general', 'buttons', 'radio', 'disabled', 'border-color');
+	$disabled-color: map.get($theme, 'general', 'buttons', 'radio', 'disabled', 'color');
 
 	@if $radio-border {
 		.mat-mdc-radio-group .mat-mdc-radio-button.mat-mdc-radio-checked .mdc-radio {
-				
-			&:not(:disabled):active #{$radio-selector}, #{$radio-selector} {
+			&:not(:disabled):active #{$radio-selector},
+			#{$radio-selector} {
 				#{$radio-circles-selector} {
 					border-color: $radio-border;
+				}
+			}
+		}
+	}
+
+	@if $disabled-border-color or $disabled-color {
+		.mat-mdc-radio-button.mat-mdc-radio-disabled {
+			#{$radio-circles-selector} {
+				@if $disabled-border-color {
+					border-color: $disabled-border-color;
+				}
+			}
+
+			.mdc-label {
+				@if $disabled-color {
+					color: $disabled-color;
 				}
 			}
 		}

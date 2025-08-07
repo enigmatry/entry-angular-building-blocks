@@ -6,6 +6,8 @@ $checkbox-selector: '.mdc-checkbox__native-control:enabled:not(:checked):not(:in
 @mixin generate-from($theme) {
 	$background: map.get($theme, 'general', 'checkboxes', 'background');
 	$border-hover-color: map.get($theme, 'general', 'checkboxes', 'border-hover-color');
+	$disabled-color: map.get($theme, 'general', 'checkboxes', 'disabled', 'color');
+	$disabled-border-color: map.get($theme, 'general', 'checkboxes', 'disabled', 'border-color');
 
 	@if $background or $border-hover-color {
 		.mat-mdc-checkbox {
@@ -25,6 +27,24 @@ $checkbox-selector: '.mdc-checkbox__native-control:enabled:not(:checked):not(:in
 							background-color: $background;
 						}
 					}
+				}
+			}
+		}
+	}
+
+	@if $disabled-color or $disabled-border-color {
+		.mat-mdc-checkbox.mdc-checkbox--disabled {
+			.mdc-checkbox__background {
+				/* stylelint-disable-next-line max-nesting-depth */
+				@if $disabled-border-color {
+					border-color: $disabled-border-color;
+				}
+			}
+
+			.mdc-label {
+				/* stylelint-disable-next-line max-nesting-depth */
+				@if $disabled-color {
+					color: $disabled-color;
 				}
 			}
 		}
