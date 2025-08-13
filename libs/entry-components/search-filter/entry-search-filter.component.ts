@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormGroup } from '@angular/forms';
 import { AutocompleteSearchFilter } from './autocomplete/autocomplete-search-filter.model';
 import { ControlType } from './control-type';
@@ -10,7 +11,6 @@ import { SearchFilterParams } from './search-filter-params.type';
 import { SelectSearchFilter } from './select/select-search-filter.model';
 import { SelectOption } from './select-option.model';
 import { TextSearchFilter } from './text/text-search-filter.model';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 /**
  * Entry SearchFilter component.
@@ -66,7 +66,8 @@ export class EntrySearchFilterComponent implements OnInit {
 
   asSelectSearchFilter = <T>(searchFilter: SearchFilterBase<T>): SelectSearchFilter<T> => searchFilter as SelectSearchFilter<T>;
 
-  asAutocompleteSearchFilter = <T>(searchFilter: SearchFilterBase<SelectOption<T>>): AutocompleteSearchFilter<T> => searchFilter as AutocompleteSearchFilter<T>;
+  asAutocompleteSearchFilter = <T>(searchFilter: SearchFilterBase<SelectOption<T>>): AutocompleteSearchFilter<T> =>
+    searchFilter as AutocompleteSearchFilter<T>;
 
   asDateTimeSearchFilter = <T>(searchFilter: SearchFilterBase<T>): DateTimeSearchFilter<T> => searchFilter as DateTimeSearchFilter<T>;
 

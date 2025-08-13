@@ -17,7 +17,7 @@ Used to provide button configuration on module or application level.
 
 ### ENTRY\_BUTTON\_CONFIG
 
-> `const` **ENTRY\_BUTTON\_CONFIG**: `InjectionToken`\<[`EntryButtonConfig`](public-api.md#entrybuttonconfig)\>
+> `const` **ENTRY\_BUTTON\_CONFIG**: `InjectionToken`\<[`EntryButtonConfig`](#entrybuttonconfig)\>
 
 Entry button config injection token.
 
@@ -37,7 +37,7 @@ Can be used to provide custom button configuration.
 
 ##### config
 
-`Partial`\<[`EntryButtonConfig`](public-api.md#entrybuttonconfig)\>
+`Partial`\<[`EntryButtonConfig`](#entrybuttonconfig)\>
 
 #### Returns
 

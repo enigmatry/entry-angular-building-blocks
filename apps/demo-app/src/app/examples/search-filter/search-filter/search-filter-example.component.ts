@@ -26,7 +26,7 @@ export class SearchFilterExampleComponent {
 
   users: Array<User>;
   displayedColumns: string[] = ['name', 'email', 'dateOfBirth', 'occupation', 'country', 'score'];
-  filters: SearchFilterBase<unknown>[] = [];
+  filters: SearchFilterBase<any>[] = [];
   private readonly usersService: UsersService = inject(UsersService);
   private readonly locale: string = inject(LOCALE_ID);
 
@@ -53,7 +53,7 @@ export class SearchFilterExampleComponent {
   }
 
   // eslint-disable-next-line max-lines-per-function
-  private createSearchFilters(): SearchFilterBase<unknown>[] {
+  private createSearchFilters(): SearchFilterBase<any>[] {
     return [
       new TextSearchFilter({
         key: 'name',
