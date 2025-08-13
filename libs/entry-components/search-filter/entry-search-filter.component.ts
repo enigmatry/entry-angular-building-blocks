@@ -47,6 +47,13 @@ export class EntrySearchFilterComponent implements OnInit {
       const formControl = searchFilter.toFormControl();
       group[searchFilter.key] = formControl;
       searchFilter.formControl = formControl;
+
+      if (searchFilter.formatValue) {
+        formControl.valueChanges.subscribe(value => {
+          const formatted = searchFilter.formatValue?.(value);
+          formControl.setValue(formatted, { emitEvent: false });
+        });
+      }
     });
     return new UntypedFormGroup(group);
   };
