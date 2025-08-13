@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { AutocompleteSearchFilter } from './autocomplete/autocomplete-search-filter.model';
 import { ControlType } from './control-type';
 import { DateSearchFilter } from './date/date-search-filter.model';
@@ -20,7 +21,7 @@ import { TextSearchFilter } from './text/text-search-filter.model';
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
-export class EntrySearchFilterComponent implements OnInit {
+export class EntrySearchFilterComponent implements OnInit, OnDestroy {
   /** Configuration of the search filters inputs that will be displayed in the search-filter component. */
   @Input() searchFilters: SearchFilterBase<any>[] = [];
   /**
@@ -31,9 +32,16 @@ export class EntrySearchFilterComponent implements OnInit {
   searchFilterForm!: UntypedFormGroup;
   controlType = ControlType;
   readonly config: EntrySearchFilterConfig = inject(ENTRY_SEARCH_FILTER_CONFIG);
+  private _valueChangeSubscription: Subscription | undefined;
 
   ngOnInit() {
     this.searchFilterForm = this.toFormGroup(this.searchFilters);
+  }
+
+  ngOnDestroy(): void {
+    if (this._valueChangeSubscription) {
+      this._valueChangeSubscription.unsubscribe();
+    }
   }
 
   onSubmit() {
@@ -49,7 +57,7 @@ export class EntrySearchFilterComponent implements OnInit {
       searchFilter.formControl = formControl;
 
       if (searchFilter.formatValue) {
-        formControl.valueChanges.subscribe(value => {
+        this._valueChangeSubscription = formControl.valueChanges.subscribe(value => {
           const formatted = searchFilter.formatValue?.(value);
           formControl.setValue(formatted, { emitEvent: false });
         });
