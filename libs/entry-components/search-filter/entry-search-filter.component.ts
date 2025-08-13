@@ -1,6 +1,5 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
-import { Subscription } from 'rxjs';
 import { AutocompleteSearchFilter } from './autocomplete/autocomplete-search-filter.model';
 import { ControlType } from './control-type';
 import { DateSearchFilter } from './date/date-search-filter.model';
@@ -11,6 +10,7 @@ import { SearchFilterParams } from './search-filter-params.type';
 import { SelectSearchFilter } from './select/select-search-filter.model';
 import { SelectOption } from './select-option.model';
 import { TextSearchFilter } from './text/text-search-filter.model';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 /**
  * Entry SearchFilter component.
@@ -21,7 +21,7 @@ import { TextSearchFilter } from './text/text-search-filter.model';
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
-export class EntrySearchFilterComponent implements OnInit, OnDestroy {
+export class EntrySearchFilterComponent implements OnInit {
   /** Configuration of the search filters inputs that will be displayed in the search-filter component. */
   @Input() searchFilters: SearchFilterBase<any>[] = [];
   /**
@@ -32,16 +32,10 @@ export class EntrySearchFilterComponent implements OnInit, OnDestroy {
   searchFilterForm!: UntypedFormGroup;
   controlType = ControlType;
   readonly config: EntrySearchFilterConfig = inject(ENTRY_SEARCH_FILTER_CONFIG);
-  private _valueChangeSubscription: Subscription | undefined;
+  private _destroyRef = inject(DestroyRef);
 
   ngOnInit() {
     this.searchFilterForm = this.toFormGroup(this.searchFilters);
-  }
-
-  ngOnDestroy(): void {
-    if (this._valueChangeSubscription) {
-      this._valueChangeSubscription.unsubscribe();
-    }
   }
 
   onSubmit() {
@@ -57,10 +51,12 @@ export class EntrySearchFilterComponent implements OnInit, OnDestroy {
       searchFilter.formControl = formControl;
 
       if (searchFilter.formatValue) {
-        this._valueChangeSubscription = formControl.valueChanges.subscribe(value => {
-          const formatted = searchFilter.formatValue?.(value);
-          formControl.setValue(formatted, { emitEvent: false });
-        });
+        formControl.valueChanges
+          .pipe(takeUntilDestroyed(this._destroyRef))
+          .subscribe(value => {
+            const formatted = searchFilter.formatValue?.(value);
+            formControl.setValue(formatted, { emitEvent: false });
+          });
       }
     });
     return new UntypedFormGroup(group);
@@ -76,3 +72,4 @@ export class EntrySearchFilterComponent implements OnInit, OnDestroy {
 
   asDateSearchFilter = <T>(searchFilter: SearchFilterBase<T>): DateSearchFilter<T> => searchFilter as DateSearchFilter<T>;
 }
+

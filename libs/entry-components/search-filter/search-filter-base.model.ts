@@ -22,7 +22,7 @@ export class SearchFilterBase<T> {
   /** A reference to the form control it represents */
   formControl: FormControl<T | undefined>;
   /** Optional function to format the value before displaying it in the input control */
-  formatValue: undefined | ((value: T) => T);
+  formatValue: ((value: T) => T) | undefined;
 
   private readonly maxPossibleLength = 256;
 
