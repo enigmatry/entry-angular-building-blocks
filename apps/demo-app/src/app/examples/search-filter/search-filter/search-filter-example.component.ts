@@ -1,4 +1,4 @@
-import { Component, inject, ViewChild } from '@angular/core';
+import { Component, inject, LOCALE_ID, ViewChild } from '@angular/core';
 import { IValidationProblemDetails, setServerSideValidationErrors } from '@enigmatry/entry-components';
 import {
   AutocompleteSearchFilter,
@@ -25,9 +25,10 @@ export class SearchFilterExampleComponent {
   @ViewChild(EntrySearchFilterComponent, { static: true }) entrySearchFilterComponent: EntrySearchFilterComponent;
 
   users: Array<User>;
-  displayedColumns: string[] = ['name', 'email', 'dateOfBirth', 'occupation', 'country'];
+  displayedColumns: string[] = ['name', 'email', 'dateOfBirth', 'occupation', 'country', 'score'];
   filters: SearchFilterBase<unknown>[] = [];
   private readonly usersService: UsersService = inject(UsersService);
+  private readonly locale: string = inject(LOCALE_ID);
 
   constructor() {
     this.fetchUsers({}).subscribe();
@@ -67,8 +68,7 @@ export class SearchFilterExampleComponent {
         multiSelect: true,
         options: Object.values(Occupation)
           .filter(value => typeof value === 'number')
-          .map((value: number) => new SelectOption(
-            value, Occupation[value].replace(/^[a-z]/u, x => x.toUpperCase())))
+          .map((value: number) => new SelectOption(value, Occupation[value].replace(/^[a-z]/u, x => x.toUpperCase())))
       }),
       new SelectSearchFilter({
         key: 'username',
@@ -93,7 +93,26 @@ export class SearchFilterExampleComponent {
         key: 'dateOfBirth',
         label: 'Born after',
         placeholder: 'Born after'
+      }),
+      new TextSearchFilter({
+        key: 'score',
+        label: 'Score',
+        placeholder: 'Decimal score',
+        maxLength: 5,
+        formatValue: this.maskDecimalScore
       })
     ];
+  }
+
+  private maskDecimalScore(value: string): string {
+    const exampleDecimalValue = 1.1;
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    const validSeparator = exampleDecimalValue.toLocaleString(this.locale).substring(1, 2);
+    const wrongSeparator = validSeparator === ',' ? '.' : ',';
+    return value
+      .replace(wrongSeparator, validSeparator)
+      .replace(/[^0-9.,]/gu, '')
+      .replace(/,/gu, '.')
+      .replace(/^0+/u, ''); // Remove leading zeros
   }
 }

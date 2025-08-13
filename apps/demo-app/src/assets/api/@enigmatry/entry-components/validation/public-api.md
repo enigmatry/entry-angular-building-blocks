@@ -90,7 +90,7 @@ Used to provide default configurations on module level.
 
 | Property | Type | Description | Defined in |
 | ------ | ------ | ------ | ------ |
-| <a id="validationmessages"></a> `validationMessages` | [`IEntryValidationMessage`](#ientryvalidationmessage)[] | Validation key to message configuration on module level. Used to configure client side validation messages for standard validators (_required_, _minLength_, _email_, etc.). **NOTE:** If using _Formly_ package to render forms, this configuration should not be used. Instead, use `FormlyModule` to configure validation messages. **Example** `new EntryValidationConfig() { validationMessages: [ { name: 'required': message: 'This field is mandatory' }, { name: 'minlength', message: (control: AbstractControl) => `Minimal length is ${control.errors.minlength.requiredLength}`} ] }` |  |
+| <a id="validationmessages"></a> `validationMessages` | [`IEntryValidationMessage`](public-api.md#ientryvalidationmessage)[] | Validation key to message configuration on module level. Used to configure client side validation messages for standard validators (_required_, _minLength_, _email_, etc.). **NOTE:** If using _Formly_ package to render forms, this configuration should not be used. Instead, use `FormlyModule` to configure validation messages. **Example** `new EntryValidationConfig() { validationMessages: [ { name: 'required': message: 'This field is mandatory' }, { name: 'minlength', message: (control: AbstractControl) => `Minimal length is ${control.errors.minlength.requiredLength}`} ] }` |  |
 
 ## Interfaces
 
@@ -115,7 +115,7 @@ Defines the api used as a container for server side validation errors.
 
 ### ENTRY\_VALIDATION\_CONFIG
 
-> `const` **ENTRY\_VALIDATION\_CONFIG**: `InjectionToken`\<[`EntryValidationConfig`](#entryvalidationconfig)\>
+> `const` **ENTRY\_VALIDATION\_CONFIG**: `InjectionToken`\<[`EntryValidationConfig`](public-api.md#entryvalidationconfig)\>
 
 Entry validation injection token of EntryValidationConfig type containing validation default configurations.
 Can be updated with custom configuration.
@@ -151,7 +151,7 @@ Can be used to provide entry validation configuration.
 
 ##### config
 
-`Partial`\<[`EntryValidationConfig`](#entryvalidationconfig)\>
+`Partial`\<[`EntryValidationConfig`](public-api.md#entryvalidationconfig)\>
 
 #### Returns
 
@@ -170,7 +170,7 @@ The errors are applied to multiple levels: form, form group, form array, and for
 
 ##### error
 
-[`IValidationProblemDetails`](#ivalidationproblemdetails)
+[`IValidationProblemDetails`](public-api.md#ivalidationproblemdetails)
 
 Server side validation errors response.
 
