@@ -53,6 +53,10 @@ export class UsersService {
       users = users.filter(x => x.dateOfBirth >= searchParams.dateOfBirth);
     }
 
+    if (!this.noFilterParam(searchParams, 'score')) {
+      users = users.filter(x => x.score === searchParams['score']);
+    }
+
     return of(users);
   }
 
