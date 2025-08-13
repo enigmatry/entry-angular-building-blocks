@@ -1,3 +1,5 @@
+/* eslint-disable max-lines */
+/* eslint-disable @typescript-eslint/no-magic-numbers */
 enum Occupation {
     unknown = 0,
     electrician = 1,
@@ -33,14 +35,15 @@ enum Country {
 }
 
 interface User {
-    id?: string;
-    userName?: string;
-    firstName?: string;
-    lastName?: string;
-    dateOfBirth?: Date;
+    id: string;
+    userName: string;
+    firstName: string;
+    lastName: string;
+    dateOfBirth: Date;
     occupation: Occupation;
-    lastLogin?: Date;
-    country?: Country;
+    lastLogin: Date;
+    country: Country;
+    score: string;
 }
 
 const LIST_OF_USERS: User[] = [
@@ -52,7 +55,8 @@ const LIST_OF_USERS: User[] = [
         dateOfBirth: new Date(1992, 3, 3),
         occupation: Occupation.electrician,
         lastLogin: new Date(),
-        country: Country.netherlands
+        country: Country.netherlands,
+        score: '4.50'
     },
     {
         id: '2',
@@ -62,7 +66,8 @@ const LIST_OF_USERS: User[] = [
         dateOfBirth: new Date(1985, 5, 26),
         occupation: Occupation.unknown,
         lastLogin: new Date(),
-        country: Country.serbia
+        country: Country.serbia,
+        score: '3.75'
     },
     {
         id: '3',
@@ -72,7 +77,8 @@ const LIST_OF_USERS: User[] = [
         dateOfBirth: new Date(1977, 9, 14),
         occupation: Occupation.baker,
         lastLogin: new Date(),
-        country: Country.argentina
+        country: Country.argentina,
+        score: '4.20'
     },
     {
         id: '4',
@@ -82,7 +88,8 @@ const LIST_OF_USERS: User[] = [
         dateOfBirth: new Date(2000, 2, 8),
         occupation: Occupation.plumber,
         lastLogin: new Date(),
-        country: Country.netherlands
+        country: Country.netherlands,
+        score: '3.90'
     },
     {
         id: '5',
@@ -92,7 +99,8 @@ const LIST_OF_USERS: User[] = [
         dateOfBirth: new Date(1965, 11, 11),
         occupation: Occupation.teacher,
         lastLogin: new Date(),
-        country: Country.india
+        country: Country.india,
+        score: '0.80'
     },
     {
         id: '6',
@@ -102,7 +110,8 @@ const LIST_OF_USERS: User[] = [
         dateOfBirth: new Date(1996, 7, 22),
         occupation: Occupation.baker,
         lastLogin: new Date(),
-        country: Country.unitedKingdom
+        country: Country.unitedKingdom,
+        score: '2.50'
     },
     {
         id: '7',
@@ -112,7 +121,8 @@ const LIST_OF_USERS: User[] = [
         dateOfBirth: new Date(1983, 0, 15),
         occupation: Occupation.soldier,
         lastLogin: new Date(),
-        country: Country.unitedStates
+        country: Country.unitedStates,
+        score: '1.25'
     },
     {
         id: '8',
@@ -122,7 +132,8 @@ const LIST_OF_USERS: User[] = [
         dateOfBirth: new Date(1973, 4, 19),
         occupation: Occupation.baker,
         lastLogin: new Date(),
-        country: Country.france
+        country: Country.france,
+        score: '3.00'
     },
     {
         id: '9',
@@ -132,7 +143,8 @@ const LIST_OF_USERS: User[] = [
         dateOfBirth: new Date(1987, 6, 30),
         occupation: Occupation.doctor,
         lastLogin: new Date(),
-        country: Country.germany
+        country: Country.germany,
+        score: '4.75'
     },
     {
         id: '10',
@@ -142,7 +154,8 @@ const LIST_OF_USERS: User[] = [
         dateOfBirth: new Date(1994, 1, 21),
         occupation: Occupation.painter,
         lastLogin: new Date(),
-        country: Country.spain
+        country: Country.spain,
+        score: '4.75'
     },
     {
         id: '11',
@@ -152,13 +165,14 @@ const LIST_OF_USERS: User[] = [
         dateOfBirth: new Date(1951, 1, 1),
         occupation: Occupation.teacher,
         lastLogin: new Date(),
-        country: Country.indonesia
+        country: Country.indonesia,
+        score: '3.00'
     }
 ];
 
 export {
     Occupation,
-    Country,
-    User,
-    LIST_OF_USERS
+    Country, LIST_OF_USERS
 };
+
+export type { User };

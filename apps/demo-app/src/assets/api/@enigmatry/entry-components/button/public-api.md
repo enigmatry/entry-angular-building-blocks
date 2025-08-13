@@ -10,8 +10,8 @@ Used to provide button configuration on module or application level.
 
 | Property | Type | Description | Defined in |
 | ------ | ------ | ------ | ------ |
-| `cancel` | `MatButtonConfig` | Cancel button configuration |  |
-| `submit` | `MatButtonConfig` | Submit button configuration |  |
+| <a id="cancel"></a> `cancel` | `MatButtonConfig` | Cancel button configuration |  |
+| <a id="submit"></a> `submit` | `MatButtonConfig` | Submit button configuration |  |
 
 ## Variables
 
@@ -35,7 +35,9 @@ Can be used to provide custom button configuration.
 
 #### Parameters
 
-• **config**: `Partial`\<[`EntryButtonConfig`](public-api.md#entrybuttonconfig)\>
+##### config
+
+`Partial`\<[`EntryButtonConfig`](public-api.md#entrybuttonconfig)\>
 
 #### Returns
 
