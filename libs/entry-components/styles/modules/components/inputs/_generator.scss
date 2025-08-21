@@ -1,13 +1,10 @@
 @use 'sass:map';
 
 /* stylelint-disable-next-line @stylistic/max-line-length */
-$focused-label: '.mat-mdc-form-field .mdc-text-field--filled:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-floating-label, .mat-mdc-form-field .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-floating-label';
-
+$focused-label: '.mdc-text-field--filled:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-floating-label, .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-floating-label';
 /* stylelint-disable-next-line @stylistic/max-line-length */
-$disabled-field: '.mat-mdc-form-field .mdc-text-field--filled.mdc-text-field--disabled, .mat-mdc-form-field .mdc-text-field--outlined.mdc-text-field--disabled';
-
-/* stylelint-disable-next-line @stylistic/max-line-length */
-$disabled-outline-border: '.mdc-notched-outline .mdc-notched-outline__leading, .mdc-notched-outline .mdc-notched-outline__notch, .mdc-notched-outline .mdc-notched-outline__trailing';
+$disabled-field: '.mdc-text-field--filled.mdc-text-field--disabled, .mdc-text-field--outlined.mdc-text-field--disabled';
+$disabled-outline-border: '.mat-mdc-notch-piece';
 
 @mixin generate-from($theme) {
 	$input-background: map.get($theme, 'general', 'inputs', 'background');
@@ -18,53 +15,56 @@ $disabled-outline-border: '.mdc-notched-outline .mdc-notched-outline__leading, .
 	$disabled-background: map.get($theme, 'general', 'inputs', 'disabled', 'background-color');
 	$disabled-border: map.get($theme, 'general', 'inputs', 'disabled', 'border-color');
 
-	@if $input-background {
-		.mat-mdc-form-field .mat-mdc-text-field-wrapper.mdc-text-field {
-			background-color: $input-background;
+	.mat-mdc-form-field {
+		@if $input-background {
+			.mat-mdc-text-field-wrapper.mdc-text-field {
+				background-color: $input-background;
 
-			&.mdc-text-field--outlined {
-				border-radius: 4px;
-			}
-		}
-	}
-
-	@if $input-hover-background {
-		.mat-mdc-form-field .mat-mdc-form-field-focus-overlay {
-			background-color: $input-hover-background;
-		}
-	}
-
-	@if $label-focus-color {
-		#{$focused-label} {
-			color: $label-focus-color;
-		}
-	}
-
-	@if $arrow-focus-color {
-		.mat-mdc-form-field.mat-focused .mat-mdc-select-arrow-wrapper .mat-mdc-select-arrow {
-			color: $arrow-focus-color;
-		}
-	}
-
-	@if $disabled-color or $disabled-background or $disabled-border {
-		#{$disabled-field} {
-			@if $disabled-background {
-				background-color: $disabled-background;
-			}
-
-			@if $disabled-color {
-				.mdc-floating-label {
-					color: $disabled-color;
+				&.mdc-text-field--outlined {
+					border-radius: 4px;
 				}
 			}
+		}
 
-			@if $disabled-border {
-				.mdc-line-ripple::before {
-					border-bottom-color: $disabled-border;
+		@if $input-hover-background {
+			.mat-mdc-form-field-focus-overlay {
+				background-color: $input-hover-background;
+			}
+		}
+
+		@if $label-focus-color {
+			#{$focused-label} {
+				color: $label-focus-color;
+			}
+		}
+
+		@if $arrow-focus-color {
+			&.mat-focused .mat-mdc-select-arrow-wrapper .mat-mdc-select-arrow {
+				color: $arrow-focus-color;
+			}
+		}
+
+		@if $disabled-color or $disabled-background or $disabled-border {
+			#{$disabled-field} {
+				@if $disabled-background {
+					background-color: $disabled-background;
 				}
 
-				#{$disabled-outline-border} {
-					border-color: $disabled-border;
+				@if $disabled-color {
+					/* stylelint-disable-next-line max-nesting-depth */
+					.mdc-floating-label, .mdc-text-field__input {
+						color: $disabled-color;
+					}
+				}
+
+				@if $disabled-border {
+					/* stylelint-disable-next-line max-nesting-depth */
+					.mdc-line-ripple::before {
+						border-bottom-color: $disabled-border;
+					}
+					#{$disabled-outline-border} {
+						border-color: $disabled-border;
+					}
 				}
 			}
 		}
