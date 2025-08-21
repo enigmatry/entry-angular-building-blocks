@@ -66,46 +66,4 @@ $disabled-outline-border: '.mat-mdc-notch-piece';
 			}
 		}
 	}
-
-	@if $input-hover-background {
-		.mat-mdc-form-field .mat-mdc-form-field-focus-overlay {
-			background-color: $input-hover-background;
-		}
-	}
-
-	@if $label-focus-color {
-		#{$focused-label} {
-			color: $label-focus-color;
-		}
-	}
-
-	@if $arrow-focus-color {
-		.mat-mdc-form-field.mat-focused .mat-mdc-select-arrow-wrapper .mat-mdc-select-arrow {
-			color: $arrow-focus-color;
-		}
-	}
-
-	@if $disabled-color or $disabled-background or $disabled-border {
-		#{$disabled-field} {
-			@if $disabled-background {
-				background-color: $disabled-background;
-			}
-
-			@if $disabled-color {
-				.mdc-floating-label {
-					color: $disabled-color;
-				}
-			}
-
-			@if $disabled-border {
-				.mdc-line-ripple::before {
-					border-bottom-color: $disabled-border;
-				}
-
-				#{$disabled-outline-border} {
-					border-color: $disabled-border;
-				}
-			}
-		}
-	}
 }
