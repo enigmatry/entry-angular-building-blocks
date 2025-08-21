@@ -3,11 +3,7 @@
 $custom-theme: (
 	general: (
 		colors: (
-			primary: #FAE3C1,
-			disabled: (
-				foreground: cyan,
-				background: magenta
-			)
+			primary: #FAE3C1
 		),
 		fonts: (
 			body: (
@@ -20,6 +16,12 @@ $custom-theme: (
 		),
 		inputs: (
 			background: yellow
+		)
+	),
+	buttons: (
+		disabled: (
+			foreground: cyan,
+			background: magenta
 		),
 		checkboxes: (
 			background: red,
