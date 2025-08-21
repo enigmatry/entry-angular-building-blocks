@@ -22,6 +22,16 @@ $custom-theme: (
 		disabled: (
 			foreground: cyan,
 			background: magenta
+		),
+		checkboxes: (
+			background: red,
+			border-hover-color: green
+		)
+	),
+	buttons: (
+		disabled: (
+			foreground: cyan,
+			background: magenta
 		)
 	),
 	checkboxes: (
