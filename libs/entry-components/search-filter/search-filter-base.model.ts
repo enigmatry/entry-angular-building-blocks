@@ -21,6 +21,9 @@ export class SearchFilterBase<T> {
   maxLength: number;
   /** A reference to the form control it represents */
   formControl: FormControl<T | undefined>;
+  /** Optional function to format the value before displaying it in the input control */
+  formatValue: ((value: T) => T) | undefined;
+
   private readonly maxPossibleLength = 256;
 
   constructor(options: Partial<SearchFilterBase<T>> = {}) {
@@ -31,6 +34,7 @@ export class SearchFilterBase<T> {
     this.controlType = options.controlType || ControlType.text;
     this.type = options.type || ControlType.text;
     this.maxLength = options.maxLength || this.maxPossibleLength;
+    this.formatValue = options.formatValue;
   }
 
   setValue(value: T | undefined) {

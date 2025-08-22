@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormGroup } from '@angular/forms';
 import { AutocompleteSearchFilter } from './autocomplete/autocomplete-search-filter.model';
 import { ControlType } from './control-type';
@@ -31,6 +32,7 @@ export class EntrySearchFilterComponent implements OnInit {
   searchFilterForm!: UntypedFormGroup;
   controlType = ControlType;
   readonly config: EntrySearchFilterConfig = inject(ENTRY_SEARCH_FILTER_CONFIG);
+  private _destroyRef = inject(DestroyRef);
 
   ngOnInit() {
     this.searchFilterForm = this.toFormGroup(this.searchFilters);
@@ -47,6 +49,15 @@ export class EntrySearchFilterComponent implements OnInit {
       const formControl = searchFilter.toFormControl();
       group[searchFilter.key] = formControl;
       searchFilter.formControl = formControl;
+
+      if (searchFilter.formatValue) {
+        formControl.valueChanges
+          .pipe(takeUntilDestroyed(this._destroyRef))
+          .subscribe(value => {
+            const formatted = searchFilter.formatValue?.(value);
+            formControl.setValue(formatted, { emitEvent: false });
+          });
+      }
     });
     return new UntypedFormGroup(group);
   };
@@ -55,10 +66,10 @@ export class EntrySearchFilterComponent implements OnInit {
 
   asSelectSearchFilter = <T>(searchFilter: SearchFilterBase<T>): SelectSearchFilter<T> => searchFilter as SelectSearchFilter<T>;
 
-  asAutocompleteSearchFilter = <T>(searchFilter: SearchFilterBase<SelectOption<T>>): AutocompleteSearchFilter<T> =>
-    searchFilter as AutocompleteSearchFilter<T>;
+  asAutocompleteSearchFilter = <T>(searchFilter: SearchFilterBase<SelectOption<T>>): AutocompleteSearchFilter<T> => searchFilter as AutocompleteSearchFilter<T>;
 
   asDateTimeSearchFilter = <T>(searchFilter: SearchFilterBase<T>): DateTimeSearchFilter<T> => searchFilter as DateTimeSearchFilter<T>;
 
   asDateSearchFilter = <T>(searchFilter: SearchFilterBase<T>): DateSearchFilter<T> => searchFilter as DateSearchFilter<T>;
 }
+

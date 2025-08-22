@@ -37,7 +37,7 @@ Can be used to provide custom button configuration.
 
 ##### config
 
-`Partial`\<[`EntryButtonConfig`](#entrybuttonconfig)\>
+`Partial`\<[`EntryButtonConfig`](public-api.md#entrybuttonconfig)\>
 
 #### Returns
 
