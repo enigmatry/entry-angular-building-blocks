@@ -19,11 +19,16 @@ export class EntryPermissionDirective<T extends PermissionType> {
     this.toggleVisibility(!this.permissionService.hasPermissions(permissions));
   }
 
-  private toggleVisibility(show: boolean): void {
-    if (show) {
-      this.renderer.removeStyle(this.elementRef.nativeElement, 'display');
-    } else {
-      this.renderer.setStyle(this.elementRef.nativeElement, 'display', 'none');
+  private readonly toggleVisibility = (show: boolean): void => {
+    const element = this.elementRef.nativeElement;
+
+    if(!show) {
+      this.renderer.setStyle(element, 'display', 'none');
+      return;
     }
-  }
+
+    if (element.style?.display) {
+      this.renderer.removeStyle(element, 'display');
+    }
+  };
 }
