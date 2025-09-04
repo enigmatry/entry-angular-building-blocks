@@ -1,3 +1,4 @@
+/* stylelint-disable max-nesting-depth, selector-max-pseudo-class, scss/block-no-redundant-nesting */
 @use 'sass:map';
 
 /* stylelint-disable-next-line @stylistic/max-line-length */
@@ -18,9 +19,7 @@ $checkbox-selector: '.mdc-checkbox__native-control:enabled:not(:checked):not(:in
 			}
 
 			&:hover {
-				/* stylelint-disable-next-line selector-max-pseudo-class */
 				.mdc-checkbox:hover {
-					/* stylelint-disable-next-line max-nesting-depth */
 					@if $background and $border-hover-color {
 						#{$checkbox-selector} {
 							border-color: $border-hover-color;
@@ -35,14 +34,12 @@ $checkbox-selector: '.mdc-checkbox__native-control:enabled:not(:checked):not(:in
 	@if $disabled-color or $disabled-border-color {
 		.mat-mdc-checkbox.mdc-checkbox--disabled {
 			.mdc-checkbox__background {
-				/* stylelint-disable-next-line max-nesting-depth */
 				@if $disabled-border-color {
 					border-color: $disabled-border-color;
 				}
 			}
 
 			.mdc-label {
-				/* stylelint-disable-next-line max-nesting-depth */
 				@if $disabled-color {
 					color: $disabled-color;
 				}
