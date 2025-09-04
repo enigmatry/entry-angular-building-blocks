@@ -722,9 +722,10 @@ The table below outlines the default values for all supported configuration prop
 | **general**      | density                         | 0                                   |
 |                  | colors/primary-theme            | null                                |
 |                  | colors/accent-theme             | null                                |
-|                  | colors/primary                  | #2581C4                             |
-|                  | colors/accent                   | #EA518D                             |
-|                  | colors/font                     | #323232                             |
+|                  | colors/primary                  | #2581C4                           |
+|                  | colors/accent                   | #EA518D                           |
+|                  | colors/warn                     | #BA1A1A                           |
+|                  | colors/font                     | #323232                           |
 |                  | disabled/foreground             | rgb(0 0 0 / .38)                    |
 |                  | disabled/background             | rgb(0 0 0 / .12)                    |
 |                  | typography                      | null                                |
@@ -733,20 +734,32 @@ The table below outlines the default values for all supported configuration prop
 |                  | fonts/letter-spacing            | null                                |
 |                  | spacing/default                 | 15px                                |
 |                  | inputs/background               | null                                |
+|                  | inputs/hover-background         | null                                |
+|                  | inputs/label-focus-color        | null                                |
+|                  | inputs/arrow-focus-color        | null                                |
+|                  | inputs/disabled/color           | null                                |
+|                  | inputs/disabled/background-color| null                                |
+|                  | inputs/disabled/border-color    | null                                |
 |                  | buttons/icon-size               | 48px                                |
+|                  | buttons/disabled/foreground     | rgb(0 0 0 / .38)                    |
+|                  | buttons/disabled/background     | rgb(0 0 0 / .12)                    |
 |                  | buttons/radio/background        | null                                |
+|                  | buttons/radio/disabled/color    | null                                |
+|                  | buttons/radio/disabled/border-color| null                             |
 |                  | checkboxes/background           | null                                |
 |                  | checkboxes/border-hover-color   | null                                |
+|                  | checkboxes/disabled/color       | null                                |
+|                  | checkboxes/disabled/border-color| null                                |
 |                  | toggle/on/background            | null                                |
 |                  | toggle/off/background           | null                                |
 | **tables**       | header/font-size                | null                                |
 |                  | cells/edge-gap                  | 4px                                 |
 |                  | cells/padding                   | null                                |
-|                  | rows/selected-color             | #FFF                                |
+|                  | rows/selected-color             | #FFF                              |
 |                  | rows/selected-background        | null                                |
-|                  | rows/disabled-color             | #F5F5F5                             |
-|                  | rows/odd-even-background/odd    | #F0F0F0                             |
-|                  | rows/odd-even-background/even   | #FFF                                |
+|                  | rows/disabled-color             | #F5F5F5                           |
+|                  | rows/odd-even-background/odd    | #F0F0F0                           |
+|                  | rows/odd-even-background/even   | #FFF                              |
 |                  | no-result/font-size             | 13px                                |
 |                  | no-result/font-weight           | 500                                 |
 | **dialogs**      | title/size                      | 20px                                |
