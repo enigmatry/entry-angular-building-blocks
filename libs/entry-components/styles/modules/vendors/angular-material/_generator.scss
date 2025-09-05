@@ -16,7 +16,7 @@
 
 	$primary-palette: theming.m2-define-palette(-get-material-palette-for('primary', $entry-theme));
 	$accent-palette: theming.m2-define-palette(-get-material-palette-for('accent', $entry-theme));
-	$warn-palette: theming.m2-define-palette(theming.$m2-red-palette);
+	$warn-palette: theming.m2-define-palette(-get-material-palette-for('warn', $entry-theme));
 
 	$typography: typography-generator.generate-from($entry-theme);
 	@include theming.typography-hierarchy($typography);

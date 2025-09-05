@@ -10,8 +10,8 @@
 - [Fonts Prerequisites](#fonts-prerequisites)
   - [Use default font](#1-use-default-font)
   - [Custom fonts](#2-custom-fonts)
-  - [Set Angular Material typography](#set-angular-material-typography)  
-  - [Configuring typography](#differences-between-configuring-typography)  
+  - [Set Angular Material typography](#set-angular-material-typography)
+  - [Configuring typography](#differences-between-configuring-typography)
 - [Configuration Properties](#configuration-properties)
 - [Theme Configuration Approaches](#theme-configuration-approaches)
   - [Custom Configuration](#1-custom-configuration)
@@ -89,7 +89,7 @@ There are 2 possibilities of using fonts in theming:
 
 ### 1. Use default font
 
-**Entry-components** library comes with the default font family. To utilize it, configuration in the `angular.json` file at the root of the app is necessary. The font is imported from the library's node modules as follows:  
+**Entry-components** library comes with the default font family. To utilize it, configuration in the `angular.json` file at the root of the app is necessary. The font is imported from the library's node modules as follows:
 
 ```json
 "assets": [
@@ -123,11 +123,11 @@ Ensure that the following steps are completed:
 
 ### Set Angular Material typography
 
-Since Angular Material uses different typography levels, to read values from a theme it's needed to add those typography level cases to corresponding native elements. So the right font configurations will be applied. Check the full list here  [Material Typography Guide](https://material.angular.io/guide/typography). 
+Since Angular Material uses different typography levels, to read values from a theme it's needed to add those typography level cases to corresponding native elements. So the right font configurations will be applied. Check the full list here  [Material Typography Guide](https://material.angular.io/guide/typography).
 
 In another case, if we don't provide those classes for custom components, our typography configurations will not be applied. It depends on the situation and customer needs.
 
-The first necessary step is to apply it to the whole body of the app, add `.mat-body` or `.mat-body-2` class to the body element in index.html file in app root. 
+The first necessary step is to apply it to the whole body of the app, add `.mat-body` or `.mat-body-2` class to the body element in index.html file in app root.
 
 ```html
 <!-- Applying mat-body class to the root component in index.html -->
@@ -177,7 +177,7 @@ $custom-theme: (
   ),
   dialogs: (
     // Dialog-related configuration options go here
-  ) 
+  )
 );
 ```
 
@@ -230,6 +230,7 @@ Defines various color properties:
 
 - `primary`: Main color used in application, it sets the tone for the overall theme.
 - `accent`: Highlight certain elements and create visual interest.
+- `warn`: Defines color of warning text such as validation messages.
 - `font`: Specifies the default font color.
 - `disabled`: Style elements that are in a disabled state:
   - `foreground`: Text color for disabled elements.
@@ -243,6 +244,7 @@ $custom-theme: (
       primary: #2581C4,
       accent: #EA518D,
       font: #323232,
+      warn: #BA1A1A,
       disabled: (
         foreground: rgb(0 0 0 / .38),
         background: rgb(0 0 0 / .12)
@@ -289,7 +291,7 @@ For customizing headers, check [this section](#adding-material-classes)
 - `hero-titles`: Define typography for h1, h2, h3, h4 elements.
 - `titles`: Typography for h5 and h6 material subtitles
 
-> **_NOTE:_**  Properties from list above are only applied if we use this method. If we do it in a Native angular material way, the properties are different, based on Typography material guidelines. Check [this subsection](#1-typography-configuration) for that scenario: 
+> **_NOTE:_**  Properties from list above are only applied if we use this method. If we do it in a Native angular material way, the properties are different, based on Typography material guidelines. Check [this subsection](#1-typography-configuration) for that scenario:
 
 > **_NOTE:_**  Don't forget to check whether font is being applied.
 
@@ -338,33 +340,66 @@ $custom-theme: (
 
 ### 5. Inputs
 
-We utilize the background value within the input configuration to establish the background color for **form text fields**. By default, background properties have no color explicitly defined, allowing the default Material styling or any existing CSS rules to take effect.
+We utilize input configuration to establish and control the appearance of **form fields and input elements**. By default, background properties have no color explicitly defined, allowing the default Material styling or any existing CSS rules to take effect.
+You can control background colors, focus states, and disabled styles.
+
+- `background`: Sets the default background color for input fields.
+- `hover-background`: Sets the background color when an input is hovered.
+- `label-focus-color`: Defines the color of the input label when the field is focused.
+- `arrow-focus-color`: Sets the color of dropdown arrows or similar icons when the input is focused.
+- `disabled`: Styling inputs in disabled states.
+  - `color`: Text color for disabled inputs.
+  - `background-color`: Background color for disabled inputs.
+  - `border-color`: Border color for disabled inputs.
+
 
 ```scss
 $custom-theme: (
   general: (
     inputs: (
-      background: #f4f4f4
-    ),
+      background: #F4F4F4,
+      hover-background: #AABB11,
+      label-focus-color: #11BB11,
+      arrow-focus-color: #11BB11,
+      disabled: (
+        color: #A0A0A0,
+        background-color: #CCC,
+        border-color: #A0A0A0
+      )
+    )
   )
 );
 ```
 
 ### 6. Buttons
 
-Additional customization for buttons:
+Additional customization for button appearance, including icon size and radio button styling:
 
-- `icon-size`:  sets the default size for icons on buttons when icons are present.
-- `radio`:  Contains property for radio buttons.
-  - `background`: sets the background color for the inner and outer circles of radio buttons.
+- `icon-size`: Sets the default size for icons within buttons when icons are present.
+- `disabled`: Styling buttons in disabled states.
+  - `foreground`: Text/icon color for disabled buttons.
+  - `background`: Background color for disabled buttons.
+- `radio`:  Contains properties for radio buttons.
+  - `background`: Sets the background color for the inner and outer circles of radio buttons.
+  - `disabled`: Styling radio buttons in disabled states.
+    - `color`: Text color of disabled radio buttons.
+    - `border-color`: Border color of disabled radio buttons.
 
 ```scss
 $custom-theme: (
   general: (
     buttons: (
       icon-size: 48px,
+      disabled: (
+        foreground: rgb(0 0 0 / .42),
+        background: rgb(0 0 0 / .11)
+      ),
       radio: (
-        background: #333
+        background: #333,
+        disabled: (
+          color: #CCC,
+          border-color: #AAA
+        )
       )
     )
   )
@@ -373,17 +408,24 @@ $custom-theme: (
 
 ### 7. Checkboxes
 
-Provides customization of checkboxes background and border color for **unchecked state**.
+Provides customization of checkboxes namely background and border color for different states.
 
-- `background`:  sets the background color for the checkboxes.
-- `border-hover-color`: sets the border color of unchecked checkbox while in hover state.
+- `background`: Sets the background color for the checkboxes.
+- `border-hover-color`: Sets the border color of unchecked checkbox while in hover state.
+- `disabled`: Styling check boxes in disabled states.
+  - `color`: Text color of disabled checkboxes.
+  - `border-color`: Border color of disabled checkboxes.
 
 ```scss
 $custom-theme: (
   general: (
     checkboxes: (
       background: blue,
-      border-hover-color: darkblue
+      border-hover-color: darkblue,
+      disabled: (
+        color:  #CCC,
+        border-color: #AAA
+      )
     )
   )
 )
@@ -404,7 +446,7 @@ $custom-theme: (
       on: (
         background: orange
       ),
-      off: (  
+      off: (
         background: green
       ),
     ),
@@ -471,7 +513,7 @@ $custom-theme: (
   tables: (
     rows: (
       odd-even-background: (
-        odd: #F0F0F0, 
+        odd: #F0F0F0,
         even: #FFF,
       ),
       selected-color: #FFF,
@@ -502,7 +544,7 @@ $custom-theme: (
     ),
     rows: (
        odd-even-background: (
-        odd: #F0F0F0, 
+        odd: #F0F0F0,
         even: #FFF,
       ),
       selected-color: #FFF,
@@ -566,13 +608,13 @@ There are few steps to follow to implement this:
 ```scss
 $typography: (
   headline-1: (font-size: 96px, line-height: 96px, font-weight: 300, font-family: 'roboto, sans-serif', letter-spacing: -.015625em),
-  headline-2: (font-size: 60px, line-height: 60px, font-weight: 300, font-family: 'roboto, sans-serif', letter-spacing: -.0083333333em), 
+  headline-2: (font-size: 60px, line-height: 60px, font-weight: 300, font-family: 'roboto, sans-serif', letter-spacing: -.0083333333em),
     // ... (include other styles)
   'font-family': 'Roboto, sans-serif'
 );
 ```
 
-Next, we define our own Sass map that includes the previously defined $typography map. It is part of a broader theme definition. It consists of a general submap, with a 
+Next, we define our own Sass map that includes the previously defined $typography map. It is part of a broader theme definition. It consists of a general submap, with a
 property `typography`. It's associating the typographic styles ($typography) with the broader theme ($custom-theme), making those styles part of the overall design theme for the project.  By default, it's set to `null`.
 
 ```scss
@@ -647,18 +689,18 @@ So, the final code should look like this:
 ```scss
 $typography: (
   headline-1: (font-size: 96px, line-height: 96px, font-weight: 300, font-family: 'roboto, sans-serif', letter-spacing: -.015625em),
-  headline-2: (font-size: 60px, line-height: 60px, font-weight: 300, font-family: 'roboto, sans-serif', letter-spacing: -.0083333333em), 
+  headline-2: (font-size: 60px, line-height: 60px, font-weight: 300, font-family: 'roboto, sans-serif', letter-spacing: -.0083333333em),
   headline-3: (font-size: 48px, line-height: 50px, font-weight: 400, font-family: 'roboto, sans-serif', letter-spacing: normal),
-  headline-4: (font-size: 34px, line-height: 40px, font-weight: 400, font-family: 'roboto, sans-serif', letter-spacing: .0073529412em), 
-  headline-5: (font-size: 32px, line-height: 32px, font-weight: 400, font-family: 'roboto, sans-serif', letter-spacing: normal), 
+  headline-4: (font-size: 34px, line-height: 40px, font-weight: 400, font-family: 'roboto, sans-serif', letter-spacing: .0073529412em),
+  headline-5: (font-size: 32px, line-height: 32px, font-weight: 400, font-family: 'roboto, sans-serif', letter-spacing: normal),
   headline-6: (font-size: 32px, line-height: 32px, font-weight: 500, font-family: 'roboto, sans-serif', letter-spacing: .0125em),
   subtitle-1: (font-size: 32px, line-height: 28px, font-weight: 400, font-family: 'roboto, sans-serif', letter-spacing: .009375em),
   subtitle-2: (font-size: 32px, line-height: 22px, font-weight: 500, font-family: 'roboto, sans-serif', letter-spacing: .0071428571em),
-  body-1: (font-size: 16px, line-height: 24px, font-weight: 400, font-family: 'roboto, sans-serif', letter-spacing: .03125em), 
-  body-2: (font-size: 14px, line-height: 20px, font-weight: 400, font-family: 'roboto, sans-serif', letter-spacing: .0178571429em), 
+  body-1: (font-size: 16px, line-height: 24px, font-weight: 400, font-family: 'roboto, sans-serif', letter-spacing: .03125em),
+  body-2: (font-size: 14px, line-height: 20px, font-weight: 400, font-family: 'roboto, sans-serif', letter-spacing: .0178571429em),
   caption: (font-size: 32px, line-height: 20px, font-weight: 400, font-family: 'roboto, sans-serif', letter-spacing: .0333333333em),
-  button: (font-size: 24px, line-height: 36px, font-weight: 500, font-family: 'roboto, sans-serif', letter-spacing: .0892857143em), 
-  overline: (font-size: 12px, line-height: 32px, font-weight: 500, font-family: 'roboto, sans-serif', letter-spacing: .1666666667em), 
+  button: (font-size: 24px, line-height: 36px, font-weight: 500, font-family: 'roboto, sans-serif', letter-spacing: .0892857143em),
+  overline: (font-size: 12px, line-height: 32px, font-weight: 500, font-family: 'roboto, sans-serif', letter-spacing: .1666666667em),
   'font-family': 'Roboto, sans-serif'
 );
 
@@ -680,9 +722,10 @@ The table below outlines the default values for all supported configuration prop
 | **general**      | density                         | 0                                   |
 |                  | colors/primary-theme            | null                                |
 |                  | colors/accent-theme             | null                                |
-|                  | colors/primary                  | #2581C4                             |
-|                  | colors/accent                   | #EA518D                             |
-|                  | colors/font                     | #323232                             |
+|                  | colors/primary                  | #2581C4                           |
+|                  | colors/accent                   | #EA518D                           |
+|                  | colors/warn                     | #BA1A1A                           |
+|                  | colors/font                     | #323232                           |
 |                  | disabled/foreground             | rgb(0 0 0 / .38)                    |
 |                  | disabled/background             | rgb(0 0 0 / .12)                    |
 |                  | typography                      | null                                |
@@ -691,20 +734,32 @@ The table below outlines the default values for all supported configuration prop
 |                  | fonts/letter-spacing            | null                                |
 |                  | spacing/default                 | 15px                                |
 |                  | inputs/background               | null                                |
+|                  | inputs/hover-background         | null                                |
+|                  | inputs/label-focus-color        | null                                |
+|                  | inputs/arrow-focus-color        | null                                |
+|                  | inputs/disabled/color           | null                                |
+|                  | inputs/disabled/background-color| null                                |
+|                  | inputs/disabled/border-color    | null                                |
 |                  | buttons/icon-size               | 48px                                |
+|                  | buttons/disabled/foreground     | rgb(0 0 0 / .38)                    |
+|                  | buttons/disabled/background     | rgb(0 0 0 / .12)                    |
 |                  | buttons/radio/background        | null                                |
+|                  | buttons/radio/disabled/color    | null                                |
+|                  | buttons/radio/disabled/border-color| null                             |
 |                  | checkboxes/background           | null                                |
 |                  | checkboxes/border-hover-color   | null                                |
+|                  | checkboxes/disabled/color       | null                                |
+|                  | checkboxes/disabled/border-color| null                                |
 |                  | toggle/on/background            | null                                |
 |                  | toggle/off/background           | null                                |
 | **tables**       | header/font-size                | null                                |
 |                  | cells/edge-gap                  | 4px                                 |
 |                  | cells/padding                   | null                                |
-|                  | rows/selected-color             | #FFF                                |
+|                  | rows/selected-color             | #FFF                              |
 |                  | rows/selected-background        | null                                |
-|                  | rows/disabled-color             | #F5F5F5                             |
-|                  | rows/odd-even-background/odd    | #F0F0F0                             |
-|                  | rows/odd-even-background/even   | #FFF                                |
+|                  | rows/disabled-color             | #F5F5F5                           |
+|                  | rows/odd-even-background/odd    | #F0F0F0                           |
+|                  | rows/odd-even-background/even   | #FFF                              |
 |                  | no-result/font-size             | 13px                                |
 |                  | no-result/font-weight           | 500                                 |
 | **dialogs**      | title/size                      | 20px                                |

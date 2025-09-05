@@ -6,6 +6,7 @@ $theme: (
 			accent-theme: null,
 			primary: #2581C4,
 			accent: #EA518D,
+			warn: #BA1A1A,
 			font: #323232,
 			disabled: (
 				foreground: rgb(0 0 0 / .38),
@@ -39,17 +40,37 @@ $theme: (
 			default: 15px
 		),
 		inputs: (
-			background: null
+			background: null,
+			hover-background: null,
+			label-focus-color: null,
+			arrow-focus-color: null,
+			disabled: (
+				color: null,
+				background-color: null,
+				border-color: null
+			)
 		),
 		buttons: (
 			icon-size: 48px,
+			disabled: (
+				foreground: rgb(0 0 0 / .38),
+				background: rgb(0 0 0 / .12)
+			),
 			radio: (
-				background: null
+				background: null,
+				disabled: (
+					color: null,
+					border-color: null
+				)
 			)
 		),
 		checkboxes: (
 			background: null,
-			border-hover-color: null
+			border-hover-color: null,
+			disabled: (
+				color: null,
+				border-color: null
+			)
 		),
 		toggle: (
 			on: (

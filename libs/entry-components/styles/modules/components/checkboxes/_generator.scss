@@ -1,3 +1,4 @@
+/* stylelint-disable max-nesting-depth, selector-max-pseudo-class, scss/block-no-redundant-nesting */
 @use 'sass:map';
 
 /* stylelint-disable-next-line @stylistic/max-line-length */
@@ -6,6 +7,8 @@ $checkbox-selector: '.mdc-checkbox__native-control:enabled:not(:checked):not(:in
 @mixin generate-from($theme) {
 	$background: map.get($theme, 'general', 'checkboxes', 'background');
 	$border-hover-color: map.get($theme, 'general', 'checkboxes', 'border-hover-color');
+	$disabled-color: map.get($theme, 'general', 'checkboxes', 'disabled', 'color');
+	$disabled-border-color: map.get($theme, 'general', 'checkboxes', 'disabled', 'border-color');
 
 	@if $background or $border-hover-color {
 		.mat-mdc-checkbox {
@@ -16,15 +19,29 @@ $checkbox-selector: '.mdc-checkbox__native-control:enabled:not(:checked):not(:in
 			}
 
 			&:hover {
-				/* stylelint-disable-next-line selector-max-pseudo-class */
 				.mdc-checkbox:hover {
-					/* stylelint-disable-next-line max-nesting-depth */
 					@if $background and $border-hover-color {
 						#{$checkbox-selector} {
 							border-color: $border-hover-color;
 							background-color: $background;
 						}
 					}
+				}
+			}
+		}
+	}
+
+	@if $disabled-color or $disabled-border-color {
+		.mat-mdc-checkbox.mdc-checkbox--disabled {
+			.mdc-checkbox__background {
+				@if $disabled-border-color {
+					border-color: $disabled-border-color;
+				}
+			}
+
+			.mdc-label {
+				@if $disabled-color {
+					color: $disabled-color;
 				}
 			}
 		}
