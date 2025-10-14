@@ -1,0 +1,157 @@
+/* stylelint-disable plugin/file-max-lines, plugin/stylelint-group-selectors */
+@use 'variables' as vars;
+@use 'scss-foundation/src/modules/display/items';
+
+.chatbot-container {
+	position: fixed;
+	z-index: 9;
+	right: 40px;
+	bottom: 110px;
+	width: 400px;
+	margin: vars.$medium-gap auto;
+	border-radius: 5px;
+	background-color: vars.$background-lightest;
+	box-shadow: 0 2px 4px rgb(0 0 0 / .1);
+
+	.header {
+		@include items.fully-align(center, space-between, row, nowrap);
+		width: 100%;
+		height: 70px;
+		padding: 0 vars.$medium-gap;
+		border-radius: 5px 5px 0 0;
+		background-repeat: no-repeat;
+		background-position: right;
+
+		.logo {
+			width: 50px;
+			height: 50px;
+			margin-right: vars.$small-gap;
+		}
+
+		.title-placeholder, .status-controls {
+			@include items.fully-align(center, flex-start, row, nowrap);
+		}
+
+		.title {
+			color: vars.$font-color-light;
+			font-size: 20px;
+			font-weight: 700;
+		}
+
+		.action-button {
+			@include items.fully-align(center, center, row, nowrap);
+			margin-bottom: vars.$medium-gap;
+			margin-left: vars.$small-gap;
+			border: none;
+			outline: none;
+			background-color: transparent;
+			color: vars.$font-color-light;
+			font-size: 30px;
+		}
+	}
+
+	.main-content {
+		height: 450px;
+		overflow-y: auto;
+		border-radius: 0 0 5px 5px;
+		@include items.fully-align(center, flex-end, column, nowrap);
+	}
+
+	.chatbot-message {
+		@include items.fully-align(center, flex-end, row, nowrap);
+		padding: 0 vars.$medium-gap;
+	}
+
+	.avatar {
+		width: 40px;
+		height: 40px;
+		margin: {
+			top: vars.$large-gap;
+			right: vars.$small-gap;
+		}
+	}
+
+	.chatbot-text {
+		padding: vars.$medium-gap;
+		border-radius: 20px 20px 20px 0;
+		background-color: vars.$online-training-background;
+		color: vars.$primary;
+		font-size: 15px;
+		font-weight: 500;
+	}
+
+	.user-message .chatbot-text {
+		margin-left: 50px;
+		border-radius: 20px 20px 0;
+		background-color: vars.$primary;
+		color: vars.$font-color-light;
+	}
+
+	.footer {
+		padding: vars.$medium-gap;
+		border-top: 1px solid #A0A0A0;
+	}
+
+	.field-placeholder {
+		@include items.fully-align(center, flex-start, row, nowrap);
+		width: 100%;
+		height: 40px;
+		border: 1px solid #D8D8D8;
+		border-radius: 20px;
+	}
+
+	.input-field {
+		flex: 1;
+		margin: 0 vars.$small-gap;
+		border: none;
+		color: #000;
+		font-size: 15px;
+		font-weight: 500;
+
+		&:focus {
+			outline: none;
+		}
+	}
+
+	.send-button {
+		@include items.fully-align(center, center, row, nowrap);
+		width: 30px;
+		height: 30px;
+		margin-right: calc(vars.$small-gap / 2);
+		border: none;
+		border-radius: 50%;
+		background-color: vars.$accent;
+	}
+
+	.privacy-note {
+		margin: vars.$medium-gap auto 0;
+		padding: 0 vars.$small-gap;
+		color: #00000075;
+		font-size: 11px;
+		font-weight: 500;
+		text-align: center;
+	}
+
+	.privacy-note a {
+		font-size: 11px;
+	}
+}
+
+p[sentTime]::after, .chat-time {
+	position: absolute;
+	top: -3px;
+	color: #A9A4A4;
+	font-size: 12px;
+}
+
+p[sentTime]::after {
+	content: attr(sentTime);
+}
+
+.chatbot p[sentTime]::after {
+	left: 0;
+}
+
+.user-message p[sentTime]::after {
+	right: 0;
+}

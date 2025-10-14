@@ -2,6 +2,7 @@
 /*
  * Public API Surface of entry-components
  */
+export * from '@enigmatry/entry-components/ai';
 export * from '@enigmatry/entry-components/button';
 export * from '@enigmatry/entry-components/common';
 export * from '@enigmatry/entry-components/dialog';

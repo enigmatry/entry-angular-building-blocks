@@ -1,0 +1,5 @@
+<svg class="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none"
+    stroke="currentColor" stroke-width="2">
+    <line x1="1" y1="8" x2="13" y2="8" />
+        <polyline points="8,3 13,8 8,13" />
+</svg>

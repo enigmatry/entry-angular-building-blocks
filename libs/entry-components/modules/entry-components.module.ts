@@ -8,6 +8,7 @@ import { EntrySearchFilterModule } from '@enigmatry/entry-components/search-filt
 import { EntrySpinnerModule } from '@enigmatry/entry-components/spinner';
 import { EntryTableModule } from '@enigmatry/entry-components/table';
 import { EntryValidationModule } from '@enigmatry/entry-components/validation';
+import { EntryChatComponent } from '../ai/public-api';
 
 interface EntryComponentsModuleOptions {
   permissionService?: Type<any>;
@@ -22,7 +23,11 @@ interface EntryComponentsModuleOptions {
  */
 @NgModule({
   declarations: [],
+  imports: [
+    EntryChatComponent
+  ],
   exports: [
+    EntryChatComponent,
     EntryButtonModule,
     EntryCommonModule,
     EntryDialogModule,

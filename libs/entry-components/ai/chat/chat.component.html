@@ -1,0 +1,40 @@
+<section class="chatbot-container" (onClick)="followLink($event)">
+    <header mat-dialog-title class="header">
+        <div class="title-placeholder">
+            <img src="./../../assets/images/chat/KM_kai_header_img.png" alt="Enigmatry chatbot logo" class="logo" />
+            <h1 class="title">Enigmatry Chat Bot</h1>
+        </div>
+        <mat-dialog-actions class="status-controls">
+            <button class="action-button" mat-icon-button type="button" aria-label="Minimize chat">
+                <mat-icon>minimize</mat-icon>
+            </button>
+            <button class="action-button" mat-icon-button mat-dialog-close type="button" aria-label="Close chat">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-dialog-actions>
+    </header>
+    <mat-dialog-content #scrollContainer class="main-content">
+        <div class="chatbot-message">
+            <img src="./../../assets/images/chat/KM_kai_avatar.png" alt="KlasMastr chatbot avatar" class="avatar" />
+            <p class="chatbot-text">{{welcomeMessage()}}</p>
+        </div>
+        @for (message of messages(); track $index) {
+        <div [class]="'chatbot-message' + (message.isRequest ? ' user-message' : 'chatbot')">
+            <p class="chatbot-text" [innerHTML]="message.message"></p>
+        </div>
+        }
+    </mat-dialog-content>
+    <footer class="footer">
+        <form class="field-placeholder">
+            <input class="input-field" type="text" [placeholder]="placeholder()" [(ngModel)]="newMessage"
+                name="newMessage" />
+            <button class="send-button clickable" type="submit" (click)="sendMessage()">
+                <img src="./../../assets/images/arrow-right.svg" alt="Send" />
+            </button>
+        </form>
+        @if(privacyNote())
+        {
+        <p class="privacy-note">{{privacyNote()}}</p>
+        }
+    </footer>
+</section>
