@@ -9,6 +9,7 @@ export class EntryTableConfig {
   /** Page size, default 20 */
   pageSize = 20;
   /** Page size options, default [20, 50, 100] */
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   pageSizeOptions = [20, 50, 100];
   /** Hide page size options, default is false */
   hidePageSize = false;
@@ -41,9 +42,8 @@ export class EntryTableConfig {
 export const ENTRY_TABLE_CONFIG = createInjectionToken(new EntryTableConfig());
 
 /** Provide entry table config */
-export function provideEntryTableConfig(config: Partial<EntryTableConfig>): Provider {
-  return provideConfig(ENTRY_TABLE_CONFIG, () => new EntryTableConfig(config));
-}
+export const provideEntryTableConfig = (config: Partial<EntryTableConfig>): Provider =>
+  provideConfig(ENTRY_TABLE_CONFIG, () => new EntryTableConfig(config));
 
 /** Default percentage multiplier injection token */
 export const DEFAULT_PERCENTAGE_MULTIPLIER: InjectionToken<number> = new InjectionToken<number>('');

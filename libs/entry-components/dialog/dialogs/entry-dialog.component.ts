@@ -1,8 +1,9 @@
-import { Component, Inject, Input, TemplateRef } from '@angular/core';
+/* eslint-disable no-secrets/no-secrets */
+import { Component, inject, Input, TemplateRef } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Observable, of } from 'rxjs';
-import { ENTRY_DIALOG_CONFIG, EntryDialogConfig } from '../entry-dialog-config.model';
 import { EntryDialogButtonsAlignment } from '../entry-dialog-buttons-alignment.type';
+import { ENTRY_DIALOG_CONFIG, EntryDialogConfig } from '../entry-dialog-config.model';
 
 /**
  * Base Entry dialog component. Must be extended when building custom dialogs.
@@ -19,6 +20,9 @@ import { EntryDialogButtonsAlignment } from '../entry-dialog-buttons-alignment.t
     standalone: false
 })
 export class EntryDialogComponent {
+    protected readonly mdDialogRef: MatDialogRef<EntryDialogComponent> = inject(MatDialogRef<EntryDialogComponent>);
+    protected readonly config: EntryDialogConfig = inject(ENTRY_DIALOG_CONFIG);
+
     /** Dialog header title  */
     @Input() title: string;
     /** Dialog buttons horizontal alignment */
@@ -37,10 +41,6 @@ export class EntryDialogComponent {
     @Input() disableConfirm: boolean;
     /** Provide custom buttons template */
     @Input() buttonsTemplate: TemplateRef<any> | null | undefined;
-
-    constructor(
-        protected readonly mdDialogRef: MatDialogRef<EntryDialogComponent>,
-        @Inject(ENTRY_DIALOG_CONFIG) protected readonly config: EntryDialogConfig) { }
 
     @Input() confirm: () => Observable<unknown> = () => of(true);
     @Input() cancel = () => this.close(false);

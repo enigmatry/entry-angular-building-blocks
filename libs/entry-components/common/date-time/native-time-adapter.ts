@@ -1,31 +1,22 @@
-import { Injectable, Provider } from "@angular/core";
-import { EntryTimeAdapter } from "./entry-time-adapter";
-import { EntryDateTimeFormats, defaultDateTimeFormats, ENTRY_MAT_DATE_TIME_FORMATS } from "./entry-date-time-formats";
+import { Injectable, Provider } from '@angular/core';
+import { EntryDateTimeFormats, defaultDateTimeFormats, ENTRY_MAT_DATE_TIME_FORMATS } from './entry-date-time-formats';
+import { EntryTimeAdapter } from './entry-time-adapter';
 
 @Injectable()
 export class EntryNativeTimeAdapter extends EntryTimeAdapter<Date> {
+  getHours = (date: Date): number => date?.getHours();
 
-  getHours(date: Date): number {
-    return date?.getHours();
-  }
+  getMinutes = (date: Date): number => date?.getMinutes();
 
-  getMinutes(date: Date): number {
-    return date?.getMinutes();
-  }
+  getSeconds = (date: Date): number => date?.getSeconds();
 
-  getSeconds(date: Date): number {
-    return date?.getSeconds();
-  }
-
-  setTime(date: Date, hours: number, minutes: number, seconds: number): Date {
+  setTime = (date: Date, hours: number, minutes: number, seconds: number): Date => {
     date?.setHours(hours, minutes, seconds, 0);
     return date;
-  }
+  };
 }
 
-export function provideEntryNativeTimeAdapter(dateTimeFormats: EntryDateTimeFormats = defaultDateTimeFormats): Provider[] {
-  return [
+export const provideEntryNativeTimeAdapter = (dateTimeFormats: EntryDateTimeFormats = defaultDateTimeFormats): Provider[] => [
     { provide: EntryTimeAdapter, useClass: EntryNativeTimeAdapter },
     { provide: ENTRY_MAT_DATE_TIME_FORMATS, useValue: dateTimeFormats }
-  ]
-}
+  ];

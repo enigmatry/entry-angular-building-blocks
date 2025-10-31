@@ -10,11 +10,13 @@ SelectOption<T>
 
 #### Extends
 
-- [`SearchFilterBase`](public-api.md#searchfilterbaset)\<[`SelectOption`](public-api.md#selectoptiont)\<`T`\>\>
+- [`SearchFilterBase`](#searchfilterbase)\<[`SelectOption`](#selectoption)\<`T`\>\>
 
 #### Type Parameters
 
-• **T**
+##### T
+
+`T`
 
 #### Properties
 
@@ -41,11 +43,13 @@ Search filter date input filed configuration.
 
 #### Extends
 
-- [`SearchFilterBase`](public-api.md#searchfilterbaset)\<`D`\>
+- [`SearchFilterBase`](#searchfilterbase)\<`D`\>
 
 #### Type Parameters
 
-• **D**
+##### D
+
+`D`
 
 #### Properties
 
@@ -69,11 +73,13 @@ Search filter date time input filed configuration.
 
 #### Extends
 
-- [`SearchFilterBase`](public-api.md#searchfilterbaset)\<`D`\>
+- [`SearchFilterBase`](#searchfilterbase)\<`D`\>
 
 #### Type Parameters
 
-• **D**
+##### D
+
+`D`
 
 #### Properties
 
@@ -163,15 +169,17 @@ Base Entry search filter input component.
 
 #### Extended by
 
-- [`TextSearchFilter`](public-api.md#textsearchfilter)
-- [`SelectSearchFilter`](public-api.md#selectsearchfiltert)
-- [`AutocompleteSearchFilter`](public-api.md#autocompletesearchfiltert)
-- [`DateTimeSearchFilter`](public-api.md#datetimesearchfilterd)
-- [`DateSearchFilter`](public-api.md#datesearchfilterd)
+- [`TextSearchFilter`](#textsearchfilter)
+- [`SelectSearchFilter`](#selectsearchfilter)
+- [`AutocompleteSearchFilter`](#autocompletesearchfilter)
+- [`DateTimeSearchFilter`](#datetimesearchfilter)
+- [`DateSearchFilter`](#datesearchfilter)
 
 #### Type Parameters
 
-• **T**
+##### T
+
+`T`
 
 #### Properties
 
@@ -195,7 +203,9 @@ Model used to populate select or autocomplete options.
 
 #### Type Parameters
 
-• **T**
+##### T
+
+`T`
 
 #### Properties
 
@@ -213,11 +223,13 @@ or observable (dynamic) list (`options$`).
 
 #### Extends
 
-- [`SearchFilterBase`](public-api.md#searchfilterbaset)\<`T`\>
+- [`SearchFilterBase`](#searchfilterbase)\<`T`\>
 
 #### Type Parameters
 
-• **T**
+##### T
+
+`T`
 
 #### Properties
 
@@ -244,7 +256,7 @@ Search filter text input filed configuration.
 
 #### Extends
 
-- [`SearchFilterBase`](public-api.md#searchfilterbaset)\<`string`\>
+- [`SearchFilterBase`](#searchfilterbase)\<`string`\>
 
 #### Properties
 
@@ -260,11 +272,9 @@ Search filter text input filed configuration.
 | <a id="type-5"></a> `type` | `string` | `undefined` | Type of input control e.g. 'text' or 'email' | - | [`SearchFilterBase`](public-api.md#searchfilterbaset).[`type`](public-api.md#type-3) |  |
 | <a id="value-5"></a> `value` | `string` | `undefined` | Default value to be displayed/selected in the input control | - | [`SearchFilterBase`](public-api.md#searchfilterbaset).[`value`](public-api.md#value-3) |  |
 
-## Type Aliases
+## Interfaces
 
 ### SearchFilterParams
-
-> **SearchFilterParams**: `object`
 
 SearchFilterParams are the same type as @angular/router type Params,
 containing a collection of query URL parameters for easy integration.

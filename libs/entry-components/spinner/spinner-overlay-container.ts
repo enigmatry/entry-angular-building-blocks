@@ -5,10 +5,10 @@ import { Inject, Injectable, OnDestroy } from '@angular/core';
 
 @Injectable()
 export class SpinnerOverlayContainer extends OverlayContainer implements OnDestroy {
-
   private _appendTo: HTMLElement = this._document.body;
   private _options: { fullscreen: boolean };
 
+  // eslint-disable-next-line @angular-eslint/prefer-inject
   constructor(@Inject(DOCUMENT) document: Document, platform: Platform) {
     super(document, platform);
   }
@@ -18,14 +18,14 @@ export class SpinnerOverlayContainer extends OverlayContainer implements OnDestr
     this._options = options;
   }
 
-  getContainerElement(): HTMLElement {
+  override getContainerElement(): HTMLElement {
     if (!this._containerElement) {
       this.createContainer();
     }
     return this._containerElement;
   }
 
-  ngOnDestroy() {
+  override ngOnDestroy() {
     this._containerElement?.remove();
   }
 

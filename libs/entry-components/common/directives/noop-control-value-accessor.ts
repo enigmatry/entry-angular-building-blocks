@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { Directive } from "@angular/core";
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
+import { Directive } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Directive({
     standalone: true,
@@ -13,8 +13,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
     ]
 })
 export class NoopControlValueAccessorDirective implements ControlValueAccessor {
-    writeValue(_obj: any): void { }
-    registerOnChange(_fn: any): void { }
-    registerOnTouched(_fn: any): void { }
-    setDisabledState?(_isDisabled: boolean): void { }
+    writeValue = (_obj: any): void => { };
+    registerOnChange = (_fn: any): void => { };
+    registerOnTouched = (_fn: any): void => { };
+    setDisabledState = (_isDisabled: boolean): void => { };
 }

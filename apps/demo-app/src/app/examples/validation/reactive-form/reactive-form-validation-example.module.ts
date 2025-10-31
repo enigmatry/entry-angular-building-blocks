@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormExampleComponent } from './reactive-form-validation-example.component';
+import { NgModule } from '@angular/core';
 import { AbstractControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EntryValidationModule, provideEntryValidationConfig } from '@enigmatry/entry-components/validation';
 import { SharedModule } from '../../../shared/shared.module';
+import { ReactiveFormExampleComponent } from './reactive-form-validation-example.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +14,7 @@ import { SharedModule } from '../../../shared/shared.module';
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
-    EntryValidationModule,
+    EntryValidationModule
   ],
   exports: [
     ReactiveFormExampleComponent
@@ -23,7 +23,8 @@ import { SharedModule } from '../../../shared/shared.module';
     provideEntryValidationConfig({
       validationMessages: [
         { name: 'required', message: 'This field is mandatory!' },
-        { name: 'minlength', message: (control: AbstractControl) => `Minimal length is ${control.errors.minlength.requiredLength}!` }
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        { name: 'minlength', message: (control: AbstractControl) => `Minimal length is ${control!.errors!['minlength'].requiredLength}!` }
       ]
     })
   ]

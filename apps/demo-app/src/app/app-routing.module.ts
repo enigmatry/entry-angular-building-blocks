@@ -1,4 +1,4 @@
-/* eslint-disable max-len */
+
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RouteSegments } from './features/route-segments';
@@ -51,7 +51,8 @@ const routes: Routes = [
   },
   {
     path: RouteSegments.dateTimePicker,
-    loadComponent: () => import('./features/date-time-picker/date-time-picker-documentation.component').then(m => m.DateTimePickerDocumentationComponent)
+    loadComponent: () => import('./features/date-time-picker/date-time-picker-documentation.component')
+      .then(m => m.DateTimePickerDocumentationComponent)
   }
 ];
 

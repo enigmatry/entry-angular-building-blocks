@@ -1,4 +1,4 @@
-import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
+import { inject, Injectable, InjectionToken } from '@angular/core';
 import { ENTRY_FORM_CONFIG, EntryFormConfig, FieldTypeResolverConfig, FieldTypeMappings } from '../interfaces/form-config';
 
 export declare type FieldTypeResolver = (type: string, isReadonly: boolean) => string;
@@ -12,7 +12,10 @@ export const fieldTypeResolverFactory = (service: FieldTypeResolverService) =>
   providedIn: 'root'
 })
 export class FieldTypeResolverService {
-  constructor(@Optional() @Inject(ENTRY_FORM_CONFIG) private _formConfig: EntryFormConfig) {
+private readonly _formConfig: EntryFormConfig | null;
+
+  constructor() {
+    this._formConfig = inject(ENTRY_FORM_CONFIG, { optional: true });
   }
 
   get resolverConfig(): FieldTypeResolverConfig {

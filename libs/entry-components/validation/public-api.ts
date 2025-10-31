@@ -3,7 +3,7 @@ export { EntryDisplayControlValidationDirective } from './entry-display-control-
 
 export { EntryValidationModule } from './entry-validation.module';
 
-export { IValidationProblemDetails } from './validation-problem-details.interface';
+export type { IValidationProblemDetails } from './validation-problem-details.interface';
 export * from './entry-validation';
 
 export * from './entry-validation-config.model';

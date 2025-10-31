@@ -8,5 +8,6 @@ import { FormControl } from '@angular/forms';
 })
 export class DefaultTimeComponent {
   dateTime = new FormControl();
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   defaultTime = new Date(0, 0, 0, 12, 0, 0);
 }

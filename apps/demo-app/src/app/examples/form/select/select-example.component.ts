@@ -10,7 +10,6 @@ import { map } from 'rxjs/operators';
     standalone: false
 })
 export class SelectExampleComponent {
-
   @Input() typeOptions = [
     { value: 0, displayName: `Food` },
     { value: 1, displayName: `Drink` },
@@ -31,7 +30,7 @@ export class SelectExampleComponent {
         valueProp: 'value',
         labelProp: 'displayName'
       }
-    },
+    }
   ];
 
   multi: FormlyFieldConfig[] = [
@@ -48,7 +47,7 @@ export class SelectExampleComponent {
         labelProp: 'displayName',
         multiple: true
       }
-    },
+    }
   ];
 
   autocomplete: FormlyFieldConfig[] = [
@@ -64,6 +63,6 @@ export class SelectExampleComponent {
         valueProp: 'value',
         labelProp: 'displayName'
       }
-    },
+    }
   ];
 }

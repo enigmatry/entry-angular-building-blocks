@@ -5,7 +5,7 @@ export type EntryDateTimeFormats = MatDateFormats;
 
 export const defaultDateTimeFormats = {
   parse: {
-    dateInput: ['dd-MM-yyyy', 'dd-MM-yyyy HH', 'dd-MM-yyyy HH:mm'],
+    dateInput: ['dd-MM-yyyy', 'dd-MM-yyyy HH', 'dd-MM-yyyy HH:mm']
   },
   display: {
     dateInput: 'dd-MM-yyyy HH:mm',

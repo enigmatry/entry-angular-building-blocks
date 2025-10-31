@@ -1,9 +1,11 @@
-/* eslint-disable @typescript-eslint/member-ordering */
+/* eslint-disable max-lines */
+
 import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
 import {
   ChangeDetectionStrategy,
   Component, ElementRef, EventEmitter, Input, NgZone,
-  OnDestroy, OnInit, Output, Renderer2, ViewChild, forwardRef
+  OnDestroy, OnInit, Output, Renderer2, ViewChild, forwardRef,
+  inject
 } from '@angular/core';
 import {
   AbstractControl, ControlValueAccessor, NG_VALIDATORS,
@@ -15,11 +17,13 @@ import { takeUntil } from 'rxjs/operators';
 const providers = [
   {
     provide: NG_VALUE_ACCESSOR,
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
     useExisting: forwardRef(() => EntryFileInputComponent),
     multi: true
   },
   {
     provide: NG_VALIDATORS,
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
     useExisting: forwardRef(() => EntryFileInputComponent),
     multi: true
   }
@@ -34,6 +38,8 @@ const providers = [
   providers
 })
 export class EntryFileInputComponent implements OnInit, OnDestroy, ControlValueAccessor, Validator {
+    private readonly _ngZone: NgZone = inject(NgZone);
+    private readonly _renderer: Renderer2 = inject(Renderer2);
 
   /**
    * Label for the select file button. Defaults to 'Choose file...'
@@ -43,7 +49,7 @@ export class EntryFileInputComponent implements OnInit, OnDestroy, ControlValueA
   /**
    * MatIcon for the select file button. Defaults to 'insert_drive_file' (optional)
    */
-  @Input() matIcon?= 'insert_drive_file';
+  @Input() matIcon? = 'insert_drive_file';
 
   /**
    * Same as 'accept' attribute in <input/> element.
@@ -115,11 +121,6 @@ export class EntryFileInputComponent implements OnInit, OnDestroy, ControlValueA
 
   private _destroy$ = new Subject<void>();
 
-  constructor(
-    private readonly _ngZone: NgZone,
-    private readonly _renderer: Renderer2) {
-  }
-
   get fileNames(): string {
     if (this.value instanceof File) {
       return this.value.name;
@@ -147,10 +148,11 @@ export class EntryFileInputComponent implements OnInit, OnDestroy, ControlValueA
 
   onFileSelect(event: Event): void {
     const fileInputEl = event.target as HTMLInputElement;
-    const files: FileList = fileInputEl.files;
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const files: FileList = fileInputEl.files!;
 
     const value = this._multiple
-      ? files?.length > 1 ? files : files[0]
+      ? files.length > 1 ? files : files[0]
       : files[0];
 
     this.value = value;
@@ -170,7 +172,7 @@ export class EntryFileInputComponent implements OnInit, OnDestroy, ControlValueA
 
   // implements ControlValueAccessor interface
 
-  onChange = (_: any) => { 
+  onChange = (_: any) => {
     // set by registerOnChange
   };
 
@@ -196,7 +198,7 @@ export class EntryFileInputComponent implements OnInit, OnDestroy, ControlValueA
 
   // implements Validator interface
 
-  validate(control: AbstractControl<File | FileList | undefined>): ValidationErrors {
+  validate(control: AbstractControl<File | FileList | undefined>): ValidationErrors | null {
     const isSizeLimitExceeded = this.isFileSizeLimitExceeded(control.value);
     const isCountLimitExceeded = this.isFileCountLimitExceeded(control.value);
 
@@ -204,24 +206,25 @@ export class EntryFileInputComponent implements OnInit, OnDestroy, ControlValueA
       return null;
     }
     return {
-      ...(isSizeLimitExceeded ? { maxFileSize: true } : {}),
-      ...(isCountLimitExceeded ? { maxFileCount: true } : {})
+      ...isSizeLimitExceeded ? { maxFileSize: true } : {},
+      ...isCountLimitExceeded ? { maxFileCount: true } : {}
     };
   }
 
-  private isFileCountLimitExceeded(files: File | FileList): boolean {
+  private isFileCountLimitExceeded(files: File | FileList | undefined): boolean {
     const isMultiple = this.multiple && files instanceof FileList;
     const maxFileCount = this.maxFileCount;
     const actualFileCount = (files as FileList)?.length;
 
-    return isMultiple && maxFileCount && actualFileCount > maxFileCount;
+    return isMultiple && !!maxFileCount && actualFileCount > maxFileCount;
   }
 
-  private isFileSizeLimitExceeded(files: File | FileList): boolean {
+  private isFileSizeLimitExceeded(files: File | FileList | undefined): boolean {
     if (!this.maxFileSizeInKb) {
       return false;
     }
-    const maxFileSizeInBytes = this.maxFileSizeInKb * 1024;
+    const kilobyte = 1024;
+    const maxFileSizeInBytes = this.maxFileSizeInKb * kilobyte;
 
     if (files instanceof File) {
       return files.size > maxFileSizeInBytes;

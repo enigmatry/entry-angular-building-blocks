@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/member-ordering */
-
+/* eslint-disable max-lines */
+import { SelectionModel } from '@angular/cdk/collections';
 import {
   Component,
   Input,
@@ -12,12 +12,11 @@ import {
   ElementRef,
   SimpleChanges,
   HostBinding,
-  Inject,
+  inject
 } from '@angular/core';
-import { SelectionModel } from '@angular/cdk/collections';
-import { MatTableDataSource } from '@angular/material/table';
 import { PageEvent } from '@angular/material/paginator';
 import { Sort, SortDirection } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 import {
   ColumnDef, PagedData, RowSelectionFormatter, RowClassFormatter,
@@ -25,21 +24,23 @@ import {
 } from '../../interfaces';
 
 @Component({
-    selector: 'entry-table',
-    templateUrl: './entry-table.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+  selector: 'entry-table',
+  templateUrl: './entry-table.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false
 })
 export class EntryTableComponent<T> implements OnChanges {
   @HostBinding('class') className = 'entry-table';
 
+  private readonly _config: EntryTableConfig = inject(ENTRY_TABLE_CONFIG);
+  private readonly _elementRef = inject(ElementRef<HTMLElement>);
+  private readonly _changeDetectorRef = inject(ChangeDetectorRef);
   dataSource = new MatTableDataSource<T>([]);
 
   @Input() displayedColumns: string[];
   @Input() columns: ColumnDef[] = [];
 
   // Data
-
   private _data: T[] = [];
   private _page: PagedData<T>;
   @Input() data: T[] | PagedData<T> | null | undefined = [];
@@ -47,7 +48,6 @@ export class EntryTableComponent<T> implements OnChanges {
   @Input() loading = false;
 
   // Pagination
-
   @Input() showPaginator: boolean;
   @Input() pageDisabled = false;
   @Input() showFirstLastButtons: boolean;
@@ -55,12 +55,10 @@ export class EntryTableComponent<T> implements OnChanges {
   @Input() pageSize: number;
   @Input() pageSizeOptions: number[];
   @Input() hidePageSize: boolean;
+  @Input() paginationTemplate: TemplateRef<any>;
   @Output() pageChange = new EventEmitter<PageEvent>();
 
-  @Input() paginationTemplate: TemplateRef<any>;
-
   // Sort
-
   @Input() sortActive: string;
   @Input() sortDirection: SortDirection;
   @Input() sortDisableClear = false;
@@ -69,14 +67,12 @@ export class EntryTableComponent<T> implements OnChanges {
   @Output() sortChange = new EventEmitter<Sort>();
 
   // Row
-
   @Input() rowHover = false;
   @Input() rowStriped = false;
   @Input() rowFocusVisible: boolean;
   @Output() rowClick = new EventEmitter<T>();
 
   // Row selection
-
   @Input() multiSelectable = true;
   rowSelection: SelectionModel<T> = new SelectionModel<T>(true, []);
 
@@ -88,7 +84,6 @@ export class EntryTableComponent<T> implements OnChanges {
   @Output() rowSelectionChange = new EventEmitter<T[]>();
 
   // Context menu
-
   @Input() showContextMenu = false;
   @Input() contextMenuItems: ContextMenuItem[] = [];
   @Input() contextMenuTemplate: TemplateRef<any> | null;
@@ -96,7 +91,6 @@ export class EntryTableComponent<T> implements OnChanges {
   @Output() contextMenuItemSelected = new EventEmitter<{ itemId: string; rowData: T }>();
 
   // No Result
-
   @Input() noResultText: string;
   @Input() noResultTemplate: TemplateRef<any> | null;
 
@@ -107,29 +101,25 @@ export class EntryTableComponent<T> implements OnChanges {
     return (!this.data || this._data.length === 0) && !this.loading;
   }
 
-  @Input() headerTemplate: TemplateRef<any> | CellTemplate | any;
+  @Input() headerTemplate: TemplateRef<unknown> | CellTemplate | Record<string, TemplateRef<unknown>>;
+  @Input() cellTemplate: TemplateRef<unknown> | CellTemplate | Record<string, TemplateRef<unknown>>;
 
-  @Input() cellTemplate: TemplateRef<any> | CellTemplate | any;
-
-  constructor(
-    @Inject(ENTRY_TABLE_CONFIG) private _config: EntryTableConfig,
-    private _elementRef: ElementRef<HTMLElement>,
-    private _changeDetectorRef: ChangeDetectorRef) { }
+  readonly toTemplateIndex = (template: TemplateRef<unknown> | CellTemplate | Record<string, TemplateRef<unknown>>, key: string) =>
+    (template as unknown as Record<string, TemplateRef<unknown>>)[key];
 
   detectChanges() {
     this._changeDetectorRef.detectChanges();
   }
 
-  isTemplateRef(obj: any) {
-    return obj instanceof TemplateRef;
-  }
+  isTemplateRef = (obj: any) => obj instanceof TemplateRef;
 
   getRowClassList(rowData: T, index: number) {
     const classList = {
       selected: this.rowSelection.isSelected(rowData),
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      'mat-row-odd': index % 2,
-    };
+
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      'mat-row-odd': index % 2
+    } as Record<string, unknown>;
     if (this.rowClassFormatter) {
       for (const key of Object.keys(this.rowClassFormatter)) {
         classList[key] = this.rowClassFormatter[key](rowData);
@@ -147,6 +137,32 @@ export class EntryTableComponent<T> implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    this.initializeVariables();
+
+    if (Array.isArray(this.data)) {
+      this._data = this.data as T[];
+    } else {
+      this._page = this.data as PagedData<T>;
+      this._data = this._page.items ?? [];
+      this.total = this._page.totalCount ?? 0;
+      this.pageSize = this._page.pageSize ?? this.pageSize ?? this._config.pageSize;
+      this.pageIndex = this._page.pageNumber ? this._page.pageNumber - 1 : this.pageIndex;
+    }
+
+    if (this.dataSource) {
+      this.dataSource.disconnect();
+    }
+
+    this.dataSource = new MatTableDataSource(this._data);
+
+    if (changes['data']) {
+      this.scrollToTop();
+    }
+  }
+
+  getIndex = (index: number, dataIndex: number) => typeof index === 'undefined' ? dataIndex : index;
+
+  private readonly initializeVariables = () => {
     this.showPaginator = this.showPaginator ?? this._config.showPaginator;
     this.showFirstLastButtons = this.showFirstLastButtons ?? this._config.showFirstLastButtons;
     this.pageSizeOptions = this.pageSizeOptions ?? this._config.pageSizeOptions;
@@ -171,31 +187,7 @@ export class EntryTableComponent<T> implements OnChanges {
     if (!this.data) {
       this.data = [];
     }
-
-    if (Array.isArray(this.data)) {
-      this._data = this.data as T[];
-    } else {
-      this._page = this.data as PagedData<T>;
-      this._data = this._page.items ?? [];
-      this.total = this._page.totalCount ?? 0;
-      this.pageSize = this._page.pageSize ?? this.pageSize ?? this._config.pageSize;
-      this.pageIndex = this._page.pageNumber ? this._page.pageNumber - 1 : this.pageIndex;
-    }
-
-    if (this.dataSource) {
-      this.dataSource.disconnect();
-    }
-
-    this.dataSource = new MatTableDataSource(this._data);
-
-    if (changes.data) {
-      this.scrollToTop();
-    }
-  }
-
-  getIndex(index: number, dataIndex: number) {
-    return typeof index === 'undefined' ? dataIndex : index;
-  }
+  };
 
   isAllSelected() {
     const numSelected = this.rowSelection.selected.length;
@@ -230,11 +222,9 @@ export class EntryTableComponent<T> implements OnChanges {
     this._elementRef.nativeElement.scrollTop = 0;
   }
 
-  get shouldShowPaginator(){
+  get shouldShowPaginator() {
     return this.showPaginator && this._data.length > 0;
   }
 
-  private convertToKebabCase(value: string): string {
-    return value?.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
-  }
+  convertToKebabCase = (value: string): string => value?.replace(/([a-z0-9])([A-Z])/gu, '$1-$2').toLowerCase();
 }

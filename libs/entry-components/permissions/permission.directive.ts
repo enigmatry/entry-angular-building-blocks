@@ -1,24 +1,29 @@
-import { NgIf } from '@angular/common';
-import { Directive, Input, inject } from '@angular/core';
+import { Directive, Input, inject, ElementRef, Renderer2 } from '@angular/core';
 import { PermissionType } from './permission-type';
 import { EntryPermissionService } from './permission.service';
 
 @Directive({
     selector: '[entryPermissionsOnly],[entryPermissionsExcept]',
-    hostDirectives: [{
-            directive: NgIf
-        }],
     standalone: false
 })
 export class EntryPermissionDirective<T extends PermissionType> {
-  private ngIfDirective = inject(NgIf);
+  private elementRef = inject(ElementRef);
+  private renderer = inject(Renderer2);
   private permissionService = inject(EntryPermissionService<T>);
 
   @Input('entryPermissionsOnly') set only(permissions: T[]) {
-    this.ngIfDirective.ngIf = this.permissionService.hasPermissions(permissions);
+    this.toggleVisibility(this.permissionService.hasPermissions(permissions));
   }
 
   @Input('entryPermissionsExcept') set except(permissions: T[]) {
-    this.ngIfDirective.ngIf = !this.permissionService.hasPermissions(permissions);
+    this.toggleVisibility(!this.permissionService.hasPermissions(permissions));
+  }
+
+  private toggleVisibility(show: boolean): void {
+    if (show) {
+      this.renderer.removeStyle(this.elementRef.nativeElement, 'display');
+    } else {
+      this.renderer.setStyle(this.elementRef.nativeElement, 'display', 'none');
+    }
   }
 }

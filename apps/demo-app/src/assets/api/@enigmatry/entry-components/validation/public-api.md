@@ -115,7 +115,7 @@ Defines the api used as a container for server side validation errors.
 
 ### ENTRY\_VALIDATION\_CONFIG
 
-> `const` **ENTRY\_VALIDATION\_CONFIG**: `InjectionToken`\<[`EntryValidationConfig`](public-api.md#entryvalidationconfig)\>
+> `const` **ENTRY\_VALIDATION\_CONFIG**: `InjectionToken`\<[`EntryValidationConfig`](#entryvalidationconfig)\>
 
 Entry validation injection token of EntryValidationConfig type containing validation default configurations.
 Can be updated with custom configuration.

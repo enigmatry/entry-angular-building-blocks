@@ -6,7 +6,7 @@ import { SharedModule } from '../../shared/shared.module';
     templateUrl: './file-input-documentation.component.html',
     imports: [
         SharedModule,
-        FileInputExampleModule,
+        FileInputExampleModule
     ]
 })
 export class FileInputDocumentationComponent {}

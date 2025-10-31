@@ -6,7 +6,7 @@ import { SharedModule } from '../../shared/shared.module';
     templateUrl: './form-documentation.component.html',
     imports: [
         SharedModule,
-        FormExampleModule,
+        FormExampleModule
     ]
 })
 export class FormDocumentationComponent { }

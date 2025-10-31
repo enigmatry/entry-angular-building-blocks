@@ -7,16 +7,16 @@
     </mat-toolbar-row>
     <mat-tab-group animationDuration="0ms" *ngIf="viewCode" mat-stretch-tabs="false">
         <mat-tab label="HTML" *ngIf="showHtml">
-            <app-code-view [codeContent]="htmlFile" codeType="html"></app-code-view>
+            <app-code-view [codeContent]="htmlFile ?? ''" codeType="html"></app-code-view>
         </mat-tab>
         <mat-tab label="TS" *ngIf="showTs">
-            <app-code-view [codeContent]="typescriptFile" codeType="ts"></app-code-view>
+            <app-code-view [codeContent]="typescriptFile ?? ''" codeType="ts"></app-code-view>
         </mat-tab>
         <mat-tab label="SCSS" *ngIf="showScss">
-            <app-code-view [codeContent]="stylesFile" codeType="scss"></app-code-view>
+            <app-code-view [codeContent]="stylesFile ?? ''" codeType="scss"></app-code-view>
         </mat-tab>
         <mat-tab label="DOCS" *ngIf="showDocs">
-            <app-markdown-viewer [markdownContent]="docsFile"></app-markdown-viewer>
+            <app-markdown-viewer [markdownContent]="docsFile ?? ''"></app-markdown-viewer>
         </mat-tab>
         <mat-tab *ngFor="let file of extraFilesToDisplay" [label]="file.name">
             <app-code-view [codeContent]="file.content" [codeType]="file.type"></app-code-view>

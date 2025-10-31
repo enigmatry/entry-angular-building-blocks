@@ -1,6 +1,6 @@
+import { Provider } from '@angular/core';
 import { createInjectionToken, provideConfig } from '@enigmatry/entry-components/common';
 import { EntryDialogButtonsAlignment } from './entry-dialog-buttons-alignment.type';
-import { Provider } from '@angular/core';
 
 /**
  * Used to provide default configurations on module level.
@@ -41,6 +41,5 @@ export const ENTRY_DIALOG_CONFIG = createInjectionToken(new EntryDialogConfig())
 /**
  * Can be used to provide entry dialog configuration.
  */
-export function provideEntryDialogConfig(config: Partial<EntryDialogConfig>): Provider {
-    return provideConfig(ENTRY_DIALOG_CONFIG, () => new EntryDialogConfig(config));
-}
+export const provideEntryDialogConfig = (config: Partial<EntryDialogConfig>): Provider =>
+    provideConfig(ENTRY_DIALOG_CONFIG, () => new EntryDialogConfig(config));

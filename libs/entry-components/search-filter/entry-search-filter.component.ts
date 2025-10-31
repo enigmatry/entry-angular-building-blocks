@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormGroup } from '@angular/forms';
 import { AutocompleteSearchFilter } from './autocomplete/autocomplete-search-filter.model';
 import { ControlType } from './control-type';
@@ -10,7 +11,6 @@ import { SearchFilterParams } from './search-filter-params.type';
 import { SelectSearchFilter } from './select/select-search-filter.model';
 import { SelectOption } from './select-option.model';
 import { TextSearchFilter } from './text/text-search-filter.model';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 /**
  * Entry SearchFilter component.

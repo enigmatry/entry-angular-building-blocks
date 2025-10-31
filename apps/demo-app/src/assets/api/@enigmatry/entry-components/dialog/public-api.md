@@ -100,7 +100,7 @@ Any result custom implementation provides
 
 ##### openAlert()
 
-> **openAlert**(`data`): `Observable`\<`true`\>
+> **openAlert**(`data`): `Observable`\<`undefined` \| `true`\>
 
 Opens alert dialog.
 
@@ -114,13 +114,13 @@ Contains title, message and optional confirm button text
 
 ###### Returns
 
-`Observable`\<`true`\>
+`Observable`\<`undefined` \| `true`\>
 
 `true` if confirmed, `undefined` if closed by clicking on backdrop or pressing escape
 
 ##### openConfirm()
 
-> **openConfirm**(`data`): `Observable`\<`boolean`\>
+> **openConfirm**(`data`): `Observable`\<`undefined` \| `boolean`\>
 
 Opens confirm dialog.
 
@@ -134,13 +134,13 @@ Contains title, message and optional confirm/cancel buttons text
 
 ###### Returns
 
-`Observable`\<`boolean`\>
+`Observable`\<`undefined` \| `boolean`\>
 
 `true` if confirmed, `false` if canceled or closed, `undefined` if closed by clicking on backdrop or pressing escape
 
 ##### openError()
 
-> **openError**(`data`): `Observable`\<`true`\>
+> **openError**(`data`): `Observable`\<`undefined` \| `true`\>
 
 Opens error dialog.
 
@@ -154,7 +154,7 @@ Contains title, errors and optional confirm button text
 
 ###### Returns
 
-`Observable`\<`true`\>
+`Observable`\<`undefined` \| `true`\>
 
 `true` if confirmed, `undefined` if closed by clicking on backdrop or pressing escape
 
@@ -166,8 +166,8 @@ Alert dialog data.
 
 #### Extended by
 
-- [`IEntryConfirmDialogData`](public-api.md#ientryconfirmdialogdata)
-- [`IEntryErrorDialogData`](public-api.md#ientryerrordialogdata)
+- [`IEntryConfirmDialogData`](#ientryconfirmdialogdata)
+- [`IEntryErrorDialogData`](#ientryerrordialogdata)
 
 #### Properties
 
@@ -188,7 +188,7 @@ Confirm dialog data. Extends IEntryAlertDialogData.
 
 #### Extends
 
-- [`IEntryAlertDialogData`](public-api.md#ientryalertdialogdata)
+- [`IEntryAlertDialogData`](#ientryalertdialogdata)
 
 #### Properties
 
@@ -210,7 +210,7 @@ Error dialog data.
 
 #### Extends
 
-- [`IEntryAlertDialogData`](public-api.md#ientryalertdialogdata)
+- [`IEntryAlertDialogData`](#ientryalertdialogdata)
 
 #### Properties
 
@@ -228,7 +228,7 @@ Error dialog data.
 
 ### EntryDialogButtonsAlignment
 
-> **EntryDialogButtonsAlignment**: `"start"` \| `"center"` \| `"end"`
+> **EntryDialogButtonsAlignment** = `"start"` \| `"center"` \| `"end"`
 
 Defines horizontal alignment of dialog buttons.
 
@@ -236,7 +236,7 @@ Defines horizontal alignment of dialog buttons.
 
 ### ENTRY\_DIALOG\_CONFIG
 
-> `const` **ENTRY\_DIALOG\_CONFIG**: `InjectionToken`\<[`EntryDialogConfig`](public-api.md#entrydialogconfig)\>
+> `const` **ENTRY\_DIALOG\_CONFIG**: `InjectionToken`\<[`EntryDialogConfig`](#entrydialogconfig)\>
 
 Entry dialog injection token of EntryDialogConfig type containing dialog default configurations.
 

@@ -44,7 +44,7 @@ export class SearchFilterBase<T> {
     }
   }
 
-  toFormControl(): FormControl<T> {
-    return new FormControl<T>(this.value);
+  toFormControl(): FormControl<T | null | undefined> {
+    return new FormControl<T | undefined>(this.value);
   }
 }

@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, Inject, Input } from '@angular/core';
-import { SelectSearchFilter } from './select-search-filter.model';
+import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
 import { ENTRY_SEARCH_FILTER_CONFIG, EntrySearchFilterConfig } from '../search-filter-config.model';
+import { SelectSearchFilter } from './select-search-filter.model';
 
 @Component({
     selector: 'entry-select-search-filter',
@@ -15,5 +15,5 @@ export class SelectSearchFilterComponent<T> {
   /** Form group to which the search-filter input component will be added. */
   @Input() form: UntypedFormGroup;
 
-  constructor(@Inject(ENTRY_SEARCH_FILTER_CONFIG) public config: EntrySearchFilterConfig) { }
+  public readonly config: EntrySearchFilterConfig = inject(ENTRY_SEARCH_FILTER_CONFIG);
 }
