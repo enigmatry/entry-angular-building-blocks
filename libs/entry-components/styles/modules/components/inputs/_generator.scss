@@ -1,8 +1,7 @@
+/* stylelint-disable max-nesting-depth, @stylistic/max-line-length */
 @use 'sass:map';
 
-/* stylelint-disable-next-line @stylistic/max-line-length */
 $focused-label: '.mdc-text-field--filled:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-floating-label, .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-floating-label';
-/* stylelint-disable-next-line @stylistic/max-line-length */
 $disabled-field: '.mdc-text-field--filled.mdc-text-field--disabled, .mdc-text-field--outlined.mdc-text-field--disabled';
 $disabled-outline-border: '.mat-mdc-notch-piece';
 
@@ -51,14 +50,12 @@ $disabled-outline-border: '.mat-mdc-notch-piece';
 				}
 
 				@if $disabled-color {
-					/* stylelint-disable-next-line max-nesting-depth */
 					.mdc-floating-label, .mdc-text-field__input {
 						color: $disabled-color;
 					}
 				}
 
 				@if $disabled-border {
-					/* stylelint-disable-next-line max-nesting-depth */
 					.mdc-line-ripple::before {
 						border-bottom-color: $disabled-border;
 					}

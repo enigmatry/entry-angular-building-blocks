@@ -28,6 +28,16 @@ $custom-theme: (
 			border-hover-color: green
 		)
 	),
+	buttons: (
+		disabled: (
+			foreground: cyan,
+			background: magenta
+		)
+	),
+	checkboxes: (
+		background: red,
+		border-hover-color: green
+	),
 	tables: (
 		cells: (
 			edge-gap: 11px,
