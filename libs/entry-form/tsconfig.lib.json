@@ -6,6 +6,7 @@
     "declaration": true,
     "declarationMap": true,
     "inlineSources": true,
+    "moduleResolution": "bundler",
     "types": [],
     "paths": {
       "@enigmatry/entry-components/date-time-picker": ["dist/enigmatry/entry-components/date-time-picker"],
