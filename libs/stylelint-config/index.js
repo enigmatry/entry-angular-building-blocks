@@ -71,7 +71,7 @@ module.exports = {
       {
         ignore: ["empty-lines"]
       }
-     ],
+    ],
     "@stylistic/no-extra-semicolons": true,
     "@stylistic/no-missing-end-of-source-newline": null,
     "@stylistic/number-leading-zero": "never",
@@ -106,7 +106,7 @@ module.exports = {
         ignoreAnnotations: ["default"]
       }
     ],
-   "at-rule-allowed-list": ["use", "for", "if", "else", "include", "extend", "return", "error", "each", "mixin", "function", "keyframes", "font-face", "forward", "at-root", "while"],
+    "at-rule-allowed-list": ["use", "for", "if", "else", "include", "extend", "return", "error", "each", "mixin", "function", "keyframes", "font-face", "forward", "at-root", "while"],
     "at-rule-descriptor-no-unknown": null,
     "at-rule-descriptor-value-no-unknown": null,
     "at-rule-disallowed-list": null,
@@ -124,6 +124,8 @@ module.exports = {
     "at-rule-prelude-no-invalid": null,
     "at-rule-property-required-list": null,
     "block-no-empty": true,
+    "block-no-redundant-nested-style-rules": true,
+    "color-function-alias-notation": "without-alpha",
     "color-function-notation": "modern",
     "color-hex-alpha": null,
     "color-hex-length": "short",
@@ -135,6 +137,7 @@ module.exports = {
     "comment-pattern": null,
     "comment-whitespace-inside": "always",
     "comment-word-disallowed-list": null,
+    "container-name-pattern": null,
     "custom-media-pattern": null,
     "custom-property-empty-line-before": "always",
     "custom-property-no-missing-var-function": null,
@@ -177,6 +180,7 @@ module.exports = {
     "keyframe-declaration-no-important": true,
     "keyframe-selector-notation": "percentage-unless-within-keyword-only-block",
     "keyframes-name-pattern": null,
+    "layer-name-pattern": null,
     "length-zero-no-unit": true,
     "lightness-notation": "number",
     "max-nesting-depth": [
@@ -193,6 +197,8 @@ module.exports = {
     "media-feature-name-value-no-unknown": null,
     "media-feature-range-notation": "context",
     "media-query-no-invalid": true,
+    "media-type-no-deprecated": true,
+    "nesting-selector-no-missing-scoping-root": true,
     "named-grid-areas-no-invalid": true,
     "no-descending-specificity": true,
     "no-duplicate-at-import-rules": true,
@@ -200,6 +206,7 @@ module.exports = {
     "no-empty-source": null,
     "no-invalid-double-slash-comments": true,
     "no-invalid-position-at-import-rule": true,
+    "no-invalid-position-declaration": true,
     "no-irregular-whitespace": null,
     "no-unknown-animations": true,
     "no-unknown-custom-media": true,
@@ -207,6 +214,7 @@ module.exports = {
     "number-max-precision": 2,
     "property-allowed-list": null,
     "property-disallowed-list": null,
+    "property-no-deprecated": true,
     "property-no-vendor-prefix": true,
     "rule-empty-line-before": [
       "always",
@@ -214,6 +222,7 @@ module.exports = {
         except: ["after-single-line-comment", "first-nested"]
       }
     ],
+    "rule-nesting-at-rule-required-list": null,
     "rule-selector-property-disallowed-list": null,
     "selector-anb-no-unmatchable": true,
     "selector-attribute-name-disallowed-list": null,
@@ -345,7 +354,7 @@ module.exports = {
     "scss/no-duplicate-dollar-variables": [
       true,
       {
-        ignoreInsideAtRules: ["each","while"]
+        ignoreInsideAtRules: ["each", "while"]
       }
     ],
     "scss/no-duplicate-mixins": true,
