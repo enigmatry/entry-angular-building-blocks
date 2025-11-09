@@ -4,6 +4,7 @@
         "../../typedoc.base.json"
     ],
     "entryPoints": [
+        "ai/public-api.ts",
         "button/public-api.ts",
         "dialog/public-api.ts",
         "search-filter/public-api.ts",

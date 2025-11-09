@@ -21,6 +21,7 @@
         @for (message of messages(); track $index) {
         <div [class]="'chatbot-message' + (message.isRequest ? ' user-message' : 'chatbot')">
             <p class="chatbot-text" [innerHTML]="message.message"></p>
+            <p class="timestamp">{{message.timestamp}}</p>
         </div>
         }
     </mat-dialog-content>

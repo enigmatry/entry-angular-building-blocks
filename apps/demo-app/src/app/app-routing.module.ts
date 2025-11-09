@@ -11,7 +11,7 @@ const routes: Routes = [
   },
   {
     path: RouteSegments.chatBot,
-    loadComponent: () => import('./features/chat-bot/chat-example.component').then(m => m.ChatExampleComponent)
+    loadComponent: () => import('./features/chat-bot/chat-documentation.component').then(m => m.ChatDocumentationComponent)
   },
   {
     path: RouteSegments.button,
