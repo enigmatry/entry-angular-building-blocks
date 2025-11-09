@@ -1,6 +1,13 @@
 /* stylelint-disable plugin/file-max-lines, plugin/stylelint-group-selectors */
-@use 'variables' as vars;
 @use 'scss-foundation/src/modules/display/items';
+
+$small-gap: 16px;
+$medium-gap: 24px;
+$primary: #F00;
+$accent: #00F;
+$font-color-light: #FAF;
+$text-background: #6F2;
+$background-lightest: #A9F;
 
 .chatbot-container {
 	position: fixed;
@@ -8,16 +15,16 @@
 	right: 40px;
 	bottom: 110px;
 	width: 400px;
-	margin: vars.$medium-gap auto;
+	margin: $medium-gap auto;
 	border-radius: 5px;
-	background-color: vars.$background-lightest;
+	background-color: $background-lightest;
 	box-shadow: 0 2px 4px rgb(0 0 0 / .1);
 
 	.header {
 		@include items.fully-align(center, space-between, row, nowrap);
 		width: 100%;
 		height: 70px;
-		padding: 0 vars.$medium-gap;
+		padding: 0 $medium-gap;
 		border-radius: 5px 5px 0 0;
 		background-repeat: no-repeat;
 		background-position: right;
@@ -25,7 +32,7 @@
 		.logo {
 			width: 50px;
 			height: 50px;
-			margin-right: vars.$small-gap;
+			margin-right: $small-gap;
 		}
 
 		.title-placeholder, .status-controls {
@@ -33,19 +40,19 @@
 		}
 
 		.title {
-			color: vars.$font-color-light;
+			color: $font-color-light;
 			font-size: 20px;
 			font-weight: 700;
 		}
 
 		.action-button {
 			@include items.fully-align(center, center, row, nowrap);
-			margin-bottom: vars.$medium-gap;
-			margin-left: vars.$small-gap;
+			margin-bottom: $medium-gap;
+			margin-left: $small-gap;
 			border: none;
 			outline: none;
 			background-color: transparent;
-			color: vars.$font-color-light;
+			color: $font-color-light;
 			font-size: 30px;
 		}
 	}
@@ -59,23 +66,23 @@
 
 	.chatbot-message {
 		@include items.fully-align(center, flex-end, row, nowrap);
-		padding: 0 vars.$medium-gap;
+		padding: 0 $medium-gap;
 	}
 
 	.avatar {
 		width: 40px;
 		height: 40px;
 		margin: {
-			top: vars.$large-gap;
-			right: vars.$small-gap;
+			top: 50px;
+			right: $small-gap;
 		}
 	}
 
 	.chatbot-text {
-		padding: vars.$medium-gap;
+		padding: $medium-gap;
 		border-radius: 20px 20px 20px 0;
-		background-color: vars.$online-training-background;
-		color: vars.$primary;
+		background-color: $text-background;
+		color: $primary;
 		font-size: 15px;
 		font-weight: 500;
 	}
@@ -83,12 +90,12 @@
 	.user-message .chatbot-text {
 		margin-left: 50px;
 		border-radius: 20px 20px 0;
-		background-color: vars.$primary;
-		color: vars.$font-color-light;
+		background-color: $primary;
+		color: $font-color-light;
 	}
 
 	.footer {
-		padding: vars.$medium-gap;
+		padding: $medium-gap;
 		border-top: 1px solid #A0A0A0;
 	}
 
@@ -102,7 +109,7 @@
 
 	.input-field {
 		flex: 1;
-		margin: 0 vars.$small-gap;
+		margin: 0 $small-gap;
 		border: none;
 		color: #000;
 		font-size: 15px;
@@ -117,15 +124,15 @@
 		@include items.fully-align(center, center, row, nowrap);
 		width: 30px;
 		height: 30px;
-		margin-right: calc(vars.$small-gap / 2);
+		margin-right: calc($small-gap / 2);
 		border: none;
 		border-radius: 50%;
-		background-color: vars.$accent;
+		background-color: $accent;
 	}
 
 	.privacy-note {
-		margin: vars.$medium-gap auto 0;
-		padding: 0 vars.$small-gap;
+		margin: $medium-gap auto 0;
+		padding: 0 $small-gap;
 		color: #00000075;
 		font-size: 11px;
 		font-weight: 500;

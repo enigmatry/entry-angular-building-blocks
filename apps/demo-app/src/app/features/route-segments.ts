@@ -1,4 +1,5 @@
 export class RouteSegments {
+    static chatBot = `chat-bot`;
     static button = `button`;
     static common = `common`;
     static dialog = `dialog`;

@@ -24,11 +24,14 @@
         </div>
         }
     </mat-dialog-content>
+    @if(loading())
+    {
     <footer class="footer">
-        <form class="field-placeholder">
-            <input class="input-field" type="text" [placeholder]="placeholder()" [(ngModel)]="newMessage"
-                name="newMessage" />
+        <form [formGroup]="form" class="field-placeholder">
+            <input class="input-field" formControlName="newMessage" type="text" autofocus [placeholder]="placeholder()"
+                [(value)]="newMessage" name="newMessage" (keydown.enter)="sendMessage()" />
             <button class="send-button clickable" type="submit" (click)="sendMessage()">
+                <mat-icon class=matSuffix (click)="sendMessage()">send</mat-icon>
                 <img src="./../../assets/images/arrow-right.svg" alt="Send" />
             </button>
         </form>
@@ -37,4 +40,13 @@
         <p class="privacy-note">{{privacyNote()}}</p>
         }
     </footer>
+    }
+    @else
+    {
+    <footer class="footer">
+        <mat-progress-spinner color="primary" [diameter]="30" mode="indeterminate">
+        </mat-progress-spinner>
+        <div class="spinner-message"> Thinking... </div>
+    </footer>
+    }
 </section>

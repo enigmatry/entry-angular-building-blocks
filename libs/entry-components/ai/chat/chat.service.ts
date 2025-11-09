@@ -6,11 +6,11 @@ import { ChatMessage } from './chat.model';
     providedIn: 'root'
 })
 export class ChatService {
-    readonly push = (messages: Signal<ChatMessage[]>, url: string) => httpResource<string>(() => {
+    readonly push = (messages: Signal<ChatMessage[]>, url: Signal<string>) => httpResource<string>(() => {
         // eslint-disable-next-line @typescript-eslint/no-magic-numbers
         if (messages().at(-1)?.isRequest) {
             return {
-                url,
+                url: url(),
                 method: 'POST',
                 body: messages(),
                 headers: {

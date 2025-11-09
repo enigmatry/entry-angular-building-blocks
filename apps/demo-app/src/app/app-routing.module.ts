@@ -10,6 +10,10 @@ const routes: Routes = [
     component: LandingComponent
   },
   {
+    path: RouteSegments.chatBot,
+    loadComponent: () => import('./features/chat-bot/chat-example.component').then(m => m.ChatExampleComponent)
+  },
+  {
     path: RouteSegments.button,
     loadComponent: () => import('./features/button/button-documentation.component').then(m => m.ButtonDocumentationComponent)
   },

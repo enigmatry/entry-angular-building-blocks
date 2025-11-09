@@ -11,6 +11,13 @@ interface IComponentDefinition {
 
 const COMPONENT_DEFINITIONS: IComponentDefinition[] = [
     {
+        label: 'Chat Bot',
+        shortDescription: `Chat bot component for interactive conversations with AI.`,
+        route: RouteSegments.chatBot,
+        readmePath: '/entry-components/ai/README.md',
+        apiDocsPath: 'assets/api/@enigmatry/entry-components/ai/public-api.md'
+    },
+    {
         label: 'Button',
         shortDescription: `Used to provide button configuration on module or application level.`,
         route: RouteSegments.button,
