@@ -16,6 +16,7 @@ import { SharedModule } from './shared/shared.module';
     imports: [
         SharedModule,
         BrowserModule,
+        // eslint-disable-next-line @typescript-eslint/no-deprecated
         BrowserAnimationsModule,
         EntryCommonModule.forRoot(),
         AppRoutingModule

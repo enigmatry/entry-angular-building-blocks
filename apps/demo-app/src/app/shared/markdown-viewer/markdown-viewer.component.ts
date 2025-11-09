@@ -105,7 +105,7 @@ export class MarkdownViewerComponent implements OnInit {
     return '';
   };
 
-  private addIdsToHeadings(html: string | null): string {
+  private readonly addIdsToHeadings = (html: string | null): string => {
     if (html) {
       const document = new DOMParser().parseFromString(html, 'text/html');
       document
@@ -117,7 +117,7 @@ export class MarkdownViewerComponent implements OnInit {
       return document.querySelector('body')?.innerHTML ?? '';
     }
     return html ?? '';
-  }
+  };
 
   highlightCode = (str: string, lang: string) => {
     if (lang && hljs.getLanguage(lang)) {

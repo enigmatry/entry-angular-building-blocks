@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
 
 /**
@@ -20,7 +20,6 @@ import { UntypedFormGroup } from '@angular/forms';
       </mat-error>
     </div>
   `,
-    changeDetection: ChangeDetectionStrategy.Default,
     standalone: false
 })
 export class EntryFormErrorsComponent {
