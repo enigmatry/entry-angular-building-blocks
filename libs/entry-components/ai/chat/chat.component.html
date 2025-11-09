@@ -28,8 +28,14 @@
     {
     <footer class="footer">
         <form [formGroup]="form" class="field-placeholder">
-            <input class="input-field" formControlName="newMessage" type="text" autofocus [placeholder]="placeholder()"
-                [(value)]="newMessage" name="newMessage" (keydown.enter)="sendMessage()" />
+            <mat-form-field>
+                <mat-label>Email</mat-label>
+                <input class="input-field" matInput [formControl]="newMessageControl" type="text" autofocus
+                    [placeholder]="placeholder()" (keydown.enter)="sendMessage()" />
+                @if (newMessageControl.hasError('required')) {
+                <mat-error>Email is <strong>required</strong></mat-error>
+                }
+            </mat-form-field>
             <button class="send-button clickable" type="submit" (click)="sendMessage()">
                 <mat-icon class=matSuffix (click)="sendMessage()">send</mat-icon>
                 <img src="./../../assets/images/arrow-right.svg" alt="Send" />

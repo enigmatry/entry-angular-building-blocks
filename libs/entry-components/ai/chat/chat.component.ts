@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, effect, ElementRef, inject, input, linkedSignal, model, signal, viewChild } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
@@ -12,7 +13,7 @@ import { ChatService } from './chat.service';
 @Component({
     selector: 'entry-chat-bot',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [CommonModule, MatDialogModule, MatIconModule, MatProgressSpinnerModule,
+    imports: [CommonModule, MatDialogModule, MatIconModule, MatProgressSpinnerModule, MatFormFieldModule,
         FormsModule, ReactiveFormsModule, EntryFileInputModule],
     templateUrl: './chat.component.html'
 })
@@ -30,8 +31,9 @@ export class EntryChatComponent {
     readonly events = input<{ onSuccess?: () => void; onError?: (error: Error) => void; onDone?: () => void }>();
     private readonly router = inject(Router);
     private readonly chat = inject(ChatService).push(this.messages, this.messageEndpoint);
+    protected readonly newMessageControl = new FormControl('');
     protected readonly form = new FormGroup({
-        newMessage: new FormControl()
+        newMessage: this.newMessageControl
     });
 
     constructor() {
