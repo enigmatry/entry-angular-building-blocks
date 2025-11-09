@@ -5,7 +5,5 @@ import { EntryPermissionService } from '@enigmatry/entry-components/permissions'
 export class PermissionExampleService implements EntryPermissionService<string> {
   private permissions = ['user.read', 'user.write'];
 
-  public hasPermissions(permissions: string[]): boolean {
-    return permissions.some(permission => this.permissions.includes(permission));
-  }
+  readonly hasPermissions = (permissions: string[]) => permissions.some(permission => this.permissions.includes(permission));
 }

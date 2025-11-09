@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
+import { MatError, MatInputModule } from '@angular/material/input';
 import { EntryDisplayControlValidationDirective } from './entry-display-control-validation.directive';
 import { EntryFormErrorsComponent } from './entry-form-errors.component';
 
@@ -12,9 +11,8 @@ import { EntryFormErrorsComponent } from './entry-form-errors.component';
   ],
   imports: [
     CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatInputModule
+    MatInputModule,
+    MatError
   ],
   exports: [
     EntryFormErrorsComponent,
