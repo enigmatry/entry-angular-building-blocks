@@ -1,4 +1,5 @@
 import tseslint from "typescript-eslint";
+import { defineConfig } from 'eslint/config';
 import angular from "angular-eslint";
 import pluginPromise from "eslint-plugin-promise";
 import stylistic from "@stylistic/eslint-plugin";
@@ -8,7 +9,7 @@ import nounsanitized from "eslint-plugin-no-unsanitized";
 import unusedImports from "eslint-plugin-unused-imports";
 import arrowFunctions from "eslint-plugin-prefer-arrow-functions";
 
-export default tseslint.config(
+export default defineConfig(
   ...angular.configs.tsRecommended,
   {
     ignores: ["src/**/generated/", "src/polyfills.ts", "src/@enigmatry/**", "**/api-reference.ts",
@@ -180,7 +181,7 @@ export default tseslint.config(
         "error",
         "single",
         {
-          "allowTemplateLiterals": true
+          "allowTemplateLiterals": "always"
         }
       ],
       "@stylistic/rest-spread-spacing": [
@@ -316,10 +317,11 @@ export default tseslint.config(
       ],
       "@typescript-eslint/no-unnecessary-parameter-property-assignment": "error",
       "@typescript-eslint/no-unnecessary-template-expression": "error",
+      "@typescript-eslint/no-unnecessary-type-conversion": "error",
       "@typescript-eslint/no-unsafe-declaration-merging": [
         "error"
       ],
-      "@typescript-eslint/no-unsafe-enum-comparison": "error",
+      "@typescript-eslint/no-unsafe-enum-comparison": "off",
       "@typescript-eslint/no-unsafe-function-type": "error",
       "@typescript-eslint/no-unsafe-return": "off",
       "@typescript-eslint/no-unsafe-type-assertion": "off",
@@ -397,6 +399,10 @@ export default tseslint.config(
       ],
       "import/dynamic-import-chunkname": [
         "off"
+      ],
+      "import/enforce-node-protocol-usage": [
+        "warn",
+        "never"
       ],
       "import/export": [
         "error"
@@ -728,6 +734,7 @@ export default tseslint.config(
       "prefer-rest-params": "error",
       "prefer-spread": "error",
       "prefer-template": "error",
+      "preserve-caught-error": "error",
       "promise/always-return": "off",
       "promise/avoid-new": "warn",
       "promise/catch-or-return": [
