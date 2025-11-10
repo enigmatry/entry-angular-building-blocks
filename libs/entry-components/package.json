@@ -15,14 +15,14 @@
     "lint": "stylelint --fix styles/**/*.scss --config ../../.stylelintrc.json"
   },
   "peerDependencies": {
-    "@angular/animations": "^20.1.0",
-    "@angular/cdk": "^20.1.0",
-    "@angular/common": "^20.1.0",
-    "@angular/core": "^20.1.0",
-    "@angular/material": "^20.1.0",
-    "@angular/forms": "^20.1.0",
-    "@angular/platform-browser": "^20.1.0",
-    "@angular/router": "^20.1.0",
+    "@angular/animations": "^20.3.0",
+    "@angular/cdk": "^20.2.12",
+    "@angular/common": "^20.3.0",
+    "@angular/core": "^20.3.10",
+    "@angular/material": "^20.2.12",
+    "@angular/forms": "^20.3.0",
+    "@angular/platform-browser": "^20.3.0",
+    "@angular/router": "^20.3.0",
     "rxjs": "7.8.1"
   },
   "dependencies": {
