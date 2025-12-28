@@ -36,6 +36,7 @@ Apache-2 © Enigmatry
 
 ## Modules
 
+- [ai/public-api](ai/public-api.md)
 - [button/public-api](button/public-api.md)
 - [dialog/public-api](dialog/public-api.md)
 - [search-filter/public-api](search-filter/public-api.md)

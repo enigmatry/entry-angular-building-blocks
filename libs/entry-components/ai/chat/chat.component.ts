@@ -11,6 +11,14 @@ import { Router } from '@angular/router';
 import { ChatMessage } from './chat.model';
 import { ChatService } from './chat.service';
 
+/**
+ * Entry chat component. Simple chat interface for AI chat bots.
+ *
+ * @example
+ * ```html
+ * <entry-chat-bot></entry-chat-bot>
+ * ```
+ */
 @Component({
     selector: 'entry-chat-bot',
     changeDetection: ChangeDetectionStrategy.OnPush,
