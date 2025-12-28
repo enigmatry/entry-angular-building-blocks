@@ -1,22 +1,20 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { ColumnDef } from '../../interfaces';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { ColumnDefinition } from '../../interfaces';
+import { EntryCellFormattedValueComponent } from '../entry-cell-formatted-value/entry-cell-formatted-value.component';
 
 @Component({
+    imports: [EntryCellFormattedValueComponent],
     selector: 'entry-cell',
     templateUrl: './entry-cell.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EntryCellComponent<T> {
-  @Input() rowData: T;
-  @Input() colDef: ColumnDef;
+  readonly rowData = input.required<T>();
+  readonly columnDefinition = input.required<ColumnDefinition>();
+  readonly value = computed(() => this.getCellValue(this.rowData(), this.columnDefinition()));
 
-  get value(): any {
-    return this.getCellValue(this.rowData, this.colDef);
-  }
-
-  getCellValue = (rowData: T, colDef: ColumnDef) => {
-    const keys = colDef.field ? colDef.field.split('.') : [];
-    return keys.reduce((data, key) => data && (data as any)[key], rowData);
+  protected readonly getCellValue = (rowData: T, columnDefinition: ColumnDefinition) => {
+    const keys = columnDefinition.field ? columnDefinition.field.split('.') : [];
+    return keys.reduce((data, key) => data && (data as Record<string, T>)[key], rowData);
   };
 }

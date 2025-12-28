@@ -19,7 +19,7 @@ import { Sort, SortDirection } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
 import {
-  ColumnDef, PagedData, RowSelectionFormatter, RowClassFormatter,
+  ColumnDefinition, PagedData, RowSelectionFormatter, RowClassFormatter,
   ContextMenuItem, RowContextMenuFormatter, CellTemplate, ENTRY_TABLE_CONFIG, EntryTableConfig
 } from '../../interfaces';
 
@@ -38,7 +38,7 @@ export class EntryTableComponent<T> implements OnChanges {
   dataSource = new MatTableDataSource<T>([]);
 
   @Input() displayedColumns: string[];
-  @Input() columns: ColumnDef[] = [];
+  @Input() columns: ColumnDefinition[] = [];
 
   // Data
   private _data: T[] = [];
@@ -128,7 +128,7 @@ export class EntryTableComponent<T> implements OnChanges {
     return classList;
   }
 
-  getColumnClassList(colDef: ColumnDef): string {
+  getColumnClassList(colDef: ColumnDefinition): string {
     const customClasses = colDef.class ?? '';
     const columnType = colDef.type ?? '';
     const columnField = `cell-${this.convertToKebabCase(colDef.field)}`;

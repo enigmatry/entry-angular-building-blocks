@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ColumnDef, ContextMenuItem } from '@enigmatry/entry-components/table';
+import { ColumnDefinition, ContextMenuItem } from '@enigmatry/entry-components/table';
 import { User } from '../../search-filter/search-filter/users';
 import { UsersService } from '../../search-filter/search-filter/users.service';
 
@@ -12,7 +12,7 @@ import { UsersService } from '../../search-filter/search-filter/users.service';
 export class TableExampleComponent implements OnInit {
   users: User[];
 
-  columns: ColumnDef[] = [];
+  columns: ColumnDefinition[] = [];
   contextMenuItems: ContextMenuItem[] = [];
   private readonly usersService: UsersService = inject(UsersService);
 
