@@ -1,5 +1,5 @@
 import { TemplateRef } from '@angular/core';
-import { ColumnSortProp } from './column-sort-prop';
+import { ColumnSortProperties } from './column-sort-properties';
 import { ColumnType } from './column-type';
 import { ColumnTypeParameter } from './column-type-parameter';
 
@@ -10,7 +10,7 @@ export interface ColumnDefinition {
   pinned?: 'left' | 'right';
   width?: string;
   sortable?: boolean | string;
-  sortProp?: ColumnSortProp;
+  sortProp?: ColumnSortProperties;
   type?: ColumnType;
   typeParameter?: ColumnTypeParameter;
   cellTemplate?: TemplateRef<unknown> | null;

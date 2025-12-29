@@ -20,7 +20,7 @@ import { MatTableDataSource } from '@angular/material/table';
 
 import {
   ColumnDefinition, PagedData, RowSelectionFormatter, RowClassFormatter,
-  ContextMenuItem, RowContextMenuFormatter, CellTemplate, ENTRY_TABLE_CONFIG, EntryTableConfig
+  ContextMenuItem, RowContextMenuFormatter, CellTemplate, ENTRY_TABLE_CONFIGURATION, EntryTableConfiguration
 } from '../../interfaces';
 
 @Component({
@@ -32,7 +32,7 @@ import {
 export class EntryTableComponent<T> implements OnChanges {
   @HostBinding('class') className = 'entry-table';
 
-  private readonly _config: EntryTableConfig = inject(ENTRY_TABLE_CONFIG);
+  private readonly _config: EntryTableConfiguration = inject(ENTRY_TABLE_CONFIGURATION);
   private readonly _elementRef = inject(ElementRef<HTMLElement>);
   private readonly _changeDetectorRef = inject(ChangeDetectorRef);
   dataSource = new MatTableDataSource<T>([]);

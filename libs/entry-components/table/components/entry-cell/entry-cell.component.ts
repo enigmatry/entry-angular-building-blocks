@@ -12,6 +12,7 @@ export class EntryCellComponent<T> {
   readonly rowData = input.required<T>();
   readonly columnDefinition = input.required<ColumnDefinition>();
   readonly value = computed(() => this.getCellValue(this.rowData(), this.columnDefinition()));
+  readonly printableValue = computed(() => this.value() as string ?? '');
 
   protected readonly getCellValue = (rowData: T, columnDefinition: ColumnDefinition) => {
     const keys = columnDefinition.field ? columnDefinition.field.split('.') : [];
