@@ -28,13 +28,12 @@ import { DEFAULT_PERCENTAGE_MULTIPLIER } from './interfaces';
     MatMenuModule,
     MatRadioModule,
     CommonModule,
-    MatButtonModule
-  ],
-  declarations: [
+    MatButtonModule,
     EntryTableComponent,
     EntryCellComponent,
     EntryCellContextMenuComponent,
     EntryCellFormattedValueComponent
+
   ],
   exports: [
     EntryTableComponent,

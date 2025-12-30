@@ -4,13 +4,13 @@ Reusable table component with context menu, sorting and paging.
 
 ## Installation
 
-```
+```batch
 npm install @enigmatry/entry-components
 ```
 
 ## Basic Usage
 
-Import the `EntryTableModule` in your `feature.module` or `shared.module`
+Import the `EntryTableModule` in your `feature.module`, `shared.module` or your standalone component
 
 ```typescript
 import { EntryTableModule } from '@enigmatry/entry-components/table';
@@ -19,32 +19,38 @@ import { EntryTableModule } from '@enigmatry/entry-components/table';
 `component.ts`
 
 ```typescript
-import { PagedData, ContextMenuItem, ColumnDef } from '@enigmatry/entry-components/table';
+import { EntryTableComponent } from '@enigmatry/entry-components/table';
+import { ContextMenuItem, ColumnDefinition } from '@enigmatry/entry-components/table/interfaces';
+import { Component, computed, inject, resource } from '@angular/core';
+import { lastValueFrom } from 'rxjs';
+import { User } from '../../search-filter/search-filter/users';
+import { UsersService } from '../../search-filter/search-filter/users.service';
 
 @Component({
-...
+  selector: 'app-table-example',
+  imports: [EntryTableComponent],
+  templateUrl: './table-example.component.html',
+  styleUrls: ['./table-example.component.scss']
 })
-export class UserListComponent implements OnInit {
+export class TableExampleComponent {
+  protected readonly columns: ColumnDefinition[] = [
+    { field: 'id', hide: true },
+    { field: 'userName', header: 'E-mail', sortable: true },
+    { field: 'firstName', header: 'First name', hide: false, sortable: true },
+    { field: 'lastName', header: 'Last name', hide: false, sortable: true },
+    { field: 'dateOfBirth', header: 'Date of birth', hide: false, sortable: true, type: 'date', typeParameter: { format: 'dd-MM-yyyy' } },
+    { field: 'occupation', header: 'Occupation', hide: false, sortable: true },
+    { field: 'lastLogin', header: 'Last login', hide: false, sortable: true, type: 'date' }
+  ];
+  protected readonly contextMenuItems: ContextMenuItem[] = [{ id: 'edit', name: 'Edit' }];
 
-  @Input() data: PagedData<GetUsersResponseItem> | null;
-
-  @Input() columns: ColumnDef[] = [];
-  @Input() contextMenuItems: ContextMenuItem[] = [];
-
-  constructor() { }
-
-  ngOnInit(): void {
-    this.columns = [
-      { field: 'id', hide: true, sortable: true },
-      { field: 'userName', header: `E-mail`, hide: false, sortable: true },
-      { field: 'name', header: `Name`, hide: false, sortable: true },
-      { field: 'createdOn', header: `Created on`, hide: false, sortable: true, type: 'date' },
-      { field: 'updatedOn', header: `Updated on`, hide: false, sortable: true, type: 'date' }
-    ];
-    this.contextMenuItems = [
-      { id: 'edit', name: `Edit`, icon: 'edit' }
-    ];
-  }
+  private readonly usersService: UsersService = inject(UsersService);
+  readonly usersResource = resource({
+    loader: async() => {
+      return lastValueFrom(this.usersService.getUsers({}));
+    }
+  });
+  protected readonly users = computed<User[]>(() => this.usersResource.hasValue() ? this.usersResource.value() : []);
 }
 ```
 
@@ -53,14 +59,12 @@ export class UserListComponent implements OnInit {
 ```html
 <entry-table
     [columns]="columns"
-    [data]="data"
+    [data]="users()"
     [showPaginator]="true"
     [showContextMenu]="true"
-    [contextMenuItems]="contextMenuItems"
-    (pageChange)="pageChange.emit($event)"
-    (sortChange)="sortChange.emit($event)"
-    (rowSelectionChange)="selectionChange.emit($event)"
-    (contextMenuItemSelected)="contextMenuItemSelected.emit($event)">
+    [rowSelectable]="true"
+    [multiSelectable]="true"
+    [contextMenuItems]="contextMenuItems">
 </entry-table>
 ```
 
@@ -68,34 +72,42 @@ export class UserListComponent implements OnInit {
 
 Default values are:
 
- * showPaginator: true
- * showFirstLastButtons: false
- * pageSize: 20
- * pageSizeOptions: [20, 50, 100]
- * hidePageSize: false
- * noResultsText: 'No results found'
- * rowFocusVisible: false
+* showPaginator: true
+* showFirstLastButtons: false
+* pageSize: 20
+* pageSizeOptions: [20, 50, 100]
+* hidePageSize: false
+* noResultsText: 'No results found'
+* rowFocusVisible: false
 
-To override with custom defaults use `provideEntryTableConfig` function:
+To override with custom defaults use `provideEntryTableConfiguration` function:
 
 ```ts
-import { EntryTableModule, provideEntryTableConfig } from '@enigmatry/entry-components/table';
+import { EntryTableModule, provideEntryTableConfiguration } from '@enigmatry/entry-components/table';
+import { CommonModule, DATE_PIPE_DEFAULT_OPTIONS } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { TableExampleComponent } from './table-example/table-example.component';
 
 @NgModule({
   imports: [
-    EntryTableModule
+    CommonModule,
+    EntryTableModule,
+    TableExampleComponent
+  ],
+  exports: [
+    TableExampleComponent
   ],
   providers: [
-      provideEntryTableConfig({
+    { provide: DATE_PIPE_DEFAULT_OPTIONS, useValue: { dateFormat: 'dd-MM-yyyy HH:mm' } },
+    provideEntryTableConfiguration({
       showPaginator: true,
       pageSizeOptions: [10, 25, 50],
       rowFocusVisible: true
     })
   ]
 })
-export class EntryComponentsModule { }
+export class TableExampleModule { }
 ```
-
 
 ## Compatibility with Angular Versions
 
@@ -108,6 +120,7 @@ export class EntryComponentsModule { }
 | 18.x                        | = 18            |
 | 19.x                        | = 19            |
 | 20.x                        | = 20            |
+| 21.x                        | = 21            |
 
 ## License
 

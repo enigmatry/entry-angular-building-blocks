@@ -1,3 +1,3 @@
 export interface RowClassFormatter {
-  [className: string]: (rowData: any) => boolean;
+  [className: string]: (rowData: unknown) => boolean;
 }

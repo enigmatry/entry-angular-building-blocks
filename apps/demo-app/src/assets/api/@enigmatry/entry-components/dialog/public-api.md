@@ -17,7 +17,7 @@ Base Entry dialog component. Must be extended when building custom dialogs.
 | Property | Type | Description | Defined in |
 | ------ | ------ | ------ | ------ |
 | <a id="buttonsalignment"></a> `buttonsAlignment` | [`EntryDialogButtonsAlignment`](#entrydialogbuttonsalignment) | Dialog buttons horizontal alignment |  |
-| <a id="buttonstemplate"></a> `buttonsTemplate` | `undefined` \| `null` \| `TemplateRef`\<`any`\> | Provide custom buttons template |  |
+| <a id="buttonstemplate"></a> `buttonsTemplate` | `TemplateRef`\<`any`\> \| `null` \| `undefined` | Provide custom buttons template |  |
 | <a id="cancelbuttontext"></a> `cancelButtonText` | `string` | Cancel button label |  |
 | <a id="confirmbuttontext"></a> `confirmButtonText` | `string` | Confirm button label |  |
 | <a id="disableconfirm"></a> `disableConfirm` | `boolean` | Enable or disable dialog confirm button |  |
@@ -84,7 +84,7 @@ Optional parameter used to supply component with input parameters
 
 Optional parameter that disable closing dialog when pressing escape or clicking on backdrop
 
-`undefined` | `boolean`
+`boolean` | `undefined`
 
 ###### cssClass
 
@@ -100,7 +100,7 @@ Any result custom implementation provides
 
 ##### openAlert()
 
-> **openAlert**(`data`): `Observable`\<`undefined` \| `true`\>
+> **openAlert**(`data`): `Observable`\<`true` \| `undefined`\>
 
 Opens alert dialog.
 
@@ -114,13 +114,13 @@ Contains title, message and optional confirm button text
 
 ###### Returns
 
-`Observable`\<`undefined` \| `true`\>
+`Observable`\<`true` \| `undefined`\>
 
 `true` if confirmed, `undefined` if closed by clicking on backdrop or pressing escape
 
 ##### openConfirm()
 
-> **openConfirm**(`data`): `Observable`\<`undefined` \| `boolean`\>
+> **openConfirm**(`data`): `Observable`\<`boolean` \| `undefined`\>
 
 Opens confirm dialog.
 
@@ -134,13 +134,13 @@ Contains title, message and optional confirm/cancel buttons text
 
 ###### Returns
 
-`Observable`\<`undefined` \| `boolean`\>
+`Observable`\<`boolean` \| `undefined`\>
 
 `true` if confirmed, `false` if canceled or closed, `undefined` if closed by clicking on backdrop or pressing escape
 
 ##### openError()
 
-> **openError**(`data`): `Observable`\<`undefined` \| `true`\>
+> **openError**(`data`): `Observable`\<`true` \| `undefined`\>
 
 Opens error dialog.
 
@@ -154,7 +154,7 @@ Contains title, errors and optional confirm button text
 
 ###### Returns
 
-`Observable`\<`undefined` \| `true`\>
+`Observable`\<`true` \| `undefined`\>
 
 `true` if confirmed, `undefined` if closed by clicking on backdrop or pressing escape
 
@@ -173,10 +173,10 @@ Alert dialog data.
 
 | Property | Type | Description | Defined in |
 | ------ | ------ | ------ | ------ |
-| <a id="buttonsalignment-2"></a> `buttonsAlignment` | `undefined` \| [`EntryDialogButtonsAlignment`](#entrydialogbuttonsalignment) | Optional dialog buttons horizontal alignment |  |
+| <a id="buttonsalignment-2"></a> `buttonsAlignment` | [`EntryDialogButtonsAlignment`](#entrydialogbuttonsalignment) \| `undefined` | Optional dialog buttons horizontal alignment |  |
 | <a id="confirmtext"></a> `confirmText?` | `string` | Optional dialog confirm text label |  |
 | <a id="disableclose-1"></a> `disableClose?` | `boolean` | Optionally disable closing dialog when pressing escape or clicking on backdrop |  |
-| <a id="hideclose-2"></a> `hideClose` | `undefined` \| `boolean` | Optionally show or hide dialog close button |  |
+| <a id="hideclose-2"></a> `hideClose` | `boolean` \| `undefined` | Optionally show or hide dialog close button |  |
 | <a id="message"></a> `message` | `string` | Dialog content message |  |
 | <a id="title-1"></a> `title` | `string` | Dialog header title |  |
 
@@ -194,11 +194,11 @@ Confirm dialog data. Extends IEntryAlertDialogData.
 
 | Property | Type | Description | Inherited from | Defined in |
 | ------ | ------ | ------ | ------ | ------ |
-| <a id="buttonsalignment-3"></a> `buttonsAlignment` | `undefined` \| [`EntryDialogButtonsAlignment`](#entrydialogbuttonsalignment) | Optional dialog buttons horizontal alignment | [`IEntryAlertDialogData`](#ientryalertdialogdata).[`buttonsAlignment`](#buttonsalignment-2) |  |
+| <a id="buttonsalignment-3"></a> `buttonsAlignment` | [`EntryDialogButtonsAlignment`](#entrydialogbuttonsalignment) \| `undefined` | Optional dialog buttons horizontal alignment | [`IEntryAlertDialogData`](#ientryalertdialogdata).[`buttonsAlignment`](#buttonsalignment-2) |  |
 | <a id="canceltext"></a> `cancelText?` | `string` | Optional dialog cancel text label | - |  |
 | <a id="confirmtext-1"></a> `confirmText?` | `string` | Optional dialog confirm text label | [`IEntryAlertDialogData`](#ientryalertdialogdata).[`confirmText`](#confirmtext) |  |
 | <a id="disableclose-2"></a> `disableClose?` | `boolean` | Optionally disable closing dialog when pressing escape or clicking on backdrop | [`IEntryAlertDialogData`](#ientryalertdialogdata).[`disableClose`](#disableclose-1) |  |
-| <a id="hideclose-3"></a> `hideClose` | `undefined` \| `boolean` | Optionally show or hide dialog close button | [`IEntryAlertDialogData`](#ientryalertdialogdata).[`hideClose`](#hideclose-2) |  |
+| <a id="hideclose-3"></a> `hideClose` | `boolean` \| `undefined` | Optionally show or hide dialog close button | [`IEntryAlertDialogData`](#ientryalertdialogdata).[`hideClose`](#hideclose-2) |  |
 | <a id="message-1"></a> `message` | `string` | Dialog content message | [`IEntryAlertDialogData`](#ientryalertdialogdata).[`message`](#message) |  |
 | <a id="title-2"></a> `title` | `string` | Dialog header title | [`IEntryAlertDialogData`](#ientryalertdialogdata).[`title`](#title-1) |  |
 
@@ -216,11 +216,11 @@ Error dialog data.
 
 | Property | Type | Description | Inherited from | Defined in |
 | ------ | ------ | ------ | ------ | ------ |
-| <a id="buttonsalignment-4"></a> `buttonsAlignment` | `undefined` \| [`EntryDialogButtonsAlignment`](#entrydialogbuttonsalignment) | Optional dialog buttons horizontal alignment | [`IEntryAlertDialogData`](#ientryalertdialogdata).[`buttonsAlignment`](#buttonsalignment-2) |  |
+| <a id="buttonsalignment-4"></a> `buttonsAlignment` | [`EntryDialogButtonsAlignment`](#entrydialogbuttonsalignment) \| `undefined` | Optional dialog buttons horizontal alignment | [`IEntryAlertDialogData`](#ientryalertdialogdata).[`buttonsAlignment`](#buttonsalignment-2) |  |
 | <a id="confirmtext-2"></a> `confirmText?` | `string` | Optional dialog confirm text label | [`IEntryAlertDialogData`](#ientryalertdialogdata).[`confirmText`](#confirmtext) |  |
 | <a id="disableclose-3"></a> `disableClose?` | `boolean` | Optionally disable closing dialog when pressing escape or clicking on backdrop | [`IEntryAlertDialogData`](#ientryalertdialogdata).[`disableClose`](#disableclose-1) |  |
 | <a id="errors"></a> `errors` | `string`[] \| [`IValidationProblemDetails`](../validation/public-api.md#ivalidationproblemdetails) | Errors to display | - |  |
-| <a id="hideclose-4"></a> `hideClose` | `undefined` \| `boolean` | Optionally show or hide dialog close button | [`IEntryAlertDialogData`](#ientryalertdialogdata).[`hideClose`](#hideclose-2) |  |
+| <a id="hideclose-4"></a> `hideClose` | `boolean` \| `undefined` | Optionally show or hide dialog close button | [`IEntryAlertDialogData`](#ientryalertdialogdata).[`hideClose`](#hideclose-2) |  |
 | <a id="message-2"></a> `message` | `string` | Dialog content message | [`IEntryAlertDialogData`](#ientryalertdialogdata).[`message`](#message) |  |
 | <a id="title-3"></a> `title` | `string` | Dialog header title | [`IEntryAlertDialogData`](#ientryalertdialogdata).[`title`](#title-1) |  |
 

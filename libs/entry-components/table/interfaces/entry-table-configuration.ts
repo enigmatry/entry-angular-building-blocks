@@ -1,7 +1,7 @@
 import { InjectionToken, Provider } from '@angular/core';
 import { createInjectionToken, provideConfig } from '@enigmatry/entry-components/common';
 
-export class EntryTableConfig {
+export class EntryTableConfiguration {
   /** Show paginator, default is true */
   showPaginator = true;
   /** Show first and last pagination buttons, default is false */
@@ -18,7 +18,7 @@ export class EntryTableConfig {
   /** Row focus visible, default is false */
   rowFocusVisible = false;
 
-  constructor(config: Partial<EntryTableConfig> = {}) {
+  constructor(config: Partial<EntryTableConfiguration> = {}) {
     this.showPaginator = config.showPaginator ?? this.showPaginator;
     this.showFirstLastButtons = config.showFirstLastButtons ?? this.showFirstLastButtons;
     this.pageSize = config.pageSize ?? this.pageSize;
@@ -39,11 +39,11 @@ export class EntryTableConfig {
  * - noResultsText: 'No results found'
  * - rowFocusVisible: false
  */
-export const ENTRY_TABLE_CONFIG = createInjectionToken(new EntryTableConfig());
+export const ENTRY_TABLE_CONFIGURATION = createInjectionToken(new EntryTableConfiguration());
 
 /** Provide entry table config */
-export const provideEntryTableConfig = (config: Partial<EntryTableConfig>): Provider =>
-  provideConfig(ENTRY_TABLE_CONFIG, () => new EntryTableConfig(config));
+export const provideEntryTableConfiguration = (config: Partial<EntryTableConfiguration>): Provider =>
+  provideConfig(ENTRY_TABLE_CONFIGURATION, () => new EntryTableConfiguration(config));
 
 /** Default percentage multiplier injection token */
 export const DEFAULT_PERCENTAGE_MULTIPLIER: InjectionToken<number> = new InjectionToken<number>('');

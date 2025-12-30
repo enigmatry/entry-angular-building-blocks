@@ -15,9 +15,9 @@ export interface PagedData<T> {
 }
 
 export interface OnSort {
-    sortChange(sort: SortEvent): void;
+    sortChange: (sort: SortEvent) => void;
 }
 
 export interface OnPage {
-    pageChange(page: PageEvent): void;
+    pageChange: (page: PageEvent) => void;
 }

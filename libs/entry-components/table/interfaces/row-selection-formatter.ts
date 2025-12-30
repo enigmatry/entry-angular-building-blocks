@@ -1,4 +1,4 @@
 export interface RowSelectionFormatter {
-  disabled?: (rowData: any) => boolean;
-  hideCheckbox?: (rowData: any) => boolean;
+  disabled?: (rowData: unknown) => boolean;
+  hideCheckbox?: (rowData: unknown) => boolean;
 }

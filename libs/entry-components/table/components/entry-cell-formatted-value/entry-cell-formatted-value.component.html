@@ -1,30 +1,24 @@
-<ng-container [ngSwitch]="type">
-  <!-- Boolean -->
-  <ng-container *ngSwitchCase="'boolean'">
-    {{value ? '\u2713' : ''}}
-  </ng-container>
-  <!-- Number -->
-  <ng-container *ngSwitchCase="'number'">
-    {{value | number: typeParameter?.digitsInfo : typeParameter?.locale}}
-  </ng-container>
-  <!-- Currency -->
-  <ng-container *ngSwitchCase="'currency'">
-    {{value | currency: typeParameter?.currencyCode : typeParameter?.display : typeParameter?.digitsInfo : typeParameter?.locale}}
-  </ng-container>
-  <!-- Percent -->
-  <ng-container *ngSwitchCase="'percent'">
-    {{+(value ?? 0) * (typeParameter?.multiplier ?? defaultPercentageMultiplier) | percent: typeParameter?.digitsInfo : typeParameter?.locale}}
-  </ng-container>
-  <!-- Date -->
-  <ng-container *ngSwitchCase="'date'">
-    {{value | date: typeParameter?.format : typeParameter?.timezone : typeParameter?.locale}}
-  </ng-container>
-  <!-- Link -->
-  <ng-container *ngSwitchCase="'link'">
-    <a [href]="value" target="_blank">{{value}}</a>
-  </ng-container>
-  <!-- Default -->
-  <ng-container *ngSwitchDefault>
-    {{value}}
-  </ng-container>
-</ng-container>
+@switch (type()) {
+  @case('boolean'){
+    {{value() ? '\u2713' : ''}}
+  }
+  @case('number'){
+    {{value() | number: typeParameter()?.digitsInfo : typeParameter()?.locale}}
+  }
+  @case('currency'){
+    {{value() | currency: typeParameter()?.currencyCode : typeParameter()?.display : typeParameter()?.digitsInfo :
+      typeParameter()?.locale}}
+  }
+  @case('percent'){
+    {{+(value() ?? 0) * (typeParameter()?.multiplier ?? defaultPercentageMultiplier) | percent: typeParameter()?.digitsInfo : typeParameter()?.locale}}
+  }
+  @case('date'){
+    {{value() | date: typeParameter()?.format : typeParameter()?.timezone : typeParameter()?.locale}}
+  }
+  @case('link'){
+    <a [href]="value()" target="_blank">{{value()}}</a>
+  }
+  @default{
+    {{value()}}
+  }
+}
