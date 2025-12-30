@@ -1,6 +1,6 @@
 $breakpoints: () !default;
 @use 'sass:map';
-@use '../../modules/responsiveness/breakpoints' as breakpoints;
+@use '../../modules/responsiveness/breakpoints';
 
 @mixin generate($column-prefix, $offset-prefix, $spacing: 0) {
 	.row {
