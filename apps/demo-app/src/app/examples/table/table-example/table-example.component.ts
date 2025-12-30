@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ColumnDefinition, ContextMenuItem } from '@enigmatry/entry-components/table';
+import { ColumnDefinition, ContextMenuItem } from 'libs/entry-components/table/interfaces';
 import { User } from '../../search-filter/search-filter/users';
 import { UsersService } from '../../search-filter/search-filter/users.service';
 

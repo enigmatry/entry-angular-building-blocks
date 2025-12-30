@@ -4,13 +4,13 @@ Reusable table component with context menu, sorting and paging.
 
 ## Installation
 
-```
+```batch
 npm install @enigmatry/entry-components
 ```
 
 ## Basic Usage
 
-Import the `EntryTableModule` in your `feature.module` or `shared.module`
+Import the `EntryTableModule` in your `feature.module`, `shared.module` or your standalone component
 
 ```typescript
 import { EntryTableModule } from '@enigmatry/entry-components/table';
@@ -25,10 +25,8 @@ import { PagedData, ContextMenuItem, ColumnDef } from '@enigmatry/entry-componen
 ...
 })
 export class UserListComponent implements OnInit {
-
   @Input() data: PagedData<GetUsersResponseItem> | null;
-
-  @Input() columns: ColumnDef[] = [];
+  @Input() columns: ColumnDefinition[] = [];
   @Input() contextMenuItems: ContextMenuItem[] = [];
 
   constructor() { }
@@ -68,25 +66,25 @@ export class UserListComponent implements OnInit {
 
 Default values are:
 
- * showPaginator: true
- * showFirstLastButtons: false
- * pageSize: 20
- * pageSizeOptions: [20, 50, 100]
- * hidePageSize: false
- * noResultsText: 'No results found'
- * rowFocusVisible: false
+* showPaginator: true
+* showFirstLastButtons: false
+* pageSize: 20
+* pageSizeOptions: [20, 50, 100]
+* hidePageSize: false
+* noResultsText: 'No results found'
+* rowFocusVisible: false
 
-To override with custom defaults use `provideEntryTableConfig` function:
+To override with custom defaults use `provideEntryTableConfiguration` function:
 
 ```ts
-import { EntryTableModule, provideEntryTableConfig } from '@enigmatry/entry-components/table';
+import { EntryTableModule, provideEntryTableConfiguration } from '@enigmatry/entry-components/table';
 
 @NgModule({
   imports: [
     EntryTableModule
   ],
   providers: [
-      provideEntryTableConfig({
+      provideEntryTableConfiguration({
       showPaginator: true,
       pageSizeOptions: [10, 25, 50],
       rowFocusVisible: true
@@ -95,7 +93,6 @@ import { EntryTableModule, provideEntryTableConfig } from '@enigmatry/entry-comp
 })
 export class EntryComponentsModule { }
 ```
-
 
 ## Compatibility with Angular Versions
 
@@ -108,6 +105,7 @@ export class EntryComponentsModule { }
 | 18.x                        | = 18            |
 | 19.x                        | = 19            |
 | 20.x                        | = 20            |
+| 21.x                        | = 21            |
 
 ## License
 

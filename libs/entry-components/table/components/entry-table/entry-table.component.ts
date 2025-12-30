@@ -6,9 +6,12 @@ import {
   effect,
   signal
 } from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
-import { Sort, SortDirection } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSortModule, Sort, SortDirection } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { EntryCellComponent, EntryCellContextMenuComponent } from '@enigmatry/entry-components';
 import {
   ColumnDefinition, PagedData, RowSelectionFormatter, RowClassFormatter, ContextMenuItem,
   RowContextMenuFormatter, CellTemplate, ENTRY_TABLE_CONFIGURATION, EntryTableConfiguration
@@ -17,6 +20,7 @@ import {
 @Component({
   selector: 'entry-table',
   host: { class: 'entry-table' },
+  imports: [MatTableModule, MatSortModule, MatCheckboxModule, MatRadioModule, MatPaginatorModule, EntryCellComponent, EntryCellContextMenuComponent],
   templateUrl: './entry-table.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
