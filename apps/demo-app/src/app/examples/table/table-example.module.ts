@@ -4,12 +4,10 @@ import { EntryTableModule } from '@enigmatry/entry-components/table';
 import { TableExampleComponent } from './table-example/table-example.component';
 
 @NgModule({
-  declarations: [
-    TableExampleComponent
-  ],
   imports: [
     CommonModule,
-    EntryTableModule
+    EntryTableModule,
+    TableExampleComponent
   ],
   exports: [
     TableExampleComponent

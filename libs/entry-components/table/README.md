@@ -19,30 +19,38 @@ import { EntryTableModule } from '@enigmatry/entry-components/table';
 `component.ts`
 
 ```typescript
-import { PagedData, ContextMenuItem, ColumnDef } from '@enigmatry/entry-components/table';
+import { EntryTableComponent } from '@enigmatry/entry-components/table';
+import { ContextMenuItem, ColumnDefinition } from '@enigmatry/entry-components/table/interfaces';
+import { Component, computed, inject, resource } from '@angular/core';
+import { lastValueFrom } from 'rxjs';
+import { User } from '../../search-filter/search-filter/users';
+import { UsersService } from '../../search-filter/search-filter/users.service';
 
 @Component({
-...
+  selector: 'app-table-example',
+  imports: [EntryTableComponent],
+  templateUrl: './table-example.component.html',
+  styleUrls: ['./table-example.component.scss']
 })
-export class UserListComponent implements OnInit {
-  @Input() data: PagedData<GetUsersResponseItem> | null;
-  @Input() columns: ColumnDefinition[] = [];
-  @Input() contextMenuItems: ContextMenuItem[] = [];
+export class TableExampleComponent {
+  protected readonly columns: ColumnDefinition[] = [
+    { field: 'id', hide: true },
+    { field: 'userName', header: 'E-mail', sortable: true },
+    { field: 'firstName', header: 'First name', hide: false, sortable: true },
+    { field: 'lastName', header: 'Last name', hide: false, sortable: true },
+    { field: 'dateOfBirth', header: 'Date of birth', hide: false, sortable: true, type: 'date', typeParameter: { format: 'dd-MM-yyyy' } },
+    { field: 'occupation', header: 'Occupation', hide: false, sortable: true },
+    { field: 'lastLogin', header: 'Last login', hide: false, sortable: true, type: 'date' }
+  ];
+  protected readonly contextMenuItems: ContextMenuItem[] = [{ id: 'edit', name: 'Edit' }];
 
-  constructor() { }
-
-  ngOnInit(): void {
-    this.columns = [
-      { field: 'id', hide: true, sortable: true },
-      { field: 'userName', header: `E-mail`, hide: false, sortable: true },
-      { field: 'name', header: `Name`, hide: false, sortable: true },
-      { field: 'createdOn', header: `Created on`, hide: false, sortable: true, type: 'date' },
-      { field: 'updatedOn', header: `Updated on`, hide: false, sortable: true, type: 'date' }
-    ];
-    this.contextMenuItems = [
-      { id: 'edit', name: `Edit`, icon: 'edit' }
-    ];
-  }
+  private readonly usersService: UsersService = inject(UsersService);
+  readonly usersResource = resource({
+    loader: async() => {
+      return lastValueFrom(this.usersService.getUsers({}));
+    }
+  });
+  protected readonly users = computed<User[]>(() => this.usersResource.hasValue() ? this.usersResource.value() : []);
 }
 ```
 
@@ -51,14 +59,12 @@ export class UserListComponent implements OnInit {
 ```html
 <entry-table
     [columns]="columns"
-    [data]="data"
+    [data]="users()"
     [showPaginator]="true"
     [showContextMenu]="true"
-    [contextMenuItems]="contextMenuItems"
-    (pageChange)="pageChange.emit($event)"
-    (sortChange)="sortChange.emit($event)"
-    (rowSelectionChange)="selectionChange.emit($event)"
-    (contextMenuItemSelected)="contextMenuItemSelected.emit($event)">
+    [rowSelectable]="true"
+    [multiSelectable]="true"
+    [contextMenuItems]="contextMenuItems">
 </entry-table>
 ```
 
@@ -78,20 +84,29 @@ To override with custom defaults use `provideEntryTableConfiguration` function:
 
 ```ts
 import { EntryTableModule, provideEntryTableConfiguration } from '@enigmatry/entry-components/table';
+import { CommonModule, DATE_PIPE_DEFAULT_OPTIONS } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { TableExampleComponent } from './table-example/table-example.component';
 
 @NgModule({
   imports: [
-    EntryTableModule
+    CommonModule,
+    EntryTableModule,
+    TableExampleComponent
+  ],
+  exports: [
+    TableExampleComponent
   ],
   providers: [
-      provideEntryTableConfiguration({
+    { provide: DATE_PIPE_DEFAULT_OPTIONS, useValue: { dateFormat: 'dd-MM-yyyy HH:mm' } },
+    provideEntryTableConfiguration({
       showPaginator: true,
       pageSizeOptions: [10, 25, 50],
       rowFocusVisible: true
     })
   ]
 })
-export class EntryComponentsModule { }
+export class TableExampleModule { }
 ```
 
 ## Compatibility with Angular Versions
