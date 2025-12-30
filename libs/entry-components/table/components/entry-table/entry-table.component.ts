@@ -11,11 +11,12 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSortModule, Sort, SortDirection } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { EntryCellComponent, EntryCellContextMenuComponent } from '@enigmatry/entry-components';
 import {
   ColumnDefinition, PagedData, RowSelectionFormatter, RowClassFormatter, ContextMenuItem,
   RowContextMenuFormatter, CellTemplate, ENTRY_TABLE_CONFIGURATION, EntryTableConfiguration
 } from '../../interfaces';
+import { EntryCellComponent } from '../entry-cell/entry-cell.component';
+import { EntryCellContextMenuComponent } from '../entry-cell-context-menu/entry-cell-context-menu.component';
 
 @Component({
   selector: 'entry-table',

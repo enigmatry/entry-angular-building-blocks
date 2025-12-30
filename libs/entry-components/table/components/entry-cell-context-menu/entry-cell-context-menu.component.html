@@ -21,7 +21,7 @@
 
             @if(menuItem.items?.length)
             {
-                <entry-cell-context-menu #subMenu [items]="menuItem.items ?? []" [rowData]="rowData" [isSubMenu]="true"
+                <entry-cell-context-menu #subMenu [items]="menuItem.items ?? []" [rowData]="rowData()" [isSubMenu]="true"
                     (selected)="selected.emit($event)">
                 </entry-cell-context-menu>
             }

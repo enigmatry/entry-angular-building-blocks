@@ -1,6 +1,7 @@
 @mixin font-hover($regular-state, $hover-state) {
 	color: $regular-state;
- 
+
+	/* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
 	&:hover, &:hover::before {
 		color: $hover-state;
 	}
