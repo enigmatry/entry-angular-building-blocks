@@ -10,7 +10,7 @@ export interface ColumnDefinition {
   pinned?: 'left' | 'right';
   width?: string;
   sortable?: boolean | string;
-  sortProp?: ColumnSortProperties;
+  sortProperties?: ColumnSortProperties;
   type?: ColumnType;
   typeParameter?: ColumnTypeParameter;
   cellTemplate?: TemplateRef<unknown> | null;
