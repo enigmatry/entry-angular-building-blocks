@@ -10,6 +10,7 @@
 			@include true.expect() {
 				color: #000;
 
+				/* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
 				&:hover, &:hover::before {
 					color: #F00;
 				}

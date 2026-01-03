@@ -10,6 +10,7 @@
 			@include true.expect() {
 				background-color: #FFF;
 
+				/* stylelint-disable-next-line nesting-selector-no-missing-scoping-root */
 				&:hover, &:hover::before {
 					background-color: #CCC;
 				}
