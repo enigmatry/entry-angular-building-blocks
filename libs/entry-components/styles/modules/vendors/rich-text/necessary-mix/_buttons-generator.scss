@@ -1,0 +1,34 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+
+$default-material-button: map.get(mat.define-typography-config(), 'button');
+
+@mixin generate-from($theme) {
+	$theming-primary: map.get($theme, 'general', 'colors', 'primary');
+	$theming-button-fonts: map.get($theme, 'general', 'fonts', 'buttons');
+	$theming-font-family: map.get($theming-button-fonts, 'family');
+	$theming-font-weight: map.get($theming-button-fonts, 'weight');
+	$theming-font-size: map.get($theming-button-fonts, 'size');
+
+	$primary-color: if($theming-primary == '' or $theming-primary == null, mat.get-color-from-palette(mat.$primary-palette, 500), $theming-primary);
+	$font-family: if($theming-font-family == '' or $theming-font-family == null, map.get($default-material-button, 'font-family'), $theming-font-family);
+	$font-weight: if($theming-font-weight == '' or $theming-font-weight == null, map.get($default-material-button, 'font-weight'), $theming-font-weight);
+	$font-size: if($theming-font-size == '' or $theming-font-size == null, map.get($default-material-button, 'font-size'), $theming-font-size);
+
+	.enigmatry-redactor-content {
+		button, .rx-content button {
+			background-color: $primary-color;
+			font: {
+				family: $font-family;
+				weight: $font-weight;
+				size: $font-size;
+			}
+		}
+
+		.rx-toolbar-buttons .rx-button {
+			&.active, &:hover {
+				background: $primary-color;
+			}
+		}
+	}
+}

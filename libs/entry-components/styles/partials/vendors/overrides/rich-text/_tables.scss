@@ -1,0 +1,31 @@
+/* stylelint-disable selector-max-compound-selectors, selector-max-type, selector-max-combinators */
+.enigmatry-redactor-content table {
+	th {
+		font-weight: 500;
+	}
+
+	p {
+		margin: 0;
+	}
+
+	td {
+		border: 1px solid rgb(0 0 0 / .12);
+	}
+
+	tr:first-child {
+		th, td {
+			border-top: none;
+		}
+	}
+	
+	tr:last-child td {
+		border-bottom: none;
+	}
+
+	th, td {
+		border: {
+			right: none;
+			left: none;
+		}
+	}
+}
