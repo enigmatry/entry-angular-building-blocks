@@ -16,7 +16,7 @@
     "test": "jest --coverage --colors"
   },
   "peerDependencies": {
-    "sass-true": "7.0.0"
+    "sass-true": "10.1.0"
   },
   "publishConfig": {
     "access": "public"
