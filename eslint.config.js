@@ -1,6 +1,7 @@
 import defaultEnigmatryConfiguration from './libs/eslint-config/index.js';
+import { defineConfig } from "eslint/config";
 
-export default [
+export default defineConfig([
     ...defaultEnigmatryConfiguration,
     {
         ignores: ['libs/scss-foundation/coverage/**']
@@ -11,4 +12,4 @@ export default [
             '@angular-eslint/prefer-standalone': 'off' // TODO: Remove when we get rid of Formly
         }
     }
-];
+]);

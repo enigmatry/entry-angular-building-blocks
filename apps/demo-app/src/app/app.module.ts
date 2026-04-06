@@ -1,8 +1,7 @@
 import { provideHttpClient } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { provideAnimations } from '@angular/platform-browser/animations';
 import { EntryCommonModule } from '@enigmatry/entry-components/common';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,12 +15,10 @@ import { SharedModule } from './shared/shared.module';
     imports: [
         SharedModule,
         BrowserModule,
-        // eslint-disable-next-line @typescript-eslint/no-deprecated
-        BrowserAnimationsModule,
         EntryCommonModule.forRoot(),
         AppRoutingModule
     ],
-    providers: [provideHttpClient()],
+    providers: [provideHttpClient(), provideAnimations()],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
