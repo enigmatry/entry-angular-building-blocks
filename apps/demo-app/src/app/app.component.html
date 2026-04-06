@@ -18,7 +18,7 @@
   </mat-toolbar>
 
   <mat-sidenav-container class="docs-container">
-    <mat-sidenav mode="side" opened class="docs-sidenav">
+    <mat-sidenav mode="side" [opened]="true" class="docs-sidenav">
       <mat-nav-list class="docs-menu-items">
         @for (item of (menuItems | sort); track item.route) {
           <a mat-list-item [routerLink]="item.route" routerLinkActive="active"

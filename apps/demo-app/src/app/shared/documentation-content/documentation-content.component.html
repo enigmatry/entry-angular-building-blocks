@@ -1,21 +1,23 @@
 <div class="component-doc-content">
-    <mat-tab-group animationDuration="0ms" mat-stretch-tabs="false">
-        <mat-tab label="Overview">
-            <div class="doc-content-wrapper">
-                <app-markdown-viewer [fileUrl]="componentDefinition!.readmePath"></app-markdown-viewer>
-            </div>
-        </mat-tab>
-        <mat-tab label="Examples">
-            <div class="doc-content-wrapper">
-                <ng-content></ng-content>
-            </div>
-        </mat-tab>
-        @if (componentDefinition!.apiDocsPath) {
-            <mat-tab label="API">
+    @if (componentDefinition; as definition) {
+        <mat-tab-group animationDuration="0ms" mat-stretch-tabs="false">
+            <mat-tab label="Overview">
                 <div class="doc-content-wrapper">
-                    <app-markdown-viewer [fileUrl]="componentDefinition!.apiDocsPath"></app-markdown-viewer>
+                    <app-markdown-viewer [fileUrl]="definition.readmePath"></app-markdown-viewer>
                 </div>
             </mat-tab>
-        }
-    </mat-tab-group>
+            <mat-tab label="Examples">
+                <div class="doc-content-wrapper">
+                    <ng-content></ng-content>
+                </div>
+            </mat-tab>
+            @if (definition.apiDocsPath) {
+                <mat-tab label="API">
+                    <div class="doc-content-wrapper">
+                        <app-markdown-viewer [fileUrl]="definition.apiDocsPath"></app-markdown-viewer>
+                    </div>
+                </mat-tab>
+            }
+        </mat-tab-group>
+    }
 </div>

@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, Input, NgZone, OnInit, Renderer2, SecurityContext } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, Input, NgZone, OnInit, Renderer2, SecurityContext, signal } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import hljs from 'highlight.js';
 import MarkdownIt from 'markdown-it';
@@ -9,13 +9,14 @@ import { FileLoadService } from '../services/file-load.service';
   selector: 'app-markdown-viewer',
   templateUrl: './markdown-viewer.component.html',
   styleUrls: ['./markdown-viewer.component.scss'],
-  standalone: false
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MarkdownViewerComponent implements OnInit {
   @Input() fileUrl: string | undefined;
   @Input() markdownContent: string | undefined;
 
-  markdownContentHtml: SafeHtml | undefined = '';
+  readonly markdownContentHtml = signal<SafeHtml>('');
 
   private readonly _fileLoad: FileLoadService = inject(FileLoadService);
   private _domSanitizer: DomSanitizer = inject(DomSanitizer);
@@ -28,7 +29,7 @@ export class MarkdownViewerComponent implements OnInit {
       this.loadFileContent();
     }
     if (this.markdownContent) {
-      this.markdownContentHtml = this.convertMarkdownToHtml(this.markdownContent);
+      this.markdownContentHtml.set(this.convertMarkdownToHtml(this.markdownContent));
     }
     this.handleAnchorClicks();
   }
@@ -41,8 +42,8 @@ export class MarkdownViewerComponent implements OnInit {
         map(response => this.convertMarkdownToHtml(response))
       )
       .subscribe({
-        next: response => this.markdownContentHtml = response,
-        error: _ => this.markdownContentHtml = `### No API documentation found :'(`
+        next: response => this.markdownContentHtml.set(response),
+        error: _ => this.markdownContentHtml.set(`### No API documentation found :'(`)
       });
   }
 
