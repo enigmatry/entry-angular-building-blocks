@@ -71,7 +71,7 @@
     "jest-environment-node-single-context": "29.4.0",
     "ng-packagr": "^21.1.0",
     "postcss-scss": "^4.0.9",
-    "sass": "1.97.3",
+    "sass": "1.99.0",
     "sass-true": "10.1.0",
     "stylelint": "^17.1.1",
     "stylelint-config-property-sort-order-smacss": "^11.1.0",
