@@ -102,7 +102,7 @@ Used to configure mapping between validation keys and messages
 
 | Property | Type | Description | Defined in |
 | ------ | ------ | ------ | ------ |
-| <a id="message"></a> `message` | `string` \| (`control`) => `string` | Validation message. Can be static string or expression returning string (when messages need to be resolved dynamically: parametrization, localization, etc.). |  |
+| <a id="message"></a> `message` | `string` \| ((`control`) => `string`) | Validation message. Can be static string or expression returning string (when messages need to be resolved dynamically: parametrization, localization, etc.). |  |
 | <a id="name"></a> `name` | `string` | Validation key (e.g. '_required_', '_minlength_', '_email_', etc.) |  |
 
 ***

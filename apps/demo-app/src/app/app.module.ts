@@ -18,6 +18,7 @@ import { SharedModule } from './shared/shared.module';
         EntryCommonModule.forRoot(),
         AppRoutingModule
     ],
+    // eslint-disable-next-line @typescript-eslint/no-deprecated -- will have to be dealt with in Angular 22 (https://enigmatry.atlassian.net/browse/BP-1582)
     providers: [provideHttpClient(), provideAnimations()],
     bootstrap: [AppComponent]
 })

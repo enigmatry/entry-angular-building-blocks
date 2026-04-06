@@ -7,7 +7,7 @@
 		@return null;
 	}
 	$current-lightness: color.lightness($color);
-	$adjustment: if(sass($current-lightness > 50%): -$percentage; else: $percentage);
+	$adjustment: if(sass($current-lightness > 50%): - $percentage; else: $percentage);
 
 	@return color.adjust($color, $lightness: $adjustment);
 }
