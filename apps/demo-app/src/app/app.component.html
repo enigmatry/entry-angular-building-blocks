@@ -5,7 +5,9 @@
       <button mat-flat-button color="primary" class="header-element" [routerLink]="''">
         Components
       </button>
-      <span *ngIf="selectedMenuItem" class="header-element"> {{selectedMenuItem.label}}</span>
+      @if (selectedMenuItem) {
+        <span class="header-element"> {{selectedMenuItem.label}}</span>
+      }
     </div>
 
     <a mat-flat-button color="primary" target="_blank" class="header-element"
@@ -18,10 +20,12 @@
   <mat-sidenav-container class="docs-container">
     <mat-sidenav mode="side" opened class="docs-sidenav">
       <mat-nav-list class="docs-menu-items">
-        <a *ngFor="let item of (menuItems | sort)" mat-list-item [routerLink]="item.route" routerLinkActive="active"
-          class="docs-menu-item">
-          {{item.label}}
-        </a>
+        @for (item of (menuItems | sort); track item.route) {
+          <a mat-list-item [routerLink]="item.route" routerLinkActive="active"
+            class="docs-menu-item">
+            {{item.label}}
+          </a>
+        }
       </mat-nav-list>
     </mat-sidenav>
 

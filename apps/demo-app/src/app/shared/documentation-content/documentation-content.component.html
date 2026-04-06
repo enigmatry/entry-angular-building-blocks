@@ -10,10 +10,12 @@
                 <ng-content></ng-content>
             </div>
         </mat-tab>
-        <mat-tab label="API" *ngIf="componentDefinition!.apiDocsPath">
-            <div class="doc-content-wrapper">
-                <app-markdown-viewer [fileUrl]="componentDefinition!.apiDocsPath"></app-markdown-viewer>
-            </div>
-        </mat-tab>
+        @if (componentDefinition!.apiDocsPath) {
+            <mat-tab label="API">
+                <div class="doc-content-wrapper">
+                    <app-markdown-viewer [fileUrl]="componentDefinition!.apiDocsPath"></app-markdown-viewer>
+                </div>
+            </mat-tab>
+        }
     </mat-tab-group>
 </div>
