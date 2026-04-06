@@ -1,25 +1,40 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { Component, computed, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { MatListModule } from '@angular/material/list';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { filter } from 'rxjs/operators';
 import { IComponentDefinition, COMPONENT_DEFINITIONS } from './features/component-definitions';
+import { SortPipe } from './shared/pipes/sort.pipe';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
-    standalone: false
+    imports: [
+        RouterLink,
+        RouterLinkActive,
+        RouterOutlet,
+        MatToolbarModule,
+        MatSidenavModule,
+        MatListModule,
+        MatButtonModule,
+        SortPipe
+    ]
 })
-export class AppComponent implements OnInit {
-  menuItems = COMPONENT_DEFINITIONS;
-  selectedMenuItem: IComponentDefinition | undefined = undefined;
-  private readonly router: Router = inject(Router);
+export class AppComponent {
+  readonly menuItems = COMPONENT_DEFINITIONS;
+  private readonly router = inject(Router);
 
-  ngOnInit(): void {
-    this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe((event: NavigationEnd) => {
-        const items = this.menuItems.filter(item => event.url.includes(item.route));
-        this.selectedMenuItem = items ? items[0] : undefined;
-      });
-  }
+  private readonly navigationEnd = toSignal(
+    this.router.events.pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
+  );
+
+  readonly selectedMenuItem = computed((): IComponentDefinition | undefined => {
+    const event = this.navigationEnd();
+    if (!event) { return undefined; }
+    return this.menuItems.find(item => event.url.includes(item.route));
+  });
 }
