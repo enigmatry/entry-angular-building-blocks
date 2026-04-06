@@ -94,6 +94,7 @@ entry-codegen --source-assembly ../MyProject.CodeGeneration.Setup/bin/Debug/net7
 |18.x| = 18
 |19.x| = 19
 |20.x| = 20
+|21.x| = 21
 
 ## License
 
