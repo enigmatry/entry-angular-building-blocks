@@ -183,6 +183,9 @@ Available globally via `NG_EVENT_PLUGINS` (registered in `EntryComponentsModule.
 
 ## Key Conventions
 
+### Generated files
+Files with `.generated` in their name (e.g., `*.generated.ts`, `*.generated.html`, `*.generated.scss`) are produced by `entry-codegen` and **must never be edited**. Modify the generator or its templates instead.
+
 ### Angular control flow syntax
 Use `@if`, `@for`, `@switch`/`@case`/`@default` exclusively. Never use `*ngIf`, `*ngFor`, `[ngSwitch]`, `*ngSwitchCase`, etc.
 
