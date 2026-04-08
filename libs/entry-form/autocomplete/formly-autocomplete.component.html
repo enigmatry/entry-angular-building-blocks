@@ -1,5 +1,21 @@
-@if (props.options | formlySelectOptions: field | async; as selectOptions) {
-    <input type="text"
+@let selectOptions = (props.options | formlySelectOptions: field | async) ?? [];
+
+<mat-form-field class="entry-autocomplete"
+  [hideRequiredMarker]="true"
+  [floatLabel]="props['floatLabel']"
+  [appearance]="props['appearance']"
+  [subscriptSizing]="props['subscriptSizing']"
+  [color]="props['color'] ?? 'primary'">
+  @if (props.label && !props['hideLabel']) {
+    <mat-label>
+      {{ props.label }}
+      @if (props.required && !props['hideRequiredMarker']) {
+        <span aria-hidden="true" class="mat-form-field-required-marker mat-mdc-form-field-required-marker">*</span>
+      }
+    </mat-label>
+  }
+
+  <input type="text"
     matInput
     #input
     [matAutocomplete]="auto"
@@ -10,6 +26,7 @@
     [errorStateMatcher]="errorStateMatcher"
     [options]="selectOptions"
     entryCheckAutocompleteInput>
+
   <mat-autocomplete #auto="matAutocomplete"
     [autoActiveFirstOption]="true"
     [displayWith]="selectOptions | displayWithAutocomplete">
@@ -19,4 +36,13 @@
       </mat-option>
     }
   </mat-autocomplete>
-}
+
+  <mat-error>
+    <formly-validation-message [field]="field"></formly-validation-message>
+  </mat-error>
+
+  @if (props.description; as hint) {
+    <mat-hint>{{ hint }}</mat-hint>
+  }
+</mat-form-field>
+

@@ -5,6 +5,7 @@ import { FieldType } from '@ngx-formly/material';
 
 @Component({
     templateUrl: './formly-autocomplete.component.html',
+    styleUrl: './formly-autocomplete.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
