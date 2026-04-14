@@ -1,7 +1,9 @@
 <mat-form-field>
     <mat-label>{{ label }}</mat-label>
     <input matInput [matDatepicker]="hiddenPicker" [placeholder]="placeholder!" [formControl]="formControl">
-    <mat-hint *ngIf="hint">{{hint}}</mat-hint>
+    @if (hint) {
+        <mat-hint>{{hint}}</mat-hint>
+    }
     <mat-datepicker #hiddenPicker class="hidden"></mat-datepicker>
     <input class="hidden" matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker"
         [formControl]="calendarControl" aria-label="Calendar Control">

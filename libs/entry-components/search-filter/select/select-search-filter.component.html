@@ -1,16 +1,20 @@
 <mat-form-field [formGroup]="form" subscriptSizing="dynamic">
     <mat-label [attr.for]="searchFilter.key">{{searchFilter.label}}</mat-label>
     <mat-select [formControlName]="searchFilter.key" [id]="searchFilter.key" [multiple]="searchFilter.multiSelect">
-        <mat-option *ngIf="!searchFilter.multiSelect && searchFilter.showNoneOption" [value]="undefined">
-            {{config.noneSelectedOptionText}}
-        </mat-option>
-        <ng-container *ngIf="searchFilter.options$ !== undefined; else fixedSelectValues">
-            <mat-option *ngFor="let option of searchFilter.options$ | async"
-                [value]="option.key">{{option.label}}</mat-option>
-        </ng-container>
-        <ng-template #fixedSelectValues>
-            <mat-option *ngFor="let option of searchFilter.options" [value]="option.key">{{option.label}}</mat-option>
-        </ng-template>
+        @if (!searchFilter.multiSelect && searchFilter.showNoneOption) {
+            <mat-option [value]="undefined">
+                {{config.noneSelectedOptionText}}
+            </mat-option>
+        }
+        @if (searchFilter.options$ !== undefined) {
+            @for (option of searchFilter.options$ | async; track option.key) {
+                <mat-option [value]="option.key">{{option.label}}</mat-option>
+            }
+        } @else {
+            @for (option of searchFilter.options; track option.key) {
+                <mat-option [value]="option.key">{{option.label}}</mat-option>
+            }
+        }
     </mat-select>
     <mat-error entryDisplayControlValidation [control]="form.get(searchFilter.key)!"></mat-error>
 </mat-form-field>

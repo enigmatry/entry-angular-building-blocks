@@ -8,9 +8,11 @@
     <mat-form-field class="item">
         <mat-label>Buttons horizontal alignment</mat-label>
         <mat-select [(ngModel)]="confirmData.buttonsAlignment">
-            <mat-option *ngFor="let alignment of alignments" [value]="alignment">
-                {{alignment}}
-            </mat-option>
+            @for (alignment of alignments; track alignment) {
+                <mat-option [value]="alignment">
+                    {{alignment}}
+                </mat-option>
+            }
         </mat-select>
     </mat-form-field>
     <button mat-button entry-submit-button (click)="openConfirm()" class="item">

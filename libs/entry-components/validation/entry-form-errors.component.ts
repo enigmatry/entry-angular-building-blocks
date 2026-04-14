@@ -14,11 +14,15 @@ import { UntypedFormGroup } from '@angular/forms';
 @Component({
     selector: 'entry-form-errors',
     template: `
-    <div *ngIf="form.errors">
-      <mat-error *ngFor="let error of form.errors['general']">
-        <span class="mat-body-2">{{error}}</span>
-      </mat-error>
-    </div>
+    @if (form.errors) {
+      <div>
+        @for (error of form.errors['general']; track error) {
+          <mat-error>
+            <span class="mat-body-2">{{error}}</span>
+          </mat-error>
+        }
+      </div>
+    }
   `,
     standalone: false
 })

@@ -1,6 +1,8 @@
 <section>
-  <entry-spinner *ngIf="loading" [fullscreen]="fullscreen" [color]="color"
-    [hasBackgroundOverlay]="hasBackgroundOverlay"></entry-spinner>
+  @if (loading) {
+    <entry-spinner [fullscreen]="fullscreen" [color]="color"
+      [hasBackgroundOverlay]="hasBackgroundOverlay"></entry-spinner>
+  }
 </section>
 
 <section>

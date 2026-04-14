@@ -4,5 +4,7 @@
     [buttonsAlignment]="data.buttonsAlignment ?? config.buttonsAlignment"
     [hideClose]="data.hideClose ?? config.hideClose"
     [hideCancel]="true">
-    <p *ngFor="let error of errors">{{error}}</p>
+    @for (error of errors; track error) {
+        <p>{{error}}</p>
+    }
 </entry-dialog>

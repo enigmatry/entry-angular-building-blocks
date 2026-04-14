@@ -62,7 +62,7 @@ Closes all opened dialogs.
 
 ##### open()
 
-> **open**(`component`, `data`, `disableClose`, `cssClass`): `Observable`\<`any`\>
+> **open**(`component`, `data?`, `disableClose?`, `cssClass?`): `Observable`\<`any`\>
 
 Opens dialog with custom component.
 
@@ -74,19 +74,19 @@ Opens dialog with custom component.
 
 Dialog custom component implementation
 
-###### data
+###### data?
 
 `unknown` = `undefined`
 
 Optional parameter used to supply component with input parameters
 
-###### disableClose
+###### disableClose?
+
+`boolean` \| `undefined`
 
 Optional parameter that disable closing dialog when pressing escape or clicking on backdrop
 
-`boolean` | `undefined`
-
-###### cssClass
+###### cssClass?
 
 `string` = `''`
 

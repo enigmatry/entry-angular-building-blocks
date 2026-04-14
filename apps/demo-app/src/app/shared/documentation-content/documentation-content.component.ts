@@ -1,5 +1,5 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { COMPONENT_DEFINITIONS, IComponentDefinition } from '../../features/component-definitions';
 
 @Component({
@@ -8,12 +8,7 @@ import { COMPONENT_DEFINITIONS, IComponentDefinition } from '../../features/comp
   styleUrls: ['./documentation-content.component.scss'],
   standalone: false
 })
-export class DocumentationContentComponent implements OnInit {
-  componentDefinition: IComponentDefinition | undefined;
-  private readonly activatedRoute: ActivatedRoute = inject(ActivatedRoute);
-
-  ngOnInit(): void {
-    const componentRoute = this.activatedRoute.snapshot.url[0].path;
-    this.componentDefinition = COMPONENT_DEFINITIONS.find(c => c.route === componentRoute);
-  }
+export class DocumentationContentComponent {
+  readonly componentDefinition: IComponentDefinition | undefined =
+    COMPONENT_DEFINITIONS.find(c => inject(Router).url.includes(c.route));
 }

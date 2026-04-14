@@ -3,9 +3,11 @@
     <input type="text" matInput [placeholder]="searchFilter.placeholder"
         [formControl]="searchField" [id]="searchFilter.key" [matAutocomplete]="auto">
     <mat-autocomplete [displayWith]="displayFn" #auto="matAutocomplete" (optionSelected)="onSelected($event)">
-        <mat-option *ngFor="let option of options$ | async" [value]="option">
-            {{option.label}}
-        </mat-option>
+        @for (option of options$ | async; track option.key) {
+            <mat-option [value]="option">
+                {{option.label}}
+            </mat-option>
+        }
     </mat-autocomplete>
     <mat-error entryDisplayControlValidation [control]="searchField"></mat-error>
 </mat-form-field>

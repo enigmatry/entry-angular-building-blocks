@@ -20,13 +20,13 @@ import { SortPipe } from './pipes/sort.pipe';
     LandingComponent,
     ExampleViewerComponent,
     MarkdownViewerComponent,
-    SortPipe,
     CodeViewComponent
   ],
   imports: [
     CommonModule,
     MaterialModule,
-    EntryButtonModule
+    EntryButtonModule,
+    SortPipe
   ],
   exports: [
     MaterialModule,

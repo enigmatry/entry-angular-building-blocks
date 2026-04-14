@@ -1,32 +1,38 @@
 <div class="entry-dialog" role="dialog">
     <div class="dialog-header">
         <h1 class="title" [class.without-close-icon]="hideClose" mat-dialog-title>{{ title }}</h1>
-        <button mat-icon-button *ngIf="!hideClose" type="button" class="close-button" (click)="cancel()"
-            aria-label="Close dialog">
-            <mat-icon aria-hidden="true">close</mat-icon>
-        </button>
+        @if (!hideClose) {
+            <button mat-icon-button type="button" class="close-button" (click)="cancel()"
+                aria-label="Close dialog">
+                <mat-icon aria-hidden="true">close</mat-icon>
+            </button>
+        }
     </div>
 
     <mat-dialog-content class="dialog-content" [ngClass]="{'with-actions': !hideButtons}">
         <ng-content></ng-content>
     </mat-dialog-content>
 
-    <mat-dialog-actions class="dialog-actions" [align]="buttonsAlignment" *ngIf="!hideButtons">
-            @if(buttonsTemplate) {
-                <ng-container *ngTemplateOutlet="buttonsTemplate"></ng-container>
-            }
+    @if (!hideButtons) {
+        <mat-dialog-actions class="dialog-actions" [align]="buttonsAlignment">
+                @if(buttonsTemplate) {
+                    <ng-container [ngTemplateOutlet]="buttonsTemplate"></ng-container>
+                }
 
-            @else {
-                <ng-container *ngTemplateOutlet="defaultButtonsTemplate"></ng-container>
-            }
-    </mat-dialog-actions>
+                @else {
+                    <ng-container [ngTemplateOutlet]="defaultButtonsTemplate"></ng-container>
+                }
+        </mat-dialog-actions>
+    }
 
     <ng-template #defaultButtonsTemplate>
         <button cdkFocusInitial mat-button entry-submit-button (click)="onSubmit()">
             <span>{{confirmButtonText}}</span>
         </button>
-        <button *ngIf="!hideCancel" mat-button entry-cancel-button (click)="cancel()">
-            <span>{{cancelButtonText}}</span>
-        </button>
+        @if (!hideCancel) {
+            <button mat-button entry-cancel-button (click)="cancel()">
+                <span>{{cancelButtonText}}</span>
+            </button>
+        }
     </ng-template>
 </div>

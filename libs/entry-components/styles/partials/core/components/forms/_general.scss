@@ -1,6 +1,7 @@
 @use 'scss-foundation/src/modules/display/items';
 
 .entry-form {
+	/* stylelint-disable-next-line selector-max-pseudo-class */
 	.action-buttons .mdc-button:not(:first-child) {
 		margin-left: 10px;
 	}

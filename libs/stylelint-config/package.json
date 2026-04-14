@@ -14,13 +14,13 @@
   ],
   "dependencies": {
     "postcss-scss": "^4.0.9",
-    "stylelint": "^16.25.0",
-    "stylelint-config-property-sort-order-smacss": "^10.0.0",
-    "@stylistic/stylelint-plugin": "^4.0.0",
-    "stylelint-use-nesting": "^6.0.0",
-    "stylelint-declaration-block-no-ignored-properties": "^2.8.0",
+    "stylelint": "^17.1.1",
+    "stylelint-config-property-sort-order-smacss": "^11.1.0",
+    "@stylistic/stylelint-plugin": "^5.0.1",
+    "stylelint-use-nesting": "^6.0.1",
+    "stylelint-declaration-block-no-ignored-properties": "^3.0.0",
     "stylelint-file-max-lines": "^1.0.0",
-    "stylelint-scss": "^6.12.1",
+    "stylelint-scss": "^7.0.0",
     "stylelint-group-selectors": "^1.0.10"
   },
   "deprecatedDependencies": {

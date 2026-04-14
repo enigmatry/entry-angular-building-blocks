@@ -6,12 +6,14 @@
  [disabled]="disabled || readonly"
  aria-controls="fileInput"
  aria-label="Upload Files">
-  <mat-icon *ngIf="matIcon">{{matIcon}}</mat-icon>
+  @if (matIcon) {
+    <mat-icon>{{matIcon}}</mat-icon>
+  }
   <span>{{label}}</span>
 </button>
-<ng-container *ngIf="value">
+@if (value) {
   {{fileNames}}
-</ng-container>
+}
 <input
  #fileInput
  type="file"

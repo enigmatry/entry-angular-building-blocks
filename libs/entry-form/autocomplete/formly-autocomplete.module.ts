@@ -26,7 +26,7 @@ import { FormlyAutocompleteComponent } from './formly-autocomplete.component';
     FormlySelectModule,
     FormlyModule.forChild({
       types: [
-        { name: 'autocomplete', component: FormlyAutocompleteComponent, wrappers: ['form-field'] }
+        { name: 'autocomplete', component: FormlyAutocompleteComponent, wrappers: [] }
       ]
     })
   ]

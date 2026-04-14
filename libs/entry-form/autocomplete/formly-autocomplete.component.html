@@ -1,20 +1,48 @@
-<ng-container *ngIf="to.options | formlySelectOptions: field | async as selectOptions">
-    <input type="text"
+@let selectOptions = (props.options | formlySelectOptions: field | async) ?? [];
+
+<mat-form-field class="entry-autocomplete"
+  [hideRequiredMarker]="true"
+  [floatLabel]="props['floatLabel']"
+  [appearance]="props['appearance']"
+  [subscriptSizing]="props['subscriptSizing']"
+  [color]="props['color'] ?? 'primary'">
+  @if (props.label && !props['hideLabel']) {
+    <mat-label>
+      {{ props.label }}
+      @if (props.required && !props['hideRequiredMarker']) {
+        <span aria-hidden="true" class="mat-form-field-required-marker mat-mdc-form-field-required-marker">*</span>
+      }
+    </mat-label>
+  }
+
+  <input type="text"
     matInput
     #input
     [matAutocomplete]="auto"
     [formControl]="control"
     [formlyAttributes]="field"
-    [placeholder]="to.placeholder ?? ''"
-    [required]="to.required ?? false"
+    [placeholder]="props.placeholder ?? ''"
+    [required]="props.required ?? false"
     [errorStateMatcher]="errorStateMatcher"
     [options]="selectOptions"
     entryCheckAutocompleteInput>
+
   <mat-autocomplete #auto="matAutocomplete"
     [autoActiveFirstOption]="true"
     [displayWith]="selectOptions | displayWithAutocomplete">
-    <mat-option *ngFor="let option of selectOptions | filterWithAutocomplete: input.value" [value]="option.value">
-    {{ option.label }}
-    </mat-option>
+    @for (option of selectOptions | filterWithAutocomplete: input.value; track option.value) {
+      <mat-option [value]="option.value">
+        {{ option.label }}
+      </mat-option>
+    }
   </mat-autocomplete>
-</ng-container>
+
+  <mat-error>
+    <formly-validation-message [field]="field"></formly-validation-message>
+  </mat-error>
+
+  @if (props.description; as hint) {
+    <mat-hint>{{ hint }}</mat-hint>
+  }
+</mat-form-field>
+

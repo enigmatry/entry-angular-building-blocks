@@ -281,12 +281,7 @@ module.exports = {
     "scss/at-else-empty-line-before": "never",
     "scss/at-else-if-parentheses-space-before": "never",
     "scss/at-extend-no-missing-placeholder": true,
-    "scss/at-function-named-arguments": [
-      "never",
-      {
-        ignoreFunctions: ["color.adjust"]
-      }
-    ],
+    "scss/at-function-named-arguments": null,
     "scss/at-function-parentheses-space-before": "never",
     "scss/at-function-pattern": null,
     "scss/at-if-closing-brace-newline-after": null,
@@ -295,11 +290,9 @@ module.exports = {
     "scss/at-import-partial-extension-allowed-list": [
       "scss"
     ],
-    "scss/at-import-partial-extension-blacklist": null,
     "scss/at-import-partial-extension-disallowed-list": [
       "sass"
     ],
-    "scss/at-import-partial-extension-whitelist": null,
     "scss/at-mixin-argumentless-call-parentheses": "always",
     "scss/at-mixin-named-arguments": null,
     "scss/at-mixin-no-risky-nesting-selector": true,
@@ -341,7 +334,7 @@ module.exports = {
     "scss/function-no-unknown": [
       true,
       {
-        ignoreFunctions: ["/^-/", "/^mat\\./", "/^theming\\.mat/"]
+        ignoreFunctions: ["/^-/", "/^mat\\./", "/^theming\\.mat/", "sass"]
       }
     ],
     "scss/function-quote-no-quoted-strings-inside": true,
