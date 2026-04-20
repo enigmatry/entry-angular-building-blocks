@@ -1,0 +1,36 @@
+@use 'scss-foundation/src/modules/display/items';
+@use '@angular/material' as mat;
+
+$redactor-link-selectors: 'a, a:visited, a:focus, a:hover';
+
+.enigmatry-redactor-content .rx-content {
+	#{$redactor-link-selectors} {
+		@include items.fully-align(center, center);
+		display: inline-flex;
+		cursor: pointer;
+	}
+
+	button, #{$redactor-link-selectors} {
+		@include items.fully-align(center, flex-start);
+		height: 36px;
+		margin: 8px 8px 8px 0;
+		padding: 0 16px;
+		border: none;
+		text-decoration: none;
+	}
+
+	a:hover {
+		background-color: mat.get-color-from-palette(mat.$grey-palette, 100);
+	}
+
+	button {
+		@include mat.elevation(4);
+		height: 36px;
+		border-radius: 4px;
+		color: #FFF;
+    
+		&:hover {
+			@include mat.elevation(8);
+		}
+	}
+}

@@ -1,0 +1,22 @@
+@use '@angular/material' as mat;
+
+$checkbox-width: 18px;
+$checkbox-height: 18px;
+$border-radius: 2px;
+
+$redactor-todoitem-selector: '.rx-editor [data-rx-type = 'todoitem']';
+
+.enigmatry-redactor-content #{$redactor-todoitem-selector} {
+	input {
+		width: $checkbox-width;
+		height: $checkbox-height;
+	}
+
+	input::before, input:checked::before {
+		width: $checkbox-width;
+		height: $checkbox-height;
+		border-width: 2px;
+		border-radius: $border-radius;
+		border-color: rgb(0 0 0 / .54);
+	}
+}

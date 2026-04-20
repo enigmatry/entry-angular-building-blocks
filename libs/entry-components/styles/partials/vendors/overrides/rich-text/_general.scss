@@ -1,0 +1,12 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+
+.enigmatry-redactor-content {
+	.rx-button-icon svg {
+		fill: rgb(0 0 0 / .54);
+	}
+
+	.rx-main-container {
+		border-color: rgb(0 0 0 / .38);
+	}
+}

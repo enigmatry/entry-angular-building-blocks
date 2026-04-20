@@ -1,0 +1,24 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+
+$redactor-checkboxes-selector: '[data-rx-type = 'todoitem'] ';
+
+@mixin generate-from($theme) {
+	$theming-accent-color: map.get($theme, 'general', 'colors', 'accent');
+	
+	.enigmatry-redactor-content {
+
+		$checkbox-color: if($theming-accent-color == '' or $theming-accent-color == null, mat.get-color-from-palette(mat.$primary-palette, 500), $theming-accent-color);
+
+		.rx-editor #{$redactor-checkboxes-selector} input:checked::before {
+			border-color: $checkbox-color;
+			background-color: $checkbox-color;
+		}
+
+		@if map.get($theme, 'general', 'checkboxes') {
+			.rx-editor #{$redactor-checkboxes-selector} input::before {
+				background-color: map.get($theme, 'general', 'checkboxes', 'background');
+			}
+		}
+	}
+}
