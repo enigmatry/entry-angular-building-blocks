@@ -77,6 +77,18 @@ export class EntryTableComponent<T> {
   readonly sortDisableClear = input<boolean>(false);
   readonly sortDisabled = input<boolean>(false);
   readonly sortStart = input<'asc' | 'desc'>('asc');
+  readonly resolvedSortActive = computed(() => {
+    if (!this.sortActive()) {
+      return this.sortActive();
+    }
+
+    const column = this.findColumnBySortKey(this.sortActive());
+    if (!column) {
+      return this.sortActive();
+    }
+
+    return column.sortProperties?.id ?? column.field;
+  });
   readonly sortChange = output<Sort>();
 
   // Row
@@ -197,6 +209,19 @@ export class EntryTableComponent<T> {
   readonly handlePage = (event: PageEvent) => {
     this.pageChange.emit(event);
   };
+
+  readonly handleSortChange = (sort: Sort): void => {
+    const column = this.findColumnBySortKey(sort.active);
+    const active = column?.sortProperties?.id ?? sort.active;
+    this.sortChange.emit({ ...sort, active });
+  };
+
+  private readonly findColumnBySortKey = (sortKey?: string): ColumnDefinition | undefined =>
+    sortKey ?
+      this.columns().find(column =>
+        column.field.toLowerCase() === sortKey.toLowerCase()
+        || column.sortProperties?.id?.toLowerCase() === sortKey.toLowerCase())
+      : undefined;
 
   readonly scrollToTop = (): void => {
     this.elementRef.nativeElement.scrollTop = 0;
