@@ -1,10 +1,10 @@
-import { CurrencyPipe, DatePipe, DecimalPipe, PercentPipe } from '@angular/common';
+import { CommonModule, CurrencyPipe, DatePipe, DecimalPipe, PercentPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { ColumnTypeParameter } from '../../interfaces';
 import { DEFAULT_PERCENTAGE_MULTIPLIER } from '../../interfaces/entry-table-configuration';
 
 @Component({
-  imports: [DatePipe, DecimalPipe, PercentPipe, CurrencyPipe],
+  imports: [CommonModule, DatePipe, DecimalPipe, PercentPipe, CurrencyPipe],
   selector: 'entry-cell-formatted-value',
   templateUrl: './entry-cell-formatted-value.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush

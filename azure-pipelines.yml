@@ -65,7 +65,7 @@ stages:
         command: custom
         customCommand: version $(theLatestVersion) --no-git-tag-version
         workingDir: 'libs/eslint-config'
-        
+
     - task: Npm@1
       displayName: 'Set the version stylelint recommended rules'
       inputs:
@@ -115,14 +115,14 @@ stages:
         folderPath: 'dist'
         jsonTargetFiles: '**/package.json'
         xmlTransformationRules:
-    
+
     - task: PublishBuildArtifacts@1
       displayName: Publish artifacts
       inputs:
         PathtoPublish: 'dist'
         ArtifactName: $(artifactName)-$(Build.BuildNumber)
         publishLocation: 'Container'
-    
+
     - task: PublishBuildArtifacts@1
       displayName: Publish libs
       inputs:
@@ -149,20 +149,20 @@ stages:
               displayName: 'Download build artifacts'
 
             - task: Npm@1
-              displayName: 'Publish entry form'
-              inputs:
-                command: publish
-                publishRegistry: useExternalRegistry
-                publishEndpoint: npm
-                workingDir: '$(Pipeline.Workspace)/$(artifactName)-$(Build.BuildNumber)/enigmatry/entry-form'
-
-            - task: Npm@1
               displayName: 'Publish entry components'
               inputs:
                 command: publish
                 publishRegistry: useExternalRegistry
                 publishEndpoint: npm
                 workingDir: '$(Pipeline.Workspace)/$(artifactName)-$(Build.BuildNumber)/enigmatry/entry-components'
+
+            - task: Npm@1
+              displayName: 'Publish entry form'
+              inputs:
+                command: publish
+                publishRegistry: useExternalRegistry
+                publishEndpoint: npm
+                workingDir: '$(Pipeline.Workspace)/$(artifactName)-$(Build.BuildNumber)/enigmatry/entry-form'
 
             - task: Npm@1
               displayName: 'Publish the eslint recommended rules'
@@ -179,7 +179,7 @@ stages:
                 publishRegistry: useExternalRegistry
                 publishEndpoint: npm
                 workingDir: '$(Pipeline.Workspace)/$(artifactName)-$(Build.BuildNumber)/stylelint-config'
-                
+
             - task: Npm@1
               displayName: 'Publish the scss foundation'
               inputs:

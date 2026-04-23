@@ -1,5 +1,6 @@
 /* eslint-disable max-lines */
 import { SelectionModel } from '@angular/cdk/collections';
+import { CommonModule } from '@angular/common';
 import {
   Component, ChangeDetectionStrategy, TemplateRef, ElementRef, inject, input, output, computed,
   linkedSignal,
@@ -21,7 +22,8 @@ import { EntryCellContextMenuComponent } from '../entry-cell-context-menu/entry-
 @Component({
   selector: 'entry-table',
   host: { class: 'entry-table' },
-  imports: [MatTableModule, MatSortModule, MatCheckboxModule, MatRadioModule, MatPaginatorModule, EntryCellComponent, EntryCellContextMenuComponent],
+  imports: [CommonModule, MatTableModule, MatSortModule, MatCheckboxModule, MatRadioModule,
+    MatPaginatorModule, EntryCellComponent, EntryCellContextMenuComponent],
   templateUrl: './entry-table.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })

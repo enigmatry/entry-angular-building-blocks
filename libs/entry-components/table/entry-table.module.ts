@@ -9,7 +9,6 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
-
 import { EntryCellComponent } from './components/entry-cell/entry-cell.component';
 import { EntryCellContextMenuComponent } from './components/entry-cell-context-menu/entry-cell-context-menu.component';
 import { EntryCellFormattedValueComponent } from './components/entry-cell-formatted-value/entry-cell-formatted-value.component';
@@ -27,7 +26,6 @@ import { DEFAULT_PERCENTAGE_MULTIPLIER } from './interfaces';
     MatIconModule,
     MatMenuModule,
     MatRadioModule,
-    CommonModule,
     MatButtonModule,
     EntryTableComponent,
     EntryCellComponent,
