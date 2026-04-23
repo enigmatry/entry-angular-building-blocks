@@ -1,9 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { ColumnDefinition } from '../../interfaces';
 import { EntryCellFormattedValueComponent } from '../entry-cell-formatted-value/entry-cell-formatted-value.component';
 
 @Component({
-    imports: [EntryCellFormattedValueComponent],
+    imports: [CommonModule, EntryCellFormattedValueComponent],
     selector: 'entry-cell',
     templateUrl: './entry-cell.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush

@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, input, output, viewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -7,7 +8,7 @@ import { RowContextMenuFormatter } from '../../interfaces/row-context-menu-forma
 
 @Component({
   selector: 'entry-cell-context-menu',
-  imports: [MatMenuModule, MatButtonModule, MatIconModule, EntryCellContextMenuComponent],
+  imports: [CommonModule, MatMenuModule, MatButtonModule, MatIconModule, EntryCellContextMenuComponent],
   templateUrl: './entry-cell-context-menu.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
