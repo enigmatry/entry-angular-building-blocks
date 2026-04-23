@@ -2,7 +2,7 @@
 <table mat-table [class.mat-table-hover]="rowHover()" [class.mat-table-striped]="rowStriped()"
   [class.mat-table-with-data]="!hasNoResult()" [dataSource]="dataSource" matSort [matSortActive]="sortActive()!"
   [matSortDirection]="sortDirection()!" [matSortDisableClear]="sortDisableClear()" [matSortDisabled]="sortDisabled()"
-  [matSortStart]="sortStart()" (matSortChange)="sortChange.emit($event)">
+  [matSortStart]="sortStart()" (matSortChange)="handleSortChange($event)">
 
   <!-- Selection column -->
   @if(rowSelectable())

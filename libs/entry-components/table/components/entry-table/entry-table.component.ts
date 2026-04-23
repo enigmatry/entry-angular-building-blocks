@@ -196,6 +196,12 @@ export class EntryTableComponent<T> {
     this.pageChange.emit(event);
   };
 
+  readonly handleSortChange = (sort: Sort): void => {
+    const column = this.columns().find(c => c.field === sort.active || c.sortProperties?.id === sort.active);
+    const active = column?.sortProperties?.id ?? sort.active;
+    this.sortChange.emit({ ...sort, active });
+  };
+
   readonly scrollToTop = (): void => {
     this.elementRef.nativeElement.scrollTop = 0;
   };
