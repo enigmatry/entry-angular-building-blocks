@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { de, enUS, fr, nl, Locale } from 'date-fns/locale';
 import { environment } from './environments/environment';
 
