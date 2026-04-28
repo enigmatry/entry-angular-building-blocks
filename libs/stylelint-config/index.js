@@ -74,6 +74,7 @@ module.exports = {
     ],
     "@stylistic/no-extra-semicolons": true,
     "@stylistic/no-missing-end-of-source-newline": null,
+    "@stylistic/no-multiple-whitespaces": true,
     "@stylistic/number-leading-zero": "never",
     "@stylistic/number-no-trailing-zeros": true,
     "@stylistic/property-case": "lower",
@@ -214,8 +215,10 @@ module.exports = {
     "number-max-precision": 2,
     "property-allowed-list": null,
     "property-disallowed-list": null,
+    "property-layout-mappings": null,
     "property-no-deprecated": true,
     "property-no-vendor-prefix": true,
+    "relative-selector-nesting-notation": "implicit",
     "rule-empty-line-before": [
       "always",
       {
@@ -249,6 +252,7 @@ module.exports = {
     "selector-max-type": 2,
     "selector-max-universal": 0,
     "selector-nested-pattern": null,
+    "selector-no-deprecated": true,
     "selector-no-qualifying-type": true,
     "selector-no-vendor-prefix": true,
     "selector-not-notation": null,
