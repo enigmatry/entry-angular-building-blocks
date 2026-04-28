@@ -208,12 +208,8 @@ export default defineConfig(
         "error",
         {
           "after": true,
-          "before": false,
+          "before": true,
           "overrides": {
-            "arrow": {
-              "after": true,
-              "before": true
-            },
             "colon": {
               "after": true,
               "before": false
