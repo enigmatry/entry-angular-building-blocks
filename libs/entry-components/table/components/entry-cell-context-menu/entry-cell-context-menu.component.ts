@@ -12,15 +12,16 @@ import { RowContextMenuFormatter } from '../../interfaces/row-context-menu-forma
   templateUrl: './entry-cell-context-menu.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EntryCellContextMenuComponent {
+export class EntryCellContextMenuComponent<T = unknown> {
   readonly items = input.required<ContextMenuItem[]>();
-  readonly rowMenuFormatter = input<RowContextMenuFormatter>();
-  readonly rowData = input<unknown>();
+  readonly rowMenuFormatter = input<RowContextMenuFormatter<T>>();
+  readonly rowData = input<T>();
   readonly triggerIcon = input<string>('more_vert');
   readonly isSubMenu = input<boolean>(false);
   readonly selected = output<string>();
   readonly menuItems = computed(() => (this.rowMenuFormatter()?.items
-    ? this.rowMenuFormatter()?.items(this.rowData)
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    ? this.rowMenuFormatter()?.items(this.rowData()!)
     : this.items()) ?? []);
   readonly menu = viewChild<MatMenuPanel>('menu');
   readonly subMenu = viewChild<EntryCellContextMenuComponent>('subMenu');
