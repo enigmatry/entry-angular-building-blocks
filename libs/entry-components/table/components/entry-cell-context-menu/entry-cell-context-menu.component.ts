@@ -20,6 +20,7 @@ export class EntryCellContextMenuComponent<T = unknown> {
   readonly isSubMenu = input<boolean>(false);
   readonly selected = output<string>();
   readonly menuItems = computed(() => (this.rowMenuFormatter()?.items
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     ? this.rowMenuFormatter()?.items(this.rowData()!)
     : this.items()) ?? []);
   readonly menu = viewChild<MatMenuPanel>('menu');
