@@ -1,5 +1,5 @@
 import { ContextMenuItem } from './context-menu-item';
 
-export interface RowContextMenuFormatter {
-  items: (rowData: unknown) => ContextMenuItem[];
+export interface RowContextMenuFormatter<T = unknown> {
+  items: (rowData: T) => ContextMenuItem[];
 }

@@ -100,7 +100,7 @@ export class EntryTableComponent<T> {
   readonly showContextMenu = input<boolean>(false);
   readonly contextMenuItems = input<ContextMenuItem[]>([]);
   readonly contextMenuTemplate = input<TemplateRef<unknown> | null>(null);
-  readonly rowContextMenuFormatter = input<RowContextMenuFormatter>();
+  readonly rowContextMenuFormatter = input<RowContextMenuFormatter<T>>();
   readonly contextMenuItemSelected = output<{ itemId: string; rowData: T }>();
 
   // No Result
