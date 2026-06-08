@@ -177,21 +177,23 @@ export class EntryTableComponent<T> {
   };
 
   readonly toggleSelectAllCheckbox = (): void => {
+    const current = this.rowSelection();
     if (this.allRowsSelected()) {
-      this.rowSelection().clear();
+        current.clear();
     } else {
-      this.dataSource.data.forEach(row => {
-        if (!this.rowSelectionFormatter().disabled?.(row)) {
-          this.rowSelection().select(row);
-        }
-      });
+        this.dataSource.data.forEach(row => {
+            if (!this.rowSelectionFormatter().disabled?.(row)) {
+                current.select(row);
+            }
+        });
     }
-    this.rowSelection.set(this.rowSelection());
+    this.rowSelection.set(new SelectionModel(current.isMultipleSelection(), [...current.selected]));
   };
 
   readonly toggleRowSelection = (row: T) => {
-    this.rowSelection().toggle(row);
-    this.rowSelection.set(this.rowSelection());
+    const current = this.rowSelection();
+    current.toggle(row);
+    this.rowSelection.set(new SelectionModel(current.isMultipleSelection(), [...current.selected]));
   };
 
   readonly handlePage = (event: PageEvent) => {
