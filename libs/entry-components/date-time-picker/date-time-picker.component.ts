@@ -107,10 +107,12 @@ export class EntryDateTimePickerComponent<D> implements OnInit, OnDestroy {
       .pipe(takeUntil(this.$destroy))
       .subscribe(value => {
         this.timePicker.to24HourClock();
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        this.dateTimeAdapter.setTime(value!, this.timePicker.hours, this.timePicker.minutes, this.timePicker.seconds);
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        this.formControl.setValue(value!);
+        const dateTime = value ? this.dateTimeAdapter.clone(value) : value;
+        if (dateTime) {
+          this.dateTimeAdapter.setTime(dateTime, this.timePicker.hours, this.timePicker.minutes, this.timePicker.seconds);
+        }
+
+        this.formControl.setValue(dateTime as D);
         this.formControl.markAsDirty();
         this.formControl.markAsTouched();
       });
