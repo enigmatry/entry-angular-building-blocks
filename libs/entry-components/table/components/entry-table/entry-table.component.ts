@@ -12,6 +12,7 @@ import {
   ElementRef,
   SimpleChanges,
   HostBinding,
+  TrackByFunction,
   inject
 } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
@@ -70,6 +71,7 @@ export class EntryTableComponent<T> implements OnChanges {
   @Input() rowHover = false;
   @Input() rowStriped = false;
   @Input() rowFocusVisible: boolean;
+  @Input() trackBy: TrackByFunction<T>;
   @Output() rowClick = new EventEmitter<T>();
 
   // Row selection
