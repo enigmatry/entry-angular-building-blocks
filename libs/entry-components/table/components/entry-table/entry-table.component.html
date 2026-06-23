@@ -2,6 +2,7 @@
 <table mat-table
         [ngClass]="{'mat-table-hover': rowHover, 'mat-table-striped': rowStriped, 'mat-table-with-data': !hasNoResult }"
         [dataSource]="dataSource"
+        [trackBy]="trackBy"
         matSort
         [matSortActive]="sortActive"
         [matSortDirection]="sortDirection"
