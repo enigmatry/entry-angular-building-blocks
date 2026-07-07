@@ -8,23 +8,35 @@
 <mat-menu #menu="matMenu" class="entry-table-menu" role="menu">
     @for(menuItem of menuItems(); track menuItem.id)
     {
-        <button mat-menu-item [disabled]="menuItem.disabled"
-            [matMenuTriggerFor]="menuItem.items?.length ? (subMenu()?.menu() ?? null) : null"
-            (click)="!menuItem.items?.length && selected.emit(menuItem.id)" class="context-menu-item">
+        @if(menuItem.items?.length)
+        {
+            <button mat-menu-item [disabled]="menuItem.disabled" [matMenuTriggerFor]="subMenuCmp.menu() ?? null"
+                class="context-menu-item">
 
-            @if(menuItem.icon)
-            {
-                <mat-icon class="icon">{{menuItem.icon}}</mat-icon>
-            }
+                @if(menuItem.icon)
+                {
+                    <mat-icon class="icon">{{menuItem.icon}}</mat-icon>
+                }
 
-            <span class="description">{{menuItem.name}}</span>
+                <span class="description">{{menuItem.name}}</span>
 
-            @if(menuItem.items?.length)
-            {
-                <entry-cell-context-menu #subMenu [items]="menuItem.items ?? []" [rowData]="rowData()" [isSubMenu]="true"
-                    (selected)="selected.emit($event)">
+                <entry-cell-context-menu #subMenuCmp [items]="menuItem.items!" [rowData]="rowData()"
+                    [isSubMenu]="true" (selected)="selected.emit($event)">
                 </entry-cell-context-menu>
-            }
-        </button>
+            </button>
+        }
+        @else
+        {
+            <button mat-menu-item [disabled]="menuItem.disabled" (click)="selected.emit(menuItem.id)"
+                class="context-menu-item">
+
+                @if(menuItem.icon)
+                {
+                    <mat-icon class="icon">{{menuItem.icon}}</mat-icon>
+                }
+
+                <span class="description">{{menuItem.name}}</span>
+            </button>
+        }
     }
 </mat-menu>
