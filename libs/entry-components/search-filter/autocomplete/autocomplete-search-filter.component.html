@@ -3,10 +3,20 @@
     <input type="text" matInput [placeholder]="searchFilter.placeholder"
         [formControl]="searchField" [id]="searchFilter.key" [matAutocomplete]="auto">
     <mat-autocomplete [displayWith]="displayFn" #auto="matAutocomplete" (optionSelected)="onSelected($event)">
-        @for (option of options$ | async; track option.key) {
-            <mat-option [value]="option">
-                {{option.label}}
-            </mat-option>
+        @for (item of (options$ | async | groupSelectOptions); track $index) {
+            @if ('options' in item) {
+                <mat-optgroup [label]="item.label">
+                    @for (child of item.options; track child.key) {
+                        <mat-option [value]="child">
+                            {{child.label}}
+                        </mat-option>
+                    }
+                </mat-optgroup>
+            } @else {
+                <mat-option [value]="item">
+                    {{item.label}}
+                </mat-option>
+            }
         }
     </mat-autocomplete>
     <mat-error entryDisplayControlValidation [control]="searchField"></mat-error>

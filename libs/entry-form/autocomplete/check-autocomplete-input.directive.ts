@@ -3,7 +3,7 @@ import { AbstractControl, NgControl } from '@angular/forms';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { SelectOption } from './select-configuration.interface';
+import { findOptionByLabel, findOptionByValue, SelectOption } from './select-configuration.interface';
 
 @Directive({
     selector: '[entryCheckAutocompleteInput]',
@@ -47,12 +47,11 @@ export class CheckAutocompleteInputDirective implements OnChanges, AfterViewInit
     if (!controlValue) {
       return;
     }
-    if (this.options.find(option => option.value === controlValue)) {
+    if (findOptionByValue(this.options, controlValue)) {
       return;
     }
 
-    const matchedOption = this.options
-      .find(option => option.label.toLowerCase() === controlValue.toLowerCase());
+    const matchedOption = findOptionByLabel(this.options, controlValue);
 
     if (matchedOption) {
       this.control.patchValue(matchedOption.value);
@@ -63,6 +62,6 @@ export class CheckAutocompleteInputDirective implements OnChanges, AfterViewInit
 
   private applySelectedValue = (value: any) => {
     const inputElement = this.elemRef.nativeElement as HTMLInputElement;
-    inputElement.value = this.options.find(option => option.value === value)?.label ?? '';
+    inputElement.value = findOptionByValue(this.options, value)?.label ?? '';
   };
 }

@@ -195,6 +195,7 @@ Model used to populate select or autocomplete options.
 
 | Property | Modifier | Type | Description | Defined in |
 | ------ | ------ | ------ | ------ | ------ |
+| <a id="group"></a> `group?` | `public` | `string` | Optional group name. Options sharing the same group are rendered together under a group header. |  |
 | <a id="key-4"></a> `key` | `public` | `T` | Key used as a value for selected option |  |
 | <a id="label-4"></a> `label` | `public` | `string` | String value used as display label of select option |  |
 

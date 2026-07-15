@@ -17,6 +17,13 @@ export class SelectExampleComponent {
     { value: 3, displayName: `Car` }
   ];
 
+  @Input() groupedTypeOptions = [
+    { value: 0, displayName: `Food`, category: `Consumables` },
+    { value: 1, displayName: `Drink`, category: `Consumables` },
+    { value: 2, displayName: `Book`, category: `Goods` },
+    { value: 3, displayName: `Car`, category: `Goods` }
+  ];
+
   single: FormlyFieldConfig[] = [
     {
       key: 'type',
@@ -50,6 +57,41 @@ export class SelectExampleComponent {
     }
   ];
 
+  groupedSingle: FormlyFieldConfig[] = [
+    {
+      key: 'type',
+      type: 'select',
+      className: `entry-type-field entry-select`,
+      templateOptions: {
+        label: `Grouped single`,
+        placeholder: `Grouped single`,
+        description: ``,
+        options: of(this.groupedTypeOptions).pipe(map(opts => sortOptions(opts, 'value', 'displayName', undefined, 'category'))),
+        valueProp: 'value',
+        labelProp: 'displayName',
+        groupProp: 'category'
+      }
+    }
+  ];
+
+  groupedMulti: FormlyFieldConfig[] = [
+    {
+      key: 'type',
+      type: 'select',
+      className: `entry-type-field entry-select`,
+      templateOptions: {
+        label: `Grouped multi`,
+        placeholder: `Grouped multi`,
+        description: ``,
+        options: of(this.groupedTypeOptions).pipe(map(opts => sortOptions(opts, 'value', 'displayName', undefined, 'category'))),
+        valueProp: 'value',
+        labelProp: 'displayName',
+        groupProp: 'category',
+        multiple: true
+      }
+    }
+  ];
+
   autocomplete: FormlyFieldConfig[] = [
     {
       key: 'type',
@@ -62,6 +104,23 @@ export class SelectExampleComponent {
         options: of(this.typeOptions).pipe(map(opts => sortOptions(opts, 'value', 'displayName'))),
         valueProp: 'value',
         labelProp: 'displayName'
+      }
+    }
+  ];
+
+  groupedAutocomplete: FormlyFieldConfig[] = [
+    {
+      key: 'type',
+      type: 'autocomplete',
+      className: `entry-type-field entry-autocomplete`,
+      templateOptions: {
+        label: `Grouped autocomplete`,
+        placeholder: `Grouped autocomplete`,
+        description: ``,
+        options: of(this.groupedTypeOptions).pipe(map(opts => sortOptions(opts, 'value', 'displayName', undefined, 'category'))),
+        valueProp: 'value',
+        labelProp: 'displayName',
+        groupProp: 'category'
       }
     }
   ];
