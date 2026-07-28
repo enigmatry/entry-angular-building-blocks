@@ -68,10 +68,7 @@ export class SearchFilterExampleComponent {
         multiSelect: true,
         options: Object.values(Occupation)
           .filter(value => typeof value === 'number')
-          .map((value: number) => new SelectOption(
-            value,
-            Occupation[value].replace(/^[a-z]/u, x => x.toUpperCase()),
-            this.occupationGroup(value)))
+          .map((value: number) => new SelectOption(value, Occupation[value].replace(/^[a-z]/u, x => x.toUpperCase())))
       }),
       new SelectSearchFilter({
         key: 'username',
@@ -107,16 +104,6 @@ export class SearchFilterExampleComponent {
     ];
   }
 
-  private readonly occupationGroups: Partial<Record<Occupation, string>> = {
-    [Occupation.electrician]: 'Skilled trades',
-    [Occupation.plumber]: 'Skilled trades',
-    [Occupation.doctor]: 'Professional',
-    [Occupation.teacher]: 'Professional',
-    [Occupation.painter]: 'Creative',
-    [Occupation.baker]: 'Creative',
-    [Occupation.soldier]: 'Public service'
-  };
-
   private readonly countryContinents: Partial<Record<Country, string>> = {
     [Country.unitedStates]: 'Americas',
     [Country.canada]: 'Americas',
@@ -131,8 +118,6 @@ export class SearchFilterExampleComponent {
     [Country.australia]: 'Oceania',
     [Country.southAfrica]: 'Africa'
   };
-
-  private occupationGroup = (occupation: Occupation): string => this.occupationGroups[occupation] ?? 'Other';
 
   private countryContinent = (country: Country): string => this.countryContinents[country] ?? 'Europe';
 

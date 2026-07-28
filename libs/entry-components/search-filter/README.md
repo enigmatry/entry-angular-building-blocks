@@ -76,8 +76,8 @@ filters = [
 ## Grouping select/autocomplete options
 
 Both `SelectSearchFilter` and `AutocompleteSearchFilter` support grouping options under a header by passing an
-optional `group` name as the third `SelectOption` constructor argument. Options are rendered opt-in as-is (flat)
-when `group` is omitted; when set, options sharing the same group name are rendered together under a `mat-optgroup`
+optional `groupName` as the third `SelectOption` constructor argument. Options are rendered opt-in as-is (flat)
+when `groupName` is omitted; when set, options sharing the same group name are rendered together under a `mat-optgroup`
 header, in first-appearance order.
 
 ```ts

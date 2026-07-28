@@ -1,5 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { findOptionByValue, SelectOption } from './select-configuration.interface';
+import { findOptionByValue } from './select-configuration.interface';
+import { SelectOption } from './select-option.model';
 
 @Pipe({
     name: 'displayWithAutocomplete',

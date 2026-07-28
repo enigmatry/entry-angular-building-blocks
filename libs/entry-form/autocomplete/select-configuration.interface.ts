@@ -1,33 +1,11 @@
-export interface SelectOption {
-  value?: any;
-  label: string;
-  disabled?: boolean;
-  group?: SelectOption[];
-}
+import { SelectOption } from './select-option.model';
 
-// Recursively looks up an option by value, descending into `group` children for grouped option lists.
-export const findOptionByValue = (options: SelectOption[], value: any): SelectOption | undefined => {
-  for (const option of options) {
-    const found = option.group ? findOptionByValue(option.group, value) : option.value === value ? option : undefined;
-    if (found) {
-      return found;
-    }
-  }
-  return undefined;
-};
+export const findOptionByValue = (options: SelectOption[], value: any): SelectOption | undefined =>
+  options.find(option => option.value === value);
 
-// Recursively looks up an option by label (case-insensitive), descending into `group` children.
 export const findOptionByLabel = (options: SelectOption[], label: string): SelectOption | undefined => {
   const lowerLabel = label.toLowerCase();
-  for (const option of options) {
-    const found = option.group ?
-      findOptionByLabel(option.group, label) :
-      option.label.toLowerCase() === lowerLabel ? option : undefined;
-    if (found) {
-      return found;
-    }
-  }
-  return undefined;
+  return options.find(option => option.label.toLowerCase() === lowerLabel);
 };
 
 export interface SelectConfiguration {

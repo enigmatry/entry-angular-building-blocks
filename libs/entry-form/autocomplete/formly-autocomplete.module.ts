@@ -8,13 +8,17 @@ import { FormlySelectModule } from '@ngx-formly/core/select';
 import { CheckAutocompleteInputDirective } from './check-autocomplete-input.directive';
 import { DisplayWithAutocompletePipe } from './display-with-autocomplete.pipe';
 import { FilterWithAutocompletePipe } from './filter-with-autocomplete.pipe';
+import { FlattenAutocompleteOptionsPipe } from './flatten-autocomplete-options.pipe';
 import { FormlyAutocompleteComponent } from './formly-autocomplete.component';
+import { GroupWithAutocompletePipe } from './group-with-autocomplete.pipe';
 
 @NgModule({
   declarations: [
     FormlyAutocompleteComponent,
     DisplayWithAutocompletePipe,
     FilterWithAutocompletePipe,
+    FlattenAutocompleteOptionsPipe,
+    GroupWithAutocompletePipe,
     CheckAutocompleteInputDirective
   ],
   imports: [

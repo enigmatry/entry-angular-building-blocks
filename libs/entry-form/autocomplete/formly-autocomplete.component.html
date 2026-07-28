@@ -1,4 +1,4 @@
-@let selectOptions = (props.options | formlySelectOptions: field | async) ?? [];
+@let selectOptions = ((props.options | formlySelectOptions: field | async) ?? []) | flattenAutocompleteOptions;
 
 <mat-form-field class="entry-autocomplete"
   [hideRequiredMarker]="true"
@@ -30,19 +30,21 @@
   <mat-autocomplete #auto="matAutocomplete"
     [autoActiveFirstOption]="true"
     [displayWith]="selectOptions | displayWithAutocomplete">
-    @for (item of selectOptions | filterWithAutocomplete: input.value; track $index) {
-      @if (item.group) {
-        <mat-optgroup [label]="item.label">
-          @for (child of item.group; track child.value) {
+    @for (group of selectOptions | filterWithAutocomplete: input.value | groupWithAutocomplete; track $index) {
+      @if (group.groupName) {
+        <mat-optgroup [label]="group.groupName">
+          @for (child of group.options; track child.value) {
             <mat-option [value]="child.value">
               {{ child.label }}
             </mat-option>
           }
         </mat-optgroup>
       } @else {
-        <mat-option [value]="item.value">
-          {{ item.label }}
-        </mat-option>
+        @for (child of group.options; track child.value) {
+          <mat-option [value]="child.value">
+            {{ child.label }}
+          </mat-option>
+        }
       }
     }
   </mat-autocomplete>

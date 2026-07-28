@@ -3,7 +3,8 @@ import { AbstractControl, NgControl } from '@angular/forms';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { findOptionByLabel, findOptionByValue, SelectOption } from './select-configuration.interface';
+import { findOptionByLabel, findOptionByValue } from './select-configuration.interface';
+import { SelectOption } from './select-option.model';
 
 @Directive({
     selector: '[entryCheckAutocompleteInput]',

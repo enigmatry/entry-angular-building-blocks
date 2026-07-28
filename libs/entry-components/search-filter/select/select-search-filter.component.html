@@ -7,27 +7,31 @@
             </mat-option>
         }
         @if (searchFilter.options$ !== undefined) {
-            @for (item of (searchFilter.options$ | async | groupSelectOptions); track $index) {
-                @if ('options' in item) {
-                    <mat-optgroup [label]="item.label">
-                        @for (child of item.options; track child.key) {
+            @for (group of (searchFilter.options$ | async | groupSelectOptions); track $index) {
+                @if (group.groupName) {
+                    <mat-optgroup [label]="group.groupName">
+                        @for (child of group.options; track child.key) {
                             <mat-option [value]="child.key">{{child.label}}</mat-option>
                         }
                     </mat-optgroup>
                 } @else {
-                    <mat-option [value]="item.key">{{item.label}}</mat-option>
+                    @for (child of group.options; track child.key) {
+                        <mat-option [value]="child.key">{{child.label}}</mat-option>
+                    }
                 }
             }
         } @else {
-            @for (item of (searchFilter.options | groupSelectOptions); track $index) {
-                @if ('options' in item) {
-                    <mat-optgroup [label]="item.label">
-                        @for (child of item.options; track child.key) {
+            @for (group of (searchFilter.options | groupSelectOptions); track $index) {
+                @if (group.groupName) {
+                    <mat-optgroup [label]="group.groupName">
+                        @for (child of group.options; track child.key) {
                             <mat-option [value]="child.key">{{child.label}}</mat-option>
                         }
                     </mat-optgroup>
                 } @else {
-                    <mat-option [value]="item.key">{{item.label}}</mat-option>
+                    @for (child of group.options; track child.key) {
+                        <mat-option [value]="child.key">{{child.label}}</mat-option>
+                    }
                 }
             }
         }

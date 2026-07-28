@@ -5,14 +5,12 @@ import { SelectOption } from './select-option.model';
 // Groups a flat option list into buckets by each option's group name, preserving first-appearance order
 // of both groups and options within a group. Ungrouped options are returned as a single group with no
 // groupName, so templates can always iterate groups without discriminating between shapes.
-// Kept untyped (any) rather than a pipe-level generic: Angular's template type checker does not reliably
-// infer a transform<T> generic through a chained `| async | groupSelectOptions` expression.
 @Pipe({
-    name: 'groupSelectOptions',
+    name: 'groupWithAutocomplete',
     standalone: false
 })
-export class GroupSelectOptionsPipe implements PipeTransform {
-  transform = (options: SelectOption<any>[] | null | undefined): Array<SelectOptionGroup<any>> => {
+export class GroupWithAutocompletePipe implements PipeTransform {
+  transform = (options: SelectOption[] | null | undefined): SelectOptionGroup[] => {
     if (!options?.length) {
       return [];
     }
@@ -22,7 +20,7 @@ export class GroupSelectOptionsPipe implements PipeTransform {
     }
 
     const groupOrder: string[] = [];
-    const groups = new Map<string, SelectOption<any>[]>();
+    const groups = new Map<string, SelectOption[]>();
     options.forEach(option => {
       const key = option.groupName ?? '';
       const existing = groups.get(key);

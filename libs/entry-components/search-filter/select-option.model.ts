@@ -5,6 +5,6 @@ export class SelectOption<T> {
         public key: T,
         /** String value used as display label of select option */
         public label: string,
-        /** Optional group name. Options sharing the same group are rendered together under a group header. */
-        public group?: string) { }
+        /** Optional group name. Options sharing the same group name are rendered together under a group header. */
+        public groupName?: string) { }
 }
