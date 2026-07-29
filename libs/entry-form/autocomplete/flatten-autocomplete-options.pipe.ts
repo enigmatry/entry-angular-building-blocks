@@ -11,8 +11,23 @@ import { SelectOption } from './select-option.model';
     standalone: false
 })
 export class FlattenAutocompleteOptionsPipe implements PipeTransform {
-  transform = (options: FormlySelectOption[] | null | undefined): SelectOption[] =>
-    (options ?? []).flatMap(option => option.group ?
-      option.group.map(child => ({ value: child.value, label: child.label, disabled: child.disabled, groupName: option.label })) :
-      [{ value: option.value, label: option.label, disabled: option.disabled }]);
+  transform = (options: FormlySelectOption[] | null | undefined): SelectOption[] => {
+    if (!options?.length) {
+      return [];
+    }
+
+    if (!options.some(option => option.group)) {
+      return options;
+    }
+
+    const result: SelectOption[] = [];
+    options.forEach(option => {
+      if (option.group) {
+        option.group.forEach(child => result.push({ value: child.value, label: child.label, disabled: child.disabled, groupName: option.label }));
+      } else {
+        result.push(option);
+      }
+    });
+    return result;
+  };
 }
