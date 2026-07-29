@@ -3,23 +3,27 @@
     <input type="text" matInput [placeholder]="searchFilter.placeholder"
         [formControl]="searchField" [id]="searchFilter.key" [matAutocomplete]="auto">
     <mat-autocomplete [displayWith]="displayFn" #auto="matAutocomplete" (optionSelected)="onSelected($event)">
-        @for (group of (options$ | async | groupSelectOptions); track $index) {
-            @if (group.groupName) {
-                <mat-optgroup [label]="group.groupName">
-                    @for (child of group.options; track child.key) {
-                        <mat-option [value]="child">
-                            {{child.label}}
-                        </mat-option>
-                    }
-                </mat-optgroup>
-            } @else {
-                @for (child of group.options; track child.key) {
-                    <mat-option [value]="child">
-                        {{child.label}}
-                    </mat-option>
-                }
-            }
+        @for (group of (options$ | async | groupSelectOptions); track group.groupName) {
+            <ng-container *ngTemplateOutlet="groupTemplate; context: { $implicit: group }"></ng-container>
         }
     </mat-autocomplete>
     <mat-error entryDisplayControlValidation [control]="searchField"></mat-error>
 </mat-form-field>
+
+<ng-template #groupTemplate let-group>
+    @if (group.groupName) {
+        <mat-optgroup [label]="group.groupName">
+            <ng-container *ngTemplateOutlet="childOptionsTemplate; context: { $implicit: group.options }"></ng-container>
+        </mat-optgroup>
+    } @else {
+        <ng-container *ngTemplateOutlet="childOptionsTemplate; context: { $implicit: group.options }"></ng-container>
+    }
+</ng-template>
+
+<ng-template #childOptionsTemplate let-options>
+    @for (child of options; track child.key) {
+        <mat-option [value]="child">
+            {{child.label}}
+        </mat-option>
+    }
+</ng-template>
