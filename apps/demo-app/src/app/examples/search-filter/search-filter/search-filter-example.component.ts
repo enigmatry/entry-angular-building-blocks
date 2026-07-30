@@ -87,7 +87,7 @@ export class SearchFilterExampleComponent {
         search: (input: string | null) => of(Object.values(Country)
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           .filter(value => value.toLocaleLowerCase().includes(input!.toLocaleLowerCase()))
-          .map(country => new SelectOption(country, country)))
+          .map(country => new SelectOption(country, country, this.countryContinent(country))))
       }),
       new DateTimeSearchFilter({
         key: 'dateOfBirth',
@@ -103,6 +103,23 @@ export class SearchFilterExampleComponent {
       })
     ];
   }
+
+  private readonly countryContinents: Partial<Record<Country, string>> = {
+    [Country.unitedStates]: 'Americas',
+    [Country.canada]: 'Americas',
+    [Country.mexico]: 'Americas',
+    [Country.brazil]: 'Americas',
+    [Country.argentina]: 'Americas',
+    [Country.china]: 'Asia',
+    [Country.india]: 'Asia',
+    [Country.japan]: 'Asia',
+    [Country.southKorea]: 'Asia',
+    [Country.indonesia]: 'Asia',
+    [Country.australia]: 'Oceania',
+    [Country.southAfrica]: 'Africa'
+  };
+
+  private countryContinent = (country: Country): string => this.countryContinents[country] ?? 'Europe';
 
   private maskDecimalScore(value: string): string {
     const exampleDecimalValue = 1.1;

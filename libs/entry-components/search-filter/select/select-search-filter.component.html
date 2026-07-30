@@ -6,13 +6,18 @@
                 {{config.noneSelectedOptionText}}
             </mat-option>
         }
-        @if (searchFilter.options$ !== undefined) {
-            @for (option of searchFilter.options$ | async; track option.key) {
-                <mat-option [value]="option.key">{{option.label}}</mat-option>
-            }
-        } @else {
-            @for (option of searchFilter.options; track option.key) {
-                <mat-option [value]="option.key">{{option.label}}</mat-option>
+        @let groups = (searchFilter.options$ !== undefined ? (searchFilter.options$ | async) : searchFilter.options) | groupSelectOptions;
+        @for (group of groups; track group.groupName) {
+            @if (group.groupName) {
+                <mat-optgroup [label]="group.groupName">
+                    @for (child of group.options; track child.key) {
+                        <mat-option [value]="child.key">{{child.label}}</mat-option>
+                    }
+                </mat-optgroup>
+            } @else {
+                @for (child of group.options; track child.key) {
+                    <mat-option [value]="child.key">{{child.label}}</mat-option>
+                }
             }
         }
     </mat-select>

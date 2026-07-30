@@ -4,5 +4,7 @@ export class SelectOption<T> {
         /** Key used as a value for selected option */
         public key: T,
         /** String value used as display label of select option */
-        public label: string) { }
+        public label: string,
+        /** Optional group name. Options sharing the same group name are rendered together under a group header. */
+        public groupName?: string) { }
 }
