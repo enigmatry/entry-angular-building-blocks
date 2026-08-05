@@ -1,11 +1,49 @@
 ---
-name: code-review
-description: Code review checklist for the entry-angular-building-blocks workspace. Use this when reviewing or performing a code review on any change in libs/ or apps/demo-app.
+name: entry-code-review
+description: Project-specific code review checklist for the entry-angular-building-blocks workspace — configuration pattern, library entry-point boundaries, public API surface, signals API, search filter models, selector conventions, and severity tiers. Use this when reviewing any change in libs/ or apps/demo-app. Prefer this over the generic built-in review for changes in this repo.
 ---
 
 # Code Review — Entry Angular Building Blocks
 
 You are an expert Angular engineer performing a code review on this workspace. Flag only issues that genuinely matter: bugs, broken conventions, security problems, incorrect architecture. Do not comment on formatting, indentation, or style that ESLint/Stylelint already enforces.
+
+Review comments are written in **English**.
+
+---
+
+## Severity tiers
+
+Rank every finding into one of three tiers and report the most severe first.
+
+### 🔴 CRITICAL — blocks merge
+- **Security**: vulnerabilities, exposed secrets, missing authorization checks
+- **Correctness**: logic errors, data corruption, race conditions
+- **Breaking changes**: public API contract changes without a version bump (these are published npm packages — a removed or renamed export from any `public-api.ts` is a breaking change)
+- **Data loss**
+
+### 🟡 IMPORTANT — requires discussion
+- **Code quality**: severe SOLID violations, excessive duplication
+- **Test coverage**: missing SCSS tests for new public mixins
+- **Performance**: obvious bottlenecks, memory leaks, undisposed subscriptions
+- **Architecture**: significant deviation from the established patterns below
+
+### 🟢 SUGGESTION — non-blocking
+- **Readability**: poor naming, logic that could be simplified
+- **Optimization** with no functional impact
+- **Best practices**: minor convention deviations
+- **Documentation**: missing JSDoc on public APIs
+
+---
+
+## Review principles
+
+1. **Be specific** — reference exact files and lines, with concrete examples.
+2. **Provide context** — explain *why* it's an issue and what the impact is.
+3. **Suggest solutions** — show the corrected code, not just the problem.
+4. **Be constructive** — improve the code, don't criticize the author.
+5. **Recognize good practices** — acknowledge well-written code and smart solutions.
+6. **Be pragmatic** — not every suggestion needs immediate implementation.
+7. **Group related comments** — don't file five comments about the same topic.
 
 ---
 
@@ -127,9 +165,78 @@ Flag any config that uses `new InjectionToken(...)` directly or provides the val
 
 ---
 
+## General quality checks
+
+Beyond the project-specific rules above, also check for:
+
+- **Clean code** — descriptive names; single responsibility; no duplication; functions under ~30 lines; nesting no deeper than 3–4 levels; no magic numbers or strings (extract constants); code self-documenting rather than comment-dependent.
+- **Error handling** — errors handled at the right level with meaningful messages; no silent failures; inputs validated early (fail fast).
+- **Security** — no secrets, tokens, or PII in code or logs; external input validated; untrusted content encoded before rendering; no dynamic code execution.
+- **Performance** — no memory leaks or undisposed subscriptions; large result sets paginated; expensive work deferred or cached; high-frequency events debounced.
+- **Architecture** — separation of concerns; dependencies flow inward (high-level modules don't depend on low-level details); small focused interfaces; components independently testable.
+- **Documentation** — JSDoc on public APIs (TypeDoc publishes these); non-obvious logic explained; breaking changes called out; README updated when setup changes.
+- **Leftovers** — no commented-out code; no `TODO` without a ticket reference.
+
+---
+
+## Comment format
+
+Use this structure for each finding:
+
+```markdown
+**[TIER] Category: Brief title**
+
+Detailed description of the issue.
+
+**Why this matters:**
+The impact, or the reason for the suggestion.
+
+**Suggested fix:**
+[code example]
+
+**Reference:** [link, or the convention it violates]
+```
+
+**Example:**
+
+````markdown
+**🔴 CRITICAL - Correctness: config provided with `useValue`**
+
+`ENTRY_UPLOAD_CONFIG` is provided via `useValue` on line 42 instead of the
+`provideConfig` helper.
+
+**Why this matters:**
+`useValue` evaluates the config once at module definition time, so consumer
+overrides passed through `forRoot()` are silently ignored — the component
+keeps the library defaults with no error.
+
+**Suggested fix:**
+```ts
+// Instead of:
+{ provide: ENTRY_UPLOAD_CONFIG, useValue: new EntryUploadConfig(config) }
+
+// Use:
+export const provideEntryUploadConfig = (config: Partial<EntryUploadConfig>): Provider =>
+  provideConfig(ENTRY_UPLOAD_CONFIG, () => new EntryUploadConfig(config));
+```
+
+**Reference:** Configuration pattern, `@enigmatry/entry-components/common`
+````
+
+---
+
 ## What NOT to flag
 
 - Formatting, trailing commas, quote style — enforced by ESLint/Stylelint.
 - `standalone: false` on existing Formly-dependent components.
 - Constructor injection inside `SpinnerOverlayContainer` and similar CDK extensions that require `@Inject`.
 - Use of `UntypedFormGroup` / `UntypedFormControl` in generated or Formly-related code.
+- Anything inside `*.generated.*` files — these are produced by `entry-codegen` and are not hand-maintained.
+
+---
+
+## Related skills
+
+- `angular-typescript` — the full coding standards these rules derive from
+- `scss-tests` — how to write the sass-true tests this review requires for new mixins
+- `a11y` — WCAG 2.2 AA rules for any change touching templates or SCSS
