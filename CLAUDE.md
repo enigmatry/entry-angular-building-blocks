@@ -1,6 +1,4 @@
-# Copilot Instructions
-
-## Repository Overview
+# Entry Angular Building Blocks
 
 Multi-project Angular workspace containing published npm libraries and a demo application:
 
@@ -17,15 +15,22 @@ The package major version tracks the supported Angular version (e.g., `21.x` = A
 
 ---
 
+## Hard rules
+
+- **Never edit `*.generated.*` files** (`.generated.ts`, `.generated.html`, `.generated.scss`). They are produced by the `entry-codegen` .NET CLI. Modify the generator or its templates instead.
+- **Never import across secondary entry points with a relative path.** Use the scoped package name — `@enigmatry/entry-components/common`, not `../common/utils/provide-config`.
+- **These are published npm packages.** Removing or renaming an export from any `public-api.ts` is a breaking change for consumers — call it out rather than doing it silently.
+- **Never use `new InjectionToken(...)` or `useValue` for component config.** Use the configuration pattern below.
+
+---
+
 ## Commands
 
 ```bash
-# Build libraries (must be done in dependency order)
+# Build libraries (dependency order matters)
 npm run entry-components:build          # build @enigmatry/entry-components
 ng build @enigmatry/entry-form          # build @enigmatry/entry-form
-
-# Build demo app
-ng build @enigmatry/demo-app
+ng build @enigmatry/demo-app            # build demo app
 
 # `npm run build` alone fails — this is a multi-project workspace, always specify a project
 
@@ -37,6 +42,12 @@ npm run lint:ts                         # TypeScript only
 npm run automated-tests                 # compiles themes + runs scss-foundation tests
 cd libs/scss-foundation && npm run test # run SCSS tests in isolation
 ```
+
+### Before reporting a change complete
+
+Run `npm run lint` always; add `npm run entry-components:build` if you touched `libs/entry-components`, and `npm run automated-tests` if you touched `libs/scss-foundation`.
+
+**There is no Angular unit test suite.** `npm run automated-tests` covers SCSS theme compilation and sass-true tests only. Never describe a TypeScript change as "tested" — it is lint-checked and build-checked. Say which of those actually ran.
 
 ---
 
@@ -62,7 +73,7 @@ libs/entry-components/
   public-api.ts     → @enigmatry/entry-components (barrel)
 ```
 
-Each entry point exposes only what's in its `public-api.ts`. Never import across entry-point boundaries using relative paths — always use the scoped package name (e.g., `@enigmatry/entry-components/common`).
+Each entry point exposes only what's in its `public-api.ts`.
 
 `EntryComponentsModule` re-exports all sub-modules. Consumers import it in `shared.module.ts` and call `.forRoot()` in `app.module.ts` to register providers.
 
@@ -91,7 +102,7 @@ export const provideEntryDialogConfig = (config: Partial<EntryDialogConfig>): Pr
   provideConfig(ENTRY_DIALOG_CONFIG, () => new EntryDialogConfig(config));
 ```
 
-`createInjectionToken` creates a root-scoped `InjectionToken` with a factory. `provideConfig` produces a `useFactory` provider. Never use bare `new InjectionToken(...)` or `useValue` for config.
+`createInjectionToken` creates a root-scoped `InjectionToken` with a factory. `provideConfig` produces a `useFactory` provider.
 
 ### Signals API
 
@@ -110,7 +121,7 @@ readonly pageIndex = linkedSignal<number>(() => 0);
 readonly usersResource = resource({ loader: async () => lastValueFrom(this.usersService.getUsers({})) });
 ```
 
-Use `effect()` for side effects that react to signal changes.
+Use `effect()` for side effects that react to signal changes — not to derive state (use `computed()` for that).
 
 ### Table component
 
@@ -138,24 +149,23 @@ Pass the array to `<entry-search-filter [searchFilters]="filters" (searchFilterC
 
 ---
 
-## Further Instructions
+## Skills
 
-Detailed, automatically-applied instructions live in `.github/instructions/`. They are loaded by Copilot when the file you're working on matches their `applyTo` glob — you don't need to invoke them manually:
+Detailed guidance lives in `.claude/skills/`. Load the matching skill when the work calls for it:
 
-| File | Triggered for | Covers |
+| Skill | Load when | Covers |
 |---|---|---|
-| `angular.instructions.md` | `**/*.ts` | async/await over RxJS, `inject()`, standalone migration, control flow syntax, lifecycle hooks |
-| `typescript-5-es2022.instructions.md` | `**/*.ts` | Arrow methods, strict types, error handling, security, immutability |
-| `azure-devops-pipelines.instructions.md` | `**/azure-pipelines*.yml` | Azure DevOps YAML best practices (generic) |
-| `code-review-generic.instructions.md` | `**` | Structured review framework: security, tests, logic, style priorities |
+| `angular-typescript` | Writing non-trivial TypeScript, or unsure whether a pattern is allowed | Full Angular 21 / TS 5 standards: async handling, DI, standalone migration, type system, error handling, security, performance, docs |
+| `entry-code-review` | Reviewing any change in `libs/` or `apps/demo-app` | Config pattern, entry-point boundaries, public API surface, signals API, search filter models, severity tiers, comment format |
+| `scss-tests` | Adding or reviewing SCSS mixins/functions in `libs/scss-foundation` | Writing sass-true tests: file conventions, assertions, error paths, coverage checklist |
+| `a11y` | Building or reviewing templates, forms, navigation, or SCSS | WCAG 2.2 Level AA: semantics, keyboard/focus, contrast, forced colors, reflow, labels |
+| `azure-devops-pipelines` | Editing `azure-pipelines.yml` or `deploy-demo.yml` | MinVer versioning, stage structure, artifact naming, FileTransform variables, add-a-library checklist |
 
-For deeper project-specific guidance, invoke the matching skill:
+`entry-code-review` is the project-specific review — prefer it over the generic built-in review for changes in this repo.
 
-| Skill | Invoke with | Covers |
-|---|---|---|
-| `code-review` | `/code-review-fosim` | Project review rules: config pattern, entry-point boundaries, signals API, search filter models, scss requirement |
-| `scss-tests` | `/scss-tests` | Writing sass-true tests for `libs/scss-foundation` |
-| `azure-devops-pipelines` | `/azure-devops-pipelines` | Project-specific pipeline conventions: MinVer, artifact naming, FileTransform variables |
+---
+
+## Additional Patterns
 
 ### Server-side validation
 
@@ -183,11 +193,8 @@ Available globally via `NG_EVENT_PLUGINS` (registered in `EntryComponentsModule.
 
 ## Key Conventions
 
-### Generated files
-Files with `.generated` in their name (e.g., `*.generated.ts`, `*.generated.html`, `*.generated.scss`) are produced by `entry-codegen` and **must never be edited**. Modify the generator or its templates instead.
-
 ### Angular control flow syntax
-Use `@if`, `@for`, `@switch`/`@case`/`@default` exclusively. Never use `*ngIf`, `*ngFor`, `[ngSwitch]`, `*ngSwitchCase`, etc.
+Use `@if`, `@for`, `@switch`/`@case`/`@default` exclusively. Never use `*ngIf`, `*ngFor`, `[ngSwitch]`, `*ngSwitchCase`, etc. Every `@for` needs a `track` expression.
 
 ```html
 @if (condition) { ... }
@@ -201,6 +208,35 @@ Use the `inject()` function. Constructor injection is only acceptable when decor
 ```ts
 private readonly config = inject(ENTRY_DIALOG_CONFIG);
 ```
+
+### Method declarations
+Class methods use `readonly` arrow-function properties. **Exception**: Angular lifecycle hooks must be plain methods — the framework calls them by name through an interface.
+
+```ts
+readonly save = (): void => { ... };        // ✅ regular method
+private readonly toKey = (x: number): string => { ... };
+ngOnInit(): void { ... }                   // ✅ lifecycle hook
+readonly ngOnInit = (): void => { ... };   // ❌ never called
+save(): void { ... }                       // ❌ use readonly arrow
+```
+
+### Async handling
+One-shot Observables (HTTP calls, `TranslateService.get()`) use `firstValueFrom()` with `async/await`. Reserve `.subscribe()` for true multi-value streams — Subjects, event buses, router events, websockets.
+
+```ts
+const data = await firstValueFrom(this.http.get<MyType>('/api/data'));  // ✅
+this.http.get<MyType>('/api/data').subscribe(d => this.data = d);       // ❌
+this.router.events.subscribe(e => { ... });                             // ✅ true stream
+```
+
+Always `await` async calls — never `void somePromise()`. Wrap awaits in `try/catch`; **never leave a catch block empty**. Log background failures with `console.error`; surface user-facing errors via snackbar or dialog.
+
+### Naming and files
+- kebab-case filenames (`user-session.ts`); PascalCase for classes/interfaces/enums/type aliases, camelCase for everything else.
+- No `I` prefix on interfaces.
+- **One class or interface per file** — never declare them inline in another file.
+- Always use braces for control-flow clauses, even single-line bodies.
+- Avoid `any` — prefer `unknown` plus narrowing.
 
 ### Component/directive prefix
 All selectors use the `entry` prefix (e.g., `entry-spinner`, `[entry-submit-button]`). Demo app uses `app`.

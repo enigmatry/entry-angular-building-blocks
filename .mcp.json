@@ -1,13 +1,5 @@
 {
-  "inputs": [
-    {
-      "type": "promptString",
-      "id": "context7-api-key",
-      "description": "Context7 API Key (get one at https://context7.com)",
-      "password": true
-    }
-  ],
-  "servers": {
+  "mcpServers": {
     "Enigma-Jira": {
       "type": "stdio",
       "command": "npx",
@@ -16,13 +8,13 @@
     "AzureDevOps": {
       "type": "stdio",
       "command": "npx",
-	  "args": ["-y", "@azure-devops/mcp", "enigmatry", "-d", "core", "repositories", "pipelines"]
+      "args": ["-y", "@azure-devops/mcp", "enigmatry", "-d", "core", "repositories", "pipelines"]
     },
     "Context7": {
       "type": "http",
       "url": "https://mcp.context7.com/mcp",
       "headers": {
-        "CONTEXT7_API_KEY": "${input:context7-api-key}"
+        "CONTEXT7_API_KEY": "${CONTEXT7_API_KEY}"
       }
     },
     "memory": {
