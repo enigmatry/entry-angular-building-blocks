@@ -6,7 +6,7 @@ import { FieldType } from '@ngx-formly/core';
     template: `@if (field.fieldGroup; as fieldGroup) {
                 <fieldset class="validation-field-group">
                     <legend class="validation-group-legend">{{props.label}}</legend>
-                    @for (field of fieldGroup; track field.name) {
+                    @for (field of fieldGroup; track $index) {
                         <formly-field [field]="field"></formly-field>
                     }
                 </fieldset>
