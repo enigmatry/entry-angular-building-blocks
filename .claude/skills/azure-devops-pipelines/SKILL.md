@@ -142,7 +142,7 @@ pr: none        # No PR builds (code review happens outside CI)
 
 ## Artifact naming
 
-Artifacts follow the pattern `$(artifactName)-$(Build.BuildNumber)`. The build number is set to the MinVer version via `##vso[build.updatebuildnumber]`, so artifacts are named like `entry-angular-building-blocks-21.2.3`.
+Artifacts follow the pattern `$(artifactName)-$(Build.BuildNumber)`. The build number is set to the MinVer version via `##vso[build.updatebuildnumber]`, so artifacts are named like `entry-angular-building-blocks-22.0.0`.
 
 ---
 

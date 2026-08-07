@@ -1,11 +1,11 @@
 ---
 name: angular-typescript
-description: Full Angular 21 / TypeScript 5 / ES2022 coding standards for this workspace — async handling, DI, standalone migration, type system, error handling, security, performance, and documentation rules. The high-traffic rules are already in CLAUDE.md; load this skill when you need the complete reference, are writing a non-trivial amount of new TypeScript, or are unsure whether a pattern is allowed.
+description: Full Angular 22 / TypeScript 6 / ES2022 coding standards for this workspace — async handling, DI, standalone migration, type system, error handling, security, performance, and documentation rules. The high-traffic rules are already in CLAUDE.md; load this skill when you need the complete reference, are writing a non-trivial amount of new TypeScript, or are unsure whether a pattern is allowed.
 ---
 
 # Angular / TypeScript Standards — Entry Angular Building Blocks
 
-Targets Angular 21, TypeScript 5.x, ES2022 output. These are the complete standards; CLAUDE.md carries the subset that applies to nearly every edit.
+Targets Angular 22, TypeScript 6.x, ES2022 output. These are the complete standards; CLAUDE.md carries the subset that applies to nearly every edit.
 
 ---
 
@@ -90,7 +90,7 @@ readonly ngOnInit = (): void => { ... };
 
 ## Dependency injection
 
-Use the `inject()` function in component/directive/service bodies. Constructor injection is only acceptable when a decorator is unavoidable — e.g. `@Inject(DOCUMENT)`, or extending a CDK class that requires it (see `SpinnerOverlayContainer`).
+Use the `inject()` function in component/directive/service bodies. Constructor injection is only acceptable when a decorator is unavoidable — e.g. `@Inject(DOCUMENT)`. No file in this workspace currently needs it: `SpinnerOverlayContainer` was the last case, and CDK's `OverlayContainer` stopped taking constructor arguments in Angular 22.
 
 ```ts
 private readonly config = inject(ENTRY_DIALOG_CONFIG);
