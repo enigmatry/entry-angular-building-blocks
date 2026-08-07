@@ -63,18 +63,21 @@ ci_build  ──→  publish_npm
 Runs all verification before any artifacts are produced. Order of steps is significant:
 
 1. `checkout` — with `fetchDepth: 50` and `fetchTags: true` (MinVer needs tag history)
-2. Install and run MinVer — sets `theLatestVersion`
-3. Stamp version into each library `package.json`
-4. `npm ci` — install from lockfile
-5. `npm run lint` — lint all libraries
-6. `npm run build @enigmatry/entry-components` — build libs in dependency order
-7. `npm run build @enigmatry/entry-form`
-8. `npm run automated-tests` — SCSS theme compilation + scss-foundation tests
-9. `FileTransform@2` — substitute pipeline variables into `dist/**/package.json` (used to inject peer dependency versions)
-10. `PublishBuildArtifacts@1` — publish `dist/` as artifact
-11. `PublishBuildArtifacts@1` — publish `libs/` as artifact
+2. `NodeTool@0` — pin the Node version
+3. Install and run MinVer — sets `theLatestVersion`
+4. Stamp version into each library `package.json`
+5. `npm ci` — install from lockfile
+6. `npm run lint` — lint all libraries
+7. `npm run build @enigmatry/entry-components` — build libs in dependency order
+8. `npm run build @enigmatry/entry-form`
+9. `npm run automated-tests` — SCSS theme compilation + scss-foundation tests
+10. `FileTransform@2` — substitute pipeline variables into `dist/**/package.json` (used to inject peer dependency versions)
+11. `PublishBuildArtifacts@1` — publish `dist/` as artifact
+12. `PublishBuildArtifacts@1` — publish `libs/` as artifact
 
 > **Build order matters**: `@enigmatry/entry-components` must be built before `@enigmatry/entry-form` because entry-form depends on entry-components types.
+
+> **Node version**: `NodeTool@0` must be kept in step with the Angular major's engine range (Angular 22 requires `^22.22.3 || ^24.15.0 || >=26.0.0`). Bump `versionSpec` as part of every Angular upgrade — the repo declares no `engines` field, so this task is the only pin.
 
 ### `publish_npm` stage
 
@@ -153,6 +156,7 @@ Always use `ubuntu-latest` for both stages. Do not pin to a specific Ubuntu vers
 
 | Task | Current version used | Notes |
 |---|---|---|
+| `NodeTool@0` | v0 | Pins the Node version — must satisfy the Angular major's engine range |
 | `DotNetCoreCLI@2` | v2 | For MinVer installation |
 | `Npm@1` | v1 | All npm operations |
 | `PowerShell@2` | v2 | MinVer version extraction |

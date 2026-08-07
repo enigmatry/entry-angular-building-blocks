@@ -1,5 +1,5 @@
 <section>
-  @if (loading) {
+  @if (loading()) {
     <entry-spinner [fullscreen]="fullscreen" [color]="color"
       [hasBackgroundOverlay]="hasBackgroundOverlay"></entry-spinner>
   }

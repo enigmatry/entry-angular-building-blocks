@@ -1,6 +1,5 @@
 import { Component, computed, inject, resource } from '@angular/core';
-import { EntryTableComponent } from 'libs/entry-components/table/components';
-import { ColumnDefinition, ContextMenuItem } from 'libs/entry-components/table/interfaces';
+import { ColumnDefinition, ContextMenuItem, EntryTableComponent } from '@enigmatry/entry-components/table';
 import { lastValueFrom } from 'rxjs';
 import { User } from '../../search-filter/search-filter/users';
 import { UsersService } from '../../search-filter/search-filter/users.service';

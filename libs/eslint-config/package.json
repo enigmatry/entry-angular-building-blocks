@@ -21,9 +21,9 @@
     "eslint-plugin-prefer-arrow-functions": "3.9.1",
     "eslint-plugin-promise": "7.3.0",
     "eslint-plugin-unused-imports": "4.4.1",
-    "angular-eslint": "21.3.1",
-    "typescript-eslint": "8.59.1",
-    "eslint": "10.2.1"
+    "angular-eslint": "22.1.0",
+    "typescript-eslint": "8.66.0",
+    "eslint": "10.8.0"
   },
   "deprecatedDependencies": {
     "eslint-plugin-import": "2.32.0 is out of support. Add it back to the list if support for ESLint v10+ is added"

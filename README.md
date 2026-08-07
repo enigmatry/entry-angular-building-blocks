@@ -26,6 +26,7 @@ Visit components demo application. [Website](https://entry-demo.enigmatry.com/)
 |19.x| = 19
 |20.x| = 20
 |21.x| = 21
+|22.x| = 22
 
 ## Migrate project to entry
 
