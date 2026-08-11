@@ -73,6 +73,25 @@ filters = [
 </entry-search-filter>
 ```
 
+## Grouping select/autocomplete options
+
+Both `SelectSearchFilter` and `AutocompleteSearchFilter` support grouping options under a header by passing an
+optional `groupName` as the third `SelectOption` constructor argument. Options are rendered opt-in as-is (flat)
+when `groupName` is omitted; when set, options sharing the same group name are rendered together under a `mat-optgroup`
+header, in first-appearance order.
+
+```ts
+new SelectSearchFilter({
+  key: 'occupation',
+  label: 'Occupation',
+  options: [
+    new SelectOption(Occupation.electrician, 'Electrician', 'Skilled trades'),
+    new SelectOption(Occupation.plumber, 'Plumber', 'Skilled trades'),
+    new SelectOption(Occupation.doctor, 'Doctor', 'Professional')
+  ]
+})
+```
+
 ## Configuration
 
 - provide entry search filter config (optional):

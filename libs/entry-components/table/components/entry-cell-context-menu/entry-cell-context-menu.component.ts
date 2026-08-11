@@ -24,5 +24,4 @@ export class EntryCellContextMenuComponent<T = unknown> {
     ? this.rowMenuFormatter()?.items(this.rowData()!)
     : this.items()) ?? []);
   readonly menu = viewChild<MatMenuPanel>('menu');
-  readonly subMenu = viewChild<EntryCellContextMenuComponent>('subMenu');
 }

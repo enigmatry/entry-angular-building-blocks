@@ -13,6 +13,7 @@ import { AutocompleteSearchFilterComponent } from './autocomplete/autocomplete-s
 import { DateSearchFilterComponent } from './date/date-search-filter.component';
 import { DateTimeSearchFilterComponent } from './date-time/date-time-search-filter.component';
 import { EntrySearchFilterComponent } from './entry-search-filter.component';
+import { GroupSelectOptionsPipe } from './group-select-options.pipe';
 import { SelectSearchFilterComponent } from './select/select-search-filter.component';
 import { TextSearchFilterComponent } from './text/text-search-filter.component';
 
@@ -23,7 +24,8 @@ import { TextSearchFilterComponent } from './text/text-search-filter.component';
     SelectSearchFilterComponent,
     AutocompleteSearchFilterComponent,
     DateTimeSearchFilterComponent,
-    DateSearchFilterComponent
+    DateSearchFilterComponent,
+    GroupSelectOptionsPipe
   ],
   imports: [
     CommonModule,
