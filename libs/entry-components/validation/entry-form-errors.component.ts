@@ -31,11 +31,11 @@ export class EntryFormErrorsComponent implements OnChanges, OnDestroy {
   /** A form group for which the validation errors are being displayed. */
   @Input() form: UntypedFormGroup;
 
-  private readonly _changeDetectorRef = inject(ChangeDetectorRef);
-  private _statusSubscription: Subscription | undefined;
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
+  private statusSubscription: Subscription | undefined;
 
   ngOnChanges(): void {
-    this._statusSubscription?.unsubscribe();
+    this.statusSubscription?.unsubscribe();
 
     // `setServerSideValidationErrors` mutates the form in place, so the bound reference never
     // changes and no event in this template ever marks this component dirty. Angular 22 made
@@ -43,11 +43,11 @@ export class EntryFormErrorsComponent implements OnChanges, OnDestroy {
     // Marking on every status emission is deliberate: the status frequently repeats the same
     // value ('INVALID' -> 'INVALID') while the error payload underneath changes, so anything
     // that compares values would go stale after the first message.
-    this._statusSubscription = this.form?.statusChanges
-      .subscribe(() => this._changeDetectorRef.markForCheck());
+    this.statusSubscription = this.form?.statusChanges
+      .subscribe(() => this.changeDetectorRef.markForCheck());
   }
 
   ngOnDestroy(): void {
-    this._statusSubscription?.unsubscribe();
+    this.statusSubscription?.unsubscribe();
   }
 }
