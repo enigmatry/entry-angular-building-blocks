@@ -81,7 +81,7 @@ Runs all verification before any artifacts are produced. Order of steps is signi
 
 > **Build order matters**: `@enigmatry/entry-components` must be built before `@enigmatry/entry-form` because entry-form depends on entry-components types.
 
-> **Node version**: the `NodeTool@0` pin lives in `pipeline-templates/install-node.yml` and must be kept in step with the Angular major's engine range (Angular 22 requires `^22.22.3 || ^24.15.0 || >=26.0.0`). Bump it together with three other places as part of every Angular upgrade: `engines.node` in the root `package.json` (the workspace/CI pin), `engines.node` in `libs/entry-components/package.json` and `libs/entry-form/package.json` (the full range consumers may use), and the `@types/node` major in the root `package.json`.
+> **Node version**: the `UseNode@1` pin lives in `pipeline-templates/install-node.yml` and must be kept in step with the Angular major's engine range (Angular 22 requires `^22.22.3 || ^24.15.0 || >=26.0.0`). Bump it together with three other places as part of every Angular upgrade: `engines.node` in the root `package.json` (the workspace/CI pin), `engines.node` in `libs/entry-components/package.json` and `libs/entry-form/package.json` (the full range consumers may use), and the `@types/node` major in the root `package.json`.
 
 ### `publish_npm` stage
 
@@ -160,7 +160,7 @@ Always use `ubuntu-latest` for both stages. Do not pin to a specific Ubuntu vers
 
 | Task | Current version used | Notes |
 |---|---|---|
-| `NodeTool@0` | v0 | Pins the Node version — must satisfy the Angular major's engine range |
+| `UseNode@1` | v1 | Pins the Node version — must satisfy the Angular major's engine range. Lives in `pipeline-templates/install-node.yml`. Its input is `version` (semver range), not `versionSpec`. Do not use the older `NodeTool@0`. |
 | `DotNetCoreCLI@2` | v2 | For MinVer installation |
 | `Npm@1` | v1 | All npm operations |
 | `PowerShell@2` | v2 | MinVer version extraction |

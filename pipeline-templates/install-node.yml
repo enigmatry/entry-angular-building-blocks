@@ -5,7 +5,7 @@
 # Keep this in step with the `engines` field in the root package.json - bump both as part of every
 # Angular major upgrade.
 steps:
-- task: NodeTool@0
+- task: UseNode@1
   displayName: 'Install Node.js'
   inputs:
-    versionSpec: '^24.15.0'
+    version: '^24.15.0'
