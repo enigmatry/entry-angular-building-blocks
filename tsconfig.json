@@ -9,7 +9,8 @@
     "paths": {
       // entry-codegen emits workspace-absolute imports (e.g. 'apps/demo-app/src/app/shared/shared.module')
       // into apps/demo-app/**/generated/, which must not be hand-edited. This mapping replaces
-      // what `baseUrl` used to do for them.
+      // what `baseUrl` used to do for them, and exists *only* for that generated code -
+      // eslint.config.js forbids libs/** from using it.
       "apps/*": ["./apps/*"],
       "@enigmatry/entry-components":["./libs/entry-components/public-api.ts"],
       "@enigmatry/entry-components/common": ["./libs/entry-components/common/public-api.ts"],
