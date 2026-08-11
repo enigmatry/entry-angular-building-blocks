@@ -15,6 +15,10 @@ You are working on the CI/CD pipelines for this multi-library Angular workspace.
 |---|---|
 | `azure-pipelines.yml` | Build, test, and publish all npm packages to npm registry. Triggered on `master`. |
 | `deploy-demo.yml` | Build and deploy the demo app. |
+| `pipeline-templates/install-node.yml` | Step template with the Node pin, consumed by both pipelines. |
+
+Steps duplicated across both pipelines belong in `pipeline-templates/` and are pulled in with
+`- template: pipeline-templates/<name>.yml` (paths are relative to the repo root).
 
 ---
 
@@ -63,7 +67,7 @@ ci_build  ──→  publish_npm
 Runs all verification before any artifacts are produced. Order of steps is significant:
 
 1. `checkout` — with `fetchDepth: 50` and `fetchTags: true` (MinVer needs tag history)
-2. `NodeTool@0` — pin the Node version
+2. `- template: pipeline-templates/install-node.yml` — pins the Node version
 3. Install and run MinVer — sets `theLatestVersion`
 4. Stamp version into each library `package.json`
 5. `npm ci` — install from lockfile
@@ -77,7 +81,7 @@ Runs all verification before any artifacts are produced. Order of steps is signi
 
 > **Build order matters**: `@enigmatry/entry-components` must be built before `@enigmatry/entry-form` because entry-form depends on entry-components types.
 
-> **Node version**: `NodeTool@0` must be kept in step with the Angular major's engine range (Angular 22 requires `^22.22.3 || ^24.15.0 || >=26.0.0`). Bump `versionSpec` as part of every Angular upgrade — the repo declares no `engines` field, so this task is the only pin.
+> **Node version**: the `NodeTool@0` pin lives in `pipeline-templates/install-node.yml` and must be kept in step with the Angular major's engine range (Angular 22 requires `^22.22.3 || ^24.15.0 || >=26.0.0`). Bump it together with three other places as part of every Angular upgrade: `engines.node` in the root `package.json` (the workspace/CI pin), `engines.node` in `libs/entry-components/package.json` and `libs/entry-form/package.json` (the full range consumers may use), and the `@types/node` major in the root `package.json`.
 
 ### `publish_npm` stage
 

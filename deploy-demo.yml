@@ -16,12 +16,7 @@ stages:
       fetchDepth: 50
       fetchTags: true
 
-    # Angular 22 requires Node ^22.22.3 || ^24.15.0 || >=26.0.0. Pinned so the build does not
-    # depend on whichever Node the hosted ubuntu-latest image happens to ship.
-    - task: NodeTool@0
-      displayName: 'Install Node.js'
-      inputs:
-        versionSpec: '24.x'
+    - template: pipeline-templates/install-node.yml
 
     - task: DotNetCoreCLI@2
       displayName: Add Manifest for tool installation

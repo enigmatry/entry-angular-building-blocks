@@ -1,0 +1,11 @@
+# Shared by azure-pipelines.yml and deploy-demo.yml.
+#
+# Angular 22 requires Node ^22.22.3 || ^24.15.0 || >=26.0.0 (see @angular/core engines). Pinned so
+# the build does not depend on whichever Node the hosted ubuntu-latest image happens to ship.
+# Keep this in step with the `engines` field in the root package.json - bump both as part of every
+# Angular major upgrade.
+steps:
+- task: NodeTool@0
+  displayName: 'Install Node.js'
+  inputs:
+    versionSpec: '^24.15.0'
