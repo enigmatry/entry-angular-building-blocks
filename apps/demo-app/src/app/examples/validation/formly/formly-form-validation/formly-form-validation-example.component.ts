@@ -41,4 +41,9 @@ export class FormlyFormValidationExampleComponent {
         }
       });
   }
+
+  readonly reset = (): void => {
+    this.form.reset();
+    this.validationResult.set(undefined);
+  };
 }

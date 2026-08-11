@@ -82,4 +82,9 @@ export class ComplexFormlyFormValidationExampleComponent {
         }
       });
   }
+
+  readonly reset = (): void => {
+    this.form.reset();
+    this.validationResult.set(undefined);
+  };
 }

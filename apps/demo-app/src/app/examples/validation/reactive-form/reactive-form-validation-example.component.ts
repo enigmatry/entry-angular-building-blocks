@@ -38,4 +38,9 @@ export class ReactiveFormExampleComponent implements OnInit {
         }
       });
   }
+
+  readonly reset = (): void => {
+    this.form.reset();
+    this.validationResult.set(undefined);
+  };
 }
