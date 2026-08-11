@@ -2,7 +2,7 @@
 
 import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
 import {
-  ChangeDetectionStrategy,
+  ChangeDetectionStrategy, ChangeDetectorRef,
   Component, ElementRef, EventEmitter, Input, NgZone,
   OnDestroy, OnInit, Output, Renderer2, ViewChild, forwardRef,
   inject
@@ -40,6 +40,7 @@ const providers = [
 export class EntryFileInputComponent implements OnInit, OnDestroy, ControlValueAccessor, Validator {
     private readonly _ngZone: NgZone = inject(NgZone);
     private readonly _renderer: Renderer2 = inject(Renderer2);
+    private readonly _changeDetectorRef: ChangeDetectorRef = inject(ChangeDetectorRef);
 
   /**
    * Label for the select file button. Defaults to 'Choose file...'
@@ -168,6 +169,8 @@ export class EntryFileInputComponent implements OnInit, OnDestroy, ControlValueA
     this.value = undefined;
     this.onChange(undefined);
     this._renderer.setProperty(this._fileInput.nativeElement, 'value', '');
+    // Part of the public API, so consumers can call this from any context - not just a template event.
+    this._changeDetectorRef.markForCheck();
   }
 
   // implements ControlValueAccessor interface
@@ -180,8 +183,11 @@ export class EntryFileInputComponent implements OnInit, OnDestroy, ControlValueA
     // set by registerOnTouched
   };
 
+  // `writeValue` and `setDisabledState` are called by the forms API, never by a template event, so
+  // nothing marks this OnPush view dirty on a programmatic setValue/patchValue or disable/enable.
   writeValue(value: any): void {
     this.value = value;
+    this._changeDetectorRef.markForCheck();
   }
 
   registerOnChange(fn: any): void {
@@ -194,6 +200,7 @@ export class EntryFileInputComponent implements OnInit, OnDestroy, ControlValueA
 
   setDisabledState?(isDisabled: boolean): void {
     this._disabled = isDisabled;
+    this._changeDetectorRef.markForCheck();
   }
 
   // implements Validator interface
