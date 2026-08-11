@@ -61,7 +61,7 @@
     "@types/node": "^24.13.3",
     "angular-eslint": "22.1.0",
     "jsdom": "^27.1.0",
-    "eslint": "10.8.0",
+    "eslint": "10.2.1",
     "eslint-plugin-no-secrets": "2.3.3",
     "eslint-plugin-no-unsanitized": "4.1.5",
     "eslint-plugin-prefer-arrow-functions": "3.9.1",
@@ -82,7 +82,7 @@
     "typedoc": "^0.28.16",
     "typedoc-plugin-markdown": "^4.9.0",
     "typescript": "~6.0.3",
-    "typescript-eslint": "8.66.0"
+    "typescript-eslint": "8.59.1"
   },
   "dependenciesComments": {
     "stylelint-related-deps": "Keep them in line with the ones in libs/stylelint-config/package.json",
