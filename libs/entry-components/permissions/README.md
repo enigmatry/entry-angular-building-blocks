@@ -70,7 +70,9 @@ providers: [
 > provideRouter(routes, withRouterConfig({ paramsInheritanceStrategy: 'emptyOnly' }))
 > ```
 >
-> Otherwise, audit every child route under a permission-guarded parent.
+> Otherwise, audit every child route under a permission-guarded parent. In dev mode the guard logs a
+> warning whenever the permissions it checked were inherited from an ancestor route rather than
+> declared on the route itself.
 
 ### View directives
 
