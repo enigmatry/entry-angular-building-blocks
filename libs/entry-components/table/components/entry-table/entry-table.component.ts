@@ -3,9 +3,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { CommonModule } from '@angular/common';
 import {
   Component, ChangeDetectionStrategy, TemplateRef, ElementRef, inject, input, output, computed,
-  linkedSignal,
-  effect,
-  signal
+  linkedSignal, effect, signal, TrackByFunction
 } from '@angular/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
@@ -83,6 +81,7 @@ export class EntryTableComponent<T> {
   readonly rowHover = input<boolean>(false);
   readonly rowStriped = input<boolean>(false);
   readonly rowFocusVisible = input<boolean>(this.configuration.rowFocusVisible);
+  readonly trackBy = input<TrackByFunction<T>>();
   readonly rowClick = output<T>();
 
   // Row selection
