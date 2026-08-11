@@ -100,6 +100,9 @@ export class EntryDateTimePickerComponent<D> implements OnInit, OnDestroy {
       .subscribe(value => {
         this.calendarControl.setValue(value, { emitEvent: false });
         this.dateTimeChanged.next(value);
+        // `emitEvent: false` keeps calendarControl silent, so a programmatic setValue/patchValue
+        // on the bound control would otherwise never repaint the input or the time picker.
+        this.changeDetectorRef.markForCheck();
       }
       );
 

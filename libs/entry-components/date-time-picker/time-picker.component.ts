@@ -60,6 +60,9 @@ export class EntryTimePickerComponent<D> implements OnChanges {
       this.to12HourClock();
     }
 
+    // Besides ngOnChanges, this is called imperatively by EntryDateTimePickerComponent from
+    // `(opened)="timePicker.update()"` - that marks the *parent's* view, not this OnPush child's,
+    // and nothing else dirties this component when the datepicker opens.
     this.changeDetectorRef.markForCheck();
   }
 
@@ -83,8 +86,8 @@ export class EntryTimePickerComponent<D> implements OnChanges {
       this.hours += this.halfADay;
     }
 
-    // Called by EntryDateTimePickerComponent from its calendarControl.valueChanges
-    // subscription, so this component is not otherwise dirty-marked.
+    // Same reason as in update(): called from the parent's calendarControl.valueChanges
+    // subscription, which never marks this view.
     this.changeDetectorRef.markForCheck();
   }
 }
