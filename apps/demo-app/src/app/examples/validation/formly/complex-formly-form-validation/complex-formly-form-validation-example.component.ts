@@ -7,7 +7,7 @@ import { ValidationService } from '../../validation.service';
 @Component({
     selector: 'app-complex-formly-form-validation-example',
     templateUrl: './complex-formly-form-validation-example.component.html',
-    styleUrls: ['./complex-formly-form-validation-example.component.scss'],
+    styleUrl: './complex-formly-form-validation-example.component.scss',
     standalone: false
 })
 export class ComplexFormlyFormValidationExampleComponent {
@@ -70,10 +70,10 @@ export class ComplexFormlyFormValidationExampleComponent {
     }
   ];
   readonly validationResult = signal<IValidationProblemDetails | undefined>(undefined);
-  private readonly _validationService: ValidationService = inject(ValidationService);
+  private readonly validationService: ValidationService = inject(ValidationService);
 
   submitForm() {
-    this._validationService.submitWithComplexValidationErrors()
+    this.validationService.submitWithComplexValidationErrors()
       .subscribe({
         error: (error: IValidationProblemDetails) => {
           /** Applies received server side validation errors to the form */

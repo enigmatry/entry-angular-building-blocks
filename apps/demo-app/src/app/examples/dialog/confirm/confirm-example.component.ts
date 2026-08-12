@@ -19,9 +19,9 @@ export class ConfirmExampleComponent {
   };
   readonly confirmResponse = signal<boolean | undefined>(undefined);
   alignments: EntryDialogButtonsAlignment[] = ['start', 'center', 'end'];
-  private readonly _entryDialog: EntryDialogService = inject(EntryDialogService);
+  private readonly entryDialog: EntryDialogService = inject(EntryDialogService);
 
-  openConfirm = () => this._entryDialog
+  openConfirm = () => this.entryDialog
     .openConfirm(this.confirmData)
     .subscribe((response: boolean | undefined) => this.confirmResponse.set(response));
 }

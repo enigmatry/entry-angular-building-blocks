@@ -16,7 +16,7 @@ import { ENTRY_DIALOG_CONFIG, EntryDialogConfig } from '../entry-dialog-config.m
 @Component({
     selector: 'entry-dialog',
     templateUrl: './entry-dialog.component.html',
-    styleUrls: ['./entry-dialog.component.scss'],
+    styleUrl: './entry-dialog.component.scss',
     standalone: false
 })
 export class EntryDialogComponent {

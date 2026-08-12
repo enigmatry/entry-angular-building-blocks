@@ -1,7 +1,6 @@
 import { Directive, ElementRef, inject, OnDestroy, OnInit } from '@angular/core';
 import { ControlContainer } from '@angular/forms';
-import { Subject, fromEvent } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Subject, fromEvent, takeUntil } from 'rxjs';
 import { NG_INVALID_CLASS } from '../constants';
 
 /**

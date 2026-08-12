@@ -1,6 +1,5 @@
 import { Component, inject, Input, OnDestroy, signal } from '@angular/core';
-import { Observable, Subject, forkJoin, of } from 'rxjs';
-import { catchError, map, takeUntil } from 'rxjs/operators';
+import { Observable, Subject, forkJoin, of, catchError, map, takeUntil } from 'rxjs';
 import { FileExtension } from '../models/file-extension.type';
 import { FileLoadService } from '../services/file-load.service';
 
@@ -14,7 +13,7 @@ interface IExtraFile {
 @Component({
   selector: 'app-example-viewer',
   templateUrl: './example-viewer.component.html',
-  styleUrls: ['./example-viewer.component.scss'],
+  styleUrl: './example-viewer.component.scss',
   standalone: false
 })
 export class ExampleViewerComponent implements OnDestroy {
@@ -33,11 +32,11 @@ export class ExampleViewerComponent implements OnDestroy {
   readonly docsFile = signal<string | null>(null);
   readonly extraFilesToDisplay = signal<IExtraFile[]>([]);
 
-  private _destroy$ = new Subject<void>();
-  private readonly _fileLoad: FileLoadService = inject(FileLoadService);
+  private destroy$ = new Subject<void>();
+  private readonly fileLoad: FileLoadService = inject(FileLoadService);
 
   ngOnDestroy(): void {
-    this._destroy$.next();
+    this.destroy$.next();
   }
 
   toggleCodeView(): void {
@@ -56,7 +55,7 @@ export class ExampleViewerComponent implements OnDestroy {
       docs: this.showDocs ? this.loadFile(this.component, 'md') : of(null)
     })
       .pipe(
-        takeUntil(this._destroy$)
+        takeUntil(this.destroy$)
       )
       .subscribe(documents => {
         this.typescriptFile.set(documents.typescript);
@@ -67,7 +66,7 @@ export class ExampleViewerComponent implements OnDestroy {
       });
     // Load extra files if any
     forkJoin(this.getExtraFiles(this.extraFiles))
-      .pipe(takeUntil(this._destroy$))
+      .pipe(takeUntil(this.destroy$))
       .subscribe((files: IExtraFile[]) => this.extraFilesToDisplay.set(files));
   };
 
@@ -88,6 +87,6 @@ export class ExampleViewerComponent implements OnDestroy {
       });
 
   private loadFile = (path: string, type: FileExtension): Observable<string> =>
-    this._fileLoad.loadCodeFile(path, type)
+    this.fileLoad.loadCodeFile(path, type)
       .pipe(catchError(_ => of('')));
 }

@@ -1,8 +1,7 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnDestroy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { Observable, Subject, of } from 'rxjs';
-import { filter, tap, takeUntil, debounceTime } from 'rxjs/operators';
+import { Observable, Subject, of, filter, tap, takeUntil, debounceTime } from 'rxjs';
 import { SelectOption } from '../select-option.model';
 import { AutocompleteSearchFilter } from './autocomplete-search-filter.model';
 

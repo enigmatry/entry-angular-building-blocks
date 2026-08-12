@@ -12,14 +12,14 @@ export const fieldTypeResolverFactory = (service: FieldTypeResolverService) =>
   providedIn: 'root'
 })
 export class FieldTypeResolverService {
-private readonly _formConfig: EntryFormConfig | null;
+private readonly formConfig: EntryFormConfig | null;
 
   constructor() {
-    this._formConfig = inject(ENTRY_FORM_CONFIG, { optional: true });
+    this.formConfig = inject(ENTRY_FORM_CONFIG, { optional: true });
   }
 
   get resolverConfig(): FieldTypeResolverConfig {
-    return this._formConfig?.fieldTypesConfig || {};
+    return this.formConfig?.fieldTypesConfig || {};
   }
 
   get readonlyFieldTypeMappings(): FieldTypeMappings {

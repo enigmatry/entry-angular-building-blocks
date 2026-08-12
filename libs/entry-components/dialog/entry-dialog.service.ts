@@ -1,7 +1,6 @@
 import { inject, Injectable, Type } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { Observable, take } from 'rxjs';
 import { IEntryAlertDialogData } from './dialogs/alert/entry-alert-dialog-data.interface';
 import { EntryAlertDialogComponent } from './dialogs/alert/entry-alert-dialog.component';
 import { IEntryConfirmDialogData } from './dialogs/confirm/entry-confirm-dialog-data.interface';

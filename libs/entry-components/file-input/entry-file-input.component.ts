@@ -11,8 +11,7 @@ import {
   AbstractControl, ControlValueAccessor, NG_VALIDATORS,
   NG_VALUE_ACCESSOR, ValidationErrors, Validator
 } from '@angular/forms';
-import { Subject, fromEvent } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Subject, fromEvent, takeUntil } from 'rxjs';
 
 const providers = [
   {
@@ -33,7 +32,7 @@ const providers = [
   standalone: false,
   selector: 'entry-file-input',
   templateUrl: './entry-file-input.component.html',
-  styleUrls: ['./entry-file-input.component.scss'],
+  styleUrl: './entry-file-input.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers
 })

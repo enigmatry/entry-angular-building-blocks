@@ -8,16 +8,16 @@ import { FileExtension } from '../models/file-extension.type';
     providedIn: 'root'
 })
 export class FileLoadService {
-    private readonly _httpClient: HttpClient = inject(HttpClient);
+    private readonly httpClient: HttpClient = inject(HttpClient);
 
     loadDocumentationFile = (path: string): Observable<string> => {
         const url = this.isAssetsUrl(path) ? path
             : `${environment.documentationUri}${path}?v=${this.getVersion()}`;
-        return this._httpClient.get(url, { responseType: 'text' });
+        return this.httpClient.get(url, { responseType: 'text' });
     };
 
     loadCodeFile = (path: string, type: FileExtension): Observable<string> =>
-        this._httpClient.get(
+        this.httpClient.get(
             `assets/examples/${path}.${type}?v=${this.getVersion()}`,
             { responseType: 'text' }
         );

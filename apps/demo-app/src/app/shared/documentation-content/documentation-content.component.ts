@@ -5,7 +5,7 @@ import { COMPONENT_DEFINITIONS, IComponentDefinition } from '../../features/comp
 @Component({
   selector: 'app-documentation-content',
   templateUrl: './documentation-content.component.html',
-  styleUrls: ['./documentation-content.component.scss'],
+  styleUrl: './documentation-content.component.scss',
   standalone: false
 })
 export class DocumentationContentComponent {

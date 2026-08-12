@@ -22,23 +22,23 @@ export class EntryDisplayControlValidationDirective implements OnInit, OnDestroy
   /** Form control for which the validation messages are displayed for. */
   @Input() control: AbstractControl;
 
-  private _controlSubscription: Subscription | undefined;
+  private controlSubscription: Subscription | undefined;
 
-  private readonly _config = inject(ENTRY_VALIDATION_CONFIG);
-  private readonly _element = inject(ElementRef);
+  private readonly config = inject(ENTRY_VALIDATION_CONFIG);
+  private readonly element = inject(ElementRef);
 
   ngOnInit(): void {
-    this._controlSubscription = this.control.statusChanges
+    this.controlSubscription = this.control.statusChanges
       .subscribe((controlStatus: FormControlStatus) => {
         if (controlStatus === 'INVALID') {
-          this._element.nativeElement.innerText = this.extractValidationMessages();
+          this.element.nativeElement.innerText = this.extractValidationMessages();
         }
       });
   }
 
   ngOnDestroy(): void {
-    if (this._controlSubscription) {
-      this._controlSubscription.unsubscribe();
+    if (this.controlSubscription) {
+      this.controlSubscription.unsubscribe();
     }
   }
 
@@ -46,7 +46,7 @@ export class EntryDisplayControlValidationDirective implements OnInit, OnDestroy
     if (!this.control.errors) {
       return '';
     }
-    const errorsString = this._config.validationMessages
+    const errorsString = this.config.validationMessages
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       .map(validationMessage => this.control.errors![validationMessage.name]
         ? typeof validationMessage.message === 'string'

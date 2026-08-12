@@ -1,8 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { sortOptions } from '@enigmatry/entry-form';
 import { FormlyFieldConfig } from '@ngx-formly/core';
-import { of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { of, map } from 'rxjs';
 
 @Component({
     selector: 'app-select-example',

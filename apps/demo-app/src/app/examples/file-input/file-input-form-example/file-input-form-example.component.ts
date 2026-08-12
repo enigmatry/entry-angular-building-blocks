@@ -4,7 +4,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 @Component({
     selector: 'app-file-input-form-example',
     templateUrl: './file-input-form-example.component.html',
-    styleUrls: ['./file-input-form-example.component.scss'],
+    styleUrl: './file-input-form-example.component.scss',
     standalone: false
 })
 export class FileInputFormExampleComponent {

@@ -8,7 +8,7 @@ import { FileExtension } from '../../models/file-extension.type';
 @Component({
   selector: 'app-code-view',
   templateUrl: './code-view.component.html',
-  styleUrls: ['./code-view.component.scss'],
+  styleUrl: './code-view.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: false
 })
@@ -17,23 +17,23 @@ export class CodeViewComponent implements OnInit {
   @Input() codeType: FileExtension;
 
   highlightedCode: SafeHtml;
-  private readonly _clipboard: Clipboard = inject(Clipboard);
-  private readonly _snackBar: MatSnackBar = inject(MatSnackBar);
-  private readonly _domSanitizer: DomSanitizer = inject(DomSanitizer);
+  private readonly clipboard: Clipboard = inject(Clipboard);
+  private readonly snackBar: MatSnackBar = inject(MatSnackBar);
+  private readonly domSanitizer: DomSanitizer = inject(DomSanitizer);
 
   ngOnInit(): void {
     this.highlightCode();
   }
 
   copy = () => {
-    this._snackBar.open(`Code copied to the clipboard!`);
-    this._clipboard.copy(this.codeContent);
+    this.snackBar.open(`Code copied to the clipboard!`);
+    this.clipboard.copy(this.codeContent);
   };
 
   private highlightCode() {
     const highlightedCode = hljs.highlight(this.codeContent, { language: this.codeType });
-    const sanitizedHtml = this._domSanitizer.sanitize(SecurityContext.HTML, highlightedCode.value);
+    const sanitizedHtml = this.domSanitizer.sanitize(SecurityContext.HTML, highlightedCode.value);
 
-    this.highlightedCode = this._domSanitizer.bypassSecurityTrustHtml(sanitizedHtml || '');
+    this.highlightedCode = this.domSanitizer.bypassSecurityTrustHtml(sanitizedHtml || '');
   }
 }

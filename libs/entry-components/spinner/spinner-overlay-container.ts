@@ -3,12 +3,12 @@ import { Injectable, OnDestroy } from '@angular/core';
 
 @Injectable()
 export class SpinnerOverlayContainer extends OverlayContainer implements OnDestroy {
-  private _appendTo: HTMLElement = this._document.body;
-  private _options: { fullscreen: boolean } = { fullscreen: true };
+  private appendTo: HTMLElement = this._document.body;
+  private options: { fullscreen: boolean } = { fullscreen: true };
 
   configure(appendTo: HTMLElement, options: { fullscreen: boolean }): void {
-    this._appendTo = appendTo;
-    this._options = options;
+    this.appendTo = appendTo;
+    this.options = options;
   }
 
   override getContainerElement(): HTMLElement {
@@ -28,13 +28,13 @@ export class SpinnerOverlayContainer extends OverlayContainer implements OnDestr
 
   private createContainer(): void {
     const containerClass = 'cdk-overlay-container';
-    const { fullscreen } = this._options;
+    const { fullscreen } = this.options;
 
     const container = this._document.createElement('div');
     container.classList.add(containerClass);
 
     container.style.position = fullscreen ? 'fixed' : 'absolute';
-    this._appendTo.appendChild(container);
+    this.appendTo.appendChild(container);
     this._containerElement = container;
   }
 }

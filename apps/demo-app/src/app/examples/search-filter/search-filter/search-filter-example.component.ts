@@ -10,15 +10,14 @@ import {
   SelectSearchFilter,
   TextSearchFilter
 } from '@enigmatry/entry-components/search-filter';
-import { Observable, of } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { Observable, of, map, tap } from 'rxjs';
 import { Country, Occupation, User } from './users';
 import { UsersService } from './users.service';
 
 @Component({
     selector: 'app-search-filter-example',
     templateUrl: './search-filter-example.component.html',
-    styleUrls: ['./search-filter-example.component.scss'],
+    styleUrl: './search-filter-example.component.scss',
     standalone: false
 })
 export class SearchFilterExampleComponent {

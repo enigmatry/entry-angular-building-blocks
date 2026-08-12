@@ -2,13 +2,13 @@ import { ChangeDetectionStrategy, Component, ElementRef, inject, Input, NgZone, 
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import hljs from 'highlight.js';
 import MarkdownIt from 'markdown-it';
-import { map } from 'rxjs/operators';
+import { map } from 'rxjs';
 import { FileLoadService } from '../services/file-load.service';
 
 @Component({
   selector: 'app-markdown-viewer',
   templateUrl: './markdown-viewer.component.html',
-  styleUrls: ['./markdown-viewer.component.scss'],
+  styleUrl: './markdown-viewer.component.scss',
   standalone: false,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -18,11 +18,11 @@ export class MarkdownViewerComponent implements OnInit {
 
   readonly markdownContentHtml = signal<SafeHtml>('');
 
-  private readonly _fileLoad: FileLoadService = inject(FileLoadService);
-  private _domSanitizer: DomSanitizer = inject(DomSanitizer);
-  private _elementRef: ElementRef = inject(ElementRef);
-  private _renderer: Renderer2 = inject(Renderer2);
-  private _ngZone: NgZone = inject(NgZone);
+  private readonly fileLoad: FileLoadService = inject(FileLoadService);
+  private domSanitizer: DomSanitizer = inject(DomSanitizer);
+  private elementRef: ElementRef = inject(ElementRef);
+  private renderer: Renderer2 = inject(Renderer2);
+  private ngZone: NgZone = inject(NgZone);
 
   ngOnInit(): void {
     if (this.fileUrl) {
@@ -35,7 +35,7 @@ export class MarkdownViewerComponent implements OnInit {
   }
 
   private loadFileContent() {
-    this._fileLoad
+    this.fileLoad
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       .loadDocumentationFile(this.fileUrl!)
       .pipe(
@@ -56,22 +56,22 @@ export class MarkdownViewerComponent implements OnInit {
     });
 
     const html = converter.render(markdown ?? '');
-    const sanitizedHtml = this._domSanitizer.sanitize(SecurityContext.HTML, html);
+    const sanitizedHtml = this.domSanitizer.sanitize(SecurityContext.HTML, html);
     const htmlWithHeadingIds = this.addIdsToHeadings(sanitizedHtml);
 
-    return this._domSanitizer.bypassSecurityTrustHtml(htmlWithHeadingIds);
+    return this.domSanitizer.bypassSecurityTrustHtml(htmlWithHeadingIds);
   }
 
   private handleAnchorClicks() {
-    this._ngZone.runOutsideAngular(() => {
-      this._renderer.listen(this._elementRef.nativeElement, 'click', (event: MouseEvent) => {
+    this.ngZone.runOutsideAngular(() => {
+      this.renderer.listen(this.elementRef.nativeElement, 'click', (event: MouseEvent) => {
         const anchor: HTMLAnchorElement | null = (event.target as HTMLElement).closest('a[href]');
 
         if (anchor && this.isHeadingLink(anchor)) {
           event.preventDefault();
           const url = new URL(anchor.href);
           const hash = decodeURI(url.hash);
-          this.scrollToAnchor(this._elementRef.nativeElement, hash);
+          this.scrollToAnchor(this.elementRef.nativeElement, hash);
         }
       }
       );

@@ -1,8 +1,7 @@
 import { AfterViewInit, Directive, ElementRef, inject, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { AbstractControl, NgControl } from '@angular/forms';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Subject, takeUntil } from 'rxjs';
 import { findOptionByLabel, findOptionByValue } from './select-configuration.interface';
 import { SelectOption } from './select-option.model';
 

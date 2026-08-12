@@ -79,7 +79,11 @@ Each entry point exposes only what's in its `public-api.ts`.
 
 ### Standalone migration
 
-Most lib components currently use `standalone: false` because of a Formly dependency. Migration to standalone is in progress — `EntryTableComponent` and demo app components are already standalone. When working on a component, prefer standalone if possible; if touching a non-standalone component with a Formly dependency, leave it as-is until Formly can be removed.
+Migration to standalone has not happened yet — 69 of the 91 components, directives and pipes still declare `standalone: false`. Already standalone: everything under `table/`, the `common/` directives, `sort.pipe`, `app.component`, and the demo app's `features/*` documentation components.
+
+Formly is **not** the blocker it was once assumed to be. `entry-components` has no `@ngx-formly` imports at all; Formly lives only in `entry-form` and the demo app's form/validation examples, and a standalone component can be imported into an `NgModule` regardless. The one piece needing design work is `FormlyAutocompleteModule`, which registers its field type through `FormlyModule.forChild()`.
+
+When working on a component, prefer standalone.
 
 ### Configuration pattern
 

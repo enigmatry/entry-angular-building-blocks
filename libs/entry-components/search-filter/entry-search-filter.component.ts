@@ -32,7 +32,7 @@ export class EntrySearchFilterComponent implements OnInit {
   searchFilterForm!: UntypedFormGroup;
   controlType = ControlType;
   readonly config: EntrySearchFilterConfig = inject(ENTRY_SEARCH_FILTER_CONFIG);
-  private _destroyRef = inject(DestroyRef);
+  private destroyRef = inject(DestroyRef);
 
   ngOnInit() {
     this.searchFilterForm = this.toFormGroup(this.searchFilters);
@@ -52,7 +52,7 @@ export class EntrySearchFilterComponent implements OnInit {
 
       if (searchFilter.formatValue) {
         formControl.valueChanges
-          .pipe(takeUntilDestroyed(this._destroyRef))
+          .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe(value => {
             const formatted = searchFilter.formatValue?.(value);
             formControl.setValue(formatted, { emitEvent: false });

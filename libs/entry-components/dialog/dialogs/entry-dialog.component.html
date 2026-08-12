@@ -9,7 +9,7 @@
         }
     </div>
 
-    <mat-dialog-content class="dialog-content" [ngClass]="{'with-actions': !hideButtons}">
+    <mat-dialog-content class="dialog-content" [class.with-actions]="!hideButtons">
         <ng-content></ng-content>
     </mat-dialog-content>
 

@@ -11,7 +11,7 @@ export interface ICustomDialogResult {
 @Component({
     selector: 'app-custom-dialog',
     templateUrl: './custom-dialog.component.html',
-    styleUrls: ['./custom-dialog.component.scss'],
+    styleUrl: './custom-dialog.component.scss',
     standalone: false
 })
 export class CustomDialogComponent extends EntryDialogComponent {

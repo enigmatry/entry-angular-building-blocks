@@ -1,7 +1,6 @@
 import { NumberInput, coerceNumberProperty } from '@angular/cdk/coercion';
 import { Directive, ElementRef, inject, Input, OnDestroy, OnInit } from '@angular/core';
-import { Subject, fromEvent, timer } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Subject, fromEvent, timer, takeUntil } from 'rxjs';
 import { NG_VALID_CLASS } from '../constants';
 
 /**
@@ -20,7 +19,7 @@ import { NG_VALID_CLASS } from '../constants';
   selector: 'button[entry-auto-disable]:not([disabled])'
 })
 export class AutoDisableButtonDirective implements OnInit, OnDestroy {
-  private _destroy$ = new Subject<void>();
+  private destroy$ = new Subject<void>();
   private _disableIntervalInMs = 2000;
   private readonly elementRef: ElementRef<HTMLButtonElement> = inject(ElementRef);
 
@@ -41,7 +40,7 @@ export class AutoDisableButtonDirective implements OnInit, OnDestroy {
     if (isTypeSubmit && form) {
       // listen to form submit event
       fromEvent(form, 'submit')
-        .pipe(takeUntil(this._destroy$))
+        .pipe(takeUntil(this.destroy$))
         .subscribe(_ => {
           if (form.matches(NG_VALID_CLASS)) {
             this.disableButton(this._disableIntervalInMs);
@@ -50,14 +49,14 @@ export class AutoDisableButtonDirective implements OnInit, OnDestroy {
     } else {
       // otherwise listen to click event
       fromEvent(button, 'click')
-        .pipe(takeUntil(this._destroy$))
+        .pipe(takeUntil(this.destroy$))
         .subscribe(_ => this.disableButton(this._disableIntervalInMs));
     }
   }
 
   ngOnDestroy(): void {
-    this._destroy$.next();
-    this._destroy$.complete();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   private disableButton(disablePeriodInMs: number): void {
@@ -66,7 +65,7 @@ export class AutoDisableButtonDirective implements OnInit, OnDestroy {
     button.disabled = true;
 
     timer(disablePeriodInMs)
-      .pipe(takeUntil(this._destroy$))
+      .pipe(takeUntil(this.destroy$))
       .subscribe(() => button.disabled = false);
   }
 }
