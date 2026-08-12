@@ -55,6 +55,25 @@ providers: [
     }
 ```
 
+> **Angular 22 — check your `paramsInheritanceStrategy`**
+>
+> `entryPermissionGuard` reads `route.data['permissions']` and denies access when it is absent.
+> Angular 22 changed the router's default `paramsInheritanceStrategy` from `'emptyOnly'` to
+> `'always'`, so a child route that defines no `data.permissions` of its own now **inherits its
+> parent's** instead of being denied.
+>
+> If you rely on deny-by-default for child routes, pin the previous behaviour:
+>
+> ```ts
+> RouterModule.forRoot(routes, { paramsInheritanceStrategy: 'emptyOnly' })
+> // or, for a standalone bootstrap:
+> provideRouter(routes, withRouterConfig({ paramsInheritanceStrategy: 'emptyOnly' }))
+> ```
+>
+> Otherwise, audit every child route under a permission-guarded parent. In dev mode the guard logs a
+> warning whenever the permissions it checked were inherited from an ancestor route rather than
+> declared on the route itself.
+
 ### View directives
 
 ```html

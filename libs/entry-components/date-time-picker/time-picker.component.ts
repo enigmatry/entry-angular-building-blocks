@@ -1,4 +1,4 @@
-import { Component, HostBinding, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, HostBinding, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
 import { DateAdapter } from '@angular/material/core';
 import { EntryDateTimeAdapter } from '@enigmatry/entry-components/common';
 
@@ -12,6 +12,7 @@ export type meridiem = 'am' | 'pm';
 export class EntryTimePickerComponent<D> implements OnChanges {
   @HostBinding('class') class = 'entry-time-picker';
   readonly timeAdapter = inject(DateAdapter) as EntryDateTimeAdapter<D, unknown>;
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
   private readonly hoursInDay = 24;
   private readonly halfADay = 12;
   private readonly minutesInHour = 60;
@@ -58,6 +59,11 @@ export class EntryTimePickerComponent<D> implements OnChanges {
     if (this.is12HourClock) {
       this.to12HourClock();
     }
+
+    // Besides ngOnChanges, this is called imperatively by EntryDateTimePickerComponent from
+    // `(opened)="timePicker.update()"` - that marks the *parent's* view, not this OnPush child's,
+    // and nothing else dirties this component when the datepicker opens.
+    this.changeDetectorRef.markForCheck();
   }
 
   to12HourClock() {
@@ -79,5 +85,9 @@ export class EntryTimePickerComponent<D> implements OnChanges {
     if (this.meridiem === 'pm' && this.hours !== this.halfADay) {
       this.hours += this.halfADay;
     }
+
+    // Same reason as in update(): called from the parent's calendarControl.valueChanges
+    // subscription, which never marks this view.
+    this.changeDetectorRef.markForCheck();
   }
 }

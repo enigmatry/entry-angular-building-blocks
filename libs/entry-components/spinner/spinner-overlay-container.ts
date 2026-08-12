@@ -1,17 +1,10 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { Platform } from '@angular/cdk/platform';
-import { DOCUMENT } from '@angular/common';
-import { Inject, Injectable, OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 
 @Injectable()
 export class SpinnerOverlayContainer extends OverlayContainer implements OnDestroy {
   private _appendTo: HTMLElement = this._document.body;
   private _options: { fullscreen: boolean } = { fullscreen: true };
-
-  // eslint-disable-next-line @angular-eslint/prefer-inject
-  constructor(@Inject(DOCUMENT) document: Document, @Inject(Platform) platform: Platform) {
-    super(document, platform);
-  }
 
   configure(appendTo: HTMLElement, options: { fullscreen: boolean }): void {
     this._appendTo = appendTo;

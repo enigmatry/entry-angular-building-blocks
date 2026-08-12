@@ -11,7 +11,7 @@ Multi-project Angular workspace containing published npm libraries and a demo ap
 | `libs/scss-foundation` | `@enigmatry/scss-foundation` | SCSS design tokens and utilities |
 | `apps/demo-app` | — | Documentation/demo application |
 
-The package major version tracks the supported Angular version (e.g., `21.x` = Angular 21).
+The package major version tracks the supported Angular version (e.g., `22.x` = Angular 22).
 
 ---
 
@@ -155,7 +155,7 @@ Detailed guidance lives in `.claude/skills/`. Load the matching skill when the w
 
 | Skill | Load when | Covers |
 |---|---|---|
-| `angular-typescript` | Writing non-trivial TypeScript, or unsure whether a pattern is allowed | Full Angular 21 / TS 5 standards: async handling, DI, standalone migration, type system, error handling, security, performance, docs |
+| `angular-typescript` | Writing non-trivial TypeScript, or unsure whether a pattern is allowed | Full Angular 22 / TS 6 standards: async handling, DI, standalone migration, type system, error handling, security, performance, docs |
 | `entry-code-review` | Reviewing any change in `libs/` or `apps/demo-app` | Config pattern, entry-point boundaries, public API surface, signals API, search filter models, severity tiers, comment format |
 | `scss-tests` | Adding or reviewing SCSS mixins/functions in `libs/scss-foundation` | Writing sass-true tests: file conventions, assertions, error paths, coverage checklist |
 | `a11y` | Building or reviewing templates, forms, navigation, or SCSS | WCAG 2.2 Level AA: semantics, keyboard/focus, contrast, forced colors, reflow, labels |
@@ -203,7 +203,7 @@ Use `@if`, `@for`, `@switch`/`@case`/`@default` exclusively. Never use `*ngIf`, 
 ```
 
 ### Dependency injection
-Use the `inject()` function. Constructor injection is only acceptable when decorators are required (e.g., `@Inject(DOCUMENT)`), as seen in `SpinnerOverlayContainer`.
+Use the `inject()` function. Constructor injection is only acceptable when decorators are required (e.g., `@Inject(DOCUMENT)`). There are currently no such cases in this workspace — `SpinnerOverlayContainer` was the last one, and it lost its constructor in Angular 22 when CDK's `OverlayContainer` moved to `inject()` internally.
 
 ```ts
 private readonly config = inject(ENTRY_DIALOG_CONFIG);

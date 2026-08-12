@@ -5,11 +5,11 @@
     <entry-form-errors [form]="form"></entry-form-errors>
     <div class="action-buttons">
         <button mat-button entry-submit-button type="submit">Submit</button>
-        <button mat-button entry-cancel-button type="reset" (click)="form.reset(); validationResult = undefined;">Reset</button>
+        <button mat-button entry-cancel-button type="reset" (click)="reset()">Reset</button>
     </div>
 </form>
 <br/>
 <p>
     Validation error response (<em>IValidationProblemDetails</em>): 
 </p>
-<pre><code>{{validationResult | json}}</code></pre>
+<pre><code>{{validationResult() | json}}</code></pre>

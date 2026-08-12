@@ -57,7 +57,10 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  // Angular 22 changed the default to 'always'. Pinned to 'emptyOnly' so a child route
+  // without its own data does not inherit the parent's - entryPermissionGuard reads
+  // route.data['permissions'] and would otherwise silently inherit instead of denying.
+  imports: [RouterModule.forRoot(routes, { paramsInheritanceStrategy: 'emptyOnly' })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

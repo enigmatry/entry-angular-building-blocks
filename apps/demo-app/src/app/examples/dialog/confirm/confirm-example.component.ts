@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { IEntryConfirmDialogData, EntryDialogButtonsAlignment, EntryDialogService } from '@enigmatry/entry-components/dialog';
 
 @Component({
@@ -17,11 +17,11 @@ export class ConfirmExampleComponent {
     hideClose: true,
     disableClose: true
   };
-  confirmResponse: boolean | undefined;
+  readonly confirmResponse = signal<boolean | undefined>(undefined);
   alignments: EntryDialogButtonsAlignment[] = ['start', 'center', 'end'];
   private readonly _entryDialog: EntryDialogService = inject(EntryDialogService);
 
   openConfirm = () => this._entryDialog
     .openConfirm(this.confirmData)
-    .subscribe((response: boolean | undefined) => this.confirmResponse = response);
+    .subscribe((response: boolean | undefined) => this.confirmResponse.set(response));
 }

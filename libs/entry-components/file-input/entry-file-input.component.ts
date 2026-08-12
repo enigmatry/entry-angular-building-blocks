@@ -2,7 +2,7 @@
 
 import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
 import {
-  ChangeDetectionStrategy,
+  ChangeDetectionStrategy, ChangeDetectorRef,
   Component, ElementRef, EventEmitter, Input, NgZone,
   OnDestroy, OnInit, Output, Renderer2, ViewChild, forwardRef,
   inject
@@ -38,8 +38,9 @@ const providers = [
   providers
 })
 export class EntryFileInputComponent implements OnInit, OnDestroy, ControlValueAccessor, Validator {
-    private readonly _ngZone: NgZone = inject(NgZone);
-    private readonly _renderer: Renderer2 = inject(Renderer2);
+  private readonly ngZone: NgZone = inject(NgZone);
+  private readonly renderer: Renderer2 = inject(Renderer2);
+  private readonly changeDetectorRef: ChangeDetectorRef = inject(ChangeDetectorRef);
 
   /**
    * Label for the select file button. Defaults to 'Choose file...'
@@ -114,12 +115,12 @@ export class EntryFileInputComponent implements OnInit, OnDestroy, ControlValueA
 
 
   @ViewChild('fileButton', { static: true, read: ElementRef })
-  _fileButton!: ElementRef<HTMLElement>;
+  fileButton!: ElementRef<HTMLElement>;
 
   @ViewChild('fileInput', { static: true })
-  _fileInput!: ElementRef<HTMLInputElement>;
+  fileInput!: ElementRef<HTMLInputElement>;
 
-  private _destroy$ = new Subject<void>();
+  private destroy$ = new Subject<void>();
 
   get fileNames(): string {
     if (this.value instanceof File) {
@@ -133,17 +134,17 @@ export class EntryFileInputComponent implements OnInit, OnDestroy, ControlValueA
 
   ngOnInit(): void {
     // Handle click event on custom file button and trigger click on native file input
-    this._ngZone.runOutsideAngular(() => {
-      fromEvent(this._fileButton.nativeElement, 'click')
-        .pipe(takeUntil(this._destroy$))
+    this.ngZone.runOutsideAngular(() => {
+      fromEvent(this.fileButton.nativeElement, 'click')
+        .pipe(takeUntil(this.destroy$))
         .subscribe(() => {
-          this._fileInput.nativeElement.click();
+          this.fileInput.nativeElement.click();
         });
     });
   }
 
   ngOnDestroy(): void {
-    this._destroy$.next();
+    this.destroy$.next();
   }
 
   onFileSelect(event: Event): void {
@@ -167,7 +168,9 @@ export class EntryFileInputComponent implements OnInit, OnDestroy, ControlValueA
   clear(): void {
     this.value = undefined;
     this.onChange(undefined);
-    this._renderer.setProperty(this._fileInput.nativeElement, 'value', '');
+    this.renderer.setProperty(this.fileInput.nativeElement, 'value', '');
+    // Part of the public API, so consumers can call this from any context - not just a template event.
+    this.changeDetectorRef.markForCheck();
   }
 
   // implements ControlValueAccessor interface
@@ -180,8 +183,11 @@ export class EntryFileInputComponent implements OnInit, OnDestroy, ControlValueA
     // set by registerOnTouched
   };
 
+  // `writeValue` and `setDisabledState` are called by the forms API, never by a template event, so
+  // nothing marks this OnPush view dirty on a programmatic setValue/patchValue or disable/enable.
   writeValue(value: any): void {
     this.value = value;
+    this.changeDetectorRef.markForCheck();
   }
 
   registerOnChange(fn: any): void {
@@ -194,6 +200,7 @@ export class EntryFileInputComponent implements OnInit, OnDestroy, ControlValueA
 
   setDisabledState?(isDisabled: boolean): void {
     this._disabled = isDisabled;
+    this.changeDetectorRef.markForCheck();
   }
 
   // implements Validator interface

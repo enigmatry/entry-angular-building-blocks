@@ -1,7 +1,7 @@
 <entry-search-filter [searchFilters]="filters" (searchFilterChange)="searchFilterChange($event)">
 </entry-search-filter>
 
-<table mat-table [dataSource]="users" class="mat-elevation-z8">
+<table mat-table [dataSource]="users()" class="mat-elevation-z8">
 
     <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef> Name </th>

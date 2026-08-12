@@ -9,20 +9,22 @@
     "url": "https://github.com/enigmatry/entry-angular-building-blocks.git"
   },
   "license": "Apache-2.0",
+  "engines": {
+    "node": "^22.22.3 || ^24.15.0 || >=26.0.0"
+  },
   "scripts": {
     "compile-scss": "sass --load-path=../../node_modules --load-path=../../libs styles/partials/theming.scss styles/dist/theming.css",
     "compile-generator": "sass --load-path=../../node_modules --load-path=../../libs styles/partials/generator-test.scss styles/dist/generator-test.css",
     "lint": "stylelint --fix styles/**/*.scss --config ../../.stylelintrc.json"
   },
   "peerDependencies": {
-    "@angular/animations": "^21.2.0",
-    "@angular/cdk": "^21.2.0",
-    "@angular/common": "^21.2.0",
-    "@angular/core": "^21.2.0",
-    "@angular/material": "^21.2.0",
-    "@angular/forms": "^21.2.0",
-    "@angular/platform-browser": "^21.2.0",
-    "@angular/router": "^21.2.0",
+    "@angular/cdk": "^22.1.1",
+    "@angular/common": "^22.1.0",
+    "@angular/core": "^22.1.0",
+    "@angular/material": "^22.1.1",
+    "@angular/forms": "^22.1.0",
+    "@angular/platform-browser": "^22.1.0",
+    "@angular/router": "^22.1.0",
     "rxjs": "7.8.2"
   },
   "dependencies": {

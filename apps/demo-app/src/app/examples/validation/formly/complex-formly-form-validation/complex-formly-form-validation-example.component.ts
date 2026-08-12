@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { IValidationProblemDetails, setServerSideValidationErrors } from '@enigmatry/entry-components/validation';
 import { FormlyFieldConfig } from '@ngx-formly/core';
@@ -69,7 +69,7 @@ export class ComplexFormlyFormValidationExampleComponent {
       }
     }
   ];
-  validationResult: IValidationProblemDetails | undefined;
+  readonly validationResult = signal<IValidationProblemDetails | undefined>(undefined);
   private readonly _validationService: ValidationService = inject(ValidationService);
 
   submitForm() {
@@ -78,8 +78,13 @@ export class ComplexFormlyFormValidationExampleComponent {
         error: (error: IValidationProblemDetails) => {
           /** Applies received server side validation errors to the form */
           setServerSideValidationErrors(error, this.form);
-          this.validationResult = error;
+          this.validationResult.set(error);
         }
       });
   }
+
+  readonly reset = (): void => {
+    this.form.reset();
+    this.validationResult.set(undefined);
+  };
 }

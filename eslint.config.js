@@ -9,7 +9,16 @@ export default defineConfig([
     {
         files: ['libs/**/*.ts'],
         rules: {
-            '@angular-eslint/prefer-standalone': 'off' // TODO: Remove when we get rid of Formly
+            '@angular-eslint/prefer-standalone': 'off', // TODO: Remove when we get rid of Formly
+            // The root tsconfig maps `apps/*` so entry-codegen's workspace-absolute imports resolve
+            // inside apps/demo-app/**/generated/. Libraries inherit that mapping through `extends`,
+            // so guard the lib -> app boundary here.
+            'no-restricted-imports': ['error', {
+                patterns: [{
+                    group: ['apps/**'],
+                    message: 'Libraries must not import from apps/**. The `apps/*` tsconfig path exists only for generated demo-app code.'
+                }]
+            }]
         }
     }
 ]);

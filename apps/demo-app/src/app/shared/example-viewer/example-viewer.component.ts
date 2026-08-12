@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnDestroy } from '@angular/core';
+import { Component, inject, Input, OnDestroy, signal } from '@angular/core';
 import { Observable, Subject, forkJoin, of } from 'rxjs';
 import { catchError, map, takeUntil } from 'rxjs/operators';
 import { FileExtension } from '../models/file-extension.type';
@@ -26,12 +26,12 @@ export class ExampleViewerComponent implements OnDestroy {
   @Input() showDocs = false;
   @Input() extraFiles: string[] = [];
 
-  viewCode = false;
-  typescriptFile: string | null;
-  htmlFile: string | null;
-  stylesFile: string | null;
-  docsFile: string | null;
-  extraFilesToDisplay: IExtraFile[] = [];
+  readonly viewCode = signal(false);
+  readonly typescriptFile = signal<string | null>(null);
+  readonly htmlFile = signal<string | null>(null);
+  readonly stylesFile = signal<string | null>(null);
+  readonly docsFile = signal<string | null>(null);
+  readonly extraFilesToDisplay = signal<IExtraFile[]>([]);
 
   private _destroy$ = new Subject<void>();
   private readonly _fileLoad: FileLoadService = inject(FileLoadService);
@@ -41,8 +41,8 @@ export class ExampleViewerComponent implements OnDestroy {
   }
 
   toggleCodeView(): void {
-    if (this.viewCode) {
-      this.viewCode = false;
+    if (this.viewCode()) {
+      this.viewCode.set(false);
     } else {
       this.loadExampleDocuments();
     }
@@ -59,16 +59,16 @@ export class ExampleViewerComponent implements OnDestroy {
         takeUntil(this._destroy$)
       )
       .subscribe(documents => {
-        this.typescriptFile = documents.typescript;
-        this.htmlFile = documents.html;
-        this.stylesFile = documents.styles;
-        this.docsFile = documents.docs;
-        this.viewCode = true;
+        this.typescriptFile.set(documents.typescript);
+        this.htmlFile.set(documents.html);
+        this.stylesFile.set(documents.styles);
+        this.docsFile.set(documents.docs);
+        this.viewCode.set(true);
       });
     // Load extra files if any
     forkJoin(this.getExtraFiles(this.extraFiles))
       .pipe(takeUntil(this._destroy$))
-      .subscribe((files: IExtraFile[]) => this.extraFilesToDisplay = files);
+      .subscribe((files: IExtraFile[]) => this.extraFilesToDisplay.set(files));
   };
 
   private getExtraFiles = (paths: string[]): Observable<IExtraFile>[] =>

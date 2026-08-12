@@ -21,6 +21,8 @@ stages:
       fetchDepth: 50
       fetchTags: true
 
+    - template: pipeline-templates/install-node.yml
+
     - task: DotNetCoreCLI@2
       displayName: Add Manifest for tool installation
       inputs:

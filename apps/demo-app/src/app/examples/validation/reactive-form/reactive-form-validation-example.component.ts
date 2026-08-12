@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { IValidationProblemDetails, setServerSideValidationErrors } from '@enigmatry/entry-components/validation';
 import { ValidationService } from '../validation.service';
@@ -15,7 +15,7 @@ export class ReactiveFormExampleComponent implements OnInit {
     lastName: FormControl<string | null>;
   }>;
 
-  validationResult: IValidationProblemDetails | undefined;
+  readonly validationResult = signal<IValidationProblemDetails | undefined>(undefined);
   private readonly defaultLength = 3;
 
   private readonly _formBuilder: FormBuilder = inject(FormBuilder);
@@ -34,8 +34,13 @@ export class ReactiveFormExampleComponent implements OnInit {
         error: (error: IValidationProblemDetails) => {
           /** Applies received server side validation errors to the form */
           setServerSideValidationErrors(error, this.form);
-          this.validationResult = error;
+          this.validationResult.set(error);
         }
       });
   }
+
+  readonly reset = (): void => {
+    this.form.reset();
+    this.validationResult.set(undefined);
+  };
 }

@@ -1,4 +1,4 @@
-import { Component, inject, LOCALE_ID, ViewChild } from '@angular/core';
+import { Component, inject, LOCALE_ID, signal, ViewChild } from '@angular/core';
 import { IValidationProblemDetails, setServerSideValidationErrors } from '@enigmatry/entry-components';
 import {
   AutocompleteSearchFilter,
@@ -24,7 +24,7 @@ import { UsersService } from './users.service';
 export class SearchFilterExampleComponent {
   @ViewChild(EntrySearchFilterComponent, { static: true }) entrySearchFilterComponent: EntrySearchFilterComponent;
 
-  users: Array<User>;
+  readonly users = signal<User[]>([]);
   displayedColumns: string[] = ['name', 'email', 'dateOfBirth', 'occupation', 'country', 'score'];
   filters: SearchFilterBase<any>[] = [];
   private readonly usersService: UsersService = inject(UsersService);
@@ -43,7 +43,7 @@ export class SearchFilterExampleComponent {
     return this.usersService.getUsers(searchParams).pipe(
       tap({
         next: (users: User[]) => {
-          this.users = users;
+          this.users.set(users);
         },
         error: (error: IValidationProblemDetails) => {
           setServerSideValidationErrors(error, this.entrySearchFilterComponent.searchFilterForm);

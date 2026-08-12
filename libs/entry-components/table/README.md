@@ -121,6 +121,7 @@ export class TableExampleModule { }
 | 19.x                        | = 19            |
 | 20.x                        | = 20            |
 | 21.x                        | = 21            |
+| 22.x                        | = 22            |
 
 ## License
 

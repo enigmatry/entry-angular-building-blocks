@@ -95,6 +95,14 @@ entry-codegen --source-assembly ../MyProject.CodeGeneration.Setup/bin/Debug/net7
 |19.x| = 19
 |20.x| = 20
 |21.x| = 21
+|22.x| = 22
+
+## Migrating to 22.x
+
+`22.x` requires Angular 22, TypeScript ~6.0 and Node `^22.22.3 || ^24.15.0 || >=26.0.0`, and drops
+the `@angular/animations` peer dependency. The breaking changes are shared with
+`@enigmatry/entry-components` — see
+[Migrating to 22.x](https://github.com/enigmatry/entry-angular-building-blocks/blob/master/libs/entry-components/README.md#migrating-to-22x).
 
 ## License
 

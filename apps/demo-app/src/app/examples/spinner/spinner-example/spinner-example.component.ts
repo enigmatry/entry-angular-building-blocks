@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { timer } from 'rxjs';
 
@@ -8,14 +8,14 @@ import { timer } from 'rxjs';
     standalone: false
 })
 export class SpinnerExampleComponent {
-  loading = false;
+  readonly loading = signal(false);
   color: ThemePalette = 'primary';
   fullscreen = false;
   hasBackgroundOverlay = true;
 
   showSpinner() {
-    this.loading = true;
+    this.loading.set(true);
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    timer(3000).subscribe(_ => this.loading = false);
+    timer(3000).subscribe(_ => this.loading.set(false));
   }
 }

@@ -229,7 +229,7 @@ export const provideEntryUploadConfig = (config: Partial<EntryUploadConfig>): Pr
 
 - Formatting, trailing commas, quote style — enforced by ESLint/Stylelint.
 - `standalone: false` on existing Formly-dependent components.
-- Constructor injection inside `SpinnerOverlayContainer` and similar CDK extensions that require `@Inject`.
+- Constructor injection in a CDK extension that genuinely requires `@Inject`. As of Angular 22 no such case remains — `SpinnerOverlayContainer` lost its constructor when `OverlayContainer` moved to `inject()` internally — so treat any new one as worth questioning.
 - Use of `UntypedFormGroup` / `UntypedFormControl` in generated or Formly-related code.
 - Anything inside `*.generated.*` files — these are produced by `entry-codegen` and are not hand-maintained.
 
