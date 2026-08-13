@@ -1,4 +1,4 @@
-import { AfterViewInit, DestroyRef, Directive, ElementRef, inject, input, OnChanges, SimpleChanges } from '@angular/core';
+import { afterNextRender, DestroyRef, Directive, effect, ElementRef, inject, input } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AbstractControl, NgControl } from '@angular/forms';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
@@ -9,7 +9,7 @@ import { SelectOption } from './select-option.model';
     selector: '[entryCheckAutocompleteInput]',
     standalone: false
 })
-export class CheckAutocompleteInputDirective implements OnChanges, AfterViewInit {
+export class CheckAutocompleteInputDirective {
   readonly options = input<SelectOption[]>([]);
 
   private readonly matAutocomplete = inject(MatAutocompleteTrigger, { host: true, self: true });
@@ -21,20 +21,25 @@ export class CheckAutocompleteInputDirective implements OnChanges, AfterViewInit
     return this.ngControl.control;
   }
 
-  ngOnChanges(_changes: SimpleChanges): void {
-    if (this.options()?.length) {
-      this.applySelectedValue(this.control?.value);
-    }
-  }
+  constructor() {
+    // Replaces ngOnChanges - reacts to `options` and nothing else.
+    effect(() => {
+      if (this.options().length) {
+        this.applySelectedValue(this.control?.value);
+      }
+    });
 
-  ngAfterViewInit(): void {
-    this.matAutocomplete.panelClosingActions
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(event => {
-        if (!event?.source) {
-          this.checkControlValue();
-        }
-      });
+    // Replaces ngAfterViewInit: the trigger's panel actions are only wired up once the host input
+    // and its autocomplete have rendered.
+    afterNextRender(() => {
+      this.matAutocomplete.panelClosingActions
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe(event => {
+          if (!event?.source) {
+            this.checkControlValue();
+          }
+        });
+    });
   }
 
   private checkControlValue(): void {

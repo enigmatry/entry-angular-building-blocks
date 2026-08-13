@@ -1,38 +1,54 @@
-import { DestroyRef, Directive, OnInit, inject } from '@angular/core';
+import { afterNextRender, DestroyRef, Directive, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControlDirective, FormControlName, NgControl, NgModel, UntypedFormControl } from '@angular/forms';
 
 @Directive({
     standalone: true
 })
-export class NgControlAccessorDirective implements OnInit {
-    control: UntypedFormControl;
-
+export class NgControlAccessorDirective {
     ngControl = inject(NgControl, {
         optional: true,
         self: true
     });
 
+    private resolvedControl: UntypedFormControl | undefined;
     private readonly destroyRef = inject(DestroyRef);
 
-    ngOnInit() {
+    /**
+     * Control the host is bound to through the forms API.
+     *
+     * @remarks Resolved on first read instead of in ngOnInit: `NgControl.control` is only populated
+     * once the owning form directive has wired itself up, and consumers read this well after that.
+     */
+    get control(): UntypedFormControl {
+        this.resolvedControl ??= this.resolveControl();
+        return this.resolvedControl;
+    }
+
+    constructor() {
+        afterNextRender(() => this.keepNgModelInSync());
+    }
+
+    private readonly resolveControl = (): UntypedFormControl => {
         if (this.ngControl instanceof FormControlDirective ||
             this.ngControl instanceof FormControlName ||
             this.ngControl instanceof NgModel) {
-            this.control = this.ngControl.control;
-        } else {
-            this.control = new UntypedFormControl();
+            return this.ngControl.control;
         }
+        return new UntypedFormControl();
+    };
 
-        if (this.ngControl instanceof NgModel) {
-            const ngModel = this.ngControl as NgModel;
-            ngModel.control.valueChanges
-                .pipe(takeUntilDestroyed(this.destroyRef))
-                .subscribe(newValue => {
-                    if (ngModel.model !== newValue || ngModel.viewModel !== newValue) {
-                        ngModel.viewToModelUpdate(newValue);
-                    }
-                });
+    private readonly keepNgModelInSync = (): void => {
+        if (!(this.ngControl instanceof NgModel)) {
+            return;
         }
-    }
+        const ngModel = this.ngControl;
+        ngModel.control.valueChanges
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe(newValue => {
+                if (ngModel.model !== newValue || ngModel.viewModel !== newValue) {
+                    ngModel.viewToModelUpdate(newValue);
+                }
+            });
+    };
 }

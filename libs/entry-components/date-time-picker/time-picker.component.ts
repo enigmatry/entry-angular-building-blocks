@@ -1,4 +1,4 @@
-import { Component, OnChanges, SimpleChanges, computed, inject, input, signal } from '@angular/core';
+import { Component, computed, inject, input, linkedSignal, signal } from '@angular/core';
 import { DateAdapter } from '@angular/material/core';
 import { EntryDateTimeAdapter } from '@enigmatry/entry-components/common';
 
@@ -12,7 +12,7 @@ export type meridiem = 'am' | 'pm';
     class: 'entry-time-picker'
   }
 })
-export class EntryTimePickerComponent<D> implements OnChanges {
+export class EntryTimePickerComponent<D> {
   readonly timeAdapter = inject(DateAdapter) as EntryDateTimeAdapter<D, unknown>;
   private readonly hoursInDay = 24;
   private readonly halfADay = 12;
@@ -23,13 +23,42 @@ export class EntryTimePickerComponent<D> implements OnChanges {
   readonly is12HourClock = input(false);
   readonly defaultTime = input<D | undefined>(undefined);
 
-  // Writable rather than computed: the selects two-way bind to these, and the parent forces a
-  // refresh through `update()`. Writing a signal marks the view, which is why the two
-  // ChangeDetectorRef.markForCheck() calls these methods used to need are gone.
-  readonly hours = signal(0);
-  readonly minutes = signal(0);
-  readonly seconds = signal(0);
-  readonly meridiem = signal<meridiem>('am');
+  /** Bumped by `update()`, whose job is to re-read `today()` - a value signals cannot track. */
+  private readonly refreshCount = signal(0);
+
+  /**
+   * Time the inputs describe. A fresh object every recomputation, so the linked signals below always
+   * take the new value rather than comparing field by field.
+   */
+  private readonly timeFromInputs = computed(() => {
+    this.refreshCount();
+    const now = this.timeAdapter.today();
+    const date = this.date();
+    const fallback = this.defaultTime() ?? now;
+
+    const hours = date
+      ? this.timeAdapter.getHours(date)
+      : this.timeAdapter.getHours(fallback);
+
+    return {
+      hours: this.is12HourClock() ? this.to12HourClock(hours) : hours,
+      minutes: date
+        ? this.timeAdapter.getMinutes(date)
+        : this.timeAdapter.getMinutes(fallback),
+      seconds: this.showSeconds() && date
+        ? this.timeAdapter.getSeconds(date)
+        : this.timeAdapter.getSeconds(fallback),
+      // read off the 24 hour value, before any conversion below
+      meridiem: (hours >= this.halfADay ? 'pm' : 'am') as meridiem
+    };
+  });
+
+  // Writable because the selects two-way bind to them, but re-derived whenever the inputs change or
+  // `update()` fires - which is what the old ngOnChanges + update() pair did.
+  readonly hours = linkedSignal({ source: this.timeFromInputs, computation: time => time.hours });
+  readonly minutes = linkedSignal({ source: this.timeFromInputs, computation: time => time.minutes });
+  readonly seconds = linkedSignal({ source: this.timeFromInputs, computation: time => time.seconds });
+  readonly meridiem = linkedSignal({ source: this.timeFromInputs, computation: time => time.meridiem });
 
   readonly hours12 = Array.from(Array(this.halfADay), (_, i) => i + 1);
   readonly hours24 = Array.from(Array(this.hoursInDay), (_, i) => i);
@@ -37,41 +66,9 @@ export class EntryTimePickerComponent<D> implements OnChanges {
 
   readonly possibleHours = computed(() => this.is12HourClock() ? this.hours12 : this.hours24);
 
-  ngOnChanges(_changes: SimpleChanges): void {
-    this.update();
-  }
-
+  /** Re-reads the current time. Called by EntryDateTimePickerComponent when the calendar opens. */
   readonly update = (): void => {
-    const now = this.timeAdapter.today();
-    const date = this.date();
-    const fallback = this.defaultTime() ?? now;
-
-    this.hours.set(date
-      ? this.timeAdapter.getHours(date)
-      : this.timeAdapter.getHours(fallback));
-
-    this.minutes.set(date
-      ? this.timeAdapter.getMinutes(date)
-      : this.timeAdapter.getMinutes(fallback));
-
-    this.seconds.set(this.showSeconds() && date
-      ? this.timeAdapter.getSeconds(date)
-      : this.timeAdapter.getSeconds(fallback));
-
-    this.meridiem.set(this.hours() >= this.halfADay ? 'pm' : 'am');
-
-    if (this.is12HourClock()) {
-      this.to12HourClock();
-    }
-  };
-
-  readonly to12HourClock = (): void => {
-    if (this.hours() > this.halfADay) {
-      this.hours.update(hours => hours - this.halfADay);
-    }
-    if (this.hours() === 0) {
-      this.hours.set(this.halfADay);
-    }
+    this.refreshCount.update(count => count + 1);
   };
 
   readonly to24HourClock = (): void => {
@@ -84,5 +81,12 @@ export class EntryTimePickerComponent<D> implements OnChanges {
     if (this.meridiem() === 'pm' && this.hours() !== this.halfADay) {
       this.hours.update(hours => hours + this.halfADay);
     }
+  };
+
+  private readonly to12HourClock = (hours: number): number => {
+    if (hours > this.halfADay) {
+      return hours - this.halfADay;
+    }
+    return hours === 0 ? this.halfADay : hours;
   };
 }

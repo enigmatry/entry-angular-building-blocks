@@ -1,5 +1,5 @@
 import { NumberInput, coerceNumberProperty } from '@angular/cdk/coercion';
-import { DestroyRef, Directive, ElementRef, inject, input, OnInit } from '@angular/core';
+import { afterNextRender, DestroyRef, Directive, ElementRef, inject, input } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { fromEvent, timer } from 'rxjs';
 import { NG_VALID_CLASS } from '../constants';
@@ -21,7 +21,7 @@ const DEFAULT_DISABLE_INTERVAL_IN_MS = 2000;
   // eslint-disable-next-line @angular-eslint/directive-selector
   selector: 'button[entry-auto-disable]:not([disabled])'
 })
-export class AutoDisableButtonDirective implements OnInit {
+export class AutoDisableButtonDirective {
   private readonly elementRef: ElementRef<HTMLButtonElement> = inject(ElementRef);
   private readonly destroyRef = inject(DestroyRef);
 
@@ -31,7 +31,13 @@ export class AutoDisableButtonDirective implements OnInit {
     transform: (value: NumberInput) => coerceNumberProperty(value, DEFAULT_DISABLE_INTERVAL_IN_MS)
   });
 
-  ngOnInit(): void {
+  constructor() {
+    // The enclosing <form> has to be in the DOM before `closest` can find it, so this waits for the
+    // first render instead of running in ngOnInit. No click can reach the button before then.
+    afterNextRender(() => this.listenForDisableTrigger());
+  }
+
+  private readonly listenForDisableTrigger = (): void => {
     const button = this.elementRef.nativeElement;
     const isTypeSubmit = button.getAttribute('type') === 'submit';
     const form: HTMLFormElement | null = button.closest('form');
@@ -45,13 +51,13 @@ export class AutoDisableButtonDirective implements OnInit {
             this.disableButton(this.disableIntervalInMs());
           }
         });
-    } else {
-      // otherwise listen to click event
-      fromEvent(button, 'click')
-        .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe(_ => this.disableButton(this.disableIntervalInMs()));
+      return;
     }
-  }
+    // otherwise listen to click event
+    fromEvent(button, 'click')
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(_ => this.disableButton(this.disableIntervalInMs()));
+  };
 
   private readonly disableButton = (disablePeriodInMs: number): void => {
     const button = this.elementRef.nativeElement;

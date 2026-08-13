@@ -1,10 +1,9 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, ElementRef, inject, input, NgZone, OnInit,
-  Renderer2, SecurityContext, signal } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { afterNextRender, ChangeDetectionStrategy, Component, computed, ElementRef, inject, input, NgZone,
+  Renderer2, resource, SecurityContext } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import hljs from 'highlight.js';
 import MarkdownIt from 'markdown-it';
-import { map } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { FileLoadService } from '../services/file-load.service';
 
 @Component({
@@ -14,42 +13,40 @@ import { FileLoadService } from '../services/file-load.service';
   standalone: false,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MarkdownViewerComponent implements OnInit {
+export class MarkdownViewerComponent {
   readonly fileUrl = input<string | undefined>(undefined);
   readonly markdownContent = input<string | undefined>(undefined);
-
-  readonly markdownContentHtml = signal<SafeHtml>('');
 
   private readonly fileLoad: FileLoadService = inject(FileLoadService);
   private readonly domSanitizer: DomSanitizer = inject(DomSanitizer);
   private readonly elementRef: ElementRef = inject(ElementRef);
   private readonly renderer: Renderer2 = inject(Renderer2);
   private readonly ngZone: NgZone = inject(NgZone);
-  private readonly destroyRef = inject(DestroyRef);
 
-  ngOnInit(): void {
-    const fileUrl = this.fileUrl();
-    if (fileUrl) {
-      this.loadFileContent(fileUrl);
-    }
-    const markdownContent = this.markdownContent();
-    if (markdownContent) {
-      this.markdownContentHtml.set(this.convertMarkdownToHtml(markdownContent));
-    }
-    this.handleAnchorClicks();
-  }
+  /**
+   * Loads the documentation file whenever `fileUrl` is set. Replaces the ngOnInit subscription; the
+   * resource reloads if a different url is bound, which the hook did not.
+   */
+  private readonly loadedFile = resource({
+    params: () => this.fileUrl(),
+    loader: ({ params: fileUrl }) => firstValueFrom(this.fileLoad.loadDocumentationFile(fileUrl))
+  });
 
-  private loadFileContent(fileUrl: string) {
-    this.fileLoad
-      .loadDocumentationFile(fileUrl)
-      .pipe(
-        map(response => this.convertMarkdownToHtml(response)),
-        takeUntilDestroyed(this.destroyRef)
-      )
-      .subscribe({
-        next: response => this.markdownContentHtml.set(response),
-        error: _ => this.markdownContentHtml.set(`### No API documentation found :'(`)
-      });
+  /** Inline content wins over a loaded file, and a failed load falls back to a notice. */
+  readonly markdownContentHtml = computed<SafeHtml>(() => {
+    const inlineContent = this.markdownContent();
+    if (inlineContent) {
+      return this.convertMarkdownToHtml(inlineContent);
+    }
+    if (this.loadedFile.error()) {
+      return this.convertMarkdownToHtml(`### No API documentation found :'(`);
+    }
+    return this.convertMarkdownToHtml(this.loadedFile.value() ?? '');
+  });
+
+  constructor() {
+    // Replaces ngOnInit for the delegated click handling - the host element has to be rendered first.
+    afterNextRender(() => this.handleAnchorClicks());
   }
 
   private convertMarkdownToHtml(markdown: string): SafeHtml {

@@ -1,8 +1,8 @@
 import { Overlay, OverlayConfig, OverlayContainer, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import {
-  AfterViewInit, ChangeDetectionStrategy, Component,
-  ElementRef, inject, input, OnDestroy,
+  afterNextRender, ChangeDetectionStrategy, Component,
+  DestroyRef, ElementRef, inject, input,
   TemplateRef, viewChild, ViewContainerRef
 } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
@@ -23,7 +23,7 @@ const DEFAULT_DIAMETER = 30;
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: false
 })
-export class EntrySpinnerComponent implements AfterViewInit, OnDestroy {
+export class EntrySpinnerComponent {
   readonly color = input<ThemePalette>('primary');
   readonly diameter = input(DEFAULT_DIAMETER);
   readonly fullscreen = input(false);
@@ -36,16 +36,17 @@ export class EntrySpinnerComponent implements AfterViewInit, OnDestroy {
   private readonly viewContainerRef = inject(ViewContainerRef);
   private readonly overlayContainer = inject(OverlayContainer);
   private readonly elementRef = inject(ElementRef<HTMLElement>);
+  private readonly destroyRef = inject(DestroyRef);
 
-  // Signal queries have no `static` option, so the template ref is not readable in ngOnInit as it
-  // was with `@ViewChild(..., { static: true })`. The overlay is created one hook later instead.
-  ngAfterViewInit(): void {
-    this.createOverlay();
-    this.overlayRef.attach(new TemplatePortal(this.templateRef(), this.viewContainerRef));
-  }
+  constructor() {
+    // The template ref only exists once the view has rendered, so the overlay is built then rather
+    // than in ngOnInit - signal queries have no `static` option.
+    afterNextRender(() => {
+      this.createOverlay();
+      this.overlayRef.attach(new TemplatePortal(this.templateRef(), this.viewContainerRef));
+    });
 
-  ngOnDestroy(): void {
-    this.disposeOverlayRef();
+    this.destroyRef.onDestroy(() => this.disposeOverlayRef());
   }
 
   private readonly createOverlay = (): void => {

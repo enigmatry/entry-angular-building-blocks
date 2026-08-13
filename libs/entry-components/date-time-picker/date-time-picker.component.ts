@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit,
+import { afterNextRender, ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef,
    computed, effect, inject, input, output, viewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl } from '@angular/forms';
@@ -22,7 +22,7 @@ import { EntryTimePickerComponent } from './time-picker.component';
         class: 'entry-date-time-picker'
     }
 })
-export class EntryDateTimePickerComponent<D> implements OnInit {
+export class EntryDateTimePickerComponent<D> {
   readonly label = input('');
   readonly showSeconds = input<boolean | undefined>(undefined);
   readonly min = input<D | undefined>(undefined);
@@ -65,16 +65,24 @@ export class EntryDateTimePickerComponent<D> implements OnInit {
 
   constructor() {
     // Tracks `disabled` only, matching the old input setter - reacting to every input change would
-    // let an unrelated binding re-enable a control the consumer disabled itself.
+    // let an unrelated binding re-enable a control the consumer disabled itself. Runs once on init,
+    // which is what the ngOnInit call to setDisabled used to cover.
     effect(() => {
       this.disabled();
       this.setDisabled();
     });
+
+    // Replaces ngOnInit. The forms API has populated `formControl` by the time the host has
+    // rendered, and calendarControl drives a hidden input, so nothing is visibly late.
+    afterNextRender(() => {
+      this.calendarControl.setValue(this.formControl.value, { emitEvent: false });
+      this.mirrorDisabledState();
+      this.mirrorValueChanges();
+      this.applyCalendarSelection();
+    });
   }
 
-  ngOnInit(): void {
-    this.calendarControl.setValue(this.formControl.value, { emitEvent: false });
-    this.setDisabled();
+  private readonly mirrorDisabledState = (): void => {
     this.formControl.statusChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(status => {
@@ -86,15 +94,18 @@ export class EntryDateTimePickerComponent<D> implements OnInit {
         // calendarControl is a FormControl, not a signal, so its disabled state does not mark the view
         this.changeDetectorRef.markForCheck();
       });
+  };
 
+  private readonly mirrorValueChanges = (): void => {
     this.formControl.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(value => {
         this.calendarControl.setValue(value, { emitEvent: false });
         this.dateTimeChanged.emit(value);
-      }
-      );
+      });
+  };
 
+  private readonly applyCalendarSelection = (): void => {
     this.calendarControl.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(value => {
@@ -109,7 +120,7 @@ export class EntryDateTimePickerComponent<D> implements OnInit {
         this.formControl.markAsDirty();
         this.formControl.markAsTouched();
       });
-  }
+  };
 
   private readonly floorToDate = (value: D | undefined): D | undefined => {
     if (!value) {

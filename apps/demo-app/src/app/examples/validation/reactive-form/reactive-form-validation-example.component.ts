@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { IValidationProblemDetails, setServerSideValidationErrors } from '@enigmatry/entry-components/validation';
 import { ValidationService } from '../validation.service';
@@ -9,24 +9,21 @@ import { ValidationService } from '../validation.service';
   styleUrl: './reactive-form-validation-example.component.scss',
   standalone: false
 })
-export class ReactiveFormExampleComponent implements OnInit {
-  form: FormGroup<{
-    firstName: FormControl<string | null>;
-    lastName: FormControl<string | null>;
-  }>;
-
+export class ReactiveFormExampleComponent {
   readonly validationResult = signal<IValidationProblemDetails | undefined>(undefined);
   private readonly defaultLength = 3;
 
   private readonly formBuilder: FormBuilder = inject(FormBuilder);
   private readonly validationService: ValidationService = inject(ValidationService);
 
-  ngOnInit(): void {
-    this.form = this.formBuilder.group({
-      firstName: new FormControl('John', [Validators.required, Validators.minLength(this.defaultLength)]),
-      lastName: new FormControl('Doe', [Validators.required, Validators.minLength(this.defaultLength)])
-    });
-  }
+  // Nothing here depends on a lifecycle moment, so the form is built with the field.
+  form: FormGroup<{
+    firstName: FormControl<string | null>;
+    lastName: FormControl<string | null>;
+  }> = this.formBuilder.group({
+    firstName: new FormControl('John', [Validators.required, Validators.minLength(this.defaultLength)]),
+    lastName: new FormControl('Doe', [Validators.required, Validators.minLength(this.defaultLength)])
+  });
 
   submitForm() {
     this.validationService.submitWithValidationErrors()

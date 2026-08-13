@@ -1,4 +1,4 @@
-import { DestroyRef, Directive, ElementRef, inject, OnInit } from '@angular/core';
+import { afterNextRender, DestroyRef, Directive, ElementRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlContainer } from '@angular/forms';
 import { fromEvent } from 'rxjs';
@@ -13,19 +13,23 @@ import { NG_INVALID_CLASS } from '../constants';
   // eslint-disable-next-line @angular-eslint/directive-selector
   selector: 'form[formGroup],form[ngForm]'
 })
-export class ScrollToInvalidControlDirective implements OnInit {
+export class ScrollToInvalidControlDirective {
   private readonly form = inject(ControlContainer, { self: true });
   private readonly elementRef = inject(ElementRef<HTMLFormElement>);
   private readonly destroyRef = inject(DestroyRef);
 
-  ngOnInit(): void {
-    fromEvent(this.elementRef.nativeElement, 'submit')
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(_ => {
-        if (this.form.invalid) {
-          this.scrollToInvalidControl();
-        }
-      });
+  constructor() {
+    // Nothing can submit the form before it has rendered, so the listener is attached then rather
+    // than in ngOnInit.
+    afterNextRender(() => {
+      fromEvent(this.elementRef.nativeElement, 'submit')
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe(_ => {
+          if (this.form.invalid) {
+            this.scrollToInvalidControl();
+          }
+        });
+    });
   }
 
   private readonly scrollToInvalidControl = (): void => {

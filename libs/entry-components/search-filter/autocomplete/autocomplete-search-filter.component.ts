@@ -1,5 +1,5 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, DestroyRef, inject, input, signal } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, input, signal } from '@angular/core';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { catchError, debounceTime, filter, of, switchMap, tap } from 'rxjs';
@@ -12,7 +12,7 @@ import { AutocompleteSearchFilter } from './autocomplete-search-filter.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: false
 })
-export class AutocompleteSearchFilterComponent<T> implements AfterViewInit {
+export class AutocompleteSearchFilterComponent<T> {
   readonly searchFilter = input.required<AutocompleteSearchFilter<T>>();
 
   searchField = new FormControl('');
@@ -20,23 +20,24 @@ export class AutocompleteSearchFilterComponent<T> implements AfterViewInit {
   /** Options returned by the most recent search. Writing a signal marks the view for us. */
   readonly options = signal<SelectOption<T>[]>([]);
 
-  private readonly destroyRef = inject(DestroyRef);
-
-  ngAfterViewInit(): void {
-    this.searchField
-      .valueChanges
+  constructor() {
+    // Replaces ngAfterViewInit, which only existed so `minimumCharacters` and `debounceTime` could be
+    // read after the input was set. Going through the input signal defers that instead.
+    toObservable(this.searchFilter)
       .pipe(
-        tap(value => this.clearFilterIfLabelMismatch(value)),
-        filter(value => !!value && value.length >= this.searchFilter().minimumCharacters),
-        debounceTime(this.searchFilter().debounceTime),
-        // catchError sits on the inner search so a failing lookup cannot tear down valueChanges
-        switchMap(searchValue => this.searchFilter().search(searchValue as string)
-          .pipe(catchError((error: unknown) => {
-            // eslint-disable-next-line no-console
-            console.error('entry-autocomplete-search-filter: search failed', error);
-            return of<SelectOption<T>[]>([]);
-          }))),
-        takeUntilDestroyed(this.destroyRef)
+        switchMap(searchFilter => this.searchField.valueChanges.pipe(
+          tap(value => this.clearFilterIfLabelMismatch(value)),
+          filter(value => !!value && value.length >= searchFilter.minimumCharacters),
+          debounceTime(searchFilter.debounceTime),
+          // catchError sits on the inner search so a failing lookup cannot tear down valueChanges
+          switchMap(searchValue => searchFilter.search(searchValue as string)
+            .pipe(catchError((error: unknown) => {
+              // eslint-disable-next-line no-console
+              console.error('entry-autocomplete-search-filter: search failed', error);
+              return of<SelectOption<T>[]>([]);
+            })))
+        )),
+        takeUntilDestroyed()
       )
       .subscribe(options => this.options.set(options));
   }

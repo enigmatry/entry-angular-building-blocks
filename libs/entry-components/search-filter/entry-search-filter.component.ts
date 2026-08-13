@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, input, OnInit, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, computed, inject, input, output } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormGroup } from '@angular/forms';
 import { AutocompleteSearchFilter } from './autocomplete/autocomplete-search-filter.model';
@@ -21,7 +21,7 @@ import { TextSearchFilter } from './text/text-search-filter.model';
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
-export class EntrySearchFilterComponent implements OnInit {
+export class EntrySearchFilterComponent {
   /** Configuration of the search filters inputs that will be displayed in the search-filter component. */
   readonly searchFilters = input<SearchFilterBase<any>[]>([]);
   /**
@@ -29,19 +29,23 @@ export class EntrySearchFilterComponent implements OnInit {
    */
   readonly searchFilterChange = output<SearchFilterParams>();
 
-  // `toFormGroup` subscribes and writes back to each filter model, so it stays in ngOnInit rather
-  // than a computed - the form is built once from the initial filters, as it was before.
-  searchFilterForm!: UntypedFormGroup;
+  /**
+   * Replaces the previous ngOnInit assignment. Evaluated lazily on first template read, so the
+   * filters input is already set, and rebuilt if a different set of filters is bound - which the
+   * ngOnInit version ignored.
+   *
+   * @remarks `toFormGroup` is not pure: it writes each control back onto its filter model and
+   * subscribes for value formatting. That is tolerated here because the computation runs once per
+   * distinct `searchFilters` value, and the subscriptions are bounded by `takeUntilDestroyed`.
+   */
+  readonly searchFilterForm = computed<UntypedFormGroup>(() => this.toFormGroup(this.searchFilters()));
+
   controlType = ControlType;
   readonly config: EntrySearchFilterConfig = inject(ENTRY_SEARCH_FILTER_CONFIG);
   private destroyRef = inject(DestroyRef);
 
-  ngOnInit() {
-    this.searchFilterForm = this.toFormGroup(this.searchFilters());
-  }
-
   readonly onSubmit = (): void => {
-    const formValue = this.searchFilterForm.value;
+    const formValue = this.searchFilterForm().value;
     this.searchFilterChange.emit(formValue);
   };
 

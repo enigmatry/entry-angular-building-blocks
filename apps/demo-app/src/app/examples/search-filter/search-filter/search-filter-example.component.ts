@@ -22,7 +22,7 @@ import { UsersService } from './users.service';
 })
 export class SearchFilterExampleComponent {
   // Not `.required`: the constructor kicks off a fetch whose error handler can run before the view
-  // exists, and the child builds `searchFilterForm` in its own ngOnInit.
+  // exists.
   readonly entrySearchFilterComponent = viewChild(EntrySearchFilterComponent);
 
   readonly users = signal<User[]>([]);
@@ -49,7 +49,7 @@ export class SearchFilterExampleComponent {
         error: (error: IValidationProblemDetails) => {
           const searchFilter = this.entrySearchFilterComponent();
           if (searchFilter) {
-            setServerSideValidationErrors(error, searchFilter.searchFilterForm);
+            setServerSideValidationErrors(error, searchFilter.searchFilterForm());
           }
         }
       })
