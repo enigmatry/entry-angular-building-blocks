@@ -49,7 +49,7 @@ export class SearchFilterExampleComponent {
         error: (error: IValidationProblemDetails) => {
           const searchFilter = this.entrySearchFilterComponent();
           if (searchFilter) {
-            setServerSideValidationErrors(error, searchFilter.searchFilterForm());
+            setServerSideValidationErrors(error, searchFilter.searchFilterForm);
           }
         }
       })

@@ -41,7 +41,7 @@ export class EntryTimePickerComponent<D> {
       : this.timeAdapter.getHours(fallback);
 
     return {
-      hours: this.is12HourClock() ? this.to12HourClock(hours) : hours,
+      hours: this.is12HourClock() ? this.toTwelveHour(hours) : hours,
       minutes: date
         ? this.timeAdapter.getMinutes(date)
         : this.timeAdapter.getMinutes(fallback),
@@ -83,7 +83,12 @@ export class EntryTimePickerComponent<D> {
     }
   };
 
-  private readonly to12HourClock = (hours: number): number => {
+  /** Converts the current hours into 12 hour form. Kept public: it was part of the class surface. */
+  readonly to12HourClock = (): void => {
+    this.hours.update(hours => this.toTwelveHour(hours));
+  };
+
+  private readonly toTwelveHour = (hours: number): number => {
     if (hours > this.halfADay) {
       return hours - this.halfADay;
     }

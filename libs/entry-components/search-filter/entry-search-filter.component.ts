@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, computed, inject, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, input, output } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormGroup } from '@angular/forms';
 import { AutocompleteSearchFilter } from './autocomplete/autocomplete-search-filter.model';
@@ -29,23 +29,29 @@ export class EntrySearchFilterComponent {
    */
   readonly searchFilterChange = output<SearchFilterParams>();
 
+  private builtForm: UntypedFormGroup | undefined;
+
   /**
-   * Replaces the previous ngOnInit assignment. Evaluated lazily on first template read, so the
-   * filters input is already set, and rebuilt if a different set of filters is bound - which the
-   * ngOnInit version ignored.
+   * Replaces the previous ngOnInit assignment, built on first read so the filters input is already
+   * set.
    *
-   * @remarks `toFormGroup` is not pure: it writes each control back onto its filter model and
-   * subscribes for value formatting. That is tolerated here because the computation runs once per
-   * distinct `searchFilters` value, and the subscriptions are bounded by `takeUntilDestroyed`.
+   * @remarks Deliberately memoised rather than a `computed`. `toFormGroup` is not pure - it writes
+   * each control back onto its filter model and subscribes for value formatting - so re-running it
+   * would mint new controls, discard whatever the user had typed, and add a subscription per run.
+   * A caller binding `[searchFilters]="getFilters()"` hands over a new array identity on every
+   * change detection pass, which is exactly the case a `computed` would rebuild on.
    */
-  readonly searchFilterForm = computed<UntypedFormGroup>(() => this.toFormGroup(this.searchFilters()));
+  get searchFilterForm(): UntypedFormGroup {
+    this.builtForm ??= this.toFormGroup(this.searchFilters());
+    return this.builtForm;
+  }
 
   controlType = ControlType;
   readonly config: EntrySearchFilterConfig = inject(ENTRY_SEARCH_FILTER_CONFIG);
   private destroyRef = inject(DestroyRef);
 
   readonly onSubmit = (): void => {
-    const formValue = this.searchFilterForm().value;
+    const formValue = this.searchFilterForm.value;
     this.searchFilterChange.emit(formValue);
   };
 

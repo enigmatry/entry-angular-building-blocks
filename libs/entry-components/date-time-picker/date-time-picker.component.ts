@@ -55,8 +55,9 @@ export class EntryDateTimePickerComponent<D> {
 
   is12HourClock = this.dateTimeAdapter.is12HoursClock(this.format.display.dateInput);
 
-  // Not `viewChild.required`: the time picker lives inside the datepicker's actions template, which
-  // Material only instantiates while the calendar is open, so the query is empty until then.
+  // The query does resolve - the actions content is declared in this view, so it is populated by the
+  // time the calendar can be interacted with (verified in the browser: a picked time round-trips).
+  // Kept non-required purely as a guard, since `calendarControl` is only reachable via the calendar.
   readonly timePicker = viewChild(EntryTimePickerComponent<D>);
 
   readonly minDate = computed(() => this.floorToDate(this.min()));

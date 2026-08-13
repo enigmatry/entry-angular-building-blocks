@@ -17,8 +17,14 @@ export class AutocompleteSearchFilterComponent<T> {
 
   searchField = new FormControl('');
 
-  /** Options returned by the most recent search. Writing a signal marks the view for us. */
-  readonly options = signal<SelectOption<T>[]>([]);
+  /**
+   * Options returned by the most recent search. Writing a signal marks the view for us.
+   *
+   * @remarks `equal: () => false` because a consumer's `search()` may resolve to a cached array; with
+   * identity equality that emission would not notify, and nothing else dirties this OnPush view - the
+   * result arrives after `debounceTime`, detached from any template event.
+   */
+  readonly options = signal<SelectOption<T>[]>([], { equal: () => false });
 
   constructor() {
     // Replaces ngAfterViewInit, which only existed so `minimumCharacters` and `debounceTime` could be

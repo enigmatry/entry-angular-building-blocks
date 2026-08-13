@@ -42,14 +42,27 @@ export class EntryDialogComponent {
     /** Provide custom buttons template */
     readonly buttonsTemplate = input<TemplateRef<any> | null | undefined>(undefined);
 
-    readonly confirm = input<() => Observable<unknown>>(() => of(true));
-    readonly cancel = input<() => void>(() => this.close(false));
+    /**
+     * Callback invoked when the dialog is confirmed.
+     *
+     * @remarks Bound as `[confirm]`, but named `confirmAction` on the class. `confirm` used to be a
+     * directly callable member; as a signal input `this.confirm()` would return the callback rather
+     * than invoke it, which type-checks fine and fails silently for anyone extending this component.
+     * The alias keeps the template binding while turning that into a compile error - which is why
+     * no-input-rename is waived here rather than the alias dropped.
+     */
+    // eslint-disable-next-line @angular-eslint/no-input-rename
+    readonly confirmAction = input<() => Observable<unknown>>(() => of(true), { alias: 'confirm' });
 
-    /** Invokes the `cancel` callback. Keeps `cancel()()` out of the template. */
-    onCancel = () => this.cancel()();
+    /** Callback invoked when the dialog is cancelled. Bound as `[cancel]` - see `confirmAction`. */
+    // eslint-disable-next-line @angular-eslint/no-input-rename
+    readonly cancelAction = input<() => void>(() => this.close(false), { alias: 'cancel' });
+
+    /** Invokes the `cancel` callback. Keeps the double call out of the template. */
+    onCancel = () => this.cancelAction()();
 
     onSubmit = () =>
-        this.confirm()().subscribe({
+        this.confirmAction()().subscribe({
             next: closeDialog => {
                 if (closeDialog) {
                     this.close(closeDialog);

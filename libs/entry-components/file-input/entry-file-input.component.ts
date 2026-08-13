@@ -100,13 +100,13 @@ export class EntryFileInputComponent implements ControlValueAccessor, Validator 
    * drives it through `setDisabledState` too - the last writer wins and a new `disabled` binding
    * re-asserts itself, which is how the previous backing field behaved.
    */
-  protected readonly isDisabled = linkedSignal(() => this.disabled());
+  readonly isDisabled = linkedSignal(() => this.disabled());
 
-  private readonly fileButton = viewChild.required('fileButton', { read: ElementRef<HTMLElement> });
+  readonly fileButton = viewChild.required('fileButton', { read: ElementRef<HTMLElement> });
 
-  private readonly fileInput = viewChild.required<ElementRef<HTMLInputElement>>('fileInput');
+  readonly fileInput = viewChild.required<ElementRef<HTMLInputElement>>('fileInput');
 
-  protected readonly fileNames = computed(() => {
+  readonly fileNames = computed(() => {
     const value = this.value();
     if (value instanceof File) {
       return value.name;

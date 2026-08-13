@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { of } from 'rxjs';
 
@@ -8,12 +8,12 @@ import { of } from 'rxjs';
     standalone: false
 })
 export class RadioExampleComponent {
-  readonly typeOptions = input([
+  readonly typeOptions = [
     { value: 0, displayName: `Food` },
     { value: 1, displayName: `Drink` },
     { value: 2, displayName: `Book` },
     { value: 3, displayName: `Car` }
-  ]);
+  ];
 
   fields: FormlyFieldConfig[] = [
     {
@@ -24,7 +24,7 @@ export class RadioExampleComponent {
         label: `Type`,
         placeholder: `Type`,
         description: ``,
-        options: of(this.typeOptions()),
+        options: of(this.typeOptions),
         valueProp: 'value',
         labelProp: 'displayName'
       }
