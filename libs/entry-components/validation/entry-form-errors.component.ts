@@ -1,6 +1,8 @@
-import { ChangeDetectorRef, Component, inject, Input, OnChanges, OnDestroy } from '@angular/core';
+import { Component, input, signal } from '@angular/core';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { UntypedFormGroup } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { startWith, switchMap } from 'rxjs';
+import { FORM_ERROR_KEY } from './entry-validation';
 
 /**
  * A component used to display generic (form level) server side validation messages.
@@ -15,9 +17,9 @@ import { Subscription } from 'rxjs';
 @Component({
     selector: 'entry-form-errors',
     template: `
-    @if (form.errors) {
+    @if (generalErrors().length) {
       <div>
-        @for (error of form.errors['general']; track error) {
+        @for (error of generalErrors(); track error) {
           <mat-error>
             <span class="mat-body-2">{{error}}</span>
           </mat-error>
@@ -27,27 +29,30 @@ import { Subscription } from 'rxjs';
   `,
     standalone: false
 })
-export class EntryFormErrorsComponent implements OnChanges, OnDestroy {
+export class EntryFormErrorsComponent {
   /** A form group for which the validation errors are being displayed. */
-  @Input() form: UntypedFormGroup;
+  readonly form = input.required<UntypedFormGroup>();
 
-  private readonly changeDetectorRef = inject(ChangeDetectorRef);
-  private statusSubscription: Subscription | undefined;
+  /**
+   * `setServerSideValidationErrors` mutates the bound form in place, so neither the input
+   * reference nor the status value is a usable change signal — the status frequently repeats
+   * ('INVALID' -> 'INVALID') while the error payload underneath changes. `equal: () => false`
+   * makes every emission notify, so anything comparing values cannot go stale after the first
+   * message.
+   */
+  protected readonly generalErrors = signal<string[]>([], { equal: () => false });
 
-  ngOnChanges(): void {
-    this.statusSubscription?.unsubscribe();
-
-    // `setServerSideValidationErrors` mutates the form in place, so the bound reference never
-    // changes and no event in this template ever marks this component dirty. Angular 22 made
-    // OnPush the default, so without this nothing re-renders the messages once they arrive.
-    // Marking on every status emission is deliberate: the status frequently repeats the same
-    // value ('INVALID' -> 'INVALID') while the error payload underneath changes, so anything
-    // that compares values would go stale after the first message.
-    this.statusSubscription = this.form?.statusChanges
-      .subscribe(() => this.changeDetectorRef.markForCheck());
-  }
-
-  ngOnDestroy(): void {
-    this.statusSubscription?.unsubscribe();
+  constructor() {
+    toObservable(this.form)
+      .pipe(
+        // re-subscribe when a different form is bound; seed from the current status so errors
+        // already present at bind time render without waiting for the next emission
+        switchMap(form => form.statusChanges.pipe(startWith(form.status))),
+        takeUntilDestroyed()
+      )
+      .subscribe(() => {
+        const errors = this.form().errors?.[FORM_ERROR_KEY] as string[] | undefined;
+        this.generalErrors.set(errors ?? []);
+      });
   }
 }

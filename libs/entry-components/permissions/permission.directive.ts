@@ -1,34 +1,38 @@
-import { Directive, Input, inject, ElementRef, Renderer2 } from '@angular/core';
+import { Directive, computed, inject, input } from '@angular/core';
 import { PermissionType } from './permission-type';
 import { EntryPermissionService } from './permission.service';
 
 @Directive({
     selector: '[entryPermissionsOnly],[entryPermissionsExcept]',
-    standalone: false
+    standalone: false,
+    host: {
+      '[style.display]': 'isHidden() ? "none" : null'
+    }
 })
 export class EntryPermissionDirective<T extends PermissionType> {
-  private elementRef = inject(ElementRef);
-  private renderer = inject(Renderer2);
-  private permissionService = inject(EntryPermissionService<T>);
+  private readonly permissionService = inject(EntryPermissionService<T>);
 
-  @Input('entryPermissionsOnly') set only(permissions: T[]) {
-    this.toggleVisibility(this.permissionService.hasPermissions(permissions));
-  }
+  /** Hides the host element unless the user holds these permissions. */
+  readonly only = input<T[] | undefined>(undefined, { alias: 'entryPermissionsOnly' });
 
-  @Input('entryPermissionsExcept') set except(permissions: T[]) {
-    this.toggleVisibility(!this.permissionService.hasPermissions(permissions));
-  }
+  /** Hides the host element when the user holds these permissions. */
+  readonly except = input<T[] | undefined>(undefined, { alias: 'entryPermissionsExcept' });
 
-  private readonly toggleVisibility = (show: boolean): void => {
-    const element = this.elementRef.nativeElement;
-
-    if(!show) {
-      this.renderer.setStyle(element, 'display', 'none');
-      return;
+  /**
+   * `only` wins when both aliases are bound, which the selector allows but no caller does.
+   *
+   * @remarks `hasPermissions` is not reactive, so this recomputes on input changes only —
+   * the same cadence the previous input setters ran at.
+   */
+  protected readonly isHidden = computed(() => {
+    const only = this.only();
+    if (only !== undefined) {
+      return !this.permissionService.hasPermissions(only);
     }
-
-    if (element.style?.display) {
-      this.renderer.removeStyle(element, 'display');
+    const except = this.except();
+    if (except !== undefined) {
+      return this.permissionService.hasPermissions(except);
     }
-  };
+    return false;
+  });
 }

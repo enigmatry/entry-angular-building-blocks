@@ -1,6 +1,7 @@
-import { Directive, ElementRef, inject, OnDestroy, OnInit } from '@angular/core';
+import { DestroyRef, Directive, ElementRef, inject, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlContainer } from '@angular/forms';
-import { Subject, fromEvent, takeUntil } from 'rxjs';
+import { fromEvent } from 'rxjs';
 import { NG_INVALID_CLASS } from '../constants';
 
 /**
@@ -12,14 +13,14 @@ import { NG_INVALID_CLASS } from '../constants';
   // eslint-disable-next-line @angular-eslint/directive-selector
   selector: 'form[formGroup],form[ngForm]'
 })
-export class ScrollToInvalidControlDirective implements OnInit, OnDestroy {
-  private destroy$ = new Subject<void>();
+export class ScrollToInvalidControlDirective implements OnInit {
   private readonly form = inject(ControlContainer, { self: true });
   private readonly elementRef = inject(ElementRef<HTMLFormElement>);
+  private readonly destroyRef = inject(DestroyRef);
 
   ngOnInit(): void {
     fromEvent(this.elementRef.nativeElement, 'submit')
-      .pipe(takeUntil(this.destroy$))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(_ => {
         if (this.form.invalid) {
           this.scrollToInvalidControl();
@@ -27,12 +28,7 @@ export class ScrollToInvalidControlDirective implements OnInit, OnDestroy {
       });
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
-  private scrollToInvalidControl() {
+  private readonly scrollToInvalidControl = (): void => {
     const firstInvalidControl: HTMLElement | null =
       this.elementRef.nativeElement.querySelector(NG_INVALID_CLASS);
 
@@ -42,5 +38,5 @@ export class ScrollToInvalidControlDirective implements OnInit, OnDestroy {
         block: 'center' // vertical alignment
       });
     }
-  }
+  };
 }

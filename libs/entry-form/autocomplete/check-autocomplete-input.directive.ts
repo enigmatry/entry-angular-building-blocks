@@ -1,7 +1,7 @@
-import { AfterViewInit, Directive, ElementRef, inject, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
+import { AfterViewInit, DestroyRef, Directive, ElementRef, inject, input, OnChanges, SimpleChanges } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AbstractControl, NgControl } from '@angular/forms';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
-import { Subject, takeUntil } from 'rxjs';
 import { findOptionByLabel, findOptionByValue } from './select-configuration.interface';
 import { SelectOption } from './select-option.model';
 
@@ -9,27 +9,27 @@ import { SelectOption } from './select-option.model';
     selector: '[entryCheckAutocompleteInput]',
     standalone: false
 })
-export class CheckAutocompleteInputDirective implements OnChanges, AfterViewInit, OnDestroy {
-  @Input() options: SelectOption[] = [];
-  private destroy$ = new Subject<void>();
+export class CheckAutocompleteInputDirective implements OnChanges, AfterViewInit {
+  readonly options = input<SelectOption[]>([]);
 
   private readonly matAutocomplete = inject(MatAutocompleteTrigger, { host: true, self: true });
   private readonly ngControl = inject(NgControl);
   private readonly elemRef = inject(ElementRef);
+  private readonly destroyRef = inject(DestroyRef);
 
   get control(): AbstractControl | null {
     return this.ngControl.control;
   }
 
   ngOnChanges(_changes: SimpleChanges): void {
-    if (this.options?.length) {
+    if (this.options()?.length) {
       this.applySelectedValue(this.control?.value);
     }
   }
 
   ngAfterViewInit(): void {
     this.matAutocomplete.panelClosingActions
-      .pipe(takeUntil(this.destroy$))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(event => {
         if (!event?.source) {
           this.checkControlValue();
@@ -37,21 +37,16 @@ export class CheckAutocompleteInputDirective implements OnChanges, AfterViewInit
       });
   }
 
-  ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
   private checkControlValue(): void {
     const controlValue = this.control?.value;
     if (!controlValue) {
       return;
     }
-    if (findOptionByValue(this.options, controlValue)) {
+    if (findOptionByValue(this.options(), controlValue)) {
       return;
     }
 
-    const matchedOption = findOptionByLabel(this.options, controlValue);
+    const matchedOption = findOptionByLabel(this.options(), controlValue);
 
     if (matchedOption) {
       this.control.patchValue(matchedOption.value);
@@ -62,6 +57,6 @@ export class CheckAutocompleteInputDirective implements OnChanges, AfterViewInit
 
   private applySelectedValue = (value: any) => {
     const inputElement = this.elemRef.nativeElement as HTMLInputElement;
-    inputElement.value = findOptionByValue(this.options, value)?.label ?? '';
+    inputElement.value = findOptionByValue(this.options(), value)?.label ?? '';
   };
 }

@@ -1,10 +1,10 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding, Input, OnDestroy, OnInit,
-   Output, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit,
+   computed, effect, inject, input, output, viewChild } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl } from '@angular/forms';
 import { MAT_DATE_FORMATS, DateAdapter, MatDateFormats } from '@angular/material/core';
 import { ENTRY_MAT_DATE_TIME_FORMATS, EntryDateTimeAdapter, NgControlAccessorDirective,
   NoopControlValueAccessorDirective } from '@enigmatry/entry-components/common';
-import { Subject, takeUntil } from 'rxjs';
 import { ENTRY_DATE_TIME_PICKER_CONFIG, EntryDateTimePickerConfig } from './date-time-picker-config.model';
 import { EntryTimePickerComponent } from './time-picker.component';
 
@@ -17,36 +17,32 @@ import { EntryTimePickerComponent } from './time-picker.component';
     ],
     hostDirectives: [NoopControlValueAccessorDirective, NgControlAccessorDirective],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: false,
+    host: {
+        class: 'entry-date-time-picker'
+    }
 })
-export class EntryDateTimePickerComponent<D> implements OnInit, OnDestroy {
-  @HostBinding('class') class = 'entry-date-time-picker';
+export class EntryDateTimePickerComponent<D> implements OnInit {
+  readonly label = input('');
+  readonly showSeconds = input<boolean | undefined>(undefined);
+  readonly min = input<D | undefined>(undefined);
+  readonly max = input<D | undefined>(undefined);
+  readonly placeholder = input<string | undefined>(undefined);
+  readonly hint = input<string | undefined>(undefined);
+  readonly defaultTime = input<D | undefined>(undefined);
+  readonly disabled = input(false);
 
-  @Input() label: string;
-  @Input() showSeconds: boolean | undefined;
-  @Input() min: D;
-  @Input() max: D;
-  @Input() placeholder: string | undefined;
-  @Input() hint: string | undefined;
-  @Input() defaultTime: D | undefined;
-  @Output() dateTimeChanged = new Subject<D>();
+  /**
+   * @remarks Was a plain `Subject<D>` exposed through `@Output()`. It is an `OutputEmitterRef` now,
+   * so callers that subscribed to or pushed into it directly need to switch to the output API.
+   */
+  readonly dateTimeChanged = output<D>();
 
-  _disabled: boolean;
-
-  @Input()
-  get disabled(): boolean {
-    return this._disabled;
-  }
-
-  set disabled(value: boolean) {
-    this._disabled = value;
-    this.setDisabled();
-  }
-
-  private ngControlAccessor = inject(NgControlAccessorDirective);
-  private dateTimeAdapter: EntryDateTimeAdapter<D, unknown> = inject(DateAdapter) as EntryDateTimeAdapter<D, unknown>;
-  private format: MatDateFormats = inject(ENTRY_MAT_DATE_TIME_FORMATS);
-  private changeDetectorRef = inject(ChangeDetectorRef);
+  private readonly ngControlAccessor = inject(NgControlAccessorDirective);
+  private readonly dateTimeAdapter: EntryDateTimeAdapter<D, unknown> = inject(DateAdapter) as EntryDateTimeAdapter<D, unknown>;
+  private readonly format: MatDateFormats = inject(ENTRY_MAT_DATE_TIME_FORMATS);
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
+  private readonly destroyRef = inject(DestroyRef);
   public config: EntryDateTimePickerConfig = inject(ENTRY_DATE_TIME_PICKER_CONFIG);
 
   // Control bound to component using FormsApi (ngModel, formControl, formControlName)
@@ -59,57 +55,54 @@ export class EntryDateTimePickerComponent<D> implements OnInit, OnDestroy {
 
   is12HourClock = this.dateTimeAdapter.is12HoursClock(this.format.display.dateInput);
 
-  @ViewChild(EntryTimePickerComponent, { static: true }) timePicker: EntryTimePickerComponent<D>;
+  // Not `viewChild.required`: the time picker lives inside the datepicker's actions template, which
+  // Material only instantiates while the calendar is open, so the query is empty until then.
+  readonly timePicker = viewChild(EntryTimePickerComponent<D>);
 
-  private $destroy = new Subject<void>();
+  readonly minDate = computed(() => this.floorToDate(this.min()));
 
-  get minDate() {
-    if (!this.min) {
-      return undefined;
-    }
-    const result = this.dateTimeAdapter.clone(this.min);
-    this.dateTimeAdapter.setTime(result, 0, 0, 0);
-    return result;
-  }
+  readonly maxDate = computed(() => this.floorToDate(this.max()));
 
-  get maxDate() {
-    if (!this.max) {
-      return undefined;
-    }
-    const result = this.dateTimeAdapter.clone(this.max);
-    this.dateTimeAdapter.setTime(result, 0, 0, 0);
-    return result;
+  constructor() {
+    // Tracks `disabled` only, matching the old input setter - reacting to every input change would
+    // let an unrelated binding re-enable a control the consumer disabled itself.
+    effect(() => {
+      this.disabled();
+      this.setDisabled();
+    });
   }
 
   ngOnInit(): void {
     this.calendarControl.setValue(this.formControl.value, { emitEvent: false });
     this.setDisabled();
     this.formControl.statusChanges
-      .pipe(takeUntil(this.$destroy))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(status => {
         if (status === 'DISABLED') {
           this.calendarControl.disable({ emitEvent: false });
         } else {
           this.calendarControl.enable({ emitEvent: false });
         }
+        // calendarControl is a FormControl, not a signal, so its disabled state does not mark the view
         this.changeDetectorRef.markForCheck();
       });
 
     this.formControl.valueChanges
-      .pipe(takeUntil(this.$destroy))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(value => {
         this.calendarControl.setValue(value, { emitEvent: false });
-        this.dateTimeChanged.next(value);
+        this.dateTimeChanged.emit(value);
       }
       );
 
     this.calendarControl.valueChanges
-      .pipe(takeUntil(this.$destroy))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(value => {
-        this.timePicker.to24HourClock();
+        const timePicker = this.timePicker();
+        timePicker?.to24HourClock();
         const dateTime = value ? this.dateTimeAdapter.clone(value) : value;
-        if (dateTime) {
-          this.dateTimeAdapter.setTime(dateTime, this.timePicker.hours, this.timePicker.minutes, this.timePicker.seconds);
+        if (dateTime && timePicker) {
+          this.dateTimeAdapter.setTime(dateTime, timePicker.hours(), timePicker.minutes(), timePicker.seconds());
         }
 
         this.formControl.setValue(dateTime as D);
@@ -118,18 +111,22 @@ export class EntryDateTimePickerComponent<D> implements OnInit, OnDestroy {
       });
   }
 
-  ngOnDestroy(): void {
-    this.$destroy.next();
-    this.$destroy.complete();
-  }
+  private readonly floorToDate = (value: D | undefined): D | undefined => {
+    if (!value) {
+      return undefined;
+    }
+    const result = this.dateTimeAdapter.clone(value);
+    this.dateTimeAdapter.setTime(result, 0, 0, 0);
+    return result;
+  };
 
-  private setDisabled() {
-    if (this._disabled && this.formControl?.enabled) {
+  private readonly setDisabled = (): void => {
+    if (this.disabled() && this.formControl?.enabled) {
       this.formControl?.disable();
       this.calendarControl?.disable({ emitEvent: false });
     } else if (this.formControl?.disabled) {
       this.formControl?.enable();
       this.calendarControl?.enable({ emitEvent: false });
     }
-  }
+  };
 }

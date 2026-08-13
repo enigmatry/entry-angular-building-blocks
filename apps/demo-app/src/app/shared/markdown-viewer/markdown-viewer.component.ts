@@ -1,4 +1,6 @@
-import { ChangeDetectionStrategy, Component, ElementRef, inject, Input, NgZone, OnInit, Renderer2, SecurityContext, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, ElementRef, inject, input, NgZone, OnInit,
+  Renderer2, SecurityContext, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import hljs from 'highlight.js';
 import MarkdownIt from 'markdown-it';
@@ -13,33 +15,36 @@ import { FileLoadService } from '../services/file-load.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MarkdownViewerComponent implements OnInit {
-  @Input() fileUrl: string | undefined;
-  @Input() markdownContent: string | undefined;
+  readonly fileUrl = input<string | undefined>(undefined);
+  readonly markdownContent = input<string | undefined>(undefined);
 
   readonly markdownContentHtml = signal<SafeHtml>('');
 
   private readonly fileLoad: FileLoadService = inject(FileLoadService);
-  private domSanitizer: DomSanitizer = inject(DomSanitizer);
-  private elementRef: ElementRef = inject(ElementRef);
-  private renderer: Renderer2 = inject(Renderer2);
-  private ngZone: NgZone = inject(NgZone);
+  private readonly domSanitizer: DomSanitizer = inject(DomSanitizer);
+  private readonly elementRef: ElementRef = inject(ElementRef);
+  private readonly renderer: Renderer2 = inject(Renderer2);
+  private readonly ngZone: NgZone = inject(NgZone);
+  private readonly destroyRef = inject(DestroyRef);
 
   ngOnInit(): void {
-    if (this.fileUrl) {
-      this.loadFileContent();
+    const fileUrl = this.fileUrl();
+    if (fileUrl) {
+      this.loadFileContent(fileUrl);
     }
-    if (this.markdownContent) {
-      this.markdownContentHtml.set(this.convertMarkdownToHtml(this.markdownContent));
+    const markdownContent = this.markdownContent();
+    if (markdownContent) {
+      this.markdownContentHtml.set(this.convertMarkdownToHtml(markdownContent));
     }
     this.handleAnchorClicks();
   }
 
-  private loadFileContent() {
+  private loadFileContent(fileUrl: string) {
     this.fileLoad
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      .loadDocumentationFile(this.fileUrl!)
+      .loadDocumentationFile(fileUrl)
       .pipe(
-        map(response => this.convertMarkdownToHtml(response))
+        map(response => this.convertMarkdownToHtml(response)),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe({
         next: response => this.markdownContentHtml.set(response),

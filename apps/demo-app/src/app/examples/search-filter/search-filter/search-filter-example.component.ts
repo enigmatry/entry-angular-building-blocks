@@ -1,4 +1,4 @@
-import { Component, inject, LOCALE_ID, signal, ViewChild } from '@angular/core';
+import { Component, inject, LOCALE_ID, signal, viewChild } from '@angular/core';
 import { IValidationProblemDetails, setServerSideValidationErrors } from '@enigmatry/entry-components';
 import {
   AutocompleteSearchFilter,
@@ -21,7 +21,9 @@ import { UsersService } from './users.service';
     standalone: false
 })
 export class SearchFilterExampleComponent {
-  @ViewChild(EntrySearchFilterComponent, { static: true }) entrySearchFilterComponent: EntrySearchFilterComponent;
+  // Not `.required`: the constructor kicks off a fetch whose error handler can run before the view
+  // exists, and the child builds `searchFilterForm` in its own ngOnInit.
+  readonly entrySearchFilterComponent = viewChild(EntrySearchFilterComponent);
 
   readonly users = signal<User[]>([]);
   displayedColumns: string[] = ['name', 'email', 'dateOfBirth', 'occupation', 'country', 'score'];
@@ -45,7 +47,10 @@ export class SearchFilterExampleComponent {
           this.users.set(users);
         },
         error: (error: IValidationProblemDetails) => {
-          setServerSideValidationErrors(error, this.entrySearchFilterComponent.searchFilterForm);
+          const searchFilter = this.entrySearchFilterComponent();
+          if (searchFilter) {
+            setServerSideValidationErrors(error, searchFilter.searchFilterForm);
+          }
         }
       })
     );

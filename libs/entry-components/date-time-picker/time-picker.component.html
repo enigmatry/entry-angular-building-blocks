@@ -1,6 +1,6 @@
 <mat-form-field appearance="fill">
   <mat-select [(value)]="hours" [hideSingleSelectionIndicator]="true" [panelWidth]="null">
-    @for (hour of possibleHours; track hour) {
+    @for (hour of possibleHours(); track hour) {
       <mat-option [value]="hour">{{hour | number:'2.0'}}</mat-option>
     }
   </mat-select>
@@ -13,7 +13,7 @@
     }
   </mat-select>
 </mat-form-field>
-@if (showSeconds) {
+@if (showSeconds()) {
   <span class="time-separator">&#58;</span>
   <mat-form-field appearance="fill">
     <mat-select [(value)]="seconds" [hideSingleSelectionIndicator]="true" [panelWidth]="null">
@@ -23,7 +23,7 @@
     </mat-select>
   </mat-form-field>
 }
-@if (is12HourClock) {
+@if (is12HourClock()) {
   <mat-form-field appearance="fill">
     <mat-select [(value)]="meridiem" [hideSingleSelectionIndicator]="true" [panelWidth]="null">
       <mat-option value="am">AM</mat-option>

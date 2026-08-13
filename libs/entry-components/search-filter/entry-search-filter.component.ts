@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, input, OnInit, output } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormGroup } from '@angular/forms';
 import { AutocompleteSearchFilter } from './autocomplete/autocomplete-search-filter.model';
@@ -23,25 +23,27 @@ import { TextSearchFilter } from './text/text-search-filter.model';
 })
 export class EntrySearchFilterComponent implements OnInit {
   /** Configuration of the search filters inputs that will be displayed in the search-filter component. */
-  @Input() searchFilters: SearchFilterBase<any>[] = [];
+  readonly searchFilters = input<SearchFilterBase<any>[]>([]);
   /**
    * Emits the change in SearchFilterParams so the containing component can apply them and retrieve the filtered results.
    */
-  @Output() searchFilterChange = new EventEmitter<SearchFilterParams>();
+  readonly searchFilterChange = output<SearchFilterParams>();
 
+  // `toFormGroup` subscribes and writes back to each filter model, so it stays in ngOnInit rather
+  // than a computed - the form is built once from the initial filters, as it was before.
   searchFilterForm!: UntypedFormGroup;
   controlType = ControlType;
   readonly config: EntrySearchFilterConfig = inject(ENTRY_SEARCH_FILTER_CONFIG);
   private destroyRef = inject(DestroyRef);
 
   ngOnInit() {
-    this.searchFilterForm = this.toFormGroup(this.searchFilters);
+    this.searchFilterForm = this.toFormGroup(this.searchFilters());
   }
 
-  onSubmit() {
+  readonly onSubmit = (): void => {
     const formValue = this.searchFilterForm.value;
     this.searchFilterChange.emit(formValue);
-  }
+  };
 
   toFormGroup = (searchFilters: SearchFilterBase<any>[]) => {
     const group: any = {};

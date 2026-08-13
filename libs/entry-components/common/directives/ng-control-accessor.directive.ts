@@ -1,11 +1,11 @@
-import { Directive, OnDestroy, OnInit, inject } from '@angular/core';
+import { DestroyRef, Directive, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControlDirective, FormControlName, NgControl, NgModel, UntypedFormControl } from '@angular/forms';
-import { Subject, takeUntil } from 'rxjs';
 
 @Directive({
     standalone: true
 })
-export class NgControlAccessorDirective implements OnDestroy, OnInit {
+export class NgControlAccessorDirective implements OnInit {
     control: UntypedFormControl;
 
     ngControl = inject(NgControl, {
@@ -13,7 +13,7 @@ export class NgControlAccessorDirective implements OnDestroy, OnInit {
         self: true
     });
 
-    private destroy$ = new Subject<void>();
+    private readonly destroyRef = inject(DestroyRef);
 
     ngOnInit() {
         if (this.ngControl instanceof FormControlDirective ||
@@ -27,17 +27,12 @@ export class NgControlAccessorDirective implements OnDestroy, OnInit {
         if (this.ngControl instanceof NgModel) {
             const ngModel = this.ngControl as NgModel;
             ngModel.control.valueChanges
-                .pipe(takeUntil(this.destroy$))
+                .pipe(takeUntilDestroyed(this.destroyRef))
                 .subscribe(newValue => {
                     if (ngModel.model !== newValue || ngModel.viewModel !== newValue) {
                         ngModel.viewToModelUpdate(newValue);
                     }
                 });
         }
-    }
-
-    ngOnDestroy(): void {
-        this.destroy$.next();
-        this.destroy$.complete();
     }
 }

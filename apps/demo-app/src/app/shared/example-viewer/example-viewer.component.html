@@ -1,28 +1,28 @@
 <mat-card appearance="outlined" class="example-card">
     <mat-toolbar-row>
-        <span>{{title}}</span>
+        <span>{{title()}}</span>
         <button mat-button (click)="toggleCodeView()" color="primary">
             {{viewCode() ? 'Hide' : 'View'}} Code
         </button>
     </mat-toolbar-row>
     @if (viewCode()) {
         <mat-tab-group animationDuration="0ms" mat-stretch-tabs="false">
-            @if (showHtml) {
+            @if (showHtml()) {
                 <mat-tab label="HTML">
                     <app-code-view [codeContent]="htmlFile() ?? ''" codeType="html"></app-code-view>
                 </mat-tab>
             }
-            @if (showTs) {
+            @if (showTs()) {
                 <mat-tab label="TS">
                     <app-code-view [codeContent]="typescriptFile() ?? ''" codeType="ts"></app-code-view>
                 </mat-tab>
             }
-            @if (showScss) {
+            @if (showScss()) {
                 <mat-tab label="SCSS">
                     <app-code-view [codeContent]="stylesFile() ?? ''" codeType="scss"></app-code-view>
                 </mat-tab>
             }
-            @if (showDocs) {
+            @if (showDocs()) {
                 <mat-tab label="DOCS">
                     <app-markdown-viewer [markdownContent]="docsFile() ?? ''"></app-markdown-viewer>
                 </mat-tab>
