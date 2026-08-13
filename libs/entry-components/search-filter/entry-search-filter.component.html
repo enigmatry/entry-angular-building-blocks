@@ -1,6 +1,6 @@
 <form (ngSubmit)="onSubmit()" [formGroup]="searchFilterForm" class="search-form-container entry-form">
     <entry-form-errors [form]="searchFilterForm"></entry-form-errors>
-    @for (searchFilter of searchFilters(); track searchFilter.key) {
+    @for (searchFilter of renderedSearchFilters; track searchFilter.key) {
         <div class="form-field">
             @switch (searchFilter.controlType) {
                 @case (controlType.text) {

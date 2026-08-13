@@ -68,10 +68,7 @@ export class EntryDateTimePickerComponent<D> {
     // Tracks `disabled` only, matching the old input setter - reacting to every input change would
     // let an unrelated binding re-enable a control the consumer disabled itself. Runs once on init,
     // which is what the ngOnInit call to setDisabled used to cover.
-    effect(() => {
-      this.disabled();
-      this.setDisabled();
-    });
+    effect(() => this.setDisabled(this.disabled()));
 
     // Replaces ngOnInit. The forms API has populated `formControl` by the time the host has
     // rendered, and calendarControl drives a hidden input, so nothing is visibly late.
@@ -132,8 +129,8 @@ export class EntryDateTimePickerComponent<D> {
     return result;
   };
 
-  private readonly setDisabled = (): void => {
-    if (this.disabled() && this.formControl?.enabled) {
+  private readonly setDisabled = (disabled: boolean): void => {
+    if (disabled && this.formControl?.enabled) {
       this.formControl?.disable();
       this.calendarControl?.disable({ emitEvent: false });
     } else if (this.formControl?.disabled) {

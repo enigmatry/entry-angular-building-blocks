@@ -49,7 +49,7 @@ export class MarkdownViewerComponent {
     afterNextRender(() => this.handleAnchorClicks());
   }
 
-  private convertMarkdownToHtml(markdown: string): SafeHtml {
+  private readonly convertMarkdownToHtml = (markdown: string): SafeHtml => {
     const converter = MarkdownIt('default', {
       html: true,
       breaks: true,
@@ -62,9 +62,9 @@ export class MarkdownViewerComponent {
     const htmlWithHeadingIds = this.addIdsToHeadings(sanitizedHtml);
 
     return this.domSanitizer.bypassSecurityTrustHtml(htmlWithHeadingIds);
-  }
+  };
 
-  private handleAnchorClicks() {
+  private readonly handleAnchorClicks = (): void => {
     this.ngZone.runOutsideAngular(() => {
       this.renderer.listen(this.elementRef.nativeElement, 'click', (event: MouseEvent) => {
         const anchor: HTMLAnchorElement | null = (event.target as HTMLElement).closest('a[href]');
@@ -78,9 +78,9 @@ export class MarkdownViewerComponent {
       }
       );
     });
-  }
+  };
 
-  private scrollToAnchor(scope: HTMLElement, anchor: string): boolean {
+  private readonly scrollToAnchor = (scope: HTMLElement, anchor: string): boolean => {
     if (scope && anchor) {
       const headingId = this.getHeadingId(anchor);
       const headingToJumpTo = scope.querySelector(`[id="${headingId}"]`);
@@ -91,7 +91,7 @@ export class MarkdownViewerComponent {
       }
     }
     return false;
-  }
+  };
 
   isHeadingLink = (anchor: HTMLAnchorElement): boolean => {
     const href = anchor.getAttribute('href');

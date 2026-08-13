@@ -102,6 +102,94 @@ workspace-absolute imports, replace it with explicit `paths` entries — note th
 resolved relative to the `tsconfig` file that declares them once `baseUrl` is gone, so paths in a
 nested `tsconfig.lib.json` need the `../..` prefix.
 
+### 5. Inputs, outputs and view queries are signals
+
+Every component and directive in the library moved from `@Input()` / `@Output()` / `@ViewChild()` to
+`input()` / `output()` / `viewChild()`.
+
+**Templates are unaffected.** `<entry-file-input [multiple]="true" [label]="'Pick'">` keeps working
+exactly as before, including the attribute coercion on `multiple`, `disabled` and `readonly`.
+
+What changes is **reading those members from TypeScript** — typically off a `@ViewChild`
+reference. They are signals now, so they have to be called:
+
+```diff
+  private readonly fileInput = viewChild.required(EntryFileInputComponent);
+
+- const name = this.fileInput().value?.name;
++ const name = this.fileInput().value()?.name;
+- if (this.fileInput().multiple) { ... }
++ if (this.fileInput().multiple()) { ... }
+```
+
+Reading a signal without calling it yields the signal function rather than the value. That is not a
+compile error in a boolean or template-literal position, so it fails quietly — grep for imperative
+reads of library inputs rather than relying on the compiler.
+
+The library also no longer implements `ngOnInit` / `ngAfterViewInit` / `ngOnDestroy` on any
+component. If you subclassed one and called `super.ngOnInit()`, drop the call — the work now happens
+in a constructor, an `afterNextRender` callback or a `linkedSignal`.
+
+### 6. Renamed and reshaped members
+
+| Symbol | 21.x | 22.0.0 |
+|---|---|---|
+| `EntryDateTimePickerComponent.dateTimeChanged` | `Subject<D>` | `OutputEmitterRef<D>` |
+| `EntryDialogComponent.confirm` | callable member | `confirmAction` input, bound as `[confirm]` |
+| `EntryDialogComponent.cancel` | callable member | `cancelAction` input, bound as `[cancel]` |
+| `EntryFileInputComponent.value` | `File \| FileList \| undefined` | `WritableSignal<...>` |
+| `EntryFileInputComponent.fileNames` | getter | `Signal<string>` |
+| `EntryTimePickerComponent.hours` / `.minutes` / `.seconds` / `.meridiem` | plain fields | signals |
+| `NgControlAccessorDirective.control` | writable field | read-only getter |
+
+`dateTimeChanged` still supports `.subscribe()`, but `.next()` is gone — an `OutputEmitterRef` is
+emit-only from the component that owns it:
+
+```diff
+- this.picker.dateTimeChanged.next(value);   // no longer available
++ // let the component emit; subscribe instead of pushing
+  this.picker.dateTimeChanged.subscribe(value => { ... });
+```
+
+The dialog callbacks are the one break with no compile-time signal if you only use the class from a
+template, and the one most likely to bite a subclass:
+
+```diff
+  export class MyDialog extends EntryDialogComponent {
+    onDismiss(): void {
+-     this.cancel();          // returned the callback instead of invoking it
++     this.cancelAction()();  // or simply this.onCancel()
+    }
+  }
+```
+
+### 7. `EntryFileInputComponent.disabled` no longer reports the effective state
+
+`disabled` used to be a getter that reflected both the `[disabled]` binding **and** the forms API
+(`setDisabledState`, i.e. `formControl.disable()`). It is now the bound input only; the combined
+state moved to `effectiveDisabled`.
+
+```diff
+- if (this.fileInput().disabled) { ... }          // false after formControl.disable()
++ if (this.fileInput().effectiveDisabled()) { ... }
+```
+
+This one is silent: reading `disabled` still compiles and still returns a boolean, just the wrong
+one whenever the form disabled the control rather than the template.
+
+### 8. Required inputs are now enforced
+
+`<entry-form-errors [form]>` and `[entryDisplayControlValidation] [control]` are declared with
+`input.required()`. Previously a missing binding was tolerated and the component rendered nothing;
+now Angular throws `NG0950` on first read. Bind them, or don't render the element:
+
+```diff
+- <entry-form-errors></entry-form-errors>
++ @if (myForm) {
++   <entry-form-errors [form]="myForm"></entry-form-errors>
++ }
+```
+
 ## License
 
 Apache-2 © Enigmatry

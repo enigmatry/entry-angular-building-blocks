@@ -29,7 +29,15 @@ export class EntrySearchFilterComponent {
    */
   readonly searchFilterChange = output<SearchFilterParams>();
 
-  private builtForm: UntypedFormGroup | undefined;
+  private built: { filters: SearchFilterBase<any>[]; form: UntypedFormGroup } | undefined;
+
+  /**
+   * The filters the form was actually built from. The template iterates this rather than the input
+   * so the rendered controls and the form can never disagree.
+   */
+  get renderedSearchFilters(): SearchFilterBase<any>[] {
+    return this.buildOnce().filters;
+  }
 
   /**
    * Replaces the previous ngOnInit assignment, built on first read so the filters input is already
@@ -39,12 +47,20 @@ export class EntrySearchFilterComponent {
    * each control back onto its filter model and subscribes for value formatting - so re-running it
    * would mint new controls, discard whatever the user had typed, and add a subscription per run.
    * A caller binding `[searchFilters]="getFilters()"` hands over a new array identity on every
-   * change detection pass, which is exactly the case a `computed` would rebuild on.
+   * change detection pass, which is exactly the case a `computed` would rebuild on. Consequently
+   * `searchFilters` is read once: rebind it and neither the form nor the rendered controls change.
    */
   get searchFilterForm(): UntypedFormGroup {
-    this.builtForm ??= this.toFormGroup(this.searchFilters());
-    return this.builtForm;
+    return this.buildOnce().form;
   }
+
+  private readonly buildOnce = (): { filters: SearchFilterBase<any>[]; form: UntypedFormGroup } => {
+    if (!this.built) {
+      const filters = this.searchFilters();
+      this.built = { filters, form: this.toFormGroup(filters) };
+    }
+    return this.built;
+  };
 
   controlType = ControlType;
   readonly config: EntrySearchFilterConfig = inject(ENTRY_SEARCH_FILTER_CONFIG);

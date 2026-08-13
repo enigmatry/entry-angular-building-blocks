@@ -5,7 +5,7 @@ import {
   afterNextRender, ChangeDetectionStrategy,
   Component, DestroyRef, ElementRef, NgZone,
   Renderer2, computed, forwardRef,
-  inject, input, linkedSignal, output, signal, viewChild
+  inject, input, linkedSignal, output, Signal, signal, viewChild
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
@@ -82,13 +82,17 @@ export class EntryFileInputComponent implements ControlValueAccessor, Validator 
    */
   readonly maxFileCount = input<number | undefined>(undefined);
 
+  private readonly selectedValue = signal<File | FileList | undefined>(undefined);
+
   /**
    * Current selected [File | FileList] object.
    *
-   * @remarks Writing this signal marks the view, which is why `writeValue` and `clear` no longer
-   * need an explicit `ChangeDetectorRef.markForCheck()`.
+   * @remarks Read-only on purpose. Writing it directly would move the value without notifying the
+   * forms API, leaving the bound control stale - go through the control, or `clear()`. Writing the
+   * signal internally marks the view, which is why `writeValue` and `clear` no longer need an
+   * explicit `ChangeDetectorRef.markForCheck()`.
    */
-  readonly value = signal<File | FileList | undefined>(undefined);
+  readonly value: Signal<File | FileList | undefined> = this.selectedValue;
 
   /**
    * Event emitted when a file is selected. Emits a [File | FileList] object.
@@ -100,12 +104,15 @@ export class EntryFileInputComponent implements ControlValueAccessor, Validator 
    * drives it through `setDisabledState` too - the last writer wins and a new `disabled` binding
    * re-asserts itself, which is how the previous backing field behaved.
    */
-  readonly isDisabled = linkedSignal(() => this.disabled());
+  readonly effectiveDisabled = linkedSignal(() => this.disabled());
 
+  /** The visible button that proxies clicks to the hidden native file input. */
   readonly fileButton = viewChild.required('fileButton', { read: ElementRef<HTMLElement> });
 
+  /** The hidden native file input that actually holds the selection. */
   readonly fileInput = viewChild.required<ElementRef<HTMLInputElement>>('fileInput');
 
+  /** Display label for the current selection: a file name, or a count when multiple. */
   readonly fileNames = computed(() => {
     const value = this.value();
     if (value instanceof File) {
@@ -142,7 +149,7 @@ export class EntryFileInputComponent implements ControlValueAccessor, Validator 
       ? files.length > 1 ? files : files[0]
       : files[0];
 
-    this.value.set(value);
+    this.selectedValue.set(value);
     this.onChange(value);
     this.onTouched();
 
@@ -152,7 +159,7 @@ export class EntryFileInputComponent implements ControlValueAccessor, Validator 
   };
 
   readonly clear = (): void => {
-    this.value.set(undefined);
+    this.selectedValue.set(undefined);
     this.onChange(undefined);
     this.renderer.setProperty(this.fileInput().nativeElement, 'value', '');
   };
@@ -168,7 +175,7 @@ export class EntryFileInputComponent implements ControlValueAccessor, Validator 
   };
 
   writeValue(value: any): void {
-    this.value.set(value);
+    this.selectedValue.set(value);
   }
 
   registerOnChange(fn: any): void {
@@ -180,7 +187,7 @@ export class EntryFileInputComponent implements ControlValueAccessor, Validator 
   }
 
   setDisabledState?(isDisabled: boolean): void {
-    this.isDisabled.set(isDisabled);
+    this.effectiveDisabled.set(isDisabled);
   }
 
   // implements Validator interface
