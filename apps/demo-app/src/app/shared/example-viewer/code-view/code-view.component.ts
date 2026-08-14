@@ -23,20 +23,25 @@ export class CodeViewComponent {
   // Purely derived from the inputs, so ngOnInit is no longer needed to prime it. The try/catch
   // matters here: a computed memoises a thrown error and re-throws it on every read, so an unknown
   // language would take down the whole template instead of this one code block.
+  //
+  // The failure is not reported anywhere on purpose. Reaching for the ErrorHandler would be a side
+  // effect inside a pure derivation, and the degradation is self-evident on screen - the block still
+  // shows the source, just unhighlighted.
   readonly highlightedCode = computed(() => {
     const code = this.codeContent();
-    let highlighted: string;
-    try {
-      highlighted = hljs.highlight(code, { language: this.codeType() }).value;
-    } catch(error) {
-      // eslint-disable-next-line no-console
-      console.error(`app-code-view: could not highlight '${this.codeType()}'`, error);
-      highlighted = code;
-    }
+    const highlighted = this.tryHighlight(code, this.codeType());
     const sanitizedHtml = this.domSanitizer.sanitize(SecurityContext.HTML, highlighted);
 
     return this.domSanitizer.bypassSecurityTrustHtml(sanitizedHtml ?? '');
   });
+
+  private readonly tryHighlight = (code: string, language: FileExtension): string => {
+    try {
+      return hljs.highlight(code, { language }).value;
+    } catch {
+      return code;
+    }
+  };
 
   copy = () => {
     this.snackBar.open(`Code copied to the clipboard!`);

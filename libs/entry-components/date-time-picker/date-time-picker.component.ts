@@ -1,4 +1,4 @@
-import { afterNextRender, ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef,
+import { afterNextRender, ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, ErrorHandler,
    computed, effect, inject, input, output, viewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl } from '@angular/forms';
@@ -43,6 +43,7 @@ export class EntryDateTimePickerComponent<D> {
   private readonly format: MatDateFormats = inject(ENTRY_MAT_DATE_TIME_FORMATS);
   private readonly changeDetectorRef = inject(ChangeDetectorRef);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly errorHandler = inject(ErrorHandler);
   public config: EntryDateTimePickerConfig = inject(ENTRY_DATE_TIME_PICKER_CONFIG);
 
   // Control bound to component using FormsApi (ngModel, formControl, formControlName)
@@ -111,8 +112,9 @@ export class EntryDateTimePickerComponent<D> {
         if (value && !timePicker) {
           // Bail rather than commit: without the time picker we would write the calendar's midnight
           // instead of the time the user selected, and markAsDirty would make it look intentional.
-          // eslint-disable-next-line no-console
-          console.error('entry-date-time-picker: time picker unavailable, keeping the previous value');
+          this.errorHandler.handleError(
+            new Error('entry-date-time-picker: time picker unavailable, keeping the previous value')
+          );
           return;
         }
         timePicker?.to24HourClock();

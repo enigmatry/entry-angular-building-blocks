@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Renderer2, computed, effect, inject, input } from '@angular/core';
+import { Directive, ElementRef, ErrorHandler, Renderer2, computed, effect, inject, input } from '@angular/core';
 import { PermissionType } from './permission-type';
 import { EntryPermissionService } from './permission.service';
 
@@ -10,6 +10,7 @@ export class EntryPermissionDirective<T extends PermissionType> {
   private readonly elementRef = inject(ElementRef);
   private readonly renderer = inject(Renderer2);
   private readonly permissionService = inject(EntryPermissionService<T>);
+  private readonly errorHandler = inject(ErrorHandler);
 
   /** Hides the host element unless the user holds these permissions. */
   readonly only = input<T[] | undefined>(undefined, { alias: 'entryPermissionsOnly' });
@@ -53,11 +54,10 @@ export class EntryPermissionDirective<T extends PermissionType> {
       // `*entryPermissionsOnly` puts this directive on an <ng-template>, whose host node is a comment
       // with no `style` - writing to it throws. That form has never worked anyway: no TemplateRef or
       // ViewContainerRef is injected here, so the embedded view is never created and the content
-      // simply never appears. Bail loudly instead of crashing.
-      // eslint-disable-next-line no-console
-      console.error(
+      // simply never appears. Report and bail instead of crashing.
+      this.errorHandler.handleError(new Error(
         'entryPermissionsOnly/entryPermissionsExcept do not support the * form - apply them as a plain attribute'
-      );
+      ));
       return;
     }
 

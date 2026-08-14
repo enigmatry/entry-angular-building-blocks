@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ErrorHandler, inject, input, signal } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
@@ -26,6 +26,8 @@ export class AutocompleteSearchFilterComponent<T> {
    */
   readonly options = signal<SelectOption<T>[]>([], { equal: () => false });
 
+  private readonly errorHandler = inject(ErrorHandler);
+
   constructor() {
     // Replaces ngAfterViewInit, which only existed so `minimumCharacters` and `debounceTime` could be
     // read after the input was set. Going through the input signal defers that instead.
@@ -35,11 +37,12 @@ export class AutocompleteSearchFilterComponent<T> {
           tap(value => this.clearFilterIfLabelMismatch(value)),
           filter(value => !!value && value.length >= searchFilter.minimumCharacters),
           debounceTime(searchFilter.debounceTime),
-          // catchError sits on the inner search so a failing lookup cannot tear down valueChanges
+          // catchError sits on the inner search so a failing lookup cannot tear down valueChanges.
+          // Reported through the app's ErrorHandler rather than swallowed, so a consumer's own
+          // reporting sees it and the library does not dictate where errors go.
           switchMap(searchValue => searchFilter.search(searchValue as string)
             .pipe(catchError((error: unknown) => {
-              // eslint-disable-next-line no-console
-              console.error('entry-autocomplete-search-filter: search failed', error);
+              this.errorHandler.handleError(error);
               return of<SelectOption<T>[]>([]);
             })))
         )),
