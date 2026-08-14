@@ -45,9 +45,10 @@ export class EntryTimePickerComponent<D> {
       minutes: date
         ? this.timeAdapter.getMinutes(date)
         : this.timeAdapter.getMinutes(fallback),
-      seconds: this.showSeconds() && date
-        ? this.timeAdapter.getSeconds(date)
-        : this.timeAdapter.getSeconds(fallback),
+      // When seconds are not selectable there is nothing for the user to choose, so they must not
+      // come from the wall clock - master's `getSeconds(defaultTime ?? now)` stamped the current
+      // second onto the committed value, making two users applying the same visible time differ.
+      seconds: this.secondsFromSource(date),
       // read off the 24 hour value, before any conversion below
       meridiem: (hours >= this.halfADay ? 'pm' : 'am') as meridiem
     };
@@ -83,9 +84,16 @@ export class EntryTimePickerComponent<D> {
     }
   };
 
-  /** Converts the current hours into 12 hour form. Kept public: it was part of the class surface. */
-  readonly to12HourClock = (): void => {
-    this.hours.update(hours => this.toTwelveHour(hours));
+  /**
+   * Seconds for the committed value: the bound date when seconds are shown, an explicit
+   * `defaultTime` when one was given, and otherwise zero rather than the current second.
+   */
+  private readonly secondsFromSource = (date: D | undefined): number => {
+    if (this.showSeconds() && date) {
+      return this.timeAdapter.getSeconds(date);
+    }
+    const defaultTime = this.defaultTime();
+    return defaultTime ? this.timeAdapter.getSeconds(defaultTime) : 0;
   };
 
   private readonly toTwelveHour = (hours: number): number => {

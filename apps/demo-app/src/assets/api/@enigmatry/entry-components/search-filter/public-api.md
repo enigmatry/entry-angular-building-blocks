@@ -101,36 +101,39 @@ Search filter date time input filed configuration.
 
 Entry SearchFilter component.
 
-#### Implements
-
-- `OnInit`
-
 #### Properties
 
-| Property | Type | Default value | Description | Defined in |
+| Property | Modifier | Type | Description | Defined in |
 | ------ | ------ | ------ | ------ | ------ |
-| <a id="searchfilterchange"></a> `searchFilterChange` | `EventEmitter`\<[`SearchFilterParams`](#searchfilterparams)\> | `undefined` | Emits the change in SearchFilterParams so the containing component can apply them and retrieve the filtered results. |  |
-| <a id="searchfilters"></a> `searchFilters` | [`SearchFilterBase`](#searchfilterbase)\<`any`\>[] | `[]` | Configuration of the search filters inputs that will be displayed in the search-filter component. |  |
+| <a id="searchfilterchange"></a> `searchFilterChange` | `readonly` | `OutputEmitterRef`\<[`SearchFilterParams`](#searchfilterparams)\> | Emits the change in SearchFilterParams so the containing component can apply them and retrieve the filtered results. |  |
+| <a id="searchfilters"></a> `searchFilters` | `readonly` | `InputSignal`\<[`SearchFilterBase`](#searchfilterbase)\<`any`\>[]\> | Configuration of the search filters inputs that will be displayed in the search-filter component. |  |
 
-#### Methods
+#### Accessors
 
-##### ngOnInit()
+##### renderedSearchFilters
 
-> **ngOnInit**(): `void`
+###### Get Signature
 
-A callback method that is invoked immediately after the
-default change detector has checked the directive's
-data-bound properties for the first time,
-and before any of the view or content children have been checked.
-It is invoked only once when the directive is instantiated.
+> **get** **renderedSearchFilters**(): [`SearchFilterBase`](#searchfilterbase)\<`any`\>[]
+
+The filters the form was actually built from. The template iterates this rather than the input
+so the rendered controls and the form can never disagree.
 
 ###### Returns
 
-`void`
+[`SearchFilterBase`](#searchfilterbase)\<`any`\>[]
 
-###### Implementation of
+##### searchFilterForm
 
-`OnInit.ngOnInit`
+###### Get Signature
+
+> **get** **searchFilterForm**(): `UntypedFormGroup`
+
+Form group holding one control per search filter. Replaces the previous ngOnInit assignment.
+
+###### Returns
+
+`UntypedFormGroup`
 
 ***
 

@@ -24,7 +24,7 @@ export class CheckAutocompleteInputDirective {
   constructor() {
     // Replaces ngOnChanges - reacts to `options` and nothing else.
     effect(() => {
-      if (this.options().length) {
+      if (this.options()?.length) {
         this.applySelectedValue(this.control?.value);
       }
     });
@@ -47,11 +47,11 @@ export class CheckAutocompleteInputDirective {
     if (!controlValue) {
       return;
     }
-    if (findOptionByValue(this.options(), controlValue)) {
+    if (findOptionByValue(this.options() ?? [], controlValue)) {
       return;
     }
 
-    const matchedOption = findOptionByLabel(this.options(), controlValue);
+    const matchedOption = findOptionByLabel(this.options() ?? [], controlValue);
 
     if (matchedOption) {
       this.control.patchValue(matchedOption.value);
@@ -62,6 +62,6 @@ export class CheckAutocompleteInputDirective {
 
   private applySelectedValue = (value: any) => {
     const inputElement = this.elemRef.nativeElement as HTMLInputElement;
-    inputElement.value = findOptionByValue(this.options(), value)?.label ?? '';
+    inputElement.value = findOptionByValue(this.options() ?? [], value)?.label ?? '';
   };
 }

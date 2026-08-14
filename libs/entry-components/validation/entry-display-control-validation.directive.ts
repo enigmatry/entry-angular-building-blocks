@@ -1,7 +1,7 @@
 import { Directive, ElementRef, inject, input } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { AbstractControl, FormControlStatus } from '@angular/forms';
-import { switchMap, tap } from 'rxjs';
+import { EMPTY, startWith, switchMap, tap } from 'rxjs';
 import { FORM_FIELD_ERROR_KEY } from './entry-validation';
 import { ENTRY_VALIDATION_CONFIG } from './entry-validation-config.model';
 
@@ -29,16 +29,22 @@ export class EntryDisplayControlValidationDirective {
   constructor() {
     toObservable(this.control)
       .pipe(
-        // clear on switch: the subscription below only ever writes on 'INVALID', so a re-bound
-        // control would otherwise leave the previous control's message in the DOM
+        // clear on switch, so a re-bound control cannot leave the previous one's message behind
         tap(() => this.element.nativeElement.innerText = ''),
-        switchMap(control => control.statusChanges),
+        // `startWith` covers a control that is already invalid when bound, which is the normal state
+        // straight after `setServerSideValidationErrors`. The guard covers a null control - every
+        // search-filter template binds `form().get(key)!`, and a key with no control would otherwise
+        // error this pipeline for good, since `toObservable` replays and never re-subscribes.
+        switchMap(control => control ? control.statusChanges.pipe(startWith(control.status)) : EMPTY),
         takeUntilDestroyed()
       )
       .subscribe((controlStatus: FormControlStatus) => {
-        if (controlStatus === 'INVALID') {
-          this.element.nativeElement.innerText = this.extractValidationMessages(this.control());
-        }
+        const control = this.control();
+        // Clearing on anything other than INVALID matters now that the text is written on bind:
+        // master only ever wrote, so a message survived the field being corrected.
+        this.element.nativeElement.innerText = controlStatus === 'INVALID'
+          ? this.extractValidationMessages(control)
+          : '';
       });
   }
 

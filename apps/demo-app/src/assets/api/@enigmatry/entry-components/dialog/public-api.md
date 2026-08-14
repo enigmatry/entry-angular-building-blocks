@@ -14,17 +14,31 @@ Base Entry dialog component. Must be extended when building custom dialogs.
 
 #### Properties
 
-| Property | Type | Description | Defined in |
-| ------ | ------ | ------ | ------ |
-| <a id="buttonsalignment"></a> `buttonsAlignment` | [`EntryDialogButtonsAlignment`](#entrydialogbuttonsalignment) | Dialog buttons horizontal alignment |  |
-| <a id="buttonstemplate"></a> `buttonsTemplate` | `TemplateRef`\<`any`\> \| `null` \| `undefined` | Provide custom buttons template |  |
-| <a id="cancelbuttontext"></a> `cancelButtonText` | `string` | Cancel button label |  |
-| <a id="confirmbuttontext"></a> `confirmButtonText` | `string` | Confirm button label |  |
-| <a id="disableconfirm"></a> `disableConfirm` | `boolean` | Enable or disable dialog confirm button |  |
-| <a id="hidebuttons"></a> `hideButtons` | `boolean` | Show or hide dialog buttons |  |
-| <a id="hidecancel"></a> `hideCancel` | `boolean` | Show or hide dialog cancel button |  |
-| <a id="hideclose"></a> `hideClose` | `boolean` | Show or hide dialog close button |  |
-| <a id="title"></a> `title` | `string` | Dialog header title |  |
+| Property | Modifier | Type | Description | Defined in |
+| ------ | ------ | ------ | ------ | ------ |
+| <a id="buttonsalignment"></a> `buttonsAlignment` | `readonly` | `InputSignal`\<[`EntryDialogButtonsAlignment`](#entrydialogbuttonsalignment)\> | Dialog buttons horizontal alignment |  |
+| <a id="buttonstemplate"></a> `buttonsTemplate` | `readonly` | `InputSignal`\<`TemplateRef`\<`any`\> \| `null` \| `undefined`\> | Provide custom buttons template |  |
+| <a id="cancelaction"></a> `cancelAction` | `readonly` | `InputSignal`\<() => `void`\> | Callback invoked when the dialog is cancelled. Bound as `[cancel]` - see `confirmAction`. |  |
+| <a id="cancelbuttontext"></a> `cancelButtonText` | `readonly` | `InputSignal`\<`string`\> | Cancel button label |  |
+| <a id="confirmaction"></a> `confirmAction` | `readonly` | `InputSignal`\<() => `Observable`\<`unknown`\>\> | Callback invoked when the dialog is confirmed. **Remarks** Bound as `[confirm]`, but named `confirmAction` on the class. `confirm` used to be a directly callable member; as a signal input `this.confirm()` would return the callback rather than invoke it, which type-checks fine and fails silently for anyone extending this component. The alias keeps the template binding while turning that into a compile error - which is why no-input-rename is waived here rather than the alias dropped. |  |
+| <a id="confirmbuttontext"></a> `confirmButtonText` | `readonly` | `InputSignal`\<`string`\> | Confirm button label |  |
+| <a id="disableconfirm"></a> `disableConfirm` | `readonly` | `InputSignal`\<`boolean`\> | Enable or disable dialog confirm button |  |
+| <a id="hidebuttons"></a> `hideButtons` | `readonly` | `InputSignal`\<`boolean`\> | Show or hide dialog buttons |  |
+| <a id="hidecancel"></a> `hideCancel` | `readonly` | `InputSignal`\<`boolean`\> | Show or hide dialog cancel button |  |
+| <a id="hideclose"></a> `hideClose` | `readonly` | `InputSignal`\<`boolean`\> | Show or hide dialog close button |  |
+| <a id="title"></a> `title` | `readonly` | `InputSignal`\<`string`\> | Dialog header title |  |
+
+#### Methods
+
+##### onCancel()
+
+> **onCancel**(): `void`
+
+Invokes the `cancel` callback. Keeps the double call out of the template.
+
+###### Returns
+
+`void`
 
 ***
 

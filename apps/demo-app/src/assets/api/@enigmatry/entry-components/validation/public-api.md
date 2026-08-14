@@ -5,7 +5,7 @@
 ### EntryDisplayControlValidationDirective
 
 A directive that displays configured validation messages or server side validations for given form control.
-The messages are separated with coma(,) and displayed as _innerHTML_ value of host component.
+The messages are separated with coma(,) and displayed as _innerText_ value of host component.
 
 #### Example
 
@@ -14,51 +14,11 @@ The messages are separated with coma(,) and displayed as _innerHTML_ value of ho
 </div
 ```
 
-#### Implements
-
-- `OnInit`
-- `OnDestroy`
-
 #### Properties
 
-| Property | Type | Description | Defined in |
-| ------ | ------ | ------ | ------ |
-| <a id="control"></a> `control` | `AbstractControl` | Form control for which the validation messages are displayed for. |  |
-
-#### Methods
-
-##### ngOnDestroy()
-
-> **ngOnDestroy**(): `void`
-
-A callback method that performs custom clean-up, invoked immediately
-before a directive, pipe, or service instance is destroyed.
-
-###### Returns
-
-`void`
-
-###### Implementation of
-
-`OnDestroy.ngOnDestroy`
-
-##### ngOnInit()
-
-> **ngOnInit**(): `void`
-
-A callback method that is invoked immediately after the
-default change detector has checked the directive's
-data-bound properties for the first time,
-and before any of the view or content children have been checked.
-It is invoked only once when the directive is instantiated.
-
-###### Returns
-
-`void`
-
-###### Implementation of
-
-`OnInit.ngOnInit`
+| Property | Modifier | Type | Description | Defined in |
+| ------ | ------ | ------ | ------ | ------ |
+| <a id="control"></a> `control` | `readonly` | `InputSignal`\<`AbstractControl`\<`any`, `any`, `any`\>\> | Form control for which the validation messages are displayed for. |  |
 
 ***
 
@@ -76,9 +36,31 @@ The messages are displayed as a list, each message in a new row.
 
 #### Properties
 
-| Property | Type | Description | Defined in |
-| ------ | ------ | ------ | ------ |
-| <a id="form"></a> `form` | `UntypedFormGroup` | A form group for which the validation errors are being displayed. |  |
+| Property | Modifier | Type | Description | Defined in |
+| ------ | ------ | ------ | ------ | ------ |
+| <a id="form"></a> `form` | `readonly` | `InputSignal`\<`UntypedFormGroup`\> | A form group for which the validation errors are being displayed. |  |
+
+#### Accessors
+
+##### generalErrors
+
+###### Get Signature
+
+> **get** `protected` **generalErrors**(): `string`[]
+
+Form level messages, read live off the bound form on every change detection pass.
+
+###### Remarks
+
+A getter rather than a signal holding a copy. `setServerSideValidationErrors` mutates
+the form in place, and a caller may equally do `form.setErrors({ general: [...] })` with no
+event at all - so the errors object itself has to be the source of truth, exactly as the
+previous template's `form.errors['general']` was. The `statusChanged` read is what gets this
+view re-checked when a status emission is the only thing that happened.
+
+###### Returns
+
+`string`[]
 
 ***
 

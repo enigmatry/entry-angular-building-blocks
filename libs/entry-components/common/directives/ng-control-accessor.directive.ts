@@ -11,31 +11,39 @@ export class NgControlAccessorDirective {
         self: true
     });
 
-    private resolvedControl: UntypedFormControl | undefined;
+    private standaloneControl: UntypedFormControl | undefined;
     private readonly destroyRef = inject(DestroyRef);
 
     /**
-     * Control the host is bound to through the forms API.
+     * Control the host is bound to through the forms API, or a standalone control when the host is
+     * not bound to one.
      *
-     * @remarks Resolved on first read instead of in ngOnInit: `NgControl.control` is only populated
-     * once the owning form directive has wired itself up, and consumers read this well after that.
+     * @remarks Resolved per read rather than memoised on the first one. `FormControlName._control`
+     * and `FormControlDirective.form` are only populated once the owning form directive has run its
+     * `ngOnChanges`, so an early read genuinely has nothing to return - memoising it would either
+     * cache `undefined` behind a non-nullable type or lock in the standalone fallback for good. Only
+     * the fallback is cached, so its identity is stable for as long as it is in use.
      */
     get control(): UntypedFormControl {
-        this.resolvedControl ??= this.resolveControl();
-        return this.resolvedControl;
+        const boundControl = this.boundControl();
+        if (boundControl) {
+            return boundControl;
+        }
+        this.standaloneControl ??= new UntypedFormControl();
+        return this.standaloneControl;
     }
 
     constructor() {
         afterNextRender(() => this.keepNgModelInSync());
     }
 
-    private readonly resolveControl = (): UntypedFormControl => {
+    private readonly boundControl = (): UntypedFormControl | undefined => {
         if (this.ngControl instanceof FormControlDirective ||
             this.ngControl instanceof FormControlName ||
             this.ngControl instanceof NgModel) {
-            return this.ngControl.control;
+            return this.ngControl.control as UntypedFormControl | undefined;
         }
-        return new UntypedFormControl();
+        return undefined;
     };
 
     private readonly keepNgModelInSync = (): void => {

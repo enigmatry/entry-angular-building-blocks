@@ -29,39 +29,41 @@ export class EntrySearchFilterComponent {
    */
   readonly searchFilterChange = output<SearchFilterParams>();
 
-  private built: { filters: SearchFilterBase<any>[]; form: UntypedFormGroup } | undefined;
+  private built: { keys: string; filters: SearchFilterBase<any>[]; form: UntypedFormGroup } | undefined;
 
   /**
    * The filters the form was actually built from. The template iterates this rather than the input
    * so the rendered controls and the form can never disagree.
    */
   get renderedSearchFilters(): SearchFilterBase<any>[] {
-    return this.buildOnce().filters;
+    return this.build().filters;
+  }
+
+  /** Form group holding one control per search filter. Replaces the previous ngOnInit assignment. */
+  get searchFilterForm(): UntypedFormGroup {
+    return this.build().form;
   }
 
   /**
-   * Replaces the previous ngOnInit assignment, built on first read so the filters input is already
-   * set.
+   * Rebuilds only when the set of filter keys changes.
    *
-   * @remarks Deliberately memoised rather than a `computed`. `toFormGroup` is not pure - it writes
-   * each control back onto its filter model and subscribes for value formatting - so re-running it
-   * would mint new controls, discard whatever the user had typed, and add a subscription per run.
-   * A caller binding `[searchFilters]="getFilters()"` hands over a new array identity on every
-   * change detection pass, which is exactly the case a `computed` would rebuild on. Consequently
-   * `searchFilters` is read once: rebind it and neither the form nor the rendered controls change.
+   * @remarks Keyed on the keys rather than the array identity, because both extremes are wrong.
+   * Rebuilding on identity - what a `computed` does - discards whatever the user typed on every
+   * change detection pass for a caller binding `[searchFilters]="getFilters()"`, since
+   * `toFormGroup` mints new controls, writes them back onto the filter models and subscribes per
+   * run. Building strictly once instead loses filters that arrive after the first render, which is
+   * the normal shape for a set assembled in an HTTP callback - and loses them silently, because the
+   * template renders this snapshot.
    *
-   * The template always reads this after the input is set, so the normal path is safe. Reading it
-   * imperatively before then - from a parent's constructor, say - locks in the empty default for
-   * good, which the previous ngOnInit could not do. Read it from the view, or after first render.
+   * Same keys, different instances: the first instances win, so a re-bound filter's `label` or
+   * `placeholder` change is not picked up. Changing the key set is the supported way to swap filters.
    */
-  get searchFilterForm(): UntypedFormGroup {
-    return this.buildOnce().form;
-  }
+  private readonly build = (): { keys: string; filters: SearchFilterBase<any>[]; form: UntypedFormGroup } => {
+    const filters = this.searchFilters();
+    const keys = filters.map(searchFilter => searchFilter.key).join('|');
 
-  private readonly buildOnce = (): { filters: SearchFilterBase<any>[]; form: UntypedFormGroup } => {
-    if (!this.built) {
-      const filters = this.searchFilters();
-      this.built = { filters, form: this.toFormGroup(filters) };
+    if (this.built?.keys !== keys) {
+      this.built = { keys, filters, form: this.toFormGroup(filters) };
     }
     return this.built;
   };

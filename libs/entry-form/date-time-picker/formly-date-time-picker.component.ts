@@ -24,7 +24,9 @@ export class FormlyDateTimePickerComponent extends FieldType<FormlyFieldConfig> 
     afterNextRender(() => {
       if (this.required) {
         this.control.addValidators(Validators.required);
-        this.control.updateValueAndValidity({ emitEvent: false });
+        // emits deliberately: statusChanges is the only data path entry-form-errors and
+        // entryDisplayControlValidation have, so a silent flip to INVALID would never render
+        this.control.updateValueAndValidity();
       }
     });
   }

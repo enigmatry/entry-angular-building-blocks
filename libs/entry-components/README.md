@@ -137,9 +137,9 @@ in a constructor, an `afterNextRender` callback or a `linkedSignal`.
 | `EntryDateTimePickerComponent.dateTimeChanged` | `Subject<D>` | `OutputEmitterRef<D>` |
 | `EntryDialogComponent.confirm` | callable member | `confirmAction` input, bound as `[confirm]` |
 | `EntryDialogComponent.cancel` | callable member | `cancelAction` input, bound as `[cancel]` |
-| `EntryFileInputComponent.value` | `File \| FileList \| undefined` | `WritableSignal<...>` |
+| `EntryFileInputComponent.value` | `File \| FileList \| undefined` | `Signal<...>` (read-only) |
 | `EntryFileInputComponent.fileNames` | getter | `Signal<string>` |
-| `EntryTimePickerComponent.hours` / `.minutes` / `.seconds` / `.meridiem` | plain fields | signals |
+| `EntryTimePickerComponent.hours` / `.minutes` / `.seconds` / `.meridiem` | plain fields | signals — only reachable through a template ref, the class is not exported |
 | `NgControlAccessorDirective.control` | writable field | read-only getter |
 
 `dateTimeChanged` still supports `.subscribe()`, but `.next()` is gone — an `OutputEmitterRef` is
@@ -174,24 +174,36 @@ state moved to `effectiveDisabled`.
 + if (this.fileInput().effectiveDisabled()) { ... }
 ```
 
-This one is silent: reading `disabled` still compiles and still returns a boolean, just the wrong
-one whenever the form disabled the control rather than the template.
+This one is silent, and worse than a stale value. Per section 5 `disabled` is now a signal, so the
+expression above does not return "the old boolean" — it returns the signal *function*, which is
+always truthy. An upload gate written that way inverts to permanently disabled:
+
+```ts
+// always true in 22.0.0, whatever the state
+if (this.fileInput().disabled) { … }
+```
 
 ### 8. Required inputs fail earlier and more clearly
 
 `<entry-form-errors [form]>` and `[entryDisplayControlValidation] [control]` are declared with
 `input.required()`. **Nothing that previously worked breaks here** — leaving either unbound was
 already a crash, just a worse one: `form` threw `Cannot read properties of undefined (reading
-'errors')` from inside the component's template, and `control` threw from its `ngOnInit`. You now
-get `NG0950` naming the input that is missing.
+'errors')` from inside the component's template, and `control` threw from its `ngOnInit`.
 
-One case did genuinely improve. Binding `undefined` explicitly, which the old template also crashed
-on, now renders nothing:
+What changes is *when* you find out. With `strictTemplates` — which this workspace enables and most
+consumers inherit — omitting the binding is now `NG8008` at build time rather than a runtime
+`TypeError`. Without it, you get `NG0950` naming the missing input on first read.
 
-```html
-<!-- fine in 22.0.0, threw a TypeError in 21.x -->
-<entry-form-errors [form]="formThatArrivesLater"></entry-form-errors>
+Binding a value that is legitimately absent at first render is also safe now, where the old template
+crashed on it — though under `strictTemplates` the bound type still has to permit it:
+
+```ts
+// the input accepts undefined at runtime; widen the field so the template type-checks
+protected form: UntypedFormGroup | undefined;
 ```
+
+Both `entry-form-errors` and `entryDisplayControlValidation` render nothing until a real
+form or control arrives, and recover on their own once it does.
 
 ## License
 

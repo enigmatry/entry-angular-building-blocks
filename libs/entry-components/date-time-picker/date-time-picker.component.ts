@@ -108,6 +108,13 @@ export class EntryDateTimePickerComponent<D> {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(value => {
         const timePicker = this.timePicker();
+        if (value && !timePicker) {
+          // Bail rather than commit: without the time picker we would write the calendar's midnight
+          // instead of the time the user selected, and markAsDirty would make it look intentional.
+          // eslint-disable-next-line no-console
+          console.error('entry-date-time-picker: time picker unavailable, keeping the previous value');
+          return;
+        }
         timePicker?.to24HourClock();
         const dateTime = value ? this.dateTimeAdapter.clone(value) : value;
         if (dateTime && timePicker) {
