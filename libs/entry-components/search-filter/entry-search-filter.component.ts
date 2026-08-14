@@ -49,6 +49,10 @@ export class EntrySearchFilterComponent {
    * A caller binding `[searchFilters]="getFilters()"` hands over a new array identity on every
    * change detection pass, which is exactly the case a `computed` would rebuild on. Consequently
    * `searchFilters` is read once: rebind it and neither the form nor the rendered controls change.
+   *
+   * The template always reads this after the input is set, so the normal path is safe. Reading it
+   * imperatively before then - from a parent's constructor, say - locks in the empty default for
+   * good, which the previous ngOnInit could not do. Read it from the view, or after first render.
    */
   get searchFilterForm(): UntypedFormGroup {
     return this.buildOnce().form;

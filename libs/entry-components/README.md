@@ -177,17 +177,20 @@ state moved to `effectiveDisabled`.
 This one is silent: reading `disabled` still compiles and still returns a boolean, just the wrong
 one whenever the form disabled the control rather than the template.
 
-### 8. Required inputs are now enforced
+### 8. Required inputs fail earlier and more clearly
 
 `<entry-form-errors [form]>` and `[entryDisplayControlValidation] [control]` are declared with
-`input.required()`. Previously a missing binding was tolerated and the component rendered nothing;
-now Angular throws `NG0950` on first read. Bind them, or don't render the element:
+`input.required()`. **Nothing that previously worked breaks here** — leaving either unbound was
+already a crash, just a worse one: `form` threw `Cannot read properties of undefined (reading
+'errors')` from inside the component's template, and `control` threw from its `ngOnInit`. You now
+get `NG0950` naming the input that is missing.
 
-```diff
-- <entry-form-errors></entry-form-errors>
-+ @if (myForm) {
-+   <entry-form-errors [form]="myForm"></entry-form-errors>
-+ }
+One case did genuinely improve. Binding `undefined` explicitly, which the old template also crashed
+on, now renders nothing:
+
+```html
+<!-- fine in 22.0.0, threw a TypeError in 21.x -->
+<entry-form-errors [form]="formThatArrivesLater"></entry-form-errors>
 ```
 
 ## License
