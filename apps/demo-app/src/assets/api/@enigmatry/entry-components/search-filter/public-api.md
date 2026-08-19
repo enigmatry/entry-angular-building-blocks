@@ -105,35 +105,10 @@ Entry SearchFilter component.
 
 | Property | Modifier | Type | Description | Defined in |
 | ------ | ------ | ------ | ------ | ------ |
+| <a id="renderedsearchfilters"></a> `renderedSearchFilters` | `readonly` | `Signal`\<[`SearchFilterBase`](#searchfilterbase)\<`any`\>[]\> | The filters the form was actually built from. The template iterates this rather than the input so the rendered controls and the form can never disagree. |  |
 | <a id="searchfilterchange"></a> `searchFilterChange` | `readonly` | `OutputEmitterRef`\<[`SearchFilterParams`](#searchfilterparams)\> | Emits the change in SearchFilterParams so the containing component can apply them and retrieve the filtered results. |  |
+| <a id="searchfilterform"></a> `searchFilterForm` | `readonly` | `Signal`\<`UntypedFormGroup`\> | Form group holding one control per search filter. |  |
 | <a id="searchfilters"></a> `searchFilters` | `readonly` | `InputSignal`\<[`SearchFilterBase`](#searchfilterbase)\<`any`\>[]\> | Configuration of the search filters inputs that will be displayed in the search-filter component. |  |
-
-#### Accessors
-
-##### renderedSearchFilters
-
-###### Get Signature
-
-> **get** **renderedSearchFilters**(): [`SearchFilterBase`](#searchfilterbase)\<`any`\>[]
-
-The filters the form was actually built from. The template iterates this rather than the input
-so the rendered controls and the form can never disagree.
-
-###### Returns
-
-[`SearchFilterBase`](#searchfilterbase)\<`any`\>[]
-
-##### searchFilterForm
-
-###### Get Signature
-
-> **get** **searchFilterForm**(): `UntypedFormGroup`
-
-Form group holding one control per search filter. Replaces the previous ngOnInit assignment.
-
-###### Returns
-
-`UntypedFormGroup`
 
 ***
 

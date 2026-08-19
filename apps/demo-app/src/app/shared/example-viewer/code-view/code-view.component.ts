@@ -20,14 +20,9 @@ export class CodeViewComponent {
   private readonly snackBar: MatSnackBar = inject(MatSnackBar);
   private readonly domSanitizer: DomSanitizer = inject(DomSanitizer);
 
-  // Purely derived from the inputs, so ngOnInit is no longer needed to prime it. The try/catch
-  // matters here: a computed memoises a thrown error and re-throws it on every read, so an unknown
-  // language would take down the whole template instead of this one code block.
-  //
-  // The failure is not reported anywhere on purpose. Reaching for the ErrorHandler would be a side
-  // effect inside a pure derivation, and the degradation is self-evident on screen - the block still
-  // shows the source, just unhighlighted.
-  readonly highlightedCode = computed(() => {
+  // A computed memoises a thrown error and re-throws it on every read, so an unknown language has to
+  // degrade to unhighlighted source rather than take down the whole template.
+  protected readonly highlightedCode = computed(() => {
     const code = this.codeContent();
     const highlighted = this.tryHighlight(code, this.codeType());
     const sanitizedHtml = this.domSanitizer.sanitize(SecurityContext.HTML, highlighted);
@@ -43,7 +38,7 @@ export class CodeViewComponent {
     }
   };
 
-  copy = () => {
+  protected readonly copy = (): void => {
     this.snackBar.open(`Code copied to the clipboard!`);
     this.clipboard.copy(this.codeContent());
   };

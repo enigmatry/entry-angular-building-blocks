@@ -5,6 +5,7 @@ import { FormControl } from '@angular/forms';
 import { MAT_DATE_FORMATS, DateAdapter, MatDateFormats } from '@angular/material/core';
 import { ENTRY_MAT_DATE_TIME_FORMATS, EntryDateTimeAdapter, NgControlAccessorDirective,
   NoopControlValueAccessorDirective } from '@enigmatry/entry-components/common';
+import { startWith } from 'rxjs';
 import { ENTRY_DATE_TIME_PICKER_CONFIG, EntryDateTimePickerConfig } from './date-time-picker-config.model';
 import { EntryTimePickerComponent } from './time-picker.component';
 
@@ -32,10 +33,6 @@ export class EntryDateTimePickerComponent<D> {
   readonly defaultTime = input<D | undefined>(undefined);
   readonly disabled = input(false);
 
-  /**
-   * @remarks Was a plain `Subject<D>` exposed through `@Output()`. It is an `OutputEmitterRef` now,
-   * so callers that subscribed to or pushed into it directly need to switch to the output API.
-   */
   readonly dateTimeChanged = output<D>();
 
   private readonly ngControlAccessor = inject(NgControlAccessorDirective);
@@ -56,9 +53,6 @@ export class EntryDateTimePickerComponent<D> {
 
   is12HourClock = this.dateTimeAdapter.is12HoursClock(this.format.display.dateInput);
 
-  // The query does resolve - the actions content is declared in this view, so it is populated by the
-  // time the calendar can be interacted with (verified in the browser: a picked time round-trips).
-  // Kept non-required purely as a guard, since `calendarControl` is only reachable via the calendar.
   readonly timePicker = viewChild(EntryTimePickerComponent<D>);
 
   readonly minDate = computed(() => this.floorToDate(this.min()));
@@ -66,13 +60,10 @@ export class EntryDateTimePickerComponent<D> {
   readonly maxDate = computed(() => this.floorToDate(this.max()));
 
   constructor() {
-    // Tracks `disabled` only, matching the old input setter - reacting to every input change would
-    // let an unrelated binding re-enable a control the consumer disabled itself. Runs once on init,
-    // which is what the ngOnInit call to setDisabled used to cover.
+    // Tracks `disabled` only: reacting to every input change would let an unrelated binding
+    // re-enable a control the consumer disabled itself.
     effect(() => this.setDisabled(this.disabled()));
 
-    // Replaces ngOnInit. The forms API has populated `formControl` by the time the host has
-    // rendered, and calendarControl drives a hidden input, so nothing is visibly late.
     afterNextRender(() => {
       this.calendarControl.setValue(this.formControl.value, { emitEvent: false });
       this.mirrorDisabledState();
@@ -83,7 +74,9 @@ export class EntryDateTimePickerComponent<D> {
 
   private readonly mirrorDisabledState = (): void => {
     this.formControl.statusChanges
-      .pipe(takeUntilDestroyed(this.destroyRef))
+      // `startWith` seeds from the current status: statusChanges does not replay, so a parent that
+      // disabled the control before this attached would otherwise leave the calendar interactive.
+      .pipe(startWith(this.formControl.status), takeUntilDestroyed(this.destroyRef))
       .subscribe(status => {
         if (status === 'DISABLED') {
           this.calendarControl.disable({ emitEvent: false });
@@ -110,8 +103,7 @@ export class EntryDateTimePickerComponent<D> {
       .subscribe(value => {
         const timePicker = this.timePicker();
         if (value && !timePicker) {
-          // Bail rather than commit: without the time picker we would write the calendar's midnight
-          // instead of the time the user selected, and markAsDirty would make it look intentional.
+          // Bail rather than commit the calendar's midnight over the time the user selected.
           this.errorHandler.handleError(
             new Error('entry-date-time-picker: time picker unavailable, keeping the previous value')
           );

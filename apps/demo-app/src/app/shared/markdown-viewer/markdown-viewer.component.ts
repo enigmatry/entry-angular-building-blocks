@@ -23,17 +23,14 @@ export class MarkdownViewerComponent {
   private readonly renderer: Renderer2 = inject(Renderer2);
   private readonly ngZone: NgZone = inject(NgZone);
 
-  /**
-   * Loads the documentation file whenever `fileUrl` is set. Replaces the ngOnInit subscription; the
-   * resource reloads if a different url is bound, which the hook did not.
-   */
+  /** `params` is what makes this reactive - a read inside the loader is untracked, so it would never reload. */
   private readonly loadedFile = resource({
     params: () => this.fileUrl(),
-    loader: ({ params: fileUrl }) => firstValueFrom(this.fileLoad.loadDocumentationFile(fileUrl))
+    loader: async({ params: fileUrl }) => firstValueFrom(this.fileLoad.loadDocumentationFile(fileUrl))
   });
 
   /** Inline content wins over a loaded file, and a failed load falls back to a notice. */
-  readonly markdownContentHtml = computed<SafeHtml>(() => {
+  protected readonly markdownContentHtml = computed<SafeHtml>(() => {
     const inlineContent = this.markdownContent();
     if (inlineContent) {
       return this.convertMarkdownToHtml(inlineContent);
@@ -45,7 +42,6 @@ export class MarkdownViewerComponent {
   });
 
   constructor() {
-    // Replaces ngOnInit for the delegated click handling - the host element has to be rendered first.
     afterNextRender(() => this.handleAnchorClicks());
   }
 
@@ -93,12 +89,12 @@ export class MarkdownViewerComponent {
     return false;
   };
 
-  isHeadingLink = (anchor: HTMLAnchorElement): boolean => {
+  private readonly isHeadingLink = (anchor: HTMLAnchorElement): boolean => {
     const href = anchor.getAttribute('href');
     return !!href && href.includes('#');
   };
 
-  getHeadingId = (str: string | null): string => {
+  private readonly getHeadingId = (str: string | null): string => {
     if (str) {
       return str
         .replace(/(_|-|\s)+/gu, '')
@@ -122,7 +118,7 @@ export class MarkdownViewerComponent {
     return html ?? '';
   };
 
-  highlightCode = (str: string, lang: string) => {
+  private readonly highlightCode = (str: string, lang: string) => {
     if (lang && hljs.getLanguage(lang)) {
       return hljs.highlight(str, { language: lang }).value;
     }

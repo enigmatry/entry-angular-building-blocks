@@ -15,22 +15,19 @@ import { AutocompleteSearchFilter } from './autocomplete-search-filter.model';
 export class AutocompleteSearchFilterComponent<T> {
   readonly searchFilter = input.required<AutocompleteSearchFilter<T>>();
 
-  searchField = new FormControl('');
+  readonly searchField = new FormControl('');
 
   /**
-   * Options returned by the most recent search. Writing a signal marks the view for us.
-   *
-   * @remarks `equal: () => false` because a consumer's `search()` may resolve to a cached array; with
-   * identity equality that emission would not notify, and nothing else dirties this OnPush view - the
-   * result arrives after `debounceTime`, detached from any template event.
+   * Options returned by the most recent search. `equal: () => false` because a consumer's `search()`
+   * may resolve to a cached array, and nothing else dirties this OnPush view after the debounce.
    */
   readonly options = signal<SelectOption<T>[]>([], { equal: () => false });
 
   private readonly errorHandler = inject(ErrorHandler);
 
+  // RxJS rather than signals: `debounceTime` and switch-cancellation have no signal equivalent.
+  // The result lands in a signal, which is what marks the view.
   constructor() {
-    // Replaces ngAfterViewInit, which only existed so `minimumCharacters` and `debounceTime` could be
-    // read after the input was set. Going through the input signal defers that instead.
     toObservable(this.searchFilter)
       .pipe(
         switchMap(searchFilter => this.searchField.valueChanges.pipe(
@@ -38,8 +35,6 @@ export class AutocompleteSearchFilterComponent<T> {
           filter(value => !!value && value.length >= searchFilter.minimumCharacters),
           debounceTime(searchFilter.debounceTime),
           // catchError sits on the inner search so a failing lookup cannot tear down valueChanges.
-          // Reported through the app's ErrorHandler rather than swallowed, so a consumer's own
-          // reporting sees it and the library does not dictate where errors go.
           switchMap(searchValue => searchFilter.search(searchValue as string)
             .pipe(catchError((error: unknown) => {
               this.errorHandler.handleError(error);
@@ -51,9 +46,9 @@ export class AutocompleteSearchFilterComponent<T> {
       .subscribe(options => this.options.set(options));
   }
 
-  displayFn = (_selectedValue: SelectOption<T>): string => this.searchFilter().formControl.value?.label ?? '';
+  readonly displayFn = (_selectedValue: SelectOption<T>): string => this.searchFilter().formControl.value?.label ?? '';
 
-  onSelected = (event: MatAutocompleteSelectedEvent) => {
+  readonly onSelected = (event: MatAutocompleteSelectedEvent): void => {
     this.searchFilter().formControl.patchValue(event.option.value);
     this.searchField.patchValue(event.option.value.label, { emitEvent: false });
   };

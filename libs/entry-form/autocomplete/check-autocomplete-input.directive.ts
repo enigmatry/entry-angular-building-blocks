@@ -22,15 +22,13 @@ export class CheckAutocompleteInputDirective {
   }
 
   constructor() {
-    // Replaces ngOnChanges - reacts to `options` and nothing else.
     effect(() => {
-      if (this.options()?.length) {
+      if (this.options().length) {
         this.applySelectedValue(this.control?.value);
       }
     });
 
-    // Replaces ngAfterViewInit: the trigger's panel actions are only wired up once the host input
-    // and its autocomplete have rendered.
+    // The trigger's panel actions only exist once the host input and its autocomplete have rendered.
     afterNextRender(() => {
       this.matAutocomplete.panelClosingActions
         .pipe(takeUntilDestroyed(this.destroyRef))
@@ -42,26 +40,26 @@ export class CheckAutocompleteInputDirective {
     });
   }
 
-  private checkControlValue(): void {
+  private readonly checkControlValue = (): void => {
     const controlValue = this.control?.value;
     if (!controlValue) {
       return;
     }
-    if (findOptionByValue(this.options() ?? [], controlValue)) {
+    if (findOptionByValue(this.options(), controlValue)) {
       return;
     }
 
-    const matchedOption = findOptionByLabel(this.options() ?? [], controlValue);
+    const matchedOption = findOptionByLabel(this.options(), controlValue);
 
     if (matchedOption) {
       this.control.patchValue(matchedOption.value);
     } else {
       this.control.reset();
     }
-  }
+  };
 
-  private applySelectedValue = (value: any) => {
+  private readonly applySelectedValue = (value: any): void => {
     const inputElement = this.elemRef.nativeElement as HTMLInputElement;
-    inputElement.value = findOptionByValue(this.options() ?? [], value)?.label ?? '';
+    inputElement.value = findOptionByValue(this.options(), value)?.label ?? '';
   };
 }

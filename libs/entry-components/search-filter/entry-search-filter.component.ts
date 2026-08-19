@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, DestroyRef, inject, input, output, Signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormGroup } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { AutocompleteSearchFilter } from './autocomplete/autocomplete-search-filter.model';
 import { ControlType } from './control-type';
 import { DateSearchFilter } from './date/date-search-filter.model';
@@ -29,55 +30,46 @@ export class EntrySearchFilterComponent {
    */
   readonly searchFilterChange = output<SearchFilterParams>();
 
-  private built: { keys: string; filters: SearchFilterBase<any>[]; form: UntypedFormGroup } | undefined;
+  readonly controlType = ControlType;
+  readonly config: EntrySearchFilterConfig = inject(ENTRY_SEARCH_FILTER_CONFIG);
+  private readonly destroyRef = inject(DestroyRef);
+
+  /** Torn down and replaced on every rebuild, so old controls do not keep formatting subscriptions alive. */
+  private formatSubscriptions = new Subscription();
+
+  /**
+   * The input, but only changing identity when the set of filter keys does. Rebuilding on array
+   * identity would discard whatever the user typed whenever a caller binds `[searchFilters]="getFilters()"`,
+   * since `toFormGroup` mints new controls; building strictly once would silently drop filters that
+   * arrive after the first render.
+   */
+  private readonly stableFilters = computed(() => this.searchFilters(), {
+    equal: (a, b) => a.length === b.length && a.every((filter, i) => filter.key === b[i].key)
+  });
+
+  private readonly built = computed(() => {
+    const filters = this.stableFilters();
+
+    this.formatSubscriptions.unsubscribe();
+    this.formatSubscriptions = new Subscription();
+
+    return { filters, form: this.toFormGroup(filters) };
+  });
 
   /**
    * The filters the form was actually built from. The template iterates this rather than the input
    * so the rendered controls and the form can never disagree.
    */
-  get renderedSearchFilters(): SearchFilterBase<any>[] {
-    return this.build().filters;
-  }
+  readonly renderedSearchFilters: Signal<SearchFilterBase<any>[]> = computed(() => this.built().filters);
 
-  /** Form group holding one control per search filter. Replaces the previous ngOnInit assignment. */
-  get searchFilterForm(): UntypedFormGroup {
-    return this.build().form;
-  }
-
-  /**
-   * Rebuilds only when the set of filter keys changes.
-   *
-   * @remarks Keyed on the keys rather than the array identity, because both extremes are wrong.
-   * Rebuilding on identity - what a `computed` does - discards whatever the user typed on every
-   * change detection pass for a caller binding `[searchFilters]="getFilters()"`, since
-   * `toFormGroup` mints new controls, writes them back onto the filter models and subscribes per
-   * run. Building strictly once instead loses filters that arrive after the first render, which is
-   * the normal shape for a set assembled in an HTTP callback - and loses them silently, because the
-   * template renders this snapshot.
-   *
-   * Same keys, different instances: the first instances win, so a re-bound filter's `label` or
-   * `placeholder` change is not picked up. Changing the key set is the supported way to swap filters.
-   */
-  private readonly build = (): { keys: string; filters: SearchFilterBase<any>[]; form: UntypedFormGroup } => {
-    const filters = this.searchFilters();
-    const keys = filters.map(searchFilter => searchFilter.key).join('|');
-
-    if (this.built?.keys !== keys) {
-      this.built = { keys, filters, form: this.toFormGroup(filters) };
-    }
-    return this.built;
-  };
-
-  controlType = ControlType;
-  readonly config: EntrySearchFilterConfig = inject(ENTRY_SEARCH_FILTER_CONFIG);
-  private destroyRef = inject(DestroyRef);
+  /** Form group holding one control per search filter. */
+  readonly searchFilterForm: Signal<UntypedFormGroup> = computed(() => this.built().form);
 
   readonly onSubmit = (): void => {
-    const formValue = this.searchFilterForm.value;
-    this.searchFilterChange.emit(formValue);
+    this.searchFilterChange.emit(this.searchFilterForm().value);
   };
 
-  toFormGroup = (searchFilters: SearchFilterBase<any>[]) => {
+  readonly toFormGroup = (searchFilters: SearchFilterBase<any>[]) => {
     const group: any = {};
     searchFilters.forEach(searchFilter => {
       const formControl = searchFilter.toFormControl();
@@ -85,25 +77,27 @@ export class EntrySearchFilterComponent {
       searchFilter.formControl = formControl;
 
       if (searchFilter.formatValue) {
-        formControl.valueChanges
-          .pipe(takeUntilDestroyed(this.destroyRef))
-          .subscribe(value => {
-            const formatted = searchFilter.formatValue?.(value);
-            formControl.setValue(formatted, { emitEvent: false });
-          });
+        this.formatSubscriptions.add(
+          formControl.valueChanges
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe(value => {
+              const formatted = searchFilter.formatValue?.(value);
+              formControl.setValue(formatted, { emitEvent: false });
+            })
+        );
       }
     });
     return new UntypedFormGroup(group);
   };
 
-  asTextSearchFilter = (searchFilter: SearchFilterBase<any>): TextSearchFilter => searchFilter as TextSearchFilter;
+  readonly asTextSearchFilter = (searchFilter: SearchFilterBase<any>): TextSearchFilter => searchFilter as TextSearchFilter;
 
-  asSelectSearchFilter = <T>(searchFilter: SearchFilterBase<T>): SelectSearchFilter<T> => searchFilter as SelectSearchFilter<T>;
+  readonly asSelectSearchFilter = <T>(searchFilter: SearchFilterBase<T>): SelectSearchFilter<T> => searchFilter as SelectSearchFilter<T>;
 
-  asAutocompleteSearchFilter = <T>(searchFilter: SearchFilterBase<SelectOption<T>>): AutocompleteSearchFilter<T> =>
+  readonly asAutocompleteSearchFilter = <T>(searchFilter: SearchFilterBase<SelectOption<T>>): AutocompleteSearchFilter<T> =>
     searchFilter as AutocompleteSearchFilter<T>;
 
-  asDateTimeSearchFilter = <T>(searchFilter: SearchFilterBase<T>): DateTimeSearchFilter<T> => searchFilter as DateTimeSearchFilter<T>;
+  readonly asDateTimeSearchFilter = <T>(searchFilter: SearchFilterBase<T>): DateTimeSearchFilter<T> => searchFilter as DateTimeSearchFilter<T>;
 
-  asDateSearchFilter = <T>(searchFilter: SearchFilterBase<T>): DateSearchFilter<T> => searchFilter as DateSearchFilter<T>;
+  readonly asDateSearchFilter = <T>(searchFilter: SearchFilterBase<T>): DateSearchFilter<T> => searchFilter as DateSearchFilter<T>;
 }

@@ -48,15 +48,9 @@ The messages are displayed as a list, each message in a new row.
 
 > **get** `protected` **generalErrors**(): `string`[]
 
-Form level messages, read live off the bound form on every change detection pass.
-
-###### Remarks
-
-A getter rather than a signal holding a copy. `setServerSideValidationErrors` mutates
-the form in place, and a caller may equally do `form.setErrors({ general: [...] })` with no
-event at all - so the errors object itself has to be the source of truth, exactly as the
-previous template's `form.errors['general']` was. The `statusChanged` read is what gets this
-view re-checked when a status emission is the only thing that happened.
+Form level messages, read live off the bound form rather than copied into a signal:
+`setServerSideValidationErrors` mutates the form in place, and a caller may equally do
+`form.setErrors({ general: [...] })` with no event at all.
 
 ###### Returns
 

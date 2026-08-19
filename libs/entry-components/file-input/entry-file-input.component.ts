@@ -85,12 +85,8 @@ export class EntryFileInputComponent implements ControlValueAccessor, Validator 
   private readonly selectedValue = signal<File | FileList | undefined>(undefined);
 
   /**
-   * Current selected [File | FileList] object.
-   *
-   * @remarks Read-only on purpose. Writing it directly would move the value without notifying the
-   * forms API, leaving the bound control stale - go through the control, or `clear()`. Writing the
-   * signal internally marks the view, which is why `writeValue` and `clear` no longer need an
-   * explicit `ChangeDetectorRef.markForCheck()`.
+   * Current selected [File | FileList] object. Read-only: writing it directly would move the value
+   * without notifying the forms API. Go through the control, or `clear()`.
    */
   readonly value: Signal<File | FileList | undefined> = this.selectedValue.asReadonly();
 
@@ -99,19 +95,10 @@ export class EntryFileInputComponent implements ControlValueAccessor, Validator 
    */
   readonly selectedFile = output<File | FileList>();
 
-  /**
-   * Derived from the `disabled` input but writable, because the forms API drives it through
-   * `setDisabledState` too - the last writer wins and a new `disabled` binding re-asserts itself,
-   * which is how the previous backing field behaved.
-   */
+  /** Writable, because `setDisabledState` drives it too - last writer wins, and a new binding re-asserts. */
   private readonly disabledState = linkedSignal(() => this.disabled());
 
-  /**
-   * Effective disabled state: the `disabled` input, or the forms API through `setDisabledState`.
-   *
-   * @remarks Exposed read-only. A writable signal here would let a caller disable the button and the
-   * native input while the bound control stayed enabled and kept validating.
-   */
+  /** Effective disabled state: the `disabled` input, or the forms API through `setDisabledState`. */
   readonly effectiveDisabled: Signal<boolean> = this.disabledState.asReadonly();
 
   /** The visible button that proxies clicks to the hidden native file input. */
@@ -133,9 +120,7 @@ export class EntryFileInputComponent implements ControlValueAccessor, Validator 
   });
 
   constructor() {
-    // Signal queries have no `static` option, so the button is not readable in ngOnInit as it was
-    // with `@ViewChild(..., { static: true })`. The listener is wired after the first render, before
-    // any click can reach the button.
+    // Signal queries have no `static` option, so the button is only readable after the first render.
     afterNextRender(() => {
       // Handle click event on custom file button and trigger click on native file input
       this.ngZone.runOutsideAngular(() => {
@@ -169,10 +154,8 @@ export class EntryFileInputComponent implements ControlValueAccessor, Validator 
   readonly clear = (): void => {
     this.selectedValue.set(undefined);
     this.onChange(undefined);
-    // `fileInput` is deliberately not `viewChild.required`: this is public API a consumer may call
-    // from their own ngOnInit, and a signal query is not resolved until the view is refreshed.
-    // Throwing here would leave the value cleared and the form notified, but the native input still
-    // showing the old file name.
+    // Not `viewChild.required`: a consumer may call this before the view is refreshed, and throwing
+    // would leave the value cleared but the native input still showing the old file name.
     const fileInput = this.fileInput();
     if (fileInput) {
       this.renderer.setProperty(fileInput.nativeElement, 'value', '');

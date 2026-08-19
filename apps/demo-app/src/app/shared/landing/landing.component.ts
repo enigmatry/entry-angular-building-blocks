@@ -11,18 +11,18 @@ import { IComponentDefinition, COMPONENT_DEFINITIONS } from '../../features/comp
   standalone: false
 })
 export class LandingComponent {
-  menuItems = COMPONENT_DEFINITIONS;
+  protected readonly menuItems = COMPONENT_DEFINITIONS;
 
   private readonly router: Router = inject(Router);
-  private activatedRoute: ActivatedRoute = inject(ActivatedRoute);
-  private clipboard: Clipboard = inject(Clipboard);
-  private snackBar: MatSnackBar = inject(MatSnackBar);
+  private readonly activatedRoute: ActivatedRoute = inject(ActivatedRoute);
+  private readonly clipboard: Clipboard = inject(Clipboard);
+  private readonly snackBar: MatSnackBar = inject(MatSnackBar);
 
-  redirect = async(item: IComponentDefinition) => {
+  protected readonly redirect = async(item: IComponentDefinition): Promise<void> => {
     await this.router.navigate([item.route], { relativeTo: this.activatedRoute });
   };
 
-  share = (item: IComponentDefinition) => {
+  protected readonly share = (item: IComponentDefinition): void => {
     this.snackBar.open(`Link copied to the clipboard!`);
     this.clipboard.copy(`${location.href}${item.route}`);
   };

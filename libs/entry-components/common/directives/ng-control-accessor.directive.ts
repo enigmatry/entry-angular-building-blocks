@@ -16,13 +16,8 @@ export class NgControlAccessorDirective {
 
     /**
      * Control the host is bound to through the forms API, or a standalone control when the host is
-     * not bound to one.
-     *
-     * @remarks Resolved per read rather than memoised on the first one. `FormControlName._control`
-     * and `FormControlDirective.form` are only populated once the owning form directive has run its
-     * `ngOnChanges`, so an early read genuinely has nothing to return - memoising it would either
-     * cache `undefined` behind a non-nullable type or lock in the standalone fallback for good. Only
-     * the fallback is cached, so its identity is stable for as long as it is in use.
+     * not bound to one. Resolved per read, because the owning form directive only populates its
+     * control in `ngOnChanges` - memoising would lock in the fallback. Only the fallback is cached.
      */
     get control(): UntypedFormControl {
         const boundControl = this.boundControl();

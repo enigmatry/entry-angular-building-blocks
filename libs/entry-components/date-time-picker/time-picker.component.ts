@@ -23,15 +23,12 @@ export class EntryTimePickerComponent<D> {
   readonly is12HourClock = input(false);
   readonly defaultTime = input<D | undefined>(undefined);
 
-  /** Bumped by `update()`, whose job is to re-read `today()` - a value signals cannot track. */
-  private readonly refreshCount = signal(0);
+  /** Flipped by `update()`, whose job is to re-read `today()` - a value signals cannot track. */
+  private readonly refresh = signal(false);
 
-  /**
-   * Time the inputs describe. A fresh object every recomputation, so the linked signals below always
-   * take the new value rather than comparing field by field.
-   */
+  /** Time the inputs describe. A fresh object each time, so the linked signals below always take it. */
   private readonly timeFromInputs = computed(() => {
-    this.refreshCount();
+    this.refresh();
     const now = this.timeAdapter.today();
     const date = this.date();
     const fallback = this.defaultTime() ?? now;
@@ -45,17 +42,13 @@ export class EntryTimePickerComponent<D> {
       minutes: date
         ? this.timeAdapter.getMinutes(date)
         : this.timeAdapter.getMinutes(fallback),
-      // When seconds are not selectable there is nothing for the user to choose, so they must not
-      // come from the wall clock - master's `getSeconds(defaultTime ?? now)` stamped the current
-      // second onto the committed value, making two users applying the same visible time differ.
       seconds: this.secondsFromSource(date),
-      // read off the 24 hour value, before any conversion below
+      // read off the 24 hour value, before any conversion above
       meridiem: (hours >= this.halfADay ? 'pm' : 'am') as meridiem
     };
   });
 
-  // Writable because the selects two-way bind to them, but re-derived whenever the inputs change or
-  // `update()` fires - which is what the old ngOnChanges + update() pair did.
+  // Writable because the selects two-way bind to them, re-derived whenever the inputs change.
   readonly hours = linkedSignal({ source: this.timeFromInputs, computation: time => time.hours });
   readonly minutes = linkedSignal({ source: this.timeFromInputs, computation: time => time.minutes });
   readonly seconds = linkedSignal({ source: this.timeFromInputs, computation: time => time.seconds });
@@ -69,7 +62,7 @@ export class EntryTimePickerComponent<D> {
 
   /** Re-reads the current time. Called by EntryDateTimePickerComponent when the calendar opens. */
   readonly update = (): void => {
-    this.refreshCount.update(count => count + 1);
+    this.refresh.update(flag => !flag);
   };
 
   readonly to24HourClock = (): void => {

@@ -139,8 +139,17 @@ in a constructor, an `afterNextRender` callback or a `linkedSignal`.
 | `EntryDialogComponent.cancel` | callable member | `cancelAction` input, bound as `[cancel]` |
 | `EntryFileInputComponent.value` | `File \| FileList \| undefined` | `Signal<...>` (read-only) |
 | `EntryFileInputComponent.fileNames` | getter | `Signal<string>` |
+| `EntrySearchFilterComponent.searchFilterForm` | `UntypedFormGroup` | `Signal<UntypedFormGroup>` |
 | `EntryTimePickerComponent.hours` / `.minutes` / `.seconds` / `.meridiem` | plain fields | signals — only reachable through a template ref, the class is not exported |
 | `NgControlAccessorDirective.control` | writable field | read-only getter |
+
+`searchFilterForm` is the one most likely to be read imperatively, because that is how server-side
+validation errors get onto the filter form:
+
+```diff
+- setServerSideValidationErrors(error, this.searchFilter.searchFilterForm);
++ setServerSideValidationErrors(error, this.searchFilter().searchFilterForm());
+```
 
 `dateTimeChanged` still supports `.subscribe()`, but `.next()` is gone — an `OutputEmitterRef` is
 emit-only from the component that owns it:
@@ -204,6 +213,19 @@ protected form: UntypedFormGroup | undefined;
 
 Both `entry-form-errors` and `entryDisplayControlValidation` render nothing until a real
 form or control arrives, and recover on their own once it does.
+
+### 9. Fixed, but behaviour-changing
+
+Two long-standing bugs are fixed in this release. Neither is a compile error, so both are worth a
+look if you rely on the affected components:
+
+- **`<entry-dialog [disableConfirm]>` now actually disables the confirm button.** The input existed
+  in `21.x` but was never bound to anything, so a wrong expression had no visible effect. If yours
+  was wrong, the dialog will now refuse to confirm.
+- **The time picker no longer stamps the current second onto a committed value.** `21.x` fell back
+  to `getSeconds(defaultTime ?? now)` whenever seconds were not selectable, so two users applying
+  the same visible time produced different values. Seconds now come from the bound date when they
+  are shown, from an explicit `defaultTime` when one is given, and are `0` otherwise.
 
 ## License
 

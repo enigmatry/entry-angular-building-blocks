@@ -34,32 +34,28 @@ export class EntryFormErrorsComponent {
   /** A form group for which the validation errors are being displayed. */
   readonly form = input.required<UntypedFormGroup>();
 
-  /** Bumped on every status emission purely to mark this OnPush view dirty. */
-  private readonly statusChanged = signal(0);
+  /** Flipped on every status emission purely to mark this OnPush view dirty. */
+  private readonly statusChanged = signal(false);
 
   /**
-   * Form level messages, read live off the bound form on every change detection pass.
-   *
-   * @remarks A getter rather than a signal holding a copy. `setServerSideValidationErrors` mutates
-   * the form in place, and a caller may equally do `form.setErrors({ general: [...] })` with no
-   * event at all - so the errors object itself has to be the source of truth, exactly as the
-   * previous template's `form.errors['general']` was. The `statusChanged` read is what gets this
-   * view re-checked when a status emission is the only thing that happened.
+   * Form level messages, read live off the bound form rather than copied into a signal:
+   * `setServerSideValidationErrors` mutates the form in place, and a caller may equally do
+   * `form.setErrors({ general: [...] })` with no event at all.
    */
   protected get generalErrors(): string[] {
     this.statusChanged();
-    return (this.form().errors?.[FORM_ERROR_KEY] as string[] | undefined) ?? [];
+    const form = this.form() as UntypedFormGroup | undefined;
+    return (form?.errors?.[FORM_ERROR_KEY] as string[] | undefined) ?? [];
   }
 
   constructor() {
     toObservable(this.form)
       .pipe(
-        // re-subscribe when a different form is bound. The guard covers a caller explicitly binding
-        // undefined - throwing here would kill the pipeline for good, because toObservable replays
-        // and never re-subscribes.
+        // The guard covers a caller binding undefined - throwing here would kill the pipeline for
+        // good, because toObservable replays and never re-subscribes.
         switchMap(form => form ? form.statusChanges : EMPTY),
         takeUntilDestroyed()
       )
-      .subscribe(() => this.statusChanged.update(count => count + 1));
+      .subscribe(() => this.statusChanged.update(flag => !flag));
   }
 }
