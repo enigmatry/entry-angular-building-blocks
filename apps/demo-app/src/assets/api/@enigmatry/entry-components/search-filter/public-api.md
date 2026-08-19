@@ -107,7 +107,7 @@ Entry SearchFilter component.
 | ------ | ------ | ------ | ------ | ------ |
 | <a id="renderedsearchfilters"></a> `renderedSearchFilters` | `readonly` | `Signal`\<[`SearchFilterBase`](#searchfilterbase)\<`any`\>[]\> | The filters the form was actually built from. The template iterates this rather than the input so the rendered controls and the form can never disagree. |  |
 | <a id="searchfilterchange"></a> `searchFilterChange` | `readonly` | `OutputEmitterRef`\<[`SearchFilterParams`](#searchfilterparams)\> | Emits the change in SearchFilterParams so the containing component can apply them and retrieve the filtered results. |  |
-| <a id="searchfilterform"></a> `searchFilterForm` | `readonly` | `Signal`\<`UntypedFormGroup`\> | Form group holding one control per search filter. |  |
+| <a id="searchfilterform"></a> `searchFilterForm` | `readonly` | `Signal`\<`FormRecord`\<`AbstractControl`\<`any`, `any`, `any`\>\>\> | Form group holding one control per search filter. A `FormRecord` rather than a `FormGroup`, because the keys come from the bound filters and are not known at compile time. |  |
 | <a id="searchfilters"></a> `searchFilters` | `readonly` | `InputSignal`\<[`SearchFilterBase`](#searchfilterbase)\<`any`\>[]\> | Configuration of the search filters inputs that will be displayed in the search-filter component. |  |
 
 ***

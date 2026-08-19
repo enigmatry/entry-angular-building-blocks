@@ -37,7 +37,8 @@ These guides provides detailed steps for setting up and configuring theming with
 
 `22.x` requires Angular 22, TypeScript ~6.0 and Node `^22.22.3 || ^24.15.0 || >=26.0.0`. Run
 `ng update @angular/core@22 @angular/cli@22 @angular/cdk@22 @angular/material@22` first, then work
-through the four items below — three of them change behaviour silently.
+through the items below. Several of them change behaviour silently, with no compile error to catch
+you — sections 2, 3, 5, 8 and 10 in particular.
 
 ### 1. `@angular/animations` is no longer a peer dependency
 
@@ -139,9 +140,9 @@ in a constructor, an `afterNextRender` callback or a `linkedSignal`.
 | `EntryDialogComponent.cancel` | callable member | `cancelAction` input, bound as `[cancel]` |
 | `EntryFileInputComponent.value` | `File \| FileList \| undefined` | `Signal<...>` (read-only) |
 | `EntryFileInputComponent.fileNames` | getter | `Signal<string>` |
-| `EntrySearchFilterComponent.searchFilterForm` | `UntypedFormGroup` | `Signal<UntypedFormGroup>` |
+| `EntrySearchFilterComponent.searchFilterForm` | `UntypedFormGroup` | `Signal<FormRecord>` |
 | `EntryTimePickerComponent.hours` / `.minutes` / `.seconds` / `.meridiem` | plain fields | signals — only reachable through a template ref, the class is not exported |
-| `NgControlAccessorDirective.control` | writable field | read-only getter |
+| `NgControlAccessorDirective.control` | writable `UntypedFormControl` field | read-only `AbstractControl` getter |
 
 `searchFilterForm` is the one most likely to be read imperatively, because that is how server-side
 validation errors get onto the filter form:
@@ -172,7 +173,52 @@ template, and the one most likely to bite a subclass:
   }
 ```
 
-### 7. `EntryFileInputComponent.disabled` no longer reports the effective state
+### 7. No more `UntypedFormGroup` / `UntypedFormControl`
+
+Every `Untyped*` type is gone from the library's public surface. Those aliases were only ever an
+`ng update` migration aid from Angular 13 — `UntypedFormGroup` is literally `FormGroup<any>`, so
+they opted every form touching this library out of typed forms.
+
+Two of the three replacements **widen** what is accepted, so nothing breaks:
+
+| Symbol | 21.x | 22.0.0 | Effect |
+|---|---|---|---|
+| `setServerSideValidationErrors(error, form)` | `UntypedFormGroup` | `AbstractControl` | widened |
+| `EntryFormErrorsComponent.form` | `UntypedFormGroup` | `AbstractControl` | widened |
+| `EntrySearchFilterComponent.searchFilterForm` | `UntypedFormGroup` | `FormRecord` | see below |
+| `NgControlAccessorDirective.control` | `UntypedFormControl` | `AbstractControl` | narrowed |
+
+You can now pass a **typed** form where you previously had to widen to `UntypedFormGroup`:
+
+```diff
+- form: UntypedFormGroup = this.formBuilder.group({ firstName: [''], lastName: [''] });
++ form = this.formBuilder.group({
++   firstName: new FormControl('', [Validators.required]),
++   lastName: new FormControl('', [Validators.required])
++ });
+  ...
+  setServerSideValidationErrors(error, this.form);   // still compiles, now fully typed
+```
+
+`searchFilterForm` is a [`FormRecord`](https://angular.dev/api/forms/FormRecord) — a `FormGroup`
+whose keys are not known at compile time, which is exactly what a filter set is. `FormRecord`
+extends `FormGroup` at runtime, so `instanceof` checks and every method behave identically.
+
+`NgControlAccessorDirective.control` is the one narrowing. It hands back `AbstractControl` because a
+directive takes no type arguments from the element it sits on, so it genuinely cannot know the value
+type. If you need `FormControl`-only members (`defaultValue`, `registerOnChange`), cast at the point
+of use, where the type *is* known:
+
+```ts
+get formControl(): FormControl<MyValue> {
+  return this.ngControlAccessor.control as FormControl<MyValue>;
+}
+```
+
+`@enigmatry/entry-form` still surfaces `UntypedFormControl` in places, because that is how
+`@ngx-formly/core` types `FieldType.formControl`. That one is not ours to remove.
+
+### 8. `EntryFileInputComponent.disabled` no longer reports the effective state
 
 `disabled` used to be a getter that reflected both the `[disabled]` binding **and** the forms API
 (`setDisabledState`, i.e. `formControl.disable()`). It is now the bound input only; the combined
@@ -192,7 +238,7 @@ always truthy. An upload gate written that way inverts to permanently disabled:
 if (this.fileInput().disabled) { … }
 ```
 
-### 8. Required inputs fail earlier and more clearly
+### 9. Required inputs fail earlier and more clearly
 
 `<entry-form-errors [form]>` and `[entryDisplayControlValidation] [control]` are declared with
 `input.required()`. **Nothing that previously worked breaks here** — leaving either unbound was
@@ -214,7 +260,7 @@ protected form: UntypedFormGroup | undefined;
 Both `entry-form-errors` and `entryDisplayControlValidation` render nothing until a real
 form or control arrives, and recover on their own once it does.
 
-### 9. Fixed, but behaviour-changing
+### 10. Fixed, but behaviour-changing
 
 Two long-standing bugs are fixed in this release. Neither is a compile error, so both are worth a
 look if you rely on the affected components:

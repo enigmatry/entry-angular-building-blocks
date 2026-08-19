@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { UntypedFormGroup } from '@angular/forms';
+import { FormRecord } from '@angular/forms';
 import { TextSearchFilter } from './text-search-filter.model';
 
 @Component({
@@ -11,5 +11,5 @@ import { TextSearchFilter } from './text-search-filter.model';
 export class TextSearchFilterComponent {
   readonly searchFilter = input.required<TextSearchFilter>();
   /** Form group to which the search-filter input component will be added. */
-  readonly form = input.required<UntypedFormGroup>();
+  readonly form = input.required<FormRecord>();
 }

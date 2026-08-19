@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, DestroyRef, inject, input, output, Signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { UntypedFormGroup } from '@angular/forms';
+import { AbstractControl, FormRecord } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { AutocompleteSearchFilter } from './autocomplete/autocomplete-search-filter.model';
 import { ControlType } from './control-type';
@@ -62,15 +62,18 @@ export class EntrySearchFilterComponent {
    */
   readonly renderedSearchFilters: Signal<SearchFilterBase<any>[]> = computed(() => this.built().filters);
 
-  /** Form group holding one control per search filter. */
-  readonly searchFilterForm: Signal<UntypedFormGroup> = computed(() => this.built().form);
+  /**
+   * Form group holding one control per search filter. A `FormRecord` rather than a `FormGroup`,
+   * because the keys come from the bound filters and are not known at compile time.
+   */
+  readonly searchFilterForm: Signal<FormRecord> = computed(() => this.built().form);
 
   readonly onSubmit = (): void => {
     this.searchFilterChange.emit(this.searchFilterForm().value);
   };
 
-  readonly toFormGroup = (searchFilters: SearchFilterBase<any>[]) => {
-    const group: any = {};
+  readonly toFormGroup = (searchFilters: SearchFilterBase<any>[]): FormRecord => {
+    const group: Record<string, AbstractControl> = {};
     searchFilters.forEach(searchFilter => {
       const formControl = searchFilter.toFormControl();
       group[searchFilter.key] = formControl;
@@ -87,7 +90,7 @@ export class EntrySearchFilterComponent {
         );
       }
     });
-    return new UntypedFormGroup(group);
+    return new FormRecord(group);
   };
 
   readonly asTextSearchFilter = (searchFilter: SearchFilterBase<any>): TextSearchFilter => searchFilter as TextSearchFilter;

@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { CKEditor5 } from '@ckeditor/ckeditor5-angular';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { FieldType } from '@ngx-formly/material';
@@ -22,8 +22,8 @@ export class FormlyCkeditorComponent extends FieldType<FormlyFieldConfig> {
     this.editorConfig = { ...this.editorConfig, ...this.ckeditorOptions.config };
   }
 
-  get control(): UntypedFormControl {
-    return this.formControl as UntypedFormControl;
+  get control(): FormControl {
+    return this.formControl as FormControl;
   }
 
   public onReady(editor: any) {

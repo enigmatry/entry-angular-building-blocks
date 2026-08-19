@@ -1,6 +1,6 @@
 import { Component, input, signal } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
-import { UntypedFormGroup } from '@angular/forms';
+import { AbstractControl } from '@angular/forms';
 import { EMPTY, switchMap } from 'rxjs';
 import { FORM_ERROR_KEY } from './entry-validation';
 
@@ -31,8 +31,11 @@ import { FORM_ERROR_KEY } from './entry-validation';
     standalone: false
 })
 export class EntryFormErrorsComponent {
-  /** A form group for which the validation errors are being displayed. */
-  readonly form = input.required<UntypedFormGroup>();
+  /**
+   * A form for which the validation errors are being displayed. Typed as `AbstractControl` so that
+   * a `FormGroup` with known keys and a `FormRecord` with dynamic ones are both accepted.
+   */
+  readonly form = input.required<AbstractControl>();
 
   /** Flipped on every status emission purely to mark this OnPush view dirty. */
   private readonly statusChanged = signal(false);
@@ -44,7 +47,7 @@ export class EntryFormErrorsComponent {
    */
   protected get generalErrors(): string[] {
     this.statusChanged();
-    const form = this.form() as UntypedFormGroup | undefined;
+    const form = this.form() as AbstractControl | undefined;
     return (form?.errors?.[FORM_ERROR_KEY] as string[] | undefined) ?? [];
   }
 

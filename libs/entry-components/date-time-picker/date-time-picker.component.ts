@@ -43,9 +43,11 @@ export class EntryDateTimePickerComponent<D> {
   private readonly errorHandler = inject(ErrorHandler);
   public config: EntryDateTimePickerConfig = inject(ENTRY_DATE_TIME_PICKER_CONFIG);
 
-  // Control bound to component using FormsApi (ngModel, formControl, formControlName)
+  // Control bound to component using FormsApi (ngModel, formControl, formControlName).
+  // The accessor hands back an AbstractControl because it cannot know the value type; this component
+  // does, and its template binds [formControl], so it narrows to FormControl<D> here.
   get formControl(): FormControl<D> {
-    return this.ngControlAccessor.control;
+    return this.ngControlAccessor.control as FormControl<D>;
   }
 
   // Control that is connected to calendar

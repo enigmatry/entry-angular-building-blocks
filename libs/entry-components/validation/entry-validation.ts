@@ -1,4 +1,4 @@
-import { AbstractControl, FormArray, FormGroup, UntypedFormGroup, ValidationErrors } from '@angular/forms';
+import { AbstractControl, FormArray, FormGroup, ValidationErrors } from '@angular/forms';
 import { IValidationProblemDetails } from './validation-problem-details.interface';
 
 /** A key used to map server side validation errors on form level */
@@ -24,9 +24,10 @@ const getFormControl = (formControl: AbstractControl | null | undefined, keys: s
  * The errors are applied to multiple levels: form, form group, form array, and form field.
  *
  * @param error Server side validation errors response.
- * @param form Form to apply validation errors to.
+ * @param form Form to apply validation errors to. Typed as `AbstractControl` so that any form shape
+ * is accepted - a `FormGroup` with known keys, a `FormRecord` with dynamic ones, or a nested mix.
  */
-const setServerSideValidationErrors = (error: IValidationProblemDetails, form: UntypedFormGroup) => {
+const setServerSideValidationErrors = (error: IValidationProblemDetails, form: AbstractControl) => {
     form.setErrors(null);
     const validationErrors = error?.errors;
     const formErrors: ValidationErrors = {};

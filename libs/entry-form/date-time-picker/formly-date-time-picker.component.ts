@@ -1,5 +1,5 @@
 import { afterNextRender, ChangeDetectionStrategy, Component } from '@angular/core';
-import { UntypedFormControl, Validators } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { FieldType } from '@ngx-formly/material';
 
@@ -10,8 +10,8 @@ import { FieldType } from '@ngx-formly/material';
     standalone: false
 })
 export class FormlyDateTimePickerComponent extends FieldType<FormlyFieldConfig> {
-  get control(): UntypedFormControl {
-    return this.formControl as UntypedFormControl;
+  get control(): FormControl {
+    return this.formControl as FormControl;
   }
 
   constructor() {

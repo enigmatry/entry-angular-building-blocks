@@ -38,7 +38,7 @@ The messages are displayed as a list, each message in a new row.
 
 | Property | Modifier | Type | Description | Defined in |
 | ------ | ------ | ------ | ------ | ------ |
-| <a id="form"></a> `form` | `readonly` | `InputSignal`\<`UntypedFormGroup`\> | A form group for which the validation errors are being displayed. |  |
+| <a id="form"></a> `form` | `readonly` | `InputSignal`\<`AbstractControl`\<`any`, `any`, `any`\>\> | A form for which the validation errors are being displayed. Typed as `AbstractControl` so that a `FormGroup` with known keys and a `FormRecord` with dynamic ones are both accepted. |  |
 
 #### Accessors
 
@@ -152,9 +152,10 @@ Server side validation errors response.
 
 ##### form
 
-`UntypedFormGroup`
+`AbstractControl`
 
-Form to apply validation errors to.
+Form to apply validation errors to. Typed as `AbstractControl` so that any form shape
+is accepted - a `FormGroup` with known keys, a `FormRecord` with dynamic ones, or a nested mix.
 
 #### Returns
 
