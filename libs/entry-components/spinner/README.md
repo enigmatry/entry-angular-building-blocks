@@ -15,13 +15,17 @@ import { EntrySpinnerModule } from '@enigmatry/entry-components/spinner';
 Show spinner:
 
 ```html
-<entry-spinner *ngIf="loading"></entry-spinner>
+@if (loading) {
+  <entry-spinner></entry-spinner>
+}
 ```
 
 Show spinner positioned in the center of the screen and with background overlay: 
 
 ```html
-<entry-spinner *ngIf="loading" [fullscreen]="true" [hasBackgroundOverlay]="true"></entry-spinner>
+@if (loading) {
+  <entry-spinner [fullscreen]="true" [hasBackgroundOverlay]="true"></entry-spinner>
+}
 ```
 
 

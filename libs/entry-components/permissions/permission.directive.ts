@@ -11,6 +11,7 @@ export class EntryPermissionDirective<T extends PermissionType> {
   private readonly renderer = inject(Renderer2);
   private readonly permissionService = inject(EntryPermissionService<T>);
   private readonly errorHandler = inject(ErrorHandler);
+  private reportedUnsupportedHost = false;
 
   /** Hides the host element unless the user holds these permissions. */
   readonly only = input<T[] | undefined>(undefined, { alias: 'entryPermissionsOnly' });
@@ -47,9 +48,13 @@ export class EntryPermissionDirective<T extends PermissionType> {
     // SVG hosts must still be hidden, so `HTMLElement` alone is too narrow. Only the comment node
     // produced by the unsupported `*entryPermissionsOnly` form falls through here.
     if (!(element instanceof HTMLElement) && !(element instanceof SVGElement)) {
-      this.errorHandler.handleError(new Error(
-        'entryPermissionsOnly/entryPermissionsExcept do not support the * form - apply them as a plain attribute'
-      ));
+      // Reported once, not once per effect run.
+      if (!this.reportedUnsupportedHost) {
+        this.reportedUnsupportedHost = true;
+        this.errorHandler.handleError(new Error(
+          'entryPermissionsOnly/entryPermissionsExcept do not support the * form - apply them as a plain attribute'
+        ));
+      }
       return;
     }
 
