@@ -224,6 +224,21 @@ readonly ngOnInit = (): void => { ... };   // ❌ never called
 save(): void { ... }                       // ❌ use readonly arrow
 ```
 
+### Member visibility
+Anything reached **only** from the component's own template is `protected readonly` — templates can
+see protected members, so `public` would overstate the surface.
+
+```ts
+protected readonly rows = computed(() => ...);   // template only
+private readonly toKey = (x: number): string => { ... };  // neither template nor other classes
+readonly value: Signal<File | undefined> = ...;  // public: read by other components/services
+```
+
+**In `libs/` this applies to demo/app code and to genuinely internal library members only.** These
+are published packages — narrowing an exported class's member from `public` to `protected` removes it
+from the published API and breaks consumers. Check whether a member is in a `public-api.ts` surface
+before tightening it, and call the change out in the migration notes if you do.
+
 ### Async handling
 One-shot Observables (HTTP calls, `TranslateService.get()`) use `firstValueFrom()` with `async/await`. Reserve `.subscribe()` for true multi-value streams — Subjects, event buses, router events, websockets.
 
