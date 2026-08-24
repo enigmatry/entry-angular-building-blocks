@@ -2,6 +2,8 @@ import { Directive, ElementRef, ErrorHandler, Renderer2, computed, effect, injec
 import { PermissionType } from './permission-type';
 import { EntryPermissionService } from './permission.service';
 
+const ELEMENT_NODE = 1;
+
 @Directive({
     selector: '[entryPermissionsOnly],[entryPermissionsExcept]',
     standalone: false
@@ -20,20 +22,23 @@ export class EntryPermissionDirective<T extends PermissionType> {
   readonly except = input<T[] | undefined>(undefined, { alias: 'entryPermissionsExcept' });
 
   /**
-   * `only` wins when both aliases are bound, which the selector allows but no caller does.
+   * Both aliases are evaluated when both are bound - the host is shown only when `only` is held and
+   * `except` is not. The selector allows the combination and neither condition may be ignored.
+   *
    * Denies by default: an unresolved binding arrives as `undefined`, and for a permission gate
    * "nothing to check against" has to read as hidden.
    */
   private readonly isHidden = computed(() => {
     const only = this.only();
-    if (only !== undefined) {
-      return !this.permissionService.hasPermissions(only);
-    }
     const except = this.except();
-    if (except !== undefined) {
-      return this.permissionService.hasPermissions(except);
+
+    if (only === undefined && except === undefined) {
+      return true;
     }
-    return true;
+    if (only !== undefined && !this.permissionService.hasPermissions(only)) {
+      return true;
+    }
+    return except !== undefined && this.permissionService.hasPermissions(except);
   });
 
   constructor() {
@@ -45,9 +50,10 @@ export class EntryPermissionDirective<T extends PermissionType> {
   private readonly toggleVisibility = (show: boolean): void => {
     const element = this.elementRef.nativeElement;
 
-    // SVG hosts must still be hidden, so `HTMLElement` alone is too narrow. Only the comment node
-    // produced by the unsupported `*entryPermissionsOnly` form falls through here.
-    if (!(element instanceof HTMLElement) && !(element instanceof SVGElement)) {
+    // `nodeType` rather than `instanceof HTMLElement`: those constructors are browser globals and
+    // undefined under a Node SSR renderer. Only the comment node produced by the unsupported
+    // `*entryPermissionsOnly` form falls through here.
+    if (element?.nodeType !== ELEMENT_NODE) {
       // Reported once, not once per effect run.
       if (!this.reportedUnsupportedHost) {
         this.reportedUnsupportedHost = true;

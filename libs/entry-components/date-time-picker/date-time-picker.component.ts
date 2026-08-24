@@ -16,6 +16,11 @@ import { EntryTimePickerComponent } from './time-picker.component';
         { provide: MAT_DATE_FORMATS, useFactory: () => inject(ENTRY_MAT_DATE_TIME_FORMATS) },
         { provide: DateAdapter, useClass: EntryDateTimeAdapter }
     ],
+    // This component does not implement ControlValueAccessor. The no-op accessor below only
+    // satisfies Angular's requirement that a [formControl]-bound element have an accessor, and the
+    // control accessor then hands back the real control so this component can write to it directly.
+    // Implementing the accessor properly here removes both host directives and the ngModel sync
+    // inside NgControlAccessorDirective; that refactor is tracked separately.
     hostDirectives: [NoopControlValueAccessorDirective, NgControlAccessorDirective],
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false,

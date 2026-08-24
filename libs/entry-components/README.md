@@ -33,6 +33,13 @@ These guides provides detailed steps for setting up and configuring theming with
 |21.x| = 21
 |22.x| = 22
 
+## Rendering targets
+
+This library is **browser-only**. It is not tested under server-side rendering or prerendering, and
+several components will not work there: they attach DOM event listeners, read `document`, and build
+CDK overlays from `afterNextRender` callbacks, which a server renderer never runs. Do not put these
+components on a prerendered route.
+
 ## Migrating to 22.x
 
 `22.x` requires Angular 22, TypeScript ~6.0 and Node `^22.22.3 || ^24.15.0 || >=26.0.0`. Run
@@ -141,6 +148,8 @@ in a constructor, an `afterNextRender` callback or a `linkedSignal`.
 | `EntryFileInputComponent.value` | `File \| FileList \| undefined` | `Signal<...>` (read-only) |
 | `EntryFileInputComponent.fileNames` | getter | `Signal<string>` |
 | `EntrySearchFilterComponent.searchFilterForm` | `UntypedFormGroup` | `Signal<FormRecord>` |
+| `EntrySearchFilterComponent.renderedSearchFilters` | array property | `Signal<SearchFilterBase<unknown>[]>` |
+| `SearchFilterBase.formatValue` | `(value: T) => T` | `(value: unknown) => unknown` |
 | `EntryTimePickerComponent.hours` / `.minutes` / `.seconds` / `.meridiem` | plain fields | signals — only reachable through a template ref, the class is not exported |
 | `NgControlAccessorDirective.control` | writable `UntypedFormControl` field | read-only `AbstractControl` getter |
 
@@ -151,6 +160,31 @@ validation errors get onto the filter form:
 - setServerSideValidationErrors(error, this.searchFilter.searchFilterForm);
 + setServerSideValidationErrors(error, this.searchFilter().searchFilterForm());
 ```
+
+`renderedSearchFilters` follows the same shape — it is now a signal, so it has to be called before
+iterating:
+
+```diff
+- this.searchFilter.renderedSearchFilters.map(filter => filter.key);
++ this.searchFilter().renderedSearchFilters().map(filter => filter.key);
+```
+
+`formatValue` is the one signature change with a compile error at the *consumer's* callback rather
+than at the call site. It takes `unknown` so that `SearchFilterBase<T>` is assignable to
+`SearchFilterBase<unknown>` — it was the only member putting `T` in a function-parameter position on
+a property, and under `strictFunctionTypes` that made the class contravariant, which is why the
+filter arrays were typed `SearchFilterBase<any>`. Narrow inside the callback:
+
+```diff
+  new TextSearchFilter({
+    key: 'score',
+-   formatValue: (value: string) => value.replace(/[^0-9.]/gu, '')
++   formatValue: (value: unknown) => String(value ?? '').replace(/[^0-9.]/gu, '')
+  })
+```
+
+The filter arrays themselves are `SearchFilterBase<unknown>[]` now, so `[searchFilters]` and any
+field you keep them in can drop their `any`.
 
 `dateTimeChanged` still supports `.subscribe()`, but `.next()` is gone — an `OutputEmitterRef` is
 emit-only from the component that owns it:
@@ -262,7 +296,7 @@ form or control arrives, and recover on their own once it does.
 
 ### 10. Fixed, but behaviour-changing
 
-Two long-standing bugs are fixed in this release. Neither is a compile error, so both are worth a
+Several long-standing bugs are fixed in this release. None is a compile error, so all are worth a
 look if you rely on the affected components:
 
 - **`<entry-dialog [disableConfirm]>` now actually disables the confirm button.** The input existed
@@ -272,6 +306,23 @@ look if you rely on the affected components:
   to `getSeconds(defaultTime ?? now)` whenever seconds were not selectable, so two users applying
   the same visible time produced different values. Seconds now come from the bound date when they
   are shown, from an explicit `defaultTime` when one is given, and are `0` otherwise.
+- **`<entry-search-filter [searchFilters]>` rebuilds when the array changes.** `21.x` built the form
+  once, so filters that arrived later — a select filter replaced once its options load — were never
+  rendered and never had their `formControl` assigned. Every new array now rebuilds, and the values
+  already in the form are carried over by key so nothing the user typed is lost. In-place mutation
+  (`filters.push(...)`) still does not rebuild: signal inputs compare by identity, so hand over a new
+  array (`this.filters = [...this.filters, newFilter]`).
+- **`[entryDisplayControlValidation]` now clears its message when the control stops being invalid.**
+  `21.x` only ever wrote the text, so a message survived the field being corrected. If you relied on
+  the message staying put, it no longer does.
+- **The permission directives deny by default.** `[entryPermissionsOnly]="user()?.permissions"` while
+  a profile loads binds `undefined`, which now reads as "nothing to check against" and hides the
+  host. `21.x` threw from inside the input setter and left the element visible. Bind an empty array
+  where you genuinely mean "no restriction".
+
+  The directives also evaluate both aliases when both are bound — the host is shown only when
+  `entryPermissionsOnly` is held and `entryPermissionsExcept` is not. In `21.x` whichever setter ran
+  last decided the result.
 
 ## License
 

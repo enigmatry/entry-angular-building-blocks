@@ -1,4 +1,4 @@
-import { afterNextRender, ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { FieldType } from '@ngx-formly/material';
@@ -9,25 +9,17 @@ import { FieldType } from '@ngx-formly/material';
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
-export class FormlyDateTimePickerComponent extends FieldType<FormlyFieldConfig> {
+export class FormlyDateTimePickerComponent extends FieldType<FormlyFieldConfig> implements OnInit {
   get control(): FormControl {
     return this.formControl as FormControl;
   }
 
-  constructor() {
-    super();
-    // Replaces ngOnInit. Not an effect: Formly's `required` and `formControl` are plain getters, so
-    // an effect would track nothing and merely be a deferred one-shot dressed up as reactive code -
-    // and flipping validity from inside change detection risks the classic changed-after-checked
-    // error in dev mode. Running after the render keeps the validator arriving late but makes the
-    // revalidation explicit.
-    afterNextRender(() => {
-      if (this.required) {
-        this.control.addValidators(Validators.required);
-        // emits deliberately: statusChanges is the only data path entry-form-errors and
-        // entryDisplayControlValidation have, so a silent flip to INVALID would never render
-        this.control.updateValueAndValidity();
-      }
-    });
+  // Stays a lifecycle hook. Formly's `required` and `formControl` are plain getters, so an effect
+  // would track nothing, and deferring to `afterNextRender` would leave the form valid for a frame -
+  // long enough for a consumer reading `form.valid` straight after building it to see the wrong answer.
+  ngOnInit(): void {
+    if (this.required) {
+      this.control.addValidators(Validators.required);
+    }
   }
 }

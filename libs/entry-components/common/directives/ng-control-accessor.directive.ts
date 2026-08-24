@@ -2,6 +2,19 @@ import { afterNextRender, DestroyRef, Directive, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AbstractControl, FormControl, FormControlDirective, FormControlName, NgControl, NgModel } from '@angular/forms';
 
+/**
+ * Reaches around a no-op `ControlValueAccessor` to get at the control the host is really bound to.
+ *
+ * @remarks Exists only because `EntryDateTimePickerComponent` does not implement
+ * `ControlValueAccessor`. It applies the no-op accessor host directive to satisfy Angular's
+ * requirement that a `[formControl]`-bound element have an accessor, then uses this directive to
+ * take the control and write to it directly. `keepNgModelInSync` patches up the `ngModel` case that
+ * the no-op accessor breaks.
+ *
+ * Implementing `ControlValueAccessor` properly on the picker removes all three pieces - the no-op
+ * accessor, this directive and the `ngModel` sync. That is a behavioural refactor rather than a
+ * syntax change, so it is tracked separately from the signals migration.
+ */
 @Directive({
     standalone: true
 })

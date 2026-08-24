@@ -77,8 +77,17 @@ providers: [
 ### View directives
 
 ```html
- <button mat-menu-item *entryPermissionsOnly="[PermissionId.UsersRead]" routerLink="users">Users</button>
+ <button mat-menu-item [entryPermissionsOnly]="[PermissionId.UsersRead]" routerLink="users">Users</button>
+ <button mat-menu-item [entryPermissionsExcept]="[PermissionId.Suspended]" routerLink="orders">Orders</button>
 ```
+
+Both are plain attribute directives — they set `display: none` on the host rather than removing it
+from the DOM, so the `*` form is not supported and is reported through `ErrorHandler`.
+
+An unresolved binding (`[entryPermissionsOnly]="user()?.permissions"` while the profile loads) hides
+the host: for a permission gate, "nothing to check against" has to read as denied. Bind an empty
+array where you mean "no restriction". When both aliases are bound, both are evaluated — the host is
+shown only when `entryPermissionsOnly` is held and `entryPermissionsExcept` is not.
 
 ### Pipe
 

@@ -25,7 +25,7 @@ export class SearchFilterExampleComponent {
 
   readonly users = signal<User[]>([]);
   displayedColumns: string[] = ['name', 'email', 'dateOfBirth', 'occupation', 'country', 'score'];
-  filters: SearchFilterBase<any>[] = [];
+  filters: SearchFilterBase<unknown>[] = [];
   private readonly usersService: UsersService = inject(UsersService);
   private readonly locale: string = inject(LOCALE_ID);
 
@@ -55,7 +55,7 @@ export class SearchFilterExampleComponent {
   }
 
   // eslint-disable-next-line max-lines-per-function
-  private createSearchFilters(): SearchFilterBase<any>[] {
+  private createSearchFilters(): SearchFilterBase<unknown>[] {
     return [
       new TextSearchFilter({
         key: 'name',
@@ -123,15 +123,15 @@ export class SearchFilterExampleComponent {
 
   private countryContinent = (country: Country): string => this.countryContinents[country] ?? 'Europe';
 
-  private maskDecimalScore(value: string): string {
+  private readonly maskDecimalScore = (value: unknown): string => {
     const exampleDecimalValue = 1.1;
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     const validSeparator = exampleDecimalValue.toLocaleString(this.locale).substring(1, 2);
     const wrongSeparator = validSeparator === ',' ? '.' : ',';
-    return value
+    return String(value ?? '')
       .replace(wrongSeparator, validSeparator)
       .replace(/[^0-9.,]/gu, '')
       .replace(/,/gu, '.')
       .replace(/^0+/u, ''); // Remove leading zeros
-  }
+  };
 }
