@@ -147,8 +147,11 @@ in a constructor, an `afterNextRender` callback or a `linkedSignal`.
 | `EntryDialogComponent.cancel` | callable member | `cancelAction` input, bound as `[cancel]` |
 | `EntryFileInputComponent.value` | `File \| FileList \| undefined` | `Signal<...>` (read-only) |
 | `EntryFileInputComponent.fileNames` | getter | `Signal<string>` |
+| `EntryFileInputComponent.selectedFile` | `EventEmitter<File \| FileList>` | `OutputEmitterRef<File \| FileList>` |
 | `EntrySearchFilterComponent.searchFilterForm` | `UntypedFormGroup` | `Signal<FormRecord>` |
 | `EntrySearchFilterComponent.renderedSearchFilters` | array property | `Signal<SearchFilterBase<unknown>[]>` |
+| `EntrySearchFilterComponent.searchFilterChange` | `EventEmitter<SearchFilterParams>` | `OutputEmitterRef<SearchFilterParams>` |
+| `EntrySearchFilterComponent.toFormGroup` | `(filters: SearchFilterBase<any>[]) => UntypedFormGroup` | `(filters: SearchFilterBase<unknown>[], currentValues?) => FormRecord` |
 | `SearchFilterBase.formatValue` | `(value: T) => T` | `(value: unknown) => unknown` |
 | `EntryTimePickerComponent.hours` / `.minutes` / `.seconds` / `.meridiem` | plain fields | signals — only reachable through a template ref, the class is not exported |
 | `NgControlAccessorDirective.control` | writable `UntypedFormControl` field | read-only `AbstractControl` getter |
@@ -184,16 +187,23 @@ filter arrays were typed `SearchFilterBase<any>`. Narrow inside the callback:
 ```
 
 The filter arrays themselves are `SearchFilterBase<unknown>[]` now, so `[searchFilters]` and any
-field you keep them in can drop their `any`.
+field you keep them in can drop their `any`. `toFormGroup` and the `as*SearchFilter` cast helpers
+were retyped the same way and lost their generics; they exist for the component's own template, so
+this only reaches you if you subclass.
 
-`dateTimeChanged` still supports `.subscribe()`, but `.next()` is gone — an `OutputEmitterRef` is
-emit-only from the component that owns it:
+All three outputs — `dateTimeChanged`, `EntryFileInputComponent.selectedFile` and
+`EntrySearchFilterComponent.searchFilterChange` — are `OutputEmitterRef` now. `.subscribe()` still
+works, but an `OutputEmitterRef` is not an `Observable`, so `.pipe()`, `.asObservable()` and
+`.next()` are all gone:
 
 ```diff
-- this.picker.dateTimeChanged.next(value);   // no longer available
-+ // let the component emit; subscribe instead of pushing
-  this.picker.dateTimeChanged.subscribe(value => { ... });
+- this.picker.dateTimeChanged.next(value);               // emit-only from inside the component now
+- this.fileInput.selectedFile.pipe(debounceTime(200));   // no longer an Observable
++ this.picker.dateTimeChanged.subscribe(value => { ... });
++ outputToObservable(this.fileInput.selectedFile).pipe(debounceTime(200));
 ```
+
+`outputToObservable` comes from `@angular/core/rxjs-interop`.
 
 The dialog callbacks are the one break with no compile-time signal if you only use the class from a
 template, and the one most likely to bite a subclass:
