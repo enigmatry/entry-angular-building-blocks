@@ -37,30 +37,21 @@ export class EntrySearchFilterComponent {
   /** Replaced on every rebuild, so controls that are gone do not keep formatting subscriptions alive. */
   private formatSubscriptions = new Subscription();
 
-  /**
-   * The filters the form was actually built from. The template iterates this rather than the input
-   * so the rendered controls and the form can never disagree.
-   */
+  /** The filters the form was built from - the template iterates these, so the two cannot disagree. */
   readonly renderedSearchFilters: Signal<SearchFilterBase<unknown>[]> = computed(() => this.built().filters);
 
-  /**
-   * Form group holding one control per search filter. A `FormRecord` rather than a `FormGroup`,
-   * because the keys come from the bound filters and are not known at compile time.
-   */
+  /** A `FormRecord` rather than a `FormGroup`: the keys come from the bound filters, not from compile time. */
   readonly searchFilterForm: Signal<FormRecord> = computed(() => this.built().form);
 
   constructor() {
-    // An effect rather than a computed: building mints controls, assigns each one onto its filter
-    // model and opens formatting subscriptions, none of which a computed body may do. Every new
-    // input array rebuilds, so a filter set replaced once its options load is rendered and bound.
+    // An effect rather than a computed: building mints controls and opens subscriptions, which a computed body may not do.
     effect(onCleanup => {
       const filters = this.searchFilters();
       const currentValues = untracked(() => this.built().form.value);
       const formatSubscriptions = new Subscription();
       this.formatSubscriptions = formatSubscriptions;
 
-      // Values are carried over by key so a rebind does not discard what the user typed - callers
-      // do bind `[searchFilters]="getFilters()"`, which hands over a fresh array on every check.
+      // Values carry over by key so a rebind does not discard what the user typed.
       this.built.set({ filters, form: this.toFormGroup(filters, currentValues) });
 
       onCleanup(() => formatSubscriptions.unsubscribe());

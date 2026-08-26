@@ -49,8 +49,7 @@ export class EntryDateTimePickerComponent<D> {
   public config: EntryDateTimePickerConfig = inject(ENTRY_DATE_TIME_PICKER_CONFIG);
 
   // Control bound to component using FormsApi (ngModel, formControl, formControlName).
-  // The accessor hands back an AbstractControl because it cannot know the value type; this component
-  // does, and its template binds [formControl], so it narrows to FormControl<D> here.
+  // The accessor cannot know the value type; this component does, so it narrows here.
   get formControl(): FormControl<D> {
     return this.ngControlAccessor.control as FormControl<D>;
   }
@@ -67,8 +66,7 @@ export class EntryDateTimePickerComponent<D> {
   readonly maxDate = computed(() => this.floorToDate(this.max()));
 
   constructor() {
-    // Tracks `disabled` only: reacting to every input change would let an unrelated binding
-    // re-enable a control the consumer disabled itself.
+    // Tracks `disabled` only: any other input would let an unrelated binding re-enable a control the consumer disabled.
     effect(() => this.setDisabled(this.disabled()));
 
     afterNextRender(() => {
@@ -81,8 +79,7 @@ export class EntryDateTimePickerComponent<D> {
 
   private readonly mirrorDisabledState = (): void => {
     this.formControl.statusChanges
-      // `startWith` seeds from the current status: statusChanges does not replay, so a parent that
-      // disabled the control before this attached would otherwise leave the calendar interactive.
+      // `startWith` seeds the current status: statusChanges does not replay, so a control disabled before this attached would be missed.
       .pipe(startWith(this.formControl.status), takeUntilDestroyed(this.destroyRef))
       .subscribe(status => {
         if (status === 'DISABLED') {

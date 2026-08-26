@@ -20,8 +20,7 @@ export class CodeViewComponent {
   private readonly snackBar: MatSnackBar = inject(MatSnackBar);
   private readonly domSanitizer: DomSanitizer = inject(DomSanitizer);
 
-  // A computed memoises a thrown error and re-throws it on every read, so an unknown language has to
-  // degrade to unhighlighted source rather than take down the whole template.
+  // A computed memoises a thrown error and re-throws it forever, so an unknown language degrades instead of throwing.
   protected readonly highlightedCode = computed(() => {
     const code = this.codeContent();
     const highlighted = this.tryHighlight(code, this.codeType());

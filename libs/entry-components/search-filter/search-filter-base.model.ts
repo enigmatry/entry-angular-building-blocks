@@ -24,10 +24,9 @@ export class SearchFilterBase<T> {
   /**
    * Optional function to format the value before displaying it in the input control.
    *
-   * @remarks Takes `unknown` rather than `T` so that a filter of any value type stays assignable to
-   * one of `unknown`. This is the only member whose type puts `T` in a function-parameter position
-   * on a property, which under `strictFunctionTypes` makes the whole class contravariant - and that
-   * is what forced the filter arrays to be typed with `any`. Narrow inside the callback.
+   * @remarks Takes `unknown`, not `T`: `T` in a function-parameter position on a property makes the
+   * class contravariant under `strictFunctionTypes`, so a filter of a concrete value type would stop
+   * being assignable to one of `unknown` and the filter arrays could not be typed. Narrow inside.
    */
   formatValue: ((value: unknown) => unknown) | undefined;
 

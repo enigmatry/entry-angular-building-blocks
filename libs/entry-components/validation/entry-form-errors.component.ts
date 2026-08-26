@@ -31,20 +31,13 @@ import { FORM_ERROR_KEY } from './entry-validation';
     standalone: false
 })
 export class EntryFormErrorsComponent {
-  /**
-   * A form for which the validation errors are being displayed. Typed as `AbstractControl` so that
-   * a `FormGroup` with known keys and a `FormRecord` with dynamic ones are both accepted.
-   */
+  /** A form for which the validation errors are being displayed. */
   readonly form = input.required<AbstractControl>();
 
   /** Flipped on every status emission purely to mark this OnPush view dirty. */
   private readonly statusChanged = signal(false);
 
-  /**
-   * Form level messages, read live off the bound form rather than copied into a signal:
-   * `setServerSideValidationErrors` mutates the form in place, and a caller may equally do
-   * `form.setErrors({ general: [...] })` with no event at all.
-   */
+  /** Read live off the bound form, not copied into a signal: callers mutate the form's errors in place, sometimes with no event. */
   protected get generalErrors(): string[] {
     this.statusChanged();
     const form = this.form() as AbstractControl | undefined;
@@ -54,8 +47,7 @@ export class EntryFormErrorsComponent {
   constructor() {
     toObservable(this.form)
       .pipe(
-        // The guard covers a caller binding undefined - throwing here would kill the pipeline for
-        // good, because toObservable replays and never re-subscribes.
+        // The guard covers a caller binding undefined - throwing would kill this pipeline for good, since toObservable never re-subscribes.
         switchMap(form => form ? form.statusChanges : EMPTY),
         takeUntilDestroyed()
       )

@@ -14,9 +14,7 @@ export class FormlyDateTimePickerComponent extends FieldType<FormlyFieldConfig> 
     return this.formControl as FormControl;
   }
 
-  // Stays a lifecycle hook. Formly's `required` and `formControl` are plain getters, so an effect
-  // would track nothing, and deferring to `afterNextRender` would leave the form valid for a frame -
-  // long enough for a consumer reading `form.valid` straight after building it to see the wrong answer.
+  // Stays a lifecycle hook: Formly's `required` is a plain getter an effect cannot track, and after-render would leave the form valid for a frame.
   ngOnInit(): void {
     if (this.required) {
       this.control.addValidators(Validators.required);

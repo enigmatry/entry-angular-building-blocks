@@ -20,9 +20,7 @@ export class EntryButtonDirective {
   private readonly config: EntryButtonConfig = inject(ENTRY_BUTTON_CONFIG);
   private readonly matButton = inject(MatButton, { optional: true });
 
-  // Runs in the constructor rather than ngOnInit, and deliberately not in an after-render hook:
-  // `MatButton.color` feeds that component's own host bindings, so it has to be set before Material
-  // first checks its view or the colour never lands.
+  // Constructor, not a lifecycle or after-render hook: `MatButton.color` feeds its own host bindings and must be set before its first check.
   constructor() {
     const entryButtonType: 'submit' | 'cancel' = this.getEntryType();
     const buttonConfig: MatButtonConfig = this.config[entryButtonType];

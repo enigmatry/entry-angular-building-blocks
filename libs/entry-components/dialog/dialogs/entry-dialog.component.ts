@@ -42,11 +42,7 @@ export class EntryDialogComponent {
     /** Provide custom buttons template */
     readonly buttonsTemplate = input<TemplateRef<any> | null | undefined>(undefined);
 
-    /**
-     * Callback invoked when the dialog is confirmed. Renamed on the class but still bound as
-     * `[confirm]`: keeping the old name would make `this.confirm()` return the callback instead of
-     * invoking it - silently, for any subclass. The rename turns that into a compile error.
-     */
+    /** Confirm callback. Renamed from `confirm` because `this.confirm()` would silently return the callback, not invoke it. */
     // eslint-disable-next-line @angular-eslint/no-input-rename
     readonly confirmAction = input<() => Observable<unknown>>(() => of(true), { alias: 'confirm' });
 

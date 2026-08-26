@@ -32,8 +32,7 @@ export class AutoDisableButtonDirective {
   });
 
   constructor() {
-    // The enclosing <form> has to be in the DOM before `closest` can find it, so this waits for the
-    // first render instead of running in ngOnInit. No click can reach the button before then.
+    // The enclosing <form> has to be in the DOM before `closest` can find it, so this waits for the first render.
     afterNextRender(() => this.listenForDisableTrigger());
   }
 

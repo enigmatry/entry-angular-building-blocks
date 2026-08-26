@@ -77,10 +77,7 @@ export class EntryTimePickerComponent<D> {
     }
   };
 
-  /**
-   * Seconds for the committed value: the bound date when seconds are shown, an explicit
-   * `defaultTime` when one was given, and otherwise zero rather than the current second.
-   */
+  /** Falls back to zero rather than the current second, so a value committed twice does not drift. */
   private readonly secondsFromSource = (date: D | undefined): number => {
     if (this.showSeconds() && date) {
       return this.timeAdapter.getSeconds(date);

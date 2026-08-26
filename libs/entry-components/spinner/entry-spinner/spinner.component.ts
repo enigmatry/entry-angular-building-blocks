@@ -39,8 +39,7 @@ export class EntrySpinnerComponent {
   private readonly destroyRef = inject(DestroyRef);
 
   constructor() {
-    // The template ref only exists once the view has rendered, so the overlay is built then rather
-    // than in ngOnInit - signal queries have no `static` option.
+    // Signal queries have no `static` option, so the template ref is only readable after the first render.
     afterNextRender(() => {
       this.createOverlay();
       this.overlayRef.attach(new TemplatePortal(this.templateRef(), this.viewContainerRef));

@@ -27,14 +27,7 @@ export class NgControlAccessorDirective {
     private standaloneControl: AbstractControl | undefined;
     private readonly destroyRef = inject(DestroyRef);
 
-    /**
-     * Control the host is bound to through the forms API, or a standalone control when the host is
-     * not bound to one. Resolved per read, because the owning form directive only populates its
-     * control in `ngOnChanges` - memoising would lock in the fallback. Only the fallback is cached.
-     *
-     * Typed as `AbstractControl` because the directive cannot know the host's value type: a directive
-     * takes no type arguments from the element it sits on. A host that does know casts to its own.
-     */
+    /** Resolved per read: the owning form directive only populates its control in `ngOnChanges`, so memoising would lock in the fallback. */
     get control(): AbstractControl {
         const boundControl = this.boundControl();
         if (boundControl) {

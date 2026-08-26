@@ -21,13 +21,7 @@ export class EntryPermissionDirective<T extends PermissionType> {
   /** Hides the host element when the user holds these permissions. */
   readonly except = input<T[] | undefined>(undefined, { alias: 'entryPermissionsExcept' });
 
-  /**
-   * Both aliases are evaluated when both are bound - the host is shown only when `only` is held and
-   * `except` is not. The selector allows the combination and neither condition may be ignored.
-   *
-   * Denies by default: an unresolved binding arrives as `undefined`, and for a permission gate
-   * "nothing to check against" has to read as hidden.
-   */
+  /** Denies by default: an unresolved binding arrives as `undefined`, which for a gate has to read as hidden. */
   private readonly isHidden = computed(() => {
     const only = this.only();
     const except = this.except();
@@ -42,19 +36,15 @@ export class EntryPermissionDirective<T extends PermissionType> {
   });
 
   constructor() {
-    // Renderer2 rather than a `[style.display]` host binding: a host binding loses to a static
-    // `style` on the same element, leaving `<div style="display: flex" entryPermissionsOnly>` visible.
+    // Renderer2, not a `[style.display]` host binding: a host binding loses to a static `style` on the same element.
     effect(() => this.toggleVisibility(!this.isHidden()));
   }
 
   private readonly toggleVisibility = (show: boolean): void => {
     const element = this.elementRef.nativeElement;
 
-    // `nodeType` rather than `instanceof HTMLElement`: those constructors are browser globals and
-    // undefined under a Node SSR renderer. Only the comment node produced by the unsupported
-    // `*entryPermissionsOnly` form falls through here.
+    // `nodeType` rather than `instanceof HTMLElement`: those constructors are undefined under a Node SSR renderer.
     if (element?.nodeType !== ELEMENT_NODE) {
-      // Reported once, not once per effect run.
       if (!this.reportedUnsupportedHost) {
         this.reportedUnsupportedHost = true;
         this.errorHandler.handleError(new Error(

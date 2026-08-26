@@ -17,10 +17,7 @@ export class AutocompleteSearchFilterComponent<T> {
 
   readonly searchField = new FormControl('');
 
-  /**
-   * Options returned by the most recent search. `equal: () => false` because a consumer's `search()`
-   * may resolve to a cached array, and nothing else dirties this OnPush view after the debounce.
-   */
+  /** `equal: () => false` because a consumer's `search()` may resolve to a cached array, and nothing else dirties this view. */
   readonly options = signal<SelectOption<T>[]>([], { equal: () => false });
 
   private readonly errorHandler = inject(ErrorHandler);

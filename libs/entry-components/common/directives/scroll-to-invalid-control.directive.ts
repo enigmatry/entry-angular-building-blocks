@@ -23,8 +23,7 @@ export class ScrollToInvalidControlDirective {
   private readonly destroyRef = inject(DestroyRef);
 
   constructor() {
-    // Nothing can submit the form before it has rendered, so the listener is attached then rather
-    // than in ngOnInit.
+    // Nothing can submit the form before it has rendered, so the listener attaches then rather than in ngOnInit.
     afterNextRender(() => {
       fromEvent(this.elementRef.nativeElement, 'submit')
         .pipe(takeUntilDestroyed(this.destroyRef))
@@ -45,8 +44,7 @@ export class ScrollToInvalidControlDirective {
         behavior: 'smooth',
         block: 'center' // vertical alignment
       });
-      // Scrolling alone leaves keyboard and screen-reader users on the submit button with no
-      // indication anything happened (WCAG 2.4.3, 3.3.1).
+      // Scrolling alone leaves keyboard and screen-reader users on the submit button (WCAG 2.4.3, 3.3.1).
       this.focusableWithin(firstInvalidControl)?.focus({ preventScroll: true });
     }
   };

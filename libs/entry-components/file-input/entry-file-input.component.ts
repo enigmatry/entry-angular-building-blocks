@@ -84,10 +84,7 @@ export class EntryFileInputComponent implements ControlValueAccessor, Validator 
 
   private readonly selectedValue = signal<File | FileList | undefined>(undefined);
 
-  /**
-   * Current selected [File | FileList] object. Read-only: writing it directly would move the value
-   * without notifying the forms API. Go through the control, or `clear()`.
-   */
+  /** Current selected [File | FileList] object. Read-only - writing it directly would bypass the forms API; use `clear()`. */
   readonly value: Signal<File | FileList | undefined> = this.selectedValue.asReadonly();
 
   /**
@@ -101,10 +98,8 @@ export class EntryFileInputComponent implements ControlValueAccessor, Validator 
   /** Effective disabled state: the `disabled` input, or the forms API through `setDisabledState`. */
   readonly effectiveDisabled: Signal<boolean> = this.disabledState.asReadonly();
 
-  /** The visible button that proxies clicks to the hidden native file input. */
   readonly fileButton = viewChild.required('fileButton', { read: ElementRef<HTMLElement> });
 
-  /** The hidden native file input that actually holds the selection. */
   readonly fileInput = viewChild<ElementRef<HTMLInputElement>>('fileInput');
 
   /** Display label for the current selection: a file name, or a count when multiple. */
@@ -154,8 +149,7 @@ export class EntryFileInputComponent implements ControlValueAccessor, Validator 
   readonly clear = (): void => {
     this.selectedValue.set(undefined);
     this.onChange(undefined);
-    // Not `viewChild.required`: a consumer may call this before the view is refreshed, and throwing
-    // would leave the value cleared but the native input still showing the old file name.
+    // Not `viewChild.required`: a consumer may call this before the first refresh, and throwing would leave a stale file name shown.
     const fileInput = this.fileInput();
     if (fileInput) {
       this.renderer.setProperty(fileInput.nativeElement, 'value', '');

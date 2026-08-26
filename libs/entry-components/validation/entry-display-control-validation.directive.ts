@@ -31,17 +31,13 @@ export class EntryDisplayControlValidationDirective {
       .pipe(
         // clear on switch, so a re-bound control cannot leave the previous one's message behind
         tap(() => this.element.nativeElement.innerText = ''),
-        // `startWith` covers a control that is already invalid when bound, which is the normal state
-        // straight after `setServerSideValidationErrors`. The guard covers a null control - every
-        // search-filter template binds `form().get(key)!`, and a key with no control would otherwise
-        // error this pipeline for good, since `toObservable` replays and never re-subscribes.
+        // `startWith` catches a control already invalid when bound; the null guard keeps a missing key from erroring the pipeline for good.
         switchMap(control => control ? control.statusChanges.pipe(startWith(control.status)) : EMPTY),
         takeUntilDestroyed()
       )
       .subscribe((controlStatus: FormControlStatus) => {
         const control = this.control();
-        // Clearing on anything other than INVALID matters now that the text is written on bind:
-        // master only ever wrote, so a message survived the field being corrected.
+        // Clearing on anything but INVALID matters now the text is written on bind - otherwise a message survives the field being corrected.
         this.element.nativeElement.innerText = controlStatus === 'INVALID'
           ? this.extractValidationMessages(control)
           : '';
