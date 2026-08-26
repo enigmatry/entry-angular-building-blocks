@@ -1,9 +1,9 @@
+import { httpResource } from '@angular/common/http';
 import { afterNextRender, ChangeDetectionStrategy, Component, computed, ElementRef, inject, input, NgZone,
-  Renderer2, resource, SecurityContext } from '@angular/core';
+  Renderer2, SecurityContext } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import hljs from 'highlight.js';
 import MarkdownIt from 'markdown-it';
-import { firstValueFrom } from 'rxjs';
 import { FileLoadService } from '../services/file-load.service';
 
 @Component({
@@ -23,11 +23,8 @@ export class MarkdownViewerComponent {
   private readonly renderer: Renderer2 = inject(Renderer2);
   private readonly ngZone: NgZone = inject(NgZone);
 
-  /** `params` is what makes this reactive - a read inside the loader is untracked, so it would never reload. */
-  private readonly loadedFile = resource({
-    params: () => this.fileUrl(),
-    loader: async({ params: fileUrl }) => firstValueFrom(this.fileLoad.loadDocumentationFile(fileUrl))
-  });
+  /** An undefined url means no request, which is what keeps this idle for the `[markdownContent]` usage. */
+  private readonly loadedFile = httpResource.text(() => this.fileLoad.documentationFileUrl(this.fileUrl()));
 
   /** Inline content wins over a loaded file, and a failed load falls back to a notice. */
   protected readonly markdownContentHtml = computed<SafeHtml>(() => {

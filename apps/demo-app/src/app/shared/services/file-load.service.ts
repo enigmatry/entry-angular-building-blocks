@@ -10,10 +10,12 @@ import { FileExtension } from '../models/file-extension.type';
 export class FileLoadService {
     private readonly httpClient: HttpClient = inject(HttpClient);
 
-    loadDocumentationFile = (path: string): Observable<string> => {
-        const url = this.isAssetsUrl(path) ? path
+    documentationFileUrl = (path: string | undefined): string | undefined => {
+        if (!path) {
+            return undefined;
+        }
+        return this.isAssetsUrl(path) ? path
             : `${environment.documentationUri}${path}?v=${this.getVersion()}`;
-        return this.httpClient.get(url, { responseType: 'text' });
     };
 
     loadCodeFile = (path: string, type: FileExtension): Observable<string> =>
