@@ -78,7 +78,8 @@ export class EntrySearchFilterComponent {
     const group: Record<string, AbstractControl> = {};
     searchFilters.forEach(searchFilter => {
       const formControl = searchFilter.toFormControl();
-      if (searchFilter.key in currentValues) {
+      // Own keys only - `in` matches `constructor` and would seed the control with a function.
+      if (Object.hasOwn(currentValues, searchFilter.key)) {
         formControl.setValue(currentValues[searchFilter.key], { emitEvent: false });
       }
       group[searchFilter.key] = formControl;
