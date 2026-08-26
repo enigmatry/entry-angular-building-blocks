@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatAnchor, MatButton } from '@angular/material/button';
+import { MatButton } from '@angular/material/button';
 import { EntryButtonDirective } from './entry-button.directive';
 
 @NgModule({
@@ -9,8 +9,7 @@ import { EntryButtonDirective } from './entry-button.directive';
   ],
   imports: [
     CommonModule,
-    MatButton,
-    MatAnchor
+    MatButton
   ],
   exports: [
     EntryButtonDirective

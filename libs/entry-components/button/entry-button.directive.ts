@@ -1,5 +1,5 @@
 import { Directive, ElementRef, inject } from '@angular/core';
-import { MatButton, MatAnchor } from '@angular/material/button';
+import { MatButton } from '@angular/material/button';
 import { ThemePalette } from '@angular/material/core';
 import { ENTRY_BUTTON_CONFIG, EntryButtonConfig, MatButtonConfig } from './entry-button-config';
 
@@ -19,7 +19,6 @@ export class EntryButtonDirective {
   private readonly elementRef: ElementRef<HTMLElement> = inject(ElementRef<HTMLElement>);
   private readonly config: EntryButtonConfig = inject(ENTRY_BUTTON_CONFIG);
   private readonly matButton = inject(MatButton, { optional: true });
-  private readonly matAnchor = inject(MatAnchor, { optional: true });
 
   // Runs in the constructor rather than ngOnInit, and deliberately not in an after-render hook:
   // `MatButton.color` feeds that component's own host bindings, so it has to be set before Material
@@ -34,13 +33,8 @@ export class EntryButtonDirective {
     this.elementRef.nativeElement.classList.add(...entryClasses, ...matClasses);
 
     const color: ThemePalette = buttonConfig.color;
-    if (color) {
-      if (this.matButton) {
-        this.matButton.color = color;
-      }
-      if (this.matAnchor) {
-        this.matAnchor.color = color;
-      }
+    if (color && this.matButton) {
+      this.matButton.color = color;
     }
   }
 
