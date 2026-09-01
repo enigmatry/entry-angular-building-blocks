@@ -48,6 +48,7 @@ export class EntryFormErrorsComponent {
     toObservable(this.form)
       .pipe(
         // The guard covers a caller binding undefined - throwing would kill this pipeline for good, since toObservable never re-subscribes.
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         switchMap(form => form ? form.statusChanges : EMPTY),
         takeUntilDestroyed()
       )

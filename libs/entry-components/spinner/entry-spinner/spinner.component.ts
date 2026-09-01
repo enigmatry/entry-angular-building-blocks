@@ -30,7 +30,7 @@ export class EntrySpinnerComponent {
   readonly hasBackgroundOverlay = input(true);
 
   private readonly templateRef = viewChild.required<TemplateRef<unknown>>('matSpinner');
-  private overlayRef: OverlayRef;
+  private overlayRef: OverlayRef | undefined;
 
   private readonly overlay = inject(Overlay);
   private readonly viewContainerRef = inject(ViewContainerRef);
@@ -41,14 +41,14 @@ export class EntrySpinnerComponent {
   constructor() {
     // Signal queries have no `static` option, so the template ref is only readable after the first render.
     afterNextRender(() => {
-      this.createOverlay();
+      this.overlayRef = this.createOverlay();
       this.overlayRef.attach(new TemplatePortal(this.templateRef(), this.viewContainerRef));
     });
 
     this.destroyRef.onDestroy(() => this.disposeOverlayRef());
   }
 
-  private readonly createOverlay = (): void => {
+  private readonly createOverlay = (): OverlayRef => {
     const overlayConfig = new OverlayConfig({
       hasBackdrop: this.hasBackgroundOverlay(),
       positionStrategy: this.overlay.position()
@@ -57,7 +57,7 @@ export class EntrySpinnerComponent {
         .centerVertically()
     });
     this.configureOverlayContainer();
-    this.overlayRef = this.overlay.create(overlayConfig);
+    return this.overlay.create(overlayConfig);
   };
 
   private readonly configureOverlayContainer = (): void => {

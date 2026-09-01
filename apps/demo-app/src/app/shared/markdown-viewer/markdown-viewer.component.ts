@@ -50,7 +50,7 @@ export class MarkdownViewerComponent {
       highlight: this.highlightCode
     });
 
-    const html = converter.render(markdown ?? '');
+    const html = converter.render(markdown);
     const sanitizedHtml = this.domSanitizer.sanitize(SecurityContext.HTML, html);
     const htmlWithHeadingIds = this.addIdsToHeadings(sanitizedHtml);
 
@@ -74,7 +74,7 @@ export class MarkdownViewerComponent {
   };
 
   private readonly scrollToAnchor = (scope: HTMLElement, anchor: string): boolean => {
-    if (scope && anchor) {
+    if (anchor) {
       const headingId = this.getHeadingId(anchor);
       const headingToJumpTo = scope.querySelector(`[id="${headingId}"]`);
 

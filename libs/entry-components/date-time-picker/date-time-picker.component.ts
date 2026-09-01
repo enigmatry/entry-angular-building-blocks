@@ -135,12 +135,12 @@ export class EntryDateTimePickerComponent<D> {
   };
 
   private readonly setDisabled = (disabled: boolean): void => {
-    if (disabled && this.formControl?.enabled) {
-      this.formControl?.disable();
-      this.calendarControl?.disable({ emitEvent: false });
-    } else if (this.formControl?.disabled) {
-      this.formControl?.enable();
-      this.calendarControl?.enable({ emitEvent: false });
+    if (disabled && this.formControl.enabled) {
+      this.formControl.disable();
+      this.calendarControl.disable({ emitEvent: false });
+    } else if (this.formControl.disabled) {
+      this.formControl.enable();
+      this.calendarControl.enable({ emitEvent: false });
     }
   };
 }

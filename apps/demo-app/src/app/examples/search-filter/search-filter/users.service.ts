@@ -30,16 +30,16 @@ export class UsersService {
     let users = this.data;
 
     if (!this.noFilterParam(searchParams, 'name')) {
-      users = users?.filter(x => x.firstName?.toLowerCase().includes(searchParams['name'].toLowerCase())
-        || x.lastName?.toLowerCase().includes(searchParams['name'].toLowerCase()));
+      users = users.filter(x => x.firstName.toLowerCase().includes(searchParams['name'].toLowerCase())
+        || x.lastName.toLowerCase().includes(searchParams['name'].toLowerCase()));
     }
     if (!this.noFilterParam(searchParams, 'occupation')) {
-      users = users?.filter(x => searchParams['occupation'] instanceof Array
+      users = users.filter(x => searchParams['occupation'] instanceof Array
         ? searchParams['occupation'].includes(x.occupation)
         : searchParams['occupation'] === x.occupation);
     }
     if (!this.noFilterParam(searchParams, 'username')) {
-      users = users?.filter(x => searchParams['username'] instanceof Array
+      users = users.filter(x => searchParams['username'] instanceof Array
         ? searchParams['username'].includes(x.userName)
         : searchParams['username'] === x.userName);
     }

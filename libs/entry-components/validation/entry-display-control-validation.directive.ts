@@ -32,6 +32,7 @@ export class EntryDisplayControlValidationDirective {
         // clear on switch, so a re-bound control cannot leave the previous one's message behind
         tap(() => this.element.nativeElement.innerText = ''),
         // `startWith` catches a control already invalid when bound; the null guard keeps a missing key from erroring the pipeline for good.
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         switchMap(control => control ? control.statusChanges.pipe(startWith(control.status)) : EMPTY),
         takeUntilDestroyed()
       )

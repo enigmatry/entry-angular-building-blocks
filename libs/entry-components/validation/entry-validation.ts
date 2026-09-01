@@ -29,7 +29,7 @@ const getFormControl = (formControl: AbstractControl | null | undefined, keys: s
  */
 const setServerSideValidationErrors = (error: IValidationProblemDetails, form: AbstractControl) => {
     form.setErrors(null);
-    const validationErrors = error?.errors;
+    const validationErrors = error.errors;
     const formErrors: ValidationErrors = {};
 
     if (validationErrors) {
