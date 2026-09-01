@@ -64,6 +64,8 @@ export default defineConfig(
           "type": "attribute"
         }
       ],
+      "@angular-eslint/no-uncalled-signals": "error",
+      "@typescript-eslint/restrict-template-expressions": "error",
       "@stylistic/array-bracket-newline": "off",
       "@stylistic/array-bracket-spacing": [
         "error",

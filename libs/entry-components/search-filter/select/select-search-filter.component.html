@@ -1,12 +1,12 @@
-<mat-form-field [formGroup]="form" subscriptSizing="dynamic">
-    <mat-label [attr.for]="searchFilter.key">{{searchFilter.label}}</mat-label>
-    <mat-select [formControlName]="searchFilter.key" [id]="searchFilter.key" [multiple]="searchFilter.multiSelect">
-        @if (!searchFilter.multiSelect && searchFilter.showNoneOption) {
+<mat-form-field [formGroup]="form()" subscriptSizing="dynamic">
+    <mat-label [attr.for]="searchFilter().key">{{searchFilter().label}}</mat-label>
+    <mat-select [formControlName]="searchFilter().key" [id]="searchFilter().key" [multiple]="searchFilter().multiSelect">
+        @if (!searchFilter().multiSelect && searchFilter().showNoneOption) {
             <mat-option [value]="undefined">
                 {{config.noneSelectedOptionText}}
             </mat-option>
         }
-        @let groups = (searchFilter.options$ !== undefined ? (searchFilter.options$ | async) : searchFilter.options) | groupSelectOptions;
+        @let groups = (searchFilter().options$ !== undefined ? (searchFilter().options$ | async) : searchFilter().options) | groupSelectOptions;
         @for (group of groups; track group.groupName) {
             @if (group.groupName) {
                 <mat-optgroup [label]="group.groupName">
@@ -21,5 +21,5 @@
             }
         }
     </mat-select>
-    <mat-error entryDisplayControlValidation [control]="form.get(searchFilter.key)!"></mat-error>
+    <mat-error entryDisplayControlValidation [control]="form().get(searchFilter().key)!"></mat-error>
 </mat-form-field>

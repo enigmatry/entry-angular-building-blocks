@@ -1,9 +1,9 @@
 <mat-form-field subscriptSizing="dynamic">
-    <mat-label>{{searchFilter.label}}</mat-label>
-    <input type="text" matInput [placeholder]="searchFilter.placeholder"
-        [formControl]="searchField" [id]="searchFilter.key" [matAutocomplete]="auto">
+    <mat-label>{{searchFilter().label}}</mat-label>
+    <input type="text" matInput [placeholder]="searchFilter().placeholder"
+        [formControl]="searchField" [id]="searchFilter().key" [matAutocomplete]="auto">
     <mat-autocomplete [displayWith]="displayFn" #auto="matAutocomplete" (optionSelected)="onSelected($event)">
-        @for (group of (options$ | async | groupSelectOptions); track group.groupName) {
+        @for (group of (options() | groupSelectOptions); track group.groupName) {
             @if (group.groupName) {
                 <mat-optgroup [label]="group.groupName">
                     @for (child of group.options; track child.key) {

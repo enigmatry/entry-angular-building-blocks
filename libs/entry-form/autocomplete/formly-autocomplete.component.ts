@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { FieldType } from '@ngx-formly/material';
 
@@ -10,7 +10,7 @@ import { FieldType } from '@ngx-formly/material';
     standalone: false
 })
 export class FormlyAutocompleteComponent extends FieldType<FormlyFieldConfig> {
-  get control(): UntypedFormControl {
-    return this.formControl as UntypedFormControl;
+  get control(): FormControl {
+    return this.formControl as FormControl;
   }
 }

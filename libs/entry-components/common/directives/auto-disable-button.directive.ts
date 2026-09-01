@@ -1,8 +1,10 @@
 import { NumberInput, coerceNumberProperty } from '@angular/cdk/coercion';
-import { Directive, ElementRef, inject, Input, OnDestroy, OnInit } from '@angular/core';
-import { Subject, fromEvent, timer } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { afterNextRender, DestroyRef, Directive, ElementRef, inject, input } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { fromEvent, timer } from 'rxjs';
 import { NG_VALID_CLASS } from '../constants';
+
+const DEFAULT_DISABLE_INTERVAL_IN_MS = 2000;
 
 /**
  * Auto disable button after click or submit with entry-auto-disable directive.
@@ -19,21 +21,22 @@ import { NG_VALID_CLASS } from '../constants';
   // eslint-disable-next-line @angular-eslint/directive-selector
   selector: 'button[entry-auto-disable]:not([disabled])'
 })
-export class AutoDisableButtonDirective implements OnInit, OnDestroy {
-  private _destroy$ = new Subject<void>();
-  private _disableIntervalInMs = 2000;
+export class AutoDisableButtonDirective {
   private readonly elementRef: ElementRef<HTMLButtonElement> = inject(ElementRef);
+  private readonly destroyRef = inject(DestroyRef);
 
-  @Input('entry-auto-disable')
-  get disableIntervalInMs() {
-    return this._disableIntervalInMs;
-  }
-  set disableIntervalInMs(value: NumberInput) {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    this._disableIntervalInMs = coerceNumberProperty(value, 2000);
+  /** How long the button stays disabled after a click or submit, in milliseconds. */
+  readonly disableIntervalInMs = input(DEFAULT_DISABLE_INTERVAL_IN_MS, {
+    alias: 'entry-auto-disable',
+    transform: (value: NumberInput) => coerceNumberProperty(value, DEFAULT_DISABLE_INTERVAL_IN_MS)
+  });
+
+  constructor() {
+    // The enclosing <form> has to be in the DOM before `closest` can find it, so this waits for the first render.
+    afterNextRender(() => this.listenForDisableTrigger());
   }
 
-  ngOnInit(): void {
+  private readonly listenForDisableTrigger = (): void => {
     const button = this.elementRef.nativeElement;
     const isTypeSubmit = button.getAttribute('type') === 'submit';
     const form: HTMLFormElement | null = button.closest('form');
@@ -41,32 +44,27 @@ export class AutoDisableButtonDirective implements OnInit, OnDestroy {
     if (isTypeSubmit && form) {
       // listen to form submit event
       fromEvent(form, 'submit')
-        .pipe(takeUntil(this._destroy$))
+        .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe(_ => {
           if (form.matches(NG_VALID_CLASS)) {
-            this.disableButton(this._disableIntervalInMs);
+            this.disableButton(this.disableIntervalInMs());
           }
         });
-    } else {
-      // otherwise listen to click event
-      fromEvent(button, 'click')
-        .pipe(takeUntil(this._destroy$))
-        .subscribe(_ => this.disableButton(this._disableIntervalInMs));
+      return;
     }
-  }
+    // otherwise listen to click event
+    fromEvent(button, 'click')
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(_ => this.disableButton(this.disableIntervalInMs()));
+  };
 
-  ngOnDestroy(): void {
-    this._destroy$.next();
-    this._destroy$.complete();
-  }
-
-  private disableButton(disablePeriodInMs: number): void {
+  private readonly disableButton = (disablePeriodInMs: number): void => {
     const button = this.elementRef.nativeElement;
 
     button.disabled = true;
 
     timer(disablePeriodInMs)
-      .pipe(takeUntil(this._destroy$))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => button.disabled = false);
-  }
+  };
 }

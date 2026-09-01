@@ -79,7 +79,11 @@ Each entry point exposes only what's in its `public-api.ts`.
 
 ### Standalone migration
 
-Most lib components currently use `standalone: false` because of a Formly dependency. Migration to standalone is in progress — `EntryTableComponent` and demo app components are already standalone. When working on a component, prefer standalone if possible; if touching a non-standalone component with a Formly dependency, leave it as-is until Formly can be removed.
+Migration to standalone has not happened yet — 69 of the 91 components, directives and pipes still declare `standalone: false`. Already standalone: everything under `table/`, the `common/` directives, `sort.pipe`, `app.component`, and the demo app's `features/*` documentation components.
+
+Formly is **not** the blocker it was once assumed to be. `entry-components` has no `@ngx-formly` imports at all; Formly lives only in `entry-form` and the demo app's form/validation examples, and a standalone component can be imported into an `NgModule` regardless. The one piece needing design work is `FormlyAutocompleteModule`, which registers its field type through `FormlyModule.forChild()`.
+
+When working on a component, prefer standalone.
 
 ### Configuration pattern
 
@@ -219,6 +223,21 @@ ngOnInit(): void { ... }                   // ✅ lifecycle hook
 readonly ngOnInit = (): void => { ... };   // ❌ never called
 save(): void { ... }                       // ❌ use readonly arrow
 ```
+
+### Member visibility
+Anything reached **only** from the component's own template is `protected readonly` — templates can
+see protected members, so `public` would overstate the surface.
+
+```ts
+protected readonly rows = computed(() => ...);   // template only
+private readonly toKey = (x: number): string => { ... };  // neither template nor other classes
+readonly value: Signal<File | undefined> = ...;  // public: read by other components/services
+```
+
+**In `libs/` this applies to demo/app code and to genuinely internal library members only.** These
+are published packages — narrowing an exported class's member from `public` to `protected` removes it
+from the published API and breaks consumers. Check whether a member is in a `public-api.ts` surface
+before tightening it, and call the change out in the migration notes if you do.
 
 ### Async handling
 One-shot Observables (HTTP calls, `TranslateService.get()`) use `firstValueFrom()` with `async/await`. Reserve `.subscribe()` for true multi-value streams — Subjects, event buses, router events, websockets.

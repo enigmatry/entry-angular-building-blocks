@@ -1,53 +1,48 @@
-import { ChangeDetectionStrategy, Component, ElementRef, inject, Input, NgZone, OnInit, Renderer2, SecurityContext, signal } from '@angular/core';
+import { httpResource } from '@angular/common/http';
+import { afterNextRender, ChangeDetectionStrategy, Component, computed, ElementRef, inject, input, NgZone,
+  Renderer2, SecurityContext } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import hljs from 'highlight.js';
 import MarkdownIt from 'markdown-it';
-import { map } from 'rxjs/operators';
 import { FileLoadService } from '../services/file-load.service';
 
 @Component({
   selector: 'app-markdown-viewer',
   templateUrl: './markdown-viewer.component.html',
-  styleUrls: ['./markdown-viewer.component.scss'],
+  styleUrl: './markdown-viewer.component.scss',
   standalone: false,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MarkdownViewerComponent implements OnInit {
-  @Input() fileUrl: string | undefined;
-  @Input() markdownContent: string | undefined;
+export class MarkdownViewerComponent {
+  readonly fileUrl = input<string | undefined>(undefined);
+  readonly markdownContent = input<string | undefined>(undefined);
 
-  readonly markdownContentHtml = signal<SafeHtml>('');
+  private readonly fileLoad: FileLoadService = inject(FileLoadService);
+  private readonly domSanitizer: DomSanitizer = inject(DomSanitizer);
+  private readonly elementRef: ElementRef = inject(ElementRef);
+  private readonly renderer: Renderer2 = inject(Renderer2);
+  private readonly ngZone: NgZone = inject(NgZone);
 
-  private readonly _fileLoad: FileLoadService = inject(FileLoadService);
-  private _domSanitizer: DomSanitizer = inject(DomSanitizer);
-  private _elementRef: ElementRef = inject(ElementRef);
-  private _renderer: Renderer2 = inject(Renderer2);
-  private _ngZone: NgZone = inject(NgZone);
+  /** An undefined url means no request, which is what keeps this idle for the `[markdownContent]` usage. */
+  private readonly loadedFile = httpResource.text(() => this.fileLoad.documentationFileUrl(this.fileUrl()));
 
-  ngOnInit(): void {
-    if (this.fileUrl) {
-      this.loadFileContent();
+  /** Inline content wins over a loaded file, and a failed load falls back to a notice. */
+  protected readonly markdownContentHtml = computed<SafeHtml>(() => {
+    const inlineContent = this.markdownContent();
+    if (inlineContent) {
+      return this.convertMarkdownToHtml(inlineContent);
     }
-    if (this.markdownContent) {
-      this.markdownContentHtml.set(this.convertMarkdownToHtml(this.markdownContent));
+    if (this.loadedFile.error()) {
+      return this.convertMarkdownToHtml(`### No API documentation found :'(`);
     }
-    this.handleAnchorClicks();
+    return this.convertMarkdownToHtml(this.loadedFile.value() ?? '');
+  });
+
+  constructor() {
+    afterNextRender(() => this.handleAnchorClicks());
   }
 
-  private loadFileContent() {
-    this._fileLoad
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      .loadDocumentationFile(this.fileUrl!)
-      .pipe(
-        map(response => this.convertMarkdownToHtml(response))
-      )
-      .subscribe({
-        next: response => this.markdownContentHtml.set(response),
-        error: _ => this.markdownContentHtml.set(`### No API documentation found :'(`)
-      });
-  }
-
-  private convertMarkdownToHtml(markdown: string): SafeHtml {
+  private readonly convertMarkdownToHtml = (markdown: string): SafeHtml => {
     const converter = MarkdownIt('default', {
       html: true,
       breaks: true,
@@ -56,29 +51,29 @@ export class MarkdownViewerComponent implements OnInit {
     });
 
     const html = converter.render(markdown ?? '');
-    const sanitizedHtml = this._domSanitizer.sanitize(SecurityContext.HTML, html);
+    const sanitizedHtml = this.domSanitizer.sanitize(SecurityContext.HTML, html);
     const htmlWithHeadingIds = this.addIdsToHeadings(sanitizedHtml);
 
-    return this._domSanitizer.bypassSecurityTrustHtml(htmlWithHeadingIds);
-  }
+    return this.domSanitizer.bypassSecurityTrustHtml(htmlWithHeadingIds);
+  };
 
-  private handleAnchorClicks() {
-    this._ngZone.runOutsideAngular(() => {
-      this._renderer.listen(this._elementRef.nativeElement, 'click', (event: MouseEvent) => {
+  private readonly handleAnchorClicks = (): void => {
+    this.ngZone.runOutsideAngular(() => {
+      this.renderer.listen(this.elementRef.nativeElement, 'click', (event: MouseEvent) => {
         const anchor: HTMLAnchorElement | null = (event.target as HTMLElement).closest('a[href]');
 
         if (anchor && this.isHeadingLink(anchor)) {
           event.preventDefault();
           const url = new URL(anchor.href);
           const hash = decodeURI(url.hash);
-          this.scrollToAnchor(this._elementRef.nativeElement, hash);
+          this.scrollToAnchor(this.elementRef.nativeElement, hash);
         }
       }
       );
     });
-  }
+  };
 
-  private scrollToAnchor(scope: HTMLElement, anchor: string): boolean {
+  private readonly scrollToAnchor = (scope: HTMLElement, anchor: string): boolean => {
     if (scope && anchor) {
       const headingId = this.getHeadingId(anchor);
       const headingToJumpTo = scope.querySelector(`[id="${headingId}"]`);
@@ -89,14 +84,14 @@ export class MarkdownViewerComponent implements OnInit {
       }
     }
     return false;
-  }
+  };
 
-  isHeadingLink = (anchor: HTMLAnchorElement): boolean => {
+  private readonly isHeadingLink = (anchor: HTMLAnchorElement): boolean => {
     const href = anchor.getAttribute('href');
     return !!href && href.includes('#');
   };
 
-  getHeadingId = (str: string | null): string => {
+  private readonly getHeadingId = (str: string | null): string => {
     if (str) {
       return str
         .replace(/(_|-|\s)+/gu, '')
@@ -120,7 +115,7 @@ export class MarkdownViewerComponent implements OnInit {
     return html ?? '';
   };
 
-  highlightCode = (str: string, lang: string) => {
+  private readonly highlightCode = (str: string, lang: string) => {
     if (lang && hljs.getLanguage(lang)) {
       return hljs.highlight(str, { language: lang }).value;
     }

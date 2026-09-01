@@ -1,28 +1,60 @@
-import { Directive, Input, inject, ElementRef, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, ErrorHandler, Renderer2, computed, effect, inject, input } from '@angular/core';
 import { PermissionType } from './permission-type';
 import { EntryPermissionService } from './permission.service';
+
+const ELEMENT_NODE = 1;
 
 @Directive({
     selector: '[entryPermissionsOnly],[entryPermissionsExcept]',
     standalone: false
 })
 export class EntryPermissionDirective<T extends PermissionType> {
-  private elementRef = inject(ElementRef);
-  private renderer = inject(Renderer2);
-  private permissionService = inject(EntryPermissionService<T>);
+  private readonly elementRef = inject(ElementRef);
+  private readonly renderer = inject(Renderer2);
+  private readonly permissionService = inject(EntryPermissionService<T>);
+  private readonly errorHandler = inject(ErrorHandler);
+  private reportedUnsupportedHost = false;
 
-  @Input('entryPermissionsOnly') set only(permissions: T[]) {
-    this.toggleVisibility(this.permissionService.hasPermissions(permissions));
-  }
+  /** Hides the host element unless the user holds these permissions. */
+  readonly only = input<T[] | undefined>(undefined, { alias: 'entryPermissionsOnly' });
 
-  @Input('entryPermissionsExcept') set except(permissions: T[]) {
-    this.toggleVisibility(!this.permissionService.hasPermissions(permissions));
+  /** Hides the host element when the user holds these permissions. */
+  readonly except = input<T[] | undefined>(undefined, { alias: 'entryPermissionsExcept' });
+
+  /** Denies by default: an unresolved binding arrives as `undefined`, which for a gate has to read as hidden. */
+  private readonly isHidden = computed(() => {
+    const only = this.only();
+    const except = this.except();
+
+    if (only === undefined && except === undefined) {
+      return true;
+    }
+    if (only !== undefined && !this.permissionService.hasPermissions(only)) {
+      return true;
+    }
+    return except !== undefined && this.permissionService.hasPermissions(except);
+  });
+
+  constructor() {
+    // Renderer2, not a `[style.display]` host binding: a host binding loses to a static `style` on the same element.
+    effect(() => this.toggleVisibility(!this.isHidden()));
   }
 
   private readonly toggleVisibility = (show: boolean): void => {
     const element = this.elementRef.nativeElement;
 
-    if(!show) {
+    // `nodeType` rather than `instanceof HTMLElement`: those constructors are undefined under a Node SSR renderer.
+    if (element?.nodeType !== ELEMENT_NODE) {
+      if (!this.reportedUnsupportedHost) {
+        this.reportedUnsupportedHost = true;
+        this.errorHandler.handleError(new Error(
+          'entryPermissionsOnly/entryPermissionsExcept do not support the * form - apply them as a plain attribute'
+        ));
+      }
+      return;
+    }
+
+    if (!show) {
       this.renderer.setStyle(element, 'display', 'none');
       return;
     }

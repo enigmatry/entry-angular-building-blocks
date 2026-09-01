@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, viewChild } from '@angular/core';
 
 @Component({
     selector: 'app-event-plugin-example',
@@ -6,9 +6,9 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
     standalone: false
 })
 export class EventPluginExampleComponent {
-  @ViewChild('events', { static: true }) events: ElementRef<HTMLTextAreaElement>;
+  readonly events = viewChild.required('events', { read: ElementRef<HTMLTextAreaElement> });
 
-  log(eventName: string) {
-    this.events.nativeElement.value += `\n${eventName}`;
-  }
+  readonly log = (eventName: string): void => {
+    this.events().nativeElement.value += `\n${eventName}`;
+  };
 }

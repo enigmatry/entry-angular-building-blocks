@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { UntypedFormGroup } from '@angular/forms';
+import { Component, input } from '@angular/core';
+import { FormRecord } from '@angular/forms';
 import { DateSearchFilter } from './date-search-filter.model';
 
 @Component({
@@ -8,7 +8,7 @@ import { DateSearchFilter } from './date-search-filter.model';
     standalone: false
 })
 export class DateSearchFilterComponent<D> {
-  @Input() searchFilter: DateSearchFilter<D>;
+  readonly searchFilter = input.required<DateSearchFilter<D>>();
   /** Form group to which the search-filter input component will be added. */
-  @Input() form: UntypedFormGroup;
+  readonly form = input.required<FormRecord>();
 }

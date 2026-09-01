@@ -21,8 +21,14 @@ export class SearchFilterBase<T> {
   maxLength: number;
   /** A reference to the form control it represents */
   formControl: FormControl<T | undefined>;
-  /** Optional function to format the value before displaying it in the input control */
-  formatValue: ((value: T) => T) | undefined;
+  /**
+   * Optional function to format the value before displaying it in the input control.
+   *
+   * @remarks Takes `unknown`, not `T`: `T` in a function-parameter position on a property makes the
+   * class contravariant under `strictFunctionTypes`, so a filter of a concrete value type would stop
+   * being assignable to one of `unknown` and the filter arrays could not be typed. Narrow inside.
+   */
+  formatValue: ((value: unknown) => unknown) | undefined;
 
   private readonly maxPossibleLength = 256;
 

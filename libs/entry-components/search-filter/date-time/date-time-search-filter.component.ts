@@ -1,5 +1,5 @@
-import { Component, Input, inject } from '@angular/core';
-import { UntypedFormGroup } from '@angular/forms';
+import { Component, inject, input } from '@angular/core';
+import { FormRecord } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { ENTRY_MAT_DATE_TIME_FORMATS, EntryDateTimeAdapter } from '@enigmatry/entry-components/common';
 import { DateTimeSearchFilter } from './date-time-search-filter.model';
@@ -14,7 +14,7 @@ import { DateTimeSearchFilter } from './date-time-search-filter.model';
     standalone: false
 })
 export class DateTimeSearchFilterComponent<D> {
-  @Input() searchFilter: DateTimeSearchFilter<D>;
+  readonly searchFilter = input.required<DateTimeSearchFilter<D>>();
   /** Form group to which the search-filter input component will be added. */
-  @Input() form: UntypedFormGroup;
+  readonly form = input.required<FormRecord>();
 }

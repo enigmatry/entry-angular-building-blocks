@@ -1,0 +1,9 @@
+# LF in the index and on checkout, so a Windows clone and a CI container agree byte for byte.
+* text=auto eol=lf
+
+*.png binary
+*.ico binary
+*.eot binary
+*.ttf binary
+*.woff binary
+*.woff2 binary

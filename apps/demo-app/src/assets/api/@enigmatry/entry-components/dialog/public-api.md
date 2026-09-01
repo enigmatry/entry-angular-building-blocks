@@ -14,17 +14,19 @@ Base Entry dialog component. Must be extended when building custom dialogs.
 
 #### Properties
 
-| Property | Type | Description | Defined in |
-| ------ | ------ | ------ | ------ |
-| <a id="buttonsalignment"></a> `buttonsAlignment` | [`EntryDialogButtonsAlignment`](#entrydialogbuttonsalignment) | Dialog buttons horizontal alignment |  |
-| <a id="buttonstemplate"></a> `buttonsTemplate` | `TemplateRef`\<`any`\> \| `null` \| `undefined` | Provide custom buttons template |  |
-| <a id="cancelbuttontext"></a> `cancelButtonText` | `string` | Cancel button label |  |
-| <a id="confirmbuttontext"></a> `confirmButtonText` | `string` | Confirm button label |  |
-| <a id="disableconfirm"></a> `disableConfirm` | `boolean` | Enable or disable dialog confirm button |  |
-| <a id="hidebuttons"></a> `hideButtons` | `boolean` | Show or hide dialog buttons |  |
-| <a id="hidecancel"></a> `hideCancel` | `boolean` | Show or hide dialog cancel button |  |
-| <a id="hideclose"></a> `hideClose` | `boolean` | Show or hide dialog close button |  |
-| <a id="title"></a> `title` | `string` | Dialog header title |  |
+| Property | Modifier | Type | Description | Defined in |
+| ------ | ------ | ------ | ------ | ------ |
+| <a id="buttonsalignment"></a> `buttonsAlignment` | `readonly` | `InputSignal`\<[`EntryDialogButtonsAlignment`](#entrydialogbuttonsalignment)\> | Dialog buttons horizontal alignment |  |
+| <a id="buttonstemplate"></a> `buttonsTemplate` | `readonly` | `InputSignal`\<`TemplateRef`\<`any`\> \| `null` \| `undefined`\> | Provide custom buttons template |  |
+| <a id="cancelaction"></a> `cancelAction` | `readonly` | `InputSignal`\<() => `void`\> | Callback invoked when the dialog is cancelled. Bound as `[cancel]` - see `confirmAction`. |  |
+| <a id="cancelbuttontext"></a> `cancelButtonText` | `readonly` | `InputSignal`\<`string`\> | Cancel button label |  |
+| <a id="confirmaction"></a> `confirmAction` | `readonly` | `InputSignal`\<() => `Observable`\<`unknown`\>\> | Callback invoked when the dialog is confirmed. Renamed on the class but still bound as `[confirm]`: keeping the old name would make `this.confirm()` return the callback instead of invoking it - silently, for any subclass. The rename turns that into a compile error. |  |
+| <a id="confirmbuttontext"></a> `confirmButtonText` | `readonly` | `InputSignal`\<`string`\> | Confirm button label |  |
+| <a id="disableconfirm"></a> `disableConfirm` | `readonly` | `InputSignal`\<`boolean`\> | Enable or disable dialog confirm button |  |
+| <a id="hidebuttons"></a> `hideButtons` | `readonly` | `InputSignal`\<`boolean`\> | Show or hide dialog buttons |  |
+| <a id="hidecancel"></a> `hideCancel` | `readonly` | `InputSignal`\<`boolean`\> | Show or hide dialog cancel button |  |
+| <a id="hideclose"></a> `hideClose` | `readonly` | `InputSignal`\<`boolean`\> | Show or hide dialog close button |  |
+| <a id="title"></a> `title` | `readonly` | `InputSignal`\<`string`\> | Dialog header title |  |
 
 ***
 

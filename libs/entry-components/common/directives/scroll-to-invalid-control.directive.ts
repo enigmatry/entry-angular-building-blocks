@@ -1,8 +1,12 @@
-import { Directive, ElementRef, inject, OnDestroy, OnInit } from '@angular/core';
+import { afterNextRender, DestroyRef, Directive, ElementRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlContainer } from '@angular/forms';
-import { Subject, fromEvent } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { fromEvent } from 'rxjs';
 import { NG_INVALID_CLASS } from '../constants';
+
+const FOCUSABLE_CONTROLS = ['input:not([type="hidden"])', 'select', 'textarea', '[tabindex]']
+  .map(selector => `${selector}:not([disabled]):not([tabindex="-1"])`)
+  .join(',');
 
 /**
  * Scroll to first invalid control when form is submitted.
@@ -13,27 +17,25 @@ import { NG_INVALID_CLASS } from '../constants';
   // eslint-disable-next-line @angular-eslint/directive-selector
   selector: 'form[formGroup],form[ngForm]'
 })
-export class ScrollToInvalidControlDirective implements OnInit, OnDestroy {
-  private destroy$ = new Subject<void>();
+export class ScrollToInvalidControlDirective {
   private readonly form = inject(ControlContainer, { self: true });
   private readonly elementRef = inject(ElementRef<HTMLFormElement>);
+  private readonly destroyRef = inject(DestroyRef);
 
-  ngOnInit(): void {
-    fromEvent(this.elementRef.nativeElement, 'submit')
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(_ => {
-        if (this.form.invalid) {
-          this.scrollToInvalidControl();
-        }
-      });
+  constructor() {
+    // Nothing can submit the form before it has rendered, so the listener attaches then rather than in ngOnInit.
+    afterNextRender(() => {
+      fromEvent(this.elementRef.nativeElement, 'submit')
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe(_ => {
+          if (this.form.invalid) {
+            this.scrollToInvalidControl();
+          }
+        });
+    });
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
-  private scrollToInvalidControl() {
+  private readonly scrollToInvalidControl = (): void => {
     const firstInvalidControl: HTMLElement | null =
       this.elementRef.nativeElement.querySelector(NG_INVALID_CLASS);
 
@@ -42,6 +44,12 @@ export class ScrollToInvalidControlDirective implements OnInit, OnDestroy {
         behavior: 'smooth',
         block: 'center' // vertical alignment
       });
+      // Scrolling alone leaves keyboard and screen-reader users on the submit button (WCAG 2.4.3, 3.3.1).
+      this.focusableWithin(firstInvalidControl)?.focus({ preventScroll: true });
     }
-  }
+  };
+
+  // `[tabindex]` is what reaches Material's own controls - a `mat-select` is focusable through its host, not a native element.
+  private readonly focusableWithin = (element: HTMLElement): HTMLElement | null =>
+    element.matches(FOCUSABLE_CONTROLS) ? element : element.querySelector(FOCUSABLE_CONTROLS);
 }

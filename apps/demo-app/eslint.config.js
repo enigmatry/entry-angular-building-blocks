@@ -6,7 +6,7 @@ export default defineConfig([
     {
         files: ['src/**/*.ts'],
         rules: {
-            '@angular-eslint/prefer-standalone': 'off' // TODO: Remove when we get rid of Formly
+            '@angular-eslint/prefer-standalone': 'off' // TODO: Remove once the demo app is standalone
         }
     }
 ]);

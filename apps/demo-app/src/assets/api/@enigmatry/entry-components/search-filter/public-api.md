@@ -101,36 +101,14 @@ Search filter date time input filed configuration.
 
 Entry SearchFilter component.
 
-#### Implements
-
-- `OnInit`
-
 #### Properties
 
-| Property | Type | Default value | Description | Defined in |
+| Property | Modifier | Type | Description | Defined in |
 | ------ | ------ | ------ | ------ | ------ |
-| <a id="searchfilterchange"></a> `searchFilterChange` | `EventEmitter`\<[`SearchFilterParams`](#searchfilterparams)\> | `undefined` | Emits the change in SearchFilterParams so the containing component can apply them and retrieve the filtered results. |  |
-| <a id="searchfilters"></a> `searchFilters` | [`SearchFilterBase`](#searchfilterbase)\<`any`\>[] | `[]` | Configuration of the search filters inputs that will be displayed in the search-filter component. |  |
-
-#### Methods
-
-##### ngOnInit()
-
-> **ngOnInit**(): `void`
-
-A callback method that is invoked immediately after the
-default change detector has checked the directive's
-data-bound properties for the first time,
-and before any of the view or content children have been checked.
-It is invoked only once when the directive is instantiated.
-
-###### Returns
-
-`void`
-
-###### Implementation of
-
-`OnInit.ngOnInit`
+| <a id="renderedsearchfilters"></a> `renderedSearchFilters` | `readonly` | `Signal`\<[`SearchFilterBase`](#searchfilterbase)\<`any`\>[]\> | The filters the form was actually built from. The template iterates this rather than the input so the rendered controls and the form can never disagree. |  |
+| <a id="searchfilterchange"></a> `searchFilterChange` | `readonly` | `OutputEmitterRef`\<[`SearchFilterParams`](#searchfilterparams)\> | Emits the change in SearchFilterParams so the containing component can apply them and retrieve the filtered results. |  |
+| <a id="searchfilterform"></a> `searchFilterForm` | `readonly` | `Signal`\<`FormRecord`\<`AbstractControl`\<`any`, `any`, `any`\>\>\> | Form group holding one control per search filter. A `FormRecord` rather than a `FormGroup`, because the keys come from the bound filters and are not known at compile time. |  |
+| <a id="searchfilters"></a> `searchFilters` | `readonly` | `InputSignal`\<[`SearchFilterBase`](#searchfilterbase)\<`any`\>[]\> | Configuration of the search filters inputs that will be displayed in the search-filter component. |  |
 
 ***
 

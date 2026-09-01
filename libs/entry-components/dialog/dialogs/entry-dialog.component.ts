@@ -1,5 +1,5 @@
 /* eslint-disable no-secrets/no-secrets */
-import { Component, inject, Input, TemplateRef } from '@angular/core';
+import { Component, inject, input, TemplateRef } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Observable, of } from 'rxjs';
 import { EntryDialogButtonsAlignment } from '../entry-dialog-buttons-alignment.type';
@@ -16,7 +16,7 @@ import { ENTRY_DIALOG_CONFIG, EntryDialogConfig } from '../entry-dialog-config.m
 @Component({
     selector: 'entry-dialog',
     templateUrl: './entry-dialog.component.html',
-    styleUrls: ['./entry-dialog.component.scss'],
+    styleUrl: './entry-dialog.component.scss',
     standalone: false
 })
 export class EntryDialogComponent {
@@ -24,29 +24,36 @@ export class EntryDialogComponent {
     protected readonly config: EntryDialogConfig = inject(ENTRY_DIALOG_CONFIG);
 
     /** Dialog header title  */
-    @Input() title: string;
+    readonly title = input('');
     /** Dialog buttons horizontal alignment */
-    @Input() buttonsAlignment: EntryDialogButtonsAlignment = this.config.buttonsAlignment;
+    readonly buttonsAlignment = input<EntryDialogButtonsAlignment>(this.config.buttonsAlignment);
     /** Confirm button label */
-    @Input() confirmButtonText = this.config.confirmButtonText;
+    readonly confirmButtonText = input(this.config.confirmButtonText);
     /** Cancel button label */
-    @Input() cancelButtonText = this.config.cancelButtonText;
+    readonly cancelButtonText = input(this.config.cancelButtonText);
     /** Show or hide dialog buttons */
-    @Input() hideButtons: boolean;
+    readonly hideButtons = input(false);
     /** Show or hide dialog cancel button */
-    @Input() hideCancel: boolean;
+    readonly hideCancel = input(false);
     /** Show or hide dialog close button */
-    @Input() hideClose: boolean = this.config.hideClose;
+    readonly hideClose = input(this.config.hideClose);
     /** Enable or disable dialog confirm button */
-    @Input() disableConfirm: boolean;
+    readonly disableConfirm = input(false);
     /** Provide custom buttons template */
-    @Input() buttonsTemplate: TemplateRef<any> | null | undefined;
+    readonly buttonsTemplate = input<TemplateRef<any> | null | undefined>(undefined);
 
-    @Input() confirm: () => Observable<unknown> = () => of(true);
-    @Input() cancel = () => this.close(false);
+    /** Confirm callback. Renamed from `confirm` because `this.confirm()` would silently return the callback, not invoke it. */
+    // eslint-disable-next-line @angular-eslint/no-input-rename
+    readonly confirmAction = input<() => Observable<unknown>>(() => of(true), { alias: 'confirm' });
 
-    onSubmit = () =>
-        this.confirm().subscribe({
+    /** Callback invoked when the dialog is cancelled. Bound as `[cancel]` - see `confirmAction`. */
+    // eslint-disable-next-line @angular-eslint/no-input-rename
+    readonly cancelAction = input<() => void>(() => this.close(false), { alias: 'cancel' });
+
+    readonly onCancel = (): void => this.cancelAction()();
+
+    readonly onSubmit = () =>
+        this.confirmAction()().subscribe({
             next: closeDialog => {
                 if (closeDialog) {
                     this.close(closeDialog);
@@ -54,5 +61,5 @@ export class EntryDialogComponent {
             }
         });
 
-    close = (value: unknown = true) => this.mdDialogRef.close(value);
+    readonly close = (value: unknown = true) => this.mdDialogRef.close(value);
 }

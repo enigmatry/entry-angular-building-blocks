@@ -8,13 +8,13 @@ import { ValidationService } from '../../validation/validation.service';
   standalone: false
 })
 export class ErrorDialogExampleComponent {
-  private readonly _entryDialog: EntryDialogService = inject(EntryDialogService);
+  private readonly entryDialog: EntryDialogService = inject(EntryDialogService);
   private readonly service: ValidationService = inject(ValidationService);
 
   openError() {
     this.service.submitWithValidationErrors()
       .subscribe({
-        error: err => this._entryDialog.openError({
+        error: err => this.entryDialog.openError({
           title: `One or more validation errors occurred`,
           errors: err
         })

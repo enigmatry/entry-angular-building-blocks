@@ -1,4 +1,4 @@
-import { Component, inject, LOCALE_ID, signal, ViewChild } from '@angular/core';
+import { Component, inject, LOCALE_ID, signal, viewChild } from '@angular/core';
 import { IValidationProblemDetails, setServerSideValidationErrors } from '@enigmatry/entry-components';
 import {
   AutocompleteSearchFilter,
@@ -10,23 +10,22 @@ import {
   SelectSearchFilter,
   TextSearchFilter
 } from '@enigmatry/entry-components/search-filter';
-import { Observable, of } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { Observable, of, map, tap } from 'rxjs';
 import { Country, Occupation, User } from './users';
 import { UsersService } from './users.service';
 
 @Component({
     selector: 'app-search-filter-example',
     templateUrl: './search-filter-example.component.html',
-    styleUrls: ['./search-filter-example.component.scss'],
+    styleUrl: './search-filter-example.component.scss',
     standalone: false
 })
 export class SearchFilterExampleComponent {
-  @ViewChild(EntrySearchFilterComponent, { static: true }) entrySearchFilterComponent: EntrySearchFilterComponent;
+  readonly entrySearchFilterComponent = viewChild(EntrySearchFilterComponent);
 
   readonly users = signal<User[]>([]);
   displayedColumns: string[] = ['name', 'email', 'dateOfBirth', 'occupation', 'country', 'score'];
-  filters: SearchFilterBase<any>[] = [];
+  filters: SearchFilterBase<unknown>[] = [];
   private readonly usersService: UsersService = inject(UsersService);
   private readonly locale: string = inject(LOCALE_ID);
 
@@ -46,14 +45,17 @@ export class SearchFilterExampleComponent {
           this.users.set(users);
         },
         error: (error: IValidationProblemDetails) => {
-          setServerSideValidationErrors(error, this.entrySearchFilterComponent.searchFilterForm);
+          const searchFilter = this.entrySearchFilterComponent();
+          if (searchFilter) {
+            setServerSideValidationErrors(error, searchFilter.searchFilterForm());
+          }
         }
       })
     );
   }
 
   // eslint-disable-next-line max-lines-per-function
-  private createSearchFilters(): SearchFilterBase<any>[] {
+  private createSearchFilters(): SearchFilterBase<unknown>[] {
     return [
       new TextSearchFilter({
         key: 'name',
@@ -121,15 +123,15 @@ export class SearchFilterExampleComponent {
 
   private countryContinent = (country: Country): string => this.countryContinents[country] ?? 'Europe';
 
-  private maskDecimalScore(value: string): string {
+  private readonly maskDecimalScore = (value: unknown): string => {
     const exampleDecimalValue = 1.1;
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     const validSeparator = exampleDecimalValue.toLocaleString(this.locale).substring(1, 2);
     const wrongSeparator = validSeparator === ',' ? '.' : ',';
-    return value
+    return String(value ?? '')
       .replace(wrongSeparator, validSeparator)
       .replace(/[^0-9.,]/gu, '')
       .replace(/,/gu, '.')
       .replace(/^0+/u, ''); // Remove leading zeros
-  }
+  };
 }

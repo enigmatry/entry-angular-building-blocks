@@ -1,8 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { sortOptions } from '@enigmatry/entry-form';
 import { FormlyFieldConfig } from '@ngx-formly/core';
-import { of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { of, map } from 'rxjs';
 
 @Component({
     selector: 'app-select-example',
@@ -10,14 +9,14 @@ import { map } from 'rxjs/operators';
     standalone: false
 })
 export class SelectExampleComponent {
-  @Input() typeOptions = [
+  readonly typeOptions = [
     { value: 0, displayName: `Food` },
     { value: 1, displayName: `Drink` },
     { value: 2, displayName: `Book` },
     { value: 3, displayName: `Car` }
   ];
 
-  @Input() groupedTypeOptions = [
+  readonly groupedTypeOptions = [
     { value: 0, displayName: `Food`, category: `Consumables` },
     { value: 1, displayName: `Drink`, category: `Consumables` },
     { value: 2, displayName: `Book`, category: `Goods` },

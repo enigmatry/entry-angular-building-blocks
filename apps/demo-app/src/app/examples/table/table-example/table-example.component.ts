@@ -8,7 +8,7 @@ import { UsersService } from '../../search-filter/search-filter/users.service';
   selector: 'app-table-example',
   imports: [EntryTableComponent],
   templateUrl: './table-example.component.html',
-  styleUrls: ['./table-example.component.scss']
+  styleUrl: './table-example.component.scss'
 })
 export class TableExampleComponent {
   protected readonly columns: ColumnDefinition[] = [

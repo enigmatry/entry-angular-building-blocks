@@ -1,4 +1,6 @@
 <h4>Permission directives</h4>
 <p>Permission module exposes directive <b>entryPermissionsOnly</b> and <b>entryPermissionsExcept</b> that can show/hide
   elements of your application based on set of permissions</p>
-<p *entryPermissionsOnly="['user.read']">Only user.read can see this</p>
+<p [entryPermissionsOnly]="['user.read']">Only user.read can see this</p>
+<p [entryPermissionsOnly]="['user.delete']">Only user.delete can see this (hidden)</p>
+<p [entryPermissionsExcept]="['user.write']">Everyone except user.write can see this (hidden)</p>

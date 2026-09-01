@@ -2,17 +2,17 @@
 
 import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
 import {
-  ChangeDetectionStrategy, ChangeDetectorRef,
-  Component, ElementRef, EventEmitter, Input, NgZone,
-  OnDestroy, OnInit, Output, Renderer2, ViewChild, forwardRef,
-  inject
+  afterNextRender, ChangeDetectionStrategy,
+  Component, DestroyRef, ElementRef, NgZone,
+  Renderer2, computed, forwardRef,
+  inject, input, linkedSignal, output, Signal, signal, viewChild
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   AbstractControl, ControlValueAccessor, NG_VALIDATORS,
   NG_VALUE_ACCESSOR, ValidationErrors, Validator
 } from '@angular/forms';
-import { Subject, fromEvent } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { fromEvent } from 'rxjs';
 
 const providers = [
   {
@@ -33,145 +33,128 @@ const providers = [
   standalone: false,
   selector: 'entry-file-input',
   templateUrl: './entry-file-input.component.html',
-  styleUrls: ['./entry-file-input.component.scss'],
+  styleUrl: './entry-file-input.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers
 })
-export class EntryFileInputComponent implements OnInit, OnDestroy, ControlValueAccessor, Validator {
+export class EntryFileInputComponent implements ControlValueAccessor, Validator {
   private readonly ngZone: NgZone = inject(NgZone);
   private readonly renderer: Renderer2 = inject(Renderer2);
-  private readonly changeDetectorRef: ChangeDetectorRef = inject(ChangeDetectorRef);
+  private readonly destroyRef = inject(DestroyRef);
 
   /**
    * Label for the select file button. Defaults to 'Choose file...'
    */
-  @Input() label = 'Choose file...';
+  readonly label = input('Choose file...');
 
   /**
    * MatIcon for the select file button. Defaults to 'insert_drive_file' (optional)
    */
-  @Input() matIcon? = 'insert_drive_file';
+  readonly matIcon = input<string | undefined>('insert_drive_file');
 
   /**
    * Same as 'accept' attribute in <input/> element.
    */
-  @Input() accept?: string;
+  readonly accept = input<string | undefined>(undefined);
 
   /**
    * Same as 'multiple' attribute in <input/> element.
    */
-  @Input()
-  set multiple(multiple: BooleanInput) {
-    this._multiple = coerceBooleanProperty(multiple);
-  }
-  get multiple(): boolean {
-    return this._multiple;
-  }
-  private _multiple = false;
+  readonly multiple = input(false, { transform: (value: BooleanInput) => coerceBooleanProperty(value) });
 
   /**
    * Same as 'disabled' attribute in <input/> element.
    */
-  @Input()
-  set disabled(disabled: BooleanInput) {
-    this._disabled = coerceBooleanProperty(disabled);
-  }
-  get disabled(): boolean {
-    return this._disabled;
-  }
-  private _disabled = false;
+  readonly disabled = input(false, { transform: (value: BooleanInput) => coerceBooleanProperty(value) });
 
   /**
    * Same as 'readonly' attribute in <input/> element.
    */
-  @Input()
-  set readonly(readonly: BooleanInput) {
-    this._readonly = coerceBooleanProperty(readonly);
-  }
-  get readonly(): boolean {
-    return this._readonly;
-  }
-  private _readonly = false;
+  readonly readonly = input(false, { transform: (value: BooleanInput) => coerceBooleanProperty(value) });
 
   /**
    * Size limit per file in KB (kilobytes)
    */
-  @Input() maxFileSizeInKb?: number = undefined;
+  readonly maxFileSizeInKb = input<number | undefined>(undefined);
 
   /**
    * Number of files allowed when multiple=true
    */
-  @Input() maxFileCount?: number = undefined;
+  readonly maxFileCount = input<number | undefined>(undefined);
 
-  /**
-   * Current selected [File | FileList] object.
-   */
-  value: File | FileList | undefined;
+  private readonly selectedValue = signal<File | FileList | undefined>(undefined);
+
+  /** Current selected [File | FileList] object. Read-only - writing it directly would bypass the forms API; use `clear()`. */
+  readonly value: Signal<File | FileList | undefined> = this.selectedValue.asReadonly();
 
   /**
    * Event emitted when a file is selected. Emits a [File | FileList] object.
    */
-  @Output() selectedFile = new EventEmitter<File | FileList>();
+  readonly selectedFile = output<File | FileList>();
 
+  /** Writable, because `setDisabledState` drives it too - last writer wins, and a new binding re-asserts. */
+  private readonly disabledState = linkedSignal(() => this.disabled());
 
-  @ViewChild('fileButton', { static: true, read: ElementRef })
-  fileButton!: ElementRef<HTMLElement>;
+  /** Effective disabled state: the `disabled` input, or the forms API through `setDisabledState`. */
+  readonly effectiveDisabled: Signal<boolean> = this.disabledState.asReadonly();
 
-  @ViewChild('fileInput', { static: true })
-  fileInput!: ElementRef<HTMLInputElement>;
+  readonly fileButton = viewChild.required('fileButton', { read: ElementRef<HTMLElement> });
 
-  private destroy$ = new Subject<void>();
+  readonly fileInput = viewChild<ElementRef<HTMLInputElement>>('fileInput');
 
-  get fileNames(): string {
-    if (this.value instanceof File) {
-      return this.value.name;
+  /** Display label for the current selection: a file name, or a count when multiple. */
+  readonly fileNames = computed(() => {
+    const value = this.value();
+    if (value instanceof File) {
+      return value.name;
     }
-    if (this.value instanceof FileList) {
-      return `${this.value.length} files`;
+    if (value instanceof FileList) {
+      return `${value.length} files`;
     }
     return '';
-  }
+  });
 
-  ngOnInit(): void {
-    // Handle click event on custom file button and trigger click on native file input
-    this.ngZone.runOutsideAngular(() => {
-      fromEvent(this.fileButton.nativeElement, 'click')
-        .pipe(takeUntil(this.destroy$))
-        .subscribe(() => {
-          this.fileInput.nativeElement.click();
-        });
+  constructor() {
+    // Signal queries have no `static` option, so the button is only readable after the first render.
+    afterNextRender(() => {
+      // Handle click event on custom file button and trigger click on native file input
+      this.ngZone.runOutsideAngular(() => {
+        fromEvent(this.fileButton().nativeElement, 'click')
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe(() => {
+            this.fileInput()?.nativeElement.click();
+          });
+      });
     });
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-  }
-
-  onFileSelect(event: Event): void {
+  readonly onFileSelect = (event: Event): void => {
     const fileInputEl = event.target as HTMLInputElement;
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const files: FileList = fileInputEl.files!;
 
-    const value = this._multiple
+    const value = this.multiple()
       ? files.length > 1 ? files : files[0]
       : files[0];
 
-    this.value = value;
+    this.selectedValue.set(value);
     this.onChange(value);
     this.onTouched();
 
     if (value) {
       this.selectedFile.emit(value);
     }
-  }
+  };
 
-  clear(): void {
-    this.value = undefined;
+  readonly clear = (): void => {
+    this.selectedValue.set(undefined);
     this.onChange(undefined);
-    this.renderer.setProperty(this.fileInput.nativeElement, 'value', '');
-    // Part of the public API, so consumers can call this from any context - not just a template event.
-    this.changeDetectorRef.markForCheck();
-  }
+    // Not `viewChild.required`: a consumer may call this before the first refresh, and throwing would leave a stale file name shown.
+    const fileInput = this.fileInput();
+    if (fileInput) {
+      this.renderer.setProperty(fileInput.nativeElement, 'value', '');
+    }
+  };
 
   // implements ControlValueAccessor interface
 
@@ -183,11 +166,8 @@ export class EntryFileInputComponent implements OnInit, OnDestroy, ControlValueA
     // set by registerOnTouched
   };
 
-  // `writeValue` and `setDisabledState` are called by the forms API, never by a template event, so
-  // nothing marks this OnPush view dirty on a programmatic setValue/patchValue or disable/enable.
   writeValue(value: any): void {
-    this.value = value;
-    this.changeDetectorRef.markForCheck();
+    this.selectedValue.set(value);
   }
 
   registerOnChange(fn: any): void {
@@ -199,8 +179,7 @@ export class EntryFileInputComponent implements OnInit, OnDestroy, ControlValueA
   }
 
   setDisabledState?(isDisabled: boolean): void {
-    this._disabled = isDisabled;
-    this.changeDetectorRef.markForCheck();
+    this.disabledState.set(isDisabled);
   }
 
   // implements Validator interface
@@ -218,20 +197,21 @@ export class EntryFileInputComponent implements OnInit, OnDestroy, ControlValueA
     };
   }
 
-  private isFileCountLimitExceeded(files: File | FileList | undefined): boolean {
-    const isMultiple = this.multiple && files instanceof FileList;
-    const maxFileCount = this.maxFileCount;
+  private readonly isFileCountLimitExceeded = (files: File | FileList | undefined): boolean => {
+    const isMultiple = this.multiple() && files instanceof FileList;
+    const maxFileCount = this.maxFileCount();
     const actualFileCount = (files as FileList)?.length;
 
     return isMultiple && !!maxFileCount && actualFileCount > maxFileCount;
-  }
+  };
 
-  private isFileSizeLimitExceeded(files: File | FileList | undefined): boolean {
-    if (!this.maxFileSizeInKb) {
+  private readonly isFileSizeLimitExceeded = (files: File | FileList | undefined): boolean => {
+    const maxFileSizeInKb = this.maxFileSizeInKb();
+    if (!maxFileSizeInKb) {
       return false;
     }
     const kilobyte = 1024;
-    const maxFileSizeInBytes = this.maxFileSizeInKb * kilobyte;
+    const maxFileSizeInBytes = maxFileSizeInKb * kilobyte;
 
     if (files instanceof File) {
       return files.size > maxFileSizeInBytes;
@@ -240,5 +220,5 @@ export class EntryFileInputComponent implements OnInit, OnDestroy, ControlValueA
       return Array.from(files).some(file => file.size > maxFileSizeInBytes);
     }
     return false;
-  }
+  };
 }
