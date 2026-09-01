@@ -133,9 +133,8 @@ export class EntryFileInputComponent implements ControlValueAccessor, Validator 
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const files: FileList = fileInputEl.files!;
 
-    const value = this.multiple()
-      ? files.length > 1 ? files : files[0]
-      : files[0];
+    // `item` rather than an index read: indexing is typed `File`, but an empty list really yields undefined.
+    const value = this.multiple() && files.length > 1 ? files : files.item(0) ?? undefined;
 
     this.selectedValue.set(value);
     this.onChange(value);
@@ -198,11 +197,11 @@ export class EntryFileInputComponent implements ControlValueAccessor, Validator 
   }
 
   private readonly isFileCountLimitExceeded = (files: File | FileList | undefined): boolean => {
-    const isMultiple = this.multiple() && files instanceof FileList;
     const maxFileCount = this.maxFileCount();
-    const actualFileCount = (files as FileList)?.length;
-
-    return isMultiple && !!maxFileCount && actualFileCount > maxFileCount;
+    if (!this.multiple() || !maxFileCount || !(files instanceof FileList)) {
+      return false;
+    }
+    return files.length > maxFileCount;
   };
 
   private readonly isFileSizeLimitExceeded = (files: File | FileList | undefined): boolean => {

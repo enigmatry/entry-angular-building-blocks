@@ -4,14 +4,14 @@ import { EntryTimeAdapter } from './entry-time-adapter';
 
 @Injectable()
 export class EntryNativeTimeAdapter extends EntryTimeAdapter<Date> {
-  getHours = (date: Date): number => date?.getHours();
+  getHours = (date: Date): number => date.getHours();
 
-  getMinutes = (date: Date): number => date?.getMinutes();
+  getMinutes = (date: Date): number => date.getMinutes();
 
-  getSeconds = (date: Date): number => date?.getSeconds();
+  getSeconds = (date: Date): number => date.getSeconds();
 
   setTime = (date: Date, hours: number, minutes: number, seconds: number): Date => {
-    date?.setHours(hours, minutes, seconds, 0);
+    date.setHours(hours, minutes, seconds, 0);
     return date;
   };
 }

@@ -30,7 +30,7 @@ const warnOnInheritedPermissions = (route: ActivatedRouteSnapshot): void => {
 export const entryPermissionGuard: CanActivateFn =
 <T extends PermissionType> (route: ActivatedRouteSnapshot, _state: RouterStateSnapshot) => {
   const permissionService = inject(EntryPermissionService);
-  const routePermissions = route.data['permissions'] as RoutePermissionConfig<T> ?? {};
+  const routePermissions = route.data['permissions'] as RoutePermissionConfig<T> | undefined ?? {};
 
   warnOnInheritedPermissions(route);
 

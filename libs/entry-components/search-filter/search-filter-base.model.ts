@@ -45,6 +45,8 @@ export class SearchFilterBase<T> {
 
   setValue(value: T | undefined) {
     this.value = value;
+    // Typed as always assigned, but only EntrySearchFilterComponent sets it - a standalone model has none.
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (this.formControl) {
       this.formControl.patchValue(value);
     }

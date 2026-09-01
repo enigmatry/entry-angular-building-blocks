@@ -120,14 +120,12 @@ export class EntryTableComponent<T> {
         } else {
           const page = this.data() as PagedData<T>;
           this.total.set(page.totalCount ?? 0);
-          this.pageSize.set(page.pageSize ?? this.pageSize() ?? this.configuration.pageSize);
+          this.pageSize.set(page.pageSize ?? this.pageSize());
           this.pageIndex.set(page.pageNumber ? page.pageNumber - 1 : this.pageIndex());
-          trueData = (this.data() as PagedData<T>)?.items ?? [];
+          trueData = page.items ?? [];
         }
 
-        if (this.dataSource) {
-          this.dataSource.disconnect();
-        }
+        this.dataSource.disconnect();
 
         this.dataSource = new MatTableDataSource(trueData);
         this.trueData.set(trueData);
@@ -203,5 +201,5 @@ export class EntryTableComponent<T> {
     this.elementRef.nativeElement.scrollTop = 0;
   };
 
-  readonly convertToKebabCase = (value: string): string => value?.replace(/([a-z0-9])([A-Z])/gu, '$1-$2').toLowerCase();
+  readonly convertToKebabCase = (value: string): string => value.replace(/([a-z0-9])([A-Z])/gu, '$1-$2').toLowerCase();
 }
