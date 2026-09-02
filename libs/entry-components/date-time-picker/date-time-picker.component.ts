@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, ErrorHandler,
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, ElementRef, ErrorHandler,
    computed, effect, inject, input, model, output, viewChild } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { FormControl } from '@angular/forms';
@@ -7,7 +7,7 @@ import { MAT_DATE_FORMATS, DateAdapter, MatDateFormats } from '@angular/material
 import { ENTRY_MAT_DATE_TIME_FORMATS, EntryDateTimeAdapter } from '@enigmatry/entry-components/common';
 import { skip } from 'rxjs';
 import { ENTRY_DATE_TIME_PICKER_CONFIG, EntryDateTimePickerConfig } from './date-time-picker-config.model';
-import { floorToDate, toValidationErrors, withTimeOfDay } from './date-time-picker.functions';
+import { floorToDate, setIfChanged, toValidationErrors, withTimeOfDay } from './date-time-picker.functions';
 import { EntryTimePickerComponent } from './time-picker.component';
 
 @Component({
@@ -47,6 +47,9 @@ export class EntryDateTimePickerComponent<D> implements FormValueControl<D | nul
   /** Every change of the value, a programmatic write to a bound control included. `valueChange` covers only the picker's own writes. */
   readonly dateTimeChanged = output<D>();
 
+  /** Without this, `focusBoundControl()` falls back to focusing the host element, which is not focusable. */
+  readonly focus = (options?: FocusOptions): void => this.dateTimeInput().nativeElement.focus(options);
+
   private readonly dateTimeAdapter: EntryDateTimeAdapter<D, unknown> = inject(DateAdapter) as EntryDateTimeAdapter<D, unknown>;
   private readonly format: MatDateFormats = inject(ENTRY_MAT_DATE_TIME_FORMATS);
   private readonly changeDetectorRef = inject(ChangeDetectorRef);
@@ -62,6 +65,7 @@ export class EntryDateTimePickerComponent<D> implements FormValueControl<D | nul
 
   protected is12HourClock = this.dateTimeAdapter.is12HoursClock(this.format.display.dateInput);
   protected readonly timePicker = viewChild(EntryTimePickerComponent<D>);
+  private readonly dateTimeInput = viewChild.required<ElementRef<HTMLInputElement>>('dateTimeInput');
   protected readonly minDate = computed(() => floorToDate(this.dateTimeAdapter, this.min()));
   protected readonly maxDate = computed(() => floorToDate(this.dateTimeAdapter, this.max()));
 
@@ -93,12 +97,8 @@ export class EntryDateTimePickerComponent<D> implements FormValueControl<D | nul
   }
 
   private readonly writeToControls = (value: D | null | undefined): void => {
-    if (!Object.is(this.displayControl.value, value)) {
-      this.displayControl.setValue(value, { emitEvent: false });
-    }
-    if (!Object.is(this.calendarControl.value, value)) {
-      this.calendarControl.setValue(value, { emitEvent: false });
-    }
+    setIfChanged(this.displayControl, value);
+    setIfChanged(this.calendarControl, value);
   };
 
   private readonly applyDisabled = (disabled: boolean): void => {

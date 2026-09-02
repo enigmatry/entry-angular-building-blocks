@@ -1,6 +1,6 @@
 <mat-form-field>
     <mat-label>{{ label() }}</mat-label>
-    <input matInput [matDatepicker]="hiddenPicker" [placeholder]="placeholder() ?? ''"
+    <input #dateTimeInput matInput [matDatepicker]="hiddenPicker" [placeholder]="placeholder() ?? ''"
         [formControl]="displayControl" [required]="required()" (blur)="touch.emit()">
     @if (hint()) {
         <mat-hint>{{hint()}}</mat-hint>

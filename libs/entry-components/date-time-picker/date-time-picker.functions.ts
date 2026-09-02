@@ -1,4 +1,4 @@
-import { ValidationErrors } from '@angular/forms';
+import { FormControl, ValidationErrors } from '@angular/forms';
 import type { ValidationError } from '@angular/forms/signals';
 import { EntryDateTimeAdapter } from '@enigmatry/entry-components/common';
 
@@ -27,6 +27,13 @@ export const floorToDate = <D>(
   const result = adapter.clone(value);
   adapter.setTime(result, 0, 0, 0);
   return result;
+};
+
+/** Writes only on a real change, so a value the model echoes back does not restart the write it came from. */
+export const setIfChanged = <D>(control: FormControl<D | null | undefined>, value: D | null | undefined): void => {
+  if (!Object.is(control.value, value)) {
+    control.setValue(value, { emitEvent: false });
+  }
 };
 
 /** A fresh instance, because `MatDatepickerInput` only reformats its text when it receives a new reference. */

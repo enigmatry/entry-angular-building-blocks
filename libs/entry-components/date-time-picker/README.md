@@ -86,6 +86,12 @@ export class SharedModule { }
   it, `boundControl.setValue(...)` does not. Bind `dateTimeChanged` if you need both.
 - touch: Emitted on blur so the forms API can mark the field touched
 
+## Methods
+
+- focus(options?: FocusOptions): Focuses the visible date-time input. Signal forms reaches it through
+  `field().focusBoundControl()`; a control that does not implement it gets the framework's fallback of
+  focusing the host element, which here is not focusable.
+
 ## Use the component
 
 The picker implements
