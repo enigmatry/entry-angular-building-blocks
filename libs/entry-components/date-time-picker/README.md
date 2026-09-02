@@ -81,7 +81,9 @@ export class SharedModule { }
 
 ## Outputs
 
-- dateTimeChanged: Every change of the value, including a programmatic write to a bound control
+- dateTimeChanged: Value changes from any source, a programmatic write to a bound control included.
+  Reports stabilized values, so writes landing inside one tick collapse into one emission - subscribe
+  to your own control's `valueChanges` if you need every write.
 - valueChange: The `value` model's own output, so only the picker's own writes - a user edit reaches
   it, `boundControl.setValue(...)` does not. Bind `dateTimeChanged` if you need both.
 - touch: Emitted on blur so the forms API can mark the field touched
@@ -91,6 +93,20 @@ export class SharedModule { }
 - focus(options?: FocusOptions): Focuses the visible date-time input. Signal forms reaches it through
   `field().focusBoundControl()`; a control that does not implement it gets the framework's fallback of
   focusing the host element, which here is not focusable.
+- reset(): Re-formats the visible text from the current value and clears a failed parse. Signal forms
+  reaches it through `field().reset()`. Setting a control's value cannot do this on its own, because
+  Material reformats its input only when the new value differs by reference.
+
+## Unparseable text
+
+The picker owns the control behind the visible field, so Material raises `matDatepickerParse` there
+rather than on the control you bound. The form field shows its error state, but the bound control
+reports valid and empty, so an unparseable entry does not block a submit on its own - validate the
+value yourself if it has to. Angular has no public channel for a custom control to contribute its own
+errors, so closing this needs the raw text owned through `transformedValue`; that is tracked
+separately.
+
+`reset()` clears the bad text and the parse error. Setting a control's value does not.
 
 ## Use the component
 

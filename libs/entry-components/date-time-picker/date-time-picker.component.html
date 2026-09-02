@@ -1,13 +1,13 @@
 <mat-form-field>
     <mat-label>{{ label() }}</mat-label>
     <input #dateTimeInput matInput [matDatepicker]="hiddenPicker" [placeholder]="placeholder() ?? ''"
-        [formControl]="displayControl" [required]="required()" (blur)="touch.emit()">
+        [formControl]="controls.display" [required]="required()" (blur)="touch.emit()">
     @if (hint()) {
         <mat-hint>{{hint()}}</mat-hint>
     }
     <mat-datepicker #hiddenPicker class="hidden"></mat-datepicker>
     <input class="hidden" matInput [min]="minDate()" [max]="maxDate()" [matDatepicker]="picker"
-        [formControl]="calendarControl" aria-label="Calendar Control">
+        [formControl]="controls.calendar" aria-label="Calendar Control">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker (opened)="timePicker()?.update()">
         <mat-datepicker-actions>
@@ -18,5 +18,5 @@
             </button>
         </mat-datepicker-actions>
     </mat-datepicker>
-    <mat-error entryDisplayControlValidation [control]="displayControl"></mat-error>
+    <mat-error entryDisplayControlValidation [control]="controls.display"></mat-error>
 </mat-form-field>

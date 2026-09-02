@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, ElementRef, ErrorHandler,
    computed, effect, inject, input, model, output, viewChild } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
-import { FormControl } from '@angular/forms';
 import type { FormValueControl, ValidationError } from '@angular/forms/signals';
 import { MAT_DATE_FORMATS, DateAdapter, MatDateFormats } from '@angular/material/core';
+import { MatDatepickerInput } from '@angular/material/datepicker';
 import { ENTRY_MAT_DATE_TIME_FORMATS, EntryDateTimeAdapter } from '@enigmatry/entry-components/common';
 import { skip } from 'rxjs';
 import { ENTRY_DATE_TIME_PICKER_CONFIG, EntryDateTimePickerConfig } from './date-time-picker-config.model';
-import { floorToDate, setIfChanged, toValidationErrors, withTimeOfDay } from './date-time-picker.functions';
+import { EntryDateTimePickerControls } from './date-time-picker-controls';
 import { EntryTimePickerComponent } from './time-picker.component';
 
 @Component({
@@ -44,11 +44,8 @@ export class EntryDateTimePickerComponent<D> implements FormValueControl<D | nul
 
   readonly touch = output<void>();
 
-  /** Every change of the value, a programmatic write to a bound control included. `valueChange` covers only the picker's own writes. */
+  /** Reports stabilized values, so two writes inside one tick surface as one. `valueChange` covers only the picker's own writes. */
   readonly dateTimeChanged = output<D>();
-
-  /** Without this, `focusBoundControl()` falls back to focusing the host element, which is not focusable. */
-  readonly focus = (options?: FocusOptions): void => this.dateTimeInput().nativeElement.focus(options);
 
   private readonly dateTimeAdapter: EntryDateTimeAdapter<D, unknown> = inject(DateAdapter) as EntryDateTimeAdapter<D, unknown>;
   private readonly format: MatDateFormats = inject(ENTRY_MAT_DATE_TIME_FORMATS);
@@ -57,35 +54,29 @@ export class EntryDateTimePickerComponent<D> implements FormValueControl<D | nul
   private readonly errorHandler = inject(ErrorHandler);
   public config: EntryDateTimePickerConfig = inject(ENTRY_DATE_TIME_PICKER_CONFIG);
 
-  /** Control behind the visible field, which `MatDatepickerInput` needs to parse, format and validate typed text. */
-  protected readonly displayControl = new FormControl<D | null | undefined>(undefined);
+  private readonly dateTimeInput = viewChild.required<ElementRef<HTMLInputElement>>('dateTimeInput');
+  // Read off the visible field's own ref, because the calendar carries a second datepicker input.
+  private readonly datepickerInput = viewChild('dateTimeInput', { read: MatDatepickerInput<D> });
 
-  /** Control behind the calendar, whose selection carries midnight until the time picker is merged in. */
-  protected readonly calendarControl = new FormControl<D | null | undefined>(undefined);
+  protected readonly controls = new EntryDateTimePickerControls<D>(() => this.datepickerInput());
 
   protected is12HourClock = this.dateTimeAdapter.is12HoursClock(this.format.display.dateInput);
   protected readonly timePicker = viewChild(EntryTimePickerComponent<D>);
-  private readonly dateTimeInput = viewChild.required<ElementRef<HTMLInputElement>>('dateTimeInput');
-  protected readonly minDate = computed(() => floorToDate(this.dateTimeAdapter, this.min()));
-  protected readonly maxDate = computed(() => floorToDate(this.dateTimeAdapter, this.max()));
+  protected readonly minDate = computed(() => this.dateTimeAdapter.startOfDay(this.min()));
+  protected readonly maxDate = computed(() => this.dateTimeAdapter.startOfDay(this.max()));
 
-  private readonly fieldErrors = computed(() => toValidationErrors(this.errors()));
+  /** Without this, `focusBoundControl()` falls back to focusing the host element, which is not focusable. */
+  readonly focus = (options?: FocusOptions): void => this.dateTimeInput().nativeElement.focus(options);
+
+  /** Clears a failed parse and re-formats the visible text, which a value-only write cannot do. */
+  readonly reset = (): void => this.controls.reset(this.value());
 
   constructor() {
-    // Reports the field's errors as the display control's own, so the form field renders them and
-    // Angular composes them with the parse errors MatDatepickerInput raises on unreadable text.
-    this.displayControl.addValidators(() => this.fieldErrors());
-
-    effect(() => this.writeToControls(this.value()));
-    effect(() => this.applyDisabled(this.disabled()));
-    effect(() => this.applyTouched(this.touched()));
-    effect(() => {
-      this.fieldErrors();
-      // Emits, because the validation directive renders off `statusChanges` and a server-side
-      // error can arrive without the value changing, which would otherwise never reach it.
-      this.displayControl.updateValueAndValidity();
-      this.changeDetectorRef.markForCheck();
-    });
+    effect(() => this.controls.write(this.value()));
+    // The controls are not signals, so nothing they hold marks the view on its own.
+    effect(() => this.andMarkForCheck(() => this.controls.setDisabled(this.disabled())));
+    effect(() => this.andMarkForCheck(() => this.controls.setTouched(this.touched())));
+    effect(() => this.andMarkForCheck(() => this.controls.reportFieldErrors(this.errors())));
 
     // `skip(1)` drops the initial value, matching a bound control's `valueChanges`, which does not replay.
     toObservable(this.value)
@@ -96,37 +87,22 @@ export class EntryDateTimePickerComponent<D> implements FormValueControl<D | nul
     this.applyCalendarSelection();
   }
 
-  private readonly writeToControls = (value: D | null | undefined): void => {
-    setIfChanged(this.displayControl, value);
-    setIfChanged(this.calendarControl, value);
-  };
-
-  private readonly applyDisabled = (disabled: boolean): void => {
-    const apply = (control: FormControl<D | null | undefined>): void =>
-      disabled ? control.disable({ emitEvent: false }) : control.enable({ emitEvent: false });
-    apply(this.displayControl);
-    apply(this.calendarControl);
-    // The controls are not signals, so their disabled state does not mark the view.
-    this.changeDetectorRef.markForCheck();
-  };
-
-  private readonly applyTouched = (touched: boolean): void => {
-    if (touched) {
-      this.displayControl.markAsTouched();
-    } else {
-      this.displayControl.markAsUntouched();
-    }
+  private readonly andMarkForCheck = (apply: () => void): void => {
+    apply();
     this.changeDetectorRef.markForCheck();
   };
 
   private readonly readTypedValue = (): void => {
-    this.displayControl.valueChanges
+    this.controls.display.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(value => this.value.set(value));
+      .subscribe(value => {
+        this.controls.typed(value);
+        this.value.set(value);
+      });
   };
 
   private readonly applyCalendarSelection = (): void => {
-    this.calendarControl.valueChanges
+    this.controls.calendar.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(value => {
         const timePicker = this.timePicker();
@@ -139,9 +115,8 @@ export class EntryDateTimePickerComponent<D> implements FormValueControl<D | nul
         }
         timePicker?.to24HourClock();
         this.value.set(value && timePicker
-          ? withTimeOfDay(this.dateTimeAdapter, value, {
-            hours: timePicker.hours(), minutes: timePicker.minutes(), seconds: timePicker.seconds()
-          })
+          ? this.dateTimeAdapter.withTimeOfDay(
+            value, timePicker.hours(), timePicker.minutes(), timePicker.seconds())
           : value);
         this.touch.emit();
       });

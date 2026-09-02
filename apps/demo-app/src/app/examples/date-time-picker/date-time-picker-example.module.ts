@@ -27,10 +27,10 @@ import { WithValidationComponent } from './with-validation/with-validation.compo
     MeridiemComponent,
     SecondsComponent,
     DefaultTimeComponent,
-    WithValidationComponent,
-    NoFormBindingComponent
+    WithValidationComponent
   ],
   imports: [
+    NoFormBindingComponent,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,

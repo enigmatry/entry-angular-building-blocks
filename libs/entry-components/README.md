@@ -363,20 +363,47 @@ Every existing picker call site keeps working. Four things change:
   consumer's control and left it disabled. The input now only disables the picker, and the forms API
   drives it from the field's own state. Disable the control instead
   (`myControl.disable()`), which is what the `disabled` input documentation already told you to do.
-- **Members that were public are now `protected`.** `formControl`, `calendarControl`,
-  `is12HourClock`, `timePicker`, `minDate` and `maxDate` are implementation detail; reading any of
-  them off a `@ViewChild` reference is now a compile error. Read and write `value` instead.
+- **`formControl` is removed.** It was a getter handing back the control the host was bound to, which
+  the picker no longer reaches for. Read and write `value` instead.
+- **`calendarControl`, `is12HourClock`, `timePicker`, `minDate` and `maxDate` are now `protected`.**
+  They are implementation detail, so reading any of them off a `@ViewChild` reference is a compile
+  error. `calendarControl` in particular moved onto an internal object and is no longer a member at
+  all.
 - **`dateTimeChanged` and `valueChange` are not interchangeable — do not swap one for the other.**
   `valueChange` is the `value` model's own output and fires only for the picker's writes, so a user
   edit reaches it but `boundControl.setValue(…)` does not. `dateTimeChanged` fires for both and is
-  the one to keep bound if you care about programmatic writes. Neither fires when a control is set
-  to the object reference it already holds, which `21.x` did emit for.
+  the one to keep bound if you care about programmatic writes.
+- **`dateTimeChanged` reports stabilized values.** It is driven off the value signal, so writes that
+  land inside one tick collapse: `setValue(a); setValue(b)` emits once with `b`, and `a → b → a`
+  emits nothing at all. `21.x` emitted every write, because it observed the bound control's
+  `valueChanges` directly. Setting a control to the object reference it already holds also no longer
+  emits. If you need per-write notification, subscribe to your own control's `valueChanges`.
 - **`min` and `max` no longer accept a nullable type, and the schema owns them under `[formField]`.**
   They narrowed from `D | undefined` to `NonNullable<D> | undefined`, so under `strictTemplates` a
   binding typed `Date | null` no longer compiles — narrow it at the call site. Reactive forms do not
   bind these, so an explicit `[min]`/`[max]` is still yours to set there; signal forms do, so under
   `[formField]` they come from the field's `min`/`max` validators and an explicit binding is
   overwritten.
+
+**Known limitation — unparseable text no longer invalidates the control you bound.** The picker holds
+its own control behind the visible field now, so Material raises `matDatepickerParse` there instead
+of on yours. In `21.x` the visible input was bound straight to your control, so typing text Material
+could not read left it invalid and blocked submission; now an optional field reports valid and empty
+while the bad text is still on screen. The form field still shows its error state, so this is visible
+rather than silent, but it does not stop a submit.
+
+Angular offers no public channel for this: a custom control's `NG_VALIDATORS` are wired only through
+`setUpControlValueAccessor`, which the custom-control path deliberately skips, so a `FormValueControl`
+cannot contribute its own errors in either reactive or signal forms. Closing it means owning the raw
+text through
+[`transformedValue`](https://angular.dev/guide/forms/signals/custom-controls#reporting-parse-errors),
+which is tracked separately. Until then, validate the value yourself if an unparseable entry must
+block your form.
+
+`reset()` is what clears the bad text. Setting a control's value cannot: Material reformats its input
+only when the new value differs by reference, so resetting an already-empty field leaves the text on
+screen. `field().reset()` calls the picker's `reset()` and clears both the text and the error; a
+reactive `control.reset()` does not reach it.
 
 ## License
 
