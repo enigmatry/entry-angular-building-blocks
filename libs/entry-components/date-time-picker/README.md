@@ -49,14 +49,21 @@ export class SharedModule { }
 
 ## Inputs
 
+- value: The selected date and time. A model signal, so it two-way binds with `[(value)]` and is
+  driven by the forms API when a form is bound.
 - label: Label for the control
 - placeholder: Placeholder for the control
 - hint: Hint text for the control
-- disabled: Whether the control is disabled, when not used with ReactiveForms  cannot be used in combination with reactive forms )
+- disabled: Whether the picker is disabled. Bound by the forms API from the field's own state, so
+  bind it yourself only when no form is bound - to disable a bound control, disable the control.
 - showSeconds: Whether to show seconds in the time picker ( default: false )
 - min: Minimum selectable date
 - max: Maximum selectable date
 - defaultTime: Default time for time picker component, if undefined sets default values to now.
+
+`touched`, `required` and `errors` are also inputs, bound by the forms API from the field's state.
+They exist so the picker can show the asterisk and the validation message, and are not meant to be
+bound by hand.
 
 Configure seconds globally via `provideEntryDateTimePickerConfig` in feature or shared module:
 
@@ -74,10 +81,24 @@ export class SharedModule { }
 
 ## Outputs
 
-- dateTimeChanged: Event emitted when the date time value changes
+- valueChange: Event emitted when the selected date and time changes
+- dateTimeChanged: Deprecated. Emitted for the same changes as `valueChange`; bind that instead.
+- touch: Emitted on blur so the forms API can mark the field touched
 
 ## Use the component
 
+The picker implements
+[`FormValueControl`](https://angular.dev/guide/forms/signals/custom-controls), so reactive,
+template-driven and signal forms all drive it:
+
 ```html
 <entry-date-time-picker [formControl]="dateTime" label="Expires on"></entry-date-time-picker>
+<entry-date-time-picker [(ngModel)]="dateTime" label="Expires on"></entry-date-time-picker>
+<entry-date-time-picker [formField]="form.expiresOn" label="Expires on"></entry-date-time-picker>
+```
+
+Without a form, two-way bind the value:
+
+```html
+<entry-date-time-picker [(value)]="dateTime" label="Expires on"></entry-date-time-picker>
 ```

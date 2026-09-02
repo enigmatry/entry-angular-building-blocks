@@ -45,7 +45,7 @@ components on a prerendered route.
 `22.x` requires Angular 22, TypeScript ~6.0 and Node `^22.22.3 || ^24.15.0 || >=26.0.0`. Run
 `ng update @angular/core@22 @angular/cli@22 @angular/cdk@22 @angular/material@22` first, then work
 through the items below. Several of them change behaviour silently, with no compile error to catch
-you — sections 2, 3, 5, 8 and 10 in particular.
+you — sections 2, 3, 5, 8, 10 and 11 in particular.
 
 ### 1. `@angular/animations` is no longer a peer dependency
 
@@ -230,7 +230,6 @@ Two of the three replacements **widen** what is accepted, so nothing breaks:
 | `setServerSideValidationErrors(error, form)` | `UntypedFormGroup` | `AbstractControl` | widened |
 | `EntryFormErrorsComponent.form` | `UntypedFormGroup` | `AbstractControl` | widened |
 | `EntrySearchFilterComponent.searchFilterForm` | `UntypedFormGroup` | `FormRecord` | see below |
-| `NgControlAccessorDirective.control` | `UntypedFormControl` | `AbstractControl` | narrowed |
 
 You can now pass a **typed** form where you previously had to widen to `UntypedFormGroup`:
 
@@ -333,6 +332,56 @@ look if you rely on the affected components:
   The directives also evaluate both aliases when both are bound — the host is shown only when
   `entryPermissionsOnly` is held and `entryPermissionsExcept` is not. In `21.x` whichever setter ran
   last decided the result.
+
+### 11. The date-time picker is a real form control, and two directives are gone
+
+`EntryDateTimePickerComponent` implements
+[`FormValueControl`](https://angular.dev/guide/forms/signals/custom-controls), so it owns a `value`
+model signal and lets the forms API drive it. `21.x` did the opposite: it provided a no-op
+`ControlValueAccessor` purely to satisfy Angular's requirement that a `[formControl]`-bound element
+have an accessor, then used a second directive to reach around it, take the control the host was
+really bound to, and write to it directly.
+
+**`NoopControlValueAccessorDirective` and `NgControlAccessorDirective` are deleted** from
+`@enigmatry/entry-components/common`. Nothing replaces them. If you applied either to a component of
+your own for the same reason, drop both and give that component a `value = model<T>()` instead:
+
+```diff
+  @Component({
+-   hostDirectives: [NoopControlValueAccessorDirective, NgControlAccessorDirective],
+    ...
+  })
+- export class MyControl {
+-   private readonly ngControlAccessor = inject(NgControlAccessorDirective);
+-   get formControl(): FormControl<MyValue> {
+-     return this.ngControlAccessor.control as FormControl<MyValue>;
+-   }
+- }
++ export class MyControl implements FormValueControl<MyValue> {
++   readonly value = model<MyValue>(…);
++ }
+```
+
+That contract is **not** signal-forms-only, and it needs no compatibility layer: reactive and
+template-driven forms drive it natively, so `[formControl]`, `formControlName` and `[(ngModel)]`
+carry on working and the same component also accepts `[formField]`. Do not implement
+`ControlValueAccessor` alongside it — Angular takes the accessor path whenever one is present, and
+the `value` model is then never written, with no compile error to tell you.
+
+Every existing picker call site keeps working. Four things change:
+
+- **`[disabled]` no longer disables the control you bound.** `21.x` reached into the bound control
+  and called `disable()` on it, so `[disabled]="true"` beside a `[formControl]` disabled the
+  consumer's control and left it disabled. The input now only disables the picker, and the forms API
+  drives it from the field's own state. Disable the control instead
+  (`myControl.disable()`), which is what the `disabled` input documentation already told you to do.
+- **`formControl` and `calendarControl` are no longer public members.** Read and write `value`.
+- **`dateTimeChanged` is deprecated** in favour of the model's `valueChange`. It still emits for the
+  same changes, including programmatic ones, so nothing breaks by leaving it bound.
+- **`min` and `max` are driven by the schema once you bind `[formField]`.** Reactive forms do not
+  bind those, so an explicit `[min]`/`[max]` is still yours to set there; signal forms do, so under
+  `[formField]` they come from the field's `min`/`max` validators and an explicit binding is
+  overwritten.
 
 ## License
 
