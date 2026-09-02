@@ -103,8 +103,8 @@ The picker owns the control behind the visible field, so Material raises `matDat
 rather than on the control you bound. The form field shows its error state, but the bound control
 reports valid and empty, so an unparseable entry does not block a submit on its own - validate the
 value yourself if it has to. Angular has no public channel for a custom control to contribute its own
-errors, so closing this needs the raw text owned through `transformedValue`; that is tracked
-separately.
+errors, so closing this would mean the picker owning the raw text through `transformedValue` rather
+than leaving the parsing to `MatDatepickerInput`.
 
 `reset()` clears the bad text and the parse error. Setting a control's value does not.
 

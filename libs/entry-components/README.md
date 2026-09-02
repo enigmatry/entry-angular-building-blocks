@@ -394,11 +394,12 @@ rather than silent, but it does not stop a submit.
 
 Angular offers no public channel for this: a custom control's `NG_VALIDATORS` are wired only through
 `setUpControlValueAccessor`, which the custom-control path deliberately skips, so a `FormValueControl`
-cannot contribute its own errors in either reactive or signal forms. Closing it means owning the raw
-text through
-[`transformedValue`](https://angular.dev/guide/forms/signals/custom-controls#reporting-parse-errors),
-which is tracked separately. Until then, validate the value yourself if an unparseable entry must
-block your form.
+cannot contribute its own errors in either reactive or signal forms. Closing it means the picker
+owning the raw text through
+[`transformedValue`](https://angular.dev/guide/forms/signals/custom-controls#reporting-parse-errors)
+instead of leaving the parsing to `MatDatepickerInput`, which is a larger change than it looks: it
+also takes away the control the form field reads its error state from. **Validate the value yourself
+if an unparseable entry has to block your form.**
 
 `reset()` is what clears the bad text. Setting a control's value cannot: Material reformats its input
 only when the new value differs by reference, so resetting an already-empty field leaves the text on
