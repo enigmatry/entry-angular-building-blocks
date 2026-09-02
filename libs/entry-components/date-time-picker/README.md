@@ -81,8 +81,9 @@ export class SharedModule { }
 
 ## Outputs
 
-- valueChange: Event emitted when the selected date and time changes
-- dateTimeChanged: Deprecated. Emitted for the same changes as `valueChange`; bind that instead.
+- dateTimeChanged: Every change of the value, including a programmatic write to a bound control
+- valueChange: The `value` model's own output, so only the picker's own writes - a user edit reaches
+  it, `boundControl.setValue(...)` does not. Bind `dateTimeChanged` if you need both.
 - touch: Emitted on blur so the forms API can mark the field touched
 
 ## Use the component

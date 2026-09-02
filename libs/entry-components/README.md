@@ -154,7 +154,6 @@ in a constructor, an `afterNextRender` callback or a `linkedSignal`.
 | `EntrySearchFilterComponent.toFormGroup` | `(filters: SearchFilterBase<any>[]) => UntypedFormGroup` | `(filters: SearchFilterBase<unknown>[], currentValues?) => FormRecord` |
 | `SearchFilterBase.formatValue` | `(value: T) => T` | `(value: unknown) => unknown` |
 | `EntryTimePickerComponent.hours` / `.minutes` / `.seconds` / `.meridiem` | plain fields | signals — only reachable through a template ref, the class is not exported |
-| `NgControlAccessorDirective.control` | writable `UntypedFormControl` field | read-only `AbstractControl` getter |
 
 `searchFilterForm` is the one most likely to be read imperatively, because that is how server-side
 validation errors get onto the filter form:
@@ -246,17 +245,6 @@ You can now pass a **typed** form where you previously had to widen to `UntypedF
 `searchFilterForm` is a [`FormRecord`](https://angular.dev/api/forms/FormRecord) — a `FormGroup`
 whose keys are not known at compile time, which is exactly what a filter set is. `FormRecord`
 extends `FormGroup` at runtime, so `instanceof` checks and every method behave identically.
-
-`NgControlAccessorDirective.control` is the one narrowing. It hands back `AbstractControl` because a
-directive takes no type arguments from the element it sits on, so it genuinely cannot know the value
-type. If you need `FormControl`-only members (`defaultValue`, `registerOnChange`), cast at the point
-of use, where the type *is* known:
-
-```ts
-get formControl(): FormControl<MyValue> {
-  return this.ngControlAccessor.control as FormControl<MyValue>;
-}
-```
 
 `@enigmatry/entry-form` still surfaces `UntypedFormControl` in places, because that is how
 `@ngx-formly/core` types `FieldType.formControl`. That one is not ours to remove.
@@ -375,11 +363,18 @@ Every existing picker call site keeps working. Four things change:
   consumer's control and left it disabled. The input now only disables the picker, and the forms API
   drives it from the field's own state. Disable the control instead
   (`myControl.disable()`), which is what the `disabled` input documentation already told you to do.
-- **`formControl` and `calendarControl` are no longer public members.** Read and write `value`.
-- **`dateTimeChanged` is deprecated** in favour of the model's `valueChange`. It still emits for the
-  same changes, including programmatic ones, so nothing breaks by leaving it bound.
-- **`min` and `max` are driven by the schema once you bind `[formField]`.** Reactive forms do not
-  bind those, so an explicit `[min]`/`[max]` is still yours to set there; signal forms do, so under
+- **Members that were public are now `protected`.** `formControl`, `calendarControl`,
+  `is12HourClock`, `timePicker`, `minDate` and `maxDate` are implementation detail; reading any of
+  them off a `@ViewChild` reference is now a compile error. Read and write `value` instead.
+- **`dateTimeChanged` and `valueChange` are not interchangeable — do not swap one for the other.**
+  `valueChange` is the `value` model's own output and fires only for the picker's writes, so a user
+  edit reaches it but `boundControl.setValue(…)` does not. `dateTimeChanged` fires for both and is
+  the one to keep bound if you care about programmatic writes. Neither fires when a control is set
+  to the object reference it already holds, which `21.x` did emit for.
+- **`min` and `max` no longer accept a nullable type, and the schema owns them under `[formField]`.**
+  They narrowed from `D | undefined` to `NonNullable<D> | undefined`, so under `strictTemplates` a
+  binding typed `Date | null` no longer compiles — narrow it at the call site. Reactive forms do not
+  bind these, so an explicit `[min]`/`[max]` is still yours to set there; signal forms do, so under
   `[formField]` they come from the field's `min`/`max` validators and an explicit binding is
   overwritten.
 

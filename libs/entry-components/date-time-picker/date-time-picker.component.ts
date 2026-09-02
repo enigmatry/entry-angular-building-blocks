@@ -44,7 +44,7 @@ export class EntryDateTimePickerComponent<D> implements FormValueControl<D | nul
 
   readonly touch = output<void>();
 
-  /** @deprecated Bind `valueChange` instead. Emitted alongside it for the same changes. */
+  /** Every change of the value, a programmatic write to a bound control included. `valueChange` covers only the picker's own writes. */
   readonly dateTimeChanged = output<D>();
 
   private readonly dateTimeAdapter: EntryDateTimeAdapter<D, unknown> = inject(DateAdapter) as EntryDateTimeAdapter<D, unknown>;
@@ -77,14 +77,15 @@ export class EntryDateTimePickerComponent<D> implements FormValueControl<D | nul
     effect(() => this.applyTouched(this.touched()));
     effect(() => {
       this.fieldErrors();
-      this.displayControl.updateValueAndValidity({ emitEvent: false });
+      // Emits, because the validation directive renders off `statusChanges` and a server-side
+      // error can arrive without the value changing, which would otherwise never reach it.
+      this.displayControl.updateValueAndValidity();
       this.changeDetectorRef.markForCheck();
     });
 
     // `skip(1)` drops the initial value, matching a bound control's `valueChanges`, which does not replay.
     toObservable(this.value)
       .pipe(skip(1), takeUntilDestroyed(this.destroyRef))
-      // eslint-disable-next-line @typescript-eslint/no-deprecated
       .subscribe(value => this.dateTimeChanged.emit(value as D));
 
     this.readTypedValue();
