@@ -31,12 +31,12 @@ export class EntryDateTimePickerControls<D> {
   }
 
   /** Records what the user typed, so the write coming back around is recognised as an echo. */
-  typed(value: D | null | undefined): void {
+  readonly typed = (value: D | null | undefined): void => {
     this.pendingEcho = { value };
-  }
+  };
 
   /** Applies a value that came from the bound field, ignoring the field's echo of a typed one. */
-  write(value: D | null | undefined): void {
+  readonly write = (value: D | null | undefined): void => {
     if (this.consumeEcho(value)) {
       return;
     }
@@ -48,9 +48,9 @@ export class EntryDateTimePickerControls<D> {
     if (!Object.is(this.calendar.value, value)) {
       this.calendar.setValue(value, { emitEvent: false });
     }
-  }
+  };
 
-  setDisabled(disabled: boolean): void {
+  readonly setDisabled = (disabled: boolean): void => {
     for (const control of [this.display, this.calendar]) {
       if (disabled) {
         control.disable({ emitEvent: false });
@@ -58,22 +58,22 @@ export class EntryDateTimePickerControls<D> {
         control.enable({ emitEvent: false });
       }
     }
-  }
+  };
 
-  setTouched(touched: boolean): void {
+  readonly setTouched = (touched: boolean): void => {
     if (touched) {
       this.display.markAsTouched();
     } else {
       this.display.markAsUntouched();
     }
-  }
+  };
 
   /**
    * Reports the bound field's errors as the display control's own, which is what the form field
    * renders. Emits, because the validation directive reads `statusChanges` and a server-side error
    * can arrive without the value changing.
    */
-  reportFieldErrors(errors: readonly ValidationError.WithOptionalFieldTree[]): void {
+  readonly reportFieldErrors = (errors: readonly ValidationError.WithOptionalFieldTree[]): void => {
     const reported = errors
       // Material's own keys are excluded so the picker's errors cannot round-trip back into itself.
       .filter(error => !error.kind.startsWith(MATERIAL_ERROR_PREFIX))
@@ -81,7 +81,7 @@ export class EntryDateTimePickerControls<D> {
       .map(error => [error.kind, (error as { context?: unknown }).context ?? true]);
     this.fieldErrors = reported.length === 0 ? null : Object.fromEntries(reported);
     this.display.updateValueAndValidity();
-  }
+  };
 
   /**
    * Re-formats the visible text from `value` and clears a failed parse.
@@ -90,7 +90,7 @@ export class EntryDateTimePickerControls<D> {
    * `MatDatepickerInput` through `writeValue`, which reformats only when the reference differs, so
    * resetting an already-empty field would leave unparseable text on screen.
    */
-  reset(value: D | null | undefined): void {
+  readonly reset = (value: D | null | undefined): void => {
     this.pendingEcho = undefined;
     this.write(value);
     const input = this.datepickerInput();
@@ -99,15 +99,15 @@ export class EntryDateTimePickerControls<D> {
     }
     this.display.markAsUntouched();
     this.display.updateValueAndValidity();
-  }
+  };
 
-  private hasParseError(): boolean {
+  private readonly hasParseError = (): boolean => {
     return Object.keys(this.display.errors ?? {}).some(kind => kind.startsWith(MATERIAL_ERROR_PREFIX));
-  }
+  };
 
-  private consumeEcho(value: D | null | undefined): boolean {
+  private readonly consumeEcho = (value: D | null | undefined): boolean => {
     const isEcho = this.pendingEcho !== undefined && Object.is(this.pendingEcho.value, value);
     this.pendingEcho = undefined;
     return isEcho;
-  }
+  };
 }

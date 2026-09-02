@@ -62,7 +62,10 @@ Never store a subscription just to call `.unsubscribe()` on it when `firstValueF
 
 ## Method declarations
 
-Declare all class methods using the `readonly` arrow-function property syntax:
+Declare all class methods using the `readonly` arrow-function property syntax. This holds for **every**
+class — components, directives, services, and plain non-Angular helper classes alike. A file with no
+Angular decorator is not exempt, and neither is a new method added beside existing prototype-style
+methods: the surrounding code is not the authority, this rule is.
 
 ```ts
 // ✅
@@ -74,7 +77,7 @@ myMethod(): void { ... }
 private myHelper(x: number): string { ... }
 ```
 
-**Exception — framework lifecycle hooks.** Angular calls these by name through an interface, so they must be plain methods:
+**Exception 1 — framework lifecycle hooks.** Angular calls these by name through an interface, so they must be plain methods:
 
 ```ts
 // ✅
@@ -85,6 +88,62 @@ ngOnChanges(changes: SimpleChanges): void { ... }
 // ❌ the framework will never call this
 readonly ngOnInit = (): void => { ... };
 ```
+
+**Exception 2 — a class that `extends` a base class** keeps prototype methods throughout, including
+methods the base does not declare. Two hard reasons: `useDefineForClassFields` is `false`
+(`tsconfig.json`), so a field arrow is assigned only after `super()` returns and a base constructor
+calling the member finds `undefined`; and TypeScript rejects a property that implements or overrides
+a base-class *method*. Splitting such a class between the two forms hides which members are
+constrained, so keep it uniform. `EntryDateTimeAdapter extends DateAdapter` is the standing example.
+
+An **interface** is not an exception. `implements` is satisfied by an arrow property, and the
+signal-forms `FormValueControl` members (`focus`, `reset`) are plain property reads at runtime —
+Angular passes the component instance as `bindingOptions` and reads the key, which finds an instance
+arrow field identically to a prototype method.
+
+**Declaration order matters for arrows.** Field initializers run top to bottom, so an arrow property
+must be declared above any *field initializer* that calls it. Calls from a constructor body or from
+another method are unaffected.
+
+---
+
+## Member visibility
+
+Pick the narrowest modifier that still compiles, member by member:
+
+- reached only from the owning component's or directive's **own template** — `protected readonly`.
+  Templates can see protected members, so `public` overstates the surface.
+- reached only from inside the declaring class — `private readonly`.
+- reached from any **other** class — `public`. This includes a component reading a helper class it
+  owns, and a helper member a template reaches *through* that helper's reference. TypeScript grants
+  `protected` access to subclasses only, so `protected` cannot express "my owner may read this".
+
+```ts
+protected readonly rows = computed(() => ...);            // template only
+private readonly toKey = (x: number): string => { ... };  // neither template nor other classes
+readonly value: Signal<File | undefined> = ...;           // public: read by other components
+```
+
+`readonly` is part of the rule, not decoration — a `protected` member with no `readonly` is a miss
+unless it is genuinely reassigned.
+
+**A plain helper class has no template of its own, so the first case never applies to it.** Narrow one
+by making `private` everything its owner never touches and leaving the rest `public`.
+`EntryDateTimePickerControls` is correct at `public` for `write`/`setDisabled`/`display`/`calendar`,
+because `EntryDateTimePickerComponent` and that component's template are the callers; asking for
+`protected` there would not compile.
+
+A signal `input()`, `output()` or `model()` on a component whose bindings come from other templates
+cannot be `protected` at all — ngtsc routes restricted input fields through
+`ɵUnwrapDirectiveSignalInputs<Dir, Fields extends keyof Dir>`, and `keyof` excludes protected keys.
+Zero of this workspace's 127 signal inputs/outputs are protected.
+
+**In `libs/` the narrowing applies to demo/app code and to genuinely internal library members only.**
+These are published packages, so narrowing an exported class's member removes it from the published
+API. `public-api.ts` lists classes, not members: the test is whether the *declaring class* is
+re-exported from its entry point's `public-api.ts`. If it is, every member of it is published surface
+— narrow deliberately and record it in `libs/entry-components/README.md`'s migration notes. A class no
+`public-api.ts` re-exports is internal and exempt.
 
 ---
 

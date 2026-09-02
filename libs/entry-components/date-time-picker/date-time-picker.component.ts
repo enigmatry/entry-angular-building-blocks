@@ -60,7 +60,7 @@ export class EntryDateTimePickerComponent<D> implements FormValueControl<D | nul
 
   protected readonly controls = new EntryDateTimePickerControls<D>(() => this.datepickerInput());
 
-  protected is12HourClock = this.dateTimeAdapter.is12HoursClock(this.format.display.dateInput);
+  protected readonly is12HourClock = this.dateTimeAdapter.is12HoursClock(this.format.display.dateInput);
   protected readonly timePicker = viewChild(EntryTimePickerComponent<D>);
   protected readonly minDate = computed(() => this.dateTimeAdapter.startOfDay(this.min()));
   protected readonly maxDate = computed(() => this.dateTimeAdapter.startOfDay(this.max()));

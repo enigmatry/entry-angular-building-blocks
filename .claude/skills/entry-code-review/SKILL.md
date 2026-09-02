@@ -78,7 +78,33 @@ Rank every finding into one of three tiers and report the most severe first.
   // ❌
   save(): void { ... }
   ```
-- **Exception**: Angular lifecycle hooks (`ngOnInit`, `ngOnDestroy`, `ngOnChanges`, `ngAfterViewInit`, etc.) must be plain methods. Flag `readonly ngOnInit = () => {}`.
+- **Check plain classes too.** This is where the rule actually gets missed: a new non-Angular helper
+  class, a model class, an adapter. No `@Component` is not an exemption, and neither is a file whose
+  existing methods are prototype-style. Nothing lints this —
+  `prefer-arrow-functions` is enabled but its guard skips any function using `this`, so it reports
+  none of the real cases — so the review is the only gate.
+- **Exception 1**: Angular lifecycle hooks (`ngOnInit`, `ngOnDestroy`, `ngOnChanges`, `ngAfterViewInit`, etc.) must be plain methods. Flag `readonly ngOnInit = () => {}`.
+- **Exception 2**: a class that `extends` a base class keeps prototype methods throughout — a field
+  arrow is assigned after `super()` and TypeScript rejects a property overriding a base method. Do not
+  ask for arrows there, and do not ask for a class to be split between the two forms.
+- `implements <interface>` is **not** an exception — an arrow property satisfies it, including the
+  signal-forms `FormValueControl` members `focus` and `reset`.
+
+### Member visibility
+- A member reached only from the owning component's or directive's **own template** must be
+  `protected readonly`. Flag `public` (explicit or implicit) on such a member, and flag a `protected`
+  member missing `readonly` unless it is genuinely reassigned.
+- A member reached only inside its declaring class must be `private readonly`.
+- Do **not** ask for `protected` on a plain helper class (no `@Component`/`@Directive`/`@Injectable`).
+  Its callers are other classes — its owning component, or that component's template *through* the
+  helper's reference — and TypeScript grants `protected` to subclasses only, so the request cannot
+  compile. The right ask there is `private` for whatever the owner never touches.
+- Do **not** ask for `protected` on a signal `input()`/`output()`/`model()` of a component other
+  templates bind to; `ɵUnwrapDirectiveSignalInputs` constrains the field names with `keyof`, which
+  excludes protected keys.
+- In `libs/`, narrowing a member of a class that its entry point's `public-api.ts` re-exports is a
+  breaking API change. Require a migration-notes entry in `libs/entry-components/README.md`; a class
+  no `public-api.ts` re-exports is internal and exempt.
 
 ### Signals API (new components)
 - Components adopting the signals API must use `input()`, `output()`, `computed()`, and `linkedSignal()` — not `@Input()` / `@Output()` / `BehaviorSubject` patterns.

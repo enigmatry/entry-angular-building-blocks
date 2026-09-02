@@ -214,7 +214,9 @@ private readonly config = inject(ENTRY_DIALOG_CONFIG);
 ```
 
 ### Method declarations
-Class methods use `readonly` arrow-function properties. **Exception**: Angular lifecycle hooks must be plain methods — the framework calls them by name through an interface.
+Every class's methods use `readonly` arrow-function properties — **components, directives, services,
+and plain helper classes alike**. A file with no `@Component` is not exempt, and neither is a new
+method added to a file whose existing methods are prototype-style.
 
 ```ts
 readonly save = (): void => { ... };        // ✅ regular method
@@ -224,9 +226,27 @@ readonly ngOnInit = (): void => { ... };   // ❌ never called
 save(): void { ... }                       // ❌ use readonly arrow
 ```
 
+Two exceptions, both because a property cannot stand where a prototype method is required:
+
+- **Angular lifecycle hooks** — the framework calls them by name through an interface.
+- **A class that `extends` a base class** keeps prototype methods throughout. A field arrow is
+  assigned after `super()` returns, so a base constructor calling the member finds `undefined`, and
+  TypeScript rejects a property that implements or overrides a base *method*. `EntryDateTimeAdapter`
+  is the standing example: it extends `DateAdapter`, so all of its methods — including new ones the
+  base does not declare — stay prototype-style rather than splitting the class between two forms.
+
+An interface is **not** an exception: `implements` is satisfied by an arrow property, and Angular's
+signal-forms `FormValueControl` members (`focus`, `reset`) are plain property reads at runtime.
+
 ### Member visibility
-Anything reached **only** from the component's own template is `protected readonly` — templates can
-see protected members, so `public` would overstate the surface.
+Pick the narrowest modifier that still compiles, member by member:
+
+- reached only from the owning component's or directive's **own template** — `protected readonly`.
+  Templates can see protected members, so `public` would overstate the surface.
+- reached only from inside the declaring class — `private readonly`.
+- reached from any **other** class — `public`. This includes a component reading a helper class it
+  owns, and a helper member a template reaches *through* that helper's reference. TypeScript grants
+  `protected` to subclasses only, so `protected` cannot express "my owner may read this".
 
 ```ts
 protected readonly rows = computed(() => ...);   // template only
@@ -234,10 +254,21 @@ private readonly toKey = (x: number): string => { ... };  // neither template no
 readonly value: Signal<File | undefined> = ...;  // public: read by other components/services
 ```
 
+**A plain helper class has no template of its own, so the first case never applies to it.** Narrow one
+by making `private` everything its owner never touches and leaving the rest `public` —
+`EntryDateTimePickerControls` is correct at `public` for `write`/`setDisabled`/`display`/`calendar`,
+because `EntryDateTimePickerComponent` and that component's template are the callers.
+
+A signal `input()`, `output()` or `model()` on a component other templates bind to cannot be
+`protected` at all — `ɵUnwrapDirectiveSignalInputs` constrains the field names with `keyof`, which
+excludes protected keys. None of the workspace's 127 signal inputs/outputs are protected.
+
 **In `libs/` this applies to demo/app code and to genuinely internal library members only.** These
 are published packages — narrowing an exported class's member from `public` to `protected` removes it
-from the published API and breaks consumers. Check whether a member is in a `public-api.ts` surface
-before tightening it, and call the change out in the migration notes if you do.
+from the published API and breaks consumers. `public-api.ts` lists classes, not members, so the test
+is whether the *declaring class* is re-exported from its entry point; if it is, every member is
+published surface. Narrow deliberately and call the change out in `libs/entry-components/README.md`'s
+migration notes. A class no `public-api.ts` re-exports is internal and exempt.
 
 ### Async handling
 One-shot Observables (HTTP calls, `TranslateService.get()`) use `firstValueFrom()` with `async/await`. Reserve `.subscribe()` for true multi-value streams — Subjects, event buses, router events, websockets.

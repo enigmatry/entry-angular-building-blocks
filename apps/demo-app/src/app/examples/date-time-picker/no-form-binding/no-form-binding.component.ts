@@ -8,5 +8,5 @@ import { EntryDateTimePickerModule } from '@enigmatry/entry-components/date-time
     imports: [EntryDateTimePickerModule, DatePipe]
 })
 export class NoFormBindingComponent {
-  readonly dateTime = signal<Date | undefined>(undefined);
+  protected readonly dateTime = signal<Date | undefined>(undefined);
 }
