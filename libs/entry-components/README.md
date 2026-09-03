@@ -374,10 +374,12 @@ Every existing picker call site keeps working. Four things change:
   edit reaches it but `boundControl.setValue(…)` does not. `dateTimeChanged` fires for both and is
   the one to keep bound if you care about programmatic writes.
 - **`dateTimeChanged` reports stabilized values.** It is driven off the value signal, so writes that
-  land inside one tick collapse: `setValue(a); setValue(b)` emits once with `b`, and `a → b → a`
-  emits nothing at all. `21.x` emitted every write, because it observed the bound control's
-  `valueChanges` directly. Setting a control to the object reference it already holds also no longer
-  emits. If you need per-write notification, subscribe to your own control's `valueChanges`.
+  land inside one tick collapse into a single emission of the value the tick ends on:
+  `setValue(a); setValue(b)` emits once with `b`, and `a → b → a` emits once with `a` — the
+  intermediate `b` never surfaces. `21.x` emitted every write, because it observed the bound
+  control's `valueChanges` directly. Setting a control to the object reference it already holds also
+  no longer emits. If you need per-write notification, subscribe to your own control's
+  `valueChanges`.
 - **`min` and `max` no longer accept a nullable type, and the schema owns them under `[formField]`.**
   They narrowed from `D | undefined` to `NonNullable<D> | undefined`, so under `strictTemplates` a
   binding typed `Date | null` no longer compiles — narrow it at the call site. Reactive forms do not
@@ -392,14 +394,19 @@ could not read left it invalid and blocked submission; now an optional field rep
 while the bad text is still on screen. The form field still shows its error state, so this is visible
 rather than silent, but it does not stop a submit.
 
-Angular offers no public channel for this: a custom control's `NG_VALIDATORS` are wired only through
-`setUpControlValueAccessor`, which the custom-control path deliberately skips, so a `FormValueControl`
-cannot contribute its own errors in either reactive or signal forms. Closing it means the picker
-owning the raw text through
-[`transformedValue`](https://angular.dev/guide/forms/signals/custom-controls#reporting-parse-errors)
-instead of leaving the parsing to `MatDatepickerInput`, which is a larger change than it looks: it
-also takes away the control the form field reads its error state from. **Validate the value yourself
-if an unparseable entry has to block your form.**
+The cheap route is closed and the supported one is deferred. `NG_VALIDATORS` is not it: a custom
+control's validators are composed only through `setUpControlValueAccessor`, which the custom-control
+path deliberately skips, so a `FormValueControl` cannot contribute its own errors in either reactive
+or signal forms. The supported public channel is
+[`transformedValue`](https://angular.dev/guide/forms/signals/custom-controls#reporting-parse-errors),
+which has the control own the raw text and report its own parse errors — a larger change than it
+looks, because taking the parsing off `MatDatepickerInput` also takes away the control the form field
+reads its error state from. It is not in this release.
+
+Until it is, **a consumer cannot tell unparseable text from a legitimately empty field** — the value
+is `null` either way, so a validator of your own has nothing to key on. Two things do block a submit:
+**make the field required**, which rejects the `null` that a failed parse produces (the message will
+say required rather than naming the bad date), or read the input's raw text yourself.
 
 `reset()` is what clears the bad text. Setting a control's value cannot: Material reformats its input
 only when the new value differs by reference, so resetting an already-empty field leaves the text on

@@ -93,18 +93,24 @@ export class SharedModule { }
 - focus(options?: FocusOptions): Focuses the visible date-time input. Signal forms reaches it through
   `field().focusBoundControl()`; a control that does not implement it gets the framework's fallback of
   focusing the host element, which here is not focusable.
-- reset(): Re-formats the visible text from the current value and clears a failed parse. Signal forms
-  reaches it through `field().reset()`. Setting a control's value cannot do this on its own, because
-  Material reformats its input only when the new value differs by reference.
+- reset(): Re-formats the visible text from the current value, clears a failed parse and returns the
+  picker's own controls to pristine and untouched. Signal forms reaches it through `field().reset()`.
+  Setting a control's value cannot do this on its own, because Material reformats its input only when
+  the new value differs by reference.
 
 ## Unparseable text
 
 The picker owns the control behind the visible field, so Material raises `matDatepickerParse` there
 rather than on the control you bound. The form field shows its error state, but the bound control
-reports valid and empty, so an unparseable entry does not block a submit on its own - validate the
-value yourself if it has to. Angular has no public channel for a custom control to contribute its own
-errors, so closing this would mean the picker owning the raw text through `transformedValue` rather
-than leaving the parsing to `MatDatepickerInput`.
+reports valid and empty, so an unparseable entry does not block a submit on its own. You cannot tell
+it from a legitimately empty field either - the value is `null` in both cases. Make the field
+required if it has to block, or read the raw input text yourself.
+
+A `FormValueControl` cannot contribute its own errors: `NG_VALIDATORS` is composed only through
+`setUpControlValueAccessor`, which the custom-control path skips. The supported public channel is
+`transformedValue`, which would have the picker own the raw text instead of leaving the parsing to
+`MatDatepickerInput`. That is deferred - it also takes away the control the form field reads its
+error state from.
 
 `reset()` clears the bad text and the parse error. Setting a control's value does not.
 
