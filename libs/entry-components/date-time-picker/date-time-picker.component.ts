@@ -73,7 +73,10 @@ export class EntryDateTimePickerComponent<D> implements FormValueControl<D | nul
 
   constructor() {
     effect(() => this.controls.write(this.value()));
-    // The controls are not signals, so nothing they hold marks the view on its own.
+    // These copy signal state into non-signal controls, which severs the dependency tracking that would
+    // otherwise dirty this view - an `effect()` schedules the view for traversal but never marks it for
+    // refresh. `mat-error` visibility comes from `MatInput.ngDoCheck()` -> `updateErrorState()`, which
+    // runs only when this view is checked, so without the mark the error never renders at all.
     effect(() => this.andMarkForCheck(() => this.controls.setDisabled(this.disabled())));
     effect(() => this.andMarkForCheck(() => this.controls.setTouched(this.touched())));
     effect(() => this.andMarkForCheck(() => this.controls.reportFieldErrors(this.errors())));
