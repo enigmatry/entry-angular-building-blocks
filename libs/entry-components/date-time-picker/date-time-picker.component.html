@@ -1,21 +1,22 @@
 <mat-form-field>
     <mat-label>{{ label() }}</mat-label>
-    <input matInput [matDatepicker]="hiddenPicker" [placeholder]="placeholder() ?? ''" [formControl]="formControl">
+    <input #dateTimeInput matInput [matDatepicker]="hiddenPicker" [placeholder]="placeholder() ?? ''"
+        [formControl]="controls.display" [required]="required()" (blur)="touch.emit()">
     @if (hint()) {
         <mat-hint>{{hint()}}</mat-hint>
     }
     <mat-datepicker #hiddenPicker class="hidden"></mat-datepicker>
     <input class="hidden" matInput [min]="minDate()" [max]="maxDate()" [matDatepicker]="picker"
-        [formControl]="calendarControl" aria-label="Calendar Control">
+        [formControl]="controls.calendar" aria-label="Calendar Control">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker (opened)="timePicker()?.update()">
         <mat-datepicker-actions>
-            <entry-time-picker [date]="formControl.value" [showSeconds]="showSeconds() ?? config.showSeconds"
+            <entry-time-picker [date]="value() ?? undefined" [showSeconds]="showSeconds() ?? config.showSeconds"
                 [is12HourClock]="is12HourClock" [defaultTime]="defaultTime()"></entry-time-picker>
             <button mat-raised-button color="primary" matDateRangePickerApply class="entry-submit-button">
                 <mat-icon aria-hidden="false" aria-label="Apply" fontIcon="done" class="icon"></mat-icon>
             </button>
         </mat-datepicker-actions>
     </mat-datepicker>
-    <mat-error entryDisplayControlValidation [control]="formControl"></mat-error>
+    <mat-error entryDisplayControlValidation [control]="controls.display"></mat-error>
 </mat-form-field>

@@ -15,6 +15,7 @@ import { DefaultTimeComponent } from './default-time/default-time.component';
 import { DisableComponent } from './disable/disable.component';
 import { MeridiemComponent } from './meridiem/meridiem.component';
 import { MinMaxComponent } from './min-max/min-max.component';
+import { NoFormBindingComponent } from './no-form-binding/no-form-binding.component';
 import { SecondsComponent } from './seconds/seconds.component';
 import { WithValidationComponent } from './with-validation/with-validation.component';
 
@@ -29,6 +30,7 @@ import { WithValidationComponent } from './with-validation/with-validation.compo
     WithValidationComponent
   ],
   imports: [
+    NoFormBindingComponent,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
@@ -45,7 +47,8 @@ import { WithValidationComponent } from './with-validation/with-validation.compo
     MeridiemComponent,
     SecondsComponent,
     DefaultTimeComponent,
-    WithValidationComponent
+    WithValidationComponent,
+    NoFormBindingComponent
   ],
   providers: [
     {

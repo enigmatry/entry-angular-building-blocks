@@ -45,7 +45,7 @@ components on a prerendered route.
 `22.x` requires Angular 22, TypeScript ~6.0 and Node `^22.22.3 || ^24.15.0 || >=26.0.0`. Run
 `ng update @angular/core@22 @angular/cli@22 @angular/cdk@22 @angular/material@22` first, then work
 through the items below. Several of them change behaviour silently, with no compile error to catch
-you — sections 2, 3, 5, 8 and 10 in particular.
+you — sections 2, 3, 5, 8, 10 and 11 in particular.
 
 ### 1. `@angular/animations` is no longer a peer dependency
 
@@ -154,7 +154,6 @@ in a constructor, an `afterNextRender` callback or a `linkedSignal`.
 | `EntrySearchFilterComponent.toFormGroup` | `(filters: SearchFilterBase<any>[]) => UntypedFormGroup` | `(filters: SearchFilterBase<unknown>[], currentValues?) => FormRecord` |
 | `SearchFilterBase.formatValue` | `(value: T) => T` | `(value: unknown) => unknown` |
 | `EntryTimePickerComponent.hours` / `.minutes` / `.seconds` / `.meridiem` | plain fields | signals — only reachable through a template ref, the class is not exported |
-| `NgControlAccessorDirective.control` | writable `UntypedFormControl` field | read-only `AbstractControl` getter |
 
 `searchFilterForm` is the one most likely to be read imperatively, because that is how server-side
 validation errors get onto the filter form:
@@ -230,7 +229,6 @@ Two of the three replacements **widen** what is accepted, so nothing breaks:
 | `setServerSideValidationErrors(error, form)` | `UntypedFormGroup` | `AbstractControl` | widened |
 | `EntryFormErrorsComponent.form` | `UntypedFormGroup` | `AbstractControl` | widened |
 | `EntrySearchFilterComponent.searchFilterForm` | `UntypedFormGroup` | `FormRecord` | see below |
-| `NgControlAccessorDirective.control` | `UntypedFormControl` | `AbstractControl` | narrowed |
 
 You can now pass a **typed** form where you previously had to widen to `UntypedFormGroup`:
 
@@ -247,17 +245,6 @@ You can now pass a **typed** form where you previously had to widen to `UntypedF
 `searchFilterForm` is a [`FormRecord`](https://angular.dev/api/forms/FormRecord) — a `FormGroup`
 whose keys are not known at compile time, which is exactly what a filter set is. `FormRecord`
 extends `FormGroup` at runtime, so `instanceof` checks and every method behave identically.
-
-`NgControlAccessorDirective.control` is the one narrowing. It hands back `AbstractControl` because a
-directive takes no type arguments from the element it sits on, so it genuinely cannot know the value
-type. If you need `FormControl`-only members (`defaultValue`, `registerOnChange`), cast at the point
-of use, where the type *is* known:
-
-```ts
-get formControl(): FormControl<MyValue> {
-  return this.ngControlAccessor.control as FormControl<MyValue>;
-}
-```
 
 `@enigmatry/entry-form` still surfaces `UntypedFormControl` in places, because that is how
 `@ngx-formly/core` types `FieldType.formControl`. That one is not ours to remove.
@@ -333,6 +320,98 @@ look if you rely on the affected components:
   The directives also evaluate both aliases when both are bound — the host is shown only when
   `entryPermissionsOnly` is held and `entryPermissionsExcept` is not. In `21.x` whichever setter ran
   last decided the result.
+
+### 11. The date-time picker is a real form control, and two directives are gone
+
+`EntryDateTimePickerComponent` implements
+[`FormValueControl`](https://angular.dev/guide/forms/signals/custom-controls), so it owns a `value`
+model signal and lets the forms API drive it. `21.x` did the opposite: it provided a no-op
+`ControlValueAccessor` purely to satisfy Angular's requirement that a `[formControl]`-bound element
+have an accessor, then used a second directive to reach around it, take the control the host was
+really bound to, and write to it directly.
+
+**`NoopControlValueAccessorDirective` and `NgControlAccessorDirective` are deleted** from
+`@enigmatry/entry-components/common`. Nothing replaces them. If you applied either to a component of
+your own for the same reason, drop both and give that component a `value = model<T>()` instead:
+
+```diff
+  @Component({
+-   hostDirectives: [NoopControlValueAccessorDirective, NgControlAccessorDirective],
+    ...
+  })
+- export class MyControl {
+-   private readonly ngControlAccessor = inject(NgControlAccessorDirective);
+-   get formControl(): FormControl<MyValue> {
+-     return this.ngControlAccessor.control as FormControl<MyValue>;
+-   }
+- }
++ export class MyControl implements FormValueControl<MyValue> {
++   readonly value = model<MyValue>(…);
++ }
+```
+
+That contract is **not** signal-forms-only, and it needs no compatibility layer: reactive and
+template-driven forms drive it natively, so `[formControl]`, `formControlName` and `[(ngModel)]`
+carry on working and the same component also accepts `[formField]`. Do not implement
+`ControlValueAccessor` alongside it — Angular takes the accessor path whenever one is present, and
+the `value` model is then never written, with no compile error to tell you.
+
+Every existing picker call site keeps working. Four things change:
+
+- **`[disabled]` no longer disables the control you bound.** `21.x` reached into the bound control
+  and called `disable()` on it, so `[disabled]="true"` beside a `[formControl]` disabled the
+  consumer's control and left it disabled. The input now only disables the picker, and the forms API
+  drives it from the field's own state. Disable the control instead
+  (`myControl.disable()`), which is what the `disabled` input documentation already told you to do.
+- **`formControl` is removed.** It was a getter handing back the control the host was bound to, which
+  the picker no longer reaches for. Read and write `value` instead.
+- **`calendarControl`, `is12HourClock`, `timePicker`, `minDate` and `maxDate` are now `protected`.**
+  They are implementation detail, so reading any of them off a `@ViewChild` reference is a compile
+  error. `calendarControl` in particular moved onto an internal object and is no longer a member at
+  all.
+- **`dateTimeChanged` and `valueChange` are not interchangeable — do not swap one for the other.**
+  `valueChange` is the `value` model's own output and fires only for the picker's writes, so a user
+  edit reaches it but `boundControl.setValue(…)` does not. `dateTimeChanged` fires for both and is
+  the one to keep bound if you care about programmatic writes.
+- **`dateTimeChanged` reports stabilized values.** It is driven off the value signal, so writes that
+  land inside one tick collapse into a single emission of the value the tick ends on:
+  `setValue(a); setValue(b)` emits once with `b`, and `a → b → a` emits once with `a` — the
+  intermediate `b` never surfaces. `21.x` emitted every write, because it observed the bound
+  control's `valueChanges` directly. Setting a control to the object reference it already holds also
+  no longer emits. If you need per-write notification, subscribe to your own control's
+  `valueChanges`.
+- **`min` and `max` no longer accept a nullable type, and the schema owns them under `[formField]`.**
+  They narrowed from `D | undefined` to `NonNullable<D> | undefined`, so under `strictTemplates` a
+  binding typed `Date | null` no longer compiles — narrow it at the call site. Reactive forms do not
+  bind these, so an explicit `[min]`/`[max]` is still yours to set there; signal forms do, so under
+  `[formField]` they come from the field's `min`/`max` validators and an explicit binding is
+  overwritten.
+
+**Known limitation — unparseable text no longer invalidates the control you bound.** The picker holds
+its own control behind the visible field now, so Material raises `matDatepickerParse` there instead
+of on yours. In `21.x` the visible input was bound straight to your control, so typing text Material
+could not read left it invalid and blocked submission; now an optional field reports valid and empty
+while the bad text is still on screen. The form field still shows its error state, so this is visible
+rather than silent, but it does not stop a submit.
+
+The cheap route is closed and the supported one is deferred. `NG_VALIDATORS` is not it: a custom
+control's validators are composed only through `setUpControlValueAccessor`, which the custom-control
+path deliberately skips, so a `FormValueControl` cannot contribute its own errors in either reactive
+or signal forms. The supported public channel is
+[`transformedValue`](https://angular.dev/guide/forms/signals/custom-controls#reporting-parse-errors),
+which has the control own the raw text and report its own parse errors — a larger change than it
+looks, because taking the parsing off `MatDatepickerInput` also takes away the control the form field
+reads its error state from. It is not in this release.
+
+Until it is, **a consumer cannot tell unparseable text from a legitimately empty field** — the value
+is `null` either way, so a validator of your own has nothing to key on. Two things do block a submit:
+**make the field required**, which rejects the `null` that a failed parse produces (the message will
+say required rather than naming the bad date), or read the input's raw text yourself.
+
+`reset()` is what clears the bad text. Setting a control's value cannot: Material reformats its input
+only when the new value differs by reference, so resetting an already-empty field leaves the text on
+screen. `field().reset()` calls the picker's `reset()` and clears both the text and the error; a
+reactive `control.reset()` does not reach it.
 
 ## License
 

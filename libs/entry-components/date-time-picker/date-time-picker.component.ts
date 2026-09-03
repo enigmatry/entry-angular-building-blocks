@@ -1,12 +1,13 @@
-import { afterNextRender, ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, ErrorHandler,
-   computed, effect, inject, input, output, viewChild } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FormControl } from '@angular/forms';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, ElementRef, ErrorHandler,
+   computed, effect, inject, input, model, output, viewChild } from '@angular/core';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
+import type { FormValueControl, ValidationError } from '@angular/forms/signals';
 import { MAT_DATE_FORMATS, DateAdapter, MatDateFormats } from '@angular/material/core';
-import { ENTRY_MAT_DATE_TIME_FORMATS, EntryDateTimeAdapter, NgControlAccessorDirective,
-  NoopControlValueAccessorDirective } from '@enigmatry/entry-components/common';
-import { startWith } from 'rxjs';
+import { MatDatepickerInput } from '@angular/material/datepicker';
+import { ENTRY_MAT_DATE_TIME_FORMATS, EntryDateTimeAdapter } from '@enigmatry/entry-components/common';
+import { skip } from 'rxjs';
 import { ENTRY_DATE_TIME_PICKER_CONFIG, EntryDateTimePickerConfig } from './date-time-picker-config.model';
+import { EntryDateTimePickerControls } from './date-time-picker-controls';
 import { EntryTimePickerComponent } from './time-picker.component';
 
 @Component({
@@ -16,31 +17,36 @@ import { EntryTimePickerComponent } from './time-picker.component';
         { provide: MAT_DATE_FORMATS, useFactory: () => inject(ENTRY_MAT_DATE_TIME_FORMATS) },
         { provide: DateAdapter, useClass: EntryDateTimeAdapter }
     ],
-    // This component does not implement ControlValueAccessor. The no-op accessor below only
-    // satisfies Angular's requirement that a [formControl]-bound element have an accessor, and the
-    // control accessor then hands back the real control so this component can write to it directly.
-    // Implementing the accessor properly here removes both host directives and the ngModel sync
-    // inside NgControlAccessorDirective; that refactor is tracked separately.
-    hostDirectives: [NoopControlValueAccessorDirective, NgControlAccessorDirective],
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false,
     host: {
         class: 'entry-date-time-picker'
     }
 })
-export class EntryDateTimePickerComponent<D> {
+export class EntryDateTimePickerComponent<D> implements FormValueControl<D | null | undefined> {
+  /** The selected date and time. `null` is relayed rather than normalised, so a bound control keeps the emptiness it declared. */
+  readonly value = model<D | null | undefined>(undefined);
+
   readonly label = input('');
   readonly showSeconds = input<boolean | undefined>(undefined);
-  readonly min = input<D | undefined>(undefined);
-  readonly max = input<D | undefined>(undefined);
+  // `NonNullable<D>`, because the forms API types these as the field's non-nullish bound.
+  readonly min = input<NonNullable<D> | undefined>(undefined);
+  readonly max = input<NonNullable<D> | undefined>(undefined);
   readonly placeholder = input<string | undefined>(undefined);
   readonly hint = input<string | undefined>(undefined);
   readonly defaultTime = input<D | undefined>(undefined);
-  readonly disabled = input(false);
 
+  // Bound by the forms API from the field's own state; set them directly only when no form is bound.
+  readonly disabled = input(false);
+  readonly touched = input(false);
+  readonly required = input(false);
+  readonly errors = input<readonly ValidationError.WithOptionalFieldTree[]>([]);
+
+  readonly touch = output<void>();
+
+  /** Reports stabilized values, so two writes inside one tick surface as one. `valueChange` covers only the picker's own writes. */
   readonly dateTimeChanged = output<D>();
 
-  private readonly ngControlAccessor = inject(NgControlAccessorDirective);
   private readonly dateTimeAdapter: EntryDateTimeAdapter<D, unknown> = inject(DateAdapter) as EntryDateTimeAdapter<D, unknown>;
   private readonly format: MatDateFormats = inject(ENTRY_MAT_DATE_TIME_FORMATS);
   private readonly changeDetectorRef = inject(ChangeDetectorRef);
@@ -48,61 +54,58 @@ export class EntryDateTimePickerComponent<D> {
   private readonly errorHandler = inject(ErrorHandler);
   public config: EntryDateTimePickerConfig = inject(ENTRY_DATE_TIME_PICKER_CONFIG);
 
-  // Control bound to component using FormsApi (ngModel, formControl, formControlName).
-  // The accessor cannot know the value type; this component does, so it narrows here.
-  get formControl(): FormControl<D> {
-    return this.ngControlAccessor.control as FormControl<D>;
-  }
+  private readonly dateTimeInput = viewChild.required<ElementRef<HTMLInputElement>>('dateTimeInput');
+  // Read off the visible field's own ref, because the calendar carries a second datepicker input.
+  private readonly datepickerInput = viewChild('dateTimeInput', { read: MatDatepickerInput<D> });
 
-  // Control that is connected to calendar
-  calendarControl: FormControl<D | null | undefined> = new FormControl<D | undefined>(undefined);
+  protected readonly controls = new EntryDateTimePickerControls<D>(() => this.datepickerInput());
 
-  is12HourClock = this.dateTimeAdapter.is12HoursClock(this.format.display.dateInput);
+  protected readonly is12HourClock = this.dateTimeAdapter.is12HoursClock(this.format.display.dateInput);
+  protected readonly timePicker = viewChild(EntryTimePickerComponent<D>);
+  protected readonly minDate = computed(() => this.dateTimeAdapter.startOfDay(this.min()));
+  protected readonly maxDate = computed(() => this.dateTimeAdapter.startOfDay(this.max()));
 
-  readonly timePicker = viewChild(EntryTimePickerComponent<D>);
+  /** Without this, `focusBoundControl()` falls back to focusing the host element, which is not focusable. */
+  readonly focus = (options?: FocusOptions): void => this.dateTimeInput().nativeElement.focus(options);
 
-  readonly minDate = computed(() => this.floorToDate(this.min()));
-
-  readonly maxDate = computed(() => this.floorToDate(this.max()));
+  /** Clears a failed parse and re-formats the visible text, which a value-only write cannot do. */
+  readonly reset = (): void => this.controls.reset(this.value());
 
   constructor() {
-    // Tracks `disabled` only: any other input would let an unrelated binding re-enable a control the consumer disabled.
-    effect(() => this.setDisabled(this.disabled()));
+    effect(() => this.controls.write(this.value()));
+    // These copy signal state into non-signal controls, which severs the dependency tracking that would
+    // otherwise dirty this view - an `effect()` schedules the view for traversal but never marks it for
+    // refresh. `mat-error` visibility comes from `MatInput.ngDoCheck()` -> `updateErrorState()`, which
+    // runs only when this view is checked, so without the mark the error never renders at all.
+    effect(() => this.andMarkForCheck(() => this.controls.setDisabled(this.disabled())));
+    effect(() => this.andMarkForCheck(() => this.controls.setTouched(this.touched())));
+    effect(() => this.andMarkForCheck(() => this.controls.reportFieldErrors(this.errors())));
 
-    afterNextRender(() => {
-      this.calendarControl.setValue(this.formControl.value, { emitEvent: false });
-      this.mirrorDisabledState();
-      this.mirrorValueChanges();
-      this.applyCalendarSelection();
-    });
+    // `skip(1)` drops the initial value, matching a bound control's `valueChanges`, which does not replay.
+    toObservable(this.value)
+      .pipe(skip(1), takeUntilDestroyed(this.destroyRef))
+      .subscribe(value => this.dateTimeChanged.emit(value as D));
+
+    this.readTypedValue();
+    this.applyCalendarSelection();
   }
 
-  private readonly mirrorDisabledState = (): void => {
-    this.formControl.statusChanges
-      // `startWith` seeds the current status: statusChanges does not replay, so a control disabled before this attached would be missed.
-      .pipe(startWith(this.formControl.status), takeUntilDestroyed(this.destroyRef))
-      .subscribe(status => {
-        if (status === 'DISABLED') {
-          this.calendarControl.disable({ emitEvent: false });
-        } else {
-          this.calendarControl.enable({ emitEvent: false });
-        }
-        // calendarControl is a FormControl, not a signal, so its disabled state does not mark the view
-        this.changeDetectorRef.markForCheck();
-      });
+  private readonly andMarkForCheck = (apply: () => void): void => {
+    apply();
+    this.changeDetectorRef.markForCheck();
   };
 
-  private readonly mirrorValueChanges = (): void => {
-    this.formControl.valueChanges
+  private readonly readTypedValue = (): void => {
+    this.controls.display.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(value => {
-        this.calendarControl.setValue(value, { emitEvent: false });
-        this.dateTimeChanged.emit(value);
+        this.controls.typed(value);
+        this.value.set(value);
       });
   };
 
   private readonly applyCalendarSelection = (): void => {
-    this.calendarControl.valueChanges
+    this.controls.calendar.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(value => {
         const timePicker = this.timePicker();
@@ -114,33 +117,11 @@ export class EntryDateTimePickerComponent<D> {
           return;
         }
         timePicker?.to24HourClock();
-        const dateTime = value ? this.dateTimeAdapter.clone(value) : value;
-        if (dateTime && timePicker) {
-          this.dateTimeAdapter.setTime(dateTime, timePicker.hours(), timePicker.minutes(), timePicker.seconds());
-        }
-
-        this.formControl.setValue(dateTime as D);
-        this.formControl.markAsDirty();
-        this.formControl.markAsTouched();
+        this.value.set(value && timePicker
+          ? this.dateTimeAdapter.withTimeOfDay(
+            value, timePicker.hours(), timePicker.minutes(), timePicker.seconds())
+          : value);
+        this.touch.emit();
       });
-  };
-
-  private readonly floorToDate = (value: D | undefined): D | undefined => {
-    if (!value) {
-      return undefined;
-    }
-    const result = this.dateTimeAdapter.clone(value);
-    this.dateTimeAdapter.setTime(result, 0, 0, 0);
-    return result;
-  };
-
-  private readonly setDisabled = (disabled: boolean): void => {
-    if (disabled && this.formControl.enabled) {
-      this.formControl.disable();
-      this.calendarControl.disable({ emitEvent: false });
-    } else if (this.formControl.disabled) {
-      this.formControl.enable();
-      this.calendarControl.enable({ emitEvent: false });
-    }
   };
 }

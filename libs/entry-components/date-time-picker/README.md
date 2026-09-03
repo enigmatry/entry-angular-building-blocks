@@ -49,14 +49,21 @@ export class SharedModule { }
 
 ## Inputs
 
+- value: The selected date and time. A model signal, so it two-way binds with `[(value)]` and is
+  driven by the forms API when a form is bound.
 - label: Label for the control
 - placeholder: Placeholder for the control
 - hint: Hint text for the control
-- disabled: Whether the control is disabled, when not used with ReactiveForms  cannot be used in combination with reactive forms )
+- disabled: Whether the picker is disabled. Bound by the forms API from the field's own state, so
+  bind it yourself only when no form is bound - to disable a bound control, disable the control.
 - showSeconds: Whether to show seconds in the time picker ( default: false )
 - min: Minimum selectable date
 - max: Maximum selectable date
 - defaultTime: Default time for time picker component, if undefined sets default values to now.
+
+`touched`, `required` and `errors` are also inputs, bound by the forms API from the field's state.
+They exist so the picker can show the asterisk and the validation message, and are not meant to be
+bound by hand.
 
 Configure seconds globally via `provideEntryDateTimePickerConfig` in feature or shared module:
 
@@ -74,10 +81,53 @@ export class SharedModule { }
 
 ## Outputs
 
-- dateTimeChanged: Event emitted when the date time value changes
+- dateTimeChanged: Value changes from any source, a programmatic write to a bound control included.
+  Reports stabilized values, so writes landing inside one tick collapse into one emission - subscribe
+  to your own control's `valueChanges` if you need every write.
+- valueChange: The `value` model's own output, so only the picker's own writes - a user edit reaches
+  it, `boundControl.setValue(...)` does not. Bind `dateTimeChanged` if you need both.
+- touch: Emitted on blur so the forms API can mark the field touched
+
+## Methods
+
+- focus(options?: FocusOptions): Focuses the visible date-time input. Signal forms reaches it through
+  `field().focusBoundControl()`; a control that does not implement it gets the framework's fallback of
+  focusing the host element, which here is not focusable.
+- reset(): Re-formats the visible text from the current value, clears a failed parse and returns the
+  picker's own controls to pristine and untouched. Signal forms reaches it through `field().reset()`.
+  Setting a control's value cannot do this on its own, because Material reformats its input only when
+  the new value differs by reference.
+
+## Unparseable text
+
+The picker owns the control behind the visible field, so Material raises `matDatepickerParse` there
+rather than on the control you bound. The form field shows its error state, but the bound control
+reports valid and empty, so an unparseable entry does not block a submit on its own. You cannot tell
+it from a legitimately empty field either - the value is `null` in both cases. Make the field
+required if it has to block, or read the raw input text yourself.
+
+A `FormValueControl` cannot contribute its own errors: `NG_VALIDATORS` is composed only through
+`setUpControlValueAccessor`, which the custom-control path skips. The supported public channel is
+`transformedValue`, which would have the picker own the raw text instead of leaving the parsing to
+`MatDatepickerInput`. That is deferred - it also takes away the control the form field reads its
+error state from.
+
+`reset()` clears the bad text and the parse error. Setting a control's value does not.
 
 ## Use the component
 
+The picker implements
+[`FormValueControl`](https://angular.dev/guide/forms/signals/custom-controls), so reactive,
+template-driven and signal forms all drive it:
+
 ```html
 <entry-date-time-picker [formControl]="dateTime" label="Expires on"></entry-date-time-picker>
+<entry-date-time-picker [(ngModel)]="dateTime" label="Expires on"></entry-date-time-picker>
+<entry-date-time-picker [formField]="form.expiresOn" label="Expires on"></entry-date-time-picker>
+```
+
+Without a form, two-way bind the value:
+
+```html
+<entry-date-time-picker [(value)]="dateTime" label="Expires on"></entry-date-time-picker>
 ```

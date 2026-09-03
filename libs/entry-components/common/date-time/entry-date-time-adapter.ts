@@ -125,6 +125,18 @@ export class EntryDateTimeAdapter<D, L> extends DateAdapter<D, L> implements Ent
 		return now.includes('a') || now.includes('p');
 	}
 
+	/** The date part of `date`, with the time zeroed. Passes an absent date straight through. */
+	startOfDay(date: D | undefined): D | undefined {
+		return date ? this.withTimeOfDay(date, 0, 0, 0) : undefined;
+	}
+
+	/** `date` carrying the given time, as a new instance so a reference-equality consumer sees the change. */
+	withTimeOfDay(date: D, hours: number, minutes: number, seconds: number): D {
+		const result = this.clone(date);
+		this.setTime(result, hours, minutes, seconds);
+		return result;
+	}
+
 	override compareDate(first: D, second: D): number {
 		return this.getYear(first) - this.getYear(second) ||
 			this.getMonth(first) - this.getMonth(second) ||
