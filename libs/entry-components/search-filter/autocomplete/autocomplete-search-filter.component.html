@@ -1,25 +1,24 @@
 <mat-form-field subscriptSizing="dynamic">
     <mat-label>{{searchFilter().label}}</mat-label>
-    <input type="text" matInput [placeholder]="searchFilter().placeholder"
-        [formControl]="searchField" [id]="searchFilter().key" [matAutocomplete]="auto">
-    <mat-autocomplete [displayWith]="displayFn" #auto="matAutocomplete" (optionSelected)="onSelected($event)">
-        @for (group of (options() | groupSelectOptions); track group.groupName) {
+    <input type="text" matInput [placeholder]="searchFilter().placeholder" [id]="searchFilter().key"
+        [value]="displayText()" (input)="onTyped($any($event.target).value)"
+        (blur)="field()().markAsTouched()" [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelected($event)">
+        @for (group of (optionsValue() | groupSelectOptions); track group.groupName) {
             @if (group.groupName) {
                 <mat-optgroup [label]="group.groupName">
                     @for (child of group.options; track child.key) {
-                        <mat-option [value]="child">
-                            {{child.label}}
-                        </mat-option>
+                        <mat-option [value]="child">{{child.label}}</mat-option>
                     }
                 </mat-optgroup>
             } @else {
                 @for (child of group.options; track child.key) {
-                    <mat-option [value]="child">
-                        {{child.label}}
-                    </mat-option>
+                    <mat-option [value]="child">{{child.label}}</mat-option>
                 }
             }
         }
     </mat-autocomplete>
-    <mat-error entryDisplayControlValidation [control]="searchField"></mat-error>
+    @for (error of field()().errors(); track $index) {
+        <mat-error>{{error.message}}</mat-error>
+    }
 </mat-form-field>
