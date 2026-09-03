@@ -45,7 +45,7 @@ components on a prerendered route.
 `22.x` requires Angular 22, TypeScript ~6.0 and Node `^22.22.3 || ^24.15.0 || >=26.0.0`. Run
 `ng update @angular/core@22 @angular/cli@22 @angular/cdk@22 @angular/material@22` first, then work
 through the items below. Several of them change behaviour silently, with no compile error to catch
-you — sections 2, 3, 5, 8, 10 and 11 in particular.
+you — sections 2, 3, 5, 8, 10, 11 and 12 in particular.
 
 ### 1. `@angular/animations` is no longer a peer dependency
 
@@ -148,28 +148,13 @@ in a constructor, an `afterNextRender` callback or a `linkedSignal`.
 | `EntryFileInputComponent.value` | `File \| FileList \| undefined` | `Signal<...>` (read-only) |
 | `EntryFileInputComponent.fileNames` | getter | `Signal<string>` |
 | `EntryFileInputComponent.selectedFile` | `EventEmitter<File \| FileList>` | `OutputEmitterRef<File \| FileList>` |
-| `EntrySearchFilterComponent.searchFilterForm` | `UntypedFormGroup` | `Signal<FormRecord>` |
-| `EntrySearchFilterComponent.renderedSearchFilters` | array property | `Signal<SearchFilterBase<unknown>[]>` |
 | `EntrySearchFilterComponent.searchFilterChange` | `EventEmitter<SearchFilterParams>` | `OutputEmitterRef<SearchFilterParams>` |
-| `EntrySearchFilterComponent.toFormGroup` | `(filters: SearchFilterBase<any>[]) => UntypedFormGroup` | `(filters: SearchFilterBase<unknown>[], currentValues?) => FormRecord` |
 | `SearchFilterBase.formatValue` | `(value: T) => T` | `(value: unknown) => unknown` |
 | `EntryTimePickerComponent.hours` / `.minutes` / `.seconds` / `.meridiem` | plain fields | signals — only reachable through a template ref, the class is not exported |
 
-`searchFilterForm` is the one most likely to be read imperatively, because that is how server-side
-validation errors get onto the filter form:
-
-```diff
-- setServerSideValidationErrors(error, this.searchFilter.searchFilterForm);
-+ setServerSideValidationErrors(error, this.searchFilter().searchFilterForm());
-```
-
-`renderedSearchFilters` follows the same shape — it is now a signal, so it has to be called before
-iterating:
-
-```diff
-- this.searchFilter.renderedSearchFilters.map(filter => filter.key);
-+ this.searchFilter().renderedSearchFilters().map(filter => filter.key);
-```
+The search filter's own members are not in this table: it no longer exposes a form at all, and every
+other member of it changed shape too. [Section 12](#12-the-search-filter-runs-on-signal-forms)
+covers that component on its own.
 
 `formatValue` is the one signature change with a compile error at the *consumer's* callback rather
 than at the call site. It takes `unknown` so that `SearchFilterBase<T>` is assignable to
@@ -186,9 +171,7 @@ filter arrays were typed `SearchFilterBase<any>`. Narrow inside the callback:
 ```
 
 The filter arrays themselves are `SearchFilterBase<unknown>[]` now, so `[searchFilters]` and any
-field you keep them in can drop their `any`. `toFormGroup` and the `as*SearchFilter` cast helpers
-were retyped the same way and lost their generics; they exist for the component's own template, so
-this only reaches you if you subclass.
+field you keep them in can drop their `any`.
 
 All three outputs — `dateTimeChanged`, `EntryFileInputComponent.selectedFile` and
 `EntrySearchFilterComponent.searchFilterChange` — are `OutputEmitterRef` now. `.subscribe()` still
@@ -222,13 +205,12 @@ Every `Untyped*` type is gone from the library's public surface. Those aliases w
 `ng update` migration aid from Angular 13 — `UntypedFormGroup` is literally `FormGroup<any>`, so
 they opted every form touching this library out of typed forms.
 
-Two of the three replacements **widen** what is accepted, so nothing breaks:
+Both replacements **widen** what is accepted, so nothing breaks:
 
 | Symbol | 21.x | 22.0.0 | Effect |
 |---|---|---|---|
 | `setServerSideValidationErrors(error, form)` | `UntypedFormGroup` | `AbstractControl` | widened |
 | `EntryFormErrorsComponent.form` | `UntypedFormGroup` | `AbstractControl` | widened |
-| `EntrySearchFilterComponent.searchFilterForm` | `UntypedFormGroup` | `FormRecord` | see below |
 
 You can now pass a **typed** form where you previously had to widen to `UntypedFormGroup`:
 
@@ -242,9 +224,8 @@ You can now pass a **typed** form where you previously had to widen to `UntypedF
   setServerSideValidationErrors(error, this.form);   // still compiles, now fully typed
 ```
 
-`searchFilterForm` is a [`FormRecord`](https://angular.dev/api/forms/FormRecord) — a `FormGroup`
-whose keys are not known at compile time, which is exactly what a filter set is. `FormRecord`
-extends `FormGroup` at runtime, so `instanceof` checks and every method behave identically.
+The search filter used to be the third entry here. It no longer has a reactive form of any kind —
+see [section 12](#12-the-search-filter-runs-on-signal-forms).
 
 `@enigmatry/entry-form` still surfaces `UntypedFormControl` in places, because that is how
 `@ngx-formly/core` types `FieldType.formControl`. That one is not ours to remove.
@@ -303,12 +284,15 @@ look if you rely on the affected components:
   to `getSeconds(defaultTime ?? now)` whenever seconds were not selectable, so two users applying
   the same visible time produced different values. Seconds now come from the bound date when they
   are shown, from an explicit `defaultTime` when one is given, and are `0` otherwise.
-- **`<entry-search-filter [searchFilters]>` rebuilds when the array changes.** `21.x` built the form
-  once, so filters that arrived later — a select filter replaced once its options load — were never
-  rendered and never had their `formControl` assigned. Every new array now rebuilds, and the values
-  already in the form are carried over by key so nothing the user typed is lost. In-place mutation
-  (`filters.push(...)`) still does not rebuild: signal inputs compare by identity, so hand over a new
-  array (`this.filters = [...this.filters, newFilter]`).
+- **`<entry-search-filter [searchFilters]>` follows the array instead of rebuilding from it.** `21.x`
+  built the form once, so filters that arrived later — a select filter replaced once its options load
+  — were never rendered. There is no build step at all now: a filter's value lives in the component's
+  model, so a new key grows a field and a dropped key prunes one, and everything else keeps its value
+  and its touched state. A filter you hand over carrying a new `value` wins; a rebind that changes no
+  declared value leaves what the user typed alone. In-place mutation (`filters.push(...)`) still goes
+  unnoticed: signal inputs compare by identity, so hand over a new array
+  (`this.filters = [...this.filters, newFilter]`). See
+  [section 12](#12-the-search-filter-runs-on-signal-forms) for the rest.
 - **`[entryDisplayControlValidation]` now clears its message when the control stops being invalid.**
   `21.x` only ever wrote the text, so a message survived the field being corrected. If you relied on
   the message staying put, it no longer does.
@@ -412,6 +396,121 @@ say required rather than naming the bad date), or read the input's raw text your
 only when the new value differs by reference, so resetting an already-empty field leaves the text on
 screen. `field().reset()` calls the picker's `reset()` and clears both the text and the error; a
 reactive `control.reset()` does not reach it.
+
+### 12. The search filter runs on signal forms
+
+`<entry-search-filter>` is rewritten on [signal forms](https://angular.dev/guide/forms/signals).
+Every member below is measured against **21.4.0**, not against `master` — two of these had already
+changed once in unreleased work, so a diff against the previous tag is the only honest baseline.
+
+The filter models are now configuration and nothing else. They hold no control, and the component
+never writes back onto them.
+
+| Symbol | 21.4.0 | 22.0.0 |
+|---|---|---|
+| `EntrySearchFilterComponent.searchAction` | — | **new, required**: `(values) => Promise<SearchFilterServerError[] \| void>` |
+| `EntrySearchFilterComponent.searchFilterChange` | `EventEmitter<SearchFilterParams>` | `OutputEmitterRef<SearchFilterParams>`, still emitted on every accepted search |
+| `EntrySearchFilterComponent.searchFilterForm` | `UntypedFormGroup` | **gone** — there is no reactive form |
+| `EntrySearchFilterComponent.renderedSearchFilters` | — | **gone** — it only ever existed on unreleased `master` |
+| `EntrySearchFilterComponent.toFormGroup` | `(filters) => UntypedFormGroup` | **gone** |
+| `EntrySearchFilterComponent.onSubmit` | callable member | **gone** — the form submits itself |
+| `EntrySearchFilterComponent.controlType` / `config` / `as*SearchFilter` | public | `protected` — template-only members |
+| `SearchFilterBase.formControl` | `FormControl<T \| undefined>` | **gone** |
+| `SearchFilterBase.setValue(value)` | method | **gone** — hand over new filters instead |
+| `SearchFilterBase.toFormControl()` | method | **gone** |
+| `SearchFilterBase.required` | — | **new**: `boolean`, default `false` |
+| `SearchFilterBase.type` | defaulted to `'text-input'` | defaults to `'text'` |
+| `SelectSearchFilter.options` | `SelectOption<T>[]` | `Signal<readonly SelectOption<T>[]>` — a plain array is still accepted and wrapped |
+| `SelectSearchFilter.options$` | `Observable<SelectOption<T>[]>` | **gone** — pass a signal to `options` |
+| `SelectSearchFilter.showNoneOption` | documented `true`, behaved as `false` | `true`, as documented |
+| `AutocompleteSearchFilter.search` | `(input) => Observable<SelectOption<T>[]>` | `(input, abortSignal) => Promise<readonly SelectOption<T>[]>` |
+| `AutocompleteSearchFilter.resolveLabel` | — | **new**, optional: resolves the label for a value the user did not pick |
+| `AutocompleteSearchFilter` value | the whole `SelectOption<T>` | the option's `key` |
+| `EntrySearchFilterConfig.clearButtonText` / `.requiredMessage` / `.maxLengthMessage` | — | **new** |
+
+#### Running the search
+
+The component asks you for the search rather than announcing it. Give it an action; return whatever
+the server rejected and Angular puts each message on its filter, clearing it when that filter is
+edited. That replaces `setServerSideValidationErrors` on this form — the filter form no longer has an
+`AbstractControl` to hand it.
+
+```diff
+- <entry-search-filter [searchFilters]="filters" (searchFilterChange)="onFilter($event)">
++ <entry-search-filter [searchFilters]="filters" [searchAction]="search">
+```
+
+```diff
+- onFilter(params: SearchFilterParams): void {
+-   this.service.getUsers(params).subscribe({
+-     next: users => this.users.set(users),
+-     error: (problem: IValidationProblemDetails) =>
+-       setServerSideValidationErrors(problem, this.searchFilter().searchFilterForm())
+-   });
+- }
++ readonly search = async(params: SearchFilterParams) => {
++   try {
++     this.users.set(await firstValueFrom(this.service.getUsers(params)));
++     return undefined;
++   } catch (problem) {
++     return Object.entries((problem as IValidationProblemDetails).errors ?? {})
++       .flatMap(([key, messages]) => messages.map(message => ({ key, message })));
++   }
++ };
+```
+
+`searchFilterChange` still fires, so a page that writes the filters into the URL and fetches
+downstream of navigation can keep binding it and hand the action an empty implementation.
+
+#### Setting a filter's value
+
+`setValue` is gone because there is no control to set. Hand over new filter instances instead — the
+component keeps what the user typed unless the filter's declared `value` changed:
+
+```diff
+- this.filters.find(filter => filter.key === 'name')!.setValue(params['name']);
++ this.filters = this.createFilters(params);   // fresh instances carrying the new values
+```
+
+#### Validation and submission
+
+Filters can be validated for the first time. `required: true` on a filter, and the `maxLength` that
+was previously only a DOM attribute, are now real rules. **An invalid filter blocks the search** and
+focus moves to the offending field — `21.x` searched regardless, because nothing could be invalid.
+
+A message the server returned keeps its filter invalid until the user edits that filter, so the next
+search is blocked too. That is deliberate: the server rejected that value and nothing else has
+happened to change its mind.
+
+#### Clearing
+
+There is a Clear button now, labelled through `EntrySearchFilterConfig.clearButtonText`. It empties
+every filter and forgets which were touched. It clears rather than restoring declared values, so a
+filter that carries a default loses it until you hand the filters over again.
+
+#### What this cost, for anyone doing the same migration
+
+Two things have no documented Angular idiom, and both are worth knowing before you copy this:
+
+- **A library component taking the submit action from its consumer.** Angular's
+  [dynamic forms guide](https://angular.dev/guide/forms/signals/dynamic-forms-with-json) only shows
+  an application component owning its own action. The required-action input is ours.
+- **Per-key *and* per-type rules over a runtime key set.** `applyEach` reaches keys created after
+  `form()` ran, but a length rule cannot be typed against a heterogeneous leaf, so the value is
+  narrowed with `applyWhenValue` first — and that narrowing re-roots the path, so the key has to come
+  from `context.pathKeys()` rather than `context.key()`. The guide's config loop with scoped
+  `SchemaPath<T>` casts assumes the config is fixed when the form is created; ours is not.
+
+Three smaller traps, all measured:
+
+- A model value of `undefined` gets **no field at all**, and writing `undefined` into a live field
+  destroys its node along with its touched state and any server message. Text filters seed `''` and
+  everything else seeds `null`.
+- Indexing a field tree with a key that is also a `Function` member — `name`, `length`, `call` —
+  type-checks as that member instead of a field. Runtime is fine; the compiler lies. Reach every
+  field through a typed accessor.
+- Iterating a field tree inside a `computed()` registers no dependency on its **key set**: adding a
+  key leaves the computed stale, while removing one invalidates it. Read the model signal first.
 
 ## License
 
