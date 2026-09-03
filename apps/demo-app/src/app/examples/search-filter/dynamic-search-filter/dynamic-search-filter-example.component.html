@@ -1,0 +1,17 @@
+<div class="dynamic-search-filter-actions">
+    <button mat-stroked-button type="button" (click)="addFilter()">Add a filter</button>
+    <button mat-stroked-button type="button" (click)="removeLastFilter()">Remove the last filter</button>
+    <button mat-stroked-button type="button" (click)="restoreFromParams()">Restore Term from params</button>
+    <button mat-stroked-button type="button" (click)="rejectRegion.set(!rejectRegion())">
+        Server rejects Region: {{rejectRegion() ? 'yes' : 'no'}}
+    </button>
+</div>
+
+<entry-search-filter [searchFilters]="filters()" [searchAction]="search"
+    (searchFilterChange)="onSearchFilterChange($event)"></entry-search-filter>
+
+<h3>What the action received</h3>
+<pre>{{lastParams() | json}}</pre>
+
+<h3>What the output emitted</h3>
+<pre>{{navigatedParams() | json}}</pre>
