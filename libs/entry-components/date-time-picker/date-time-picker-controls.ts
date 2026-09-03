@@ -37,12 +37,11 @@ export class EntryDateTimePickerControls<D> {
 
   /** Applies a value that came from the bound field, ignoring the field's echo of a typed one. */
   readonly write = (value: D | null | undefined): void => {
-    if (this.consumeEcho(value)) {
-      return;
-    }
+    // The echo guards only the visible field - the calendar is never typed into and would go stale.
+    const isEcho = this.consumeEcho(value);
     // A parse failure means the visible text does not represent this value, so the write has to
     // land even when the control already holds it - that is what clears Material's parse state.
-    if (this.hasParseError() || !Object.is(this.display.value, value)) {
+    if (!isEcho && (this.hasParseError() || !Object.is(this.display.value, value))) {
       this.display.setValue(value, { emitEvent: false });
     }
     if (!Object.is(this.calendar.value, value)) {
@@ -84,7 +83,8 @@ export class EntryDateTimePickerControls<D> {
   };
 
   /**
-   * Re-formats the visible text from `value` and clears a failed parse.
+   * Re-formats the visible text from `value`, clears a failed parse and returns both controls to
+   * pristine, which is the state `FormValueControl.reset()` is defined to restore.
    *
    * Assigning the input's `value` rather than the control's is deliberate: the control path reaches
    * `MatDatepickerInput` through `writeValue`, which reformats only when the reference differs, so
@@ -97,7 +97,10 @@ export class EntryDateTimePickerControls<D> {
     if (input) {
       input.value = value ?? null;
     }
-    this.display.markAsUntouched();
+    for (const control of [this.display, this.calendar]) {
+      control.markAsPristine();
+      control.markAsUntouched();
+    }
     this.display.updateValueAndValidity();
   };
 
