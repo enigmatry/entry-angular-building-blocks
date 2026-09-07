@@ -1,3 +1,3 @@
-<mat-checkbox (ngModelChange)="setDisabled($event)" [(ngModel)]="disabled">Disabled</mat-checkbox>
-<entry-date-time-picker [formControl]="dateTime" label="Reactive forms"></entry-date-time-picker>
-<entry-date-time-picker [(ngModel)]="anotherDateTime" [disabled]="disabled" label="Without reactive forms"></entry-date-time-picker>
+<mat-checkbox [(ngModel)]="disabled" (ngModelChange)="setDisabled($event)">Disabled</mat-checkbox>
+<entry-date-time-picker label="Reactive forms" [formControl]="dateTime" />
+<entry-date-time-picker label="Without reactive forms" [disabled]="disabled" [(ngModel)]="anotherDateTime" />

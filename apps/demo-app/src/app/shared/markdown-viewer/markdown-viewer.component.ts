@@ -43,7 +43,7 @@ export class MarkdownViewerComponent {
   }
 
   private readonly convertMarkdownToHtml = (markdown: string): SafeHtml => {
-    const converter = MarkdownIt('default', {
+    const converter = new MarkdownIt('default', {
       html: true,
       breaks: true,
       typographer: true,

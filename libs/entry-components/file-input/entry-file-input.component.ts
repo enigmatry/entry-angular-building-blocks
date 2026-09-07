@@ -4,7 +4,7 @@ import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
 import {
   afterNextRender, ChangeDetectionStrategy,
   Component, DestroyRef, ElementRef, NgZone,
-  Renderer2, computed, forwardRef,
+  Renderer2, computed,
   inject, input, linkedSignal, output, Signal, signal, viewChild
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -14,28 +14,16 @@ import {
 } from '@angular/forms';
 import { fromEvent } from 'rxjs';
 
-const providers = [
-  {
-    provide: NG_VALUE_ACCESSOR,
-    // eslint-disable-next-line @typescript-eslint/no-use-before-define
-    useExisting: forwardRef(() => EntryFileInputComponent),
-    multi: true
-  },
-  {
-    provide: NG_VALIDATORS,
-    // eslint-disable-next-line @typescript-eslint/no-use-before-define
-    useExisting: forwardRef(() => EntryFileInputComponent),
-    multi: true
-  }
-];
-
 @Component({
   standalone: false,
   selector: 'entry-file-input',
   templateUrl: './entry-file-input.component.html',
   styleUrl: './entry-file-input.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers
+  providers: [
+    { provide: NG_VALUE_ACCESSOR, useExisting: EntryFileInputComponent, multi: true },
+    { provide: NG_VALIDATORS, useExisting: EntryFileInputComponent, multi: true }
+  ]
 })
 export class EntryFileInputComponent implements ControlValueAccessor, Validator {
   private readonly ngZone: NgZone = inject(NgZone);

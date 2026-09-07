@@ -4,7 +4,7 @@ import { ThemePalette } from '@angular/material/core';
 import { ENTRY_BUTTON_CONFIG, EntryButtonConfig, MatButtonConfig } from './entry-button-config';
 
 @Directive({
-  // eslint-disable-next-line @angular-eslint/directive-selector
+
   selector: `[mat-button][entry-submit-button],[mat-button][entry-cancel-button]`,
   standalone: false
 })

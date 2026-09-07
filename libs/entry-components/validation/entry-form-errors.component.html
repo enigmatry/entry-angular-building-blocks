@@ -1,0 +1,10 @@
+@let errors = generalErrors;
+@if (errors.length) {
+  <div>
+    @for (error of errors; track error) {
+      <mat-error>
+        <span class="mat-body-2">{{error}}</span>
+      </mat-error>
+    }
+  </div>
+}

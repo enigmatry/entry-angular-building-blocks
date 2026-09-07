@@ -119,7 +119,7 @@ readonly pageChange = output<PageEvent>();
 
 // derived state
 readonly displayedColumns = computed(() => this.columns().filter(...).map(...));
-readonly pageIndex = linkedSignal<number>(() => 0);
+readonly rowSelection = linkedSignal(() => new SelectionModel<T>(this.multiSelectable(), this.rowSelected()));
 
 // async resources
 readonly usersResource = resource({ loader: async () => lastValueFrom(this.usersService.getUsers({})) });

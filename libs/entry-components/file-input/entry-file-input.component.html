@@ -3,9 +3,9 @@
  mat-button
  entry-submit-button
  type="button"
- [disabled]="effectiveDisabled() || readonly()"
  aria-controls="fileInput"
- aria-label="Upload Files">
+ aria-label="Upload Files"
+ [disabled]="effectiveDisabled() || readonly()">
   @if (matIcon()) {
     <mat-icon>{{matIcon()}}</mat-icon>
   }
@@ -18,11 +18,11 @@
  #fileInput
  type="file"
  class="file-input-hidden"
+ aria-label="File Upload"
+ id="fileInput"
  [accept]="accept() ?? ''"
  [multiple]="multiple()"
  [disabled]="effectiveDisabled()"
  [readonly]="readonly()"
  (change)="onFileSelect($event)"
- aria-label="File Upload"
- id="fileInput"
 />

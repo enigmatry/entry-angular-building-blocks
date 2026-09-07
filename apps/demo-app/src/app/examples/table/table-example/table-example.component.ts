@@ -40,9 +40,7 @@ export class TableExampleComponent {
 
   private readonly usersService: UsersService = inject(UsersService);
   readonly usersResource = resource({
-    loader: async() => {
-      return lastValueFrom(this.usersService.getUsers({}));
-    }
+    loader: async() => lastValueFrom(this.usersService.getUsers({}))
   });
   protected readonly users = computed<User[]>(() => this.usersResource.hasValue() ? this.usersResource.value() : []);
 }

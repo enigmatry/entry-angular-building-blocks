@@ -1,8 +1,8 @@
-<form [formGroup]="form" (ngSubmit)="submitForm()" class="formly-form entry-form">
-    <formly-form [fields]="fields" [form]="form" [model]="model"></formly-form>
+<form class="formly-form entry-form" [formGroup]="form" (ngSubmit)="submitForm()">
+    <formly-form [fields]="fields" [form]="form" [model]="model" />
 
     <!-- Displays form level validation errors -->
-    <entry-form-errors [form]="form"></entry-form-errors>
+    <entry-form-errors [form]="form" />
     
     <div class="action-buttons">
         <button mat-button entry-submit-button type="submit">Submit</button>

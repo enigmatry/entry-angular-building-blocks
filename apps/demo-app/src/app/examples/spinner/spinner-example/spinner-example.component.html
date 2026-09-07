@@ -1,13 +1,13 @@
 <section>
   @if (loading()) {
     <entry-spinner [fullscreen]="fullscreen" [color]="color"
-      [hasBackgroundOverlay]="hasBackgroundOverlay"></entry-spinner>
+      [hasBackgroundOverlay]="hasBackgroundOverlay" />
   }
 </section>
 
 <section>
   <p>
-    <label>Color: </label>
+    <span>Color: </span>
     <mat-radio-group aria-label="Color" name="color" [(ngModel)]="color">
       <mat-radio-button value="primary">Primary (default)</mat-radio-button>
       <mat-radio-button value="accent">Accent</mat-radio-button>
@@ -15,14 +15,14 @@
     </mat-radio-group>
   </p>
   <p>
-    <label>Fullscreen: </label>
+    <span>Fullscreen: </span>
     <mat-radio-group aria-label="Fullscreen" name="fullscreen" [(ngModel)]="fullscreen">
       <mat-radio-button [value]="true">True</mat-radio-button>
       <mat-radio-button [value]="false">False (default)</mat-radio-button>
     </mat-radio-group>
   </p>
   <p>
-    <label>Background overlay: </label>
+    <span>Background overlay: </span>
     <mat-radio-group aria-label="Backdrop" name="backdrop" [(ngModel)]="hasBackgroundOverlay">
       <mat-radio-button [value]="true">True (default)</mat-radio-button>
       <mat-radio-button [value]="false">False</mat-radio-button>

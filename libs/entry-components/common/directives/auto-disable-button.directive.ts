@@ -18,7 +18,7 @@ const DEFAULT_DISABLE_INTERVAL_IN_MS = 2000;
  */
 @Directive({
   standalone: true,
-  // eslint-disable-next-line @angular-eslint/directive-selector
+
   selector: 'button[entry-auto-disable]:not([disabled])'
 })
 export class AutoDisableButtonDirective {

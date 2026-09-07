@@ -5,18 +5,18 @@
     @if (hint()) {
         <mat-hint>{{hint()}}</mat-hint>
     }
-    <mat-datepicker #hiddenPicker class="hidden"></mat-datepicker>
-    <input class="hidden" matInput [min]="minDate()" [max]="maxDate()" [matDatepicker]="picker"
-        [formControl]="controls.calendar" aria-label="Calendar Control">
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #hiddenPicker class="hidden" />
+    <input class="hidden" matInput aria-label="Calendar Control" [min]="minDate()" [max]="maxDate()"
+        [matDatepicker]="picker" [formControl]="controls.calendar">
+    <mat-datepicker-toggle matSuffix [for]="picker" />
     <mat-datepicker #picker (opened)="timePicker()?.update()">
         <mat-datepicker-actions>
             <entry-time-picker [date]="value() ?? undefined" [showSeconds]="showSeconds() ?? config.showSeconds"
-                [is12HourClock]="is12HourClock" [defaultTime]="defaultTime()"></entry-time-picker>
+                [is12HourClock]="is12HourClock" [defaultTime]="defaultTime()" />
             <button mat-raised-button color="primary" matDateRangePickerApply class="entry-submit-button">
-                <mat-icon aria-hidden="false" aria-label="Apply" fontIcon="done" class="icon"></mat-icon>
+                <mat-icon aria-hidden="false" aria-label="Apply" fontIcon="done" class="icon" />
             </button>
         </mat-datepicker-actions>
     </mat-datepicker>
-    <mat-error entryDisplayControlValidation [control]="controls.display"></mat-error>
+    <mat-error entryDisplayControlValidation [control]="controls.display" />
 </mat-form-field>

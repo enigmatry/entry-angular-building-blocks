@@ -1,0 +1,9 @@
+<div class="validation-children-names">
+  <span class="description">{{props.label}}:</span>
+  @for (field of field.fieldGroup; track field.id) {
+    <div>
+      <span>{{$index + 1}}. child</span>
+      <formly-field [field]="field" />
+    </div>
+  }
+</div>

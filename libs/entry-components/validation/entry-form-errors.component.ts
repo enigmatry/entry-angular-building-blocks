@@ -16,18 +16,7 @@ import { FORM_ERROR_KEY } from './entry-validation';
  */
 @Component({
     selector: 'entry-form-errors',
-    template: `
-    @let errors = generalErrors;
-    @if (errors.length) {
-      <div>
-        @for (error of errors; track error) {
-          <mat-error>
-            <span class="mat-body-2">{{error}}</span>
-          </mat-error>
-        }
-      </div>
-    }
-  `,
+    templateUrl: './entry-form-errors.component.html',
     standalone: false
 })
 export class EntryFormErrorsComponent {

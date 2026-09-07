@@ -1,14 +1,12 @@
 
-import { Injectable } from '@angular/core';
+import { Service } from '@angular/core';
 import { IValidationProblemDetails } from '@enigmatry/entry-components/validation';
 import { Observable, throwError } from 'rxjs';
 
 /**
  * A service used to mock API validation error responses.
  */
-@Injectable({
-  providedIn: 'root'
-})
+@Service()
 export class ValidationService {
   submitWithValidationErrors = (): Observable<void> => throwError(() => ({
       errors: {
