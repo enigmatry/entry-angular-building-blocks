@@ -123,6 +123,8 @@ export default defineConfig(
         "property"
       ],
       "@stylistic/eol-last": "off",
+      "@stylistic/exp-jsx-props-style": "off",
+      "@stylistic/exp-list-style": "off",
       "@stylistic/function-call-argument-newline": "off",
       "@stylistic/function-call-spacing": "error",
       "@stylistic/function-paren-newline": "off",
@@ -285,6 +287,7 @@ export default defineConfig(
       ],
       "@typescript-eslint/no-empty-object-type": "off",
       "@typescript-eslint/no-floating-promises": "error",
+      "@typescript-eslint/no-generated-empty-object-type": "error",
       "@typescript-eslint/no-implied-eval": [
         "error"
       ],
@@ -885,6 +888,7 @@ export default defineConfig(
       "@angular-eslint/template/prefer-ngsrc": "off",
       "@angular-eslint/template/prefer-self-closing-tags": "error",
       "@angular-eslint/template/prefer-static-string-properties": "error",
+      "@angular-eslint/template/prefer-style-binding": "error",
       "@angular-eslint/template/prefer-template-literal": "error",
       "@angular-eslint/template/require-switch-default": "error",
       "@angular-eslint/template/role-has-required-aria": "error",
