@@ -756,6 +756,17 @@ export default defineConfig(
       "prefer-arrow-functions/prefer-arrow-functions": [
         "warn",
         {
+          "allowedNames": [
+            "ngAfterContentChecked",
+            "ngAfterContentInit",
+            "ngAfterViewChecked",
+            "ngAfterViewInit",
+            "ngDoBootstrap",
+            "ngDoCheck",
+            "ngOnChanges",
+            "ngOnDestroy",
+            "ngOnInit"
+          ],
           "allowNamedFunctions": false,
           "classPropertiesAllowed": true,
           "disallowPrototype": true,
