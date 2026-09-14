@@ -12,7 +12,7 @@
     "lint:ts": "eslint",
     "typedoc": "typedoc",
     "demo-app:eslint": "cd apps/demo-app && eslint",
-    "demo-app:stylelint": "cd apps/demo-app && stylelint --fix src/**/*.scss --config ../../.stylelintrc.json",
+    "demo-app:stylelint": "cd apps/demo-app && stylelint --fix \"src/**/*.scss\" --config ../../.stylelintrc.json",
     "entry-components:build": "ng build @enigmatry/entry-components",
     "entry-components:watch": "ng build @enigmatry/entry-components --watch --configuration development",
     "entry-components:compile-fixed-theme": "cd libs/entry-components && npm run compile-scss",
