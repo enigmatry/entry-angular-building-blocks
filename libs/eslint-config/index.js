@@ -876,7 +876,12 @@ export default defineConfig(
       "@angular-eslint/template/no-autofocus": "error",
       "@angular-eslint/template/no-call-expression": "off",
       "@angular-eslint/template/no-distracting-elements": "error",
-      "@angular-eslint/template/no-duplicate-attributes": "error",
+      "@angular-eslint/template/no-duplicate-attributes": [
+        "error",
+        {
+          "allowStylePrecedenceDuplicates": true
+        }
+      ],
       "@angular-eslint/template/no-empty-control-flow": "error",
       "@angular-eslint/template/no-inline-styles": [
         "error",
