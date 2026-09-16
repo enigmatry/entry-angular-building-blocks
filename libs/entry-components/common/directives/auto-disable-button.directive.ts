@@ -18,7 +18,6 @@ const DEFAULT_DISABLE_INTERVAL_IN_MS = 2000;
  */
 @Directive({
   standalone: true,
-
   selector: 'button[entry-auto-disable]:not([disabled])'
 })
 export class AutoDisableButtonDirective {

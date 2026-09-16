@@ -14,7 +14,6 @@ const FOCUSABLE_CONTROLS = ['input:not([type="hidden"])', 'select', 'textarea', 
  */
 @Directive({
   standalone: true,
-
   selector: 'form[formGroup],form[ngForm]'
 })
 export class ScrollToInvalidControlDirective {

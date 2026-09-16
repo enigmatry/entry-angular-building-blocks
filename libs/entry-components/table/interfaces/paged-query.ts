@@ -31,11 +31,11 @@ export class PagedQuery implements OnPage, OnSort {
   };
 
   readonly getRouteQueryParams = (): Params => ({
-      pageNumber: this.pageNumber,
-      pageSize: this.pageSize,
-      sortBy: this.sortBy,
-      sortDirection: this.sortDirection
-    });
+    pageNumber: this.pageNumber,
+    pageSize: this.pageSize,
+    sortBy: this.sortBy,
+    sortDirection: this.sortDirection
+  });
 
   readonly getValueIfNotEmpty = <T>(value: T): T | undefined => value ? value : undefined;
 }
