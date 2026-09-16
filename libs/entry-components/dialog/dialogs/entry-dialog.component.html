@@ -26,11 +26,11 @@
     }
 
     <ng-template #defaultButtonsTemplate>
-        <button cdkFocusInitial mat-button entry-submit-button [disabled]="disableConfirm()" (click)="onSubmit()">
+        <button cdkFocusInitial mat-button entry-submit-button type="button" [disabled]="disableConfirm()" (click)="onSubmit()">
             <span>{{confirmButtonText()}}</span>
         </button>
         @if (!hideCancel()) {
-            <button mat-button entry-cancel-button (click)="onCancel()">
+            <button mat-button entry-cancel-button type="button" (click)="onCancel()">
                 <span>{{cancelButtonText()}}</span>
             </button>
         }

@@ -18,11 +18,14 @@
                 @case (controlType.date) {
                     <entry-date-search-filter [searchFilter]="asDateSearchFilter(searchFilter)" [form]="searchFilterForm()" />
                 }
+                @default {
+                    <!-- ControlType is exhaustive; @default only satisfies require-switch-default -->
+                }
             }
         </div>
     }
     <div class="entry-search-filter-actions">
-        <button mat-button entry-submit-button>
+        <button mat-button entry-submit-button type="submit">
             <span>{{config.applyButtonText}}</span>
         </button>
     </div>

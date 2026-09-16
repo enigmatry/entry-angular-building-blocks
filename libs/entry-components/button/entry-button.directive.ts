@@ -4,21 +4,20 @@ import { ThemePalette } from '@angular/material/core';
 import { ENTRY_BUTTON_CONFIG, EntryButtonConfig, MatButtonConfig } from './entry-button-config';
 
 @Directive({
-
   selector: `[mat-button][entry-submit-button],[mat-button][entry-cancel-button]`,
   standalone: false
 })
 export class EntryButtonDirective {
+  private readonly elementRef: ElementRef<HTMLElement> = inject(ElementRef<HTMLElement>);
+  private readonly config: EntryButtonConfig = inject(ENTRY_BUTTON_CONFIG);
+  private readonly matButton = inject(MatButton, { optional: true });
+
   matClasses: { [key: string]: string[] } = {
     basic: ['mdc-button', 'mat-mdc-button'],
     raised: ['mdc-button', 'mdc-button--raised', 'mat-mdc-raised-button'],
     stroked: ['mdc-button', 'mdc-button--outlined', 'mat-mdc-outlined-button'],
     flat: ['mdc-button', 'mdc-button--unelevated', 'mat-mdc-unelevated-button']
   };
-
-  private readonly elementRef: ElementRef<HTMLElement> = inject(ElementRef<HTMLElement>);
-  private readonly config: EntryButtonConfig = inject(ENTRY_BUTTON_CONFIG);
-  private readonly matButton = inject(MatButton, { optional: true });
 
   // Constructor, not a lifecycle or after-render hook: `MatButton.color` feeds its own host bindings and must be set before its first check.
   constructor() {

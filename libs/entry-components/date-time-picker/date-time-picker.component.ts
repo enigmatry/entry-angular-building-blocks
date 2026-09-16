@@ -24,6 +24,13 @@ import { EntryTimePickerComponent } from './time-picker.component';
     }
 })
 export class EntryDateTimePickerComponent<D> implements FormValueControl<D | null | undefined> {
+  private readonly dateTimeAdapter: EntryDateTimeAdapter<D, unknown> = inject(DateAdapter) as EntryDateTimeAdapter<D, unknown>;
+  private readonly format: MatDateFormats = inject(ENTRY_MAT_DATE_TIME_FORMATS);
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly errorHandler = inject(ErrorHandler);
+  public config: EntryDateTimePickerConfig = inject(ENTRY_DATE_TIME_PICKER_CONFIG);
+
   /** The selected date and time. `null` is relayed rather than normalised, so a bound control keeps the emptiness it declared. */
   readonly value = model<D | null | undefined>(undefined);
 
@@ -46,13 +53,6 @@ export class EntryDateTimePickerComponent<D> implements FormValueControl<D | nul
 
   /** Reports stabilized values, so two writes inside one tick surface as one. `valueChange` covers only the picker's own writes. */
   readonly dateTimeChanged = output<D>();
-
-  private readonly dateTimeAdapter: EntryDateTimeAdapter<D, unknown> = inject(DateAdapter) as EntryDateTimeAdapter<D, unknown>;
-  private readonly format: MatDateFormats = inject(ENTRY_MAT_DATE_TIME_FORMATS);
-  private readonly changeDetectorRef = inject(ChangeDetectorRef);
-  private readonly destroyRef = inject(DestroyRef);
-  private readonly errorHandler = inject(ErrorHandler);
-  public config: EntryDateTimePickerConfig = inject(ENTRY_DATE_TIME_PICKER_CONFIG);
 
   private readonly dateTimeInput = viewChild.required<ElementRef<HTMLInputElement>>('dateTimeInput');
   // Read off the visible field's own ref, because the calendar carries a second datepicker input.

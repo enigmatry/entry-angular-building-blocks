@@ -1,7 +1,7 @@
 <mat-card appearance="outlined" class="example-card">
     <mat-toolbar-row>
         <span>{{title()}}</span>
-        <button mat-button color="primary" (click)="toggleCodeView()">
+        <button mat-button color="primary" type="button" (click)="toggleCodeView()">
             {{viewCode() ? 'Hide' : 'View'}} Code
         </button>
     </mat-toolbar-row>

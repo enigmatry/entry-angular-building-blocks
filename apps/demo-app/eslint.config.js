@@ -9,17 +9,15 @@ export default defineConfig([
     {
         files: ['src/**/*.ts'],
         rules: {
-            '@angular-eslint/inject-at-top': 'off', // TODO: Remove once every inject() call sits above the other class fields (27 sites in 13 files)
-            '@angular-eslint/prefer-standalone': 'off', // TODO: Remove once the demo app is standalone
-            '@angular-eslint/use-injectable-provided-in': 'off', // TODO: Remove once the example permission service declares providedIn
+            '@angular-eslint/prefer-standalone': 'off', // TODO BP-1642: 40 declarations in the demo app are still NgModule-declared
+            '@angular-eslint/use-injectable-provided-in': 'off', // TODO BP-1642: the example permission service is provided by its module, not by providedIn
             '@typescript-eslint/no-unnecessary-condition': 'error'
         }
     },
     {
         files: ['src/**/*.html'],
         rules: {
-            '@angular-eslint/template/button-has-type': 'off', // TODO: Remove once every <button> in the demo app declares a type (16 sites in 11 files)
-            '@angular-eslint/template/cyclomatic-complexity': 'off' // TODO: Remove once the example viewer template is split up
+            '@angular-eslint/template/cyclomatic-complexity': 'off' // TODO BP-1642: 1 site, the example viewer template, needs splitting up
         }
     }
 ]);

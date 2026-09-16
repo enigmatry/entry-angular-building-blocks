@@ -9,9 +9,8 @@ export default defineConfig([
     {
         files: ['libs/**/*.ts'],
         rules: {
-            '@angular-eslint/inject-at-top': 'off', // TODO: Remove once every inject() call sits above the other class fields (54 sites in 23 files)
-            '@angular-eslint/prefer-standalone': 'off', // TODO: Remove once both libraries are standalone
-            '@angular-eslint/use-injectable-provided-in': 'off', // TODO: Remove once the module-provided injectables (date/time adapters, event plugins, dialog service, spinner overlay container) declare providedIn
+            '@angular-eslint/prefer-standalone': 'off', // TODO BP-1642: 28 declarations in libs are still NgModule-declared; going standalone is a breaking change for both published libraries
+            '@angular-eslint/use-injectable-provided-in': 'off', // TODO BP-1642: 7 module-provided injectables (date/time adapters, event plugins, dialog service, spinner overlay container) declare their provider in a module, not in providedIn
             '@typescript-eslint/no-unnecessary-condition': 'error',
             // The root tsconfig maps `apps/*` so entry-codegen's workspace-absolute imports resolve
             // inside apps/demo-app/**/generated/. Libraries inherit that mapping through `extends`,
@@ -27,10 +26,8 @@ export default defineConfig([
     {
         files: ['libs/**/*.html'],
         rules: {
-            '@angular-eslint/template/button-has-type': 'off', // TODO: Remove once every <button> in the libraries declares a type (7 sites in 4 files)
-            '@angular-eslint/template/cyclomatic-complexity': 'off', // TODO: Remove once the table, search filter and formly autocomplete templates are split up (12 sites in 4 files)
-            '@angular-eslint/template/no-non-null-assertion': 'off', // TODO: Remove once the templates stop using `!` (15 sites in 9 files)
-            '@angular-eslint/template/require-switch-default': 'off' // TODO: Remove once Angular supports `@default never` (the ControlType switch in entry-search-filter is exhaustive)
+            '@angular-eslint/template/cyclomatic-complexity': 'off', // TODO BP-1642: 12 sites in 4 templates (entry-table x7) need the templates split up
+            '@angular-eslint/template/no-non-null-assertion': 'off' // TODO BP-1642: 15 `!` assertions in 9 templates (entry-table x7)
         }
     }
 ]);

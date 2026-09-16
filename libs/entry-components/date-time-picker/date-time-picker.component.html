@@ -13,7 +13,7 @@
         <mat-datepicker-actions>
             <entry-time-picker [date]="value() ?? undefined" [showSeconds]="showSeconds() ?? config.showSeconds"
                 [is12HourClock]="is12HourClock" [defaultTime]="defaultTime()" />
-            <button mat-raised-button color="primary" matDateRangePickerApply class="entry-submit-button">
+            <button mat-raised-button color="primary" matDateRangePickerApply type="button" class="entry-submit-button">
                 <mat-icon aria-hidden="false" aria-label="Apply" fontIcon="done" class="icon" />
             </button>
         </mat-datepicker-actions>

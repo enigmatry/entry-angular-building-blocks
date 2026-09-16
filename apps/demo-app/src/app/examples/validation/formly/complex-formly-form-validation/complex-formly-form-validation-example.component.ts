@@ -11,6 +11,8 @@ import { ValidationService } from '../../validation.service';
     standalone: false
 })
 export class ComplexFormlyFormValidationExampleComponent {
+  private readonly validationService: ValidationService = inject(ValidationService);
+
   form = new FormGroup({});
   model = {
     personalInfo: {
@@ -70,7 +72,6 @@ export class ComplexFormlyFormValidationExampleComponent {
     }
   ];
   readonly validationResult = signal<IValidationProblemDetails | undefined>(undefined);
-  private readonly validationService: ValidationService = inject(ValidationService);
 
   submitForm() {
     this.validationService.submitWithComplexValidationErrors()

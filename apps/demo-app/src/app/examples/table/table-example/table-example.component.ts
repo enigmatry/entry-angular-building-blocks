@@ -11,6 +11,8 @@ import { UsersService } from '../../search-filter/search-filter/users.service';
   styleUrl: './table-example.component.scss'
 })
 export class TableExampleComponent {
+  private readonly usersService: UsersService = inject(UsersService);
+
   protected readonly columns: ColumnDefinition[] = [
     { field: 'id', hide: true },
     { field: 'userName', header: 'E-mail', sortable: true },
@@ -38,7 +40,6 @@ export class TableExampleComponent {
       ]
     }];
 
-  private readonly usersService: UsersService = inject(UsersService);
   readonly usersResource = resource({
     loader: async() => lastValueFrom(this.usersService.getUsers({}))
   });
