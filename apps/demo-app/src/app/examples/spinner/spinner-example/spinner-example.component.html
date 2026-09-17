@@ -1,33 +1,36 @@
 <section>
   @if (loading()) {
-    <entry-spinner [fullscreen]="fullscreen" [color]="color"
-      [hasBackgroundOverlay]="hasBackgroundOverlay" />
+    <entry-spinner [fullscreen]="fullscreen()" [color]="color()"
+      [hasBackgroundOverlay]="hasBackgroundOverlay()" />
   }
 </section>
 
 <section>
-  <fieldset>
-    <legend id="spinner-color-label">Color</legend>
-    <mat-radio-group aria-labelledby="spinner-color-label" name="color" [(ngModel)]="color">
+  <p>
+    <span id="spinner-color-label">Color: </span>
+    <mat-radio-group aria-labelledby="spinner-color-label" name="color"
+      [value]="color()" (change)="color.set($event.value)">
       <mat-radio-button value="primary">Primary (default)</mat-radio-button>
       <mat-radio-button value="accent">Accent</mat-radio-button>
       <mat-radio-button value="warn">Warn</mat-radio-button>
     </mat-radio-group>
-  </fieldset>
-  <fieldset>
-    <legend id="spinner-fullscreen-label">Fullscreen</legend>
-    <mat-radio-group aria-labelledby="spinner-fullscreen-label" name="fullscreen" [(ngModel)]="fullscreen">
+  </p>
+  <p>
+    <span id="spinner-fullscreen-label">Fullscreen: </span>
+    <mat-radio-group aria-labelledby="spinner-fullscreen-label" name="fullscreen"
+      [value]="fullscreen()" (change)="fullscreen.set($event.value)">
       <mat-radio-button [value]="true">True</mat-radio-button>
       <mat-radio-button [value]="false">False (default)</mat-radio-button>
     </mat-radio-group>
-  </fieldset>
-  <fieldset>
-    <legend id="spinner-backdrop-label">Background overlay</legend>
-    <mat-radio-group aria-labelledby="spinner-backdrop-label" name="backdrop" [(ngModel)]="hasBackgroundOverlay">
+  </p>
+  <p>
+    <span id="spinner-backdrop-label">Background overlay: </span>
+    <mat-radio-group aria-labelledby="spinner-backdrop-label" name="backdrop"
+      [value]="hasBackgroundOverlay()" (change)="hasBackgroundOverlay.set($event.value)">
       <mat-radio-button [value]="true">True (default)</mat-radio-button>
       <mat-radio-button [value]="false">False</mat-radio-button>
     </mat-radio-group>
-  </fieldset>
+  </p>
   <p>
     <button mat-button entry-submit-button type="button" (click)="showSpinner()">Show spinner</button>
   </p>
