@@ -1,4 +1,4 @@
-<entry-search-filter [searchFilters]="filters" (searchFilterChange)="searchFilterChange($event)">
+<entry-search-filter [searchFilters]="filters" [searchAction]="search">
 </entry-search-filter>
 
 <table mat-table [dataSource]="users()" class="mat-elevation-z8">

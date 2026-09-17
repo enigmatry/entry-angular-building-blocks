@@ -1,7 +1,9 @@
-<mat-form-field class="date-time-search-field" [formGroup]="form()" subscriptSizing="dynamic">
+<mat-form-field class="date-time-search-field" subscriptSizing="dynamic">
     <mat-label [attr.for]="searchFilter().key">{{searchFilter().label}}</mat-label>
-    <input matInput [formControlName]="searchFilter().key" [matDatepicker]="picker" [id]="searchFilter().key">
+    <input matInput [formField]="field()" [matDatepicker]="picker" [id]="searchFilter().key">
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
-    <mat-error entryDisplayControlValidation [control]="form().get(searchFilter().key)!"></mat-error>
+    @for (error of field()().errors(); track $index) {
+        <mat-error>{{error.message}}</mat-error>
+    }
 </mat-form-field>
