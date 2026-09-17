@@ -1,4 +1,4 @@
-import { SchemaFn, applyEach, applyWhenValue, maxLength, required } from '@angular/forms/signals';
+import { SchemaFn, applyEach, applyWhenValue, maxLength, minLength, required } from '@angular/forms/signals';
 import { ControlType } from './control-type';
 import { SearchFilterBase } from './search-filter-base.model';
 import { SearchFilterValue, SearchFilterValues } from './search-filter-values.type';
@@ -24,11 +24,6 @@ export const emptySearchFilterValue = (searchFilter: SearchFilterBase<unknown>):
 /** The model one bound filter contributes, its declared value coerced away from `undefined`. */
 export const searchFilterEntry = (searchFilter: SearchFilterBase<unknown>): [string, SearchFilterValue] =>
   [searchFilter.key, (searchFilter.value as SearchFilterValue | undefined) ?? emptySearchFilterValue(searchFilter)];
-
-/** A model holding every bound filter's declared value. */
-export const buildSearchFilterModel = (
-  searchFilters: readonly SearchFilterBase<unknown>[]
-): SearchFilterValues => Object.fromEntries(searchFilters.map(searchFilterEntry));
 
 /**
  * The rules for a filter set whose keys are not known until runtime.
@@ -57,6 +52,15 @@ export const searchFilterSchema = (
         textPath,
         context => configFor(context.pathKeys().at(lastKeyIndex))?.maxLength ?? 0,
         { message: messages.maxLengthMessage }
+      );
+    });
+
+    // `required` treats only '', false and nullish as empty, so an empty multi-select needs a length rule.
+    applyWhenValue(itemPath, (value): value is readonly unknown[] => Array.isArray(value), arrayPath => {
+      minLength(
+        arrayPath,
+        context => configFor(context.pathKeys().at(lastKeyIndex))?.required === true ? 1 : 0,
+        { message: messages.requiredMessage }
       );
     });
   });
