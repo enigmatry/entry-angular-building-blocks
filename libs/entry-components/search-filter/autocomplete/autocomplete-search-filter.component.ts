@@ -31,23 +31,18 @@ export class AutocompleteSearchFilterComponent<T> {
     return key === null || key === undefined ? undefined : key;
   });
 
-  /** What the user typed. A value arriving from outside empties it, so a rebind is not searched over. */
-  private readonly searchText = linkedSignal<T | undefined, string>({
+  /** What the user typed, `undefined` while the box shows a committed label. A value from outside ends the edit. */
+  private readonly typedText = linkedSignal<T | undefined, string | undefined>({
     source: () => this.valueKey(),
-    computation: () => ''
+    computation: () => undefined
   });
 
   /** The option picked here, kept with its key so a value change cannot leave its label behind. */
   private readonly picked = signal<SelectOption<T> | undefined>(undefined);
 
-  /**
-   * Deliberately on `debounced`, which is experimental in 22.x, rather than on RxJS: this is the
-   * API the debounce is meant to end up on, so taking it now avoids migrating the same code twice.
-   * `resource` carries no debounce option of its own in 22.1. The wait is a function because the
-   * delay comes from a required input, which cannot be read while fields are still initialising.
-   */
+  // The wait is a function: the delay comes from a required input, unreadable while fields initialise.
   private readonly debouncedText = debounced(
-    () => this.searchText(),
+    () => this.typedText() ?? '',
     () => delay(this.searchFilter().debounceTime)
   );
 
@@ -82,24 +77,37 @@ export class AutocompleteSearchFilterComponent<T> {
     return picked?.key === this.valueKey() ? picked?.label : undefined;
   });
 
-  /** What the input shows: the label of the picked option, the resolved one, or nothing. */
-  protected readonly displayText = computed(() =>
-    this.valueKey() === undefined ? '' : this.pickedLabel() ?? this.resolvedLabel.value() ?? ''
-  );
+  /** The label of the key the field holds, or `undefined` while a lookup for it is still running. */
+  private readonly committedLabel = computed(() => {
+    if (this.valueKey() === undefined) {
+      return '';
+    }
+    return this.pickedLabel()
+      ?? (this.resolvedLabel.status() === 'resolved' ? this.resolvedLabel.value() ?? '' : undefined);
+  });
+
+  /** What the input shows: the edit in progress, otherwise the label of the value the field holds. */
+  protected readonly displayText = computed(() => this.typedText() ?? this.committedLabel() ?? '');
+
+  protected readonly displayOption = (option: SelectOption<T> | null): string => option?.label ?? '';
 
   protected readonly onTyped = (text: string): void => {
-    this.searchText.set(text);
-    if (text === '') {
+    const label = this.committedLabel();
+    if (label !== undefined && label !== '' && text !== label) {
       // `null`, never `undefined`: writing undefined into a live field destroys its node.
       this.field()().value.set(null);
+      this.field()().markAsDirty();
     }
+    // After the clear, never before: `set` absorbs the pending source change, so the other order drops the text.
+    this.typedText.set(text);
   };
 
   protected readonly onSelected = (event: MatAutocompleteSelectedEvent): void => {
     const option = event.option.value as SelectOption<T>;
     this.picked.set(option);
     this.field()().value.set(option.key);
-    this.searchText.set('');
+    this.field()().markAsDirty();
+    this.typedText.set(undefined);
   };
 
   private readonly searchOptions = async(
