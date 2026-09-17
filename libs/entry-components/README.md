@@ -411,7 +411,7 @@ never writes back onto them.
 | `EntrySearchFilterComponent.searchAction` | — | **new, required**: `(values) => Promise<SearchFilterServerError[] \| void>` |
 | `EntrySearchFilterComponent.searchFilterChange` | `EventEmitter<SearchFilterParams>` | `OutputEmitterRef<SearchFilterParams>`, still emitted on every accepted search |
 | `EntrySearchFilterComponent.searchFilterForm` | `UntypedFormGroup` | **gone** — there is no reactive form |
-| `EntrySearchFilterComponent.renderedSearchFilters` | — | **gone** — it only ever existed on unreleased `master` |
+| `EntrySearchFilterComponent.renderedSearchFilters` | — | **gone** — `protected` now, and it only ever existed on unreleased `master` |
 | `EntrySearchFilterComponent.toFormGroup` | `(filters) => UntypedFormGroup` | **gone** |
 | `EntrySearchFilterComponent.onSubmit` | callable member | **gone** — the form submits itself |
 | `EntrySearchFilterComponent.controlType` / `config` / `as*SearchFilter` | public | `protected` — template-only members |
@@ -427,6 +427,7 @@ never writes back onto them.
 | `AutocompleteSearchFilter.resolveLabel` | — | **new**, optional: resolves the label for a value the user did not pick |
 | `AutocompleteSearchFilter` value | the whole `SelectOption<T>` | the option's `key` |
 | `EntrySearchFilterConfig.clearButtonText` / `.requiredMessage` / `.maxLengthMessage` | — | **new** |
+| `SearchFilterParams`, an empty filter's value | `undefined` | `''` for a text filter, `[]` for a multi-select, `null` for the rest |
 
 #### Running the search
 
@@ -462,15 +463,42 @@ edited. That replaces `setServerSideValidationErrors` on this form — the filte
 `searchFilterChange` still fires, so a page that writes the filters into the URL and fetches
 downstream of navigation can keep binding it and hand the action an empty implementation.
 
+Every bound filter was always a key in those params. What changed is what an untouched one holds:
+`''`, `[]` or `null` where `21.4.0` put `undefined`. A guard that tested only for `undefined` now
+lets empty filters through, so a page that writes them into the URL gains empty query parameters,
+and a backend reading a present-but-empty value as "match the empty string" returns nothing:
+
+```ts
+const isEmptySearchValue = (value: unknown): boolean =>
+  value === undefined || value === null || value === '' || (Array.isArray(value) && value.length === 0);
+```
+
+```diff
+  readonly onNavigate = (params: SearchFilterParams): void => {
+-   const applied = Object.fromEntries(
+-     Object.entries(params).filter(([, value]) => value !== undefined));
++   const applied = Object.fromEntries(
++     Object.entries(params).filter(([, value]) => !isEmptySearchValue(value)));
+    this.router.navigate([], { queryParams: applied });
+  };
+```
+
+The shape is forced rather than chosen: a model value of `undefined` yields no field at all, and
+writing `undefined` into a live field destroys its node along with its touched state.
+
 #### Setting a filter's value
 
-`setValue` is gone because there is no control to set. Hand over new filter instances instead — the
-component keeps what the user typed unless the filter's declared `value` changed:
+`setValue` is gone because there is no control to set. Hand over new filter instances instead:
 
 ```diff
 - this.filters.find(filter => filter.key === 'name')!.setValue(params['name']);
 + this.filters = this.createFilters(params);   // fresh instances carrying the new values
 ```
+
+The component keeps what the user typed unless the filter's declared `value` changed, compared **by
+reference**. A `string` or `number` default therefore survives a rebind that changes nothing, while a
+`Date` or an array default is a new object on every rebuild and replaces what the user typed. Hold a
+non-primitive default in a field and hand over the same instance when an edit must be left alone.
 
 #### Validation and submission
 
@@ -479,8 +507,16 @@ was previously only a DOM attribute, are now real rules. **An invalid filter blo
 focus moves to the offending field — `21.x` searched regardless, because nothing could be invalid.
 
 A message the server returned keeps its filter invalid until the user edits that filter, so the next
-search is blocked too. That is deliberate: the server rejected that value and nothing else has
-happened to change its mind.
+search is blocked too. That is Angular's own mechanism rather than a choice made here: a field's
+submission errors are a `linkedSignal` over that field's value, so they are discarded when that
+value changes and at no other time. **Editing a different filter does not re-enable the search** —
+only the rejected one does.
+
+Clear is not a way out of that state either, unless it changes the value in question. It empties
+every filter, and for a filter the server rejected while it was already empty the write is a no-op,
+so the message stays attached while `reset` marks the field untouched and Material stops displaying
+it. If a filter must not be submitted empty, give it `required: true`, which is validated on the
+client and clears normally, rather than relying on the server to reject it.
 
 #### Clearing
 
