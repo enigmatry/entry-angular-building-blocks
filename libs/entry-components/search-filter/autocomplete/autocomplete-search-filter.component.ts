@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, ErrorHandler, computed, debounced, inject, input, resource,
-  signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ErrorHandler, computed, debounced, inject, input, linkedSignal,
+  resource, signal } from '@angular/core';
 import { Field } from '@angular/forms/signals';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { SelectOption } from '../select-option.model';
@@ -25,11 +25,20 @@ export class AutocompleteSearchFilterComponent<T> {
 
   private readonly errorHandler = inject(ErrorHandler);
 
-  /** What the user typed. Separate from the field, which holds the chosen key. */
-  private readonly searchText = signal('');
+  /** The key the filter holds, or `undefined` when it holds nothing. */
+  private readonly valueKey = computed(() => {
+    const key = this.field()().value() as T | null | undefined;
+    return key === null || key === undefined ? undefined : key;
+  });
 
-  /** The label of the option the user picked, kept so it survives the option list changing. */
-  private readonly selectedLabel = signal('');
+  /** What the user typed. A value arriving from outside empties it, so a rebind is not searched over. */
+  private readonly searchText = linkedSignal<T | undefined, string>({
+    source: () => this.valueKey(),
+    computation: () => ''
+  });
+
+  /** The option picked here, kept with its key so a value change cannot leave its label behind. */
+  private readonly picked = signal<SelectOption<T> | undefined>(undefined);
 
   /**
    * Deliberately on `debounced`, which is experimental in 22.x, rather than on RxJS: this is the
@@ -52,27 +61,44 @@ export class AutocompleteSearchFilterComponent<T> {
     defaultValue: [] as readonly SelectOption<T>[]
   });
 
+  /**
+   * The label of a key the user did not pick here - one the filter declared, or restored from a URL.
+   * Undefined params keep a resource idle, so a key the picked option already covers costs no lookup.
+   */
+  private readonly resolvedLabel = resource({
+    params: () => {
+      const key = this.valueKey();
+      return key === undefined || this.picked()?.key === key ? undefined : key;
+    },
+    loader: ({ params, abortSignal }) => this.lookupLabel(params, abortSignal),
+    defaultValue: undefined as string | undefined
+  });
+
   protected readonly optionsValue = computed(() => this.options.value());
 
-  /** What the input shows: the label of the picked option, or nothing once the value is cleared. */
-  protected readonly displayText = computed(() => {
-    const key = this.field()().value();
-    return key === null || key === undefined ? '' : this.selectedLabel();
+  /** The picked option's label, while it still belongs to the key the field holds. */
+  private readonly pickedLabel = computed(() => {
+    const picked = this.picked();
+    return picked?.key === this.valueKey() ? picked?.label : undefined;
   });
+
+  /** What the input shows: the label of the picked option, the resolved one, or nothing. */
+  protected readonly displayText = computed(() =>
+    this.valueKey() === undefined ? '' : this.pickedLabel() ?? this.resolvedLabel.value() ?? ''
+  );
 
   protected readonly onTyped = (text: string): void => {
     this.searchText.set(text);
     if (text === '') {
       // `null`, never `undefined`: writing undefined into a live field destroys its node.
       this.field()().value.set(null);
-      this.selectedLabel.set('');
     }
   };
 
   protected readonly onSelected = (event: MatAutocompleteSelectedEvent): void => {
     const option = event.option.value as SelectOption<T>;
+    this.picked.set(option);
     this.field()().value.set(option.key);
-    this.selectedLabel.set(option.label);
     this.searchText.set('');
   };
 
@@ -85,6 +111,20 @@ export class AutocompleteSearchFilterComponent<T> {
     } catch(error) {
       this.report(error, abortSignal);
       return [];
+    }
+  };
+
+  private readonly lookupLabel = async(key: T, abortSignal: AbortSignal): Promise<string | undefined> => {
+    const searchFilter = this.searchFilter();
+    try {
+      if (searchFilter.resolveLabel) {
+        return await searchFilter.resolveLabel(key, abortSignal);
+      }
+      const matches = await searchFilter.search(String(key), abortSignal);
+      return matches.find(option => option.key === key)?.label;
+    } catch(error) {
+      this.report(error, abortSignal);
+      return undefined;
     }
   };
 
