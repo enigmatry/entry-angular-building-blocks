@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, computed, debounced, input, resource, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ErrorHandler, computed, debounced, inject, input, resource,
+  signal } from '@angular/core';
 import { Field } from '@angular/forms/signals';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { SelectOption } from '../select-option.model';
@@ -21,6 +22,8 @@ export class AutocompleteSearchFilterComponent<T> {
   readonly searchFilter = input.required<AutocompleteSearchFilter<T>>();
   /** The field this filter edits. It holds the selected option's key, not the option. */
   readonly field = input.required<Field<unknown>>();
+
+  private readonly errorHandler = inject(ErrorHandler);
 
   /** What the user typed. Separate from the field, which holds the chosen key. */
   private readonly searchText = signal('');
@@ -45,8 +48,8 @@ export class AutocompleteSearchFilterComponent<T> {
       const text = this.debouncedText.value();
       return text.length >= this.searchFilter().minimumCharacters ? text : undefined;
     },
-    loader: ({ params, abortSignal }) => this.searchFilter().search(params, abortSignal),
-    defaultValue: []
+    loader: ({ params, abortSignal }) => this.searchOptions(params, abortSignal),
+    defaultValue: [] as readonly SelectOption<T>[]
   });
 
   protected readonly optionsValue = computed(() => this.options.value());
@@ -71,5 +74,25 @@ export class AutocompleteSearchFilterComponent<T> {
     this.field()().value.set(option.key);
     this.selectedLabel.set(option.label);
     this.searchText.set('');
+  };
+
+  private readonly searchOptions = async(
+    text: string,
+    abortSignal: AbortSignal
+  ): Promise<readonly SelectOption<T>[]> => {
+    try {
+      return await this.searchFilter().search(text, abortSignal);
+    } catch(error) {
+      this.report(error, abortSignal);
+      return [];
+    }
+  };
+
+  // A rejected loader makes `Resource.value()` throw while the view renders: `defaultValue` covers
+  // only the idle and post-error reloading states, never the error itself.
+  private readonly report = (error: unknown, abortSignal: AbortSignal): void => {
+    if (!abortSignal.aborted) {
+      this.errorHandler.handleError(error);
+    }
   };
 }
