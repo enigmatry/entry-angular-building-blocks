@@ -2,7 +2,7 @@
     <mat-label>{{searchFilter().label}}</mat-label>
     <input type="text" matInput [placeholder]="searchFilter().placeholder"
         [formControl]="searchField" [id]="searchFilter().key" [matAutocomplete]="auto">
-    <mat-autocomplete [displayWith]="displayFn" #auto="matAutocomplete" (optionSelected)="onSelected($event)">
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="onSelected($event)">
         @for (group of (options() | groupSelectOptions); track group.groupName) {
             @if (group.groupName) {
                 <mat-optgroup [label]="group.groupName">
@@ -21,5 +21,5 @@
             }
         }
     </mat-autocomplete>
-    <mat-error entryDisplayControlValidation [control]="searchField"></mat-error>
+    <mat-error entryDisplayControlValidation [control]="searchField" />
 </mat-form-field>

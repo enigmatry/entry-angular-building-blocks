@@ -3,6 +3,7 @@ import { FileInputExampleModule } from '../../examples/file-input/file-input-exa
 import { SharedModule } from '../../shared/shared.module';
 
 @Component({
+    selector: 'app-file-input-documentation',
     templateUrl: './file-input-documentation.component.html',
     imports: [
         SharedModule,

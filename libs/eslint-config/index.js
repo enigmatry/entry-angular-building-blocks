@@ -38,34 +38,62 @@ export default defineConfig(
       "unused-imports": unusedImports,
     },
     "rules": {
-      "@angular-eslint/component-selector": [
-        "error",
-        {
-          "prefix": [
-            "app",
-            "appg",
-            "enigmatry",
-            "entry"
-          ],
-          "style": "kebab-case",
-          "type": "element"
-        }
-      ],
-      "@angular-eslint/directive-selector": [
-        "error",
-        {
-          "prefix": [
-            "app",
-            "appg",
-            "enigmatry",
-            "entry"
-          ],
-          "style": "camelCase",
-          "type": "attribute"
-        }
-      ],
+      "@angular-eslint/component-class-suffix": "error",
+      "@angular-eslint/component-max-inline-declarations": "error",
+      "@angular-eslint/component-selector": "off",
+      "@angular-eslint/computed-must-return": "error",
+      "@angular-eslint/consistent-component-styles": "error",
+      "@angular-eslint/contextual-decorator": "error",
+      "@angular-eslint/contextual-lifecycle": "error",
+      "@angular-eslint/directive-class-suffix": "error",
+      "@angular-eslint/directive-selector": "off",
+      "@angular-eslint/inject-at-top": "error",
+      "@angular-eslint/no-async-lifecycle-method": "error",
+      "@angular-eslint/no-attribute-decorator": "error",
+      "@angular-eslint/no-developer-preview": "error",
+      "@angular-eslint/no-duplicates-in-metadata-arrays": "error",
+      "@angular-eslint/no-empty-lifecycle-method": "error",
+      "@angular-eslint/no-experimental": "error",
+      "@angular-eslint/no-forward-ref": "error",
+      "@angular-eslint/no-implicit-take-until-destroyed": "error",
+      "@angular-eslint/no-input-prefix": "off",
+      "@angular-eslint/no-input-rename": "error",
+      "@angular-eslint/no-inputs-metadata-property": "error",
+      "@angular-eslint/no-lifecycle-call": "error",
+      "@angular-eslint/no-output-native": "error",
+      "@angular-eslint/no-output-on-prefix": "error",
+      "@angular-eslint/no-output-rename": "error",
+      "@angular-eslint/no-outputs-metadata-property": "error",
+      "@angular-eslint/no-pipe-impure": "error",
+      "@angular-eslint/no-queries-metadata-property": "error",
       "@angular-eslint/no-uncalled-signals": "error",
-      "@typescript-eslint/restrict-template-expressions": "error",
+      "@angular-eslint/pipe-prefix": "off",
+      "@angular-eslint/prefer-host-metadata-property": "error",
+      "@angular-eslint/prefer-inject": "error",
+      "@angular-eslint/prefer-on-push-component-change-detection": "error",
+      "@angular-eslint/prefer-output-emitter-ref": "error",
+      "@angular-eslint/prefer-output-readonly": "error",
+      "@angular-eslint/prefer-service-decorator": "error",
+      "@angular-eslint/prefer-signal-model": "error",
+      "@angular-eslint/prefer-signals": "error",
+      "@angular-eslint/prefer-standalone": "error",
+      "@angular-eslint/reactive-context-must-read-signal": [
+        "error",
+        {
+          "checkResources": true
+        }
+      ],
+      "@angular-eslint/relative-url-prefix": "error",
+      "@angular-eslint/require-lifecycle-on-prototype": "error",
+      "@angular-eslint/require-localize-metadata": "error",
+      "@angular-eslint/runtime-localize": "off",
+      "@angular-eslint/sort-keys-in-type-decorator": "off",
+      "@angular-eslint/sort-lifecycle-methods": "error",
+      "@angular-eslint/use-component-selector": "error",
+      "@angular-eslint/use-component-view-encapsulation": "error",
+      "@angular-eslint/use-injectable-provided-in": "error",
+      "@angular-eslint/use-lifecycle-interface": "error",
+      "@angular-eslint/use-pipe-transform-interface": "error",
       "@stylistic/array-bracket-newline": "off",
       "@stylistic/array-bracket-spacing": [
         "error",
@@ -95,6 +123,8 @@ export default defineConfig(
         "property"
       ],
       "@stylistic/eol-last": "off",
+      "@stylistic/exp-jsx-props-style": "off",
+      "@stylistic/exp-list-style": "off",
       "@stylistic/function-call-argument-newline": "off",
       "@stylistic/function-call-spacing": "error",
       "@stylistic/function-paren-newline": "off",
@@ -105,7 +135,6 @@ export default defineConfig(
         "tab"
       ],
       "@stylistic/indent-binary-ops": "off",
-      "@stylistic/jsx-props-style": "off",
       "@stylistic/jsx-quotes": "error",
       "@stylistic/key-spacing": "error",
       "@stylistic/keyword-spacing": "off",
@@ -224,7 +253,7 @@ export default defineConfig(
       "@stylistic/wrap-iife": "off",
       "@stylistic/wrap-regex": "off",
       "@stylistic/yield-star-spacing": "error",
-      "@typescript-eslint/ban-ts-comments": "off",
+      "@typescript-eslint/ban-ts-comment": "off",
       "@typescript-eslint/consistent-type-definitions": "error",
       "@typescript-eslint/consistent-type-exports": [
         "error",
@@ -240,10 +269,6 @@ export default defineConfig(
       ],
       "@typescript-eslint/dot-notation": [
         "error"
-      ],
-      "@typescript-eslint/indent": [
-        "off",
-        "tab"
       ],
       "@typescript-eslint/init-declarations": [
         "off"
@@ -262,17 +287,12 @@ export default defineConfig(
       ],
       "@typescript-eslint/no-empty-object-type": "off",
       "@typescript-eslint/no-floating-promises": "error",
+      "@typescript-eslint/no-generated-empty-object-type": "error",
       "@typescript-eslint/no-implied-eval": [
         "error"
       ],
       "@typescript-eslint/no-import-type-side-effects": "error",
       "@typescript-eslint/no-invalid-this": [
-        "error"
-      ],
-      "@typescript-eslint/no-loop-func": [
-        "error"
-      ],
-      "@typescript-eslint/no-loss-of-precision": [
         "error"
       ],
       "@typescript-eslint/no-magic-numbers": [
@@ -306,9 +326,6 @@ export default defineConfig(
       ],
       "@typescript-eslint/no-redundant-type-constituents": [
         "error"
-      ],
-      "@typescript-eslint/no-restricted-imports": [
-        "off"
       ],
       "@typescript-eslint/no-restricted-types": "error",
       "@typescript-eslint/no-shadow": [
@@ -353,6 +370,7 @@ export default defineConfig(
         "error"
       ],
       "@typescript-eslint/restrict-plus-operands": "error",
+      "@typescript-eslint/restrict-template-expressions": "error",
       "@typescript-eslint/return-await": [
         "error"
       ],
@@ -377,7 +395,6 @@ export default defineConfig(
       "func-name-matching": "off",
       "func-names": "error",
       "func-style": "error",
-      "function-call-argument-newline": "off",
       "getter-return": "error",
       "grouped-accessor-pairs": "warn",
       "guard-for-in": "warn",
@@ -563,7 +580,34 @@ export default defineConfig(
         "error",
         20
       ],
-      "new-cap": "off",
+      "new-cap": [
+        "error",
+        {
+          "capIsNewExceptions": [
+            "Attribute",
+            "Component",
+            "ContentChild",
+            "ContentChildren",
+            "Directive",
+            "Host",
+            "HostBinding",
+            "HostListener",
+            "Inject",
+            "Injectable",
+            "Input",
+            "NgModule",
+            "Optional",
+            "Output",
+            "Pipe",
+            "Self",
+            "Service",
+            "SkipSelf",
+            "Subjectize",
+            "ViewChild",
+            "ViewChildren"
+          ]
+        }
+      ],
       "no-alert": "error",
       "no-array-constructor": "off",
       "no-async-promise-executor": "error",
@@ -622,8 +666,8 @@ export default defineConfig(
       "no-labels": "error",
       "no-lone-blocks": "error",
       "no-lonely-if": "error",
-      "no-loop-func": "off",
-      "no-loss-of-precision": "off",
+      "no-loop-func": "error",
+      "no-loss-of-precision": "error",
       "no-magic-numbers": "off",
       "no-misleading-character-class": "error",
       "no-multi-assign": "error",
@@ -652,7 +696,6 @@ export default defineConfig(
       "no-restricted-properties": "off",
       "no-restricted-syntax": "off",
       "no-return-assign": "off",
-      "no-return-await": "off",
       "no-script-url": "error",
       "no-secrets/no-secrets": [
         "error",
@@ -699,7 +742,6 @@ export default defineConfig(
       "no-useless-computed-key": "error",
       "no-useless-concat": "error",
       "no-useless-constructor": "off",
-      "no-useless-empty-export": "off",
       "no-useless-escape": "error",
       "no-useless-rename": "error",
       "no-useless-return": "error",
@@ -714,6 +756,17 @@ export default defineConfig(
       "prefer-arrow-functions/prefer-arrow-functions": [
         "warn",
         {
+          "allowedNames": [
+            "ngAfterContentChecked",
+            "ngAfterContentInit",
+            "ngAfterViewChecked",
+            "ngAfterViewInit",
+            "ngDoBootstrap",
+            "ngDoCheck",
+            "ngOnChanges",
+            "ngOnDestroy",
+            "ngOnInit"
+          ],
           "allowNamedFunctions": false,
           "classPropertiesAllowed": true,
           "disallowPrototype": true,
@@ -790,13 +843,74 @@ export default defineConfig(
     }
   },
   {
-    "files": ["*.html"],
+    "files": ["**/*.html"],
     "extends": [
       ...angular.configs.templateRecommended,
       ...angular.configs.templateAccessibility,
     ],
-    rules: {
-      "@angular-eslint/template/no-negated-async": "off"
+    "rules": {
+      "@angular-eslint/template/alt-text": "error",
+      "@angular-eslint/template/attributes-order": "error",
+      "@angular-eslint/template/banana-in-box": "error",
+      "@angular-eslint/template/button-has-type": "error",
+      "@angular-eslint/template/click-events-have-key-events": "error",
+      "@angular-eslint/template/conditional-complexity": [
+        "error",
+        {
+          "maxComplexity": 3
+        }
+      ],
+      "@angular-eslint/template/cyclomatic-complexity": [
+        "error",
+        {
+          "maxComplexity": 5
+        }
+      ],
+      "@angular-eslint/template/elements-content": "error",
+      "@angular-eslint/template/eqeqeq": "error",
+      "@angular-eslint/template/i18n": "off",
+      "@angular-eslint/template/interactive-supports-focus": "error",
+      "@angular-eslint/template/label-has-associated-control": "error",
+      "@angular-eslint/template/mouse-events-have-key-events": "error",
+      "@angular-eslint/template/no-any": "error",
+      "@angular-eslint/template/no-autofocus": "error",
+      "@angular-eslint/template/no-call-expression": "off",
+      "@angular-eslint/template/no-distracting-elements": "error",
+      "@angular-eslint/template/no-duplicate-attributes": [
+        "error",
+        {
+          "allowStylePrecedenceDuplicates": true
+        }
+      ],
+      "@angular-eslint/template/no-empty-control-flow": "error",
+      "@angular-eslint/template/no-inline-styles": [
+        "error",
+        {
+          "allowBindToStyle": true
+        }
+      ],
+      "@angular-eslint/template/no-interpolation-in-attributes": "error",
+      "@angular-eslint/template/no-negated-async": "off",
+      "@angular-eslint/template/no-nested-tags": "error",
+      "@angular-eslint/template/no-non-null-assertion": "error",
+      "@angular-eslint/template/no-outerhtml": "error",
+      "@angular-eslint/template/no-positive-tabindex": "error",
+      "@angular-eslint/template/prefer-at-else": "error",
+      "@angular-eslint/template/prefer-at-empty": "error",
+      "@angular-eslint/template/prefer-built-in-pipes": "error",
+      "@angular-eslint/template/prefer-class-binding": "error",
+      "@angular-eslint/template/prefer-contextual-for-variables": "error",
+      "@angular-eslint/template/prefer-control-flow": "error",
+      "@angular-eslint/template/prefer-ngsrc": "off",
+      "@angular-eslint/template/prefer-self-closing-tags": "error",
+      "@angular-eslint/template/prefer-static-string-properties": "error",
+      "@angular-eslint/template/prefer-style-binding": "error",
+      "@angular-eslint/template/prefer-template-literal": "error",
+      "@angular-eslint/template/require-switch-default": "error",
+      "@angular-eslint/template/role-has-required-aria": "error",
+      "@angular-eslint/template/table-scope": "error",
+      "@angular-eslint/template/use-track-by-function": "error",
+      "@angular-eslint/template/valid-aria": "error"
     }
   }
 );

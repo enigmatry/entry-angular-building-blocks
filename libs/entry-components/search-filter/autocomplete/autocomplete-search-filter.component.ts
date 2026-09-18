@@ -13,14 +13,14 @@ import { AutocompleteSearchFilter } from './autocomplete-search-filter.model';
   standalone: false
 })
 export class AutocompleteSearchFilterComponent<T> {
+  private readonly errorHandler = inject(ErrorHandler);
+
   readonly searchFilter = input.required<AutocompleteSearchFilter<T>>();
 
   readonly searchField = new FormControl('');
 
   /** `equal: () => false` because a consumer's `search()` may resolve to a cached array, and nothing else dirties this view. */
   readonly options = signal<SelectOption<T>[]>([], { equal: () => false });
-
-  private readonly errorHandler = inject(ErrorHandler);
 
   // RxJS rather than signals: `debounceTime` and switch-cancellation have no signal equivalent.
   // The result lands in a signal, which is what marks the view.

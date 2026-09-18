@@ -3,6 +3,7 @@ import { SpinnerExampleModule } from '../../examples/spinner/spinner-example.mod
 import { SharedModule } from '../../shared/shared.module';
 
 @Component({
+    selector: 'app-spinner-documentation',
     templateUrl: './spinner-documentation.component.html',
     imports: [
         SharedModule,

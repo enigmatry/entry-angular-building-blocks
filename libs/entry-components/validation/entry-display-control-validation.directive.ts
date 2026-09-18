@@ -20,11 +20,11 @@ import { ENTRY_VALIDATION_CONFIG } from './entry-validation-config.model';
     standalone: false
 })
 export class EntryDisplayControlValidationDirective {
-  /** Form control for which the validation messages are displayed for. */
-  readonly control = input.required<AbstractControl>();
-
   private readonly config = inject(ENTRY_VALIDATION_CONFIG);
   private readonly element = inject(ElementRef);
+
+  /** Form control for which the validation messages are displayed for. */
+  readonly control = input.required<AbstractControl>();
 
   constructor() {
     toObservable(this.control)

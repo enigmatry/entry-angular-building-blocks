@@ -1,4 +1,4 @@
-<mat-form-field [formGroup]="form()" subscriptSizing="dynamic">
+<mat-form-field subscriptSizing="dynamic" [formGroup]="form()">
     <mat-label [attr.for]="searchFilter().key">{{searchFilter().label}}</mat-label>
     <mat-select [formControlName]="searchFilter().key" [id]="searchFilter().key" [multiple]="searchFilter().multiSelect">
         @if (!searchFilter().multiSelect && searchFilter().showNoneOption) {
@@ -21,5 +21,5 @@
             }
         }
     </mat-select>
-    <mat-error entryDisplayControlValidation [control]="form().get(searchFilter().key)!"></mat-error>
+    <mat-error entryDisplayControlValidation [control]="form().get(searchFilter().key)!" />
 </mat-form-field>

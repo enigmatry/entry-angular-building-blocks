@@ -1,34 +1,37 @@
 <section>
   @if (loading()) {
-    <entry-spinner [fullscreen]="fullscreen" [color]="color"
-      [hasBackgroundOverlay]="hasBackgroundOverlay"></entry-spinner>
+    <entry-spinner [fullscreen]="fullscreen()" [color]="color()"
+      [hasBackgroundOverlay]="hasBackgroundOverlay()" />
   }
 </section>
 
 <section>
   <p>
-    <label>Color: </label>
-    <mat-radio-group aria-label="Color" name="color" [(ngModel)]="color">
+    <span id="spinner-color-label">Color: </span>
+    <mat-radio-group aria-labelledby="spinner-color-label" name="color"
+      [value]="color()" (change)="color.set($event.value)">
       <mat-radio-button value="primary">Primary (default)</mat-radio-button>
       <mat-radio-button value="accent">Accent</mat-radio-button>
       <mat-radio-button value="warn">Warn</mat-radio-button>
     </mat-radio-group>
   </p>
   <p>
-    <label>Fullscreen: </label>
-    <mat-radio-group aria-label="Fullscreen" name="fullscreen" [(ngModel)]="fullscreen">
+    <span id="spinner-fullscreen-label">Fullscreen: </span>
+    <mat-radio-group aria-labelledby="spinner-fullscreen-label" name="fullscreen"
+      [value]="fullscreen()" (change)="fullscreen.set($event.value)">
       <mat-radio-button [value]="true">True</mat-radio-button>
       <mat-radio-button [value]="false">False (default)</mat-radio-button>
     </mat-radio-group>
   </p>
   <p>
-    <label>Background overlay: </label>
-    <mat-radio-group aria-label="Backdrop" name="backdrop" [(ngModel)]="hasBackgroundOverlay">
+    <span id="spinner-backdrop-label">Background overlay: </span>
+    <mat-radio-group aria-labelledby="spinner-backdrop-label" name="backdrop"
+      [value]="hasBackgroundOverlay()" (change)="hasBackgroundOverlay.set($event.value)">
       <mat-radio-button [value]="true">True (default)</mat-radio-button>
       <mat-radio-button [value]="false">False</mat-radio-button>
     </mat-radio-group>
   </p>
   <p>
-    <button mat-button entry-submit-button (click)="showSpinner()">Show spinner</button>
+    <button mat-button entry-submit-button type="button" (click)="showSpinner()">Show spinner</button>
   </p>
 </section>

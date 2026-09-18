@@ -13,12 +13,12 @@ import { FileExtension } from '../../models/file-extension.type';
   standalone: false
 })
 export class CodeViewComponent {
-  readonly codeContent = input.required<string>();
-  readonly codeType = input.required<FileExtension>();
-
   private readonly clipboard: Clipboard = inject(Clipboard);
   private readonly snackBar: MatSnackBar = inject(MatSnackBar);
   private readonly domSanitizer: DomSanitizer = inject(DomSanitizer);
+
+  readonly codeContent = input.required<string>();
+  readonly codeType = input.required<FileExtension>();
 
   // A computed memoises a thrown error and re-throws it forever, so an unknown language degrades instead of throwing.
   protected readonly highlightedCode = computed(() => {

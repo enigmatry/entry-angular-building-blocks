@@ -104,9 +104,7 @@ export class EntryDateTimePickerControls<D> {
     this.display.updateValueAndValidity();
   };
 
-  private readonly hasParseError = (): boolean => {
-    return Object.keys(this.display.errors ?? {}).some(kind => kind.startsWith(MATERIAL_ERROR_PREFIX));
-  };
+  private readonly hasParseError = (): boolean => Object.keys(this.display.errors ?? {}).some(kind => kind.startsWith(MATERIAL_ERROR_PREFIX));
 
   private readonly consumeEcho = (value: D | null | undefined): boolean => {
     const isEcho = this.pendingEcho !== undefined && Object.is(this.pendingEcho.value, value);

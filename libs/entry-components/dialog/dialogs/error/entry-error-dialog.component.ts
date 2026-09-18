@@ -11,10 +11,11 @@ import { IEntryErrorDialogData } from './entry-error-dialog-data.interface';
   standalone: false
 })
 export class EntryErrorDialogComponent extends EntryDialogComponent {
-  errors: string[] = [];
   protected override readonly mdDialogRef: MatDialogRef<EntryDialogComponent> = inject(MatDialogRef<EntryDialogComponent>);
   override readonly config: EntryDialogConfig = inject(ENTRY_DIALOG_CONFIG);
   readonly data: IEntryErrorDialogData = inject(MAT_DIALOG_DATA);
+
+  errors: string[] = [];
 
   constructor() {
     super();

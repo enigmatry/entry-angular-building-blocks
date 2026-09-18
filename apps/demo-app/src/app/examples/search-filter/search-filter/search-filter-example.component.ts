@@ -21,13 +21,14 @@ import { UsersService } from './users.service';
     standalone: false
 })
 export class SearchFilterExampleComponent {
+  private readonly usersService: UsersService = inject(UsersService);
+  private readonly locale: string = inject(LOCALE_ID);
+
   readonly entrySearchFilterComponent = viewChild(EntrySearchFilterComponent);
 
   readonly users = signal<User[]>([]);
   displayedColumns: string[] = ['name', 'email', 'dateOfBirth', 'occupation', 'country', 'score'];
   filters: SearchFilterBase<unknown>[] = [];
-  private readonly usersService: UsersService = inject(UsersService);
-  private readonly locale: string = inject(LOCALE_ID);
 
   constructor() {
     this.fetchUsers({}).subscribe();

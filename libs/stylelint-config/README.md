@@ -44,6 +44,25 @@ For example, to change the `at-rule-no-unknown` rule to use its `ignoreAtRules` 
 }
 ```
 
+## Upgrading to 22.x
+
+**Requires stylelint 17.15 or later**, because `selector-no-unmatchable` was added in that release. The other three rules the config picks up here — `selector-no-invalid`, `unit-layout-mappings` and `value-keyword-layout-mappings` — have been available since 17.10. The config also moves to `@stylistic/stylelint-plugin` 5.3 and `stylelint-scss` 7.2.
+
+**Low risk in practice.** All four core rules ship as `null`, and two projects (542 and 30 SCSS files) reported 0 problems both before and after the upgrade. A project that is clean on 21.x will almost certainly stay clean.
+
+**Keep `--fix` out of the script CI runs.** A fixable violation repaired in an ephemeral checkout turns the build green while the committed source stays non-compliant. Split the scripts instead:
+
+```json
+{
+    "scripts": {
+        "lint": "stylelint \"src/**/*.scss\"",
+        "lint:fix": "stylelint --fix \"src/**/*.scss\""
+    }
+}
+```
+
+Quote the glob. On Linux agents npm runs scripts through `/bin/sh`, which expands an unquoted `src/**/*.scss` as `src/*/*.scss` and silently lints a fraction of the files — Windows `cmd.exe` does not, so this only shows up on CI.
+
 ## License
 
 Apache-2 © Enigmatry

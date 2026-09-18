@@ -16,7 +16,7 @@
     {{value() | date: typeParameter()?.format : typeParameter()?.timezone : typeParameter()?.locale}}
   }
   @case('link'){
-    <a [href]="value()" target="_blank">{{value()}}</a>
+    <a target="_blank" [href]="value()">{{value()}}</a>
   }
   @default{
     {{value()}}

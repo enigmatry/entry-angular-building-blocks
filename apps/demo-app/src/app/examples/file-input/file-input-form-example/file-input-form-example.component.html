@@ -2,14 +2,12 @@
   <entry-file-input 
     accept="image/*"
     label="Template driven" 
-    [(ngModel)]="selectedFile">
-  </entry-file-input>
+    [(ngModel)]="selectedFile" />
 </p>
 
 <form [formGroup]="form">
   <entry-file-input 
     accept="image/*" 
     label="Reactive driven" 
-    formControlName="file">
-  </entry-file-input>
+    formControlName="file" />
 </form>

@@ -15,10 +15,11 @@ export interface ICustomDialogResult {
     standalone: false
 })
 export class CustomDialogComponent extends EntryDialogComponent {
-    comment: string;
     protected override readonly mdDialogRef: MatDialogRef<EntryDialogComponent> = inject(MatDialogRef<EntryDialogComponent>);
     protected override readonly config: EntryDialogConfig = inject(ENTRY_DIALOG_CONFIG);
     readonly data: ICustomDialogData = inject(MAT_DIALOG_DATA);
+
+    comment: string;
 
     onClick = (response: string) =>
         this.close({ response, comment: this.comment } as ICustomDialogResult);

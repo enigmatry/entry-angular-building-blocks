@@ -51,21 +51,19 @@ export class EntryTableComponent<T> {
   // Data
   readonly data = input<T[] | PagedData<T> | null | undefined>([]);
   private readonly trueData = signal(<T[] | null>([]));
-  readonly total = linkedSignal<number>(() => 0);
+  readonly total = signal(0);
   readonly loading = input<boolean>(false);
 
   // Pagination
   readonly showPaginator = input<boolean>(this.configuration.showPaginator);
   readonly pageDisabled = input<boolean>(this.configuration.showFirstLastButtons);
   readonly showFirstLastButtons = input<boolean>(false);
-  readonly pageIndex = linkedSignal<number>(() => 0);
-  readonly pageSize = linkedSignal<number>(() => 0);
+  readonly pageIndex = signal(0);
+  readonly pageSize = signal(0);
   readonly pageSizeOptions = input<number[]>(this.configuration.pageSizeOptions);
   readonly hidePageSize = input<boolean>(this.configuration.hidePageSize);
   readonly paginationTemplate = input<TemplateRef<unknown>>();
-  readonly shouldShowPaginator = computed(() => {
-    return this.showPaginator() && this.trueData()?.length;
-  });
+  readonly shouldShowPaginator = computed(() => this.showPaginator() && this.trueData()?.length);
 
   readonly pageChange = output<PageEvent>();
 
