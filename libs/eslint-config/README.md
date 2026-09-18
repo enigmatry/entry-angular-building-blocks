@@ -48,17 +48,25 @@ rules: {
 
 **Staging the migration.** Prefer taking the config whole and relaxing the rules you have not burned down yet over staying on the old version:
 
+Keep the TypeScript and template rules in separate objects: the `@angular-eslint/template` plugin is only registered for the HTML files, so naming a `template/*` rule in an object that also matches `**/*.ts` fails the whole run with `could not find plugin "@angular-eslint/template"` and nothing gets linted.
+
 ```js
 export default defineConfig([
     ...defaultConfiguration,
     {
-        "files": ["src/**/*.ts", "src/**/*.html"],
+        "files": ["src/**/*.ts"],
+        "rules": {
+            // TODO: burn down, then delete this block
+            "@angular-eslint/consistent-component-styles": "warn",
+            "@angular-eslint/prefer-signals": "off"
+        }
+    },
+    {
+        "files": ["src/**/*.html"],
         "rules": {
             // TODO: burn down, then delete this block
             "@angular-eslint/template/prefer-self-closing-tags": "warn",
-            "@angular-eslint/template/attributes-order": "warn",
-            "@angular-eslint/consistent-component-styles": "warn",
-            "@angular-eslint/prefer-signals": "off"
+            "@angular-eslint/template/attributes-order": "warn"
         }
     }
 ]);

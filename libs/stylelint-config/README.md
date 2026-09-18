@@ -46,9 +46,9 @@ For example, to change the `at-rule-no-unknown` rule to use its `ignoreAtRules` 
 
 ## Upgrading to 22.x
 
-**Requires stylelint 17.15 or later.** `selector-no-invalid`, `selector-no-unmatchable`, `unit-layout-mappings` and `value-keyword-layout-mappings` exist only from that release. The config also moves to `@stylistic/stylelint-plugin` 5.3 and `stylelint-scss` 7.2.
+**Requires stylelint 17.15 or later**, because `selector-no-unmatchable` was added in that release. The other three rules the config picks up here — `selector-no-invalid`, `unit-layout-mappings` and `value-keyword-layout-mappings` — have been available since 17.10. The config also moves to `@stylistic/stylelint-plugin` 5.3 and `stylelint-scss` 7.2.
 
-**Low risk in practice.** The four new core rules ship as `null`, and two projects (542 and 30 SCSS files) reported 0 problems both before and after the upgrade. A project that is clean on 21.x will almost certainly stay clean.
+**Low risk in practice.** All four core rules ship as `null`, and two projects (542 and 30 SCSS files) reported 0 problems both before and after the upgrade. A project that is clean on 21.x will almost certainly stay clean.
 
 **Keep `--fix` out of the script CI runs.** A fixable violation repaired in an ephemeral checkout turns the build green while the committed source stays non-compliant. Split the scripts instead:
 
