@@ -12,15 +12,7 @@ import { EntryDateTimePickerModule } from '@enigmatry/entry-components/date-time
   selector: 'app-date-time-picker-signal-form',
   imports: [EntryDateTimePickerModule, FormField, FormRoot],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
-    <form [formRoot]="expiryForm">
-      <entry-date-time-picker [formField]="expiryForm.expiresOn" label="Expires on"></entry-date-time-picker>
-      <button mat-button type="submit">Submit</button>
-    </form>
-    <p>Value: {{expiryModel().expiresOn ?? 'empty'}}</p>
-    <p>Touched: {{expiryForm.expiresOn().touched()}} | Invalid: {{expiryForm.expiresOn().invalid()}}</p>
-    <button type="button" (click)="focusFirstInvalid()">Focus the first invalid field</button>
-  `
+  templateUrl: './signal-form.component.html'
 })
 export class SignalFormComponent {
   protected readonly expiryModel = signal<{ expiresOn: Date | null }>({ expiresOn: null });
