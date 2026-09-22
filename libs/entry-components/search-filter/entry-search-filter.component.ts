@@ -30,6 +30,8 @@ const toSubmissionError = (
     standalone: false
 })
 export class EntrySearchFilterComponent {
+  protected readonly config: EntrySearchFilterConfig = inject(ENTRY_SEARCH_FILTER_CONFIG);
+
   /** Configuration of the search filters inputs that will be displayed in the search-filter component. */
   readonly searchFilters = input<SearchFilterBase<unknown>[]>([]);
 
@@ -40,7 +42,6 @@ export class EntrySearchFilterComponent {
   readonly searchFilterChange = output<SearchFilterParams>();
 
   protected readonly controlType = ControlType;
-  protected readonly config: EntrySearchFilterConfig = inject(ENTRY_SEARCH_FILTER_CONFIG);
 
   /**
    * Carries a value across a rebind only while the filter still declares the same one, so handing

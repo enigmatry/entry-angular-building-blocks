@@ -3,6 +3,7 @@ import { SearchFilterExamplesModule } from '../../examples/search-filter/search-
 import { SharedModule } from '../../shared/shared.module';
 
 @Component({
+    selector: 'app-search-filter-documentation',
     templateUrl: './search-filter-documentation.component.html',
     imports: [
         SharedModule,

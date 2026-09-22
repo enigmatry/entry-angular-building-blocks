@@ -3,6 +3,7 @@ import { PermissionsExampleModule } from '../../examples/permissions/permissions
 import { SharedModule } from '../../shared/shared.module';
 
 @Component({
+    selector: 'app-permissions-documentation',
     templateUrl: './permissions-documentation.component.html',
     imports: [
         SharedModule,

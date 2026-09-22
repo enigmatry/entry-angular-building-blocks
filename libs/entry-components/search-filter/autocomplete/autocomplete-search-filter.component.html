@@ -1,8 +1,8 @@
 <mat-form-field subscriptSizing="dynamic">
     <mat-label>{{searchFilter().label}}</mat-label>
-    <input type="text" matInput [placeholder]="searchFilter().placeholder" [id]="searchFilter().key"
-        [entryFieldErrorState]="field()" [value]="displayText()" (input)="onTyped($any($event.target).value)"
-        (blur)="field()().markAsTouched()" [matAutocomplete]="auto">
+    <input #searchInput type="text" matInput [placeholder]="searchFilter().placeholder" [id]="searchFilter().key"
+        [entryFieldErrorState]="field()" [value]="displayText()" [matAutocomplete]="auto"
+        (input)="onTyped(searchInput.value)" (blur)="field()().markAsTouched()">
     <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayOption" (optionSelected)="onSelected($event)">
         @for (group of (optionsValue() | groupSelectOptions); track group.groupName) {
             @if (group.groupName) {

@@ -19,11 +19,11 @@ const delay = (milliseconds: number): Promise<void> => new Promise(resolve => {
   standalone: false
 })
 export class AutocompleteSearchFilterComponent<T> {
+  private readonly errorHandler = inject(ErrorHandler);
+
   readonly searchFilter = input.required<AutocompleteSearchFilter<T>>();
   /** The field this filter edits. It holds the selected option's key, not the option. */
   readonly field = input.required<Field<unknown>>();
-
-  private readonly errorHandler = inject(ErrorHandler);
 
   /** The key the filter holds, or `undefined` when it holds nothing. */
   private readonly valueKey = computed(() => {
@@ -41,6 +41,7 @@ export class AutocompleteSearchFilterComponent<T> {
   private readonly picked = signal<SelectOption<T> | undefined>(undefined);
 
   // The wait is a function: the delay comes from a required input, unreadable while fields initialise.
+  // eslint-disable-next-line @angular-eslint/no-experimental -- `debounced` is the only debounce Angular ships; RxJS here would reintroduce the subscription this component was rewritten to drop.
   private readonly debouncedText = debounced(
     () => this.typedText() ?? '',
     () => delay(this.searchFilter().debounceTime)

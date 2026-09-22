@@ -8,7 +8,7 @@
 </div>
 
 <entry-search-filter [searchFilters]="filters()" [searchAction]="search"
-    (searchFilterChange)="onSearchFilterChange($event)"></entry-search-filter>
+    (searchFilterChange)="onSearchFilterChange($event)" />
 
 <h3>What the action received</h3>
 <pre>{{lastParams() | json}}</pre>

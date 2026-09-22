@@ -1,6 +1,6 @@
 @if(!isSubMenu())
 {
-    <button mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()">
+    <button mat-icon-button type="button" [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()">
         <mat-icon>{{triggerIcon()}}</mat-icon>
     </button>
 }
@@ -10,8 +10,8 @@
     {
         @if(menuItem.items?.length)
         {
-            <button mat-menu-item [disabled]="menuItem.disabled" [matMenuTriggerFor]="subMenuCmp.menu() ?? null"
-                class="context-menu-item">
+            <button mat-menu-item type="button" class="context-menu-item" [disabled]="menuItem.disabled"
+                [matMenuTriggerFor]="subMenuCmp.menu() ?? null">
 
                 @if(menuItem.icon)
                 {
@@ -21,14 +21,13 @@
                 <span class="description">{{menuItem.name}}</span>
 
                 <entry-cell-context-menu #subMenuCmp [items]="menuItem.items!" [rowData]="rowData()"
-                    [isSubMenu]="true" (selected)="selected.emit($event)">
-                </entry-cell-context-menu>
+                    [isSubMenu]="true" (selected)="selected.emit($event)" />
             </button>
         }
         @else
         {
-            <button mat-menu-item [disabled]="menuItem.disabled" (click)="selected.emit(menuItem.id)"
-                class="context-menu-item">
+            <button mat-menu-item type="button" class="context-menu-item" [disabled]="menuItem.disabled"
+                (click)="selected.emit(menuItem.id)">
 
                 @if(menuItem.icon)
                 {

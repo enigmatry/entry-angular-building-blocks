@@ -7,6 +7,8 @@ import { IEntryConfirmDialogData, EntryDialogButtonsAlignment, EntryDialogServic
   standalone: false
 })
 export class ConfirmExampleComponent {
+  private readonly entryDialog: EntryDialogService = inject(EntryDialogService);
+
   confirmData: Partial<IEntryConfirmDialogData> = {
     title: `CONFIRM`,
     message: `Lorem Ipsum is simply dummy text of the printing and typesetting industry.`,
@@ -19,7 +21,6 @@ export class ConfirmExampleComponent {
   };
   readonly confirmResponse = signal<boolean | undefined>(undefined);
   alignments: EntryDialogButtonsAlignment[] = ['start', 'center', 'end'];
-  private readonly entryDialog: EntryDialogService = inject(EntryDialogService);
 
   openConfirm = () => this.entryDialog
     .openConfirm(this.confirmData)

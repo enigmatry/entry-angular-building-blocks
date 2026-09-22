@@ -1,6 +1,6 @@
 <!-- Table content -->
-<table mat-table [class.mat-table-hover]="rowHover()" [class.mat-table-striped]="rowStriped()"
-  [class.mat-table-with-data]="!hasNoResult()" [dataSource]="dataSource" [trackBy]="trackBy()!" matSort [matSortActive]="sortActive()!"
+<table mat-table matSort [class.mat-table-hover]="rowHover()"
+  [class.mat-table-striped]="rowStriped()" [class.mat-table-with-data]="!hasNoResult()" [dataSource]="dataSource" [trackBy]="trackBy()!" [matSortActive]="sortActive()!"
   [matSortDirection]="sortDirection()!" [matSortDisableClear]="sortDisableClear()" [matSortDisabled]="sortDisabled()"
   [matSortStart]="sortStart()" (matSortChange)="sortChange.emit($event)">
 
@@ -8,23 +8,21 @@
   @if(rowSelectable())
   {
   <ng-container [matColumnDef]="selectionColumn">
-    <th mat-header-cell *matHeaderCellDef class="selection-cell" aria-label="Select rows">
+    <th *matHeaderCellDef mat-header-cell class="selection-cell" aria-label="Select rows">
       @if(multiSelectable() && showSelectAllCheckbox())
       {
       <mat-checkbox aria-label="Select all" [checked]="rowSelection().hasValue() && allRowsSelected()"
         [indeterminate]="rowSelection().hasValue() && !allRowsSelected()"
-        (change)="$event ? toggleSelectAllCheckbox() : null">
-      </mat-checkbox>
+        (change)="$event ? toggleSelectAllCheckbox() : null" />
       }
     </th>
-    <td mat-cell *matCellDef="let row; let index = index; let dataIndex = dataIndex;" class="selection-cell"
+    <td *matCellDef="let row; let index = index; let dataIndex = dataIndex;" mat-cell class="selection-cell"
       (click)="$event.stopPropagation()">
       @if(multiSelectable() && !(rowSelectionFormatter().hideCheckbox && rowSelectionFormatter().hideCheckbox!(row)))
       {
       <mat-checkbox aria-label="Select row"
         [disabled]="rowSelectionFormatter().disabled && rowSelectionFormatter().disabled!(row)"
-        [checked]="rowSelection().isSelected(row)" (change)="$event ? toggleRowSelection(row) : null">
-      </mat-checkbox>
+        [checked]="rowSelection().isSelected(row)" (change)="$event ? toggleRowSelection(row) : null" />
       }
 
       @if(!multiSelectable() && !(rowSelectionFormatter().hideCheckbox && rowSelectionFormatter().hideCheckbox!(row)))
@@ -32,8 +30,7 @@
       <mat-radio-button aria-label="Select row"
         [disabled]="rowSelectionFormatter().disabled && rowSelectionFormatter().disabled!(row)"
         [checked]="rowSelection().isSelected(row)" [value]="rowSelection().isSelected(row)"
-        (change)="$event ? toggleRowSelection(row) : null">
-      </mat-radio-button>
+        (change)="$event ? toggleRowSelection(row) : null" />
       }
     </td>
   </ng-container>
@@ -43,19 +40,18 @@
   @if(showContextMenu())
   {
   <ng-container [matColumnDef]="contextMenuColumn">
-    <th mat-header-cell *matHeaderCellDef class="action-cell" aria-label="Context Menu Actions"></th>
+    <th *matHeaderCellDef mat-header-cell class="action-cell" aria-label="Context Menu Actions"></th>
 
-    <td mat-cell *matCellDef="let row; let index = index; let dataIndex = dataIndex;" class="action-cell">
+    <td *matCellDef="let row; let index = index; let dataIndex = dataIndex;" mat-cell class="action-cell">
       @if(isTemplateRef(contextMenuTemplate()))
       {
       <ng-template [ngTemplateOutlet]="contextMenuTemplate()"
-        [ngTemplateOutletContext]="{ $implicit: row, rowData: row }">
-      </ng-template>
+        [ngTemplateOutletContext]="{ $implicit: row, rowData: row }" />
       }
       @else{
       <entry-cell-context-menu [items]="contextMenuItems()" [rowData]="row"
         [rowMenuFormatter]="rowContextMenuFormatter()"
-        (selected)="contextMenuItemSelected.emit({itemId: $event, rowData: row})"></entry-cell-context-menu>
+        (selected)="contextMenuItemSelected.emit({itemId: $event, rowData: row})" />
       }
     </td>
   </ng-container>
@@ -64,21 +60,19 @@
   @for(column of columns(); track column.field)
   {
   <ng-container [matColumnDef]="column.field" [sticky]="column.pinned==='left'" [stickyEnd]="column.pinned==='right'">
-    <th mat-header-cell *matHeaderCellDef [class]="getColumnClassList(column)"
+    <th *matHeaderCellDef mat-header-cell [class]="getColumnClassList(column)"
       [class.mat-table-sticky-left]="column.pinned === 'left'"
       [class.mat-table-sticky-right]="column.pinned === 'right'"
-      [style]="{'width': column.width, 'min-width': column.width}">
+      [style.width]="column.width" [style.min-width]="column.width">
       @if(isTemplateRef(headerTemplate()))
       {
       <ng-template [ngTemplateOutlet]="unknownTemplateAsTemplate(headerTemplate())"
-        [ngTemplateOutletContext]="{ $implicit: column, colDef: column }">
-      </ng-template>
+        [ngTemplateOutletContext]="{ $implicit: column, colDef: column }" />
       }
       @else if(headerTemplate() && isTemplateRef(toTemplateIndex(unknownTemplateAsTemplate(headerTemplate()),
       column.field))) {
       <ng-template [ngTemplateOutlet]="toTemplateIndex(unknownTemplateAsTemplate(headerTemplate()), column.field)"
-        [ngTemplateOutletContext]="{ $implicit: column, colDef: column }">
-      </ng-template>
+        [ngTemplateOutletContext]="{ $implicit: column, colDef: column }" />
       }
       @else {
       <div [mat-sort-header]="column.sortProperties?.id || column.field" [disabled]="!column.sortable"
@@ -87,37 +81,34 @@
       </div>
       }
     </th>
-    <td mat-cell *matCellDef="let row; let index = index; let dataIndex = dataIndex;"
+    <td *matCellDef="let row; let index = index; let dataIndex = dataIndex;" mat-cell
       [class]="getColumnClassList(column)" [class.mat-table-sticky-left]="column.pinned === 'left'"
       [class.mat-table-sticky-right]="column.pinned === 'right'"
-      [style]="{'width': column.width, 'min-width': column.width}">
+      [style.width]="column.width" [style.min-width]="column.width">
       @if(isTemplateRef(cellTemplate()))
       {
       <ng-template [ngTemplateOutlet]="unknownTemplateAsTemplate(cellTemplate())"
-        [ngTemplateOutletContext]="{ $implicit: row, rowData: row, index: getIndex(index, dataIndex), colDef: column }">
-      </ng-template>
+        [ngTemplateOutletContext]="{ $implicit: row, rowData: row, index: getIndex(index, dataIndex), colDef: column }" />
       }
       @else if(cellTemplate() && isTemplateRef(toTemplateIndex(unknownTemplateAsTemplate(cellTemplate()),
       column.field)))
       {
       <ng-template [ngTemplateOutlet]="toTemplateIndex(unknownTemplateAsTemplate(cellTemplate()), column.field)"
-        [ngTemplateOutletContext]="{ $implicit: row, rowData: row, index: getIndex(index, dataIndex), colDef: column }">
-      </ng-template>
+        [ngTemplateOutletContext]="{ $implicit: row, rowData: row, index: getIndex(index, dataIndex), colDef: column }" />
       }
       @else if(column.cellTemplate) {
       <ng-template [ngTemplateOutlet]="column.cellTemplate"
-        [ngTemplateOutletContext]="{ $implicit: row, rowData: row, index: getIndex(index, dataIndex), colDef: column }">
-      </ng-template>
+        [ngTemplateOutletContext]="{ $implicit: row, rowData: row, index: getIndex(index, dataIndex), colDef: column }" />
       }
       @else {
-      <entry-cell [rowData]="row" [columnDefinition]="column"></entry-cell>
+      <entry-cell [rowData]="row" [columnDefinition]="column" />
       }
     </td>
   </ng-container>
   }
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns(); sticky: true"></tr>
-  <tr mat-row *matRowDef="let row; let index = index; let dataIndex = dataIndex; columns: displayedColumns();"
+  <tr *matHeaderRowDef="displayedColumns(); sticky: true" mat-header-row></tr>
+  <tr *matRowDef="let row; let index = index; let dataIndex = dataIndex; columns: displayedColumns();" mat-row
     [class]="getRowClassList(row, getIndex(index, dataIndex))" [attr.tabindex]="rowFocusVisible() ? 0 : -1"
     (click)="rowClick.emit(row)" (keydown.enter)="rowClick.emit(row)">
   </tr>
@@ -129,7 +120,7 @@
 <div class="no-results mat-body-2">
   @if(isTemplateRef(noResultTemplate()))
   {
-  <ng-template [ngTemplateOutlet]="noResultTemplate()"></ng-template>
+  <ng-template [ngTemplateOutlet]="noResultTemplate()" />
   }
   @else {
   {{noResultText()}}
@@ -139,11 +130,10 @@
 <!-- Pagination -->
 @if(isTemplateRef(paginationTemplate()))
 {
-<ng-template [ngTemplateOutlet]="paginationTemplate()"></ng-template>
+<ng-template [ngTemplateOutlet]="paginationTemplate()" />
 }
 @else if(shouldShowPaginator()) {
 <mat-paginator class="pagination" [showFirstLastButtons]="showFirstLastButtons()" [length]="total()"
   [pageIndex]="pageIndex()" [pageSize]="pageSize()" [pageSizeOptions]="pageSizeOptions()"
-  [hidePageSize]="hidePageSize()" (page)="handlePage($event)" [disabled]="pageDisabled()">
-</mat-paginator>
+  [hidePageSize]="hidePageSize()" [disabled]="pageDisabled()" (page)="handlePage($event)" />
 }

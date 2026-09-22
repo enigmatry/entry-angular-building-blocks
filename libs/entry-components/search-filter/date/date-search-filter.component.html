@@ -1,8 +1,8 @@
 <mat-form-field subscriptSizing="dynamic">
     <mat-label [attr.for]="searchFilter().key">{{searchFilter().label}}</mat-label>
     <input matInput [formField]="field()" [matDatepicker]="picker" [id]="searchFilter().key">
-    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
+    <mat-datepicker-toggle matIconSuffix [for]="picker" />
+    <mat-datepicker #picker />
     @for (error of field()().errors(); track $index) {
         <mat-error>{{error.message}}</mat-error>
     }

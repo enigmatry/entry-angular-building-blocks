@@ -2,11 +2,11 @@
   <mat-toolbar class="docs-header">
     <div class="doc-navigation">
       <img class="logo header-element" src="assets/images/entry_logo_small_transparent_material.png" alt="Entry logo">
-      <button mat-flat-button color="primary" class="header-element" [routerLink]="''">
+      <button mat-flat-button color="primary" type="button" class="header-element" routerLink="">
         Components
       </button>
       @if (selectedMenuItem()) {
-        <span class="header-element"> {{selectedMenuItem()!.label}}</span>
+        <span class="header-element"> {{selectedMenuItem()?.label}}</span>
       }
     </div>
 
@@ -18,11 +18,11 @@
   </mat-toolbar>
 
   <mat-sidenav-container class="docs-container">
-    <mat-sidenav mode="side" [opened]="true" class="docs-sidenav">
+    <mat-sidenav mode="side" class="docs-sidenav" [opened]="true">
       <mat-nav-list class="docs-menu-items">
         @for (item of (menuItems | sort); track item.route) {
-          <a mat-list-item [routerLink]="item.route" routerLinkActive="active"
-            class="docs-menu-item">
+          <a mat-list-item routerLinkActive="active" class="docs-menu-item"
+            [routerLink]="item.route">
             {{item.label}}
           </a>
         }
@@ -30,7 +30,7 @@
     </mat-sidenav>
 
     <mat-sidenav-content class="main-content">
-      <router-outlet></router-outlet>
+      <router-outlet />
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>

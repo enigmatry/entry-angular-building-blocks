@@ -1,7 +1,7 @@
 <mat-form-field subscriptSizing="dynamic">
     <mat-label [attr.for]="searchFilter().key">{{searchFilter().label}}</mat-label>
-    <input [formField]="field()" [id]="searchFilter().key" [type]="searchFilter().type" matInput
-        [placeholder]="searchFilter().placeholder" (input)="applyMask($any($event.target))">
+    <input #textInput matInput [formField]="field()" [id]="searchFilter().key" [type]="searchFilter().type"
+        [placeholder]="searchFilter().placeholder" (input)="applyMask(textInput)">
     @for (error of field()().errors(); track $index) {
         <mat-error>{{error.message}}</mat-error>
     }

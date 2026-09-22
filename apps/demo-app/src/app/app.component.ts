@@ -25,8 +25,8 @@ import { SortPipe } from './shared/pipes/sort.pipe';
   ]
 })
 export class AppComponent {
-  readonly menuItems = COMPONENT_DEFINITIONS;
   private readonly router = inject(Router);
+  readonly menuItems = COMPONENT_DEFINITIONS;
 
   private readonly navigationEnd = toSignal(
     this.router.events.pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))

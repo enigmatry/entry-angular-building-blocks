@@ -10,9 +10,9 @@ import { SelectSearchFilter } from './select-search-filter.model';
     standalone: false
 })
 export class SelectSearchFilterComponent<T> {
+  protected readonly config: EntrySearchFilterConfig = inject(ENTRY_SEARCH_FILTER_CONFIG);
+
   readonly searchFilter = input.required<SelectSearchFilter<T>>();
   /** The field this filter edits, taken from the search filter form. */
   readonly field = input.required<Field<unknown>>();
-
-  protected readonly config: EntrySearchFilterConfig = inject(ENTRY_SEARCH_FILTER_CONFIG);
 }

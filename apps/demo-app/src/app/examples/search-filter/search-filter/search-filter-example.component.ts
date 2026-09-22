@@ -26,12 +26,12 @@ const toServerErrors = (problem: IValidationProblemDetails): readonly SearchFilt
     standalone: false
 })
 export class SearchFilterExampleComponent {
+  private readonly usersService: UsersService = inject(UsersService);
+  private readonly locale: string = inject(LOCALE_ID);
+
   readonly users = signal<User[]>([]);
   displayedColumns: string[] = ['name', 'email', 'dateOfBirth', 'occupation', 'country', 'score'];
   filters: SearchFilterBase<unknown>[] = [];
-
-  private readonly usersService: UsersService = inject(UsersService);
-  private readonly locale: string = inject(LOCALE_ID);
 
   /** An HTTP-backed option list reaches the filter as a signal rather than an observable. */
   private readonly usernameOptions = toSignal(

@@ -30,14 +30,12 @@ export class PagedQuery implements OnPage, OnSort {
     this.sortDirection = this.getValueIfNotEmpty(queryParams['sortDirection'] ?? this.sortDirection);
   };
 
-  readonly getRouteQueryParams = (): Params => {
-    return {
-      pageNumber: this.pageNumber,
-      pageSize: this.pageSize,
-      sortBy: this.sortBy,
-      sortDirection: this.sortDirection
-    };
-  };
+  readonly getRouteQueryParams = (): Params => ({
+    pageNumber: this.pageNumber,
+    pageSize: this.pageSize,
+    sortBy: this.sortBy,
+    sortDirection: this.sortDirection
+  });
 
   readonly getValueIfNotEmpty = <T>(value: T): T | undefined => value ? value : undefined;
 }

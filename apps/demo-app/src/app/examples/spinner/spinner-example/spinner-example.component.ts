@@ -9,9 +9,9 @@ import { timer } from 'rxjs';
 })
 export class SpinnerExampleComponent {
   readonly loading = signal(false);
-  color: ThemePalette = 'primary';
-  fullscreen = false;
-  hasBackgroundOverlay = true;
+  readonly color = signal<ThemePalette>('primary');
+  readonly fullscreen = signal(false);
+  readonly hasBackgroundOverlay = signal(true);
 
   showSpinner() {
     this.loading.set(true);

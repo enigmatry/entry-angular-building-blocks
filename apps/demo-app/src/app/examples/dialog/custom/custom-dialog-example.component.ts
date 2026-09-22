@@ -12,9 +12,10 @@ export interface ICustomDialogData {
     standalone: false
 })
 export class CustomDialogExampleComponent {
+    private readonly entryDialog: EntryDialogService = inject(EntryDialogService);
+
     question = 'Isn\'t this logo cute?';
     readonly result = signal<ICustomDialogResult | undefined>(undefined);
-    private readonly entryDialog: EntryDialogService = inject(EntryDialogService);
 
     openCustom = () =>
         this.entryDialog.open(

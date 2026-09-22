@@ -1,4 +1,4 @@
-<form [formRoot]="filterForm" class="search-form-container entry-form">
+<form class="search-form-container entry-form" [formRoot]="filterForm">
     @let formErrors = filterForm().errors();
     @if (formErrors.length) {
         <div>
@@ -12,23 +12,26 @@
             @switch (searchFilter.controlType) {
                 @case (controlType.text) {
                     <entry-text-search-filter [searchFilter]="asTextSearchFilter(searchFilter)"
-                        [field]="asTextField(searchFilter.key)"></entry-text-search-filter>
+                        [field]="asTextField(searchFilter.key)" />
                 }
                 @case (controlType.select) {
                     <entry-select-search-filter [searchFilter]="asSelectSearchFilter(searchFilter)"
-                        [field]="asSelectField(searchFilter.key)"></entry-select-search-filter>
+                        [field]="asSelectField(searchFilter.key)" />
                 }
                 @case (controlType.autocomplete) {
                     <entry-autocomplete-search-filter [searchFilter]="asAutocompleteSearchFilter(searchFilter)"
-                        [field]="asAutocompleteField(searchFilter.key)"></entry-autocomplete-search-filter>
+                        [field]="asAutocompleteField(searchFilter.key)" />
                 }
                 @case (controlType.dateTime) {
                     <entry-date-time-search-filter [searchFilter]="asDateTimeSearchFilter(searchFilter)"
-                        [field]="asDateField(searchFilter.key)"></entry-date-time-search-filter>
+                        [field]="asDateField(searchFilter.key)" />
                 }
                 @case (controlType.date) {
                     <entry-date-search-filter [searchFilter]="asDateSearchFilter(searchFilter)"
-                        [field]="asDateField(searchFilter.key)"></entry-date-search-filter>
+                        [field]="asDateField(searchFilter.key)" />
+                }
+                @default {
+                    <!-- ControlType is exhaustive; @default only satisfies require-switch-default -->
                 }
             }
         </div>
@@ -37,7 +40,7 @@
         <button mat-button type="button" (click)="clear()">
             <span>{{config.clearButtonText}}</span>
         </button>
-        <button mat-button entry-submit-button>
+        <button mat-button entry-submit-button type="submit">
             <span>{{config.applyButtonText}}</span>
         </button>
     </div>

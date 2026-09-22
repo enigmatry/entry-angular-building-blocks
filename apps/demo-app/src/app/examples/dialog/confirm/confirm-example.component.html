@@ -2,7 +2,7 @@
     <mat-checkbox [(ngModel)]="confirmData.hideClose">
         Hide close button
     </mat-checkbox>
-    <mat-checkbox [(ngModel)]="confirmData.disableClose" class="item">
+    <mat-checkbox class="item" [(ngModel)]="confirmData.disableClose">
         Disable closing on Esc or backdrop click
     </mat-checkbox>
     <mat-form-field class="item">
@@ -15,7 +15,7 @@
             }
         </mat-select>
     </mat-form-field>
-    <button mat-button entry-submit-button (click)="openConfirm()" class="item">
+    <button mat-button entry-submit-button type="button" class="item" (click)="openConfirm()">
         <span>Open Confirm Dialog</span>
     </button>
     <p>

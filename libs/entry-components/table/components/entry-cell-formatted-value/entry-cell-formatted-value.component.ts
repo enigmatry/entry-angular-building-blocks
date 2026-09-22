@@ -10,9 +10,9 @@ import { DEFAULT_PERCENTAGE_MULTIPLIER } from '../../interfaces/entry-table-conf
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EntryCellFormattedValueComponent {
+  public readonly defaultPercentageMultiplier: number = inject(DEFAULT_PERCENTAGE_MULTIPLIER);
+
   readonly value = input<string | undefined>();
   readonly type = input<string | undefined>();
   readonly typeParameter = input<ColumnTypeParameter & { multiplier?: number } | undefined>();
-
-  public readonly defaultPercentageMultiplier: number = inject(DEFAULT_PERCENTAGE_MULTIPLIER);
 }

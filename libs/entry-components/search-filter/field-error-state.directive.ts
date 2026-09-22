@@ -9,10 +9,10 @@ import { MatInput } from '@angular/material/input';
   standalone: false
 })
 export class FieldErrorStateDirective {
-  readonly entryFieldErrorState = input.required<Field<unknown>>();
-
   private readonly matInput = inject(MatInput, { self: true });
   private readonly errorStateMatcher = inject(ErrorStateMatcher);
+
+  readonly entryFieldErrorState = input.required<Field<unknown>>();
 
   constructor() {
     effect(() => {

@@ -24,6 +24,12 @@ const DEFAULT_DIAMETER = 30;
   standalone: false
 })
 export class EntrySpinnerComponent {
+  private readonly overlay = inject(Overlay);
+  private readonly viewContainerRef = inject(ViewContainerRef);
+  private readonly overlayContainer = inject(OverlayContainer);
+  private readonly elementRef = inject(ElementRef<HTMLElement>);
+  private readonly destroyRef = inject(DestroyRef);
+
   readonly color = input<ThemePalette>('primary');
   readonly diameter = input(DEFAULT_DIAMETER);
   readonly fullscreen = input(false);
@@ -31,12 +37,6 @@ export class EntrySpinnerComponent {
 
   private readonly templateRef = viewChild.required<TemplateRef<unknown>>('matSpinner');
   private overlayRef: OverlayRef | undefined;
-
-  private readonly overlay = inject(Overlay);
-  private readonly viewContainerRef = inject(ViewContainerRef);
-  private readonly overlayContainer = inject(OverlayContainer);
-  private readonly elementRef = inject(ElementRef<HTMLElement>);
-  private readonly destroyRef = inject(DestroyRef);
 
   constructor() {
     // Signal queries have no `static` option, so the template ref is only readable after the first render.

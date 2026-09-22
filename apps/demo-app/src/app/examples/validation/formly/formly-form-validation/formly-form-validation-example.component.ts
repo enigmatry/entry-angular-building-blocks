@@ -11,6 +11,8 @@ import { ValidationService } from '../../validation.service';
     standalone: false
 })
 export class FormlyFormValidationExampleComponent {
+  private readonly validationService: ValidationService = inject(ValidationService);
+
   form = new FormGroup({});
   model = {
     firstName: 'John',
@@ -29,7 +31,6 @@ export class FormlyFormValidationExampleComponent {
     }
   ];
   readonly validationResult = signal<IValidationProblemDetails | undefined>(undefined);
-  private readonly validationService: ValidationService = inject(ValidationService);
 
   submitForm() {
     this.validationService.submitWithValidationErrors()

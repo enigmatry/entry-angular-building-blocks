@@ -35,7 +35,8 @@ ng build @enigmatry/demo-app            # build demo app
 # `npm run build` alone fails — this is a multi-project workspace, always specify a project
 
 # Lint (all)
-npm run lint                            # TypeScript ESLint + stylelint
+npm run lint                            # TypeScript ESLint + stylelint (reports only, never rewrites files)
+npm run lint:fix                        # the same chain with --fix, for local use
 npm run lint:ts                         # TypeScript only
 
 # Tests (SCSS only — no Angular unit test suite exists)
@@ -119,7 +120,7 @@ readonly pageChange = output<PageEvent>();
 
 // derived state
 readonly displayedColumns = computed(() => this.columns().filter(...).map(...));
-readonly pageIndex = linkedSignal<number>(() => 0);
+readonly rowSelection = linkedSignal(() => new SelectionModel<T>(this.multiSelectable(), this.rowSelected()));
 
 // async resources
 readonly usersResource = resource({ loader: async () => lastValueFrom(this.usersService.getUsers({})) });
