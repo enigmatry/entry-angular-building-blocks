@@ -3,6 +3,7 @@ import { DateTimePickerExampleModule } from '../../examples/date-time-picker/dat
 import { SharedModule } from '../../shared/shared.module';
 
 @Component({
+    selector: 'app-date-time-picker-documentation',
     templateUrl: './date-time-picker-documentation.component.html',
     imports: [
         SharedModule,

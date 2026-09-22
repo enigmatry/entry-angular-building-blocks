@@ -15,17 +15,17 @@
     </mat-label>
   }
 
-  <input type="text"
+  <input #input
+    type="text"
     matInput
-    #input
+    entryCheckAutocompleteInput
     [matAutocomplete]="auto"
     [formControl]="control"
     [formlyAttributes]="field"
     [placeholder]="props.placeholder ?? ''"
     [required]="props.required ?? false"
     [errorStateMatcher]="errorStateMatcher"
-    [options]="selectOptions"
-    entryCheckAutocompleteInput>
+    [options]="selectOptions">
 
   <mat-autocomplete #auto="matAutocomplete"
     [autoActiveFirstOption]="true"
@@ -50,7 +50,7 @@
   </mat-autocomplete>
 
   <mat-error>
-    <formly-validation-message [field]="field"></formly-validation-message>
+    <formly-validation-message [field]="field" />
   </mat-error>
 
   @if (props.description; as hint) {

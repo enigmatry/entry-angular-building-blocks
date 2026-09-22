@@ -2,9 +2,8 @@
   <p>
     Size limit per file in KB and number of files allowed when multiple
   </p>
-  <entry-file-input accept="image/*" multiple="true" label="Select file" [maxFileSizeInKb]="100" [maxFileCount]="2"
-    formControlName="image">
-  </entry-file-input>
+  <entry-file-input accept="image/*" multiple="true" label="Select file" formControlName="image" [maxFileSizeInKb]="100"
+    [maxFileCount]="2" />
   <p>
     <small>
       Is valid: {{ form.valid }} , errors: {{ form.get('image')?.errors | json }}

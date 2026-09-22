@@ -3,17 +3,7 @@ import { FieldArrayType } from '@ngx-formly/core';
 
 @Component({
     selector: 'app-repeat-name',
-    template: `
-    <div class="validation-children-names">
-      <label class="description">{{props.label}}:</label>
-      @for (field of field.fieldGroup; track field.id; let i = $index) {
-        <div>
-          <span>{{i + 1}}. child</span>
-          <formly-field [field]="field"></formly-field>
-        </div>
-      }
-    </div>
-  `,
+    templateUrl: './repeat-name.component.html',
     standalone: false
 })
 export class RepeatNameComponent extends FieldArrayType {}

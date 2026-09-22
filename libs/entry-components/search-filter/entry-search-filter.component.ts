@@ -22,6 +22,8 @@ import { TextSearchFilter } from './text/text-search-filter.model';
     standalone: false
 })
 export class EntrySearchFilterComponent {
+  readonly config: EntrySearchFilterConfig = inject(ENTRY_SEARCH_FILTER_CONFIG);
+
   /** Configuration of the search filters inputs that will be displayed in the search-filter component. */
   readonly searchFilters = input<SearchFilterBase<unknown>[]>([]);
   /**
@@ -30,7 +32,6 @@ export class EntrySearchFilterComponent {
   readonly searchFilterChange = output<SearchFilterParams>();
 
   readonly controlType = ControlType;
-  readonly config: EntrySearchFilterConfig = inject(ENTRY_SEARCH_FILTER_CONFIG);
 
   private readonly built = signal<BuiltSearchFilters>({ filters: [], form: new FormRecord({}) });
 

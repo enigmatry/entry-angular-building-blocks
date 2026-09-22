@@ -14,14 +14,14 @@ import { FileLoadService } from '../services/file-load.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MarkdownViewerComponent {
-  readonly fileUrl = input<string | undefined>(undefined);
-  readonly markdownContent = input<string | undefined>(undefined);
-
   private readonly fileLoad: FileLoadService = inject(FileLoadService);
   private readonly domSanitizer: DomSanitizer = inject(DomSanitizer);
   private readonly elementRef: ElementRef = inject(ElementRef);
   private readonly renderer: Renderer2 = inject(Renderer2);
   private readonly ngZone: NgZone = inject(NgZone);
+
+  readonly fileUrl = input<string | undefined>(undefined);
+  readonly markdownContent = input<string | undefined>(undefined);
 
   /** An undefined url means no request, which is what keeps this idle for the `[markdownContent]` usage. */
   private readonly loadedFile = httpResource.text(() => this.fileLoad.documentationFileUrl(this.fileUrl()));
@@ -43,7 +43,7 @@ export class MarkdownViewerComponent {
   }
 
   private readonly convertMarkdownToHtml = (markdown: string): SafeHtml => {
-    const converter = MarkdownIt('default', {
+    const converter = new MarkdownIt('default', {
       html: true,
       breaks: true,
       typographer: true,

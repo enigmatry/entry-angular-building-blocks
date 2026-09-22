@@ -1,12 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Service } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { FileExtension } from '../models/file-extension.type';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Service()
 export class FileLoadService {
     private readonly httpClient: HttpClient = inject(HttpClient);
 

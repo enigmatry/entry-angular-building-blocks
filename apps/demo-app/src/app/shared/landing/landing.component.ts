@@ -11,12 +11,12 @@ import { IComponentDefinition, COMPONENT_DEFINITIONS } from '../../features/comp
   standalone: false
 })
 export class LandingComponent {
-  protected readonly menuItems = COMPONENT_DEFINITIONS;
-
   private readonly router: Router = inject(Router);
   private readonly activatedRoute: ActivatedRoute = inject(ActivatedRoute);
   private readonly clipboard: Clipboard = inject(Clipboard);
   private readonly snackBar: MatSnackBar = inject(MatSnackBar);
+
+  protected readonly menuItems = COMPONENT_DEFINITIONS;
 
   protected readonly redirect = async(item: IComponentDefinition): Promise<void> => {
     await this.router.navigate([item.route], { relativeTo: this.activatedRoute });

@@ -10,12 +10,12 @@ import { SelectOption } from './select-option.model';
     standalone: false
 })
 export class CheckAutocompleteInputDirective {
-  readonly options = input<SelectOption[]>([]);
-
   private readonly matAutocomplete = inject(MatAutocompleteTrigger, { host: true, self: true });
   private readonly ngControl = inject(NgControl);
   private readonly elemRef = inject(ElementRef);
   private readonly destroyRef = inject(DestroyRef);
+
+  readonly options = input<SelectOption[]>([]);
 
   get control(): AbstractControl | null {
     return this.ngControl.control;

@@ -4,6 +4,7 @@ import { ReactiveFormValidationExampleModule } from '../../examples/validation/r
 import { SharedModule } from '../../shared/shared.module';
 
 @Component({
+    selector: 'app-validation-documentation',
     templateUrl: './validation-documentation.component.html',
     imports: [
         SharedModule,

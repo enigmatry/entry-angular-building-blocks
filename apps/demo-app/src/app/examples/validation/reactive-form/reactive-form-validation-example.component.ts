@@ -10,11 +10,11 @@ import { ValidationService } from '../validation.service';
   standalone: false
 })
 export class ReactiveFormExampleComponent {
-  readonly validationResult = signal<IValidationProblemDetails | undefined>(undefined);
-  private readonly defaultLength = 3;
-
   private readonly formBuilder: FormBuilder = inject(FormBuilder);
   private readonly validationService: ValidationService = inject(ValidationService);
+
+  readonly validationResult = signal<IValidationProblemDetails | undefined>(undefined);
+  private readonly defaultLength = 3;
 
   // Nothing here depends on a lifecycle moment, so the form is built with the field.
   form: FormGroup<{

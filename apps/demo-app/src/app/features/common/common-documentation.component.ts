@@ -3,6 +3,7 @@ import { CommonExampleModule } from '../../examples/common/common-example.module
 import { SharedModule } from '../../shared/shared.module';
 
 @Component({
+    selector: 'app-common-documentation',
     templateUrl: './common-documentation.component.html',
     imports: [
         SharedModule,

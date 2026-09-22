@@ -2,7 +2,7 @@
   Example: Debouncing a click event with custom interval.
 </p>
 <p>
-  <button mat-raised-button color="primary" (click.debounce.2000)="log('click')">
+  <button mat-raised-button color="primary" type="button" (click.debounce.2000)="log('click')">
     Refresh
     <mat-icon>refresh</mat-icon>
   </button>
@@ -24,7 +24,7 @@
     <mat-label>Events</mat-label>
     <textarea #events matInput rows="10"></textarea>
   </mat-form-field>
-  <button mat-icon-button aria-label="Clear" (click)="events.value=''">
+  <button mat-icon-button aria-label="Clear" type="button" (click)="events.value=''">
     <mat-icon>close</mat-icon>
   </button>
 </p>

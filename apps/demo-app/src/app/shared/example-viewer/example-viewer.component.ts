@@ -18,6 +18,9 @@ interface IExtraFile {
   standalone: false
 })
 export class ExampleViewerComponent {
+  private readonly fileLoad: FileLoadService = inject(FileLoadService);
+  private readonly destroyRef = inject(DestroyRef);
+
   readonly component = input.required<string>();
   readonly title = input('Example');
   readonly showTs = input(true);
@@ -32,9 +35,6 @@ export class ExampleViewerComponent {
   readonly stylesFile = signal<string | null>(null);
   readonly docsFile = signal<string | null>(null);
   readonly extraFilesToDisplay = signal<IExtraFile[]>([]);
-
-  private readonly fileLoad: FileLoadService = inject(FileLoadService);
-  private readonly destroyRef = inject(DestroyRef);
 
   readonly toggleCodeView = (): void => {
     if (this.viewCode()) {

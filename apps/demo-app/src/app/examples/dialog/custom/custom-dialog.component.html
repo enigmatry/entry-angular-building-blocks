@@ -11,13 +11,13 @@
 
 <ng-template #customButtonsTemplate>
     <mat-dialog-actions class="dialog-actions" align="center">
-        <button cdkFocusInitial mat-button color="primary" (click)="onClick('Yes it is')">
+        <button cdkFocusInitial mat-button color="primary" type="button" (click)="onClick('Yes it is')">
             Yes it is
         </button>
-        <button mat-button (click)="onClick('So-so')">
+        <button mat-button type="button" (click)="onClick('So-so')">
             So-so
         </button>
-        <button mat-button (click)="onClick('Nope')">
+        <button mat-button type="button" (click)="onClick('Nope')">
             Nope
         </button>
     </mat-dialog-actions>
