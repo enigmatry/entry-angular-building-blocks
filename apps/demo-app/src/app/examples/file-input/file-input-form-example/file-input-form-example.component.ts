@@ -9,11 +9,11 @@ import { FileInputValue } from '@enigmatry/entry-components/file-input';
     standalone: false
 })
 export class FileInputFormExampleComponent {
-  protected selectedFile: FileInputValue;
+  protected selectedFile: FileInputValue = null;
 
-  protected readonly standaloneControl = new FormControl<FileInputValue>(undefined);
+  protected readonly standaloneControl = new FormControl<FileInputValue>(null);
 
   protected readonly form = new FormGroup({
-    file: new FormControl<FileInputValue>(undefined)
+    file: new FormControl<FileInputValue>(null)
   });
 }

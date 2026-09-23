@@ -145,8 +145,8 @@ in a constructor, an `afterNextRender` callback or a `linkedSignal`.
 | `EntryDateTimePickerComponent.dateTimeChanged` | `Subject<D>` | `OutputEmitterRef<D>` |
 | `EntryDialogComponent.confirm` | callable member | `confirmAction` input, bound as `[confirm]` |
 | `EntryDialogComponent.cancel` | callable member | `cancelAction` input, bound as `[cancel]` |
-| `EntryFileInputComponent.value` | `File \| FileList \| undefined` | `ModelSignal<File \| FileList \| null \| undefined>` — see [section 8](#8-the-file-input-is-a-real-form-control) |
-| `EntryFileInputComponent.fileNames` | getter | `Signal<string>` |
+| `EntryFileInputComponent.value` | `File \| FileList \| undefined` | `ModelSignal<FileInputValue>` — see [section 8](#8-the-file-input-is-a-real-form-control) |
+| `EntryFileInputComponent.fileNames` | getter | `protected` — see [section 8](#8-the-file-input-is-a-real-form-control) |
 | `EntryFileInputComponent.selectedFile` | `EventEmitter<File \| FileList>` | `OutputEmitterRef<File \| FileList>` |
 | `EntrySearchFilterComponent.searchFilterForm` | `UntypedFormGroup` | `Signal<FormRecord>` |
 | `EntrySearchFilterComponent.renderedSearchFilters` | array property | `Signal<SearchFilterBase<unknown>[]>` |
@@ -264,7 +264,8 @@ Angular takes the accessor path whenever one is present, and the `value` model i
 written. [Section 11](#11-the-date-time-picker-is-a-real-form-control-and-two-directives-are-gone)
 has the rest of the contract.
 
-These members went with the two interfaces:
+The two interfaces took their members with them, and what is left of the internals was narrowed
+while the class was open:
 
 | Symbol | 21.x | 22.0.0 |
 |---|---|---|
@@ -272,10 +273,15 @@ These members went with the two interfaces:
 | `onChange` / `onTouched` | callbacks the forms API registered | **gone** |
 | `validate` | `Validator` | **gone** — see below |
 | `maxFileSizeInKb` / `maxFileCount` | inputs | **gone** — see below |
+| `fileNames` / `onFileSelect` | public | `protected` — template-only members |
+| `fileButton` / `fileInput` | public view queries | `private` — the element references are internal |
 
 `value` is a `ModelSignal` now rather than the read-only signal of section 6, so writing it is the
-supported way to set the selection from outside. `clear()` still empties it, and `reset()` is new:
-it returns the underlying element to its pristine state, which is what `field().reset()` calls.
+supported way to set the selection from outside. Its empty is `null` rather than `undefined` —
+`FileInputValue` is `File | FileList | null`, because a signal form's model may not contain
+`undefined` — so a field or control you declare wants `null` as its initial value. `clear()` still
+empties the selection, `reset()` is new and returns the element to its pristine state (it is what
+`field().reset()` calls), and `focus()` is new so that `focusBoundControl()` reaches the button.
 
 #### The size and count limits moved out of the component
 
@@ -293,7 +299,7 @@ inputs, and the same two limits ship as rules for the control you own:
 + import { maxFileCountValidator, maxFileSizeValidator } from '@enigmatry/entry-components/file-input';
 ...
 - image: new FormControl<File | undefined>(undefined, { validators: [Validators.required] })
-+ image: new FormControl<FileInputValue>(undefined, {
++ image: new FormControl<FileInputValue>(null, {
 +   validators: [Validators.required, maxFileSizeValidator(100), maxFileCountValidator(2)]
 + })
 ```
@@ -311,12 +317,24 @@ readonly uploadForm = form(this.uploadModel, path => {
 });
 ```
 
-A signal form's model may not include `undefined` — the path is possibly-undefined then and the
-rules will not type-check against it — so type that field `File | FileList | null`.
+Removing the two inputs is a loud break: a binding to either is `NG8002`, whatever your
+`strictTemplates` setting, unless the declaring module suppresses it with `NO_ERRORS_SCHEMA`. If it
+does, grep your templates for `maxFileSizeInKb` and `maxFileCount` instead — there the bindings are
+ignored and the limits simply stop being enforced.
 
-**This is the silent one.** Under `strictTemplates` the two removed inputs are a compile error;
-without it, the bindings are ignored and the limits simply stop being enforced, with nothing to tell
-you. Grep your templates for `maxFileSizeInKb` and `maxFileCount`.
+**Template-driven forms lose more than these two limits — this is the silent part.** Angular composes
+validators only in `setUpControlValueAccessor`, so on a custom control it composes none at all. A
+validator *directive* on the element no longer reaches the control, and that includes Angular's own:
+
+```html
+<!-- 21.x: invalid while empty. 22.0.0: valid, with no warning -->
+<entry-file-input required [(ngModel)]="file" name="file" />
+```
+
+The same is true of the date-time picker and of any custom control you write. Give such a field a
+reactive form, where the validators go on the control, or a signal form, where the rules go on the
+schema. A validator directive of your own will not work either — there is no composition step left
+for it to join.
 
 #### Two behaviour changes beyond the contract
 

@@ -22,56 +22,50 @@ export class EntryFileInputComponent implements FormValueControl<FileInputValue>
   private readonly renderer: Renderer2 = inject(Renderer2);
   private readonly destroyRef = inject(DestroyRef);
 
-  /** Current selection: one [File], a [FileList] when `multiple`, or nothing. */
-  readonly value = model<FileInputValue>(undefined);
+  /** Current selection: one [File], a [FileList] when `multiple`, or `null`. */
+  readonly value = model<FileInputValue>(null);
 
-  /**
-   * Label for the select file button. Defaults to 'Choose file...'
-   */
+  /** Label for the select file button. Defaults to 'Choose file...' */
   readonly label = input('Choose file...');
 
-  /**
-   * MatIcon for the select file button. Defaults to 'insert_drive_file' (optional)
-   */
+  /** MatIcon for the select file button. Defaults to 'insert_drive_file' (optional) */
   readonly matIcon = input<string | undefined>('insert_drive_file');
 
-  /**
-   * Same as 'accept' attribute in <input/> element.
-   */
+  /** Same as 'accept' attribute in <input/> element. */
   readonly accept = input<string | undefined>(undefined);
 
-  /**
-   * Same as 'multiple' attribute in <input/> element.
-   */
+  /** Same as 'multiple' attribute in <input/> element. */
   readonly multiple = input(false, { transform: (value: BooleanInput) => coerceBooleanProperty(value) });
 
   /**
-   * Same as 'disabled' attribute in <input/> element. Bound by the forms API from the field's own
-   * state, so set it directly only when no form is bound.
+   * Same as 'disabled' attribute in <input/> element. Bound by the forms API from the state of the
+   * control or field, so set it directly only when no form is bound.
    */
-  // `unknown`, not `BooleanInput`: this transform has to satisfy the one the control contract
-  // declares, and a parameter type narrower than its `unknown` is not assignable to it.
+  // `unknown` rather than `BooleanInput`, because a transform narrower than the one the control
+  // contract declares is not assignable to it.
   readonly disabled = input(false, { transform: (value: unknown) => coerceBooleanProperty(value) });
 
   /**
-   * Same as 'readonly' attribute in <input/> element. Bound by the forms API from the field's own state.
+   * Same as 'readonly' attribute in <input/> element. Bound from the field's own state under
+   * `[formField]`, which is the only binding that carries one.
    */
   readonly readonly = input(false, { transform: (value: unknown) => coerceBooleanProperty(value) });
 
-  /**
-   * Event emitted when a file is selected. Emits a [File | FileList] object.
-   */
+  /** Event emitted when a file is selected. Emits a [File | FileList] object. */
   readonly selectedFile = output<File | FileList>();
 
-  /** Marks the bound field touched, which the forms API listens for. */
+  /** Marks the bound control or field touched. Emitted on blur, and on a selection. */
   readonly touch = output<void>();
 
-  readonly fileButton = viewChild.required('fileButton', { read: ElementRef<HTMLElement> });
+  private readonly fileButton = viewChild.required('fileButton', { read: ElementRef<HTMLElement> });
 
-  readonly fileInput = viewChild<ElementRef<HTMLInputElement>>('fileInput');
+  private readonly fileInput = viewChild<ElementRef<HTMLInputElement>>('fileInput');
+
+  /** The last value the element produced, held so a write coming back around is known as its echo. */
+  private selectedFromElement: FileInputValue = null;
 
   /** Display label for the current selection: a file name, or a count when multiple. */
-  readonly fileNames = computed(() => {
+  protected readonly fileNames = computed(() => {
     const value = this.value();
     if (value instanceof File) {
       return value.name;
@@ -83,10 +77,11 @@ export class EntryFileInputComponent implements FormValueControl<FileInputValue>
   });
 
   constructor() {
-    // The element keeps the files it was given, so a value written away elsewhere - a form reset, a
-    // `setValue(undefined)` - would leave the old selection in place and swallow a re-pick of it.
+    // A file input owns its selection and nothing may write one into it. Left as it is after a value
+    // arrived from elsewhere, it holds files the form no longer has - and the browser raises no
+    // `change` when the user picks one of those again, so that selection could not be restored.
     effect(() => {
-      if (!this.value()) {
+      if (!Object.is(this.value(), this.selectedFromElement)) {
         this.clearFileInput();
       }
     });
@@ -104,9 +99,10 @@ export class EntryFileInputComponent implements FormValueControl<FileInputValue>
     });
   }
 
-  readonly onFileSelect = (event: Event): void => {
+  protected readonly onFileSelect = (event: Event): void => {
     const value = this.toValue((event.target as HTMLInputElement).files);
 
+    this.selectedFromElement = value;
     this.value.set(value);
     this.touch.emit();
 
@@ -116,22 +112,26 @@ export class EntryFileInputComponent implements FormValueControl<FileInputValue>
   };
 
   readonly clear = (): void => {
-    this.value.set(undefined);
+    this.value.set(null);
     this.clearFileInput();
   };
 
   /** Returns the element to its pristine state, which a value-only write cannot do. */
   readonly reset = (): void => this.clearFileInput();
 
-  private readonly toValue = (files: FileList | null): File | FileList | undefined => {
+  /** Without this, `focusBoundControl()` falls back to focusing the host element, which is not focusable. */
+  readonly focus = (options?: FocusOptions): void => this.fileButton().nativeElement.focus(options);
+
+  private readonly toValue = (files: FileList | null): FileInputValue => {
     if (!files) {
-      return undefined;
+      return null;
     }
     // `item` rather than an index read: indexing is typed `File`, but an empty list really yields undefined.
-    return this.multiple() && files.length > 1 ? files : files.item(0) ?? undefined;
+    return this.multiple() && files.length > 1 ? files : files.item(0);
   };
 
   private readonly clearFileInput = (): void => {
+    this.selectedFromElement = null;
     // Not `viewChild.required`: a consumer may call this before the first refresh, and throwing would leave a stale file name shown.
     const fileInput = this.fileInput();
     if (fileInput) {

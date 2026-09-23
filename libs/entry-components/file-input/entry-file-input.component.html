@@ -5,7 +5,8 @@
  type="button"
  aria-controls="fileInput"
  aria-label="Upload Files"
- [disabled]="disabled() || readonly()">
+ [disabled]="disabled() || readonly()"
+ (blur)="touch.emit()">
   @if (matIcon()) {
     <mat-icon>{{matIcon()}}</mat-icon>
   }

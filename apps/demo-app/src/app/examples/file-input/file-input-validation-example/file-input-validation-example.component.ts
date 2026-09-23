@@ -13,7 +13,7 @@ const fileCountLimit = 2;
 })
 export class FileInputValidationExampleComponent {
   protected readonly form = new FormGroup({
-    image: new FormControl<FileInputValue>(undefined, {
+    image: new FormControl<FileInputValue>(null, {
       validators: [Validators.required, maxFileSizeValidator(sizeLimitInKb), maxFileCountValidator(fileCountLimit)]
     })
   });

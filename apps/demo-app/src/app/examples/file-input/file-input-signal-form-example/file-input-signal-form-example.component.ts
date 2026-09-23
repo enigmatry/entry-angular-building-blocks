@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { FormField, FormRoot, form, required } from '@angular/forms/signals';
 import { MatButtonModule } from '@angular/material/button';
-import { EntryFileInputModule, maxFileCount, maxFileSize } from '@enigmatry/entry-components/file-input';
+import { EntryFileInputModule, FileInputValue, maxFileCount, maxFileSize } from '@enigmatry/entry-components/file-input';
 
 const sizeLimitInKb = 100;
 const fileCountLimit = 2;
@@ -17,7 +17,7 @@ const fileCountLimit = 2;
   imports: [EntryFileInputModule, FormField, FormRoot, MatButtonModule]
 })
 export class FileInputSignalFormExampleComponent {
-  protected readonly uploadModel = signal<{ attachments: File | FileList | null }>({ attachments: null });
+  protected readonly uploadModel = signal<{ attachments: FileInputValue }>({ attachments: null });
 
   protected readonly uploadForm = form(this.uploadModel, path => {
     required(path.attachments, { message: 'Select at least one file.' });
