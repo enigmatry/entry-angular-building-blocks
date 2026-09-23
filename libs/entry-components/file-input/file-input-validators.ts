@@ -18,12 +18,12 @@ const exceedsMaxFileSize = (value: FileInputValue, maxFileSizeInKb: number): boo
 const exceedsMaxFileCount = (value: FileInputValue, limit: number): boolean =>
   selectedFiles(value).length > limit;
 
-/** Reports `maxFileSize` when a selected file is larger than `maxFileSizeInKb`. For a reactive or template-driven control. */
+/** Reports `maxFileSize` when a selected file is larger than `maxFileSizeInKb`. For a reactive control. */
 export const maxFileSizeValidator = (maxFileSizeInKb: number): ValidatorFn =>
   (control: AbstractControl<FileInputValue>): ValidationErrors | null =>
     exceedsMaxFileSize(control.value, maxFileSizeInKb) ? { maxFileSize: true } : null;
 
-/** Reports `maxFileCount` when more files are selected than `limit`. For a reactive or template-driven control. */
+/** Reports `maxFileCount` when more files are selected than `limit`. For a reactive control. */
 export const maxFileCountValidator = (limit: number): ValidatorFn =>
   (control: AbstractControl<FileInputValue>): ValidationErrors | null =>
     exceedsMaxFileCount(control.value, limit) ? { maxFileCount: true } : null;

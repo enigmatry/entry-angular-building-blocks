@@ -128,7 +128,7 @@ control that has a `ControlValueAccessor`, so on a custom control no validator d
 - selectedFile: function($event)
   - Emits a [File or FileList] object.
 - touch: function()
-  - Emitted when a selection is made, which is what marks the bound control or field touched.
+  - Emitted on blur, and on a selection. Marks the bound control or field touched.
 
 #### Methods
 

@@ -77,9 +77,8 @@ export class EntryFileInputComponent implements FormValueControl<FileInputValue>
   });
 
   constructor() {
-    // A file input owns its selection and nothing may write one into it. Left as it is after a value
-    // arrived from elsewhere, it holds files the form no longer has - and the browser raises no
-    // `change` when the user picks one of those again, so that selection could not be restored.
+    // A file input owns its selection and nothing may write one into it, so left alone it keeps files
+    // the form no longer has - and the browser raises no `change` when one of those is picked again.
     effect(() => {
       if (!Object.is(this.value(), this.selectedFromElement)) {
         this.clearFileInput();
@@ -127,7 +126,17 @@ export class EntryFileInputComponent implements FormValueControl<FileInputValue>
       return null;
     }
     // `item` rather than an index read: indexing is typed `File`, but an empty list really yields undefined.
-    return this.multiple() && files.length > 1 ? files : files.item(0);
+    return this.multiple() && files.length > 1 ? this.detach(files) : files.item(0);
+  };
+
+  // Clearing the element empties its own `FileList` in place, which would blank a value the form
+  // still holds. A `DataTransfer` copy belongs to nobody and survives; a single `File` never suffers.
+  private readonly detach = (files: FileList): FileList => {
+    const transfer = new DataTransfer();
+    for (const file of Array.from(files)) {
+      transfer.items.add(file);
+    }
+    return transfer.files;
   };
 
   private readonly clearFileInput = (): void => {

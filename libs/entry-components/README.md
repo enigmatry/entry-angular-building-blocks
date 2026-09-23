@@ -279,7 +279,9 @@ while the class was open:
 `value` is a `ModelSignal` now rather than the read-only signal of section 6, so writing it is the
 supported way to set the selection from outside. Its empty is `null` rather than `undefined` —
 `FileInputValue` is `File | FileList | null`, because a signal form's model may not contain
-`undefined` — so a field or control you declare wants `null` as its initial value. `clear()` still
+`undefined` — so a field or control you declare wants `null` as its initial value. Retype the ones
+you have: a control or `[(ngModel)]` property declared `File | undefined` keeps compiling and then
+takes a `null` at runtime, from `clear()` or from an empty selection. `clear()` still
 empties the selection, `reset()` is new and returns the element to its pristine state (it is what
 `field().reset()` calls), and `focus()` is new so that `focusBoundControl()` reaches the button.
 
@@ -336,7 +338,7 @@ reactive form, where the validators go on the control, or a signal form, where t
 schema. A validator directive of your own will not work either — there is no composition step left
 for it to join.
 
-#### Two behaviour changes beyond the contract
+#### Three behaviour changes beyond the contract
 
 - **`[disabled]` beside a bound control does nothing.** The forms API writes this input from the
   control's or field's own state on every check, so it wins outright: `[disabled]="true"` next to an
@@ -344,11 +346,18 @@ for it to join.
   was enough to disable. Disable the control instead (`myControl.disable()`). `disabled` still
   reports the effective state — as a signal, per section 5 — so an imperative read wants
   `this.fileInput().disabled()`.
-- **A value written away now clears the element.** `21.x` left the selected file on the native input
-  when the bound control was reset or set to something empty. The name went off screen, but the
-  element still held the file, so re-picking that same file raised no `change` event and the value
-  could not be restored. Any empty write empties the element now, and `reset()` does the same for a
-  value that is still there.
+- **A value the element did not produce now clears it.** `21.x` left the files on the native input
+  whenever the bound control was reset or written to, so the element held files the form did not
+  have — and because the browser raises no `change` when the user picks one of those again, that
+  selection could not be restored at all. The component now remembers the value it handed over and
+  empties the element for every other write; `reset()` does the same on demand. Note that
+  `control.reset(control.value)` is not one of those writes: the value does not change, so the
+  element still matches it and is left alone.
+- **A `FileList` value is a copy now, and outlives the element.** The value used to be the
+  element's own list, which the browser empties in place when the input is cleared — so a list you
+  had captured from `selectedFile` went to zero length behind your back the moment anything called
+  `clear()`. The component hands over a detached copy instead. Single `File` values were never
+  affected.
 
 ### 9. Required inputs fail earlier and more clearly
 
