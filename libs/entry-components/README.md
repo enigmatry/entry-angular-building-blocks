@@ -145,7 +145,7 @@ in a constructor, an `afterNextRender` callback or a `linkedSignal`.
 | `EntryDateTimePickerComponent.dateTimeChanged` | `Subject<D>` | `OutputEmitterRef<D>` |
 | `EntryDialogComponent.confirm` | callable member | `confirmAction` input, bound as `[confirm]` |
 | `EntryDialogComponent.cancel` | callable member | `cancelAction` input, bound as `[cancel]` |
-| `EntryFileInputComponent.value` | `File \| FileList \| undefined` | `Signal<...>` (read-only) |
+| `EntryFileInputComponent.value` | `File \| FileList \| undefined` | `ModelSignal<File \| FileList \| null \| undefined>` — see [section 8](#8-the-file-input-is-a-real-form-control) |
 | `EntryFileInputComponent.fileNames` | getter | `Signal<string>` |
 | `EntryFileInputComponent.selectedFile` | `EventEmitter<File \| FileList>` | `OutputEmitterRef<File \| FileList>` |
 | `EntrySearchFilterComponent.searchFilterForm` | `UntypedFormGroup` | `Signal<FormRecord>` |
@@ -249,25 +249,88 @@ extends `FormGroup` at runtime, so `instanceof` checks and every method behave i
 `@enigmatry/entry-form` still surfaces `UntypedFormControl` in places, because that is how
 `@ngx-formly/core` types `FieldType.formControl`. That one is not ours to remove.
 
-### 8. `EntryFileInputComponent.disabled` no longer reports the effective state
+### 8. The file input is a real form control
 
-`disabled` used to be a getter that reflected both the `[disabled]` binding **and** the forms API
-(`setDisabledState`, i.e. `formControl.disable()`). It is now the bound input only; the combined
-state moved to `effectiveDisabled`.
+`EntryFileInputComponent` implements
+[`FormValueControl`](https://angular.dev/guide/forms/signals/custom-controls), the same contract the
+date-time picker moved to, so it owns a `value` model signal and lets the forms API drive it. Its
+`ControlValueAccessor` and its `Validator` are gone, along with `NG_VALUE_ACCESSOR` and
+`NG_VALIDATORS`.
+
+`[formControl]`, `formControlName` and `[(ngModel)]` all keep working — reactive and template-driven
+forms drive that contract natively — and the component now also accepts `[formField]`. Without a
+form, `[(value)]` binds the selection directly. Do not give it a `ControlValueAccessor` again:
+Angular takes the accessor path whenever one is present, and the `value` model is then never
+written. [Section 11](#11-the-date-time-picker-is-a-real-form-control-and-two-directives-are-gone)
+has the rest of the contract.
+
+These members went with the two interfaces:
+
+| Symbol | 21.x | 22.0.0 |
+|---|---|---|
+| `writeValue` / `registerOnChange` / `registerOnTouched` / `setDisabledState` | `ControlValueAccessor` | **gone** |
+| `onChange` / `onTouched` | callbacks the forms API registered | **gone** |
+| `validate` | `Validator` | **gone** — see below |
+| `maxFileSizeInKb` / `maxFileCount` | inputs | **gone** — see below |
+
+`value` is a `ModelSignal` now rather than the read-only signal of section 6, so writing it is the
+supported way to set the selection from outside. `clear()` still empties it, and `reset()` is new:
+it returns the underlying element to its pristine state, which is what `field().reset()` calls.
+
+#### The size and count limits moved out of the component
+
+A custom control cannot report its own errors. Its validators are composed only through
+`setUpControlValueAccessor`, which the custom-control path deliberately skips, and signal forms
+expects validation to come from the schema. So `maxFileSizeInKb` and `maxFileCount` are gone as
+inputs, and the same two limits ship as rules for the control you own:
 
 ```diff
-- if (this.fileInput().disabled) { ... }          // false after formControl.disable()
-+ if (this.fileInput().effectiveDisabled()) { ... }
+- <entry-file-input formControlName="image" multiple="true" [maxFileSizeInKb]="100" [maxFileCount]="2" />
++ <entry-file-input formControlName="image" multiple="true" />
 ```
 
-This one is silent, and worse than a stale value. Per section 5 `disabled` is now a signal, so the
-expression above does not return "the old boolean" — it returns the signal *function*, which is
-always truthy. An upload gate written that way inverts to permanently disabled:
+```diff
++ import { maxFileCountValidator, maxFileSizeValidator } from '@enigmatry/entry-components/file-input';
+...
+- image: new FormControl<File | undefined>(undefined, { validators: [Validators.required] })
++ image: new FormControl<FileInputValue>(undefined, {
++   validators: [Validators.required, maxFileSizeValidator(100), maxFileCountValidator(2)]
++ })
+```
+
+The error keys are unchanged — `maxFileSize` and `maxFileCount`, reported for the same selections as
+before — so configured validation messages keep matching. For a signal form the same limits are
+schema rules, and they carry a message of their own:
 
 ```ts
-// always true in 22.0.0, whatever the state
-if (this.fileInput().disabled) { … }
+import { maxFileCount, maxFileSize } from '@enigmatry/entry-components/file-input';
+
+readonly uploadForm = form(this.uploadModel, path => {
+  maxFileSize(path.attachments, 100, { message: 'Every file has to be 100 KB or smaller.' });
+  maxFileCount(path.attachments, 2, { message: 'Select at most two files.' });
+});
 ```
+
+A signal form's model may not include `undefined` — the path is possibly-undefined then and the
+rules will not type-check against it — so type that field `File | FileList | null`.
+
+**This is the silent one.** Under `strictTemplates` the two removed inputs are a compile error;
+without it, the bindings are ignored and the limits simply stop being enforced, with nothing to tell
+you. Grep your templates for `maxFileSizeInKb` and `maxFileCount`.
+
+#### Two behaviour changes beyond the contract
+
+- **`[disabled]` beside a bound control does nothing.** The forms API writes this input from the
+  control's or field's own state on every check, so it wins outright: `[disabled]="true"` next to an
+  enabled `[formControl]` leaves the button enabled. `21.x` combined the two, and the binding alone
+  was enough to disable. Disable the control instead (`myControl.disable()`). `disabled` still
+  reports the effective state — as a signal, per section 5 — so an imperative read wants
+  `this.fileInput().disabled()`.
+- **A value written away now clears the element.** `21.x` left the selected file on the native input
+  when the bound control was reset or set to something empty. The name went off screen, but the
+  element still held the file, so re-picking that same file raised no `change` event and the value
+  could not be restored. Any empty write empties the element now, and `reset()` does the same for a
+  value that is still there.
 
 ### 9. Required inputs fail earlier and more clearly
 

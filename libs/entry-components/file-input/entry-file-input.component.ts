@@ -1,34 +1,29 @@
-/* eslint-disable max-lines */
-
 import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
 import {
   afterNextRender, ChangeDetectionStrategy,
-  Component, DestroyRef, ElementRef, NgZone,
+  Component, DestroyRef, effect, ElementRef, NgZone,
   Renderer2, computed,
-  inject, input, linkedSignal, output, Signal, signal, viewChild
+  inject, input, model, output, viewChild
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import {
-  AbstractControl, ControlValueAccessor, NG_VALIDATORS,
-  NG_VALUE_ACCESSOR, ValidationErrors, Validator
-} from '@angular/forms';
+import type { FormValueControl } from '@angular/forms/signals';
 import { fromEvent } from 'rxjs';
+import { FileInputValue } from './file-input-value.type';
 
 @Component({
   standalone: false,
   selector: 'entry-file-input',
   templateUrl: './entry-file-input.component.html',
   styleUrl: './entry-file-input.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
-    { provide: NG_VALUE_ACCESSOR, useExisting: EntryFileInputComponent, multi: true },
-    { provide: NG_VALIDATORS, useExisting: EntryFileInputComponent, multi: true }
-  ]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EntryFileInputComponent implements ControlValueAccessor, Validator {
+export class EntryFileInputComponent implements FormValueControl<FileInputValue> {
   private readonly ngZone: NgZone = inject(NgZone);
   private readonly renderer: Renderer2 = inject(Renderer2);
   private readonly destroyRef = inject(DestroyRef);
+
+  /** Current selection: one [File], a [FileList] when `multiple`, or nothing. */
+  readonly value = model<FileInputValue>(undefined);
 
   /**
    * Label for the select file button. Defaults to 'Choose file...'
@@ -51,40 +46,25 @@ export class EntryFileInputComponent implements ControlValueAccessor, Validator 
   readonly multiple = input(false, { transform: (value: BooleanInput) => coerceBooleanProperty(value) });
 
   /**
-   * Same as 'disabled' attribute in <input/> element.
+   * Same as 'disabled' attribute in <input/> element. Bound by the forms API from the field's own
+   * state, so set it directly only when no form is bound.
    */
-  readonly disabled = input(false, { transform: (value: BooleanInput) => coerceBooleanProperty(value) });
+  // `unknown`, not `BooleanInput`: this transform has to satisfy the one the control contract
+  // declares, and a parameter type narrower than its `unknown` is not assignable to it.
+  readonly disabled = input(false, { transform: (value: unknown) => coerceBooleanProperty(value) });
 
   /**
-   * Same as 'readonly' attribute in <input/> element.
+   * Same as 'readonly' attribute in <input/> element. Bound by the forms API from the field's own state.
    */
-  readonly readonly = input(false, { transform: (value: BooleanInput) => coerceBooleanProperty(value) });
-
-  /**
-   * Size limit per file in KB (kilobytes)
-   */
-  readonly maxFileSizeInKb = input<number | undefined>(undefined);
-
-  /**
-   * Number of files allowed when multiple=true
-   */
-  readonly maxFileCount = input<number | undefined>(undefined);
-
-  private readonly selectedValue = signal<File | FileList | undefined>(undefined);
-
-  /** Current selected [File | FileList] object. Read-only - writing it directly would bypass the forms API; use `clear()`. */
-  readonly value: Signal<File | FileList | undefined> = this.selectedValue.asReadonly();
+  readonly readonly = input(false, { transform: (value: unknown) => coerceBooleanProperty(value) });
 
   /**
    * Event emitted when a file is selected. Emits a [File | FileList] object.
    */
   readonly selectedFile = output<File | FileList>();
 
-  /** Writable, because `setDisabledState` drives it too - last writer wins, and a new binding re-asserts. */
-  private readonly disabledState = linkedSignal(() => this.disabled());
-
-  /** Effective disabled state: the `disabled` input, or the forms API through `setDisabledState`. */
-  readonly effectiveDisabled: Signal<boolean> = this.disabledState.asReadonly();
+  /** Marks the bound field touched, which the forms API listens for. */
+  readonly touch = output<void>();
 
   readonly fileButton = viewChild.required('fileButton', { read: ElementRef<HTMLElement> });
 
@@ -103,6 +83,14 @@ export class EntryFileInputComponent implements ControlValueAccessor, Validator 
   });
 
   constructor() {
+    // The element keeps the files it was given, so a value written away elsewhere - a form reset, a
+    // `setValue(undefined)` - would leave the old selection in place and swallow a re-pick of it.
+    effect(() => {
+      if (!this.value()) {
+        this.clearFileInput();
+      }
+    });
+
     // Signal queries have no `static` option, so the button is only readable after the first render.
     afterNextRender(() => {
       // Handle click event on custom file button and trigger click on native file input
@@ -117,16 +105,10 @@ export class EntryFileInputComponent implements ControlValueAccessor, Validator 
   }
 
   readonly onFileSelect = (event: Event): void => {
-    const fileInputEl = event.target as HTMLInputElement;
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const files: FileList = fileInputEl.files!;
+    const value = this.toValue((event.target as HTMLInputElement).files);
 
-    // `item` rather than an index read: indexing is typed `File`, but an empty list really yields undefined.
-    const value = this.multiple() && files.length > 1 ? files : files.item(0) ?? undefined;
-
-    this.selectedValue.set(value);
-    this.onChange(value);
-    this.onTouched();
+    this.value.set(value);
+    this.touch.emit();
 
     if (value) {
       this.selectedFile.emit(value);
@@ -134,78 +116,26 @@ export class EntryFileInputComponent implements ControlValueAccessor, Validator 
   };
 
   readonly clear = (): void => {
-    this.selectedValue.set(undefined);
-    this.onChange(undefined);
+    this.value.set(undefined);
+    this.clearFileInput();
+  };
+
+  /** Returns the element to its pristine state, which a value-only write cannot do. */
+  readonly reset = (): void => this.clearFileInput();
+
+  private readonly toValue = (files: FileList | null): File | FileList | undefined => {
+    if (!files) {
+      return undefined;
+    }
+    // `item` rather than an index read: indexing is typed `File`, but an empty list really yields undefined.
+    return this.multiple() && files.length > 1 ? files : files.item(0) ?? undefined;
+  };
+
+  private readonly clearFileInput = (): void => {
     // Not `viewChild.required`: a consumer may call this before the first refresh, and throwing would leave a stale file name shown.
     const fileInput = this.fileInput();
     if (fileInput) {
       this.renderer.setProperty(fileInput.nativeElement, 'value', '');
     }
-  };
-
-  // implements ControlValueAccessor interface
-
-  onChange = (_: any) => {
-    // set by registerOnChange
-  };
-
-  onTouched = () => {
-    // set by registerOnTouched
-  };
-
-  writeValue(value: any): void {
-    this.selectedValue.set(value);
-  }
-
-  registerOnChange(fn: any): void {
-    this.onChange = fn;
-  }
-
-  registerOnTouched(fn: any): void {
-    this.onTouched = fn;
-  }
-
-  setDisabledState?(isDisabled: boolean): void {
-    this.disabledState.set(isDisabled);
-  }
-
-  // implements Validator interface
-
-  validate(control: AbstractControl<File | FileList | undefined>): ValidationErrors | null {
-    const isSizeLimitExceeded = this.isFileSizeLimitExceeded(control.value);
-    const isCountLimitExceeded = this.isFileCountLimitExceeded(control.value);
-
-    if (!isSizeLimitExceeded && !isCountLimitExceeded) {
-      return null;
-    }
-    return {
-      ...isSizeLimitExceeded ? { maxFileSize: true } : {},
-      ...isCountLimitExceeded ? { maxFileCount: true } : {}
-    };
-  }
-
-  private readonly isFileCountLimitExceeded = (files: File | FileList | undefined): boolean => {
-    const maxFileCount = this.maxFileCount();
-    if (!this.multiple() || !maxFileCount || !(files instanceof FileList)) {
-      return false;
-    }
-    return files.length > maxFileCount;
-  };
-
-  private readonly isFileSizeLimitExceeded = (files: File | FileList | undefined): boolean => {
-    const maxFileSizeInKb = this.maxFileSizeInKb();
-    if (!maxFileSizeInKb) {
-      return false;
-    }
-    const kilobyte = 1024;
-    const maxFileSizeInBytes = maxFileSizeInKb * kilobyte;
-
-    if (files instanceof File) {
-      return files.size > maxFileSizeInBytes;
-    }
-    if (files instanceof FileList) {
-      return Array.from(files).some(file => file.size > maxFileSizeInBytes);
-    }
-    return false;
   };
 }

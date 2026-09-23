@@ -5,7 +5,7 @@
  type="button"
  aria-controls="fileInput"
  aria-label="Upload Files"
- [disabled]="effectiveDisabled() || readonly()">
+ [disabled]="disabled() || readonly()">
   @if (matIcon()) {
     <mat-icon>{{matIcon()}}</mat-icon>
   }
@@ -22,7 +22,7 @@
  id="fileInput"
  [accept]="accept() ?? ''"
  [multiple]="multiple()"
- [disabled]="effectiveDisabled()"
+ [disabled]="disabled()"
  [readonly]="readonly()"
  (change)="onFileSelect($event)"
 />
