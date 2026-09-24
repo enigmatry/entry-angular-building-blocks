@@ -3,7 +3,7 @@
 Entry component for providing standard filtering capabilities that can be consumed by entry-table component, but also any other list data representation component like Angular material table component. It supports the following filtering inputs:
 
 * Text filter
-* Select filter (fixed or dynamic options)
+* Select filter (a fixed list or a signal)
 * Autocomplete filter
 * Date filter
 * DateTime filter
@@ -18,59 +18,104 @@ import { EntrySearchFilterModule } from '@enigmatry/entry-components/search-filt
 
 ## Basic usage
 
-Provide filters in component and use `<entry-search-filter>` to display them in view
+Declare the filters, then give the component an action that runs the search. The filters are
+configuration only — they hold no form state, and the component never writes back onto them.
 
 ```ts
 import {
   AutocompleteSearchFilter,
+  DateTimeSearchFilter,
+  SearchFilterParams,
+  SearchFilterServerError,
   SelectOption,
   SelectSearchFilter,
-  TextSearchFilter,
-  DateTimeSearchFilter
+  TextSearchFilter
 } from '@enigmatry/entry-components/search-filter';
 
 @Component({...})
 export class ExampleComponent {
+  /** An option list that arrives later is a signal, not an observable. */
+  private readonly usernames = toSignal(
+    this.usersService.getUsernames().pipe(map(names => names.map(name => new SelectOption(name, name)))),
+    { initialValue: [] }
+  );
 
-filters = [
-      new TextSearchFilter({
-        key: 'name',
-        label: 'Name',
-        placeholder: 'Name',
-        maxLength: 25
-      }),
-      new SelectSearchFilter({
-        key: 'username',
-        label: 'Username',
-        placeholder: 'Select username',
-        multiSelect: false,
-        options$: this._usersService
-          .getUsernames()
-          .pipe(map(usernames => usernames.map(un => new SelectOption(un, un))))
-      }),
-      new AutocompleteSearchFilter({
-        key: 'country',
-        label: 'Country',
-        placeholder: 'Select country',
-        minimumCharacters: 0,
-        search: (input: string) => of(Object.values(Country)
-          .filter(value => value.toLocaleLowerCase().includes(input.toLocaleLowerCase()))
-          .map((country => new SelectOption(country, country))))
-      }),
-      new DateTimeSearchFilter({
-        key: 'createdAt',
-        label: 'Created at',
-        placeholder: 'Created at'
-      })
-];
+  filters = [
+    new TextSearchFilter({
+      key: 'name',
+      label: 'Name',
+      placeholder: 'Name',
+      maxLength: 25
+    }),
+    new SelectSearchFilter({
+      key: 'username',
+      label: 'Username',
+      placeholder: 'Select username',
+      options: this.usernames
+    }),
+    new AutocompleteSearchFilter<Country>({
+      key: 'country',
+      label: 'Country',
+      placeholder: 'Select country',
+      search: (input, abortSignal) => this.countriesService.search(input, abortSignal)
+    }),
+    new DateTimeSearchFilter({
+      key: 'createdAt',
+      label: 'Created at',
+      placeholder: 'Created at'
+    })
+  ];
+
+  /** Return the server's messages to place them on their filters; return nothing on success. */
+  readonly search = async(params: SearchFilterParams): Promise<readonly SearchFilterServerError[] | void> => {
+    try {
+      this.rows.set(await this.service.search(params));
+      return undefined;
+    } catch (problem) {
+      return [{ key: 'createdAt', message: 'The date cannot be in the future.' }];
+    }
+  };
 }
 ```
 
 ```html
-<entry-search-filter
-    [searchFilters]="filters"
-    (searchFilterChange)="searchFilterChange($event)">
-</entry-search-filter>
+<entry-search-filter [searchFilters]="filters" [searchAction]="search"></entry-search-filter>
+```
+
+Angular routes each returned message to its filter and clears it as soon as that filter is edited.
+While a message stands its filter is invalid, so the next search is blocked until the user changes
+that value.
+
+`searchFilterChange` still fires on every accepted search, for a page that writes the filters into
+the URL and fetches downstream of the navigation instead:
+
+```html
+<entry-search-filter [searchFilters]="filters" [searchAction]="search"
+    (searchFilterChange)="onFilter($event)"></entry-search-filter>
+```
+
+## Validation
+
+`required: true` on a filter, and `maxLength` on a text filter, are real rules. An invalid filter
+blocks the search and focus moves to it. Messages come from the component's configuration rather
+than per filter, since a filter set has no natural place to hang one.
+
+A required select or autocomplete filter is satisfied by any option key the user picks, `false`
+included; a required multi-select needs at least one option.
+
+## Clearing
+
+The component renders a Clear button beside Apply. It empties every filter and forgets which were
+touched. It clears rather than restoring declared values, so a filter that carries a default loses
+it until the filters are handed over again.
+
+## Setting a filter's value
+
+There is no `setValue`. Hand over new filter instances carrying the values you want — the component
+keeps what the user typed unless a filter's declared `value` changed:
+
+```ts
+this.filters = this.createFilters(this.route.snapshot.queryParams);
 ```
 
 ## Grouping select/autocomplete options
@@ -96,7 +141,10 @@ new SelectSearchFilter({
 
 - provide entry search filter config (optional):
   - `applyButtonText`: Apply button text
+  - `clearButtonText`: Clear button text
   - `noneSelectedOptionText`: None option text in select dropdown
+  - `requiredMessage`: message shown under a required filter left empty
+  - `maxLengthMessage`: message shown when a filter's value is longer than its maximum
 
 - provide `ENTRY_MAT_DATE_TIME` for `DateTimeSearchFilter` (required when this filter is used):
   - matDateFormats of type `MatDateFormats`
@@ -113,6 +161,7 @@ import { EntrySearchFilterModule, provideEntrySearchFilterConfig } from '@enigma
   providers: [
     provideEntrySearchFilterConfig({
       applyButtonText: 'Filter',
+      clearButtonText: 'Reset',
       noneSelectedOptionText: '-'
     }),
     // provide date adapter used by mat-datepicker
