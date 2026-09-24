@@ -100,6 +100,9 @@ the URL and fetches downstream of the navigation instead:
 blocks the search and focus moves to it. Messages come from the component's configuration rather
 than per filter, since a filter set has no natural place to hang one.
 
+A required select or autocomplete filter is satisfied by any option key the user picks, `false`
+included; a required multi-select needs at least one option.
+
 ## Clearing
 
 The component renders a Clear button beside Apply. It empties every filter and forgets which were

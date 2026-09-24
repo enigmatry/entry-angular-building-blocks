@@ -1,4 +1,5 @@
-import { SchemaFn, applyEach, applyWhenValue, maxLength, minLength, required } from '@angular/forms/signals';
+import { PathKind, REQUIRED, SchemaFn, SchemaPathTree, applyEach, applyWhenValue, maxLength, metadata, minLength,
+  required, requiredError, validate } from '@angular/forms/signals';
 import { ControlType } from './control-type';
 import { SearchFilterBase } from './search-filter-base.model';
 import { SearchFilterValue, SearchFilterValues } from './search-filter-values.type';
@@ -25,6 +26,68 @@ export const emptySearchFilterValue = (searchFilter: SearchFilterBase<unknown>):
 export const searchFilterEntry = (searchFilter: SearchFilterBase<unknown>): [string, SearchFilterValue] =>
   [searchFilter.key, (searchFilter.value as SearchFilterValue | undefined) ?? emptySearchFilterValue(searchFilter)];
 
+/** Whether the filter holds an option's key, which the options are free to make `false`. */
+const holdsAnOptionKey = (searchFilter: SearchFilterBase<unknown>): boolean =>
+  searchFilter.controlType === ControlType.select || searchFilter.controlType === ControlType.autocomplete;
+
+/**
+ * The rules that make a required filter hold something.
+ *
+ * @remarks `required` counts `false` as empty, so a filter holding an option key gets the same
+ * check written against `null` instead - an option whose key is `false` would never satisfy
+ * `required`. The metadata is what marks the control required in the DOM, so it is set either way.
+ */
+const applyPresenceRules = (
+  itemPath: SchemaPathTree<SearchFilterValue, PathKind.Child>,
+  configFor: (key: string | undefined) => SearchFilterBase<unknown> | undefined,
+  requiredMessage: string
+): void => {
+  metadata(itemPath, REQUIRED, context => configFor(context.key())?.required === true);
+
+  required(itemPath, {
+    when: context => {
+      const searchFilter = configFor(context.key());
+      return searchFilter?.required === true && !holdsAnOptionKey(searchFilter);
+    },
+    message: requiredMessage
+  });
+
+  validate(itemPath, context => {
+    const searchFilter = configFor(context.key());
+    const missing = searchFilter?.required === true && holdsAnOptionKey(searchFilter) && context.value() === null;
+    return missing ? requiredError({ message: requiredMessage }) : undefined;
+  });
+};
+
+/**
+ * The rules over a filter's length, and the multi-select presence check that rides along.
+ *
+ * @remarks A length rule cannot be typed against the heterogeneous leaf, so the value is narrowed
+ * first. That narrowing re-roots the path, which is why the key comes from `pathKeys` and not
+ * `key()`. An empty multi-select is `[]`, which is not `null`, so its presence check lives here.
+ */
+const applyLengthRules = (
+  itemPath: SchemaPathTree<SearchFilterValue, PathKind.Child>,
+  configFor: (key: string | undefined) => SearchFilterBase<unknown> | undefined,
+  messages: { requiredMessage: string; maxLengthMessage: string }
+): void => {
+  applyWhenValue(itemPath, (value): value is string => typeof value === 'string', textPath => {
+    maxLength(
+      textPath,
+      context => configFor(context.pathKeys().at(lastKeyIndex))?.maxLength ?? 0,
+      { message: messages.maxLengthMessage }
+    );
+  });
+
+  applyWhenValue(itemPath, (value): value is readonly unknown[] => Array.isArray(value), arrayPath => {
+    minLength(
+      arrayPath,
+      context => configFor(context.pathKeys().at(lastKeyIndex))?.required === true ? 1 : 0,
+      { message: messages.requiredMessage }
+    );
+  });
+};
+
 /**
  * The rules for a filter set whose keys are not known until runtime.
  *
@@ -40,28 +103,7 @@ export const searchFilterSchema = (
     searchFilters().find(searchFilter => searchFilter.key === key);
 
   applyEach(rootPath, itemPath => {
-    required(itemPath, {
-      when: context => configFor(context.key())?.required === true,
-      message: messages.requiredMessage
-    });
-
-    // A length rule cannot be typed against the heterogeneous leaf, so the value is narrowed first.
-    // That narrowing re-roots the path, which is why the key comes from `pathKeys` and not `key()`.
-    applyWhenValue(itemPath, (value): value is string => typeof value === 'string', textPath => {
-      maxLength(
-        textPath,
-        context => configFor(context.pathKeys().at(lastKeyIndex))?.maxLength ?? 0,
-        { message: messages.maxLengthMessage }
-      );
-    });
-
-    // `required` treats only '', false and nullish as empty, so an empty multi-select needs a length rule.
-    applyWhenValue(itemPath, (value): value is readonly unknown[] => Array.isArray(value), arrayPath => {
-      minLength(
-        arrayPath,
-        context => configFor(context.pathKeys().at(lastKeyIndex))?.required === true ? 1 : 0,
-        { message: messages.requiredMessage }
-      );
-    });
+    applyPresenceRules(itemPath, configFor, messages.requiredMessage);
+    applyLengthRules(itemPath, configFor, messages);
   });
 };

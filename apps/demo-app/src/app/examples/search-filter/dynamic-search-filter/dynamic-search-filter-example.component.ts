@@ -19,6 +19,12 @@ const baseFilters = (): SearchFilterBase<unknown>[] => [
     label: 'Status',
     options: [new SelectOption('open', 'Open'), new SelectOption('closed', 'Closed')]
   }),
+  new SelectSearchFilter<boolean>({
+    key: 'archived',
+    label: 'Archived (required)',
+    required: true,
+    options: [new SelectOption(true, 'Yes'), new SelectOption(false, 'No')]
+  }),
   new AutocompleteSearchFilter<string>({
     key: 'owner',
     label: 'Owner',
