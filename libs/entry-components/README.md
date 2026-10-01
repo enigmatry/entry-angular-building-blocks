@@ -320,6 +320,11 @@ look if you rely on the affected components:
   The directives also evaluate both aliases when both are bound — the host is shown only when
   `entryPermissionsOnly` is held and `entryPermissionsExcept` is not. In `21.x` whichever setter ran
   last decided the result.
+- **Server-side errors on disabled controls now show at form level.** `setServerSideValidationErrors`
+  put them on the disabled control in `21.x`, where Angular never reports them as invalid, so the
+  message appeared nowhere. They now land in `<entry-form-errors>`, as do errors for controls inside
+  a disabled group or array. If your app wraps the helper to work around this, remove the wrapper —
+  otherwise the message may show twice.
 
 ### 11. The date-time picker is a real form control, and two directives are gone
 
