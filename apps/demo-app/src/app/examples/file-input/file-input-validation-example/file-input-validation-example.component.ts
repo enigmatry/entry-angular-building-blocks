@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FileInputValue, maxFileCountValidator, maxFileSizeValidator } from '@enigmatry/entry-components/file-input';
+
+const sizeLimitInKb = 100;
+const fileCountLimit = 2;
 
 @Component({
     selector: 'app-file-input-validation-example',
@@ -8,7 +12,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
     standalone: false
 })
 export class FileInputValidationExampleComponent {
-  form = new FormGroup({
-    image: new FormControl<File | undefined>(undefined, { validators: [Validators.required] })
+  protected readonly form = new FormGroup({
+    image: new FormControl<FileInputValue>(null, {
+      validators: [Validators.required, maxFileSizeValidator(sizeLimitInKb), maxFileCountValidator(fileCountLimit)]
+    })
   });
 }

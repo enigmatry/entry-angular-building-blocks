@@ -5,6 +5,13 @@
     [(ngModel)]="selectedFile" />
 </p>
 
+<p>
+  <entry-file-input 
+    accept="image/*" 
+    label="Form control" 
+    [formControl]="standaloneControl" />
+</p>
+
 <form [formGroup]="form">
   <entry-file-input 
     accept="image/*" 
