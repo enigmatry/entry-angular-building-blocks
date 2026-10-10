@@ -17,6 +17,7 @@ import { MeridiemComponent } from './meridiem/meridiem.component';
 import { MinMaxComponent } from './min-max/min-max.component';
 import { NoFormBindingComponent } from './no-form-binding/no-form-binding.component';
 import { SecondsComponent } from './seconds/seconds.component';
+import { SignalFormComponent } from './signal-form/signal-form.component';
 import { WithValidationComponent } from './with-validation/with-validation.component';
 
 @NgModule({
@@ -31,6 +32,7 @@ import { WithValidationComponent } from './with-validation/with-validation.compo
   ],
   imports: [
     NoFormBindingComponent,
+    SignalFormComponent,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
@@ -48,7 +50,8 @@ import { WithValidationComponent } from './with-validation/with-validation.compo
     SecondsComponent,
     DefaultTimeComponent,
     WithValidationComponent,
-    NoFormBindingComponent
+    NoFormBindingComponent,
+    SignalFormComponent
   ],
   providers: [
     {

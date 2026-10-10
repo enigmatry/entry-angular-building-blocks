@@ -1,13 +1,16 @@
-import { FormControl } from '@angular/forms';
 import { ControlType } from './control-type';
 
 /**
- * Base Entry search filter input component.
+ * Base Entry search filter input configuration.
+ *
+ * @remarks Configuration only. The form state lives in the search filter component model, and
+ * nothing is written back onto these objects. To change a filter's value, hand the component a new
+ * array of filters carrying the values you want.
  */
 export class SearchFilterBase<T> {
-  /** Unique search-filter input key */
+  /** Unique search-filter input key. Also the key this filter's value takes in the emitted params. */
   key: string;
-  /** Default value to be displayed/selected in the input control */
+  /** Value to display/select in the input control. */
   value: T | undefined;
   /** Label text to be displayed for the search-filter input control */
   label: string;
@@ -17,10 +20,10 @@ export class SearchFilterBase<T> {
   type: string;
   /** Control type to be overridden in implementing class, used to render the proper input type e.g. 'text-input' */
   controlType: ControlType;
-  /** Max text length to be entered in the input component (default is 256) */
+  /** Max text length accepted by a text filter (default is 256). */
   maxLength: number;
-  /** A reference to the form control it represents */
-  formControl: FormControl<T | undefined>;
+  /** Whether a value must be given before the search can run (default is false). */
+  required: boolean;
   /**
    * Optional function to format the value before displaying it in the input control.
    *
@@ -38,21 +41,9 @@ export class SearchFilterBase<T> {
     this.label = options.label || '';
     this.placeholder = options.placeholder || '';
     this.controlType = options.controlType || ControlType.text;
-    this.type = options.type || ControlType.text;
+    this.type = options.type || 'text';
     this.maxLength = options.maxLength || this.maxPossibleLength;
+    this.required = options.required ?? false;
     this.formatValue = options.formatValue;
-  }
-
-  setValue(value: T | undefined) {
-    this.value = value;
-    // Typed as always assigned, but only EntrySearchFilterComponent sets it - a standalone model has none.
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    if (this.formControl) {
-      this.formControl.patchValue(value);
-    }
-  }
-
-  toFormControl(): FormControl<T | null | undefined> {
-    return new FormControl<T | undefined>(this.value);
   }
 }

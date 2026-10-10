@@ -1,18 +1,23 @@
-import { Component, inject, LOCALE_ID, signal, viewChild } from '@angular/core';
-import { IValidationProblemDetails, setServerSideValidationErrors } from '@enigmatry/entry-components';
+import { Component, LOCALE_ID, inject, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { IValidationProblemDetails } from '@enigmatry/entry-components';
 import {
   AutocompleteSearchFilter,
   DateTimeSearchFilter,
-  EntrySearchFilterComponent,
   SearchFilterBase,
   SearchFilterParams,
+  SearchFilterServerError,
   SelectOption,
   SelectSearchFilter,
   TextSearchFilter
 } from '@enigmatry/entry-components/search-filter';
-import { Observable, of, map, tap } from 'rxjs';
+import { firstValueFrom, map } from 'rxjs';
 import { Country, Occupation, User } from './users';
 import { UsersService } from './users.service';
+
+const toServerErrors = (problem: IValidationProblemDetails): readonly SearchFilterServerError[] =>
+  Object.entries(problem.errors ?? {})
+    .flatMap(([key, messages]) => messages.map(message => ({ key, message })));
 
 @Component({
     selector: 'app-search-filter-example',
@@ -24,36 +29,33 @@ export class SearchFilterExampleComponent {
   private readonly usersService: UsersService = inject(UsersService);
   private readonly locale: string = inject(LOCALE_ID);
 
-  readonly entrySearchFilterComponent = viewChild(EntrySearchFilterComponent);
-
   readonly users = signal<User[]>([]);
   displayedColumns: string[] = ['name', 'email', 'dateOfBirth', 'occupation', 'country', 'score'];
   filters: SearchFilterBase<unknown>[] = [];
 
+  /** An HTTP-backed option list reaches the filter as a signal rather than an observable. */
+  private readonly usernameOptions = toSignal(
+    this.usersService.getUsernames().pipe(map(usernames => usernames.map(username => new SelectOption(username, username)))),
+    { initialValue: [] }
+  );
+
   constructor() {
-    this.fetchUsers({}).subscribe();
     this.filters = this.createSearchFilters();
+    this.search({}).catch(() => undefined);
   }
 
-  searchFilterChange(searchParams: SearchFilterParams): void {
-    this.fetchUsers(searchParams).subscribe();
-  }
-
-  private fetchUsers(searchParams: SearchFilterParams = {}): Observable<User[]> {
-    return this.usersService.getUsers(searchParams).pipe(
-      tap({
-        next: (users: User[]) => {
-          this.users.set(users);
-        },
-        error: (error: IValidationProblemDetails) => {
-          const searchFilter = this.entrySearchFilterComponent();
-          if (searchFilter) {
-            setServerSideValidationErrors(error, searchFilter.searchFilterForm());
-          }
-        }
-      })
-    );
-  }
+  /**
+   * Runs the search and hands back whatever the server rejected. Angular puts each message on its
+   * filter and clears it when that filter is edited, so nothing here touches a form control.
+   */
+  readonly search = async(searchParams: SearchFilterParams): Promise<readonly SearchFilterServerError[] | void> => {
+    try {
+      this.users.set(await firstValueFrom(this.usersService.getUsers(searchParams)));
+      return undefined;
+    } catch(error) {
+      return toServerErrors(error as IValidationProblemDetails);
+    }
+  };
 
   // eslint-disable-next-line max-lines-per-function
   private createSearchFilters(): SearchFilterBase<unknown>[] {
@@ -77,20 +79,16 @@ export class SearchFilterExampleComponent {
         key: 'username',
         label: 'Username',
         placeholder: 'Select username',
-        multiSelect: false,
-        options$: this.usersService
-          .getUsernames()
-          .pipe(map(usernames => usernames.map(un => new SelectOption(un, un))))
+        options: this.usernameOptions
       }),
-      new AutocompleteSearchFilter({
+      new AutocompleteSearchFilter<Country>({
         key: 'country',
         label: 'Country',
         placeholder: 'Select country',
-        minimumCharacters: 0,
-        search: (input: string | null) => of(Object.values(Country)
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          .filter(value => value.toLocaleLowerCase().includes(input!.toLocaleLowerCase()))
-          .map(country => new SelectOption(country, country, this.countryContinent(country))))
+        search: input => Promise.resolve(Object.values(Country)
+          .filter(value => value.toLocaleLowerCase().includes(input.toLocaleLowerCase()))
+          .map(country => new SelectOption(country, country, this.countryContinent(country)))),
+        resolveLabel: key => Promise.resolve(key as string)
       }),
       new DateTimeSearchFilter({
         key: 'dateOfBirth',
@@ -136,3 +134,4 @@ export class SearchFilterExampleComponent {
       .replace(/^0+/u, ''); // Remove leading zeros
   };
 }
+

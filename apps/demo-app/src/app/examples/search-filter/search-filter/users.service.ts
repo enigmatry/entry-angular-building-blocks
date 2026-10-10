@@ -43,7 +43,7 @@ export class UsersService {
     }
 
     if (!this.noFilterParam(searchParams, 'country')) {
-      users = users.filter(x => x.country === searchParams['country'].key);
+      users = users.filter(x => x.country === searchParams['country']);
     }
 
     if (!this.noFilterParam(searchParams, 'dateOfBirth')) {

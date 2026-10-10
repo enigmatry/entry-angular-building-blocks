@@ -1,6 +1,8 @@
-<mat-form-field subscriptSizing="dynamic" [formGroup]="form()">
+<mat-form-field subscriptSizing="dynamic">
     <mat-label [attr.for]="searchFilter().key">{{searchFilter().label}}</mat-label>
-    <input matInput [formControlName]="searchFilter().key" [id]="searchFilter().key" [type]="searchFilter().type"
-        [placeholder]="searchFilter().placeholder" [maxlength]="searchFilter().maxLength">
-    <mat-error entryDisplayControlValidation [control]="form().get(searchFilter().key)!" />
+    <input #textInput matInput [formField]="field()" [id]="searchFilter().key" [type]="searchFilter().type"
+        [placeholder]="searchFilter().placeholder" (input)="applyMask(textInput)">
+    @for (error of field()().errors(); track $index) {
+        <mat-error>{{error.message}}</mat-error>
+    }
 </mat-form-field>
