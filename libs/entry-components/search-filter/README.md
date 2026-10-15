@@ -71,8 +71,13 @@ export class ExampleComponent {
     try {
       this.rows.set(await this.service.search(params));
       return undefined;
-    } catch (problem) {
-      return [{ key: 'createdAt', message: 'The date cannot be in the future.' }];
+    } catch (error) {
+      if (!isValidationProblem(error)) {
+        this.snackBar.open('The search failed. Try again.');
+        return undefined;
+      }
+      return Object.entries(error.errors ?? {})
+        .flatMap(([key, messages]) => messages.map(message => ({ key, message })));
     }
   };
 }
@@ -84,7 +89,9 @@ export class ExampleComponent {
 
 Angular routes each returned message to its filter and clears it as soon as that filter is edited.
 While a message stands its filter is invalid, so the next search is blocked until the user changes
-that value.
+that value. Return messages only for what the server rejected, and report any other failure yourself:
+a message stands on the form either way. A message for a filter the user changed while the search ran
+is dropped.
 
 `searchFilterChange` still fires on every accepted search, for a page that writes the filters into
 the URL and fetches downstream of the navigation instead:
@@ -103,11 +110,14 @@ than per filter, since a filter set has no natural place to hang one.
 A required select or autocomplete filter is satisfied by any option key the user picks, `false`
 included; a required multi-select needs at least one option.
 
+A date filter whose text is not a date is invalid too, once it has held a date: text typed into an
+empty date filter leaves the value `null` and is not validated.
+
 ## Clearing
 
 The component renders a Clear button beside Apply. It empties every filter and forgets which were
-touched. It clears rather than restoring declared values, so a filter that carries a default loses
-it until the filters are handed over again.
+touched. It clears rather than restoring declared values, and handing the same filters over again
+does not bring a default back either.
 
 ## Setting a filter's value
 
@@ -117,6 +127,9 @@ keeps what the user typed unless a filter's declared `value` changed:
 ```ts
 this.filters = this.createFilters(this.route.snapshot.queryParams);
 ```
+
+So there is no way to force a value a filter already declares: once the user has edited or cleared
+it, handing over the same declaration leaves their value in place.
 
 ## Grouping select/autocomplete options
 
@@ -145,6 +158,7 @@ new SelectSearchFilter({
   - `noneSelectedOptionText`: None option text in select dropdown
   - `requiredMessage`: message shown under a required filter left empty
   - `maxLengthMessage`: message shown when a filter's value is longer than its maximum
+  - `invalidDateMessage`: message shown when a date filter's text is not a date
 
 - provide `ENTRY_MAT_DATE_TIME` for `DateTimeSearchFilter` (required when this filter is used):
   - matDateFormats of type `MatDateFormats`

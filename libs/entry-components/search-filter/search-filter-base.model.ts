@@ -25,7 +25,7 @@ export class SearchFilterBase<T> {
   /** Whether a value must be given before the search can run (default is false). */
   required: boolean;
   /**
-   * Optional function to format the value before displaying it in the input control.
+   * Optional input mask a text filter applies to what the user types. Other filter types ignore it.
    *
    * @remarks Takes `unknown`, not `T`: `T` in a function-parameter position on a property makes the
    * class contravariant under `strictFunctionTypes`, so a filter of a concrete value type would stop

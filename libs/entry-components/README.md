@@ -420,13 +420,14 @@ never writes back onto them.
 | `SearchFilterBase.toFormControl()` | method | **gone** |
 | `SearchFilterBase.required` | — | **new**: `boolean`, default `false` |
 | `SearchFilterBase.type` | defaulted to `'text-input'` | defaults to `'text'` |
+| `SearchFilterBase.formatValue` | ran on every filter's value changes, `setValue` included | text filters only, on what the user types |
 | `SelectSearchFilter.options` | `SelectOption<T>[]` | `Signal<readonly SelectOption<T>[]>` — a plain array is still accepted and wrapped |
 | `SelectSearchFilter.options$` | `Observable<SelectOption<T>[]>` | **gone** — pass a signal to `options` |
 | `SelectSearchFilter.showNoneOption` | documented `true`, behaved as `false` | `true`, as documented |
 | `AutocompleteSearchFilter.search` | `(input) => Observable<SelectOption<T>[]>` | `(input, abortSignal) => Promise<readonly SelectOption<T>[]>` |
 | `AutocompleteSearchFilter.resolveLabel` | — | **new**, optional: resolves the label for a value the user did not pick |
 | `AutocompleteSearchFilter` value | the whole `SelectOption<T>` | the option's `key` |
-| `EntrySearchFilterConfig.clearButtonText` / `.requiredMessage` / `.maxLengthMessage` | — | **new** |
+| `EntrySearchFilterConfig.clearButtonText` / `.requiredMessage` / `.maxLengthMessage` / `.invalidDateMessage` | — | **new** |
 | `SearchFilterParams`, an empty filter's value | `undefined` | `''` for a text filter, `[]` for a multi-select, `null` for the rest |
 
 #### Running the search
@@ -453,12 +454,20 @@ edited. That replaces `setServerSideValidationErrors` on this form — the filte
 +   try {
 +     this.users.set(await firstValueFrom(this.service.getUsers(params)));
 +     return undefined;
-+   } catch (problem) {
-+     return Object.entries((problem as IValidationProblemDetails).errors ?? {})
++   } catch (error) {
++     if (!isValidationProblem(error)) {
++       this.snackBar.open('The search failed. Try again.');
++       return undefined;
++     }
++     return Object.entries(error.errors ?? {})
 +       .flatMap(([key, messages]) => messages.map(message => ({ key, message })));
 +   }
 + };
 ```
+
+`isValidationProblem` stands for whatever narrows the error to `IValidationProblemDetails` in your
+application. Return messages only for what the server rejected: a message for a network failure or a
+server fault would stand on the form like any other and block the retry, so report those yourself.
 
 `searchFilterChange` still fires, so a page that writes the filters into the URL and fetches
 downstream of navigation can keep binding it and hand the action an empty implementation.
@@ -500,17 +509,28 @@ reference**. A `string` or `number` default therefore survives a rebind that cha
 `Date` or an array default is a new object on every rebuild and replaces what the user typed. Hold a
 non-primitive default in a field and hand over the same instance when an edit must be left alone.
 
+The flip side is that there is no way to force a value a filter already declares. Once the user has
+edited or cleared it, handing over the same declaration leaves their value in place.
+
 #### Validation and submission
 
 Filters can be validated for the first time. `required: true` on a filter, and the `maxLength` that
 was previously only a DOM attribute, are now real rules. **An invalid filter blocks the search** and
 focus moves to the offending field — `21.x` searched regardless, because nothing could be invalid.
 
+A date filter is invalid while its text is not a date, and shows
+`EntrySearchFilterConfig.invalidDateMessage`. That needs the filter to have held a date: text typed
+into an empty date filter leaves its value `null`, unchanged, and Angular does not validate it again,
+so the search runs without that filter.
+
 A message the server returned keeps its filter invalid until the user edits that filter, so the next
 search is blocked too. That is Angular's own mechanism rather than a choice made here: a field's
 submission errors are a `linkedSignal` over that field's value, so they are discarded when that
 value changes and at no other time. **Editing a different filter does not re-enable the search** —
 only the rejected one does.
+
+A message that arrives for a filter the user changed while the search was running is dropped, since
+it is about a value no longer there. A message for no filter is dropped once any filter changed.
 
 Clear is not a way out of that state either, unless it changes the value in question. It empties
 every filter, and for a filter the server rejected while it was already empty the write is a no-op,
@@ -521,8 +541,9 @@ client and clears normally, rather than relying on the server to reject it.
 #### Clearing
 
 There is a Clear button now, labelled through `EntrySearchFilterConfig.clearButtonText`. It empties
-every filter and forgets which were touched. It clears rather than restoring declared values, so a
-filter that carries a default loses it until you hand the filters over again.
+every filter and forgets which were touched. It clears rather than restoring declared values, and
+handing the same filters over again does not bring a default back either — see
+[Setting a filter's value](#setting-a-filters-value).
 
 #### What this cost, for anyone doing the same migration
 
