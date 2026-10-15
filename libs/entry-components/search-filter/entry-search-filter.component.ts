@@ -20,6 +20,12 @@ const toSubmissionError = (
   ? { kind: 'serverError', message: error.message }
   : { kind: 'serverError', message: error.message, fieldTree: (field as Record<string, unknown>)[error.key] as FieldTree<unknown> };
 
+const changedKeys = (submitted: SearchFilterValues, current: SearchFilterValues): ReadonlySet<string> =>
+  new Set([...Object.keys(submitted), ...Object.keys(current)].filter(key => submitted[key] !== current[key]));
+
+const isStale = (error: SearchFilterServerError, changed: ReadonlySet<string>): boolean =>
+  error.key === undefined ? changed.size > 0 : changed.has(error.key);
+
 /**
  * Entry SearchFilter component.
  */
@@ -66,7 +72,10 @@ export class EntrySearchFilterComponent {
     const values = this.model();
     this.searchFilterChange.emit(values);
     const errors = await this.searchAction()(values) ?? [];
-    return errors.map(error => toSubmissionError(field, error));
+    const changed = changedKeys(values, this.model());
+    return errors
+      .filter(error => !isStale(error, changed))
+      .map(error => toSubmissionError(field, error));
   };
 
   private readonly focusFirstInvalidFilter = (): void => {

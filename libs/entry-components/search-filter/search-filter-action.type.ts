@@ -12,7 +12,8 @@ export interface SearchFilterServerError {
  * nothing when the search succeeded.
  *
  * @remarks Returned messages are submission errors: Angular routes each to its field and clears it
- * as soon as the user edits that filter.
+ * as soon as the user edits that filter. A message for a filter edited while the action ran is
+ * dropped, and so is a message for no filter once any filter was edited.
  */
 export type SearchFilterAction =
   (values: SearchFilterParams) => Promise<readonly SearchFilterServerError[] | void>;
