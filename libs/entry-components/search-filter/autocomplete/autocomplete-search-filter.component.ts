@@ -51,9 +51,10 @@ export class AutocompleteSearchFilterComponent<T> {
   private readonly options = resource({
     params: () => {
       const text = this.debouncedText.value();
-      return text.length >= this.searchFilter().minimumCharacters ? text : undefined;
+      const { minimumCharacters, search } = this.searchFilter();
+      return text.length >= minimumCharacters ? { text, search } : undefined;
     },
-    loader: ({ params, abortSignal }) => this.searchOptions(params, abortSignal),
+    loader: ({ params, abortSignal }) => this.searchOptions(params.search, params.text, abortSignal),
     defaultValue: [] as readonly SelectOption<T>[]
   });
 
@@ -93,8 +94,7 @@ export class AutocompleteSearchFilterComponent<T> {
   protected readonly displayOption = (option: SelectOption<T> | null): string => option?.label ?? '';
 
   protected readonly onTyped = (text: string): void => {
-    const label = this.committedLabel();
-    if (label !== undefined && label !== '' && text !== label) {
+    if (this.valueKey() !== undefined && text !== (this.committedLabel() ?? '')) {
       // `null`, never `undefined`: writing undefined into a live field destroys its node.
       this.field()().value.set(null);
       this.field()().markAsDirty();
@@ -112,11 +112,12 @@ export class AutocompleteSearchFilterComponent<T> {
   };
 
   private readonly searchOptions = async(
+    search: AutocompleteSearchFilter<T>['search'],
     text: string,
     abortSignal: AbortSignal
   ): Promise<readonly SelectOption<T>[]> => {
     try {
-      return await this.searchFilter().search(text, abortSignal);
+      return await search(text, abortSignal);
     } catch(error) {
       this.report(error, abortSignal);
       return [];
