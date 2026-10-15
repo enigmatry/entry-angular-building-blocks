@@ -74,7 +74,10 @@ const applyLengthRules = (
   applyWhenValue(itemPath, (value): value is string => typeof value === 'string', textPath => {
     maxLength(
       textPath,
-      context => configFor(context.pathKeys().at(lastKeyIndex))?.maxLength ?? 0,
+      context => {
+        const searchFilter = configFor(context.pathKeys().at(lastKeyIndex));
+        return searchFilter?.controlType === ControlType.text ? searchFilter.maxLength : undefined;
+      },
       { message: messages.maxLengthMessage }
     );
   });
