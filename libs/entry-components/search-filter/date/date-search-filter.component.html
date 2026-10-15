@@ -4,6 +4,6 @@
     <mat-datepicker-toggle matIconSuffix [for]="picker" />
     <mat-datepicker #picker />
     @for (error of field()().errors(); track $index) {
-        <mat-error>{{error.message}}</mat-error>
+        <mat-error>{{errorMessage(error)}}</mat-error>
     }
 </mat-form-field>
