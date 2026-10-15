@@ -46,16 +46,16 @@ const baseFilters = (): SearchFilterBase<unknown>[] => [
 })
 export class DynamicSearchFilterExampleComponent {
   /** Held in a signal, so add and remove are ordinary writes rather than a rebind. */
-  readonly filters = signal<SearchFilterBase<unknown>[]>(baseFilters());
+  protected readonly filters = signal<SearchFilterBase<unknown>[]>(baseFilters());
 
-  readonly lastParams = signal<SearchFilterParams | undefined>(undefined);
-  readonly navigatedParams = signal<SearchFilterParams | undefined>(undefined);
-  readonly rejectRegion = signal(true);
+  protected readonly lastParams = signal<SearchFilterParams | undefined>(undefined);
+  protected readonly navigatedParams = signal<SearchFilterParams | undefined>(undefined);
+  protected readonly rejectRegion = signal(true);
 
   private extraCount = 0;
 
   /** Rejects `region` on demand, so a stale server error can be watched across searches. */
-  readonly search = (searchParams: SearchFilterParams): Promise<readonly SearchFilterServerError[] | void> => {
+  protected readonly search = (searchParams: SearchFilterParams): Promise<readonly SearchFilterServerError[] | void> => {
     this.lastParams.set(searchParams);
     const regionRejected = this.rejectRegion() && Boolean(searchParams['region']);
     return Promise.resolve(regionRejected
@@ -64,22 +64,22 @@ export class DynamicSearchFilterExampleComponent {
   };
 
   /** Proof that the output still fires for a caller that would navigate instead of fetching. */
-  readonly onSearchFilterChange = (searchParams: SearchFilterParams): void => {
+  protected readonly onSearchFilterChange = (searchParams: SearchFilterParams): void => {
     this.navigatedParams.set(searchParams);
   };
 
-  readonly addFilter = (): void => {
+  protected readonly addFilter = (): void => {
     this.extraCount += 1;
     const key = `extra${this.extraCount}`;
     this.filters.update(current => [...current, new TextSearchFilter({ key, label: `Extra ${this.extraCount}` })]);
   };
 
-  readonly removeLastFilter = (): void => {
+  protected readonly removeLastFilter = (): void => {
     this.filters.update(current => current.length > baseFilters().length ? current.slice(0, dropLastItem) : current);
   };
 
   /** Hands over fresh filters carrying values, which is how a caller restores from a URL now. */
-  readonly restoreFromParams = (): void => {
+  protected readonly restoreFromParams = (): void => {
     this.filters.update(current => current.map(searchFilter => searchFilter.key === 'term'
       ? new TextSearchFilter({ key: 'term', label: 'Term', value: 'restored' })
       : searchFilter));
