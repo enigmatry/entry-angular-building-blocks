@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
-import { FormRecord } from '@angular/forms';
+import { Field } from '@angular/forms/signals';
 import { ENTRY_SEARCH_FILTER_CONFIG, EntrySearchFilterConfig } from '../search-filter-config.model';
 import { SelectSearchFilter } from './select-search-filter.model';
 
@@ -10,10 +10,9 @@ import { SelectSearchFilter } from './select-search-filter.model';
     standalone: false
 })
 export class SelectSearchFilterComponent<T> {
-  public readonly config: EntrySearchFilterConfig = inject(ENTRY_SEARCH_FILTER_CONFIG);
+  protected readonly config: EntrySearchFilterConfig = inject(ENTRY_SEARCH_FILTER_CONFIG);
 
-  /** Configuration of the search filters inputs that will be displayed in the search-filter component. */
   readonly searchFilter = input.required<SelectSearchFilter<T>>();
-  /** Form group to which the search-filter input component will be added. */
-  readonly form = input.required<FormRecord>();
+  /** The field this filter edits, taken from the search filter form. */
+  readonly field = input.required<Field<unknown>>();
 }

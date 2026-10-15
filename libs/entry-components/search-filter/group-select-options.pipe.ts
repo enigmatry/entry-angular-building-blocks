@@ -12,13 +12,13 @@ import { SelectOption } from './select-option.model';
     standalone: false
 })
 export class GroupSelectOptionsPipe implements PipeTransform {
-  transform = (options: SelectOption<any>[] | null | undefined): Array<SelectOptionGroup<any>> => {
+  transform = (options: readonly SelectOption<any>[] | null | undefined): Array<SelectOptionGroup<any>> => {
     if (!options?.length) {
       return [];
     }
 
     if (!options.some(option => option.groupName)) {
-      return [{ options }];
+      return [{ options: [...options] }];
     }
 
     const groupOrder: string[] = [];
