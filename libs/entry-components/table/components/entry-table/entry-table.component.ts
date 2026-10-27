@@ -59,7 +59,7 @@ export class EntryTableComponent<T> {
   readonly pageDisabled = input<boolean>(this.configuration.showFirstLastButtons);
   readonly showFirstLastButtons = input<boolean>(false);
   readonly pageIndex = signal(0);
-  readonly pageSize = signal(0);
+  readonly pageSize = signal(this.configuration.pageSize);
   readonly pageSizeOptions = input<number[]>(this.configuration.pageSizeOptions);
   readonly hidePageSize = input<boolean>(this.configuration.hidePageSize);
   readonly paginationTemplate = input<TemplateRef<unknown>>();
