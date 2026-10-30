@@ -1,9 +1,12 @@
 export { EntrySearchFilterComponent } from './entry-search-filter.component';
 
 export type { SearchFilterParams } from './search-filter-params.type';
+export type { SearchFilterValue, SearchFilterValues } from './search-filter-values.type';
+export type { SearchFilterAction, SearchFilterServerError } from './search-filter-action.type';
 export { SearchFilterBase } from './search-filter-base.model';
 export { TextSearchFilter } from './text/text-search-filter.model';
 export { SelectSearchFilter } from './select/select-search-filter.model';
+export type { SelectSearchFilterOptions } from './select/select-search-filter.model';
 export { AutocompleteSearchFilter } from './autocomplete/autocomplete-search-filter.model';
 export { SelectOption } from './select-option.model';
 export { DateTimeSearchFilter } from './date-time/date-time-search-filter.model';

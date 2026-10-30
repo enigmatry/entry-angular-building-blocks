@@ -20,7 +20,7 @@ Base Entry dialog component. Must be extended when building custom dialogs.
 | <a id="buttonstemplate"></a> `buttonsTemplate` | `readonly` | `InputSignal`\<`TemplateRef`\<`any`\> \| `null` \| `undefined`\> | Provide custom buttons template |  |
 | <a id="cancelaction"></a> `cancelAction` | `readonly` | `InputSignal`\<() => `void`\> | Callback invoked when the dialog is cancelled. Bound as `[cancel]` - see `confirmAction`. |  |
 | <a id="cancelbuttontext"></a> `cancelButtonText` | `readonly` | `InputSignal`\<`string`\> | Cancel button label |  |
-| <a id="confirmaction"></a> `confirmAction` | `readonly` | `InputSignal`\<() => `Observable`\<`unknown`\>\> | Callback invoked when the dialog is confirmed. Renamed on the class but still bound as `[confirm]`: keeping the old name would make `this.confirm()` return the callback instead of invoking it - silently, for any subclass. The rename turns that into a compile error. |  |
+| <a id="confirmaction"></a> `confirmAction` | `readonly` | `InputSignal`\<() => `Observable`\<`unknown`\>\> | Confirm callback. Renamed from `confirm` because `this.confirm()` would silently return the callback, not invoke it. |  |
 | <a id="confirmbuttontext"></a> `confirmButtonText` | `readonly` | `InputSignal`\<`string`\> | Confirm button label |  |
 | <a id="disableconfirm"></a> `disableConfirm` | `readonly` | `InputSignal`\<`boolean`\> | Enable or disable dialog confirm button |  |
 | <a id="hidebuttons"></a> `hideButtons` | `readonly` | `InputSignal`\<`boolean`\> | Show or hide dialog buttons |  |
