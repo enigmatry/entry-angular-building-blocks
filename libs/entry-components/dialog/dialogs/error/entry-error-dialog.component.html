@@ -1,10 +1,14 @@
 <entry-dialog
-    [title]="data.title"
-    [confirmButtonText]="data.confirmText ?? config.confirmButtonText"
-    [buttonsAlignment]="data.buttonsAlignment ?? config.buttonsAlignment"
-    [hideClose]="data.hideClose ?? config.hideClose"
-    [hideCancel]="true">
-    @for (error of errors; track error) {
+    [title]="dialog.data.title"
+    [confirmButtonText]="dialog.data.confirmText ?? config.confirmButtonText"
+    [buttonsAlignment]="dialog.data.buttonsAlignment ?? config.buttonsAlignment"
+    [hideClose]="dialog.data.hideClose ?? config.hideClose"
+    [hideCancel]="true"
+    (confirmed)="dialog.close(true)">
+    @if (dialog.data.message) {
+        <p>{{dialog.data.message}}</p>
+    }
+    @for (error of errors; track $index) {
         <p>{{error}}</p>
     }
 </entry-dialog>

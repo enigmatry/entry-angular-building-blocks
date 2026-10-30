@@ -3,17 +3,17 @@ import { EntryDialogButtonsAlignment } from '../../entry-dialog-buttons-alignmen
 /**
  * Alert dialog data.
  */
-export interface IEntryAlertDialogData {
+export interface EntryAlertDialogData {
     /** Dialog header title */
     title: string;
     /** Dialog content message */
     message: string;
-    /** Optional dialog buttons horizontal alignment */
-    buttonsAlignment: EntryDialogButtonsAlignment | undefined;
-    /** Optional dialog confirm text label */
-    confirmText?: string | undefined;
-    /** Optionally show or hide dialog close button */
-    hideClose: boolean | undefined;
-    /** Optionally disable closing dialog when pressing escape or clicking on backdrop */
-    disableClose?: boolean | undefined;
+    /** Dialog buttons horizontal alignment (default from `EntryDialogConfig`) */
+    buttonsAlignment?: EntryDialogButtonsAlignment;
+    /** Confirm button label (default from `EntryDialogConfig`) */
+    confirmText?: string;
+    /** Hide the close button (default from `EntryDialogConfig`) */
+    hideClose?: boolean;
+    /** Disable closing dialog when pressing escape or clicking on backdrop (default from `EntryDialogConfig`) */
+    disableClose?: boolean;
 }

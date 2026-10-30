@@ -14,7 +14,7 @@ export class AlertExampleComponent {
     message: `Lorem Ipsum is simply dummy text of the printing and typesetting industry.`
     // Optional properties (if not provided, default values are used from ENTRY_DIALOG_CONFIG):
     // confirmText: 'Ok',
-    // buttonsAlignment: 'align-center',
+    // buttonsAlignment: 'center',
     // hideClose: true,
     // disableClose: false
   });

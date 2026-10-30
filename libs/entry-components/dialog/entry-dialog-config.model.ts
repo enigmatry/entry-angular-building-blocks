@@ -10,9 +10,11 @@ export class EntryDialogConfig {
     confirmButtonText: string;
     /** Cancel button label (default 'Cancel') */
     cancelButtonText: string;
-    /** Dialog buttons horizontal alignment (default 'align-right') */
+    /** Accessible label of the close button (default 'Close dialog') */
+    closeButtonLabel: string;
+    /** Dialog buttons horizontal alignment (default 'end') */
     buttonsAlignment: EntryDialogButtonsAlignment;
-    /** Determines if close button is visible (default is true) */
+    /** Hide the close button (default true) */
     hideClose: boolean;
     /** Disable closing dialog when pressing escape or clicking on backdrop (default false) */
     disableClose: boolean;
@@ -20,6 +22,7 @@ export class EntryDialogConfig {
     constructor(config: Partial<EntryDialogConfig> = {}) {
         this.confirmButtonText = config.confirmButtonText ?? 'Ok';
         this.cancelButtonText = config.cancelButtonText ?? 'Cancel';
+        this.closeButtonLabel = config.closeButtonLabel ?? 'Close dialog';
         this.buttonsAlignment = config.buttonsAlignment ?? 'end';
         this.hideClose = config.hideClose ?? true;
         this.disableClose = config.disableClose ?? false;
@@ -32,6 +35,7 @@ export class EntryDialogConfig {
  * Defaults:
  * - confirmButtonText: 'Ok'
  * - cancelButtonText: 'Cancel'
+ * - closeButtonLabel: 'Close dialog'
  * - buttonsAlignment: 'end'
  * - hideClose: true
  * - disableClose: false

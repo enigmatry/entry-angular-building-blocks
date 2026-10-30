@@ -1,16 +1,15 @@
-/* eslint-disable no-secrets/no-secrets */
-import { Component, inject, input, TemplateRef } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
-import { Observable, of } from 'rxjs';
+import { Component, inject, input, output, TemplateRef } from '@angular/core';
+import { MatDialogRef, MatDialogState } from '@angular/material/dialog';
 import { EntryDialogButtonsAlignment } from '../entry-dialog-buttons-alignment.type';
 import { ENTRY_DIALOG_CONFIG, EntryDialogConfig } from '../entry-dialog-config.model';
 
 /**
- * Base Entry dialog component. Must be extended when building custom dialogs.
+ * Dialog layout: title, close button, content and confirm/cancel buttons. The dialog component that renders it
+ * closes the dialog with its result through `injectEntryDialog()`.
  *
  * @example
  * ```html
- * <entry-dialog title="TITLE"><p>Dialog content</p></entry-dialog>
+ * <entry-dialog title="TITLE" (confirmed)="dialog.close(true)"><p>Dialog content</p></entry-dialog>
  * ```
  */
 @Component({
@@ -20,8 +19,8 @@ import { ENTRY_DIALOG_CONFIG, EntryDialogConfig } from '../entry-dialog-config.m
     standalone: false
 })
 export class EntryDialogComponent {
-    protected readonly mdDialogRef: MatDialogRef<EntryDialogComponent> = inject(MatDialogRef<EntryDialogComponent>);
     protected readonly config: EntryDialogConfig = inject(ENTRY_DIALOG_CONFIG);
+    private readonly dialogRef = inject<MatDialogRef<unknown>>(MatDialogRef);
 
     /** Dialog header title  */
     readonly title = input('');
@@ -31,35 +30,35 @@ export class EntryDialogComponent {
     readonly confirmButtonText = input(this.config.confirmButtonText);
     /** Cancel button label */
     readonly cancelButtonText = input(this.config.cancelButtonText);
-    /** Show or hide dialog buttons */
+    /** Hide the dialog buttons */
     readonly hideButtons = input(false);
-    /** Show or hide dialog cancel button */
+    /** Hide the cancel button */
     readonly hideCancel = input(false);
-    /** Show or hide dialog close button */
+    /** Hide the close button */
     readonly hideClose = input(this.config.hideClose);
-    /** Enable or disable dialog confirm button */
+    /** Disable the confirm button; it stays focusable and ignores clicks and Enter */
     readonly disableConfirm = input(false);
     /** Provide custom buttons template */
-    readonly buttonsTemplate = input<TemplateRef<any> | null | undefined>(undefined);
+    readonly buttonsTemplate = input<TemplateRef<unknown> | null | undefined>(undefined);
 
-    /** Confirm callback. Renamed from `confirm` because `this.confirm()` would silently return the callback, not invoke it. */
-    // eslint-disable-next-line @angular-eslint/no-input-rename
-    readonly confirmAction = input<() => Observable<unknown>>(() => of(true), { alias: 'confirm' });
+    /** Emitted when the confirm button is pressed; the dialog stays open until it is closed with a result */
+    readonly confirmed = output();
+    /** Emitted when the cancel or close button is pressed; the dialog then closes with `undefined` unless a handler closed it */
+    readonly canceled = output();
 
-    /** Callback invoked when the dialog is cancelled. Bound as `[cancel]` - see `confirmAction`. */
-    // eslint-disable-next-line @angular-eslint/no-input-rename
-    readonly cancelAction = input<() => void>(() => this.close(false), { alias: 'cancel' });
+    protected readonly confirm = (event: Event): void => {
+        if (this.disableConfirm()) {
+            // Stops the submit of a wrapping form, which a disabled-interactive button does not prevent on its own
+            event.preventDefault();
+            return;
+        }
+        this.confirmed.emit();
+    };
 
-    readonly onCancel = (): void => this.cancelAction()();
-
-    readonly onSubmit = () =>
-        this.confirmAction()().subscribe({
-            next: closeDialog => {
-                if (closeDialog) {
-                    this.close(closeDialog);
-                }
-            }
-        });
-
-    readonly close = (value: unknown = true) => this.mdDialogRef.close(value);
+    protected readonly cancel = (): void => {
+        this.canceled.emit();
+        if (this.dialogRef.getState() === MatDialogState.OPEN) {
+            this.dialogRef.close();
+        }
+    };
 }

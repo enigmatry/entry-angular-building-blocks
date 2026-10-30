@@ -1,0 +1,18 @@
+<!-- Wrapping the dialog in the form makes Enter in a field submit it through the confirm button -->
+<form [formGroup]="form">
+    <entry-dialog title="Edit name" [hideClose]="false" [disableConfirm]="dialog.submitting()" (confirmed)="save()">
+        <div class="stack-vertical">
+            <mat-form-field>
+                <mat-label>First name</mat-label>
+                <input matInput type="text" formControlName="firstName">
+                <mat-error entryDisplayControlValidation [control]="form.controls.firstName" />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Last name</mat-label>
+                <input matInput type="text" formControlName="lastName">
+                <mat-error entryDisplayControlValidation [control]="form.controls.lastName" />
+            </mat-form-field>
+            <entry-form-errors [form]="form" />
+        </div>
+    </entry-dialog>
+</form>

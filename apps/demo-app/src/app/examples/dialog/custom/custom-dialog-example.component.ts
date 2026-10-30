@@ -1,10 +1,8 @@
 import { Component, inject, signal } from '@angular/core';
 import { EntryDialogService } from '@enigmatry/entry-components/dialog';
-import { CustomDialogComponent, ICustomDialogResult } from './custom-dialog.component';
-
-export interface ICustomDialogData {
-    question: string;
-}
+import { firstValueFrom } from 'rxjs';
+import { CustomDialogResult } from './custom-dialog-result.interface';
+import { CustomDialogComponent } from './custom-dialog.component';
 
 @Component({
     selector: 'app-custom-dialog-example',
@@ -14,13 +12,9 @@ export interface ICustomDialogData {
 export class CustomDialogExampleComponent {
     private readonly entryDialog: EntryDialogService = inject(EntryDialogService);
 
-    question = 'Isn\'t this logo cute?';
-    readonly result = signal<ICustomDialogResult | undefined>(undefined);
+    protected readonly question = signal('Isn\'t this logo cute?');
+    protected readonly result = signal<CustomDialogResult | undefined>(undefined);
 
-    openCustom = () =>
-        this.entryDialog.open(
-            CustomDialogComponent,
-            { question: this.question } as ICustomDialogData,
-            true
-        ).subscribe(result => this.result.set(result));
+    protected readonly openCustom = async(): Promise<void> =>
+        this.result.set(await firstValueFrom(this.entryDialog.open(CustomDialogComponent, { question: this.question() }, true)));
 }
