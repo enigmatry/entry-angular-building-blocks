@@ -4,13 +4,8 @@ import { Field } from '@angular/forms/signals';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { SelectOption } from '../select-option.model';
 import { AutocompleteSearchFilter } from './autocomplete-search-filter.model';
+import { delay, lookupLabel, searchOptions } from './autocomplete-search-filter.functions';
 
-// `debounced` asks for a promise that resolves when the wait is over, and without RxJS a timer is
-// the only way to express one.
-// eslint-disable-next-line promise/avoid-new
-const delay = (milliseconds: number): Promise<void> => new Promise(resolve => {
-  setTimeout(resolve, milliseconds);
-});
 
 @Component({
   selector: 'entry-autocomplete-search-filter',
@@ -54,7 +49,7 @@ export class AutocompleteSearchFilterComponent<T> {
       const { minimumCharacters, search } = this.searchFilter();
       return text.length >= minimumCharacters ? { text, search } : undefined;
     },
-    loader: ({ params, abortSignal }) => this.searchOptions(params.search, params.text, abortSignal),
+    loader: ({ params, abortSignal }) => searchOptions(params.search, params.text, abortSignal, this.report),
     defaultValue: [] as readonly SelectOption<T>[]
   });
 
@@ -65,9 +60,15 @@ export class AutocompleteSearchFilterComponent<T> {
   private readonly resolvedLabel = resource({
     params: () => {
       const key = this.valueKey();
-      return key === undefined || this.picked()?.key === key ? undefined : key;
+      if (key === undefined || this.picked()?.key === key) {
+        return undefined;
+      }
+      // The callbacks ride in the params so that replacing either one supersedes a lookup in flight;
+      // read inside the loader they would not be tracked, and a stale label would survive a rebind.
+      const { resolveLabel, search } = this.searchFilter();
+      return { key, resolveLabel, search };
     },
-    loader: ({ params, abortSignal }) => this.lookupLabel(params, abortSignal),
+    loader: ({ params, abortSignal }) => lookupLabel(params, abortSignal, this.report),
     defaultValue: undefined as string | undefined
   });
 
@@ -111,32 +112,6 @@ export class AutocompleteSearchFilterComponent<T> {
     this.typedText.set(undefined);
   };
 
-  private readonly searchOptions = async(
-    search: AutocompleteSearchFilter<T>['search'],
-    text: string,
-    abortSignal: AbortSignal
-  ): Promise<readonly SelectOption<T>[]> => {
-    try {
-      return await search(text, abortSignal);
-    } catch(error) {
-      this.report(error, abortSignal);
-      return [];
-    }
-  };
-
-  private readonly lookupLabel = async(key: T, abortSignal: AbortSignal): Promise<string | undefined> => {
-    const searchFilter = this.searchFilter();
-    try {
-      if (searchFilter.resolveLabel) {
-        return await searchFilter.resolveLabel(key, abortSignal);
-      }
-      const matches = await searchFilter.search(String(key), abortSignal);
-      return matches.find(option => option.key === key)?.label;
-    } catch(error) {
-      this.report(error, abortSignal);
-      return undefined;
-    }
-  };
 
   // A rejected loader makes `Resource.value()` throw while the view renders: `defaultValue` covers
   // only the idle and post-error reloading states, never the error itself.

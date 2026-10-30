@@ -2,6 +2,7 @@
     <mat-label>{{searchFilter().label}}</mat-label>
     <input #searchInput type="text" matInput [placeholder]="searchFilter().placeholder" [id]="searchFilter().key"
         [entryFieldErrorState]="field()" [value]="displayText()" [matAutocomplete]="auto"
+        [attr.aria-required]="field()().required() ? 'true' : null"
         (input)="onTyped(searchInput.value)" (blur)="field()().markAsTouched()">
     <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayOption" (optionSelected)="onSelected($event)">
         @for (group of (optionsValue() | groupSelectOptions); track group.groupName) {
