@@ -1,0 +1,11 @@
+<section class="dialog-example stack-vertical">
+    <mat-checkbox [(ngModel)]="simulateServerErrors">
+        Simulate server validation errors
+    </mat-checkbox>
+    <button mat-button entry-submit-button type="button" class="item" (click)="openForm()">
+        <span>Open Form Dialog</span>
+    </button>
+    <strong>
+        <pre>{{result() | json}}</pre>
+    </strong>
+</section>

@@ -45,7 +45,7 @@ components on a prerendered route.
 `22.x` requires Angular 22, TypeScript ~6.0 and Node `^22.22.3 || ^24.15.0 || >=26.0.0`. Run
 `ng update @angular/core@22 @angular/cli@22 @angular/cdk@22 @angular/material@22` first, then work
 through the items below. Several of them change behaviour silently, with no compile error to catch
-you — sections 2, 3, 5, 8, 10 and 11 in particular.
+you — sections 2, 3, 5, 8, 10, 11 and 12 in particular.
 
 ### 1. `@angular/animations` is no longer a peer dependency
 
@@ -143,8 +143,7 @@ in a constructor, an `afterNextRender` callback or a `linkedSignal`.
 | Symbol | 21.x | 22.0.0 |
 |---|---|---|
 | `EntryDateTimePickerComponent.dateTimeChanged` | `Subject<D>` | `OutputEmitterRef<D>` |
-| `EntryDialogComponent.confirm` | callable member | `confirmAction` input, bound as `[confirm]` |
-| `EntryDialogComponent.cancel` | callable member | `cancelAction` input, bound as `[cancel]` |
+| `EntryDialogComponent.confirm` / `.cancel` | callable members | `(confirmed)` / `(canceled)` outputs — see section 12 |
 | `EntryFileInputComponent.value` | `File \| FileList \| undefined` | `Signal<...>` (read-only) |
 | `EntryFileInputComponent.fileNames` | getter | `Signal<string>` |
 | `EntryFileInputComponent.selectedFile` | `EventEmitter<File \| FileList>` | `OutputEmitterRef<File \| FileList>` |
@@ -203,18 +202,6 @@ works, but an `OutputEmitterRef` is not an `Observable`, so `.pipe()`, `.asObser
 ```
 
 `outputToObservable` comes from `@angular/core/rxjs-interop`.
-
-The dialog callbacks are the one break with no compile-time signal if you only use the class from a
-template, and the one most likely to bite a subclass:
-
-```diff
-  export class MyDialog extends EntryDialogComponent {
-    onDismiss(): void {
--     this.cancel();          // returned the callback instead of invoking it
-+     this.cancelAction()();  // or simply this.onCancel()
-    }
-  }
-```
 
 ### 7. No more `UntypedFormGroup` / `UntypedFormControl`
 
@@ -298,7 +285,8 @@ look if you rely on the affected components:
 
 - **`<entry-dialog [disableConfirm]>` now actually disables the confirm button.** The input existed
   in `21.x` but was never bound to anything, so a wrong expression had no visible effect. If yours
-  was wrong, the dialog will now refuse to confirm.
+  was wrong, the dialog will now refuse to confirm. A disabled confirm button stays focusable
+  (`aria-disabled`) and ignores clicks and Enter.
 - **The time picker no longer stamps the current second onto a committed value.** `21.x` fell back
   to `getSeconds(defaultTime ?? now)` whenever seconds were not selectable, so two users applying
   the same visible time produced different values. Seconds now come from the bound date when they
@@ -417,6 +405,69 @@ say required rather than naming the bad date), or read the input's raw text your
 only when the new value differs by reference, so resetting an already-empty field leaves the text on
 screen. `field().reset()` calls the picker's `reset()` and clears both the text and the error; a
 reactive `control.reset()` does not reach it.
+
+### 12. Dialogs close themselves, with a typed result
+
+`<entry-dialog>` no longer takes its confirm and cancel behaviour as function inputs, and dialog
+components no longer extend `EntryDialogComponent`. A dialog component renders `<entry-dialog>`,
+listens to its outputs and closes itself through a typed handle:
+
+```diff
+  @Component({
+-   template: `<entry-dialog title="Rename" [confirm]="rename"> … </entry-dialog>`
++   template: `<entry-dialog title="Rename" (confirmed)="dialog.close(name())"> … </entry-dialog>`
+  })
+- export class RenameDialog extends EntryDialogComponent {
+-   readonly data: RenameData = inject(MAT_DIALOG_DATA);
+-   name = this.data.name;
+-   rename = () => of(this.name);
++ export class RenameDialog {
++   readonly dialog = injectEntryDialog<RenameData, string>();
++   protected readonly name = signal(this.dialog.data.name);
+  }
+```
+
+- **The `confirm` and `cancel` inputs are gone; bind `(confirmed)` and `(canceled)`.** A leftover
+  `[confirm]` or `[cancel]` binding is a compile error under `strictTemplates`. `(confirmed)` only
+  notifies: call `dialog.close(result)` when you are done, so a save that fails can leave the dialog
+  open. `(canceled)` is emitted by the cancel and close buttons, after which the dialog closes with
+  `undefined` unless the handler already closed it; close synchronously to return a value of your own.
+- **The confirm button no longer closes the dialog by itself, and nothing tells you at compile
+  time.** A dialog that relied on the default confirm button closing with `true` stays open until it
+  binds `(confirmed)="dialog.close(true)"`. Look for every `<entry-dialog>` that renders the default
+  buttons (no `hideButtons`, no `buttonsTemplate`) and has no `(confirmed)` binding.
+- **Cancel and the close button close with `undefined`, not `false`.** That matches Escape and
+  backdrop clicks, so `undefined` always means "dismissed". The built-in confirm dialog still returns
+  `false` for both.
+- **Read the data and close through the handle.** `inject(MAT_DIALOG_DATA)` becomes `dialog.data`,
+  and `this.close(x)` or `this.mdDialogRef.close(x)` becomes `dialog.close(x)`. The handle has to be a
+  public field named `dialog`: `EntryDialogService.open()` reads the data and result types from it,
+  so `open(RenameDialog, { name })` returns `Observable<string | undefined>` and rejects data of the
+  wrong shape. Data is required unless the dialog's data type accepts `undefined`, and
+  `injectEntryDialog()` without type arguments is `EntryDialog<void, boolean>`. Once the dialog has
+  started closing, further `dialog.close()` calls and button presses are ignored, so the first close
+  wins.
+- **`dialog.submit()` keeps the confirm button disabled while saving.** It holds `dialog.submitting()`
+  true until the work you pass settles and ignores repeated calls; bind
+  `[disableConfirm]="dialog.submitting()"`.
+- **The cancel button no longer submits a form around the dialog.** In `21.x` neither default button
+  had a `type`, so inside a `<form>` both submitted it. The confirm button is still a submit button,
+  so a dialog component that wraps `<entry-dialog>` in its own `<form [formGroup]>` still confirms on
+  Enter, but cancel is now `type="button"`. Listen to `(confirmed)` or `(ngSubmit)`, not both.
+- **The built-in dialogs' data types lost the `I` prefix and the `Partial`.** `IEntryAlertDialogData`,
+  `IEntryConfirmDialogData` and `IEntryErrorDialogData` are now `EntryAlertDialogData`,
+  `EntryConfirmDialogData` and `EntryErrorDialogData`. `openAlert`, `openConfirm` and `openError`
+  require `title` and `message` (`message` is optional for errors and renders above the error list),
+  and they no longer write `disableClose` back into the object you pass.
+- **The built-in dialog components no longer extend `EntryDialogComponent`.**
+  `EntryAlertDialogComponent`, `EntryConfirmDialogComponent` and `EntryErrorDialogComponent` expose
+  their data as `dialog.data` instead of `data`, their `config` and the error dialog's `errors` are
+  now `protected`, and they no longer carry the `<entry-dialog>` inputs, `close` or `onSubmit`.
+- **Smaller changes:** the title is an `<h2 mat-dialog-title>`; the inner `role="dialog"` is gone,
+  since `mat-dialog-container` already carries it; the close button's accessible label comes from
+  `EntryDialogConfig.closeButtonLabel` (default `'Close dialog'`) instead of being hard-coded;
+  `buttonsTemplate` is typed `TemplateRef<unknown>`; and `EntryDialogComponent` no longer has
+  `close` or `onSubmit`.
 
 ## License
 

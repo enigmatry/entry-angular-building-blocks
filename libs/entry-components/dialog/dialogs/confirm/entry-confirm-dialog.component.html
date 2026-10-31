@@ -1,8 +1,10 @@
 <entry-dialog
-    [title]="data.title"
-    [confirmButtonText]="data.confirmText ?? config.confirmButtonText"
-    [cancelButtonText]="data.cancelText ?? config.cancelButtonText"
-    [buttonsAlignment]="data.buttonsAlignment ?? config.buttonsAlignment"
-    [hideClose]="data.hideClose ?? config.hideClose">
-    <p>{{data.message}}</p>
+    [title]="dialog.data.title"
+    [confirmButtonText]="dialog.data.confirmText ?? config.confirmButtonText"
+    [cancelButtonText]="dialog.data.cancelText ?? config.cancelButtonText"
+    [buttonsAlignment]="dialog.data.buttonsAlignment ?? config.buttonsAlignment"
+    [hideClose]="dialog.data.hideClose ?? config.hideClose"
+    (confirmed)="dialog.close(true)"
+    (canceled)="dialog.close(false)">
+    <p>{{dialog.data.message}}</p>
 </entry-dialog>

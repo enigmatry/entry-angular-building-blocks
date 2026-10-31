@@ -1,12 +1,7 @@
-import { Component, inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { EntryDialogComponent, ENTRY_DIALOG_CONFIG, EntryDialogConfig } from '@enigmatry/entry-components/dialog';
-import { ICustomDialogData } from './custom-dialog-example.component';
-
-export interface ICustomDialogResult {
-    response: string;
-    comment: string;
-}
+import { Component, signal } from '@angular/core';
+import { injectEntryDialog } from '@enigmatry/entry-components/dialog';
+import { CustomDialogData } from './custom-dialog-data.interface';
+import { CustomDialogResult } from './custom-dialog-result.interface';
 
 @Component({
     selector: 'app-custom-dialog',
@@ -14,13 +9,10 @@ export interface ICustomDialogResult {
     styleUrl: './custom-dialog.component.scss',
     standalone: false
 })
-export class CustomDialogComponent extends EntryDialogComponent {
-    protected override readonly mdDialogRef: MatDialogRef<EntryDialogComponent> = inject(MatDialogRef<EntryDialogComponent>);
-    protected override readonly config: EntryDialogConfig = inject(ENTRY_DIALOG_CONFIG);
-    readonly data: ICustomDialogData = inject(MAT_DIALOG_DATA);
+export class CustomDialogComponent {
+    readonly dialog = injectEntryDialog<CustomDialogData, CustomDialogResult>();
 
-    comment: string;
+    protected readonly comment = signal('');
 
-    onClick = (response: string) =>
-        this.close({ response, comment: this.comment } as ICustomDialogResult);
+    protected readonly answer = (response: string): void => this.dialog.close({ response, comment: this.comment() });
 }
