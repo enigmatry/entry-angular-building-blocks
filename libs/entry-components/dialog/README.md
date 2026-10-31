@@ -74,15 +74,18 @@ const newName = await firstValueFrom(this.entryDialog.open(RenameDialogComponent
 
 ### Saving before closing
 
-`dialog.submit(work)` keeps `dialog.submitting()` true until `work` settles and ignores repeated calls in the meantime. Bind it to `[disableConfirm]`; a disabled confirm button stays focusable.
+`dialog.submit(work)` keeps `dialog.submitting()` true until `work` settles and ignores repeated calls in the meantime, as well as calls made once the dialog is closing. Bind it to `[disableConfirm]`; a disabled confirm button stays focusable.
 
 ```ts
 protected readonly save = (): Promise<void> => this.dialog.submit(async() => {
     try {
         this.dialog.close(await firstValueFrom(this.userClient.update(this.form.getRawValue())));
     } catch(error) {
+        if (!(error instanceof HttpErrorResponse) || error.status !== HttpStatusCode.BadRequest) {
+            throw error;
+        }
         // The dialog stays open, so the user can correct the form
-        setServerSideValidationErrors((error as HttpErrorResponse).error, this.form);
+        setServerSideValidationErrors(error.error, this.form);
     }
 });
 ```
@@ -91,9 +94,12 @@ protected readonly save = (): Promise<void> => this.dialog.submit(async() => {
 <form [formGroup]="form">
     <entry-dialog title="Edit user" [disableConfirm]="dialog.submitting()" (confirmed)="save()">
         ...
+        <entry-form-errors [form]="form" />
     </entry-dialog>
 </form>
 ```
+
+Only validation errors are mapped onto the form; anything else is rethrown and reaches your global error handler.
 
 The confirm button is a submit button, so wrapping `<entry-dialog>` in your own `<form>` makes Enter in a field confirm the dialog. Listen to either `(confirmed)` or the form's `(ngSubmit)`, not both.
 

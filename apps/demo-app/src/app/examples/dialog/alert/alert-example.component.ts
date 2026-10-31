@@ -9,13 +9,15 @@ import { EntryDialogService } from '@enigmatry/entry-components/dialog';
 export class AlertExampleComponent {
   private readonly entryDialog: EntryDialogService = inject(EntryDialogService);
 
-  openAlert = () => this.entryDialog.openAlert({
-    title: `ALERT`,
-    message: `Lorem Ipsum is simply dummy text of the printing and typesetting industry.`
-    // Optional properties (if not provided, default values are used from ENTRY_DIALOG_CONFIG):
-    // confirmText: 'Ok',
-    // buttonsAlignment: 'center',
-    // hideClose: true,
-    // disableClose: false
-  });
+  protected readonly openAlert = (): void => {
+    this.entryDialog.openAlert({
+      title: `ALERT`,
+      message: `Lorem Ipsum is simply dummy text of the printing and typesetting industry.`
+      // Optional properties (if not provided, default values are used from ENTRY_DIALOG_CONFIG):
+      // confirmText: 'Ok',
+      // buttonsAlignment: 'center',
+      // hideClose: true,
+      // disableClose: false
+    });
+  };
 }

@@ -1,5 +1,5 @@
 import { inject, signal } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogState } from '@angular/material/dialog';
 
 /**
  * Typed handle to the dialog a component is rendered in. Create it with `injectEntryDialog()`.
@@ -14,12 +14,16 @@ export class EntryDialog<TData = void, TResult = boolean> {
   /** Whether the work passed to `submit()` is still running */
   readonly submitting = this.submittingState.asReadonly();
 
-  /** Closes the dialog with a result; the opener receives `undefined` when none is given */
-  readonly close = (result?: TResult): void => this.dialogRef.close(result);
+  /** Closes the dialog with a result; the opener receives `undefined` when none is given. Ignored once the dialog is closing, so the first close wins */
+  readonly close = (result?: TResult): void => {
+    if (this.isOpen()) {
+      this.dialogRef.close(result);
+    }
+  };
 
-  /** Runs `work` while `submitting()` is true and ignores calls made until it settles; the dialog stays open unless `work` closes it */
+  /** Runs `work` while `submitting()` is true; ignored while earlier work runs or once the dialog is closing. The dialog stays open unless `work` closes it */
   readonly submit = async(work: () => Promise<void>): Promise<void> => {
-    if (this.submittingState()) {
+    if (this.submittingState() || !this.isOpen()) {
       return;
     }
     this.submittingState.set(true);
@@ -29,4 +33,6 @@ export class EntryDialog<TData = void, TResult = boolean> {
       this.submittingState.set(false);
     }
   };
+
+  private readonly isOpen = (): boolean => this.dialogRef.getState() === MatDialogState.OPEN;
 }

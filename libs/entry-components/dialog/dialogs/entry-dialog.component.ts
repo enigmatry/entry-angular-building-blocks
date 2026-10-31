@@ -47,7 +47,7 @@ export class EntryDialogComponent {
     readonly canceled = output();
 
     protected readonly confirm = (event: Event): void => {
-        if (this.disableConfirm()) {
+        if (this.disableConfirm() || !this.isOpen()) {
             // Stops the submit of a wrapping form, which a disabled-interactive button does not prevent on its own
             event.preventDefault();
             return;
@@ -56,9 +56,14 @@ export class EntryDialogComponent {
     };
 
     protected readonly cancel = (): void => {
+        if (!this.isOpen()) {
+            return;
+        }
         this.canceled.emit();
-        if (this.dialogRef.getState() === MatDialogState.OPEN) {
+        if (this.isOpen()) {
             this.dialogRef.close();
         }
     };
+
+    private readonly isOpen = (): boolean => this.dialogRef.getState() === MatDialogState.OPEN;
 }

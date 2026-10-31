@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EntryDialogModule } from '@enigmatry/entry-components/dialog';
-import { EntryValidationModule } from '@enigmatry/entry-components/validation';
 import { SharedModule } from '../../shared/shared.module';
 import { AlertExampleComponent } from './alert/alert-example.component';
 import { ConfirmExampleComponent } from './confirm/confirm-example.component';
@@ -10,7 +9,6 @@ import { CustomDialogExampleComponent } from './custom/custom-dialog-example.com
 import { CustomDialogComponent } from './custom/custom-dialog.component';
 import { ErrorDialogExampleComponent } from './error/error-example.component';
 import { FormDialogExampleComponent } from './form/form-dialog-example.component';
-import { FormDialogComponent } from './form/form-dialog.component';
 
 @NgModule({
   declarations: [
@@ -18,9 +16,7 @@ import { FormDialogComponent } from './form/form-dialog.component';
     ConfirmExampleComponent,
     CustomDialogExampleComponent,
     CustomDialogComponent,
-    ErrorDialogExampleComponent,
-    FormDialogExampleComponent,
-    FormDialogComponent
+    ErrorDialogExampleComponent
   ],
   imports: [
     CommonModule,
@@ -28,7 +24,7 @@ import { FormDialogComponent } from './form/form-dialog.component';
     ReactiveFormsModule,
     SharedModule,
     EntryDialogModule,
-    EntryValidationModule
+    FormDialogExampleComponent
   ],
   exports: [
     AlertExampleComponent,

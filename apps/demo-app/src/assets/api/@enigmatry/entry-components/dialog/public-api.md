@@ -29,7 +29,7 @@ Typed handle to the dialog a component is rendered in. Create it with `injectEnt
 
 > `readonly` **close**(`result?`): `void`
 
-Closes the dialog with a result; the opener receives `undefined` when none is given
+Closes the dialog with a result; the opener receives `undefined` when none is given. Ignored once the dialog is closing, so the first close wins
 
 ###### Parameters
 
@@ -45,7 +45,7 @@ Closes the dialog with a result; the opener receives `undefined` when none is gi
 
 > `readonly` **submit**(`work`): `Promise`\<`void`\>
 
-Runs `work` while `submitting()` is true and ignores calls made until it settles; the dialog stays open unless `work` closes it
+Runs `work` while `submitting()` is true; ignored while earlier work runs or once the dialog is closing. The dialog stays open unless `work` closes it
 
 ###### Parameters
 
@@ -277,6 +277,12 @@ A component `EntryDialogService.open()` can open: it exposes its typed dialog ha
 ##### TResult
 
 `TResult`
+
+#### Properties
+
+| Property | Modifier | Type | Description | Defined in |
+| ------ | ------ | ------ | ------ | ------ |
+| <a id="dialog"></a> `dialog` | `readonly` | [`EntryDialog`](#entrydialog)\<`TData`, `TResult`\> | Handle created with `injectEntryDialog()`; it has to be a public field so `open()` can infer the data and result types |  |
 
 ***
 
