@@ -117,6 +117,7 @@ export class AutocompleteSearchFilterComponent<T> implements FormValueControl<T 
   readonly reset = (): void => {
     this.typedText.set(undefined);
     this.picked.set(undefined);
+    this.options.set([]);
   };
 
   protected readonly onTyped = (text: string): void => {
