@@ -94,9 +94,9 @@ readonly uploadForm = form(this.uploadModel, path => {
 
 Both report the error kinds `maxFileSize` and `maxFileCount`.
 
-Neither reaches a field bound with `[(ngModel)]` alone. Angular composes validators only for a
-control that has a `ControlValueAccessor`, so on a custom control no validator directive applies —
-`required` included. Give such a field a reactive form or a signal form.
+A validator directive on the element does not apply, whatever the binding — `required` included, in
+reactive forms as much as with `[(ngModel)]`. Angular composes validators only for a control that has
+a `ControlValueAccessor`, so put the rules on the control or on the schema, as above.
 
 ## API Summary
 
@@ -117,8 +117,9 @@ control that has a `ControlValueAccessor`, so on a custom control no validator d
 - accept: string
   - Sets files accepted when opening the file browser dialog. Same as "accept" attribute in `<input/>` element.
 - disabled: boolean
-  - Disables the button and the input. Bound by the forms API from the state of the control or
-    field, so a binding of your own is overwritten there — disable the control instead.
+  - Disables the button and the input. Next to a bound control, the forms API writes it whenever the
+    control is disabled or enabled and your binding whenever its value changes, so the last write
+    wins — in a reactive form, disable the control instead.
 - readonly: boolean
   - Disables the button while leaving the selection on screen. Under `[formField]` it is bound
     from the field’s own readonly state; no other binding carries one.
@@ -133,7 +134,8 @@ control that has a `ControlValueAccessor`, so on a custom control no validator d
 #### Methods
 
 - clear()
-  - Empties the selection and the underlying element.
+  - Empties the selection and the underlying element. Use it to discard a selection from
+    `(selectedFile)`: a `control.reset()` there never reaches the component.
 - reset()
   - Returns the element to its pristine state, which a value-only write cannot do. Called for you by
     `field().reset()`.

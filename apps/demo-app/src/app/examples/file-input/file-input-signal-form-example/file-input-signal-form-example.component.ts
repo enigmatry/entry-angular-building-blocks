@@ -17,7 +17,7 @@ const fileCountLimit = 2;
   imports: [EntryFileInputModule, FormField, FormRoot, MatButtonModule]
 })
 export class FileInputSignalFormExampleComponent {
-  protected readonly uploadModel = signal<{ attachments: FileInputValue }>({ attachments: null });
+  private readonly uploadModel = signal<{ attachments: FileInputValue }>({ attachments: null });
 
   protected readonly uploadForm = form(this.uploadModel, path => {
     required(path.attachments, { message: 'Select at least one file.' });

@@ -258,7 +258,8 @@ date-time picker moved to, so it owns a `value` model signal and lets the forms 
 `NG_VALIDATORS`.
 
 `[formControl]`, `formControlName` and `[(ngModel)]` all keep working — reactive and template-driven
-forms drive that contract natively — and the component now also accepts `[formField]`. Without a
+forms drive that contract natively, though validator directives on the element and
+`updateOn: 'submit'` no longer apply (see below) — and the component now also accepts `[formField]`. Without a
 form, `[(value)]` binds the selection directly. Do not give it a `ControlValueAccessor` again:
 Angular takes the accessor path whenever one is present, and the `value` model is then never
 written. [Section 11](#11-the-date-time-picker-is-a-real-form-control-and-two-directives-are-gone)
@@ -274,14 +275,16 @@ while the class was open:
 | `validate` | `Validator` | **gone** — see below |
 | `maxFileSizeInKb` / `maxFileCount` | inputs | **gone** — see below |
 | `fileNames` / `onFileSelect` | public | `protected` — template-only members |
-| `fileButton` / `fileInput` | public view queries | `private` — the element references are internal |
+| `_fileButton` / `_fileInput` | public `@ViewChild` fields | **gone** — the element references are private now |
 
-`value` is a `ModelSignal` now rather than the read-only signal of section 6, so writing it is the
-supported way to set the selection from outside. Its empty is `null` rather than `undefined` —
+`value` was a plain field in `21.x` and is a `ModelSignal` now, so assigning to it no longer
+compiles: `value.set(…)` is the supported way to set the selection from outside. Its empty is `null` rather than `undefined` —
 `FileInputValue` is `File | FileList | null`, because a signal form's model may not contain
 `undefined` — so a field or control you declare wants `null` as its initial value. Retype the ones
 you have: a control or `[(ngModel)]` property declared `File | undefined` keeps compiling and then
-takes a `null` at runtime, from `clear()` or from an empty selection. `clear()` still
+takes a `null` at runtime, from `clear()` or from an empty selection. Change emptiness checks written
+as `=== undefined` too: TypeScript does not flag them, and a gate such as `selectedFile === undefined`
+stays `false` once the empty is `null`. `clear()` still
 empties the selection, `reset()` is new and returns the element to its pristine state (it is what
 `field().reset()` calls), and `focus()` is new so that `focusBoundControl()` reaches the button.
 
@@ -307,7 +310,9 @@ inputs, and the same two limits ship as rules for the control you own:
 ```
 
 The error keys are unchanged — `maxFileSize` and `maxFileCount`, reported for the same selections as
-before — so configured validation messages keep matching. For a signal form the same limits are
+before for any positive limit — so configured validation messages keep matching. A limit of `0` is the
+exception: `21.x` treated it as no limit, while the validators enforce it and reject every file, so
+leave the validator off rather than passing `0`. For a signal form the same limits are
 schema rules, and they carry a message of their own:
 
 ```ts
@@ -319,45 +324,59 @@ readonly uploadForm = form(this.uploadModel, path => {
 });
 ```
 
-Removing the two inputs is a loud break: a binding to either is `NG8002`, whatever your
-`strictTemplates` setting, unless the declaring module suppresses it with `NO_ERRORS_SCHEMA`. If it
-does, grep your templates for `maxFileSizeInKb` and `maxFileCount` instead — there the bindings are
-ignored and the limits simply stop being enforced.
+Do not count on the compiler to find the two removed inputs. A bound `[maxFileSizeInKb]` or
+`[maxFileCount]` is usually `NG8002`, but a plain attribute (`maxFileCount="2"`), a module or
+component with `NO_ERRORS_SCHEMA` or `CUSTOM_ELEMENTS_SCHEMA`, and — with `strictTemplates` off — a
+binding inside `@if`, `@for` or an `<ng-template>` all compile cleanly, and the limit simply stops
+being enforced. Grep your templates for `maxFileSizeInKb` and `maxFileCount` either way.
 
-**Template-driven forms lose more than these two limits — this is the silent part.** Angular composes
-validators only in `setUpControlValueAccessor`, so on a custom control it composes none at all. A
-validator *directive* on the element no longer reaches the control, and that includes Angular's own:
+**Validator directives on the element stop applying, whatever the binding — this is the silent
+part.** Angular composes validators only in `setUpControlValueAccessor`, so on a custom control it
+composes none at all. A validator *directive* on the element no longer reaches the control, in
+reactive forms as much as template-driven ones, and that includes Angular's own:
 
 ```html
 <!-- 21.x: invalid while empty. 22.0.0: valid, with no warning -->
 <entry-file-input required [(ngModel)]="file" name="file" />
+<entry-file-input required formControlName="image" />
 ```
 
-The same is true of the date-time picker and of any custom control you write. Give such a field a
-reactive form, where the validators go on the control, or a signal form, where the rules go on the
-schema. A validator directive of your own will not work either — there is no composition step left
-for it to join.
+The same is true of the date-time picker and of any custom control you write. Put the rule on the
+control (`Validators.required`) or on the signal form's schema instead. A validator directive of your
+own will not work either — there is no composition step left for it to join.
 
-#### Three behaviour changes beyond the contract
+#### Four behaviour changes beyond the contract
 
-- **`[disabled]` beside a bound control does nothing.** The forms API writes this input from the
-  control's or field's own state on every check, so it wins outright: `[disabled]="true"` next to an
-  enabled `[formControl]` leaves the button enabled. `21.x` combined the two, and the binding alone
-  was enough to disable. Disable the control instead (`myControl.disable()`). `disabled` still
-  reports the effective state — as a signal, per section 5 — so an imperative read wants
-  `this.fileInput().disabled()`.
+- **`updateOn: 'submit'` is ignored.** Set on the control, its group or form, or through
+  `ngModelOptions`, it no longer holds a selection back: the value, dirty, touched and validation
+  update as soon as a file is picked, where `21.x` waited for submit. Angular applies a custom
+  control's value directly; [angular/angular#70735](https://github.com/angular/angular/pull/70735)
+  fixes that upstream. `'blur'` changes nothing here, because `21.x` committed on selection too.
+- **Blur now marks the control touched.** `21.x` marked it only on a selection, so tabbing past an
+  empty required field now shows its error.
 - **A value the element did not produce now clears it.** `21.x` left the files on the native input
   whenever the bound control was reset or written to, so the element held files the form did not
   have — and because the browser raises no `change` when the user picks one of those again, that
   selection could not be restored at all. The component now remembers the value it handed over and
   empties the element for every other write; `reset()` does the same on demand. Note that
   `control.reset(control.value)` is not one of those writes: the value does not change, so the
-  element still matches it and is left alone.
+  element still matches it and is left alone. Nor is a write back to the previous value before the
+  next change detection — a `control.reset()` or `setValue(null)` inside `(selectedFile)` or a
+  synchronous `valueChanges` subscriber — because Angular never passes it to a custom control, and the
+  file name stays on screen. Discard such a selection with the component's `clear()`, followed by
+  `control.reset()` if pristine matters.
 - **A `FileList` value is a copy now, and outlives the element.** The value used to be the
   element's own list, which the browser empties in place when the input is cleared — so a list you
   had captured from `selectedFile` went to zero length behind your back the moment anything called
   `clear()`. The component hands over a detached copy instead. Single `File` values were never
   affected.
+
+`[disabled]` beside a bound control behaves as it did in `21.x`: the binding and the forms API write
+the same input and the last write wins — the forms API at setup and whenever the control is disabled
+or enabled, the binding whenever its value changes. In a reactive form, disable the control
+(`myControl.disable()`); with `[(ngModel)]`, `[disabled]` goes through the control and stays the way
+to do it. `disabled` is a signal now, per section 5, so an imperative read is
+`this.fileInput().disabled()`.
 
 ### 9. Required inputs fail earlier and more clearly
 

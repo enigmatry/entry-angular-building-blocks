@@ -22,7 +22,7 @@ export class EntryFileInputComponent implements FormValueControl<FileInputValue>
   private readonly renderer: Renderer2 = inject(Renderer2);
   private readonly destroyRef = inject(DestroyRef);
 
-  /** Current selection: one [File], a [FileList] when `multiple`, or `null`. */
+  /** Current selection: one [File], a [FileList] when `multiple` and more than one is picked, or `null`. */
   readonly value = model<FileInputValue>(null);
 
   /** Label for the select file button. Defaults to 'Choose file...' */
@@ -77,8 +77,8 @@ export class EntryFileInputComponent implements FormValueControl<FileInputValue>
   });
 
   constructor() {
-    // A file input owns its selection and nothing may write one into it, so left alone it keeps files
-    // the form no longer has - and the browser raises no `change` when one of those is picked again.
+    // The element is not synced to writes it did not produce, so left alone it keeps files the form no
+    // longer has - and the browser raises no `change` when one of those is picked again.
     effect(() => {
       if (!Object.is(this.value(), this.selectedFromElement)) {
         this.clearFileInput();
