@@ -311,7 +311,8 @@ inputs, and the same two limits ship as rules for the control you own:
 
 The error keys are unchanged — `maxFileSize` and `maxFileCount`, reported for the same selections as
 before for any positive limit — so configured validation messages keep matching. A limit of `0` is the
-exception: `21.x` treated it as no limit, while the validators enforce it and reject every file, so
+exception: `21.x` treated it as no limit, while the validators enforce it — `0` files rejects every
+selection and `0` KB every non-empty file — so
 leave the validator off rather than passing `0`. For a signal form the same limits are
 schema rules, and they carry a message of their own:
 
@@ -465,8 +466,12 @@ carry on working and the same component also accepts `[formField]`. Do not imple
 `ControlValueAccessor` alongside it — Angular takes the accessor path whenever one is present, and
 the `value` model is then never written, with no compile error to tell you.
 
-Every existing picker call site keeps working. Four things change:
+Existing picker call sites change in these ways:
 
+- **Validator directives on the element stop applying.** `21.x` provided an accessor, so a `required`
+  beside `formControlName` or `[(ngModel)]` reached the control; now it does not, whatever the binding
+  — see [section 8](#8-the-file-input-is-a-real-form-control). Put the rule on the control or the
+  schema.
 - **`[disabled]` no longer disables the control you bound.** `21.x` reached into the bound control
   and called `disable()` on it, so `[disabled]="true"` beside a `[formControl]` disabled the
   consumer's control and left it disabled. The input now only disables the picker, and the forms API
