@@ -20,7 +20,7 @@
                 }
                 @case (controlType.autocomplete) {
                     <entry-autocomplete-search-filter [searchFilter]="asAutocompleteSearchFilter(searchFilter)"
-                        [field]="asAutocompleteField(searchFilter.key)" />
+                        [formField]="asAutocompleteField(searchFilter.key)" />
                 }
                 @case (controlType.dateTime) {
                     <entry-date-time-search-filter [searchFilter]="asDateTimeSearchFilter(searchFilter)"

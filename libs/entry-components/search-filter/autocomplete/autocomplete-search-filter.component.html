@@ -1,9 +1,9 @@
 <mat-form-field subscriptSizing="dynamic">
     <mat-label>{{searchFilter().label}}</mat-label>
     <input #searchInput type="text" matInput [placeholder]="searchFilter().placeholder" [id]="searchFilter().key"
-        [entryFieldErrorState]="field()" [value]="displayText()" [matAutocomplete]="auto"
-        [attr.aria-required]="field()().required() ? 'true' : null"
-        (input)="onTyped(searchInput.value)" (blur)="field()().markAsTouched()">
+        [entryFieldErrorState]="formField.field()" [value]="displayText()" [matAutocomplete]="auto"
+        [required]="required()"
+        (input)="onTyped(searchInput.value)" (blur)="touch.emit()">
     <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayOption" (optionSelected)="onSelected($event)">
         @for (group of (optionsValue() | groupSelectOptions); track group.groupName) {
             @if (group.groupName) {
@@ -19,7 +19,7 @@
             }
         }
     </mat-autocomplete>
-    @for (error of field()().errors(); track $index) {
+    @for (error of formField.field()().errors(); track $index) {
         <mat-error>{{error.message}}</mat-error>
     }
 </mat-form-field>

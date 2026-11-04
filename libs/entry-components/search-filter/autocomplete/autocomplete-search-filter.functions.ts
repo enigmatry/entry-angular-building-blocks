@@ -8,6 +8,13 @@ export interface LabelLookupParams<T> {
   search: AutocompleteSearchFilter<T>['search'];
 }
 
+/** An option the user picked, kept with the callbacks it was picked under. */
+export interface PickedOption<T> {
+  option: SelectOption<T>;
+  resolveLabel: AutocompleteSearchFilter<T>['resolveLabel'];
+  search: AutocompleteSearchFilter<T>['search'];
+}
+
 /** Reports a failed lookup. Not called for an aborted one, which is a supersession rather than a fault. */
 export type ReportLookupFailure = (error: unknown, abortSignal: AbortSignal) => void;
 
