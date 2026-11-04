@@ -162,7 +162,10 @@ Flag any config that uses `new InjectionToken(...)` directly or provides the val
 ## Search filter models
 
 - Search filter models must extend `SearchFilterBase<T>` or a built-in subclass (`TextSearchFilter`, `SelectSearchFilter`, etc.).
-- `SelectSearchFilter` with `options$` (Observable) is valid; `options` (fixed array) is also valid — both can coexist.
+- `SelectSearchFilter.options` takes a fixed array or a `Signal` of options. `options$` no longer exists — flag any
+  consumer still passing an `Observable`; `toSignal(source$)` is the replacement.
+- Filter models are configuration only: `formControl`, `setValue` and `toFormControl` are gone. To change a value, hand
+  the component new filter instances.
 - Flag direct instantiation of `SearchFilterBase<T>` without a subclass when a suitable subclass exists.
 
 ---
@@ -172,6 +175,9 @@ Flag any config that uses `new InjectionToken(...)` directly or provides the val
 - `setServerSideValidationErrors(problemDetails, form)` must be called in HTTP error handlers on forms.
 - Form-level errors go under the `'general'` key; field-level errors under `'fromServer'`.
 - `<entry-form-errors [form]="...">` must be present in templates that use `setServerSideValidationErrors`.
+- **Not for `<entry-search-filter>`.** It runs on signal forms and has no reactive form to pass. Its server errors come
+  back as the return value of its `searchAction`, and Angular places each on its filter. Do not ask for
+  `setServerSideValidationErrors` there.
 
 ---
 

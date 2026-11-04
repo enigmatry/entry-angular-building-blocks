@@ -144,7 +144,7 @@ Search filter inputs are configured as model objects (not components directly):
 ```ts
 // Extend SearchFilterBase<T> or use one of the built-in subclasses:
 new TextSearchFilter({ key: 'name', label: 'Name' })
-new SelectSearchFilter({ key: 'status', label: 'Status', options: [...] })  // or options$: Observable
+new SelectSearchFilter({ key: 'status', label: 'Status', options: [...] })  // or a Signal of options
 new AutocompleteSearchFilter({ key: 'type', label: 'Type', ... })
 new DateSearchFilter({ key: 'date', label: 'Date' })
 new DateTimeSearchFilter({ key: 'createdAt', label: 'Created' })
