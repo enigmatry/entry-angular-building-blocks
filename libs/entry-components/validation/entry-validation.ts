@@ -19,9 +19,15 @@ const getFormControl = (formControl: AbstractControl | null | undefined, keys: s
     return null;
 };
 
+const appendFormError = (formErrors: ValidationErrors, messages: string[]): void => {
+    formErrors[FORM_ERROR_KEY] = (formErrors[FORM_ERROR_KEY] as string[] | undefined)?.concat(messages) ?? messages;
+};
+
 /**
  * Applies validation errors received from server side to the form.
  * The errors are applied to multiple levels: form, form group, form array, and form field.
+ * Errors keyed to a disabled control, or to one inside a disabled group or array, are shown on form level,
+ * because Angular never marks a disabled control as invalid.
  *
  * @param error Server side validation errors response.
  * @param form Form to apply validation errors to. Typed as `AbstractControl` so that any form shape
@@ -37,14 +43,13 @@ const setServerSideValidationErrors = (error: IValidationProblemDetails, form: A
         for (const key in validationErrors) {
             const control = getFormControl(form, key.split(/[.[\]]+/gu));
 
-            if (control) {
+            if (control?.enabled) {
                 const fieldErrors = {} as ValidationErrors;
                 fieldErrors[FORM_FIELD_ERROR_KEY] = validationErrors[key];
                 control.setErrors(fieldErrors);
                 control.markAsTouched();
             } else {
-                formErrors[FORM_ERROR_KEY] =
-                    formErrors[FORM_ERROR_KEY]?.concat(validationErrors[key]) || validationErrors[key];
+                appendFormError(formErrors, validationErrors[key]);
             }
         }
     } else {
