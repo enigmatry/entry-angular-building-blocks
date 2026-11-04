@@ -453,7 +453,9 @@ listens to its outputs and closes itself through a typed handle:
 - **The cancel button no longer submits a form around the dialog.** In `21.x` neither default button
   had a `type`, so inside a `<form>` both submitted it. The confirm button is still a submit button,
   so a dialog component that wraps `<entry-dialog>` in its own `<form [formGroup]>` still confirms on
-  Enter, but cancel is now `type="button"`. Listen to `(confirmed)` or `(ngSubmit)`, not both.
+  Enter, but cancel is now `type="button"`. Save such a dialog from the form's `(ngSubmit)`, not
+  `(confirmed)`: `(confirmed)` fires on the click, before the form commits controls that update on
+  `submit` or `blur`.
 - **The built-in dialogs' data types lost the `I` prefix and the `Partial`.** `IEntryAlertDialogData`,
   `IEntryConfirmDialogData` and `IEntryErrorDialogData` are now `EntryAlertDialogData`,
   `EntryConfirmDialogData` and `EntryErrorDialogData`. `openAlert`, `openConfirm` and `openError`

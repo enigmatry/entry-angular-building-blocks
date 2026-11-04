@@ -1,6 +1,6 @@
-<!-- Wrapping the dialog in the form makes Enter in a field submit it through the confirm button -->
-<form [formGroup]="form">
-    <entry-dialog title="Edit name" [hideClose]="false" [disableConfirm]="dialog.submitting()" (confirmed)="save()">
+<!-- Saving from the form's ngSubmit reads the committed values; the confirm button submits it, and so does Enter in a field -->
+<form [formGroup]="form" (ngSubmit)="save()">
+    <entry-dialog title="Edit name" [hideClose]="false" [disableConfirm]="dialog.submitting()">
         <div class="stack-vertical">
             <mat-form-field>
                 <mat-label>First name</mat-label>
