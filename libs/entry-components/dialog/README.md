@@ -101,7 +101,7 @@ protected readonly save = (): Promise<void> => this.dialog.submit(async() => {
 
 Only validation errors are mapped onto the form; anything else is rethrown and reaches your global error handler.
 
-The confirm button is a submit button, so wrapping `<entry-dialog>` in your own `<form [formGroup]>` makes both the button and Enter in a field submit the form. Save from the form's `(ngSubmit)` rather than `(confirmed)`: `(confirmed)` fires on the button click, before the form commits the values of controls that update on `submit` or `blur`, so it can read stale values. Keep `(confirmed)` for dialogs without a form, and never listen to both.
+The confirm button is a submit button, so wrapping `<entry-dialog>` in your own `<form [formGroup]>` makes both the button and Enter in a field submit the form. Save from the form's `(ngSubmit)` rather than `(confirmed)`: `(confirmed)` fires on the button click, before the form commits the values of controls that update on `submit`, so it can read stale values. Keep `(confirmed)` for dialogs without a form, and never listen to both.
 
 ## Configuration
 

@@ -43,7 +43,7 @@ export class EntryDialogComponent {
 
     /**
      * Emitted when the confirm button is pressed; the dialog stays open until it is closed with a result.
-     * In a dialog wrapped in a form, save from the form's `(ngSubmit)` instead: this fires before the form commits pending values.
+     * In a dialog wrapped in a form, save from the form's `(ngSubmit)` instead: this fires before the form commits controls that update on `submit`.
      */
     readonly confirmed = output();
     /** Emitted when the cancel or close button is pressed; the dialog then closes with `undefined` unless a handler closed it */

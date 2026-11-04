@@ -79,7 +79,7 @@ closes the dialog with its result through `injectEntryDialog()`.
 | <a id="cancelbuttontext"></a> `cancelButtonText` | `readonly` | `InputSignal`\<`string`\> | Cancel button label |  |
 | <a id="canceled"></a> `canceled` | `readonly` | `OutputEmitterRef`\<`void`\> | Emitted when the cancel or close button is pressed; the dialog then closes with `undefined` unless a handler closed it |  |
 | <a id="confirmbuttontext"></a> `confirmButtonText` | `readonly` | `InputSignal`\<`string`\> | Confirm button label |  |
-| <a id="confirmed"></a> `confirmed` | `readonly` | `OutputEmitterRef`\<`void`\> | Emitted when the confirm button is pressed; the dialog stays open until it is closed with a result. In a dialog wrapped in a form, save from the form's `(ngSubmit)` instead: this fires before the form commits pending values. |  |
+| <a id="confirmed"></a> `confirmed` | `readonly` | `OutputEmitterRef`\<`void`\> | Emitted when the confirm button is pressed; the dialog stays open until it is closed with a result. In a dialog wrapped in a form, save from the form's `(ngSubmit)` instead: this fires before the form commits controls that update on `submit`. |  |
 | <a id="disableconfirm"></a> `disableConfirm` | `readonly` | `InputSignal`\<`boolean`\> | Disable the confirm button; it stays focusable and ignores clicks and Enter |  |
 | <a id="hidebuttons"></a> `hideButtons` | `readonly` | `InputSignal`\<`boolean`\> | Hide the dialog buttons |  |
 | <a id="hidecancel"></a> `hideCancel` | `readonly` | `InputSignal`\<`boolean`\> | Hide the cancel button |  |
