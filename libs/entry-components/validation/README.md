@@ -61,6 +61,16 @@ submitForm() {
 }
 ```
 
+### Where server errors appear
+
+`setServerSideValidationErrors` matches each error key to a form control and decides where its messages are shown:
+
+* **Enabled control** - under the field, through `entryDisplayControlValidation` (error key `fromServer`).
+* **Disabled control**, or a control inside a disabled group or array - in `<entry-form-errors>` (error key `general`). Angular never marks a disabled control as invalid, so a message on it would never be visible. The control's own errors are left untouched.
+* **No matching control** - in `<entry-form-errors>`.
+
+A response without any errors shows a generic message in `<entry-form-errors>`. Always include `<entry-form-errors>` in forms that have disabled or read-only fields, otherwise these messages are not shown.
+
 ## Configuration
 
 Optionally, when using Reactive form, client side validation messages can be configured on module level:
