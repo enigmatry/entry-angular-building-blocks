@@ -85,7 +85,12 @@ const applyLengthRules = (
   applyWhenValue(itemPath, (value): value is readonly unknown[] => Array.isArray(value), arrayPath => {
     minLength(
       arrayPath,
-      context => configFor(context.pathKeys().at(lastKeyIndex))?.required === true ? 1 : 0,
+      context => {
+        const searchFilter = configFor(context.pathKeys().at(lastKeyIndex));
+        // Only a multi-select's array is the selection; a single-select or autocomplete key may be an array.
+        const requiredMultiSelect = searchFilter instanceof SelectSearchFilter && searchFilter.multiSelect && searchFilter.required;
+        return requiredMultiSelect ? 1 : 0;
+      },
       { message: messages.requiredMessage }
     );
   });
