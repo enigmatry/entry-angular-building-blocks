@@ -1,14 +1,13 @@
 import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
 import {
-  afterNextRender, ChangeDetectionStrategy,
-  Component, DestroyRef, effect, ElementRef, NgZone,
-  Renderer2, computed,
-  inject, input, model, output, viewChild
+  afterNextRender, ChangeDetectionStrategy, Component, DestroyRef, effect, ElementRef, NgZone,
+  Renderer2, computed, inject, input, model, output, viewChild
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import type { FormValueControl } from '@angular/forms/signals';
 import { fromEvent } from 'rxjs';
 import { FileInputValue } from './file-input-value.type';
+import { warnOnValidatorDirectives } from './warn-on-validator-directives';
 
 @Component({
   standalone: false,
@@ -77,6 +76,8 @@ export class EntryFileInputComponent implements FormValueControl<FileInputValue>
   });
 
   constructor() {
+    warnOnValidatorDirectives();
+
     // The element is not synced to writes it did not produce, so left alone it keeps files the form no
     // longer has - and the browser raises no `change` when one of those is picked again.
     effect(() => {
@@ -87,7 +88,6 @@ export class EntryFileInputComponent implements FormValueControl<FileInputValue>
 
     // Signal queries have no `static` option, so the button is only readable after the first render.
     afterNextRender(() => {
-      // Handle click event on custom file button and trigger click on native file input
       this.ngZone.runOutsideAngular(() => {
         fromEvent(this.fileButton().nativeElement, 'click')
           .pipe(takeUntilDestroyed(this.destroyRef))

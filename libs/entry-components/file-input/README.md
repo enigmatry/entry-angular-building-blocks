@@ -96,7 +96,8 @@ Both report the error kinds `maxFileSize` and `maxFileCount`.
 
 A validator directive on the element does not apply, whatever the binding — `required` included, in
 reactive forms as much as with `[(ngModel)]`. Angular composes validators only for a control that has
-a `ControlValueAccessor`, so put the rules on the control or on the schema, as above.
+a `ControlValueAccessor`, so put the rules on the control or on the schema, as above. In dev mode the
+component logs a warning when it finds one.
 
 ## API Summary
 

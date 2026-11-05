@@ -344,7 +344,8 @@ reactive forms as much as template-driven ones, and that includes Angular's own:
 
 The same is true of the date-time picker and of any custom control you write. Put the rule on the
 control (`Validators.required`) or on the signal form's schema instead. A validator directive of your
-own will not work either — there is no composition step left for it to join.
+own will not work either — there is no composition step left for it to join. In dev mode the file
+input logs a console warning when it finds a validator directive on its element; the picker does not.
 
 #### Four behaviour changes beyond the contract
 
