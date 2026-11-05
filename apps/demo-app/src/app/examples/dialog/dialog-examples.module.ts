@@ -8,6 +8,7 @@ import { ConfirmExampleComponent } from './confirm/confirm-example.component';
 import { CustomDialogExampleComponent } from './custom/custom-dialog-example.component';
 import { CustomDialogComponent } from './custom/custom-dialog.component';
 import { ErrorDialogExampleComponent } from './error/error-example.component';
+import { FormDialogExampleComponent } from './form/form-dialog-example.component';
 
 @NgModule({
   declarations: [
@@ -22,13 +23,15 @@ import { ErrorDialogExampleComponent } from './error/error-example.component';
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
-    EntryDialogModule
+    EntryDialogModule,
+    FormDialogExampleComponent
   ],
   exports: [
     AlertExampleComponent,
     ConfirmExampleComponent,
     CustomDialogExampleComponent,
-    ErrorDialogExampleComponent
+    ErrorDialogExampleComponent,
+    FormDialogExampleComponent
   ]
 })
 export class DialogExamplesModule { }

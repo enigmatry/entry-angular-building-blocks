@@ -24,7 +24,7 @@ SelectOption<T>
 | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
 | <a id="controltype"></a> `controlType` | `ControlType` | `ControlType.autocomplete` | Control type to be overridden in implementing class, used to render the proper input type e.g. 'text-input' | [`SearchFilterBase`](#searchfilterbase).[`controlType`](#controltype-3) | - |  |
 | <a id="debouncetime"></a> `debounceTime` | `number` | `undefined` | Delay in typing before triggering the search function in milliseconds(default is 300) | - | - |  |
-| <a id="formatvalue"></a> `formatValue` | ((`value`) => [`SelectOption`](#selectoption)) \| `undefined` | `undefined` | Optional function to format the value before displaying it in the input control | - | [`SearchFilterBase`](#searchfilterbase).[`formatValue`](#formatvalue-3) |  |
+| <a id="formatvalue"></a> `formatValue` | ((`value`) => `unknown`) \| `undefined` | `undefined` | Optional function to format the value before displaying it in the input control. **Remarks** Takes `unknown`, not `T`: `T` in a function-parameter position on a property makes the class contravariant under `strictFunctionTypes`, so a filter of a concrete value type would stop being assignable to one of `unknown` and the filter arrays could not be typed. Narrow inside. | - | [`SearchFilterBase`](#searchfilterbase).[`formatValue`](#formatvalue-3) |  |
 | <a id="formcontrol"></a> `formControl` | `FormControl`\<[`SelectOption`](#selectoption)\<`T`\> \| `undefined`\> | `undefined` | A reference to the form control it represents | - | [`SearchFilterBase`](#searchfilterbase).[`formControl`](#formcontrol-3) |  |
 | <a id="key"></a> `key` | `string` | `undefined` | Unique search-filter input key | - | [`SearchFilterBase`](#searchfilterbase).[`key`](#key-3) |  |
 | <a id="label"></a> `label` | `string` | `undefined` | Label text to be displayed for the search-filter input control | - | [`SearchFilterBase`](#searchfilterbase).[`label`](#label-3) |  |
@@ -56,7 +56,7 @@ Search filter date input filed configuration.
 | Property | Type | Default value | Description | Overrides | Inherited from | Defined in |
 | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
 | <a id="controltype-1"></a> `controlType` | `ControlType` | `ControlType.date` | Control type to be overridden in implementing class, used to render the proper input type e.g. 'text-input' | [`SearchFilterBase`](#searchfilterbase).[`controlType`](#controltype-3) | - |  |
-| <a id="formatvalue-1"></a> `formatValue` | ((`value`) => `D`) \| `undefined` | `undefined` | Optional function to format the value before displaying it in the input control | - | [`SearchFilterBase`](#searchfilterbase).[`formatValue`](#formatvalue-3) |  |
+| <a id="formatvalue-1"></a> `formatValue` | ((`value`) => `unknown`) \| `undefined` | `undefined` | Optional function to format the value before displaying it in the input control. **Remarks** Takes `unknown`, not `T`: `T` in a function-parameter position on a property makes the class contravariant under `strictFunctionTypes`, so a filter of a concrete value type would stop being assignable to one of `unknown` and the filter arrays could not be typed. Narrow inside. | - | [`SearchFilterBase`](#searchfilterbase).[`formatValue`](#formatvalue-3) |  |
 | <a id="formcontrol-1"></a> `formControl` | `FormControl`\<`D` \| `undefined`\> | `undefined` | A reference to the form control it represents | - | [`SearchFilterBase`](#searchfilterbase).[`formControl`](#formcontrol-3) |  |
 | <a id="key-1"></a> `key` | `string` | `undefined` | Unique search-filter input key | - | [`SearchFilterBase`](#searchfilterbase).[`key`](#key-3) |  |
 | <a id="label-1"></a> `label` | `string` | `undefined` | Label text to be displayed for the search-filter input control | - | [`SearchFilterBase`](#searchfilterbase).[`label`](#label-3) |  |
@@ -86,7 +86,7 @@ Search filter date time input filed configuration.
 | Property | Type | Default value | Description | Overrides | Inherited from | Defined in |
 | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
 | <a id="controltype-2"></a> `controlType` | `ControlType` | `ControlType.dateTime` | Control type to be overridden in implementing class, used to render the proper input type e.g. 'text-input' | [`SearchFilterBase`](#searchfilterbase).[`controlType`](#controltype-3) | - |  |
-| <a id="formatvalue-2"></a> `formatValue` | ((`value`) => `D`) \| `undefined` | `undefined` | Optional function to format the value before displaying it in the input control | - | [`SearchFilterBase`](#searchfilterbase).[`formatValue`](#formatvalue-3) |  |
+| <a id="formatvalue-2"></a> `formatValue` | ((`value`) => `unknown`) \| `undefined` | `undefined` | Optional function to format the value before displaying it in the input control. **Remarks** Takes `unknown`, not `T`: `T` in a function-parameter position on a property makes the class contravariant under `strictFunctionTypes`, so a filter of a concrete value type would stop being assignable to one of `unknown` and the filter arrays could not be typed. Narrow inside. | - | [`SearchFilterBase`](#searchfilterbase).[`formatValue`](#formatvalue-3) |  |
 | <a id="formcontrol-2"></a> `formControl` | `FormControl`\<`D` \| `undefined`\> | `undefined` | A reference to the form control it represents | - | [`SearchFilterBase`](#searchfilterbase).[`formControl`](#formcontrol-3) |  |
 | <a id="key-2"></a> `key` | `string` | `undefined` | Unique search-filter input key | - | [`SearchFilterBase`](#searchfilterbase).[`key`](#key-3) |  |
 | <a id="label-2"></a> `label` | `string` | `undefined` | Label text to be displayed for the search-filter input control | - | [`SearchFilterBase`](#searchfilterbase).[`label`](#label-3) |  |
@@ -105,10 +105,10 @@ Entry SearchFilter component.
 
 | Property | Modifier | Type | Description | Defined in |
 | ------ | ------ | ------ | ------ | ------ |
-| <a id="renderedsearchfilters"></a> `renderedSearchFilters` | `readonly` | `Signal`\<[`SearchFilterBase`](#searchfilterbase)\<`any`\>[]\> | The filters the form was actually built from. The template iterates this rather than the input so the rendered controls and the form can never disagree. |  |
+| <a id="renderedsearchfilters"></a> `renderedSearchFilters` | `readonly` | `Signal`\<[`SearchFilterBase`](#searchfilterbase)\<`unknown`\>[]\> | The filters the form was built from - the template iterates these, so the two cannot disagree. |  |
 | <a id="searchfilterchange"></a> `searchFilterChange` | `readonly` | `OutputEmitterRef`\<[`SearchFilterParams`](#searchfilterparams)\> | Emits the change in SearchFilterParams so the containing component can apply them and retrieve the filtered results. |  |
-| <a id="searchfilterform"></a> `searchFilterForm` | `readonly` | `Signal`\<`FormRecord`\<`AbstractControl`\<`any`, `any`, `any`\>\>\> | Form group holding one control per search filter. A `FormRecord` rather than a `FormGroup`, because the keys come from the bound filters and are not known at compile time. |  |
-| <a id="searchfilters"></a> `searchFilters` | `readonly` | `InputSignal`\<[`SearchFilterBase`](#searchfilterbase)\<`any`\>[]\> | Configuration of the search filters inputs that will be displayed in the search-filter component. |  |
+| <a id="searchfilterform"></a> `searchFilterForm` | `readonly` | `Signal`\<`FormRecord`\<`AbstractControl`\<`any`, `any`, `any`\>\>\> | A `FormRecord` rather than a `FormGroup`: the keys come from the bound filters, not from compile time. |  |
+| <a id="searchfilters"></a> `searchFilters` | `readonly` | `InputSignal`\<[`SearchFilterBase`](#searchfilterbase)\<`unknown`\>[]\> | Configuration of the search filters inputs that will be displayed in the search-filter component. |  |
 
 ***
 
@@ -148,7 +148,7 @@ Base Entry search filter input component.
 | Property | Type | Description | Defined in |
 | ------ | ------ | ------ | ------ |
 | <a id="controltype-3"></a> `controlType` | `ControlType` | Control type to be overridden in implementing class, used to render the proper input type e.g. 'text-input' |  |
-| <a id="formatvalue-3"></a> `formatValue` | ((`value`) => `T`) \| `undefined` | Optional function to format the value before displaying it in the input control |  |
+| <a id="formatvalue-3"></a> `formatValue` | ((`value`) => `unknown`) \| `undefined` | Optional function to format the value before displaying it in the input control. **Remarks** Takes `unknown`, not `T`: `T` in a function-parameter position on a property makes the class contravariant under `strictFunctionTypes`, so a filter of a concrete value type would stop being assignable to one of `unknown` and the filter arrays could not be typed. Narrow inside. |  |
 | <a id="formcontrol-3"></a> `formControl` | `FormControl`\<`T` \| `undefined`\> | A reference to the form control it represents |  |
 | <a id="key-3"></a> `key` | `string` | Unique search-filter input key |  |
 | <a id="label-3"></a> `label` | `string` | Label text to be displayed for the search-filter input control |  |
@@ -199,7 +199,7 @@ or observable (dynamic) list (`options$`).
 | Property | Type | Default value | Description | Overrides | Inherited from | Defined in |
 | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
 | <a id="controltype-4"></a> `controlType` | `ControlType` | `ControlType.select` | Control type to be overridden in implementing class, used to render the proper input type e.g. 'text-input' | [`SearchFilterBase`](#searchfilterbase).[`controlType`](#controltype-3) | - |  |
-| <a id="formatvalue-4"></a> `formatValue` | ((`value`) => `T`) \| `undefined` | `undefined` | Optional function to format the value before displaying it in the input control | - | [`SearchFilterBase`](#searchfilterbase).[`formatValue`](#formatvalue-3) |  |
+| <a id="formatvalue-4"></a> `formatValue` | ((`value`) => `unknown`) \| `undefined` | `undefined` | Optional function to format the value before displaying it in the input control. **Remarks** Takes `unknown`, not `T`: `T` in a function-parameter position on a property makes the class contravariant under `strictFunctionTypes`, so a filter of a concrete value type would stop being assignable to one of `unknown` and the filter arrays could not be typed. Narrow inside. | - | [`SearchFilterBase`](#searchfilterbase).[`formatValue`](#formatvalue-3) |  |
 | <a id="formcontrol-4"></a> `formControl` | `FormControl`\<`T` \| `undefined`\> | `undefined` | A reference to the form control it represents | - | [`SearchFilterBase`](#searchfilterbase).[`formControl`](#formcontrol-3) |  |
 | <a id="key-5"></a> `key` | `string` | `undefined` | Unique search-filter input key | - | [`SearchFilterBase`](#searchfilterbase).[`key`](#key-3) |  |
 | <a id="label-5"></a> `label` | `string` | `undefined` | Label text to be displayed for the search-filter input control | - | [`SearchFilterBase`](#searchfilterbase).[`label`](#label-3) |  |
@@ -226,7 +226,7 @@ Search filter text input filed configuration.
 | Property | Type | Default value | Description | Overrides | Inherited from | Defined in |
 | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
 | <a id="controltype-5"></a> `controlType` | `ControlType` | `ControlType.text` | Control type to be overridden in implementing class, used to render the proper input type e.g. 'text-input' | [`SearchFilterBase`](#searchfilterbase).[`controlType`](#controltype-3) | - |  |
-| <a id="formatvalue-5"></a> `formatValue` | ((`value`) => `string`) \| `undefined` | `undefined` | Optional function to format the value before displaying it in the input control | - | [`SearchFilterBase`](#searchfilterbase).[`formatValue`](#formatvalue-3) |  |
+| <a id="formatvalue-5"></a> `formatValue` | ((`value`) => `unknown`) \| `undefined` | `undefined` | Optional function to format the value before displaying it in the input control. **Remarks** Takes `unknown`, not `T`: `T` in a function-parameter position on a property makes the class contravariant under `strictFunctionTypes`, so a filter of a concrete value type would stop being assignable to one of `unknown` and the filter arrays could not be typed. Narrow inside. | - | [`SearchFilterBase`](#searchfilterbase).[`formatValue`](#formatvalue-3) |  |
 | <a id="formcontrol-5"></a> `formControl` | `FormControl`\<`string` \| `undefined`\> | `undefined` | A reference to the form control it represents | - | [`SearchFilterBase`](#searchfilterbase).[`formControl`](#formcontrol-3) |  |
 | <a id="key-6"></a> `key` | `string` | `undefined` | Unique search-filter input key | - | [`SearchFilterBase`](#searchfilterbase).[`key`](#key-3) |  |
 | <a id="label-6"></a> `label` | `string` | `undefined` | Label text to be displayed for the search-filter input control | - | [`SearchFilterBase`](#searchfilterbase).[`label`](#label-3) |  |

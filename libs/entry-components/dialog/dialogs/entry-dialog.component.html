@@ -1,9 +1,9 @@
-<div class="entry-dialog" role="dialog">
+<div class="entry-dialog">
     <div class="dialog-header">
-        <h1 class="title" mat-dialog-title [class.without-close-icon]="hideClose()">{{ title() }}</h1>
+        <h2 class="title" mat-dialog-title [class.without-close-icon]="hideClose()">{{ title() }}</h2>
         @if (!hideClose()) {
-            <button mat-icon-button type="button" class="close-button" aria-label="Close dialog"
-                (click)="onCancel()">
+            <button mat-icon-button type="button" class="close-button" [attr.aria-label]="config.closeButtonLabel"
+                (click)="cancel()">
                 <mat-icon aria-hidden="true">close</mat-icon>
             </button>
         }
@@ -15,22 +15,21 @@
 
     @if (!hideButtons()) {
         <mat-dialog-actions class="dialog-actions" [align]="buttonsAlignment()">
-                @if(buttonsTemplate()) {
-                    <ng-container [ngTemplateOutlet]="buttonsTemplate()!" />
-                }
-
-                @else {
-                    <ng-container [ngTemplateOutlet]="defaultButtonsTemplate" />
-                }
+            @if (buttonsTemplate(); as buttons) {
+                <ng-container [ngTemplateOutlet]="buttons" />
+            } @else {
+                <ng-container [ngTemplateOutlet]="defaultButtonsTemplate" />
+            }
         </mat-dialog-actions>
     }
 
     <ng-template #defaultButtonsTemplate>
-        <button cdkFocusInitial mat-button entry-submit-button type="button" [disabled]="disableConfirm()" (click)="onSubmit()">
+        <button cdkFocusInitial mat-button entry-submit-button type="submit" disabledInteractive [disabled]="disableConfirm()"
+            (click)="confirm($event)">
             <span>{{confirmButtonText()}}</span>
         </button>
         @if (!hideCancel()) {
-            <button mat-button entry-cancel-button type="button" (click)="onCancel()">
+            <button mat-button entry-cancel-button type="button" (click)="cancel()">
                 <span>{{cancelButtonText()}}</span>
             </button>
         }

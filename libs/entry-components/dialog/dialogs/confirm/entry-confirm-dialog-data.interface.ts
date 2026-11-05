@@ -1,9 +1,9 @@
-import { IEntryAlertDialogData } from '../alert/entry-alert-dialog-data.interface';
+import { EntryAlertDialogData } from '../alert/entry-alert-dialog-data.interface';
 
 /**
- * Confirm dialog data. Extends IEntryAlertDialogData.
+ * Confirm dialog data. Extends EntryAlertDialogData.
  */
-export interface IEntryConfirmDialogData extends IEntryAlertDialogData {
-    /** Optional dialog cancel text label */
-    cancelText?: string | undefined;
+export interface EntryConfirmDialogData extends EntryAlertDialogData {
+    /** Cancel button label (default from `EntryDialogConfig`) */
+    cancelText?: string;
 }
