@@ -337,7 +337,7 @@ composes none at all. A validator *directive* on the element no longer reaches t
 reactive forms as much as template-driven ones, and that includes Angular's own:
 
 ```html
-<!-- 21.x: invalid while empty. 22.0.0: valid, with no warning -->
+<!-- 21.x: invalid while empty. 22.0.0: valid while empty; the file input warns in dev mode -->
 <entry-file-input required [(ngModel)]="file" name="file" />
 <entry-file-input required formControlName="image" />
 ```
