@@ -38,8 +38,8 @@ export class EntryFileInputComponent implements FormValueControl<FileInputValue>
   readonly multiple = input(false, { transform: (value: BooleanInput) => coerceBooleanProperty(value) });
 
   /**
-   * Same as 'disabled' attribute in <input/> element. Bound by the forms API from the state of the
-   * control or field, so set it directly only when no form is bound.
+   * Same as 'disabled' attribute in <input/> element. The forms API also writes it whenever the bound
+   * control or field is disabled or enabled, so beside a form binding the last write wins.
    */
   // `unknown` rather than `BooleanInput`, because a transform narrower than the one the control
   // contract declares is not assignable to it.

@@ -135,7 +135,8 @@ a `ControlValueAccessor`, so put the rules on the control or on the schema, as a
 
 - clear()
   - Empties the selection and the underlying element. Use it to discard a selection from
-    `(selectedFile)`: a `control.reset()` there never reaches the component.
+    `(selectedFile)`: a `control.reset()` there that returns the control to its previous value
+    never reaches the component.
 - reset()
   - Returns the element to its pristine state, which a value-only write cannot do. Called for you by
     `field().reset()`.
