@@ -113,10 +113,12 @@ export class AutocompleteSearchFilterComponent<T> implements FormValueControl<T 
   /** Called by the form when it focuses this field, e.g. the first invalid one on submit. */
   readonly focus = (options?: FocusOptions): void => this.searchInput().nativeElement.focus(options);
 
-  /** Called by the form on reset, which is what Clear does: a typed but unpicked query must go too. */
+  /**
+   * Called by the form on reset - Clear, or the host's `reset(values)`: a typed but unpicked query must go too.
+   * The picked option stays, since it is shown only while the field holds its key, so restoring that key keeps its label.
+   */
   readonly reset = (): void => {
     this.typedText.set(undefined);
-    this.picked.set(undefined);
     this.options.set([]);
   };
 
