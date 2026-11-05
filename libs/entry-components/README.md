@@ -478,6 +478,10 @@ server fault would stand on the form like any other and block the retry, so repo
 `searchFilterChange` still fires, so a page that writes the filters into the URL and fetches
 downstream of navigation can keep binding it and hand the action an empty implementation.
 
+`searchAction` and `searchFilterChange` each get their own copy of the values, so adding, removing or
+replacing a key leaves the form alone. Arrays and dates inside are the form's own: replace them, never
+mutate them in place.
+
 Every bound filter was always a key in those params. What changed is what an untouched one holds:
 `''`, `[]` or `null` where `21.4.0` put `undefined`. A guard that tested only for `undefined` now
 lets empty filters through, so a page that writes them into the URL gains empty query parameters,
@@ -514,8 +518,10 @@ The component keeps what the user typed unless the filter's declared `value` cha
 reference**. A `string` or `number` default therefore survives a rebind that changes nothing, while a
 `Date` or an array default is a new object on every rebuild and replaces what the user typed. Hold a
 non-primitive default in a field and hand over the same instance when an edit must be left alone. A
-different kind of filter for the same key — a text filter replaced by a multi-select, say — also
-starts from its own value rather than inheriting the old one.
+different kind of filter for the same key — a text filter replaced by a multi-select, or a date filter
+by a date-time one — also starts from its own value rather than inheriting the old one. To keep what
+the user applied, declare it on the new filter from the values your `searchAction` last received; an
+edit not yet applied is lost, since the component hands out only the values of a search.
 
 The flip side is that a rebind cannot force a value a filter already declares: once the user has
 edited or cleared it, handing over the same declaration leaves their value in place. For that, call

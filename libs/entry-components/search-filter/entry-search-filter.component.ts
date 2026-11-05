@@ -68,8 +68,9 @@ export class EntrySearchFilterComponent {
     field: FieldTree<SearchFilterValues>
   ): Promise<readonly ValidationError.WithOptionalFieldTree[]> => {
     const values = this.model();
-    this.searchFilterChange.emit(values);
-    const errors = await this.searchAction()(values) ?? [];
+    // Copies, not the model: a consumer reshaping its params for the router would otherwise rewrite form state.
+    this.searchFilterChange.emit({ ...values });
+    const errors = await this.searchAction()({ ...values }) ?? [];
     const changed = changedKeys(values, this.model());
     return errors
       .filter(error => !isStale(error, changed))

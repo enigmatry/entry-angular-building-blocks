@@ -101,6 +101,10 @@ the URL and fetches downstream of the navigation instead:
     (searchFilterChange)="onFilter($event)"></entry-search-filter>
 ```
 
+`searchAction` and `searchFilterChange` each get their own copy of the values, so adding, removing or
+replacing a key leaves the form alone. Arrays and dates inside are the form's own: replace them, never
+mutate them in place.
+
 ## Validation
 
 `required: true` on a filter, and `maxLength` on a text filter, are real rules. An invalid filter
@@ -127,6 +131,11 @@ keeps what the user typed unless a filter's declared `value` changed:
 ```ts
 this.filters = this.createFilters(this.route.snapshot.queryParams);
 ```
+
+A different kind of filter for the same key — a text filter replaced by a multi-select, or a date
+filter by a date-time one — starts from its own value rather than inheriting the old one. To keep what
+the user applied, declare it on the new filter from the values your `searchAction` last received; an
+edit not yet applied is lost, since the component hands out only the values of a search.
 
 A rebind cannot force a value a filter already declares: once the user has edited or cleared it,
 handing over the same declaration leaves their value in place. To put values back — a saved search,
