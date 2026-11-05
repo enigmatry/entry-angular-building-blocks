@@ -1,6 +1,5 @@
 import { Directive, effect, inject, input } from '@angular/core';
-import { NgControl } from '@angular/forms';
-import { FormField } from '@angular/forms/signals';
+import { Field } from '@angular/forms/signals';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatInput } from '@angular/material/input';
 
@@ -13,8 +12,8 @@ export class FieldErrorStateDirective {
   private readonly matInput = inject(MatInput, { self: true });
   private readonly errorStateMatcher = inject(ErrorStateMatcher);
 
-  /** The `[formField]` binding whose field this input shows the error state of. */
-  readonly entryFieldErrorState = input.required<FormField<unknown>>();
+  /** The field whose error state this input shows. */
+  readonly entryFieldErrorState = input.required<Field<unknown>>();
 
   constructor() {
     effect(() => {
@@ -27,12 +26,11 @@ export class FieldErrorStateDirective {
     });
   }
 
-  // Material's own tracker falls back the same way: a matcher written before signal forms has only `isErrorState`.
-  private readonly currentErrorState = (formField: FormField<unknown>): boolean => {
+  // Material's tracker hands a classic-only matcher a null control for every `[formField]` input; the same here.
+  private readonly currentErrorState = (field: Field<unknown>): boolean => {
     if (this.errorStateMatcher.isSignalErrorState) {
-      return this.errorStateMatcher.isSignalErrorState(formField.field());
+      return this.errorStateMatcher.isSignalErrorState(field);
     }
-    const control = formField.injector.get(NgControl, null, { self: true })?.control ?? null;
-    return this.errorStateMatcher.isErrorState(control, null);
+    return this.errorStateMatcher.isErrorState(null, null);
   };
 }

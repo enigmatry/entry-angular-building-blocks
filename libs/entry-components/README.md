@@ -526,9 +526,10 @@ declares, and forgets that it was touched:
 this.searchFilter().reset(savedSearch);   // values for the keys you name, declared values for the rest
 ```
 
-A key given as `null` empties its filter. Each value must have the shape its filter holds — an array
-for a multi-select — just as a declared value must. A server message stays on a filter whose value the
-reset leaves unchanged, since that value is still the one the server rejected.
+A key given as `null` empties its filter; a key left out or given as `undefined` takes its declared
+value. Each value must have the shape its filter holds — an array for a multi-select — just as a
+declared value must. A server message stays on a filter whose value the reset leaves unchanged, since
+that value is still the one the server rejected.
 
 #### Validation and submission
 

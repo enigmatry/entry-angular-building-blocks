@@ -137,8 +137,9 @@ the one it declares, and forgets that it was touched:
 this.searchFilter().reset(savedSearch);
 ```
 
-A key given as `null` empties its filter. Each value must have the shape its filter holds — an array
-for a multi-select. A server message stays on a filter whose value the reset leaves unchanged.
+A key given as `null` empties its filter; a key left out or given as `undefined` takes its declared
+value. Each value must have the shape its filter holds — an array for a multi-select. A server message
+stays on a filter whose value the reset leaves unchanged.
 
 ## Grouping select/autocomplete options
 
