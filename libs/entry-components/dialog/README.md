@@ -101,7 +101,7 @@ protected readonly save = (): Promise<void> => this.dialog.submit(async() => {
 
 Only validation errors are mapped onto the form; anything else is rethrown and reaches your global error handler.
 
-Cancel, the close button, Escape and a backdrop click still close the dialog while a save is running. The save keeps going on the server, but the opener has already received `undefined` and the save's own `dialog.close(result)` is ignored, so data the opener reloads on close may not include the save yet. Treat it like any other request still in flight: if the opener has to show the saved result, refresh it when the save completes rather than when the dialog closes.
+Cancel, the close button, Escape and a backdrop click still close the dialog while a save is running. The save keeps going on the server, but the opener has already received `undefined` and the save's own `dialog.close(result)` is ignored, so data the opener reloads on close may not include the save yet. Blocking dismissal would not prevent this: a page reload during the save races the same way. Treat it like any other request still in flight: if the opener has to show the saved result, refresh it when the save completes rather than when the dialog closes.
 
 The confirm button is a submit button, so wrapping `<entry-dialog>` in your own `<form [formGroup]>` makes both the button and Enter in a field submit the form. Save from the form's `(ngSubmit)` rather than `(confirmed)`: `(confirmed)` fires on the button click, before the form commits the values of controls that update on `submit`, so it can read stale values. Keep `(confirmed)` for dialogs without a form, and never listen to both.
 
