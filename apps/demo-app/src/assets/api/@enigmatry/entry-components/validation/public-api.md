@@ -38,7 +38,7 @@ The messages are displayed as a list, each message in a new row.
 
 | Property | Modifier | Type | Description | Defined in |
 | ------ | ------ | ------ | ------ | ------ |
-| <a id="form"></a> `form` | `readonly` | `InputSignal`\<`AbstractControl`\<`any`, `any`, `any`\>\> | A form for which the validation errors are being displayed. Typed as `AbstractControl` so that a `FormGroup` with known keys and a `FormRecord` with dynamic ones are both accepted. |  |
+| <a id="form"></a> `form` | `readonly` | `InputSignal`\<`AbstractControl`\<`any`, `any`, `any`\>\> | A form for which the validation errors are being displayed. |  |
 
 #### Accessors
 
@@ -48,9 +48,7 @@ The messages are displayed as a list, each message in a new row.
 
 > **get** `protected` **generalErrors**(): `string`[]
 
-Form level messages, read live off the bound form rather than copied into a signal:
-`setServerSideValidationErrors` mutates the form in place, and a caller may equally do
-`form.setErrors({ general: [...] })` with no event at all.
+Read live off the bound form, not copied into a signal: callers mutate the form's errors in place, sometimes with no event.
 
 ###### Returns
 
@@ -141,6 +139,8 @@ Can be used to provide entry validation configuration.
 
 Applies validation errors received from server side to the form.
 The errors are applied to multiple levels: form, form group, form array, and form field.
+Errors keyed to a disabled control, or to one inside a disabled group or array, are shown on form level,
+because Angular never marks a disabled control as invalid.
 
 #### Parameters
 

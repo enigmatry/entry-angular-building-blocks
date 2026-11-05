@@ -32,12 +32,19 @@ These guides provides detailed steps for setting up and configuring theming with
 |21.x| = 21
 |22.x| = 22
 
+## Rendering targets
+
+This library is **browser-only**. It is not tested under server-side rendering or prerendering, and
+several components will not work there: they attach DOM event listeners, read `document`, and build
+CDK overlays from `afterNextRender` callbacks, which a server renderer never runs. Do not put these
+components on a prerendered route.
+
 ## Migrating to 22.x
 
 `22.x` requires Angular 22, TypeScript ~6.0 and Node `^22.22.3 || ^24.15.0 || >=26.0.0`. Run
 `ng update @angular/core@22 @angular/cli@22 @angular/cdk@22 @angular/material@22` first, then work
 through the items below. Several of them change behaviour silently, with no compile error to catch
-you — sections 2, 3, 5, 8 and 10 in particular.
+you — sections 2, 3, 5, 8, 10, 11 and 12 in particular.
 
 ### 1. `@angular/animations` is no longer a peer dependency
 
@@ -135,13 +142,16 @@ in a constructor, an `afterNextRender` callback or a `linkedSignal`.
 | Symbol | 21.x | 22.0.0 |
 |---|---|---|
 | `EntryDateTimePickerComponent.dateTimeChanged` | `Subject<D>` | `OutputEmitterRef<D>` |
-| `EntryDialogComponent.confirm` | callable member | `confirmAction` input, bound as `[confirm]` |
-| `EntryDialogComponent.cancel` | callable member | `cancelAction` input, bound as `[cancel]` |
+| `EntryDialogComponent.confirm` / `.cancel` | callable members | `(confirmed)` / `(canceled)` outputs — see section 12 |
 | `EntryFileInputComponent.value` | `File \| FileList \| undefined` | `Signal<...>` (read-only) |
 | `EntryFileInputComponent.fileNames` | getter | `Signal<string>` |
+| `EntryFileInputComponent.selectedFile` | `EventEmitter<File \| FileList>` | `OutputEmitterRef<File \| FileList>` |
 | `EntrySearchFilterComponent.searchFilterForm` | `UntypedFormGroup` | `Signal<FormRecord>` |
+| `EntrySearchFilterComponent.renderedSearchFilters` | array property | `Signal<SearchFilterBase<unknown>[]>` |
+| `EntrySearchFilterComponent.searchFilterChange` | `EventEmitter<SearchFilterParams>` | `OutputEmitterRef<SearchFilterParams>` |
+| `EntrySearchFilterComponent.toFormGroup` | `(filters: SearchFilterBase<any>[]) => UntypedFormGroup` | `(filters: SearchFilterBase<unknown>[], currentValues?) => FormRecord` |
+| `SearchFilterBase.formatValue` | `(value: T) => T` | `(value: unknown) => unknown` |
 | `EntryTimePickerComponent.hours` / `.minutes` / `.seconds` / `.meridiem` | plain fields | signals — only reachable through a template ref, the class is not exported |
-| `NgControlAccessorDirective.control` | writable `UntypedFormControl` field | read-only `AbstractControl` getter |
 
 `searchFilterForm` is the one most likely to be read imperatively, because that is how server-side
 validation errors get onto the filter form:
@@ -151,26 +161,46 @@ validation errors get onto the filter form:
 + setServerSideValidationErrors(error, this.searchFilter().searchFilterForm());
 ```
 
-`dateTimeChanged` still supports `.subscribe()`, but `.next()` is gone — an `OutputEmitterRef` is
-emit-only from the component that owns it:
+`renderedSearchFilters` follows the same shape — it is now a signal, so it has to be called before
+iterating:
 
 ```diff
-- this.picker.dateTimeChanged.next(value);   // no longer available
-+ // let the component emit; subscribe instead of pushing
-  this.picker.dateTimeChanged.subscribe(value => { ... });
+- this.searchFilter.renderedSearchFilters.map(filter => filter.key);
++ this.searchFilter().renderedSearchFilters().map(filter => filter.key);
 ```
 
-The dialog callbacks are the one break with no compile-time signal if you only use the class from a
-template, and the one most likely to bite a subclass:
+`formatValue` is the one signature change with a compile error at the *consumer's* callback rather
+than at the call site. It takes `unknown` so that `SearchFilterBase<T>` is assignable to
+`SearchFilterBase<unknown>` — it was the only member putting `T` in a function-parameter position on
+a property, and under `strictFunctionTypes` that made the class contravariant, which is why the
+filter arrays were typed `SearchFilterBase<any>`. Narrow inside the callback:
 
 ```diff
-  export class MyDialog extends EntryDialogComponent {
-    onDismiss(): void {
--     this.cancel();          // returned the callback instead of invoking it
-+     this.cancelAction()();  // or simply this.onCancel()
-    }
-  }
+  new TextSearchFilter({
+    key: 'score',
+-   formatValue: (value: string) => value.replace(/[^0-9.]/gu, '')
++   formatValue: (value: unknown) => String(value ?? '').replace(/[^0-9.]/gu, '')
+  })
 ```
+
+The filter arrays themselves are `SearchFilterBase<unknown>[]` now, so `[searchFilters]` and any
+field you keep them in can drop their `any`. `toFormGroup` and the `as*SearchFilter` cast helpers
+were retyped the same way and lost their generics; they exist for the component's own template, so
+this only reaches you if you subclass.
+
+All three outputs — `dateTimeChanged`, `EntryFileInputComponent.selectedFile` and
+`EntrySearchFilterComponent.searchFilterChange` — are `OutputEmitterRef` now. `.subscribe()` still
+works, but an `OutputEmitterRef` is not an `Observable`, so `.pipe()`, `.asObservable()` and
+`.next()` are all gone:
+
+```diff
+- this.picker.dateTimeChanged.next(value);               // emit-only from inside the component now
+- this.fileInput.selectedFile.pipe(debounceTime(200));   // no longer an Observable
++ this.picker.dateTimeChanged.subscribe(value => { ... });
++ outputToObservable(this.fileInput.selectedFile).pipe(debounceTime(200));
+```
+
+`outputToObservable` comes from `@angular/core/rxjs-interop`.
 
 ### 7. No more `UntypedFormGroup` / `UntypedFormControl`
 
@@ -185,7 +215,6 @@ Two of the three replacements **widen** what is accepted, so nothing breaks:
 | `setServerSideValidationErrors(error, form)` | `UntypedFormGroup` | `AbstractControl` | widened |
 | `EntryFormErrorsComponent.form` | `UntypedFormGroup` | `AbstractControl` | widened |
 | `EntrySearchFilterComponent.searchFilterForm` | `UntypedFormGroup` | `FormRecord` | see below |
-| `NgControlAccessorDirective.control` | `UntypedFormControl` | `AbstractControl` | narrowed |
 
 You can now pass a **typed** form where you previously had to widen to `UntypedFormGroup`:
 
@@ -202,17 +231,6 @@ You can now pass a **typed** form where you previously had to widen to `UntypedF
 `searchFilterForm` is a [`FormRecord`](https://angular.dev/api/forms/FormRecord) — a `FormGroup`
 whose keys are not known at compile time, which is exactly what a filter set is. `FormRecord`
 extends `FormGroup` at runtime, so `instanceof` checks and every method behave identically.
-
-`NgControlAccessorDirective.control` is the one narrowing. It hands back `AbstractControl` because a
-directive takes no type arguments from the element it sits on, so it genuinely cannot know the value
-type. If you need `FormControl`-only members (`defaultValue`, `registerOnChange`), cast at the point
-of use, where the type *is* known:
-
-```ts
-get formControl(): FormControl<MyValue> {
-  return this.ngControlAccessor.control as FormControl<MyValue>;
-}
-```
 
 `@enigmatry/entry-form` still surfaces `UntypedFormControl` in places, because that is how
 `@ngx-formly/core` types `FieldType.formControl`. That one is not ours to remove.
@@ -261,16 +279,196 @@ form or control arrives, and recover on their own once it does.
 
 ### 10. Fixed, but behaviour-changing
 
-Two long-standing bugs are fixed in this release. Neither is a compile error, so both are worth a
+Several long-standing bugs are fixed in this release. None is a compile error, so all are worth a
 look if you rely on the affected components:
 
 - **`<entry-dialog [disableConfirm]>` now actually disables the confirm button.** The input existed
   in `21.x` but was never bound to anything, so a wrong expression had no visible effect. If yours
-  was wrong, the dialog will now refuse to confirm.
+  was wrong, the dialog will now refuse to confirm. A disabled confirm button stays focusable
+  (`aria-disabled`) and ignores clicks and Enter.
 - **The time picker no longer stamps the current second onto a committed value.** `21.x` fell back
   to `getSeconds(defaultTime ?? now)` whenever seconds were not selectable, so two users applying
   the same visible time produced different values. Seconds now come from the bound date when they
   are shown, from an explicit `defaultTime` when one is given, and are `0` otherwise.
+- **`<entry-search-filter [searchFilters]>` rebuilds when the array changes.** `21.x` built the form
+  once, so filters that arrived later — a select filter replaced once its options load — were never
+  rendered and never had their `formControl` assigned. Every new array now rebuilds, and the values
+  already in the form are carried over by key so nothing the user typed is lost. In-place mutation
+  (`filters.push(...)`) still does not rebuild: signal inputs compare by identity, so hand over a new
+  array (`this.filters = [...this.filters, newFilter]`).
+- **`[entryDisplayControlValidation]` now clears its message when the control stops being invalid.**
+  `21.x` only ever wrote the text, so a message survived the field being corrected. If you relied on
+  the message staying put, it no longer does.
+- **The permission directives deny by default.** `[entryPermissionsOnly]="user()?.permissions"` while
+  a profile loads binds `undefined`, which now reads as "nothing to check against" and hides the
+  host. `21.x` threw from inside the input setter and left the element visible. Bind an empty array
+  where you genuinely mean "no restriction".
+
+  The directives also evaluate both aliases when both are bound — the host is shown only when
+  `entryPermissionsOnly` is held and `entryPermissionsExcept` is not. In `21.x` whichever setter ran
+  last decided the result.
+- **Server-side errors on disabled controls now show at form level.** `setServerSideValidationErrors`
+  put them on the disabled control in `21.x`, where Angular never reports them as invalid, so the
+  message appeared nowhere. They now land in `<entry-form-errors>`, as do errors for controls inside
+  a disabled group or array. If your app wraps the helper to work around this, remove the wrapper —
+  otherwise the message may show twice.
+
+### 11. The date-time picker is a real form control, and two directives are gone
+
+`EntryDateTimePickerComponent` implements
+[`FormValueControl`](https://angular.dev/guide/forms/signals/custom-controls), so it owns a `value`
+model signal and lets the forms API drive it. `21.x` did the opposite: it provided a no-op
+`ControlValueAccessor` purely to satisfy Angular's requirement that a `[formControl]`-bound element
+have an accessor, then used a second directive to reach around it, take the control the host was
+really bound to, and write to it directly.
+
+**`NoopControlValueAccessorDirective` and `NgControlAccessorDirective` are deleted** from
+`@enigmatry/entry-components/common`. Nothing replaces them. If you applied either to a component of
+your own for the same reason, drop both and give that component a `value = model<T>()` instead:
+
+```diff
+  @Component({
+-   hostDirectives: [NoopControlValueAccessorDirective, NgControlAccessorDirective],
+    ...
+  })
+- export class MyControl {
+-   private readonly ngControlAccessor = inject(NgControlAccessorDirective);
+-   get formControl(): FormControl<MyValue> {
+-     return this.ngControlAccessor.control as FormControl<MyValue>;
+-   }
+- }
++ export class MyControl implements FormValueControl<MyValue> {
++   readonly value = model<MyValue>(…);
++ }
+```
+
+That contract is **not** signal-forms-only, and it needs no compatibility layer: reactive and
+template-driven forms drive it natively, so `[formControl]`, `formControlName` and `[(ngModel)]`
+carry on working and the same component also accepts `[formField]`. Do not implement
+`ControlValueAccessor` alongside it — Angular takes the accessor path whenever one is present, and
+the `value` model is then never written, with no compile error to tell you.
+
+Every existing picker call site keeps working. Four things change:
+
+- **`[disabled]` no longer disables the control you bound.** `21.x` reached into the bound control
+  and called `disable()` on it, so `[disabled]="true"` beside a `[formControl]` disabled the
+  consumer's control and left it disabled. The input now only disables the picker, and the forms API
+  drives it from the field's own state. Disable the control instead
+  (`myControl.disable()`), which is what the `disabled` input documentation already told you to do.
+- **`formControl` is removed.** It was a getter handing back the control the host was bound to, which
+  the picker no longer reaches for. Read and write `value` instead.
+- **`calendarControl`, `is12HourClock`, `timePicker`, `minDate` and `maxDate` are now `protected`.**
+  They are implementation detail, so reading any of them off a `@ViewChild` reference is a compile
+  error. `calendarControl` in particular moved onto an internal object and is no longer a member at
+  all.
+- **`dateTimeChanged` and `valueChange` are not interchangeable — do not swap one for the other.**
+  `valueChange` is the `value` model's own output and fires only for the picker's writes, so a user
+  edit reaches it but `boundControl.setValue(…)` does not. `dateTimeChanged` fires for both and is
+  the one to keep bound if you care about programmatic writes.
+- **`dateTimeChanged` reports stabilized values.** It is driven off the value signal, so writes that
+  land inside one tick collapse into a single emission of the value the tick ends on:
+  `setValue(a); setValue(b)` emits once with `b`, and `a → b → a` emits once with `a` — the
+  intermediate `b` never surfaces. `21.x` emitted every write, because it observed the bound
+  control's `valueChanges` directly. Setting a control to the object reference it already holds also
+  no longer emits. If you need per-write notification, subscribe to your own control's
+  `valueChanges`.
+- **`min` and `max` no longer accept a nullable type, and the schema owns them under `[formField]`.**
+  They narrowed from `D | undefined` to `NonNullable<D> | undefined`, so under `strictTemplates` a
+  binding typed `Date | null` no longer compiles — narrow it at the call site. Reactive forms do not
+  bind these, so an explicit `[min]`/`[max]` is still yours to set there; signal forms do, so under
+  `[formField]` they come from the field's `min`/`max` validators and an explicit binding is
+  overwritten.
+
+**Known limitation — unparseable text no longer invalidates the control you bound.** The picker holds
+its own control behind the visible field now, so Material raises `matDatepickerParse` there instead
+of on yours. In `21.x` the visible input was bound straight to your control, so typing text Material
+could not read left it invalid and blocked submission; now an optional field reports valid and empty
+while the bad text is still on screen. The form field still shows its error state, so this is visible
+rather than silent, but it does not stop a submit.
+
+The cheap route is closed and the supported one is deferred. `NG_VALIDATORS` is not it: a custom
+control's validators are composed only through `setUpControlValueAccessor`, which the custom-control
+path deliberately skips, so a `FormValueControl` cannot contribute its own errors in either reactive
+or signal forms. The supported public channel is
+[`transformedValue`](https://angular.dev/guide/forms/signals/custom-controls#reporting-parse-errors),
+which has the control own the raw text and report its own parse errors — a larger change than it
+looks, because taking the parsing off `MatDatepickerInput` also takes away the control the form field
+reads its error state from. It is not in this release.
+
+Until it is, **a consumer cannot tell unparseable text from a legitimately empty field** — the value
+is `null` either way, so a validator of your own has nothing to key on. Two things do block a submit:
+**make the field required**, which rejects the `null` that a failed parse produces (the message will
+say required rather than naming the bad date), or read the input's raw text yourself.
+
+`reset()` is what clears the bad text. Setting a control's value cannot: Material reformats its input
+only when the new value differs by reference, so resetting an already-empty field leaves the text on
+screen. `field().reset()` calls the picker's `reset()` and clears both the text and the error; a
+reactive `control.reset()` does not reach it.
+
+### 12. Dialogs close themselves, with a typed result
+
+`<entry-dialog>` no longer takes its confirm and cancel behaviour as function inputs, and dialog
+components no longer extend `EntryDialogComponent`. A dialog component renders `<entry-dialog>`,
+listens to its outputs and closes itself through a typed handle:
+
+```diff
+  @Component({
+-   template: `<entry-dialog title="Rename" [confirm]="rename"> … </entry-dialog>`
++   template: `<entry-dialog title="Rename" (confirmed)="dialog.close(name())"> … </entry-dialog>`
+  })
+- export class RenameDialog extends EntryDialogComponent {
+-   readonly data: RenameData = inject(MAT_DIALOG_DATA);
+-   name = this.data.name;
+-   rename = () => of(this.name);
++ export class RenameDialog {
++   readonly dialog = injectEntryDialog<RenameData, string>();
++   protected readonly name = signal(this.dialog.data.name);
+  }
+```
+
+- **The `confirm` and `cancel` inputs are gone; bind `(confirmed)` and `(canceled)`.** A leftover
+  `[confirm]` or `[cancel]` binding is a compile error under `strictTemplates`. `(confirmed)` only
+  notifies: call `dialog.close(result)` when you are done, so a save that fails can leave the dialog
+  open. `(canceled)` is emitted by the cancel and close buttons, after which the dialog closes with
+  `undefined` unless the handler already closed it; close synchronously to return a value of your own.
+- **The confirm button no longer closes the dialog by itself, and nothing tells you at compile
+  time.** A dialog that relied on the default confirm button closing with `true` stays open until it
+  binds `(confirmed)="dialog.close(true)"`. Look for every `<entry-dialog>` that renders the default
+  buttons (no `hideButtons`, no `buttonsTemplate`) and has no `(confirmed)` binding.
+- **Cancel and the close button close with `undefined`, not `false`.** That matches Escape and
+  backdrop clicks, so `undefined` always means "dismissed". The built-in confirm dialog still returns
+  `false` for both.
+- **Read the data and close through the handle.** `inject(MAT_DIALOG_DATA)` becomes `dialog.data`,
+  and `this.close(x)` or `this.mdDialogRef.close(x)` becomes `dialog.close(x)`. The handle has to be a
+  public field named `dialog`: `EntryDialogService.open()` reads the data and result types from it,
+  so `open(RenameDialog, { name })` returns `Observable<string | undefined>` and rejects data of the
+  wrong shape. Data is required unless the dialog's data type accepts `undefined`, and
+  `injectEntryDialog()` without type arguments is `EntryDialog<void, boolean>`. Once the dialog has
+  started closing, further `dialog.close()` calls and button presses are ignored, so the first close
+  wins.
+- **`dialog.submit()` keeps the confirm button disabled while saving.** It holds `dialog.submitting()`
+  true until the work you pass settles and ignores repeated calls; bind
+  `[disableConfirm]="dialog.submitting()"`.
+- **The cancel button no longer submits a form around the dialog.** In `21.x` neither default button
+  had a `type`, so inside a `<form>` both submitted it. The confirm button is still a submit button,
+  so a dialog component that wraps `<entry-dialog>` in its own `<form [formGroup]>` still confirms on
+  Enter, but cancel is now `type="button"`. Save such a dialog from the form's `(ngSubmit)`, not
+  `(confirmed)`: `(confirmed)` fires on the click, before the form commits controls that update on
+  `submit`.
+- **The built-in dialogs' data types lost the `I` prefix and the `Partial`.** `IEntryAlertDialogData`,
+  `IEntryConfirmDialogData` and `IEntryErrorDialogData` are now `EntryAlertDialogData`,
+  `EntryConfirmDialogData` and `EntryErrorDialogData`. `openAlert`, `openConfirm` and `openError`
+  require `title` and `message` (`message` is optional for errors and renders above the error list),
+  and they no longer write `disableClose` back into the object you pass.
+- **The built-in dialog components no longer extend `EntryDialogComponent`.**
+  `EntryAlertDialogComponent`, `EntryConfirmDialogComponent` and `EntryErrorDialogComponent` expose
+  their data as `dialog.data` instead of `data`, their `config` and the error dialog's `errors` are
+  now `protected`, and they no longer carry the `<entry-dialog>` inputs, `close` or `onSubmit`.
+- **Smaller changes:** the title is an `<h2 mat-dialog-title>`; the inner `role="dialog"` is gone,
+  since `mat-dialog-container` already carries it; the close button's accessible label comes from
+  `EntryDialogConfig.closeButtonLabel` (default `'Close dialog'`) instead of being hard-coded;
+  `buttonsTemplate` is typed `TemplateRef<unknown>`; and `EntryDialogComponent` no longer has
+  `close` or `onSubmit`.
 
 ## License
 
