@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { FileInputValue } from '@enigmatry/entry-components/file-input';
 
 @Component({
     selector: 'app-file-input-form-example',
@@ -8,9 +9,11 @@ import { FormControl, FormGroup } from '@angular/forms';
     standalone: false
 })
 export class FileInputFormExampleComponent {
-  selectedFile: File | undefined;
+  protected selectedFile: FileInputValue = null;
 
-  form = new FormGroup({
-    file: new FormControl<File | undefined>(undefined)
+  protected readonly standaloneControl = new FormControl<FileInputValue>(null);
+
+  protected readonly form = new FormGroup({
+    file: new FormControl<FileInputValue>(null)
   });
 }
