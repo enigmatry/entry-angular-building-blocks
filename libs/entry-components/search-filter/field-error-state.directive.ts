@@ -1,4 +1,4 @@
-import { Directive, effect, inject, input } from '@angular/core';
+import { DoCheck, Directive, effect, inject, input } from '@angular/core';
 import { Field } from '@angular/forms/signals';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatInput } from '@angular/material/input';
@@ -8,7 +8,7 @@ import { MatInput } from '@angular/material/input';
   selector: 'input[matInput][entryFieldErrorState]',
   standalone: false
 })
-export class FieldErrorStateDirective {
+export class FieldErrorStateDirective implements DoCheck {
   private readonly matInput = inject(MatInput, { self: true });
   private readonly errorStateMatcher = inject(ErrorStateMatcher);
 
@@ -16,15 +16,22 @@ export class FieldErrorStateDirective {
   readonly entryFieldErrorState = input.required<Field<unknown>>();
 
   constructor() {
-    effect(() => {
-      const errorState = this.currentErrorState(this.entryFieldErrorState());
-      if (errorState !== this.matInput.errorState) {
-        this.matInput.errorState = errorState;
-        // `mat-form-field` re-reads `errorState` only when the control emits here.
-        this.matInput.stateChanges.next();
-      }
-    });
+    effect(() => this.applyErrorState(this.entryFieldErrorState()));
   }
+
+  // MatInput re-runs its matcher on every check, so a matcher reading state outside the field is picked up here too.
+  ngDoCheck(): void {
+    this.applyErrorState(this.entryFieldErrorState());
+  }
+
+  private readonly applyErrorState = (field: Field<unknown>): void => {
+    const errorState = this.currentErrorState(field);
+    if (errorState !== this.matInput.errorState) {
+      this.matInput.errorState = errorState;
+      // `mat-form-field` re-reads `errorState` only when the control emits here.
+      this.matInput.stateChanges.next();
+    }
+  };
 
   // Material's tracker hands a classic-only matcher a null control for every `[formField]` input; the same here.
   private readonly currentErrorState = (field: Field<unknown>): boolean => {
