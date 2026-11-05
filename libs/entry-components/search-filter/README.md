@@ -117,7 +117,7 @@ empty date filter leaves the value `null` and is not validated.
 
 The component renders a Clear button beside Apply. It empties every filter and forgets which were
 touched. It clears rather than restoring declared values, and handing the same filters over again
-does not bring a default back either.
+does not bring a default back either — call `reset()` for that (see below).
 
 ## Setting a filter's value
 
@@ -128,8 +128,17 @@ keeps what the user typed unless a filter's declared `value` changed:
 this.filters = this.createFilters(this.route.snapshot.queryParams);
 ```
 
-So there is no way to force a value a filter already declares: once the user has edited or cleared
-it, handing over the same declaration leaves their value in place.
+A rebind cannot force a value a filter already declares: once the user has edited or cleared it,
+handing over the same declaration leaves their value in place. To put values back — a saved search,
+say — call `reset(values)` on the component. Each filter takes the value given for its key, or else
+the one it declares, and forgets that it was touched:
+
+```ts
+this.searchFilter().reset(savedSearch);
+```
+
+A key given as `null` empties its filter. Each value must have the shape its filter holds — an array
+for a multi-select. A server message stays on a filter whose value the reset leaves unchanged.
 
 ## Grouping select/autocomplete options
 

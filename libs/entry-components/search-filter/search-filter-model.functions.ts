@@ -2,29 +2,10 @@ import { PathKind, REQUIRED, SchemaFn, SchemaPathTree, applyEach, applyWhenValue
   required, requiredError, validate } from '@angular/forms/signals';
 import { ControlType } from './control-type';
 import { SearchFilterBase } from './search-filter-base.model';
+import { isMultiSelect } from './search-filter-entries.functions';
 import { SearchFilterValue, SearchFilterValues } from './search-filter-values.type';
-import { SelectSearchFilter } from './select/select-search-filter.model';
 
 const lastKeyIndex = -1;
-
-/**
- * The value a filter holds when it is empty.
- *
- * @remarks Text filters get `''` rather than `null` so they stay inside the schema's string
- * narrowing from first render - with `null` the `maxLength` rule is inactive until the first
- * keystroke, and the `maxlength` attribute the forms API writes from it is absent, so a paste into
- * an empty filter would not be truncated.
- */
-export const emptySearchFilterValue = (searchFilter: SearchFilterBase<unknown>): SearchFilterValue => {
-  if (searchFilter.controlType === ControlType.text) {
-    return '';
-  }
-  return searchFilter instanceof SelectSearchFilter && searchFilter.multiSelect ? [] : null;
-};
-
-/** The model one bound filter contributes, its declared value coerced away from `undefined`. */
-export const searchFilterEntry = (searchFilter: SearchFilterBase<unknown>): [string, SearchFilterValue] =>
-  [searchFilter.key, (searchFilter.value as SearchFilterValue | undefined) ?? emptySearchFilterValue(searchFilter)];
 
 /** Whether the filter holds an option's key, which the options are free to make `false`. */
 const holdsAnOptionKey = (searchFilter: SearchFilterBase<unknown>): boolean =>
@@ -88,7 +69,7 @@ const applyLengthRules = (
       context => {
         const searchFilter = configFor(context.pathKeys().at(lastKeyIndex));
         // Only a multi-select's array is the selection; a single-select or autocomplete key may be an array.
-        const requiredMultiSelect = searchFilter instanceof SelectSearchFilter && searchFilter.multiSelect && searchFilter.required;
+        const requiredMultiSelect = searchFilter !== undefined && isMultiSelect(searchFilter) && searchFilter.required;
         return requiredMultiSelect ? 1 : 0;
       },
       { message: messages.requiredMessage }

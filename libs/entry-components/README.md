@@ -415,6 +415,7 @@ never writes back onto them.
 |---|---|---|
 | `EntrySearchFilterComponent.searchAction` | — | **new, required**: `(values) => Promise<SearchFilterServerError[] \| void>` |
 | `EntrySearchFilterComponent.searchFilterChange` | `EventEmitter<SearchFilterParams>` | `OutputEmitterRef<SearchFilterParams>`, still emitted on every accepted search |
+| `EntrySearchFilterComponent.reset(values?)` | — | **new**: puts each filter back to the value given for its key, else to the one it declares |
 | `EntrySearchFilterComponent.searchFilterForm` | `UntypedFormGroup` | **gone** — there is no reactive form |
 | `EntrySearchFilterComponent.renderedSearchFilters` | — | **gone** — `protected` now, and it only ever existed on unreleased `master` |
 | `EntrySearchFilterComponent.toFormGroup` | `(filters) => UntypedFormGroup` | **gone** |
@@ -512,10 +513,22 @@ writing `undefined` into a live field destroys its node along with its touched s
 The component keeps what the user typed unless the filter's declared `value` changed, compared **by
 reference**. A `string` or `number` default therefore survives a rebind that changes nothing, while a
 `Date` or an array default is a new object on every rebuild and replaces what the user typed. Hold a
-non-primitive default in a field and hand over the same instance when an edit must be left alone.
+non-primitive default in a field and hand over the same instance when an edit must be left alone. A
+different kind of filter for the same key — a text filter replaced by a multi-select, say — also
+starts from its own value rather than inheriting the old one.
 
-The flip side is that there is no way to force a value a filter already declares. Once the user has
-edited or cleared it, handing over the same declaration leaves their value in place.
+The flip side is that a rebind cannot force a value a filter already declares: once the user has
+edited or cleared it, handing over the same declaration leaves their value in place. For that, call
+`reset(values)` on the component — each filter takes the value given for its key, or else the one it
+declares, and forgets that it was touched:
+
+```ts
+this.searchFilter().reset(savedSearch);   // values for the keys you name, declared values for the rest
+```
+
+A key given as `null` empties its filter. Each value must have the shape its filter holds — an array
+for a multi-select — just as a declared value must. A server message stays on a filter whose value the
+reset leaves unchanged, since that value is still the one the server rejected.
 
 #### Validation and submission
 
@@ -547,7 +560,7 @@ client and clears normally, rather than relying on the server to reject it.
 
 There is a Clear button now, labelled through `EntrySearchFilterConfig.clearButtonText`. It empties
 every filter and forgets which were touched. It clears rather than restoring declared values, and
-handing the same filters over again does not bring a default back either — see
+handing the same filters over again does not bring a default back either — `reset()` does, see
 [Setting a filter's value](#setting-a-filters-value).
 
 #### What this cost, for anyone doing the same migration

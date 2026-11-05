@@ -7,7 +7,7 @@
             }
         </div>
     }
-    @for (searchFilter of renderedSearchFilters(); track searchFilter.key) {
+    @for (searchFilter of renderedSearchFilters(); track renderIdentity(searchFilter)) {
         <div class="form-field">
             @switch (searchFilter.controlType) {
                 @case (controlType.text) {

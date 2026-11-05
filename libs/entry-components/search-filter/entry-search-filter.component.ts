@@ -7,7 +7,13 @@ import { DateTimeSearchFilter } from './date-time/date-time-search-filter.model'
 import { SearchFilterAction, SearchFilterServerError } from './search-filter-action.type';
 import { SearchFilterBase } from './search-filter-base.model';
 import { ENTRY_SEARCH_FILTER_CONFIG, EntrySearchFilterConfig } from './search-filter-config.model';
-import { emptySearchFilterValue, searchFilterEntry, searchFilterSchema } from './search-filter-model.functions';
+import {
+  carriedSearchFilterEntry,
+  emptySearchFilterValue,
+  restoredSearchFilterEntry,
+  searchFilterRenderIdentity
+} from './search-filter-entries.functions';
+import { searchFilterSchema } from './search-filter-model.functions';
 import { SearchFilterParams } from './search-filter-params.type';
 import { SearchFilterValues } from './search-filter-values.type';
 import { SelectSearchFilter } from './select/select-search-filter.model';
@@ -49,19 +55,11 @@ export class EntrySearchFilterComponent {
 
   protected readonly controlType = ControlType;
 
-  /**
-   * Carries a value across a rebind only while the filter still declares the same one, so handing
-   * over filters with new values - the way to set them, now that the models hold no control - wins
-   * over what the user typed, and a rebind that changes nothing does not.
-   */
+  /** Carries what the user typed across a rebind while each filter stays as it was declared - see `carriedSearchFilterEntry`. */
   private readonly model = linkedSignal<readonly SearchFilterBase<unknown>[], SearchFilterValues>({
     source: () => this.searchFilters(),
-    computation: (searchFilters, previous) => Object.fromEntries(searchFilters.map(searchFilter => {
-      const declared = previous?.source.find(earlier => earlier.key === searchFilter.key);
-      const keepTyped = declared !== undefined && declared.value === searchFilter.value
-        && previous !== undefined && Object.hasOwn(previous.value, searchFilter.key);
-      return keepTyped ? [searchFilter.key, previous.value[searchFilter.key]] : searchFilterEntry(searchFilter);
-    }))
+    computation: (searchFilters, previous) =>
+      Object.fromEntries(searchFilters.map(searchFilter => carriedSearchFilterEntry(searchFilter, previous)))
   });
 
   // Declared above `filterForm` because a field initializer reads them: an arrow property below it
@@ -93,6 +91,8 @@ export class EntrySearchFilterComponent {
   /** Read off the input rather than by iterating the field tree, which does not track its key set. */
   protected readonly renderedSearchFilters = computed(() => this.searchFilters());
 
+  protected readonly renderIdentity = searchFilterRenderIdentity;
+
   /**
    * Empties every filter and forgets which were touched, in one write.
    *
@@ -102,6 +102,21 @@ export class EntrySearchFilterComponent {
   protected readonly clear = (): void => {
     this.filterForm().reset(Object.fromEntries(
       this.searchFilters().map(searchFilter => [searchFilter.key, emptySearchFilterValue(searchFilter)])
+    ));
+  };
+
+  /**
+   * Puts every filter back to the value given for its key, or else to the value it declares, and forgets which
+   * were touched. A key given as `null` empties its filter; a key left out or given as `undefined` restores it.
+   *
+   * @remarks The way to restore a value the filter already declares. Handing the filters over again keeps what the
+   * user typed when no declaration changed, so it cannot tell "put this back" from "nothing happened". Each value
+   * must have the shape its filter holds - an array for a multi-select. A server message stays on a filter whose
+   * value the reset leaves unchanged.
+   */
+  readonly reset = (values: SearchFilterParams = {}): void => {
+    this.filterForm().reset(Object.fromEntries(
+      this.searchFilters().map(searchFilter => restoredSearchFilterEntry(searchFilter, values))
     ));
   };
 
