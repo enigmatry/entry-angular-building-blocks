@@ -142,17 +142,16 @@ in a constructor, an `afterNextRender` callback or a `linkedSignal`.
 | Symbol | 21.x | 22.0.0 |
 |---|---|---|
 | `EntryDateTimePickerComponent.dateTimeChanged` | `Subject<D>` | `OutputEmitterRef<D>` |
-| `EntryDialogComponent.confirm` | callable member | `confirmAction` input, bound as `[confirm]` |
-| `EntryDialogComponent.cancel` | callable member | `cancelAction` input, bound as `[cancel]` |
-| `EntryFileInputComponent.value` | `File \| FileList \| undefined` | `Signal<...>` (read-only) |
-| `EntryFileInputComponent.fileNames` | getter | `Signal<string>` |
+| `EntryDialogComponent.confirm` / `.cancel` | callable members | `(confirmed)` / `(canceled)` outputs — see [section 12](#12-dialogs-close-themselves-with-a-typed-result) |
+| `EntryFileInputComponent.value` | `File \| FileList \| undefined` | `ModelSignal<FileInputValue>` — see [section 8](#8-the-file-input-is-a-real-form-control) |
+| `EntryFileInputComponent.fileNames` | getter | `protected` — see [section 8](#8-the-file-input-is-a-real-form-control) |
 | `EntryFileInputComponent.selectedFile` | `EventEmitter<File \| FileList>` | `OutputEmitterRef<File \| FileList>` |
 | `EntrySearchFilterComponent.searchFilterChange` | `EventEmitter<SearchFilterParams>` | `OutputEmitterRef<SearchFilterParams>` |
 | `SearchFilterBase.formatValue` | `(value: T) => T` | `(value: unknown) => unknown` |
 | `EntryTimePickerComponent.hours` / `.minutes` / `.seconds` / `.meridiem` | plain fields | signals — only reachable through a template ref, the class is not exported |
 
 The search filter's own members are not in this table: it no longer exposes a form at all, and every
-other member of it changed shape too. [Section 12](#12-the-search-filter-runs-on-signal-forms)
+other member of it changed shape too. [Section 13](#13-the-search-filter-runs-on-signal-forms)
 covers that component on its own.
 
 `formatValue` is the one signature change with a compile error at the *consumer's* callback rather
@@ -186,18 +185,6 @@ works, but an `OutputEmitterRef` is not an `Observable`, so `.pipe()`, `.asObser
 
 `outputToObservable` comes from `@angular/core/rxjs-interop`.
 
-The dialog callbacks are the one break with no compile-time signal if you only use the class from a
-template, and the one most likely to bite a subclass:
-
-```diff
-  export class MyDialog extends EntryDialogComponent {
-    onDismiss(): void {
--     this.cancel();          // returned the callback instead of invoking it
-+     this.cancelAction()();  // or simply this.onCancel()
-    }
-  }
-```
-
 ### 7. No more `UntypedFormGroup` / `UntypedFormControl`
 
 Every `Untyped*` type is gone from the library's public surface. Those aliases were only ever an
@@ -224,30 +211,141 @@ You can now pass a **typed** form where you previously had to widen to `UntypedF
 ```
 
 The search filter used to be the third entry here. It no longer has a reactive form of any kind —
-see [section 12](#12-the-search-filter-runs-on-signal-forms).
+see [section 13](#13-the-search-filter-runs-on-signal-forms).
 
 `@enigmatry/entry-form` still surfaces `UntypedFormControl` in places, because that is how
 `@ngx-formly/core` types `FieldType.formControl`. That one is not ours to remove.
 
-### 8. `EntryFileInputComponent.disabled` no longer reports the effective state
+### 8. The file input is a real form control
 
-`disabled` used to be a getter that reflected both the `[disabled]` binding **and** the forms API
-(`setDisabledState`, i.e. `formControl.disable()`). It is now the bound input only; the combined
-state moved to `effectiveDisabled`.
+`EntryFileInputComponent` implements
+[`FormValueControl`](https://angular.dev/guide/forms/signals/custom-controls), the same contract the
+date-time picker moved to, so it owns a `value` model signal and lets the forms API drive it. Its
+`ControlValueAccessor` and its `Validator` are gone, along with `NG_VALUE_ACCESSOR` and
+`NG_VALIDATORS`.
+
+`[formControl]`, `formControlName` and `[(ngModel)]` all keep working — reactive and template-driven
+forms drive that contract natively, though validator directives on the element and
+`updateOn: 'submit'` no longer apply (see below) — and the component now also accepts `[formField]`. Without a
+form, `[(value)]` binds the selection directly. Do not give it a `ControlValueAccessor` again:
+Angular takes the accessor path whenever one is present, and the `value` model is then never
+written. [Section 11](#11-the-date-time-picker-is-a-real-form-control-and-two-directives-are-gone)
+has the rest of the contract.
+
+The two interfaces took their members with them, and what is left of the internals was narrowed
+while the class was open:
+
+| Symbol | 21.x | 22.0.0 |
+|---|---|---|
+| `writeValue` / `registerOnChange` / `registerOnTouched` / `setDisabledState` | `ControlValueAccessor` | **gone** |
+| `onChange` / `onTouched` | callbacks the forms API registered | **gone** |
+| `validate` | `Validator` | **gone** — see below |
+| `maxFileSizeInKb` / `maxFileCount` | inputs | **gone** — see below |
+| `fileNames` / `onFileSelect` | public | `protected` — template-only members |
+| `_fileButton` / `_fileInput` | public `@ViewChild` fields | **gone** — the element references are private now |
+
+`value` was a plain field in `21.x` and is a `ModelSignal` now, so assigning to it no longer
+compiles: `value.set(…)` is the supported way to set the selection from outside. Its empty is `null` rather than `undefined` —
+`FileInputValue` is `File | FileList | null`, because a signal form's model may not contain
+`undefined` — so a field or control you declare wants `null` as its initial value. Retype the ones
+you have: a control or `[(ngModel)]` property declared `File | undefined` keeps compiling and then
+takes a `null` at runtime, from `clear()` or from an empty selection. Change emptiness checks written
+as `=== undefined` too: TypeScript does not flag them, and a gate such as `selectedFile === undefined`
+stays `false` once the empty is `null`. `clear()` still
+empties the selection, `reset()` is new and returns the element to its pristine state (it is what
+`field().reset()` calls), and `focus()` is new so that `focusBoundControl()` reaches the button.
+
+#### The size and count limits moved out of the component
+
+A custom control cannot report its own errors. Its validators are composed only through
+`setUpControlValueAccessor`, which the custom-control path deliberately skips, and signal forms
+expects validation to come from the schema. So `maxFileSizeInKb` and `maxFileCount` are gone as
+inputs, and the same two limits ship as rules for the control you own:
 
 ```diff
-- if (this.fileInput().disabled) { ... }          // false after formControl.disable()
-+ if (this.fileInput().effectiveDisabled()) { ... }
+- <entry-file-input formControlName="image" multiple="true" [maxFileSizeInKb]="100" [maxFileCount]="2" />
++ <entry-file-input formControlName="image" multiple="true" />
 ```
 
-This one is silent, and worse than a stale value. Per section 5 `disabled` is now a signal, so the
-expression above does not return "the old boolean" — it returns the signal *function*, which is
-always truthy. An upload gate written that way inverts to permanently disabled:
+```diff
++ import { maxFileCountValidator, maxFileSizeValidator } from '@enigmatry/entry-components/file-input';
+...
+- image: new FormControl<File | undefined>(undefined, { validators: [Validators.required] })
++ image: new FormControl<FileInputValue>(null, {
++   validators: [Validators.required, maxFileSizeValidator(100), maxFileCountValidator(2)]
++ })
+```
+
+The error keys are unchanged — `maxFileSize` and `maxFileCount`, reported for the same selections as
+before for any positive limit — so configured validation messages keep matching. A limit of `0` is the
+exception: `21.x` treated it as no limit, while the validators enforce it — `0` files rejects every
+selection and `0` KB every non-empty file — so
+leave the validator off rather than passing `0`. For a signal form the same limits are
+schema rules, and they carry a message of their own:
 
 ```ts
-// always true in 22.0.0, whatever the state
-if (this.fileInput().disabled) { … }
+import { maxFileCount, maxFileSize } from '@enigmatry/entry-components/file-input';
+
+readonly uploadForm = form(this.uploadModel, path => {
+  maxFileSize(path.attachments, 100, { message: 'Every file has to be 100 KB or smaller.' });
+  maxFileCount(path.attachments, 2, { message: 'Select at most two files.' });
+});
 ```
+
+Do not count on the compiler to find the two removed inputs. A bound `[maxFileSizeInKb]` or
+`[maxFileCount]` is usually `NG8002`, but a plain attribute (`maxFileCount="2"`), a module or
+component with `NO_ERRORS_SCHEMA` or `CUSTOM_ELEMENTS_SCHEMA`, and — with `strictTemplates` off — a
+binding inside `@if`, `@for` or an `<ng-template>` all compile cleanly, and the limit simply stops
+being enforced. Grep your templates for `maxFileSizeInKb` and `maxFileCount` either way.
+
+**Validator directives on the element stop applying, whatever the binding — this is the silent
+part.** Angular composes validators only in `setUpControlValueAccessor`, so on a custom control it
+composes none at all. A validator *directive* on the element no longer reaches the control, in
+reactive forms as much as template-driven ones, and that includes Angular's own:
+
+```html
+<!-- 21.x: invalid while empty. 22.0.0: valid while empty; the file input warns in dev mode -->
+<entry-file-input required [(ngModel)]="file" name="file" />
+<entry-file-input required formControlName="image" />
+```
+
+The same is true of the date-time picker and of any custom control you write. Put the rule on the
+control (`Validators.required`) or on the signal form's schema instead. A validator directive of your
+own will not work either — there is no composition step left for it to join. In dev mode the file
+input logs a console warning when it finds a validator directive on its element; the picker does not.
+
+#### Four behaviour changes beyond the contract
+
+- **`updateOn: 'submit'` is ignored.** Set on the control, its group or form, or through
+  `ngModelOptions`, it no longer holds a selection back: the value, dirty, touched and validation
+  update as soon as a file is picked, where `21.x` waited for submit. Angular applies a custom
+  control's value directly; [angular/angular#70735](https://github.com/angular/angular/pull/70735)
+  fixes that upstream. `'blur'` changes nothing here, because `21.x` committed on selection too.
+- **Blur now marks the control touched.** `21.x` marked it only on a selection, so tabbing past an
+  empty required field now shows its error.
+- **A value the element did not produce now clears it.** `21.x` left the files on the native input
+  whenever the bound control was reset or written to, so the element held files the form did not
+  have — and because the browser raises no `change` when the user picks one of those again, that
+  selection could not be restored at all. The component now remembers the value it handed over and
+  empties the element for every other write; `reset()` does the same on demand. Note that
+  `control.reset(control.value)` is not one of those writes: the value does not change, so the
+  element still matches it and is left alone. Nor is a write back to the previous value before the
+  next change detection — a `control.reset()` or `setValue(null)` inside `(selectedFile)` or a
+  synchronous `valueChanges` subscriber — because Angular never passes it to a custom control, and the
+  file name stays on screen. Discard such a selection with the component's `clear()`, followed by
+  `control.reset()` if pristine matters.
+- **A `FileList` value is a copy now, and outlives the element.** The value used to be the
+  element's own list, which the browser empties in place when the input is cleared — so a list you
+  had captured from `selectedFile` went to zero length behind your back the moment anything called
+  `clear()`. The component hands over a detached copy instead. Single `File` values were never
+  affected.
+
+`[disabled]` beside a bound control behaves as it did in `21.x`: the binding and the forms API write
+the same input and the last write wins — the forms API at setup and whenever the control is disabled
+or enabled, the binding whenever its value changes. In a reactive form, disable the control
+(`myControl.disable()`); with `[(ngModel)]`, `[disabled]` goes through the control and stays the way
+to do it. `disabled` is a signal now, per section 5, so an imperative read is
+`this.fileInput().disabled()`.
 
 ### 9. Required inputs fail earlier and more clearly
 
@@ -278,7 +376,8 @@ look if you rely on the affected components:
 
 - **`<entry-dialog [disableConfirm]>` now actually disables the confirm button.** The input existed
   in `21.x` but was never bound to anything, so a wrong expression had no visible effect. If yours
-  was wrong, the dialog will now refuse to confirm.
+  was wrong, the dialog will now refuse to confirm. A disabled confirm button stays focusable
+  (`aria-disabled`) and ignores clicks and Enter.
 - **The time picker no longer stamps the current second onto a committed value.** `21.x` fell back
   to `getSeconds(defaultTime ?? now)` whenever seconds were not selectable, so two users applying
   the same visible time produced different values. Seconds now come from the bound date when they
@@ -291,7 +390,7 @@ look if you rely on the affected components:
   declared value leaves what the user typed alone. In-place mutation (`filters.push(...)`) still goes
   unnoticed: signal inputs compare by identity, so hand over a new array
   (`this.filters = [...this.filters, newFilter]`). See
-  [section 12](#12-the-search-filter-runs-on-signal-forms) for the rest.
+  [section 13](#13-the-search-filter-runs-on-signal-forms) for the rest.
 - **`[entryDisplayControlValidation]` now clears its message when the control stops being invalid.**
   `21.x` only ever wrote the text, so a message survived the field being corrected. If you relied on
   the message staying put, it no longer does.
@@ -303,6 +402,11 @@ look if you rely on the affected components:
   The directives also evaluate both aliases when both are bound — the host is shown only when
   `entryPermissionsOnly` is held and `entryPermissionsExcept` is not. In `21.x` whichever setter ran
   last decided the result.
+- **Server-side errors on disabled controls now show at form level.** `setServerSideValidationErrors`
+  put them on the disabled control in `21.x`, where Angular never reports them as invalid, so the
+  message appeared nowhere. They now land in `<entry-form-errors>`, as do errors for controls inside
+  a disabled group or array. If your app wraps the helper to work around this, remove the wrapper —
+  otherwise the message may show twice.
 
 ### 11. The date-time picker is a real form control, and two directives are gone
 
@@ -339,8 +443,12 @@ carry on working and the same component also accepts `[formField]`. Do not imple
 `ControlValueAccessor` alongside it — Angular takes the accessor path whenever one is present, and
 the `value` model is then never written, with no compile error to tell you.
 
-Every existing picker call site keeps working. Four things change:
+Existing picker call sites change in these ways:
 
+- **Validator directives on the element stop applying.** `21.x` provided an accessor, so a `required`
+  beside `formControlName` or `[(ngModel)]` reached the control; now it does not, whatever the binding
+  — see [section 8](#8-the-file-input-is-a-real-form-control). Put the rule on the control or the
+  schema.
 - **`[disabled]` no longer disables the control you bound.** `21.x` reached into the bound control
   and called `disable()` on it, so `[disabled]="true"` beside a `[formControl]` disabled the
   consumer's control and left it disabled. The input now only disables the picker, and the forms API
@@ -396,7 +504,72 @@ only when the new value differs by reference, so resetting an already-empty fiel
 screen. `field().reset()` calls the picker's `reset()` and clears both the text and the error; a
 reactive `control.reset()` does not reach it.
 
-### 12. The search filter runs on signal forms
+### 12. Dialogs close themselves, with a typed result
+
+`<entry-dialog>` no longer takes its confirm and cancel behaviour as function inputs, and dialog
+components no longer extend `EntryDialogComponent`. A dialog component renders `<entry-dialog>`,
+listens to its outputs and closes itself through a typed handle:
+
+```diff
+  @Component({
+-   template: `<entry-dialog title="Rename" [confirm]="rename"> … </entry-dialog>`
++   template: `<entry-dialog title="Rename" (confirmed)="dialog.close(name())"> … </entry-dialog>`
+  })
+- export class RenameDialog extends EntryDialogComponent {
+-   readonly data: RenameData = inject(MAT_DIALOG_DATA);
+-   name = this.data.name;
+-   rename = () => of(this.name);
++ export class RenameDialog {
++   readonly dialog = injectEntryDialog<RenameData, string>();
++   protected readonly name = signal(this.dialog.data.name);
+  }
+```
+
+- **The `confirm` and `cancel` inputs are gone; bind `(confirmed)` and `(canceled)`.** A leftover
+  `[confirm]` or `[cancel]` binding is a compile error under `strictTemplates`. `(confirmed)` only
+  notifies: call `dialog.close(result)` when you are done, so a save that fails can leave the dialog
+  open. `(canceled)` is emitted by the cancel and close buttons, after which the dialog closes with
+  `undefined` unless the handler already closed it; close synchronously to return a value of your own.
+- **The confirm button no longer closes the dialog by itself, and nothing tells you at compile
+  time.** A dialog that relied on the default confirm button closing with `true` stays open until it
+  binds `(confirmed)="dialog.close(true)"`. Look for every `<entry-dialog>` that renders the default
+  buttons (no `hideButtons`, no `buttonsTemplate`) and has no `(confirmed)` binding.
+- **Cancel and the close button close with `undefined`, not `false`.** That matches Escape and
+  backdrop clicks, so `undefined` always means "dismissed". The built-in confirm dialog still returns
+  `false` for both.
+- **Read the data and close through the handle.** `inject(MAT_DIALOG_DATA)` becomes `dialog.data`,
+  and `this.close(x)` or `this.mdDialogRef.close(x)` becomes `dialog.close(x)`. The handle has to be a
+  public field named `dialog`: `EntryDialogService.open()` reads the data and result types from it,
+  so `open(RenameDialog, { name })` returns `Observable<string | undefined>` and rejects data of the
+  wrong shape. Data is required unless the dialog's data type accepts `undefined`, and
+  `injectEntryDialog()` without type arguments is `EntryDialog<void, boolean>`. Once the dialog has
+  started closing, further `dialog.close()` calls and button presses are ignored, so the first close
+  wins.
+- **`dialog.submit()` keeps the confirm button disabled while saving.** It holds `dialog.submitting()`
+  true until the work you pass settles and ignores repeated calls; bind
+  `[disableConfirm]="dialog.submitting()"`.
+- **The cancel button no longer submits a form around the dialog.** In `21.x` neither default button
+  had a `type`, so inside a `<form>` both submitted it. The confirm button is still a submit button,
+  so a dialog component that wraps `<entry-dialog>` in its own `<form [formGroup]>` still confirms on
+  Enter, but cancel is now `type="button"`. Save such a dialog from the form's `(ngSubmit)`, not
+  `(confirmed)`: `(confirmed)` fires on the click, before the form commits controls that update on
+  `submit`.
+- **The built-in dialogs' data types lost the `I` prefix and the `Partial`.** `IEntryAlertDialogData`,
+  `IEntryConfirmDialogData` and `IEntryErrorDialogData` are now `EntryAlertDialogData`,
+  `EntryConfirmDialogData` and `EntryErrorDialogData`. `openAlert`, `openConfirm` and `openError`
+  require `title` and `message` (`message` is optional for errors and renders above the error list),
+  and they no longer write `disableClose` back into the object you pass.
+- **The built-in dialog components no longer extend `EntryDialogComponent`.**
+  `EntryAlertDialogComponent`, `EntryConfirmDialogComponent` and `EntryErrorDialogComponent` expose
+  their data as `dialog.data` instead of `data`, their `config` and the error dialog's `errors` are
+  now `protected`, and they no longer carry the `<entry-dialog>` inputs, `close` or `onSubmit`.
+- **Smaller changes:** the title is an `<h2 mat-dialog-title>`; the inner `role="dialog"` is gone,
+  since `mat-dialog-container` already carries it; the close button's accessible label comes from
+  `EntryDialogConfig.closeButtonLabel` (default `'Close dialog'`) instead of being hard-coded;
+  `buttonsTemplate` is typed `TemplateRef<unknown>`; and `EntryDialogComponent` no longer has
+  `close` or `onSubmit`.
+
+### 13. The search filter runs on signal forms
 
 `<entry-search-filter>` is rewritten on [signal forms](https://angular.dev/guide/forms/signals).
 Every member below is measured against **21.4.0**, not against `master` — two of these had already
@@ -409,8 +582,9 @@ never writes back onto them.
 |---|---|---|
 | `EntrySearchFilterComponent.searchAction` | — | **new, required**: `(values) => Promise<SearchFilterServerError[] \| void>` |
 | `EntrySearchFilterComponent.searchFilterChange` | `EventEmitter<SearchFilterParams>` | `OutputEmitterRef<SearchFilterParams>`, still emitted on every accepted search |
+| `EntrySearchFilterComponent.reset(values?)` | — | **new**: puts each filter back to the value given for its key, else to the one it declares |
 | `EntrySearchFilterComponent.searchFilterForm` | `UntypedFormGroup` | **gone** — there is no reactive form |
-| `EntrySearchFilterComponent.renderedSearchFilters` | — | **gone** — it only ever existed on unreleased `master` |
+| `EntrySearchFilterComponent.renderedSearchFilters` | — | **gone** — `protected` now, and it only ever existed on unreleased `master` |
 | `EntrySearchFilterComponent.toFormGroup` | `(filters) => UntypedFormGroup` | **gone** |
 | `EntrySearchFilterComponent.onSubmit` | callable member | **gone** — the form submits itself |
 | `EntrySearchFilterComponent.controlType` / `config` / `as*SearchFilter` | public | `protected` — template-only members |
@@ -419,13 +593,15 @@ never writes back onto them.
 | `SearchFilterBase.toFormControl()` | method | **gone** |
 | `SearchFilterBase.required` | — | **new**: `boolean`, default `false` |
 | `SearchFilterBase.type` | defaulted to `'text-input'` | defaults to `'text'` |
+| `SearchFilterBase.formatValue` | ran on every filter's value changes, `setValue` included | text filters only, on what the user types |
 | `SelectSearchFilter.options` | `SelectOption<T>[]` | `Signal<readonly SelectOption<T>[]>` — a plain array is still accepted and wrapped |
 | `SelectSearchFilter.options$` | `Observable<SelectOption<T>[]>` | **gone** — pass a signal to `options` |
 | `SelectSearchFilter.showNoneOption` | documented `true`, behaved as `false` | `true`, as documented |
 | `AutocompleteSearchFilter.search` | `(input) => Observable<SelectOption<T>[]>` | `(input, abortSignal) => Promise<readonly SelectOption<T>[]>` |
 | `AutocompleteSearchFilter.resolveLabel` | — | **new**, optional: resolves the label for a value the user did not pick |
 | `AutocompleteSearchFilter` value | the whole `SelectOption<T>` | the option's `key` |
-| `EntrySearchFilterConfig.clearButtonText` / `.requiredMessage` / `.maxLengthMessage` | — | **new** |
+| `EntrySearchFilterConfig.clearButtonText` / `.requiredMessage` / `.maxLengthMessage` / `.invalidDateMessage` | — | **new** |
+| `SearchFilterParams`, an empty filter's value | `undefined` | `''` for a text filter, `[]` for a multi-select, `null` for the rest |
 
 #### Running the search
 
@@ -451,25 +627,82 @@ edited. That replaces `setServerSideValidationErrors` on this form — the filte
 +   try {
 +     this.users.set(await firstValueFrom(this.service.getUsers(params)));
 +     return undefined;
-+   } catch (problem) {
-+     return Object.entries((problem as IValidationProblemDetails).errors ?? {})
++   } catch (error) {
++     if (!isValidationProblem(error)) {
++       this.snackBar.open('The search failed. Try again.');
++       return undefined;
++     }
++     return Object.entries(error.errors ?? {})
 +       .flatMap(([key, messages]) => messages.map(message => ({ key, message })));
 +   }
 + };
 ```
 
+`isValidationProblem` stands for whatever narrows the error to `IValidationProblemDetails` in your
+application. Return messages only for what the server rejected: a message for a network failure or a
+server fault would stand on the form like any other and block the retry, so report those yourself.
+
 `searchFilterChange` still fires, so a page that writes the filters into the URL and fetches
 downstream of navigation can keep binding it and hand the action an empty implementation.
 
+`searchAction` and `searchFilterChange` each get their own copy of the values, so adding, removing or
+replacing a key leaves the form alone. Arrays and dates inside are the form's own: replace them, never
+mutate them in place.
+
+Every bound filter was always a key in those params. What changed is what an untouched one holds:
+`''`, `[]` or `null` where `21.4.0` put `undefined`. A guard that tested only for `undefined` now
+lets empty filters through, so a page that writes them into the URL gains empty query parameters,
+and a backend reading a present-but-empty value as "match the empty string" returns nothing:
+
+```ts
+const isEmptySearchValue = (value: unknown): boolean =>
+  value === undefined || value === null || value === '' || (Array.isArray(value) && value.length === 0);
+```
+
+```diff
+  readonly onNavigate = (params: SearchFilterParams): void => {
+-   const applied = Object.fromEntries(
+-     Object.entries(params).filter(([, value]) => value !== undefined));
++   const applied = Object.fromEntries(
++     Object.entries(params).filter(([, value]) => !isEmptySearchValue(value)));
+    this.router.navigate([], { queryParams: applied });
+  };
+```
+
+The shape is forced rather than chosen: a model value of `undefined` yields no field at all, and
+writing `undefined` into a live field destroys its node along with its touched state.
+
 #### Setting a filter's value
 
-`setValue` is gone because there is no control to set. Hand over new filter instances instead — the
-component keeps what the user typed unless the filter's declared `value` changed:
+`setValue` is gone because there is no control to set. Hand over new filter instances instead:
 
 ```diff
 - this.filters.find(filter => filter.key === 'name')!.setValue(params['name']);
 + this.filters = this.createFilters(params);   // fresh instances carrying the new values
 ```
+
+The component keeps what the user typed unless the filter's declared `value` changed, compared **by
+reference**. A `string` or `number` default therefore survives a rebind that changes nothing, while a
+`Date` or an array default is a new object on every rebuild and replaces what the user typed. Hold a
+non-primitive default in a field and hand over the same instance when an edit must be left alone. A
+different kind of filter for the same key — a text filter replaced by a multi-select, or a date filter
+by a date-time one — also starts from its own value rather than inheriting the old one. To keep what
+the user applied, declare it on the new filter from the values your `searchAction` last received; an
+edit not yet applied is lost, since the component hands out only the values of a search.
+
+The flip side is that a rebind cannot force a value a filter already declares: once the user has
+edited or cleared it, handing over the same declaration leaves their value in place. For that, call
+`reset(values)` on the component — each filter takes the value given for its key, or else the one it
+declares, and forgets that it was touched:
+
+```ts
+this.searchFilter().reset(savedSearch);   // values for the keys you name, declared values for the rest
+```
+
+A key given as `null` empties its filter; a key left out or given as `undefined` takes its declared
+value. Each value must have the shape its filter holds — an array for a multi-select — just as a
+declared value must. A server message stays on a filter whose value the reset leaves unchanged, since
+that value is still the one the server rejected.
 
 #### Validation and submission
 
@@ -477,15 +710,32 @@ Filters can be validated for the first time. `required: true` on a filter, and t
 was previously only a DOM attribute, are now real rules. **An invalid filter blocks the search** and
 focus moves to the offending field — `21.x` searched regardless, because nothing could be invalid.
 
+A date filter is invalid while its text is not a date, and shows
+`EntrySearchFilterConfig.invalidDateMessage`. That needs the filter to have held a date: text typed
+into an empty date filter leaves its value `null`, unchanged, and Angular does not validate it again,
+so the search runs without that filter.
+
 A message the server returned keeps its filter invalid until the user edits that filter, so the next
-search is blocked too. That is deliberate: the server rejected that value and nothing else has
-happened to change its mind.
+search is blocked too. That is Angular's own mechanism rather than a choice made here: a field's
+submission errors are a `linkedSignal` over that field's value, so they are discarded when that
+value changes and at no other time. **Editing a different filter does not re-enable the search** —
+only the rejected one does.
+
+A message that arrives for a filter the user changed while the search was running is dropped, since
+it is about a value no longer there. A message for no filter is dropped once any filter changed.
+
+Clear is not a way out of that state either, unless it changes the value in question. It empties
+every filter, and for a filter the server rejected while it was already empty the write is a no-op,
+so the message stays attached while `reset` marks the field untouched and Material stops displaying
+it. If a filter must not be submitted empty, give it `required: true`, which is validated on the
+client and clears normally, rather than relying on the server to reject it.
 
 #### Clearing
 
 There is a Clear button now, labelled through `EntrySearchFilterConfig.clearButtonText`. It empties
-every filter and forgets which were touched. It clears rather than restoring declared values, so a
-filter that carries a default loses it until you hand the filters over again.
+every filter and forgets which were touched. It clears rather than restoring declared values, and
+handing the same filters over again does not bring a default back either — `reset()` does, see
+[Setting a filter's value](#setting-a-filters-value).
 
 #### What this cost, for anyone doing the same migration
 

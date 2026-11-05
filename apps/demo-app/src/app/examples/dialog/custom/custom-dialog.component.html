@@ -1,6 +1,6 @@
 <entry-dialog title="Custom Dialog" [hideClose]="false" [buttonsTemplate]="customButtonsTemplate">
     <div class="stack-vertical">
-        <p>{{data.question}}</p>
+        <p>{{dialog.data.question}}</p>
         <img class="custom-dialog-logo" src="./../../../../assets/images/entry_logo_small_transparent_material.png" alt="Entry small logo">
         <mat-form-field>
             <mat-label>Write your comment</mat-label>
@@ -11,13 +11,13 @@
 
 <ng-template #customButtonsTemplate>
     <mat-dialog-actions class="dialog-actions" align="center">
-        <button cdkFocusInitial mat-button color="primary" type="button" (click)="onClick('Yes it is')">
+        <button cdkFocusInitial mat-button color="primary" type="button" (click)="answer('Yes it is')">
             Yes it is
         </button>
-        <button mat-button type="button" (click)="onClick('So-so')">
+        <button mat-button type="button" (click)="answer('So-so')">
             So-so
         </button>
-        <button mat-button type="button" (click)="onClick('Nope')">
+        <button mat-button type="button" (click)="answer('Nope')">
             Nope
         </button>
     </mat-dialog-actions>

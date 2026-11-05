@@ -139,6 +139,8 @@ Can be used to provide entry validation configuration.
 
 Applies validation errors received from server side to the form.
 The errors are applied to multiple levels: form, form group, form array, and form field.
+Errors keyed to a disabled control, or to one inside a disabled group or array, are shown on form level,
+because Angular never marks a disabled control as invalid.
 
 #### Parameters
 

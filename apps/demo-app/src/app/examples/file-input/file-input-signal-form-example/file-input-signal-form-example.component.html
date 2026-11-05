@@ -1,0 +1,10 @@
+<form [formRoot]="uploadForm">
+  <entry-file-input accept="image/*" multiple="true" label="Select files" [formField]="uploadForm.attachments" />
+  <button mat-button type="submit">Submit</button>
+</form>
+@if (uploadForm.attachments().touched()) {
+  @for (error of uploadForm.attachments().errors(); track $index) {
+    <p><small>{{ error.message }}</small></p>
+  }
+}
+<p><small>Touched: {{ uploadForm.attachments().touched() }} | Invalid: {{ uploadForm.attachments().invalid() }}</small></p>

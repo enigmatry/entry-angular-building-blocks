@@ -28,7 +28,7 @@ see `resolveLabel` for the case where the key was restored from a URL and no loo
 | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
 | <a id="controltype"></a> `controlType` | `ControlType` | `ControlType.autocomplete` | Control type to be overridden in implementing class, used to render the proper input type e.g. 'text-input' | [`SearchFilterBase`](#searchfilterbase).[`controlType`](#controltype-3) | - |  |
 | <a id="debouncetime"></a> `debounceTime` | `number` | `undefined` | Delay in typing before triggering the search function, in milliseconds (default is 300). | - | - |  |
-| <a id="formatvalue"></a> `formatValue` | ((`value`) => `unknown`) \| `undefined` | `undefined` | Optional function to format the value before displaying it in the input control. **Remarks** Takes `unknown`, not `T`: `T` in a function-parameter position on a property makes the class contravariant under `strictFunctionTypes`, so a filter of a concrete value type would stop being assignable to one of `unknown` and the filter arrays could not be typed. Narrow inside. | - | [`SearchFilterBase`](#searchfilterbase).[`formatValue`](#formatvalue-3) |  |
+| <a id="formatvalue"></a> `formatValue` | ((`value`) => `unknown`) \| `undefined` | `undefined` | Optional input mask a text filter applies to what the user types. Other filter types ignore it. **Remarks** Takes `unknown`, not `T`: `T` in a function-parameter position on a property makes the class contravariant under `strictFunctionTypes`, so a filter of a concrete value type would stop being assignable to one of `unknown` and the filter arrays could not be typed. Narrow inside. | - | [`SearchFilterBase`](#searchfilterbase).[`formatValue`](#formatvalue-3) |  |
 | <a id="key"></a> `key` | `string` | `undefined` | Unique search-filter input key. Also the key this filter's value takes in the emitted params. | - | [`SearchFilterBase`](#searchfilterbase).[`key`](#key-3) |  |
 | <a id="label"></a> `label` | `string` | `undefined` | Label text to be displayed for the search-filter input control | - | [`SearchFilterBase`](#searchfilterbase).[`label`](#label-3) |  |
 | <a id="maxlength"></a> `maxLength` | `number` | `undefined` | Max text length accepted by a text filter (default is 256). | - | [`SearchFilterBase`](#searchfilterbase).[`maxLength`](#maxlength-3) |  |
@@ -61,7 +61,7 @@ Search filter date input filed configuration.
 | Property | Type | Default value | Description | Overrides | Inherited from | Defined in |
 | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
 | <a id="controltype-1"></a> `controlType` | `ControlType` | `ControlType.date` | Control type to be overridden in implementing class, used to render the proper input type e.g. 'text-input' | [`SearchFilterBase`](#searchfilterbase).[`controlType`](#controltype-3) | - |  |
-| <a id="formatvalue-1"></a> `formatValue` | ((`value`) => `unknown`) \| `undefined` | `undefined` | Optional function to format the value before displaying it in the input control. **Remarks** Takes `unknown`, not `T`: `T` in a function-parameter position on a property makes the class contravariant under `strictFunctionTypes`, so a filter of a concrete value type would stop being assignable to one of `unknown` and the filter arrays could not be typed. Narrow inside. | - | [`SearchFilterBase`](#searchfilterbase).[`formatValue`](#formatvalue-3) |  |
+| <a id="formatvalue-1"></a> `formatValue` | ((`value`) => `unknown`) \| `undefined` | `undefined` | Optional input mask a text filter applies to what the user types. Other filter types ignore it. **Remarks** Takes `unknown`, not `T`: `T` in a function-parameter position on a property makes the class contravariant under `strictFunctionTypes`, so a filter of a concrete value type would stop being assignable to one of `unknown` and the filter arrays could not be typed. Narrow inside. | - | [`SearchFilterBase`](#searchfilterbase).[`formatValue`](#formatvalue-3) |  |
 | <a id="key-1"></a> `key` | `string` | `undefined` | Unique search-filter input key. Also the key this filter's value takes in the emitted params. | - | [`SearchFilterBase`](#searchfilterbase).[`key`](#key-3) |  |
 | <a id="label-1"></a> `label` | `string` | `undefined` | Label text to be displayed for the search-filter input control | - | [`SearchFilterBase`](#searchfilterbase).[`label`](#label-3) |  |
 | <a id="maxlength-1"></a> `maxLength` | `number` | `undefined` | Max text length accepted by a text filter (default is 256). | - | [`SearchFilterBase`](#searchfilterbase).[`maxLength`](#maxlength-3) |  |
@@ -91,7 +91,7 @@ Search filter date time input filed configuration.
 | Property | Type | Default value | Description | Overrides | Inherited from | Defined in |
 | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
 | <a id="controltype-2"></a> `controlType` | `ControlType` | `ControlType.dateTime` | Control type to be overridden in implementing class, used to render the proper input type e.g. 'text-input' | [`SearchFilterBase`](#searchfilterbase).[`controlType`](#controltype-3) | - |  |
-| <a id="formatvalue-2"></a> `formatValue` | ((`value`) => `unknown`) \| `undefined` | `undefined` | Optional function to format the value before displaying it in the input control. **Remarks** Takes `unknown`, not `T`: `T` in a function-parameter position on a property makes the class contravariant under `strictFunctionTypes`, so a filter of a concrete value type would stop being assignable to one of `unknown` and the filter arrays could not be typed. Narrow inside. | - | [`SearchFilterBase`](#searchfilterbase).[`formatValue`](#formatvalue-3) |  |
+| <a id="formatvalue-2"></a> `formatValue` | ((`value`) => `unknown`) \| `undefined` | `undefined` | Optional input mask a text filter applies to what the user types. Other filter types ignore it. **Remarks** Takes `unknown`, not `T`: `T` in a function-parameter position on a property makes the class contravariant under `strictFunctionTypes`, so a filter of a concrete value type would stop being assignable to one of `unknown` and the filter arrays could not be typed. Narrow inside. | - | [`SearchFilterBase`](#searchfilterbase).[`formatValue`](#formatvalue-3) |  |
 | <a id="key-2"></a> `key` | `string` | `undefined` | Unique search-filter input key. Also the key this filter's value takes in the emitted params. | - | [`SearchFilterBase`](#searchfilterbase).[`key`](#key-3) |  |
 | <a id="label-2"></a> `label` | `string` | `undefined` | Label text to be displayed for the search-filter input control | - | [`SearchFilterBase`](#searchfilterbase).[`label`](#label-3) |  |
 | <a id="maxlength-2"></a> `maxLength` | `number` | `undefined` | Max text length accepted by a text filter (default is 256). | - | [`SearchFilterBase`](#searchfilterbase).[`maxLength`](#maxlength-3) |  |
@@ -132,6 +132,30 @@ Empties every filter and forgets which were touched, in one write.
 Built from the filters bound right now, never from a snapshot: `reset` replaces the
 model wholesale, so a key missing from the value passed would drop out of the form.
 
+##### reset()
+
+> `readonly` **reset**(`values?`): `void`
+
+Puts every filter back to the value given for its key, or else to the value it declares, and forgets which
+were touched. A key given as `null` empties its filter; a key left out or given as `undefined` restores it.
+
+###### Parameters
+
+###### values?
+
+[`SearchFilterParams`](#searchfilterparams) = `{}`
+
+###### Returns
+
+`void`
+
+###### Remarks
+
+The way to restore a value the filter already declares. Handing the filters over again keeps what the
+user typed when no declaration changed, so it cannot tell "put this back" from "nothing happened". Each value
+must have the shape its filter holds - an array for a multi-select. A server message stays on a filter whose
+value the reset leaves unchanged.
+
 ***
 
 ### EntrySearchFilterConfig
@@ -144,6 +168,7 @@ Used to provide entry search filter configuration on module level.
 | ------ | ------ | ------ | ------ |
 | <a id="applybuttontext"></a> `applyButtonText` | `string` | Apply search filters button label (default 'Apply') |  |
 | <a id="clearbuttontext"></a> `clearButtonText` | `string` | Clear search filters button label (default 'Clear') |  |
+| <a id="invaliddatemessage"></a> `invalidDateMessage` | `string` | Message shown when a date filter's text is not a date (default 'Value is not a valid date') |  |
 | <a id="maxlengthmessage"></a> `maxLengthMessage` | `string` | Message shown when a filter's value is longer than its maximum (default 'Value is too long') |  |
 | <a id="noneselectedoptiontext"></a> `noneSelectedOptionText` | `string` | Label for 'none selected' select filter option |  |
 | <a id="requiredmessage"></a> `requiredMessage` | `string` | Message shown under a required filter left empty (default 'This filter is required') |  |
@@ -179,7 +204,7 @@ array of filters carrying the values you want.
 | Property | Type | Description | Defined in |
 | ------ | ------ | ------ | ------ |
 | <a id="controltype-3"></a> `controlType` | `ControlType` | Control type to be overridden in implementing class, used to render the proper input type e.g. 'text-input' |  |
-| <a id="formatvalue-3"></a> `formatValue` | ((`value`) => `unknown`) \| `undefined` | Optional function to format the value before displaying it in the input control. **Remarks** Takes `unknown`, not `T`: `T` in a function-parameter position on a property makes the class contravariant under `strictFunctionTypes`, so a filter of a concrete value type would stop being assignable to one of `unknown` and the filter arrays could not be typed. Narrow inside. |  |
+| <a id="formatvalue-3"></a> `formatValue` | ((`value`) => `unknown`) \| `undefined` | Optional input mask a text filter applies to what the user types. Other filter types ignore it. **Remarks** Takes `unknown`, not `T`: `T` in a function-parameter position on a property makes the class contravariant under `strictFunctionTypes`, so a filter of a concrete value type would stop being assignable to one of `unknown` and the filter arrays could not be typed. Narrow inside. |  |
 | <a id="key-3"></a> `key` | `string` | Unique search-filter input key. Also the key this filter's value takes in the emitted params. |  |
 | <a id="label-3"></a> `label` | `string` | Label text to be displayed for the search-filter input control |  |
 | <a id="maxlength-3"></a> `maxLength` | `number` | Max text length accepted by a text filter (default is 256). |  |
@@ -235,7 +260,7 @@ and wrapped, so a fixed list needs no ceremony.
 | Property | Modifier | Type | Default value | Description | Overrides | Inherited from | Defined in |
 | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
 | <a id="controltype-4"></a> `controlType` | `public` | `ControlType` | `ControlType.select` | Control type to be overridden in implementing class, used to render the proper input type e.g. 'text-input' | [`SearchFilterBase`](#searchfilterbase).[`controlType`](#controltype-3) | - |  |
-| <a id="formatvalue-4"></a> `formatValue` | `public` | ((`value`) => `unknown`) \| `undefined` | `undefined` | Optional function to format the value before displaying it in the input control. **Remarks** Takes `unknown`, not `T`: `T` in a function-parameter position on a property makes the class contravariant under `strictFunctionTypes`, so a filter of a concrete value type would stop being assignable to one of `unknown` and the filter arrays could not be typed. Narrow inside. | - | [`SearchFilterBase`](#searchfilterbase).[`formatValue`](#formatvalue-3) |  |
+| <a id="formatvalue-4"></a> `formatValue` | `public` | ((`value`) => `unknown`) \| `undefined` | `undefined` | Optional input mask a text filter applies to what the user types. Other filter types ignore it. **Remarks** Takes `unknown`, not `T`: `T` in a function-parameter position on a property makes the class contravariant under `strictFunctionTypes`, so a filter of a concrete value type would stop being assignable to one of `unknown` and the filter arrays could not be typed. Narrow inside. | - | [`SearchFilterBase`](#searchfilterbase).[`formatValue`](#formatvalue-3) |  |
 | <a id="key-5"></a> `key` | `public` | `string` | `undefined` | Unique search-filter input key. Also the key this filter's value takes in the emitted params. | - | [`SearchFilterBase`](#searchfilterbase).[`key`](#key-3) |  |
 | <a id="label-5"></a> `label` | `public` | `string` | `undefined` | Label text to be displayed for the search-filter input control | - | [`SearchFilterBase`](#searchfilterbase).[`label`](#label-3) |  |
 | <a id="maxlength-4"></a> `maxLength` | `public` | `number` | `undefined` | Max text length accepted by a text filter (default is 256). | - | [`SearchFilterBase`](#searchfilterbase).[`maxLength`](#maxlength-3) |  |
@@ -262,7 +287,7 @@ Search filter text input filed configuration.
 | Property | Type | Default value | Description | Overrides | Inherited from | Defined in |
 | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
 | <a id="controltype-5"></a> `controlType` | `ControlType` | `ControlType.text` | Control type to be overridden in implementing class, used to render the proper input type e.g. 'text-input' | [`SearchFilterBase`](#searchfilterbase).[`controlType`](#controltype-3) | - |  |
-| <a id="formatvalue-5"></a> `formatValue` | ((`value`) => `unknown`) \| `undefined` | `undefined` | Optional function to format the value before displaying it in the input control. **Remarks** Takes `unknown`, not `T`: `T` in a function-parameter position on a property makes the class contravariant under `strictFunctionTypes`, so a filter of a concrete value type would stop being assignable to one of `unknown` and the filter arrays could not be typed. Narrow inside. | - | [`SearchFilterBase`](#searchfilterbase).[`formatValue`](#formatvalue-3) |  |
+| <a id="formatvalue-5"></a> `formatValue` | ((`value`) => `unknown`) \| `undefined` | `undefined` | Optional input mask a text filter applies to what the user types. Other filter types ignore it. **Remarks** Takes `unknown`, not `T`: `T` in a function-parameter position on a property makes the class contravariant under `strictFunctionTypes`, so a filter of a concrete value type would stop being assignable to one of `unknown` and the filter arrays could not be typed. Narrow inside. | - | [`SearchFilterBase`](#searchfilterbase).[`formatValue`](#formatvalue-3) |  |
 | <a id="key-6"></a> `key` | `string` | `undefined` | Unique search-filter input key. Also the key this filter's value takes in the emitted params. | - | [`SearchFilterBase`](#searchfilterbase).[`key`](#key-3) |  |
 | <a id="label-6"></a> `label` | `string` | `undefined` | Label text to be displayed for the search-filter input control | - | [`SearchFilterBase`](#searchfilterbase).[`label`](#label-3) |  |
 | <a id="maxlength-5"></a> `maxLength` | `number` | `undefined` | Max text length accepted by a text filter (default is 256). | - | [`SearchFilterBase`](#searchfilterbase).[`maxLength`](#maxlength-3) |  |
@@ -312,7 +337,8 @@ nothing when the search succeeded.
 #### Remarks
 
 Returned messages are submission errors: Angular routes each to its field and clears it
-as soon as the user edits that filter.
+as soon as the user edits that filter. A message for a filter edited while the action ran is
+dropped, and so is a message for no filter once any filter was edited.
 
 ***
 
