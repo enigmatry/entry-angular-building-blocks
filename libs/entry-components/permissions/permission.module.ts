@@ -4,12 +4,10 @@ import { EntryPermissionDirective } from './permission.directive';
 import { EntryPermissionPipe } from './permission.pipe';
 
 @NgModule({
-  declarations: [
+  imports: [
+    CommonModule,
     EntryPermissionDirective,
     EntryPermissionPipe
-  ],
-  imports: [
-    CommonModule
   ],
   exports: [
     EntryPermissionDirective,

@@ -4,11 +4,13 @@ Loading spinner that is intended to inform the user that an operation is in prog
 
 ## Integration
 
-Import component module in your shared module:
+Import the standalone `EntrySpinnerComponent` where you use `<entry-spinner>`:
 
 ```ts
-import { EntrySpinnerModule } from '@enigmatry/entry-components/spinner';
+import { EntrySpinnerComponent } from '@enigmatry/entry-components/spinner';
 ```
+
+`EntrySpinnerModule` still exists for `NgModule`-based code and exports the same component.
 
 ## Usage
 

@@ -8,8 +8,7 @@ import { SelectOption } from './select-option.model';
 // Kept untyped (any) rather than a pipe-level generic: Angular's template type checker does not reliably
 // infer a transform<T> generic through a chained `| async | groupSelectOptions` expression.
 @Pipe({
-    name: 'groupSelectOptions',
-    standalone: false
+    name: 'groupSelectOptions'
 })
 export class GroupSelectOptionsPipe implements PipeTransform {
   transform = (options: readonly SelectOption<any>[] | null | undefined): Array<SelectOptionGroup<any>> => {

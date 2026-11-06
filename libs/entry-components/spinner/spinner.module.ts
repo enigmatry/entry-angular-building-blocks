@@ -5,13 +5,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { EntrySpinnerComponent } from './entry-spinner/spinner.component';
 
 @NgModule({
-  declarations: [
-    EntrySpinnerComponent
-  ],
   imports: [
     CommonModule,
     OverlayModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    EntrySpinnerComponent
   ],
   exports: [
     EntrySpinnerComponent

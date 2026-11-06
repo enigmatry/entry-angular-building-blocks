@@ -10,11 +10,18 @@ Entry component for providing standard filtering capabilities that can be consum
 
 ## Integration
 
-Import component package:
+Import the standalone `EntrySearchFilterComponent` where you use `<entry-search-filter>`:
 
 ```ts
-import { EntrySearchFilterModule } from '@enigmatry/entry-components/search-filter';
+import { EntrySearchFilterComponent } from '@enigmatry/entry-components/search-filter';
+
+@Component({
+  imports: [EntrySearchFilterComponent],
+  ...
+})
 ```
+
+`EntrySearchFilterModule` still exists for `NgModule`-based code and exports the same component.
 
 ## Basic usage
 

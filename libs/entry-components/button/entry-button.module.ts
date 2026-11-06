@@ -4,12 +4,10 @@ import { MatButton } from '@angular/material/button';
 import { EntryButtonDirective } from './entry-button.directive';
 
 @NgModule({
-  declarations: [
-    EntryButtonDirective
-  ],
   imports: [
     CommonModule,
-    MatButton
+    MatButton,
+    EntryButtonDirective
   ],
   exports: [
     EntryButtonDirective

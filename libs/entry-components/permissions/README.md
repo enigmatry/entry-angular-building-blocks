@@ -23,11 +23,13 @@ export class PermissionService implements EntryPermissionService<PermissionId> {
 }
 ```
 
-Import permissions module:
+Import the standalone directive and pipe where your template uses them:
 
 ```ts
-import { EntryPermissionModule } from '@enigmatry/entry-components/permissions';
+import { EntryPermissionDirective, EntryPermissionPipe } from '@enigmatry/entry-components/permissions';
 ```
+
+`EntryPermissionModule` still exists for `NgModule`-based code and exports both.
 
 Provide implementation of the EntryPermissionService:
 

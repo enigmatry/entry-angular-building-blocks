@@ -5,12 +5,15 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import type { FormValueControl } from '@angular/forms/signals';
+import { MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { EntryButtonDirective } from '@enigmatry/entry-components/button';
 import { fromEvent } from 'rxjs';
 import { FileInputValue } from './file-input-value.type';
 import { warnOnValidatorDirectives } from './warn-on-validator-directives';
 
 @Component({
-  standalone: false,
+  imports: [MatButton, EntryButtonDirective, MatIcon],
   selector: 'entry-file-input',
   templateUrl: './entry-file-input.component.html',
   styleUrl: './entry-file-input.component.scss',
