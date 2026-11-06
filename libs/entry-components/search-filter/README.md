@@ -186,55 +186,49 @@ new SelectSearchFilter({
   - `maxLengthMessage`: message shown when a filter's value is longer than its maximum
   - `invalidDateMessage`: message shown when a date filter's text is not a date
 
-- provide `ENTRY_MAT_DATE_TIME` for `DateTimeSearchFilter` (required when this filter is used):
-  - matDateFormats of type `MatDateFormats`
-  - `compareDate` function
+- provide `ENTRY_MAT_DATE_TIME_FORMATS` and an `EntryTimeAdapter` for `DateTimeSearchFilter` (required when this filter is used):
+  - `ENTRY_MAT_DATE_TIME_FORMATS` takes a `MatDateFormats`: the parse and display formats of the date-time input
+  - `EntryTimeAdapter` reads and sets the time part; `EntryNativeTimeAdapter` does it for native `Date` values
+  - `provideEntryNativeTimeAdapter(formats)` from `@enigmatry/entry-components/common` provides both in one call
+
+The date-time filter also needs the application's `DateAdapter`, which it wraps to add the time.
 
 ```ts
-import { EntrySearchFilterModule, provideEntrySearchFilterConfig } from '@enigmatry/entry-components/search-filter';
-// ...
+import { ApplicationConfig } from '@angular/core';
+import { DateAdapter, MAT_DATE_LOCALE, MatDateFormats } from '@angular/material/core';
+import { DateFnsAdapter } from '@angular/material-date-fns-adapter';
+import { ENTRY_MAT_DATE_TIME_FORMATS, EntryNativeTimeAdapter, EntryTimeAdapter } from '@enigmatry/entry-components/common';
+import { provideEntrySearchFilterConfig } from '@enigmatry/entry-components/search-filter';
+import { enGB } from 'date-fns/locale';
 
-@NgModule({
-  imports: [
-    EntrySearchFilterModule
-  ],
+const dateTimeFormats: MatDateFormats = {
+  parse: {
+    // formats used for parsing
+    dateInput: ['dd-MM-yyyy', 'dd-MM-yyyy HH', 'dd-MM-yyyy HH:mm']
+  },
+  display: {
+    // display value in input always as 'dd-MM-yyyy HH:mm'
+    dateInput: 'dd-MM-yyyy HH:mm',
+    // standard mat-datepicker calendar options
+    monthYearLabel: 'LLL uuuu',
+    dateA11yLabel: 'PP',
+    monthYearA11yLabel: 'LLLL uuuu'
+  }
+};
+
+export const appConfig: ApplicationConfig = {
   providers: [
     provideEntrySearchFilterConfig({
       applyButtonText: 'Filter',
       clearButtonText: 'Reset',
       noneSelectedOptionText: '-'
     }),
-    // provide date adapter used by mat-datepicker
-    // usually provided in shared or material module
-    {
-      provide: DateAdapter,
-      useClass: DateFnsAdapter,
-      deps: [MAT_DATE_LOCALE],
-    },
-    // provide matDateFormats along with compareDate function
-    {
-      provide: ENTRY_MAT_DATE_TIME,
-      useValue: {
-        matDateFormats: {
-          parse: {
-            // formats used for parsing:
-            dateInput: ['dd-MM-yyyy', 'dd-MM-yyyy HH', 'dd-MM-yyyy HH:mm'],
-          },
-          display: {
-            // display value in input always as 'dd-MM-yyyy HH:mm'
-            dateInput: 'dd-MM-yyyy HH:mm',
-            // standard mat-datepicker calendar options
-            monthYearLabel: 'LLL uuuu',
-            dateA11yLabel: 'PP',
-            monthYearA11yLabel: 'LLLL uuuu',
-          },
-        },
-        compareDate(first: Date, second: Date): number {
-          return first.getTime() - second.getTime();
-        }
-      }
-    }
+    // date adapter used by mat-datepicker, usually provided once for the whole application
+    { provide: MAT_DATE_LOCALE, useValue: enGB },
+    { provide: DateAdapter, useClass: DateFnsAdapter, deps: [MAT_DATE_LOCALE] },
+    // the next two providers are what provideEntryNativeTimeAdapter(dateTimeFormats) returns
+    { provide: ENTRY_MAT_DATE_TIME_FORMATS, useValue: dateTimeFormats },
+    { provide: EntryTimeAdapter, useClass: EntryNativeTimeAdapter }
   ]
-})
-export class SharedModule { }
+};
 ```
