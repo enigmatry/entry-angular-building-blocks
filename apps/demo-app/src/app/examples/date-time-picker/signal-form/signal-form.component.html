@@ -1,0 +1,7 @@
+<form [formRoot]="expiryForm">
+    <entry-date-time-picker label="Expires on" [formField]="expiryForm.expiresOn" />
+    <button mat-button type="submit">Submit</button>
+</form>
+<p>Value: {{expiryModel().expiresOn ?? 'empty'}}</p>
+<p>Touched: {{expiryForm.expiresOn().touched()}} | Invalid: {{expiryForm.expiresOn().invalid()}}</p>
+<button type="button" (click)="focusFirstInvalid()">Focus the first invalid field</button>
