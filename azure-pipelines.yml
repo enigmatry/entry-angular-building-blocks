@@ -21,6 +21,13 @@ stages:
       fetchDepth: 50
       fetchTags: true
 
+    # Pinned so the build does not depend on whichever Node ubuntu-latest ships. Node 24 is inside
+    # Angular 21's engine range, and its npm 11 refuses a pre-release publish without a tag.
+    - task: UseNode@1
+      displayName: 'Install Node.js'
+      inputs:
+        version: '^24.15.0'
+
     - task: DotNetCoreCLI@2
       displayName: Add Manifest for tool installation
       inputs:
@@ -148,6 +155,31 @@ stages:
             - download: current
               displayName: 'Download build artifacts'
 
+            - task: UseNode@1
+              displayName: 'Install Node.js'
+              inputs:
+                version: '^24.15.0'
+
+            # Without a tag npm moves `latest` - what a plain install resolves to - onto whatever was
+            # published last. A release from this branch takes `latest` only while 21 is still the
+            # newest major on npm. Once a newer major is `latest` it goes to `v21-lts`, and a
+            # pre-release always goes to `v21-next`, so neither can move `latest` back to 21.
+            - bash: |
+                set -euo pipefail
+                version=$(node -p "require('./package.json').version")
+                major=${version%%.*}
+                if [[ "$version" == *-* ]]; then
+                  tag="v${major}-next"
+                else
+                  latest=$(npm view @enigmatry/entry-components dist-tags.latest)
+                  if [[ -z "$latest" ]]; then echo "Could not read the current latest version from npm"; exit 1; fi
+                  if (( ${latest%%.*} > major )); then tag="v${major}-lts"; else tag=latest; fi
+                fi
+                echo "Publishing $version under the npm dist-tag '$tag'"
+                echo "##vso[task.setvariable variable=npmDistTag]$tag"
+              displayName: 'Choose the npm dist-tag'
+              workingDirectory: '$(Pipeline.Workspace)/$(artifactName)-$(Build.BuildNumber)/enigmatry/entry-components'
+
             - task: Npm@1
               displayName: 'Publish entry components'
               inputs:
@@ -155,6 +187,8 @@ stages:
                 publishRegistry: useExternalRegistry
                 publishEndpoint: npm
                 workingDir: '$(Pipeline.Workspace)/$(artifactName)-$(Build.BuildNumber)/enigmatry/entry-components'
+              env:
+                npm_config_tag: $(npmDistTag)
 
             - task: Npm@1
               displayName: 'Publish entry form'
@@ -163,6 +197,8 @@ stages:
                 publishRegistry: useExternalRegistry
                 publishEndpoint: npm
                 workingDir: '$(Pipeline.Workspace)/$(artifactName)-$(Build.BuildNumber)/enigmatry/entry-form'
+              env:
+                npm_config_tag: $(npmDistTag)
 
             - task: Npm@1
               displayName: 'Publish the eslint recommended rules'
@@ -171,6 +207,8 @@ stages:
                 publishRegistry: useExternalRegistry
                 publishEndpoint: npm
                 workingDir: '$(Pipeline.Workspace)/$(artifactName)-$(Build.BuildNumber)/eslint-config'
+              env:
+                npm_config_tag: $(npmDistTag)
 
             - task: Npm@1
               displayName: 'Publish the stylelint recommended rules'
@@ -179,6 +217,8 @@ stages:
                 publishRegistry: useExternalRegistry
                 publishEndpoint: npm
                 workingDir: '$(Pipeline.Workspace)/$(artifactName)-$(Build.BuildNumber)/stylelint-config'
+              env:
+                npm_config_tag: $(npmDistTag)
 
             - task: Npm@1
               displayName: 'Publish the scss foundation'
@@ -187,3 +227,5 @@ stages:
                 publishRegistry: useExternalRegistry
                 publishEndpoint: npm
                 workingDir: '$(Pipeline.Workspace)/$(artifactName)-$(Build.BuildNumber)/scss-foundation'
+              env:
+                npm_config_tag: $(npmDistTag)

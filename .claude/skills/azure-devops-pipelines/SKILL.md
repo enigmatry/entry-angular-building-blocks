@@ -103,6 +103,16 @@ Each library is published with `command: publish` + `useExternalRegistry` pointi
 workingDir: '$(Pipeline.Workspace)/$(artifactName)-$(Build.BuildNumber)/enigmatry/<lib-name>'
 ```
 
+#### npm dist-tag (release/21)
+
+`npm publish` without a tag moves `latest` onto whatever went out last. The publish job pins Node (npm 11 refuses a pre-release publish without a tag), and a `Choose the npm dist-tag` step sets `npmDistTag`:
+
+- a pre-release → `v21-next`
+- a release while 21 is still the newest major on npm → `latest`
+- a release once a newer major is `latest` → `v21-lts`
+
+Every publish step passes it as `env: npm_config_tag: $(npmDistTag)`. `Npm@1`'s `publish` command has no tag input.
+
 **When adding a new library to publish**, add a step that matches this pattern. The artifact sub-path depends on how ng-packagr places the output:
 - `@enigmatry/*` scoped packages → `enigmatry/<lib-name>` inside the artifact
 - Unscoped packages (`eslint-config`, `stylelint-config`, `scss-foundation`) → `<lib-name>` directly
