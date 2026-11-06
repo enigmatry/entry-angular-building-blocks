@@ -28,6 +28,20 @@ Visit components demo application. [Website](https://entry-demo.enigmatry.com/)
 |21.x| = 21
 |22.x| = 22
 
+## Releases and previews
+
+All five packages are published under the same npm dist-tags:
+
+| Dist-tag | Install with | What you get |
+|-|-|-|
+| `latest` | `npm i @enigmatry/entry-components` | The newest release. A plain install, with no version, resolves to this. |
+| `next` | `npm i @enigmatry/entry-components@next` | A preview built from every merge to `master`, e.g. `22.0.0-preview.12`. Not a release, and it changes with every merge. |
+| `v<major>-lts` | `npm i @enigmatry/entry-components@v21-lts` | Patches for an older major, published from its `release/<major>` branch once a newer major is `latest`. |
+
+Previews never move `latest`, so a plain install always gets a release.
+
+To try a preview, pin the exact version (`npm i @enigmatry/entry-components@22.0.0-preview.12`) rather than depending on `@next`. `next` moves on every merge, and a pre-release version satisfies no ordinary range such as `^22.0.0`. Install the same preview version of every `@enigmatry/*` package you use; they are built together.
+
 ## Migrate project to entry
 
 [How to migrate project to entry](https://github.com/enigmatry/entry-angular-building-blocks/wiki/Migrate-project-to-Entry)

@@ -13,7 +13,7 @@ You are working on the CI/CD pipelines for this multi-library Angular workspace.
 
 | File | Purpose |
 |---|---|
-| `azure-pipelines.yml` | Build, test, and publish all npm packages to npm registry. Triggered on `master`. |
+| `azure-pipelines.yml` | Build, test, and publish all npm packages to npm registry. Triggered on `master`; pull requests into `master` run its `ci_build` stage only. |
 | `deploy-demo.yml` | Build and deploy the demo app. |
 | `pipeline-templates/install-node.yml` | Step template with the Node pin, consumed by both pipelines. |
 
@@ -34,10 +34,17 @@ The version is computed once and stored in the pipeline variable `theLatestVersi
   inputs:
     targetType: inline
     script: |
-      $version = dotnet minver -p preview
+      $version = dotnet minver -p preview -m 22.0
       echo "##vso[task.setvariable variable=theLatestVersion]$version"
       echo "##vso[build.updatebuildnumber]$version"
 ```
+
+`-m 22.0` is MinVer's minimum major.minor. The newest reachable release tag on `master` is from the
+previous major, so without it `master` would publish the new major's code under an old version number
+such as `21.4.1-preview.9`. With it, untagged commits come out as `22.0.0-preview.<height>`. Once a
+`22.x` release tag exists the flag has no effect. **Bump it as part of every Angular major upgrade**,
+together with the Node pin. Release branches (`release/21`, ...) carry their own copy of this file
+and must not get the new major's `-m`.
 
 **When adding a new library**, add a version-stamping step in the same block as the others — before the `npm ci` step:
 
@@ -74,10 +81,15 @@ Runs all verification before any artifacts are produced. Order of steps is signi
 6. `npm run lint` — lint all libraries
 7. `npm run build @enigmatry/entry-components` — build libs in dependency order
 8. `npm run build @enigmatry/entry-form`
-9. `npm run automated-tests` — SCSS theme compilation + scss-foundation tests
-10. `FileTransform@2` — substitute pipeline variables into `dist/**/package.json` (used to inject peer dependency versions)
-11. `PublishBuildArtifacts@1` — publish `dist/` as artifact
-12. `PublishBuildArtifacts@1` — publish `libs/` as artifact
+9. `npm run build @enigmatry/demo-app` — `deploy-demo.yml` ships every `master` merge without approval, so the demo must compile before merge
+10. `npm run automated-tests` — SCSS theme compilation + scss-foundation tests
+11. `FileTransform@2` — substitute pipeline variables into `dist/**/package.json` (used to inject peer dependency versions)
+12. `PublishBuildArtifacts@1` — publish `dist/` as artifact
+13. `PublishBuildArtifacts@1` — publish `libs/` as artifact
+
+This stage is also the pull request validation build. Keep everything in it safe to run for a PR,
+with no secrets and no side effects outside the build agent. Anything that publishes belongs in
+`publish_npm`.
 
 > **Build order matters**: `@enigmatry/entry-components` must be built before `@enigmatry/entry-form` because entry-form depends on entry-components types.
 
@@ -85,11 +97,13 @@ Runs all verification before any artifacts are produced. Order of steps is signi
 
 ### `publish_npm` stage
 
-Runs as a **deployment job** targeting the `npm` environment (which has approval gates if configured):
+Runs as a **deployment job** targeting the `npm` environment (which has approval gates if configured).
+It is skipped for pull request builds:
 
 ```yaml
 - stage: publish_npm
   dependsOn: ci_build
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
   jobs:
   - deployment: Deploy
     environment: npm
@@ -109,6 +123,29 @@ Each library is published with `command: publish` + `useExternalRegistry` pointi
 ```yaml
 workingDir: '$(Pipeline.Workspace)/$(artifactName)-$(Build.BuildNumber)/enigmatry/<lib-name>'
 ```
+
+#### npm dist-tag
+
+Without a tag, `npm publish` moves `latest` (what a plain `npm install <pkg>` resolves to) onto
+whatever went out last, previews included. The job therefore pins Node with
+`pipeline-templates/install-node.yml`, and a `Choose the npm dist-tag` step reads the version from
+the built `entry-components` `package.json`. It sets `npmDistTag` to `next` for a pre-release (the
+version contains `-`) and to `latest` for a real release. Every publish step passes it through the
+environment:
+
+```yaml
+- task: Npm@1
+  inputs:
+    command: publish
+    ...
+  env:
+    npm_config_tag: $(npmDistTag)
+```
+
+`Npm@1`'s `publish` command has no tag input, which is why the tag goes through the environment.
+Do not switch to `command: custom` with `publish --tag ...`, because that changes how the service
+connection's credentials are applied. With the pinned Node, npm 11 refuses to publish a pre-release
+without a tag. A step that loses its `env` therefore fails instead of moving `latest`.
 
 **When adding a new library to publish**, add a step that matches this pattern. The artifact sub-path depends on how ng-packagr places the output:
 - `@enigmatry/*` scoped packages → `enigmatry/<lib-name>` inside the artifact
@@ -134,12 +171,19 @@ variables:
 
 ```yaml
 trigger:
-- master        # CI triggers only on master
+- master        # CI build + publish on every master merge
 
-pr: none        # No PR builds (code review happens outside CI)
+pr:
+  branches:
+    include:
+    - master    # PR validation build: ci_build only, publish_npm skipped
 ```
 
-- Keep `pr: none` — PR validation is not automated in this project.
+- PR builds of `azure-pipelines.yml` are the merge check for `master`. Branch protection on
+  `master` requires them, so do not switch them back to `pr: none`.
+- The skip for PRs lives in `publish_npm`'s stage `condition`. Any new stage with side effects
+  needs the same condition.
+- `deploy-demo.yml` keeps `pr: none`: it deploys, and the PR build already compiles the demo.
 - Add path filters only if you have a strong reason to skip CI on certain paths.
 
 ---
@@ -176,7 +220,7 @@ Do not upgrade task versions without testing — especially `Npm@1` and `FileTra
 1. Add a version-stamp step (`npm version $(theLatestVersion) --no-git-tag-version`) before `npm ci`
 2. Add a build step after existing build steps (respect dependency order)
 3. Add a `peerDependencies.<package-name>: $(theLatestVersion)` variable if consumers need the version injected
-4. Add a publish step in `publish_npm` pointing at the correct artifact sub-path
+4. Add a publish step in `publish_npm` pointing at the correct artifact sub-path, with `env: npm_config_tag: $(npmDistTag)`
 5. Verify `FileTransform@2` path covers the new library's `package.json`
 
 ---
@@ -188,3 +232,5 @@ Do not upgrade task versions without testing — especially `Npm@1` and `FileTra
 - **Publishing before `dependsOn: ci_build`** — always gate publish on a successful build stage.
 - **Using `npm install` instead of `npm ci`** — always use `ci` in pipelines to ensure reproducible installs from the lockfile.
 - **Hardcoding version strings** — always use `$(theLatestVersion)` from MinVer, never hardcode.
+- **A publish step without `npm_config_tag`** — a pre-release would take `latest`, or fail under npm 11.
+- **Forgetting MinVer's `-m` on a major upgrade** — `master` then publishes the new major's code under the previous major's version number.
