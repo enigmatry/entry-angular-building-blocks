@@ -13,7 +13,7 @@ You are working on the CI/CD pipelines for this multi-library Angular workspace.
 
 | File | Purpose |
 |---|---|
-| `azure-pipelines.yml` | Build, test, and publish all npm packages to npm registry. Triggered on `master`. |
+| `azure-pipelines.yml` | Build, test, and publish all npm packages to npm registry. Triggered on `master`; pull requests into `master` run its `ci_build` stage only. |
 | `deploy-demo.yml` | Build and deploy the demo app. |
 | `pipeline-templates/install-node.yml` | Step template with the Node pin, consumed by both pipelines. |
 
@@ -74,10 +74,15 @@ Runs all verification before any artifacts are produced. Order of steps is signi
 6. `npm run lint` — lint all libraries
 7. `npm run build @enigmatry/entry-components` — build libs in dependency order
 8. `npm run build @enigmatry/entry-form`
-9. `npm run automated-tests` — SCSS theme compilation + scss-foundation tests
-10. `FileTransform@2` — substitute pipeline variables into `dist/**/package.json` (used to inject peer dependency versions)
-11. `PublishBuildArtifacts@1` — publish `dist/` as artifact
-12. `PublishBuildArtifacts@1` — publish `libs/` as artifact
+9. `npm run build @enigmatry/demo-app` — `deploy-demo.yml` ships every `master` merge without approval, so the demo must compile before merge
+10. `npm run automated-tests` — SCSS theme compilation + scss-foundation tests
+11. `FileTransform@2` — substitute pipeline variables into `dist/**/package.json` (used to inject peer dependency versions)
+12. `PublishBuildArtifacts@1` — publish `dist/` as artifact
+13. `PublishBuildArtifacts@1` — publish `libs/` as artifact
+
+This stage is also the pull request validation build. Keep everything in it safe to run for a PR,
+with no secrets and no side effects outside the build agent. Anything that publishes belongs in
+`publish_npm`.
 
 > **Build order matters**: `@enigmatry/entry-components` must be built before `@enigmatry/entry-form` because entry-form depends on entry-components types.
 
@@ -85,11 +90,13 @@ Runs all verification before any artifacts are produced. Order of steps is signi
 
 ### `publish_npm` stage
 
-Runs as a **deployment job** targeting the `npm` environment (which has approval gates if configured):
+Runs as a **deployment job** targeting the `npm` environment (which has approval gates if configured).
+It is skipped for pull request builds:
 
 ```yaml
 - stage: publish_npm
   dependsOn: ci_build
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
   jobs:
   - deployment: Deploy
     environment: npm
@@ -134,12 +141,19 @@ variables:
 
 ```yaml
 trigger:
-- master        # CI triggers only on master
+- master        # CI build + publish on every master merge
 
-pr: none        # No PR builds (code review happens outside CI)
+pr:
+  branches:
+    include:
+    - master    # PR validation build: ci_build only, publish_npm skipped
 ```
 
-- Keep `pr: none` — PR validation is not automated in this project.
+- PR builds of `azure-pipelines.yml` are the merge check for `master`. Branch protection on
+  `master` requires them, so do not switch them back to `pr: none`.
+- The skip for PRs lives in `publish_npm`'s stage `condition`. Any new stage with side effects
+  needs the same condition.
+- `deploy-demo.yml` keeps `pr: none`: it deploys, and the PR build already compiles the demo.
 - Add path filters only if you have a strong reason to skip CI on certain paths.
 
 ---

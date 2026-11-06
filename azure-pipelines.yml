@@ -1,8 +1,12 @@
 trigger:
 - master
 
-# no PR triggers
-pr: none
+# Pull requests into master run the ci_build stage as a validation build. publish_npm is skipped
+# for them by its stage condition.
+pr:
+  branches:
+    include:
+    - master
 
 variables:
   theLatestVersion: ''
@@ -106,6 +110,12 @@ stages:
         customCommand: 'run build @enigmatry/entry-form'
 
     - task: Npm@1
+      displayName: 'Build demo application'
+      inputs:
+        command: 'custom'
+        customCommand: 'run build @enigmatry/demo-app'
+
+    - task: Npm@1
       displayName: 'Run unit tests'
       inputs:
         command: 'custom'
@@ -134,6 +144,7 @@ stages:
 
 - stage: publish_npm
   dependsOn: ci_build
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
   displayName: Publish to NPM
   jobs:
   - deployment: Deploy
