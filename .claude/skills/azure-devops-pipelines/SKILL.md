@@ -34,10 +34,17 @@ The version is computed once and stored in the pipeline variable `theLatestVersi
   inputs:
     targetType: inline
     script: |
-      $version = dotnet minver -p preview
+      $version = dotnet minver -p preview -m 22.0
       echo "##vso[task.setvariable variable=theLatestVersion]$version"
       echo "##vso[build.updatebuildnumber]$version"
 ```
+
+`-m 22.0` is MinVer's minimum major.minor. The newest reachable release tag on `master` is from the
+previous major, so without it `master` would publish the new major's code under an old version number
+such as `21.4.1-preview.9`. With it, untagged commits come out as `22.0.0-preview.<height>`. Once a
+`22.x` release tag exists the flag has no effect. **Bump it as part of every Angular major upgrade**,
+together with the Node pin. Release branches (`release/21`, ...) carry their own copy of this file
+and must not get the new major's `-m`.
 
 **When adding a new library**, add a version-stamping step in the same block as the others — before the `npm ci` step:
 
@@ -117,6 +124,29 @@ Each library is published with `command: publish` + `useExternalRegistry` pointi
 workingDir: '$(Pipeline.Workspace)/$(artifactName)-$(Build.BuildNumber)/enigmatry/<lib-name>'
 ```
 
+#### npm dist-tag
+
+Without a tag, `npm publish` moves `latest` (what a plain `npm install <pkg>` resolves to) onto
+whatever went out last, previews included. The job therefore pins Node with
+`pipeline-templates/install-node.yml`, and a `Choose the npm dist-tag` step reads the version from
+the built `entry-components` `package.json`. It sets `npmDistTag` to `next` for a pre-release (the
+version contains `-`) and to `latest` for a real release. Every publish step passes it through the
+environment:
+
+```yaml
+- task: Npm@1
+  inputs:
+    command: publish
+    ...
+  env:
+    npm_config_tag: $(npmDistTag)
+```
+
+`Npm@1`'s `publish` command has no tag input, which is why the tag goes through the environment.
+Do not switch to `command: custom` with `publish --tag ...`, because that changes how the service
+connection's credentials are applied. With the pinned Node, npm 11 refuses to publish a pre-release
+without a tag. A step that loses its `env` therefore fails instead of moving `latest`.
+
 **When adding a new library to publish**, add a step that matches this pattern. The artifact sub-path depends on how ng-packagr places the output:
 - `@enigmatry/*` scoped packages → `enigmatry/<lib-name>` inside the artifact
 - Unscoped packages (`eslint-config`, `stylelint-config`, `scss-foundation`) → `<lib-name>` directly
@@ -190,7 +220,7 @@ Do not upgrade task versions without testing — especially `Npm@1` and `FileTra
 1. Add a version-stamp step (`npm version $(theLatestVersion) --no-git-tag-version`) before `npm ci`
 2. Add a build step after existing build steps (respect dependency order)
 3. Add a `peerDependencies.<package-name>: $(theLatestVersion)` variable if consumers need the version injected
-4. Add a publish step in `publish_npm` pointing at the correct artifact sub-path
+4. Add a publish step in `publish_npm` pointing at the correct artifact sub-path, with `env: npm_config_tag: $(npmDistTag)`
 5. Verify `FileTransform@2` path covers the new library's `package.json`
 
 ---
@@ -202,3 +232,5 @@ Do not upgrade task versions without testing — especially `Npm@1` and `FileTra
 - **Publishing before `dependsOn: ci_build`** — always gate publish on a successful build stage.
 - **Using `npm install` instead of `npm ci`** — always use `ci` in pipelines to ensure reproducible installs from the lockfile.
 - **Hardcoding version strings** — always use `$(theLatestVersion)` from MinVer, never hardcode.
+- **A publish step without `npm_config_tag`** — a pre-release would take `latest`, or fail under npm 11.
+- **Forgetting MinVer's `-m` on a major upgrade** — `master` then publishes the new major's code under the previous major's version number.
