@@ -30,9 +30,12 @@ The package major version tracks the supported Angular version (e.g., `22.x` = A
 # Build libraries (dependency order matters)
 npm run entry-components:build          # build @enigmatry/entry-components
 ng build @enigmatry/entry-form          # build @enigmatry/entry-form
-ng build @enigmatry/demo-app            # build demo app
+ng build @enigmatry/demo-app            # build demo app (run `npm run typedoc` first, or the API tab shows no documentation)
 
 # `npm run build` alone fails — this is a multi-project workspace, always specify a project
+
+# API reference (typedoc → apps/demo-app/src/assets/api/, gitignored — never commit it)
+npm run typedoc                         # generate it; `npm start` runs this first via `prestart`
 
 # Lint (all)
 npm run lint                            # TypeScript ESLint + stylelint (reports only, never rewrites files)

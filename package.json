@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "ng": "ng",
+    "prestart": "npm run typedoc",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
