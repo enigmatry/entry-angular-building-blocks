@@ -47,6 +47,12 @@ stages:
         command: 'ci'
 
     - task: Npm@1
+      displayName: 'Generate API reference'
+      inputs:
+        command: 'custom'
+        customCommand: 'run typedoc'
+
+    - task: Npm@1
       displayName: 'Build demo application'
       inputs:
         command: 'custom'

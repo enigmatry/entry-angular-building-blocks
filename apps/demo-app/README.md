@@ -49,6 +49,12 @@ This tab should load generated documentation of the components api.
 
 To be able to have api documentation, exported features of the component (defined in component's `public-api.ts`) must be documented with comments (`/** */` or `//`) like in `libs/entry-components/dialog/entry-dialog.service.ts`.
 
-After the component features are decorated with documentation comments use `typedoc` npm script to generate documentation. Documentation will be generated in `assets/api/` folder and can be accessed in browser using same path.
+Only exported, documented, public members are published: `private` and `protected` members are left out, as is anything without a documentation comment. The entry point must also be listed in `entryPoints` of the library's `typedoc.json` (e.g. `libs/entry-components/typedoc.json`).
 
-To be able to load generated documentation in Api tab, path to the component's generated page (e.g. 'assets/api/modules/Entry_Components.dialog_public_api.html') should be provided as value of `apiDocsPath` field in `COMPONENT_DEFINITIONS` list.
+The documentation is generated in markdown by the `typedoc` npm script into `src/assets/api/` and can be accessed in the browser under `assets/api/`. **The generated files are not committed** — the folder is gitignored:
+
+* `npm start` runs `npm run typedoc` first (`prestart` hook), so the API tab is populated locally. Run `npm run typedoc` again to see documentation changes while `ng serve` is already running.
+* `deploy-demo.yml` runs `npm run typedoc` before building the demo application, so the deployed site always documents the libraries as they are on `master`.
+* If you build the demo application directly with `ng build @enigmatry/demo-app`, run `npm run typedoc` first, otherwise the API tab shows no documentation.
+
+To be able to load generated documentation in Api tab, path to the component's generated page (e.g. `'assets/api/@enigmatry/entry-components/dialog/public-api.md'`) should be provided as value of `apiDocsPath` field in `COMPONENT_DEFINITIONS` list.
