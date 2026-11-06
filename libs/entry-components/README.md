@@ -10,6 +10,10 @@ Visit components demo application. [Website](https://entry-demo.enigmatry.com/)
 npm install @enigmatry/entry-components
 ```
 
+This installs the latest release. Previews of the next version are published under the `next` dist-tag
+(`npm install @enigmatry/entry-components@next`). See
+[Releases and previews](https://github.com/enigmatry/entry-angular-building-blocks#releases-and-previews).
+
 ### Theming Guidelines
 
 These guides provides detailed steps for setting up and configuring theming within your project.
