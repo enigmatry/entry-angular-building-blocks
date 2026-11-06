@@ -1,4 +1,4 @@
-import { inject, Injectable, Type } from '@angular/core';
+import { inject, Service, Type } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Observable, take } from 'rxjs';
 import { EntryAlertDialogData } from './dialogs/alert/entry-alert-dialog-data.interface';
@@ -12,9 +12,10 @@ import { EntryDialogContent } from './entry-dialog-content.interface';
 import { EntryDialogOpenArguments } from './entry-dialog-open-arguments.type';
 
 /**
- * Used to open built-in and custom entry dialogs.
+ * Used to open built-in and custom entry dialogs. Provided automatically, so a standalone component can inject it without
+ * `EntryDialogModule`; the module still provides its own instance, which reads the config provided where it is imported.
  */
-@Injectable()
+@Service()
 export class EntryDialogService {
   protected readonly config: EntryDialogConfig = inject(ENTRY_DIALOG_CONFIG);
   private readonly matDialog: MatDialog = inject(MatDialog);

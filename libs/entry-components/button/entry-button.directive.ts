@@ -4,8 +4,7 @@ import { ThemePalette } from '@angular/material/core';
 import { ENTRY_BUTTON_CONFIG, EntryButtonConfig, MatButtonConfig } from './entry-button-config';
 
 @Directive({
-  selector: `[mat-button][entry-submit-button],[mat-button][entry-cancel-button]`,
-  standalone: false
+  selector: `[mat-button][entry-submit-button],[mat-button][entry-cancel-button]`
 })
 export class EntryButtonDirective {
   private readonly elementRef: ElementRef<HTMLElement> = inject(ElementRef<HTMLElement>);

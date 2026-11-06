@@ -1,16 +1,22 @@
 import { ChangeDetectionStrategy, Component, ElementRef, ErrorHandler, computed, debounced, inject, input, linkedSignal,
   model, output, resource, signal, viewChild } from '@angular/core';
 import { FORM_FIELD, FormValueControl } from '@angular/forms/signals';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatAutocompleteSelectedEvent, MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { MatOptgroup, MatOption } from '@angular/material/core';
+import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { FieldErrorStateDirective } from '../field-error-state.directive';
+import { GroupSelectOptionsPipe } from '../group-select-options.pipe';
 import { SelectOption } from '../select-option.model';
 import { AutocompleteSearchFilter } from './autocomplete-search-filter.model';
-import { PickedOption, delay, lookupLabel, searchOptions } from './autocomplete-search-filter.functions';
+import { PickedOption, delay, lookupLabel, pickedUnder, searchOptions } from './autocomplete-search-filter.functions';
 
 @Component({
   selector: 'entry-autocomplete-search-filter',
   templateUrl: './autocomplete-search-filter.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: false
+  imports: [MatFormField, MatLabel, MatError, MatInput, MatAutocomplete, MatAutocompleteTrigger, MatOption, MatOptgroup,
+    FieldErrorStateDirective, GroupSelectOptionsPipe]
 })
 export class AutocompleteSearchFilterComponent<T> implements FormValueControl<T | null> {
   private readonly errorHandler = inject(ErrorHandler);
@@ -41,15 +47,7 @@ export class AutocompleteSearchFilterComponent<T> implements FormValueControl<T 
   private readonly picked = signal<PickedOption<T> | undefined>(undefined);
 
   /** The picked option, while the filter still carries the callbacks it was picked under. */
-  private readonly currentPick = computed(() => {
-    const picked = this.picked();
-    if (picked === undefined) {
-      return undefined;
-    }
-    const { resolveLabel, search } = this.searchFilter();
-    const pickedUnderTheseCallbacks = picked.resolveLabel === resolveLabel && picked.search === search;
-    return pickedUnderTheseCallbacks ? picked.option : undefined;
-  });
+  private readonly currentPick = computed(() => pickedUnder(this.picked(), this.searchFilter()));
 
   // The wait is a function: the delay comes from a required input, unreadable while fields initialise.
   // eslint-disable-next-line @angular-eslint/no-experimental -- `debounced` is the only debounce Angular ships; RxJS here would reintroduce the subscription this component was rewritten to drop.

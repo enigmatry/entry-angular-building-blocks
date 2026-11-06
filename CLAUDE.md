@@ -56,7 +56,7 @@ Run `npm run lint` always; add `npm run entry-components:build` if you touched `
 
 ### Library structure (entry-components)
 
-`entry-components` is built as an **ng-packagr library with secondary entry points**. Each feature area is its own sub-package with its own `ng-package.json`, `public-api.ts`, and `NgModule`:
+`entry-components` is built as an **ng-packagr library with secondary entry points**. Each feature area is its own sub-package with its own `ng-package.json`, `public-api.ts`, and a wrapper `NgModule`:
 
 ```
 libs/entry-components/
@@ -68,7 +68,7 @@ libs/entry-components/
   permissions/      → @enigmatry/entry-components/permissions
   search-filter/    → @enigmatry/entry-components/search-filter
   spinner/          → @enigmatry/entry-components/spinner
-  table/            → @enigmatry/entry-components/table        (already standalone)
+  table/            → @enigmatry/entry-components/table
   validation/       → @enigmatry/entry-components/validation
   modules/          → aggregate EntryComponentsModule (re-exports all sub-modules)
   public-api.ts     → @enigmatry/entry-components (barrel)
@@ -76,11 +76,18 @@ libs/entry-components/
 
 Each entry point exposes only what's in its `public-api.ts`.
 
-`EntryComponentsModule` re-exports all sub-modules. Consumers import it in `shared.module.ts` and call `.forRoot()` in `app.module.ts` to register providers.
+`EntryComponentsModule` re-exports all sub-modules. Module-based consumers import it in `shared.module.ts` and call `.forRoot()` in `app.module.ts` to register providers; standalone consumers import the components, directives and pipes directly.
 
 ### Standalone migration
 
-Migration to standalone has not happened yet — 69 of the 91 components, directives and pipes still declare `standalone: false`. Already standalone: everything under `table/`, the `common/` directives, `sort.pipe`, `app.component`, and the demo app's `features/*` documentation components.
+Every component, directive and pipe in `entry-components` is standalone. Each entry point keeps its `NgModule` as a wrapper that imports and re-exports the standalone pieces, the way `EntryTableModule` does, so consumers can import either. Removing a module, or an export from one, is a breaking change. `entry-form` and the demo app still declare through modules: the root `eslint.config.js` turns `@angular-eslint/prefer-standalone` off for `libs/entry-form/**`, and `apps/demo-app/eslint.config.js` turns it off for the demo.
+
+To convert, run `ng g @angular/core:standalone --mode=convert-to-standalone --path=<entry point>` one entry point at a time, dependencies first. Then check its output by hand:
+
+- It writes relative imports across entry points; rewrite them to `@enigmatry/entry-components/<entry point>` (see Hard rules).
+- With Prettier installed it reformats every file it touches. A temporary `.prettierignore` listing the folder keeps the diff to decorators and imports; delete it afterwards.
+- `EntryButtonDirective` is matched by attributes alone, so a template that lacks it in `imports` compiles and silently renders a plain `mat-button`.
+- A standalone dialog component must not import an `NgModule` with providers (`MatDialogModule`, `EntryDialogModule`): created dynamically, it gets an environment injector of its own with second instances of those providers. Import the standalone directives instead.
 
 Formly is **not** the blocker it was once assumed to be. `entry-components` has no `@ngx-formly` imports at all; Formly lives only in `entry-form` and the demo app's form/validation examples, and a standalone component can be imported into an `NgModule` regardless. The one piece needing design work is `FormlyAutocompleteModule`, which registers its field type through `FormlyModule.forChild()`.
 

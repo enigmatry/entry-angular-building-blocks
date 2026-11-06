@@ -1,10 +1,16 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, ElementRef, ErrorHandler,
    computed, effect, inject, input, model, output, viewChild } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
+import { ReactiveFormsModule } from '@angular/forms';
 import type { FormValueControl, ValidationError } from '@angular/forms/signals';
+import { MatButton } from '@angular/material/button';
 import { MAT_DATE_FORMATS, DateAdapter, MatDateFormats } from '@angular/material/core';
-import { MatDatepickerInput } from '@angular/material/datepicker';
+import { MatDatepickerInput, MatDatepicker, MatDatepickerActions, MatDatepickerApply, MatDatepickerToggle } from '@angular/material/datepicker';
+import { MatError, MatFormField, MatHint, MatLabel, MatSuffix } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { MatInput } from '@angular/material/input';
 import { ENTRY_MAT_DATE_TIME_FORMATS, EntryDateTimeAdapter } from '@enigmatry/entry-components/common';
+import { EntryDisplayControlValidationDirective } from '@enigmatry/entry-components/validation';
 import { skip } from 'rxjs';
 import { ENTRY_DATE_TIME_PICKER_CONFIG, EntryDateTimePickerConfig } from './date-time-picker-config.model';
 import { EntryDateTimePickerControls } from './date-time-picker-controls';
@@ -18,7 +24,9 @@ import { EntryTimePickerComponent } from './time-picker.component';
         { provide: DateAdapter, useClass: EntryDateTimeAdapter }
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false,
+    imports: [ReactiveFormsModule, MatFormField, MatLabel, MatHint, MatSuffix, MatError, MatInput, MatDatepicker, MatDatepickerInput,
+      MatDatepickerToggle, MatDatepickerActions, MatDatepickerApply, MatButton, MatIcon, EntryDisplayControlValidationDirective,
+      EntryTimePickerComponent],
     host: {
         class: 'entry-date-time-picker'
     }

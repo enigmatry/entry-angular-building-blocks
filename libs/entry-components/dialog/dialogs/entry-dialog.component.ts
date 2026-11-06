@@ -1,5 +1,9 @@
+import { NgTemplateOutlet } from '@angular/common';
 import { Component, inject, input, output, TemplateRef } from '@angular/core';
-import { MatDialogRef, MatDialogState } from '@angular/material/dialog';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatDialogRef, MatDialogState, MatDialogActions, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
+import { MatIcon } from '@angular/material/icon';
+import { EntryButtonDirective } from '@enigmatry/entry-components/button';
 import { EntryDialogButtonsAlignment } from '../entry-dialog-buttons-alignment.type';
 import { ENTRY_DIALOG_CONFIG, EntryDialogConfig } from '../entry-dialog-config.model';
 
@@ -16,7 +20,7 @@ import { ENTRY_DIALOG_CONFIG, EntryDialogConfig } from '../entry-dialog-config.m
     selector: 'entry-dialog',
     templateUrl: './entry-dialog.component.html',
     styleUrl: './entry-dialog.component.scss',
-    standalone: false
+    imports: [MatDialogTitle, MatDialogContent, MatDialogActions, MatIconButton, MatButton, MatIcon, NgTemplateOutlet, EntryButtonDirective]
 })
 export class EntryDialogComponent {
     protected readonly config: EntryDialogConfig = inject(ENTRY_DIALOG_CONFIG);

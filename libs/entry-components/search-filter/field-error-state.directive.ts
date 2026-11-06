@@ -5,8 +5,7 @@ import { MatInput } from '@angular/material/input';
 
 /** Shows a field's error state on a `matInput` that cannot carry `[formField]` and so has no `NgControl`. */
 @Directive({
-  selector: 'input[matInput][entryFieldErrorState]',
-  standalone: false
+  selector: 'input[matInput][entryFieldErrorState]'
 })
 export class FieldErrorStateDirective implements DoCheck {
   private readonly matInput = inject(MatInput, { self: true });
