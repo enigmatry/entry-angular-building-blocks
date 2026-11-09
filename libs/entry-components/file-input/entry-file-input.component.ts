@@ -1,6 +1,6 @@
 import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
 import {
-  afterNextRender, ChangeDetectionStrategy, Component, DestroyRef, effect, ElementRef, NgZone,
+  afterNextRender, ChangeDetectionStrategy, Component, DestroyRef, effect, ElementRef,
   Renderer2, computed, inject, input, model, output, viewChild
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -17,7 +17,6 @@ import { warnOnValidatorDirectives } from './warn-on-validator-directives';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EntryFileInputComponent implements FormValueControl<FileInputValue> {
-  private readonly ngZone: NgZone = inject(NgZone);
   private readonly renderer: Renderer2 = inject(Renderer2);
   private readonly destroyRef = inject(DestroyRef);
 
@@ -88,13 +87,11 @@ export class EntryFileInputComponent implements FormValueControl<FileInputValue>
 
     // Signal queries have no `static` option, so the button is only readable after the first render.
     afterNextRender(() => {
-      this.ngZone.runOutsideAngular(() => {
-        fromEvent(this.fileButton().nativeElement, 'click')
-          .pipe(takeUntilDestroyed(this.destroyRef))
-          .subscribe(() => {
-            this.fileInput()?.nativeElement.click();
-          });
-      });
+      fromEvent(this.fileButton().nativeElement, 'click')
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe(() => {
+          this.fileInput()?.nativeElement.click();
+        });
     });
   }
 

@@ -1,5 +1,5 @@
 import { httpResource } from '@angular/common/http';
-import { afterNextRender, ChangeDetectionStrategy, Component, computed, ElementRef, inject, input, NgZone,
+import { afterNextRender, ChangeDetectionStrategy, Component, computed, ElementRef, inject, input,
   Renderer2, SecurityContext } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import hljs from 'highlight.js';
@@ -18,7 +18,6 @@ export class MarkdownViewerComponent {
   private readonly domSanitizer: DomSanitizer = inject(DomSanitizer);
   private readonly elementRef: ElementRef = inject(ElementRef);
   private readonly renderer: Renderer2 = inject(Renderer2);
-  private readonly ngZone: NgZone = inject(NgZone);
 
   readonly fileUrl = input<string | undefined>(undefined);
   readonly markdownContent = input<string | undefined>(undefined);
@@ -58,18 +57,15 @@ export class MarkdownViewerComponent {
   };
 
   private readonly handleAnchorClicks = (): void => {
-    this.ngZone.runOutsideAngular(() => {
-      this.renderer.listen(this.elementRef.nativeElement, 'click', (event: MouseEvent) => {
-        const anchor: HTMLAnchorElement | null = (event.target as HTMLElement).closest('a[href]');
+    this.renderer.listen(this.elementRef.nativeElement, 'click', (event: MouseEvent) => {
+      const anchor: HTMLAnchorElement | null = (event.target as HTMLElement).closest('a[href]');
 
-        if (anchor && this.isHeadingLink(anchor)) {
-          event.preventDefault();
-          const url = new URL(anchor.href);
-          const hash = decodeURI(url.hash);
-          this.scrollToAnchor(this.elementRef.nativeElement, hash);
-        }
+      if (anchor && this.isHeadingLink(anchor)) {
+        event.preventDefault();
+        const url = new URL(anchor.href);
+        const hash = decodeURI(url.hash);
+        this.scrollToAnchor(this.elementRef.nativeElement, hash);
       }
-      );
     });
   };
 
