@@ -115,6 +115,14 @@ stages:
         command: 'custom'
         customCommand: 'run build @enigmatry/entry-form'
 
+    # deploy-demo.yml generates the API reference and deploys every master merge without approval,
+    # so a pull request that breaks typedoc has to fail here, before it reaches master.
+    - task: Npm@1
+      displayName: 'Generate API reference'
+      inputs:
+        command: 'custom'
+        customCommand: 'run typedoc'
+
     - task: Npm@1
       displayName: 'Build demo application'
       inputs:
