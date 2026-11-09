@@ -109,7 +109,7 @@ The token has no default. Generated forms inject it optionally, and when nothing
 
 ```html
 <input matInput formControlName="price" type="text" inputmode="decimal"
-  entryFieldFormat [entryFieldFormatDef]="{ name: 'currency', currencyCode: 'EUR' }">
+  entryFieldFormat [entryFieldFormatDefinition]="{ name: 'currency', currencyCode: 'EUR' }">
 ```
 
 It is a `ControlValueAccessor` for reactive forms:
@@ -117,7 +117,7 @@ It is a `ControlValueAccessor` for reactive forms:
 - `number`, `currency` and `percent` show the formatted value (through Angular's `DecimalPipe`, `CurrencyPipe` and `PercentPipe`) while the field is not focused, and a plain number with the locale's decimal separator while it is. `percent` edits the percentage (`12.5` for `0.125`) and honours `multiplier`.
 - Typed text must be a valid number in the locale: an optional minus sign, the currency symbol or percent sign the field displays, the locale's decimal separator, and group separators only at the locale's group positions (`1,234.5` or `1234.5` in `en`, `1.234,5` in `nl`, `12,34,567` in `en-IN`). Anything else (`1,5` in `en`, letters, exponents, non-Latin digits) sets a `null` value and the `entryFieldFormat` validation error, so a mistyped amount is never saved as a different number.
 - `date`, `boolean` and custom definitions format the displayed value only. Typed text is written to the model exactly as typed.
-- Only text-like inputs (`text`, `search`, `tel`, `url`, `email`, textarea) are formatted. A `type="number"` input cannot display formatted text, so it shows and parses a plain number; use `type="text" inputmode="decimal"` to get formatting. Other native types such as `date` keep their raw value.
+- Only text-like inputs (`text`, `search`, `tel`, `url`, `email`, textarea) are formatted. A `type="number"` or `type="range"` input cannot display formatted text, so it shows and parses a plain number; use `type="text" inputmode="decimal"` to get formatting. Other native types such as `date` keep their raw value. Checkbox, radio and file inputs are not matched by the directive, so they keep Angular's own value accessors.
 - Formatting changes the display only: the model keeps the precision that was typed (`2.499` displays as `€2.50` with `digitsInfo: '1.2-2'`).
 - A `locale` in the definition must be registered with `registerLocaleData`, as for Angular's pipes.
 

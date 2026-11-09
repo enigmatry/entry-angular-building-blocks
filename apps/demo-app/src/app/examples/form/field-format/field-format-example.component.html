@@ -13,7 +13,7 @@
   <mat-form-field>
     <mat-label>Price</mat-label>
     <input matInput formControlName="price" type="text" inputmode="decimal"
-      entryFieldFormat [entryFieldFormatDef]="{ name: 'currency', currencyCode: 'EUR' }">
+      entryFieldFormat [entryFieldFormatDefinition]="{ name: 'currency', currencyCode: 'EUR' }">
     @if (form.controls.price.hasError('entryFieldFormat')) {
       <mat-error>Enter a valid amount</mat-error>
     }
@@ -22,7 +22,7 @@
   <mat-form-field>
     <mat-label>Quantity</mat-label>
     <input matInput formControlName="quantity" type="text" inputmode="decimal"
-      entryFieldFormat [entryFieldFormatDef]="{ name: 'number', digitsInfo: '1.0-2' }">
+      entryFieldFormat [entryFieldFormatDefinition]="{ name: 'number', digitsInfo: '1.0-2' }">
     @if (form.controls.quantity.hasError('entryFieldFormat')) {
       <mat-error>Enter a valid number</mat-error>
     }
@@ -31,7 +31,7 @@
   <mat-form-field>
     <mat-label>Discount</mat-label>
     <input matInput formControlName="discount" type="text" inputmode="decimal"
-      entryFieldFormat [entryFieldFormatDef]="{ name: 'percent', digitsInfo: '1.0-2' }">
+      entryFieldFormat [entryFieldFormatDefinition]="{ name: 'percent', digitsInfo: '1.0-2' }">
     @if (form.controls.discount.hasError('entryFieldFormat')) {
       <mat-error>Enter a valid percentage</mat-error>
     }
@@ -40,7 +40,7 @@
   <mat-form-field>
     <mat-label>Created on</mat-label>
     <input matInput formControlName="createdOn"
-      entryFieldFormat [entryFieldFormatDef]="{ name: 'date', format: 'dd-MM-yyyy' }">
+      entryFieldFormat [entryFieldFormatDefinition]="{ name: 'date', format: 'dd-MM-yyyy' }">
   </mat-form-field>
 </form>
 

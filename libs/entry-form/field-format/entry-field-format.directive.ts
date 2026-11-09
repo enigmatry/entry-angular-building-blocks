@@ -1,10 +1,9 @@
 import { CurrencyPipe, DatePipe, DecimalPipe, PercentPipe } from '@angular/common';
-import { Directive, ElementRef, Renderer2, effect, inject, input } from '@angular/core';
+import { Directive, ElementRef, Renderer2, effect, inject, input, untracked } from '@angular/core';
 import { COMPOSITION_BUFFER_MODE, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
-import { EntryFieldFormatDef } from './entry-field-format-def';
-import { EntryFieldFormatter, EntryFieldInputKind } from './entry-field-formatter';
-
-const textTypes = new Set(['text', 'search', 'tel', 'url', 'email', 'textarea']);
+import { EntryFieldFormatDefinition } from './entry-field-format-definition';
+import { EntryFieldFormatter } from './entry-field-formatter';
+import { EntryFieldInputKind, inputKindOf } from './entry-field-input-kind';
 
 const isAndroid = (): boolean => typeof navigator !== 'undefined' && /android (\d+)/iu.test(navigator.userAgent);
 
@@ -17,14 +16,14 @@ const isAndroid = (): boolean => typeof navigator !== 'undefined' && /android (\
  *   in the locale sets the `entryFieldFormat` validation error and a `null` model value.
  * - `date`, `boolean` and custom definitions format the displayed value only; typed text is written to the
  *   model unchanged.
- * - Only text-like inputs (`text`, `search`, `tel`, `url`, `email`, textarea) are formatted. A `type="number"`
- *   input shows and parses a plain number; other native types (`date`, `time`, ...) keep their raw value.
+ * - Only text-like inputs are formatted. `number` and `range` inputs show and parse a plain number, other native
+ *   types keep their raw value, and checkbox, radio and file inputs keep Angular's own value accessors.
  *
  * Temporary: a reactive-forms `ControlValueAccessor` for generated forms. When generated forms migrate to
  * signal forms it will be replaced by a `FormValueControl` built on `transformedValue`.
  */
 @Directive({
-  selector: 'input[entryFieldFormat], textarea[entryFieldFormat]',
+  selector: 'input[entryFieldFormat]:not([type=checkbox]):not([type=radio]):not([type=file]), textarea[entryFieldFormat]',
   providers: [
     { provide: NG_VALUE_ACCESSOR, useExisting: EntryFieldFormatDirective, multi: true },
     { provide: NG_VALIDATORS, useExisting: EntryFieldFormatDirective, multi: true },
@@ -48,39 +47,46 @@ export class EntryFieldFormatDirective implements ControlValueAccessor, Validato
   private readonly formatter = inject(EntryFieldFormatter);
   private readonly compositionBuffered = inject(COMPOSITION_BUFFER_MODE, { optional: true }) ?? !isAndroid();
 
-  readonly entryFieldFormatDef = input.required<EntryFieldFormatDef>();
+  readonly entryFieldFormatDefinition = input.required<EntryFieldFormatDefinition>();
 
   private value: unknown = null;
   private focused = false;
   private composing = false;
-  private invalidText: string | null = null;
+  private parseError: { text: string } | null = null;
   private onChange: (value: unknown) => void = () => undefined;
   private onTouched: () => void = () => undefined;
+  private onValidatorChange: () => void = () => undefined;
 
   constructor() {
-    effect(() => this.render());
+    effect(() => {
+      this.entryFieldFormatDefinition();
+      untracked(() => this.refresh());
+    });
   }
 
   readonly writeValue = (value: unknown): void => {
     this.value = value;
-    this.invalidText = null;
+    this.parseError = null;
     this.render();
   };
 
-  readonly registerOnChange = (fn: (value: unknown) => void): void => {
-    this.onChange = fn;
+  readonly registerOnChange = (callback: (value: unknown) => void): void => {
+    this.onChange = callback;
   };
 
-  readonly registerOnTouched = (fn: () => void): void => {
-    this.onTouched = fn;
+  readonly registerOnTouched = (callback: () => void): void => {
+    this.onTouched = callback;
   };
 
   readonly setDisabledState = (isDisabled: boolean): void => {
     this.renderer.setProperty(this.element, 'disabled', isDisabled);
   };
 
-  readonly validate = (): ValidationErrors | null =>
-    this.invalidText === null ? null : { entryFieldFormat: { text: this.invalidText } };
+  readonly validate = (): ValidationErrors | null => this.parseError ? { entryFieldFormat: this.parseError } : null;
+
+  readonly registerOnValidatorChange = (callback: () => void): void => {
+    this.onValidatorChange = callback;
+  };
 
   protected readonly onInput = (): void => {
     if (this.compositionBuffered && this.composing) {
@@ -90,8 +96,8 @@ export class EntryFieldFormatDirective implements ControlValueAccessor, Validato
     const kind = this.inputKind();
     const result = kind === 'number' && this.element.validity.badInput
       ? { error: true as const }
-      : this.formatter.parse(text, this.entryFieldFormatDef(), kind);
-    this.invalidText = 'error' in result ? text : null;
+      : this.formatter.parse(text, this.entryFieldFormatDefinition(), kind);
+    this.parseError = 'error' in result ? { text } : null;
     this.value = 'error' in result ? null : result.value;
     this.onChange(this.value);
   };
@@ -118,23 +124,26 @@ export class EntryFieldFormatDirective implements ControlValueAccessor, Validato
     }
   };
 
-  private readonly render = (): void => {
-    const def = this.entryFieldFormatDef();
-    if (this.invalidText !== null) {
+  private readonly refresh = (): void => {
+    if (!this.parseError) {
+      this.render();
       return;
     }
+    this.onInput();
+    this.onValidatorChange();
+  };
+
+  private readonly render = (): void => {
+    if (this.parseError) {
+      return;
+    }
+    const definition = this.entryFieldFormatDefinition();
     const kind = this.inputKind();
     const text = this.focused || kind !== 'text'
-      ? this.formatter.edit(this.value, def, kind)
-      : this.formatter.display(this.value, def);
+      ? this.formatter.edit(this.value, definition, kind)
+      : this.formatter.display(this.value, definition);
     this.renderer.setProperty(this.element, 'value', text);
   };
 
-  private readonly inputKind = (): EntryFieldInputKind => {
-    const type = this.element.type;
-    if (type === 'number') {
-      return 'number';
-    }
-    return textTypes.has(type) ? 'text' : 'native';
-  };
+  private readonly inputKind = (): EntryFieldInputKind => inputKindOf(this.element);
 }

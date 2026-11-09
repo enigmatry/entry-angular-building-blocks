@@ -1,5 +1,5 @@
 /**
- * Formatter definition rendered by entry-code-generation as `[entryFieldFormatDef]`.
+ * Formatter definition rendered by entry-code-generation as `[entryFieldFormatDefinition]`.
  *
  * Built-in names and the properties they read:
  * - `date`: `format`, `timezone`, `locale`
@@ -10,7 +10,7 @@
  *
  * Empty strings are treated as "not set". Custom formatters may add their own properties.
  */
-export interface EntryFieldFormatDef {
+export interface EntryFieldFormatDefinition {
   name: string;
   format?: string;
   timezone?: string;

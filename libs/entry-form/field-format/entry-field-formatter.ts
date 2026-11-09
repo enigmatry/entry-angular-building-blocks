@@ -1,15 +1,22 @@
 import { CurrencyPipe, DatePipe, DecimalPipe, PercentPipe, formatNumber } from '@angular/common';
 import { Injectable, LOCALE_ID, inject } from '@angular/core';
-import { EntryFieldFormatDef } from './entry-field-format-def';
-import { groupingSample, negativeSample, numberSyntax, parseLocalizedNumber, plainNumber, round, setting, toNumber } from './field-format-numbers';
+import { EntryFieldFormatDefinition } from './entry-field-format-definition';
+import { EntryFieldInputKind } from './entry-field-input-kind';
+import { groupingSample, negativeSample, numberSyntax, parseLocalizedNumber } from './field-format-numbers';
+import { plainNumber, toNumber } from './number-conversion';
 import { NumberSyntax } from './number-syntax';
+import { fromPercent, toPercent } from './percent-scale';
 
 export type EntryFieldParseResult = { value: unknown } | { error: true };
 
-export type EntryFieldInputKind = 'text' | 'number' | 'native';
-
-const percentScale = 100;
 const sampleDigits = '1.1-1';
+
+const isEmptyValue = (value: unknown): boolean => {
+  const normalized = value ?? '';
+  return typeof normalized === 'string' && !normalized;
+};
+
+const setting = (value: unknown): string | undefined => typeof value === 'string' && value ? value : undefined;
 
 @Injectable()
 export class EntryFieldFormatter {
@@ -19,94 +26,96 @@ export class EntryFieldFormatter {
   private readonly decimalPipe = inject(DecimalPipe);
   private readonly percentPipe = inject(PercentPipe);
 
-  readonly display = (value: unknown, def: EntryFieldFormatDef): string => {
-    if (value === null || value === undefined || value === '') {
+  readonly display = (value: unknown, definition: EntryFieldFormatDefinition): string => {
+    if (isEmptyValue(value)) {
       return '';
     }
-    const locale = this.locale(def);
-    const digitsInfo = setting(def.digitsInfo);
+    if (definition.name === 'date') {
+      return this.displayDate(value, definition);
+    }
+    if (definition.name === 'boolean') {
+      return value === true ? '\u2713' : '';
+    }
     const numeric = toNumber(value);
-    switch (def.name) {
-      case 'number':
-        return numeric === null ? String(value) : this.decimalPipe.transform(numeric, digitsInfo, locale) ?? '';
-      case 'currency':
-        return numeric === null
-          ? String(value)
-          : this.currencyPipe.transform(numeric, setting(def.currencyCode), this.currencyDisplay(def), digitsInfo, locale) ?? '';
-      case 'percent':
-        return numeric === null ? String(value) : this.percentPipe.transform(numeric * this.multiplier(def), digitsInfo, locale) ?? '';
-      case 'date':
-        return this.displayDate(value, def);
-      case 'boolean':
-        return value === true ? '✓' : '';
-      default:
-        return String(value);
-    }
-  };
-
-  readonly edit = (value: unknown, def: EntryFieldFormatDef, kind: EntryFieldInputKind): string => {
-    if (value === null || value === undefined) {
-      return '';
-    }
-    const numeric = kind !== 'native' && (kind === 'number' || this.isNumeric(def)) ? toNumber(value) : null;
-    if (numeric === null) {
+    if (!this.isNumeric(definition) || !Number.isFinite(numeric)) {
       return String(value);
     }
-    const plain = plainNumber(this.isNumeric(def) ? this.toEditNumber(numeric, def) : numeric);
+    return this.displayNumber(numeric, definition);
+  };
+
+  readonly edit = (value: unknown, definition: EntryFieldFormatDefinition, kind: EntryFieldInputKind): string => {
+    if (isEmptyValue(value)) {
+      return '';
+    }
+    const numeric = kind !== 'native' && (kind === 'number' || this.isNumeric(definition)) ? toNumber(value) : NaN;
+    if (!Number.isFinite(numeric)) {
+      return String(value);
+    }
+    const plain = plainNumber(this.isNumeric(definition) ? this.toEditNumber(numeric, definition) : numeric);
     if (kind === 'number') {
       return plain;
     }
-    const syntax = this.syntax(def);
+    const syntax = this.syntax(definition);
     return plain.replace('-', syntax.minus).replace('.', syntax.decimal);
   };
 
-  readonly parse = (text: string, def: EntryFieldFormatDef, kind: EntryFieldInputKind): EntryFieldParseResult => {
+  readonly parse = (text: string, definition: EntryFieldFormatDefinition, kind: EntryFieldInputKind): EntryFieldParseResult => {
     if (kind === 'native') {
       return { value: text };
     }
-    if (kind === 'text' && !this.isNumeric(def)) {
+    if (kind === 'text' && !this.isNumeric(definition)) {
       return { value: text };
     }
-    if (text.trim() === '') {
+    if (!text.trim()) {
       return { value: null };
     }
-    const parsed = kind === 'number' ? toNumber(text) : parseLocalizedNumber(text, this.syntax(def));
-    const value = parsed === null || !this.isNumeric(def) ? parsed : this.fromEditNumber(parsed, def);
-    return value === null || !Number.isFinite(value) ? { error: true } : { value };
+    const parsed = kind === 'number' ? toNumber(text) : parseLocalizedNumber(text, this.syntax(definition));
+    const value = this.isNumeric(definition) ? this.fromEditNumber(parsed, definition) : parsed;
+    return Number.isFinite(value) ? { value } : { error: true };
   };
 
-  private readonly isNumeric = (def: EntryFieldFormatDef): boolean =>
-    def.name === 'number' || def.name === 'currency' || def.name === 'percent';
+  private readonly isNumeric = (definition: EntryFieldFormatDefinition): boolean =>
+    definition.name === 'number' || definition.name === 'currency' || definition.name === 'percent';
 
-  private readonly locale = (def: EntryFieldFormatDef): string => setting(def.locale) ?? this.localeId;
+  private readonly locale = (definition: EntryFieldFormatDefinition): string => setting(definition.locale) ?? this.localeId;
 
-  private readonly currencyDisplay = (def: EntryFieldFormatDef): string | boolean =>
-    typeof def.display === 'boolean' ? def.display : setting(def.display) ?? 'symbol';
+  private readonly currencyDisplay = (definition: EntryFieldFormatDefinition): string | boolean =>
+    typeof definition.display === 'boolean' ? definition.display : setting(definition.display) ?? 'symbol';
 
-  private readonly multiplier = (def: EntryFieldFormatDef): number => {
-    const multiplier = toNumber(def.multiplier);
-    return multiplier === null || multiplier === 0 ? 1 : multiplier;
+  private readonly multiplier = (definition: EntryFieldFormatDefinition): number => toNumber(definition.multiplier) || 1;
+
+  private readonly displayNumber = (value: number, definition: EntryFieldFormatDefinition): string => {
+    const locale = this.locale(definition);
+    const digits = setting(definition.digitsInfo);
+    switch (definition.name) {
+      case 'currency':
+        return this.currencyPipe.transform(value, setting(definition.currencyCode), this.currencyDisplay(definition), digits, locale) ?? '';
+      case 'percent':
+        return this.percentPipe.transform(value * this.multiplier(definition), digits, locale) ?? '';
+      default:
+        return this.decimalPipe.transform(value, digits, locale) ?? '';
+    }
   };
 
-  private readonly toEditNumber = (value: number, def: EntryFieldFormatDef): number =>
-    def.name === 'percent' ? round(value * this.multiplier(def) * percentScale) : value;
+  private readonly toEditNumber = (value: number, definition: EntryFieldFormatDefinition): number =>
+    definition.name === 'percent' ? toPercent(value, this.multiplier(definition)) : value;
 
-  private readonly fromEditNumber = (value: number, def: EntryFieldFormatDef): number =>
-    def.name === 'percent' ? round(value / percentScale / this.multiplier(def)) : value;
+  private readonly fromEditNumber = (value: number, definition: EntryFieldFormatDefinition): number =>
+    definition.name === 'percent' ? fromPercent(value, this.multiplier(definition)) : value;
 
-  private readonly syntax = (def: EntryFieldFormatDef): NumberSyntax => {
-    const locale = this.locale(def);
+  private readonly syntax = (definition: EntryFieldFormatDefinition): NumberSyntax => {
+    const locale = this.locale(definition);
     const sample = (value: number, display: string | boolean): string => {
-      switch (def.name) {
+      switch (definition.name) {
         case 'currency':
-          return this.currencyPipe.transform(value, setting(def.currencyCode), display, sampleDigits, locale) ?? '';
+          return this.currencyPipe.transform(value, setting(definition.currencyCode), display, sampleDigits, locale) ?? '';
         case 'percent':
           return this.percentPipe.transform(value, sampleDigits, locale) ?? '';
         default:
           return formatNumber(value, locale, sampleDigits);
       }
     };
-    const display = this.currencyDisplay(def);
+    const display = this.currencyDisplay(definition);
     return numberSyntax({
       positive: sample(groupingSample, display),
       negative: sample(-groupingSample, display),
@@ -115,12 +124,12 @@ export class EntryFieldFormatter {
     }, formatNumber(negativeSample, locale, '1.0-0'));
   };
 
-  private readonly displayDate = (value: unknown, def: EntryFieldFormatDef): string => {
+  private readonly displayDate = (value: unknown, definition: EntryFieldFormatDefinition): string => {
     if (!(value instanceof Date) && typeof value !== 'string' && typeof value !== 'number') {
       return String(value);
     }
     try {
-      return this.datePipe.transform(value, setting(def.format), setting(def.timezone), this.locale(def)) ?? '';
+      return this.datePipe.transform(value, setting(definition.format), setting(definition.timezone), this.locale(definition)) ?? '';
     } catch {
       return String(value);
     }
