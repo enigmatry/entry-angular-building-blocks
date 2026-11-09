@@ -1,11 +1,15 @@
 import { Component, signal } from '@angular/core';
+import { MatButton } from '@angular/material/button';
 import { ThemePalette } from '@angular/material/core';
+import { MatRadioGroup, MatRadioButton } from '@angular/material/radio';
+import { EntryButtonDirective } from '@enigmatry/entry-components/button';
+import { EntrySpinnerComponent } from '@enigmatry/entry-components/spinner';
 import { timer } from 'rxjs';
 
 @Component({
     selector: 'app-spinner-example',
     templateUrl: './spinner-example.component.html',
-    standalone: false
+    imports: [EntrySpinnerComponent, MatRadioGroup, MatRadioButton, MatButton, EntryButtonDirective]
 })
 export class SpinnerExampleComponent {
   readonly loading = signal(false);

@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
@@ -7,25 +6,17 @@ import { EntryButtonModule, provideEntryButtonConfig } from '@enigmatry/entry-co
 import { EntryCommonModule, provideEntryNativeTimeAdapter } from '@enigmatry/entry-components/common';
 import { getMatDateLocale } from '../../localization';
 import { DocumentationContentComponent } from './documentation-content/documentation-content.component';
-import { CodeViewComponent } from './example-viewer/code-view/code-view.component';
 import { ExampleViewerComponent } from './example-viewer/example-viewer.component';
-import { LandingComponent } from './landing/landing.component';
 import { MarkdownViewerComponent } from './markdown-viewer/markdown-viewer.component';
 import { MaterialModule } from './material/material.module';
 import { SortPipe } from './pipes/sort.pipe';
 
 @NgModule({
-  declarations: [
+  imports: [
+    MaterialModule,
     DocumentationContentComponent,
-    LandingComponent,
     ExampleViewerComponent,
     MarkdownViewerComponent,
-    CodeViewComponent
-  ],
-  imports: [
-    CommonModule,
-    MaterialModule,
-    EntryButtonModule,
     SortPipe
   ],
   exports: [

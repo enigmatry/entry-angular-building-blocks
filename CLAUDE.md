@@ -83,7 +83,7 @@ Each entry point exposes only what's in its `public-api.ts`.
 
 ### Standalone migration
 
-Every component, directive and pipe in `entry-components` is standalone. Each entry point keeps its `NgModule` as a wrapper that imports and re-exports the standalone pieces, the way `EntryTableModule` does, so consumers can import either. Removing a module, or an export from one, is a breaking change. `entry-form` and the demo app still declare through modules: the root `eslint.config.js` turns `@angular-eslint/prefer-standalone` off for `libs/entry-form/**`, and `apps/demo-app/eslint.config.js` turns it off for the demo.
+Every component, directive and pipe in `entry-components` is standalone. Each entry point keeps its `NgModule` as a wrapper that imports and re-exports the standalone pieces, the way `EntryTableModule` does, so consumers can import either. Removing a module, or an export from one, is a breaking change. The demo app's own declarations are standalone too, and its example modules only wrap them and hold their providers. Only the Formly code still declares through modules: `entry-form`, for which the root `eslint.config.js` turns `@angular-eslint/prefer-standalone` off in `libs/entry-form/**`, and the demo's Form page and Formly validation examples, for which `apps/demo-app/eslint.config.js` turns it off in `examples/form/**` and `examples/validation/formly/**`.
 
 To convert, run `ng g @angular/core:standalone --mode=convert-to-standalone --path=<entry point>` one entry point at a time, dependencies first. Then check its output by hand:
 

@@ -1,20 +1,11 @@
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { AbstractControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { EntryValidationModule, provideEntryValidationConfig } from '@enigmatry/entry-components/validation';
-import { SharedModule } from '../../../shared/shared.module';
+import { AbstractControl } from '@angular/forms';
+import { provideEntryValidationConfig } from '@enigmatry/entry-components/validation';
 import { ReactiveFormExampleComponent } from './reactive-form-validation-example.component';
 
 @NgModule({
-  declarations: [
-    ReactiveFormExampleComponent
-  ],
   imports: [
-    CommonModule,
-    SharedModule,
-    FormsModule,
-    ReactiveFormsModule,
-    EntryValidationModule
+    ReactiveFormExampleComponent
   ],
   exports: [
     ReactiveFormExampleComponent

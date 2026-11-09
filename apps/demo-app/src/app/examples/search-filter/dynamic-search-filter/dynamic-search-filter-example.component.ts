@@ -1,4 +1,6 @@
+import { JsonPipe } from '@angular/common';
 import { Component, signal } from '@angular/core';
+import { MatButton } from '@angular/material/button';
 import {
   AutocompleteSearchFilter,
   SearchFilterBase,
@@ -6,7 +8,8 @@ import {
   SearchFilterServerError,
   SelectOption,
   SelectSearchFilter,
-  TextSearchFilter
+  TextSearchFilter,
+  EntrySearchFilterComponent
 } from '@enigmatry/entry-components/search-filter';
 
 const dropLastItem = -1;
@@ -42,7 +45,7 @@ const baseFilters = (): SearchFilterBase<unknown>[] => [
 @Component({
   selector: 'app-dynamic-search-filter-example',
   templateUrl: './dynamic-search-filter-example.component.html',
-  standalone: false
+  imports: [MatButton, EntrySearchFilterComponent, JsonPipe]
 })
 export class DynamicSearchFilterExampleComponent {
   /** Held in a signal, so add and remove are ordinary writes rather than a rebind. */

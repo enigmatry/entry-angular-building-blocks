@@ -1,4 +1,6 @@
 import { Component, inject } from '@angular/core';
+import { MatButton } from '@angular/material/button';
+import { EntryButtonDirective } from '@enigmatry/entry-components/button';
 import { EntryDialogService } from '@enigmatry/entry-components/dialog';
 import { IValidationProblemDetails } from '@enigmatry/entry-components/validation';
 import { firstValueFrom } from 'rxjs';
@@ -7,7 +9,7 @@ import { ValidationService } from '../../validation/validation.service';
 @Component({
   selector: 'app-error-dialog-example',
   templateUrl: './error-example.component.html',
-  standalone: false
+  imports: [MatButton, EntryButtonDirective]
 })
 export class ErrorDialogExampleComponent {
   private readonly entryDialog: EntryDialogService = inject(EntryDialogService);

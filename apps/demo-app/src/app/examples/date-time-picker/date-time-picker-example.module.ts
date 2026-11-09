@@ -1,14 +1,7 @@
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { DateFnsAdapter, MAT_DATE_FNS_FORMATS } from '@angular/material-date-fns-adapter';
 import { provideEntryNativeTimeAdapter } from '@enigmatry/entry-components/common';
-import { EntryDateTimePickerModule } from '@enigmatry/entry-components/date-time-picker';
 import { provideEntryValidationConfig } from '@enigmatry/entry-components/validation';
 import { BasicComponent } from './basic/basic.component';
 import { DefaultTimeComponent } from './default-time/default-time.component';
@@ -21,26 +14,16 @@ import { SignalFormComponent } from './signal-form/signal-form.component';
 import { WithValidationComponent } from './with-validation/with-validation.component';
 
 @NgModule({
-  declarations: [
+  imports: [
     BasicComponent,
     MinMaxComponent,
     DisableComponent,
     MeridiemComponent,
     SecondsComponent,
     DefaultTimeComponent,
-    WithValidationComponent
-  ],
-  imports: [
+    WithValidationComponent,
     NoFormBindingComponent,
-    SignalFormComponent,
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    EntryDateTimePickerModule,
-    MatCheckboxModule,
-    MatDatepickerModule,
-    MatFormFieldModule,
-    MatInputModule
+    SignalFormComponent
   ],
   exports: [
     BasicComponent,

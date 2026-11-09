@@ -1,19 +1,35 @@
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { Component, viewChildren } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
-import { EntryDialogModule, injectEntryDialog } from '@enigmatry/entry-components/dialog';
-// eslint-disable-next-line @stylistic/max-len
-import { EntryValidationModule, IValidationProblemDetails, provideEntryValidationConfig, setServerSideValidationErrors } from '@enigmatry/entry-components/validation';
+import { ScrollToInvalidControlDirective } from '@enigmatry/entry-components/common';
+import { EntryDialogComponent, injectEntryDialog } from '@enigmatry/entry-components/dialog';
+import {
+    EntryDisplayControlValidationDirective,
+    EntryFormErrorsComponent,
+    IValidationProblemDetails,
+    provideEntryValidationConfig,
+    setServerSideValidationErrors
+} from '@enigmatry/entry-components/validation';
 import { firstValueFrom, timer } from 'rxjs';
-import { SharedModule } from '../../../shared/shared.module';
 import { FormDialogData } from './form-dialog-data.interface';
 import { FormDialogResult } from './form-dialog-result.interface';
 
 @Component({
     selector: 'app-form-dialog',
     templateUrl: './form-dialog.component.html',
-    imports: [SharedModule, EntryDialogModule, EntryValidationModule],
+    imports: [
+        ReactiveFormsModule,
+        MatFormField,
+        MatLabel,
+        MatInput,
+        MatError,
+        EntryDialogComponent,
+        EntryDisplayControlValidationDirective,
+        EntryFormErrorsComponent,
+        ScrollToInvalidControlDirective
+    ],
     providers: [provideEntryValidationConfig({ validationMessages: [{ name: 'required', message: 'This field is required.' }] })]
 })
 export class FormDialogComponent {

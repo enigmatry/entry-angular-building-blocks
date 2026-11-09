@@ -1,11 +1,17 @@
 import { Component, inject, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatButton } from '@angular/material/button';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatSelect, MatOption } from '@angular/material/select';
+import { EntryButtonDirective } from '@enigmatry/entry-components/button';
 import { EntryConfirmDialogData, EntryDialogButtonsAlignment, EntryDialogService } from '@enigmatry/entry-components/dialog';
 import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-confirm-example',
   templateUrl: './confirm-example.component.html',
-  standalone: false
+  imports: [MatCheckbox, FormsModule, MatFormField, MatLabel, MatSelect, MatOption, MatButton, EntryButtonDirective]
 })
 export class ConfirmExampleComponent {
   private readonly entryDialog: EntryDialogService = inject(EntryDialogService);

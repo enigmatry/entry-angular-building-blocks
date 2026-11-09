@@ -1,13 +1,36 @@
+import { JsonPipe } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { IValidationProblemDetails, setServerSideValidationErrors } from '@enigmatry/entry-components/validation';
+import { FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { MatButton } from '@angular/material/button';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { EntryButtonDirective } from '@enigmatry/entry-components/button';
+import { ScrollToInvalidControlDirective } from '@enigmatry/entry-components/common';
+import {
+  IValidationProblemDetails,
+  setServerSideValidationErrors,
+  EntryDisplayControlValidationDirective,
+  EntryFormErrorsComponent
+} from '@enigmatry/entry-components/validation';
 import { ValidationService } from '../validation.service';
 
 @Component({
   selector: 'app-reactive-form-validation-example',
   templateUrl: './reactive-form-validation-example.component.html',
   styleUrl: './reactive-form-validation-example.component.scss',
-  standalone: false
+  imports: [
+    ScrollToInvalidControlDirective,
+    ReactiveFormsModule,
+    MatFormField,
+    MatLabel,
+    MatInput,
+    MatError,
+    EntryDisplayControlValidationDirective,
+    EntryFormErrorsComponent,
+    MatButton,
+    EntryButtonDirective,
+    JsonPipe
+  ]
 })
 export class ReactiveFormExampleComponent {
   private readonly formBuilder: FormBuilder = inject(FormBuilder);

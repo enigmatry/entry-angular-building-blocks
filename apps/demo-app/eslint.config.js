@@ -9,9 +9,16 @@ export default defineConfig([
     {
         files: ['src/**/*.ts'],
         rules: {
-            '@angular-eslint/prefer-standalone': 'off', // TODO BP-1642: 40 declarations in the demo app are still NgModule-declared
             '@angular-eslint/use-injectable-provided-in': 'off', // TODO BP-1642: the example permission service is provided by its module, not by providedIn
             '@typescript-eslint/no-unnecessary-condition': 'error'
+        }
+    },
+    {
+        // TODO BP-1646: the Formly examples and the Form page stay NgModule-declared until Formly is removed.
+        // form/form-example/generated/ is entry-codegen output and stays that way until the generator emits standalone components (BP-1664).
+        files: ['src/app/examples/form/**/*.ts', 'src/app/examples/validation/formly/**/*.ts'],
+        rules: {
+            '@angular-eslint/prefer-standalone': 'off'
         }
     },
     {
