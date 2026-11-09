@@ -24,5 +24,6 @@
         "Reference"
     ],
     "excludePrivate": true,
+    "excludeProtected": true,
     "disableSources": true
 }
