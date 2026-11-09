@@ -18,16 +18,6 @@ import { SelectSearchFilterComponent } from './select/select-search-filter.compo
 import { TextSearchFilterComponent } from './text/text-search-filter.component';
 
 @NgModule({
-  declarations: [
-    EntrySearchFilterComponent,
-    TextSearchFilterComponent,
-    SelectSearchFilterComponent,
-    AutocompleteSearchFilterComponent,
-    FieldErrorStateDirective,
-    DateTimeSearchFilterComponent,
-    DateSearchFilterComponent,
-    GroupSelectOptionsPipe
-  ],
   imports: [
     CommonModule,
     FormField,
@@ -38,7 +28,15 @@ import { TextSearchFilterComponent } from './text/text-search-filter.component';
     MatSelectModule,
     MatAutocompleteModule,
     MatDatepickerModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    EntrySearchFilterComponent,
+    TextSearchFilterComponent,
+    SelectSearchFilterComponent,
+    AutocompleteSearchFilterComponent,
+    FieldErrorStateDirective,
+    DateTimeSearchFilterComponent,
+    DateSearchFilterComponent,
+    GroupSelectOptionsPipe
   ],
   exports: [
     EntrySearchFilterComponent

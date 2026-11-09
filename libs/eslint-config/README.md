@@ -37,6 +37,8 @@ The 22.x line tracks Angular 22 and enables the full `@angular-eslint` and `@ang
 
 **Templates are linted for the first time.** Until 22.x the config's HTML glob was `*.html`, which matches only the project root, so no template rule ever ran on a real project. It is now `**/*.html`. Nothing about your templates changed — the backlog was simply invisible. On that same ~900-component app the first run reported roughly 1700 violations, about 70% of them auto-fixable, led by `template/prefer-self-closing-tags`, `template/attributes-order` and `consistent-component-styles`.
 
+**`@angular-eslint/prefer-standalone` is an error.** Every component, directive and pipe declared with `standalone: false` is reported. `ng g @angular/core:standalone --mode=convert-to-standalone --path=<folder>` converts them a folder at a time; when Prettier is installed it also reformats every file it touches, which a temporary `.prettierignore` listing those folders prevents. Relax the rule as shown under *Staging the migration* below if you cannot convert yet.
+
 **Selectors ship `off`.** `component-selector` and `directive-selector` are off because a shared config cannot know your prefix. Re-enable them with your own:
 
 ```js

@@ -10,10 +10,10 @@ npm install @enigmatry/entry-components
 
 ## Basic Usage
 
-Import the `EntryTableModule` in your `feature.module`, `shared.module` or your standalone component
+Import the standalone `EntryTableComponent` where you use `<entry-table>`. `EntryTableModule` still exists for `NgModule`-based code and exports the same components.
 
 ```typescript
-import { EntryTableModule } from '@enigmatry/entry-components/table';
+import { EntryTableComponent } from '@enigmatry/entry-components/table';
 ```
 
 `component.ts`

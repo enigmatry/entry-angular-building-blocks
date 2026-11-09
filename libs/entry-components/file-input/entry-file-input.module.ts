@@ -7,15 +7,13 @@ import { EntryButtonModule } from '@enigmatry/entry-components/button';
 import { EntryFileInputComponent } from './entry-file-input.component';
 
 @NgModule({
-  declarations: [
-    EntryFileInputComponent
-  ],
   imports: [
     CommonModule,
     FormsModule,
     MatIconModule,
     MatButtonModule,
-    EntryButtonModule
+    EntryButtonModule,
+    EntryFileInputComponent
   ],
   exports: [
     EntryFileInputComponent

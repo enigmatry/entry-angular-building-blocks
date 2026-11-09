@@ -5,14 +5,12 @@ import { EntryDisplayControlValidationDirective } from './entry-display-control-
 import { EntryFormErrorsComponent } from './entry-form-errors.component';
 
 @NgModule({
-  declarations: [
-    EntryFormErrorsComponent,
-    EntryDisplayControlValidationDirective
-  ],
   imports: [
     CommonModule,
     MatInputModule,
-    MatError
+    MatError,
+    EntryFormErrorsComponent,
+    EntryDisplayControlValidationDirective
   ],
   exports: [
     EntryFormErrorsComponent,

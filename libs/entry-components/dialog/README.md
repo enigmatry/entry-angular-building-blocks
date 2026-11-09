@@ -8,11 +8,13 @@ Enables working with built-in (alert, confirm and error) and custom dialogs. Sup
 npm i @enigmatry/entry-components
 ```
 
-Import component package:
+`EntryDialogService` is provided in root, so opening a dialog needs no import. A custom dialog component imports the standalone `EntryDialogComponent` to render `<entry-dialog>`:
 
 ```ts
-import { EntryDialogModule } from '@enigmatry/entry-components/dialog';
+import { EntryDialogComponent } from '@enigmatry/entry-components/dialog';
 ```
+
+`EntryDialogModule` still exists and still exports the dialog components, for `NgModule`-based code. Do not import it, or `MatDialogModule`, into a standalone dialog component: a dialog is created dynamically, and a standalone component that imports a module with providers is then given an injector of its own, with a second instance of everything those modules provide. Import `EntryDialogComponent` and Material's dialog directives instead.
 
 Styles import:
 
@@ -55,7 +57,7 @@ A dialog component renders `<entry-dialog>` and gets a typed handle to its dialo
                 <input matInput [(ngModel)]="name">
             </mat-form-field>
         </entry-dialog>`,
-    imports: [EntryDialogModule, FormsModule, MatFormFieldModule, MatInputModule]
+    imports: [EntryDialogComponent, FormsModule, MatFormField, MatLabel, MatInput]
 })
 export class RenameDialogComponent {
     readonly dialog = injectEntryDialog<{ name: string }, string>();
@@ -123,12 +125,9 @@ Default values are:
 To override with custom defaults use providers on application level:
 
 ```ts
-import { EntryDialogModule, provideEntryDialogConfig } from '@enigmatry/entry-components/dialog';
+import { provideEntryDialogConfig } from '@enigmatry/entry-components/dialog';
 
-@NgModule({
-  imports: [
-    EntryDialogModule
-  ],
+export const appConfig: ApplicationConfig = {
   providers: [
     provideEntryDialogConfig({
       confirmButtonText: 'Yes',
@@ -139,6 +138,7 @@ import { EntryDialogModule, provideEntryDialogConfig } from '@enigmatry/entry-co
       disableClose: true
     })
   ]
-})
-export class AppModule { }
+};
 ```
+
+Dialogs opened through the root `EntryDialogService` read the root configuration. A standalone route that provides a configuration of its own also needs `importProvidersFrom(EntryDialogModule)` in the same `providers`, which gives the route its own `EntryDialogService`, `MatDialog` and CDK `Dialog`. Listing only `EntryDialogService` is not enough: the dialog's content gets its injector from the CDK `Dialog`, so its buttons would keep the root configuration. An `EntryDialogModule` imported into a lazy-loaded module already behaves this way.

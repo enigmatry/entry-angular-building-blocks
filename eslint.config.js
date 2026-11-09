@@ -9,8 +9,7 @@ export default defineConfig([
     {
         files: ['libs/**/*.ts'],
         rules: {
-            '@angular-eslint/prefer-standalone': 'off', // TODO BP-1642: 28 declarations in libs are still NgModule-declared; going standalone is a breaking change for both published libraries
-            '@angular-eslint/use-injectable-provided-in': 'off', // TODO BP-1642: 7 module-provided injectables (date/time adapters, event plugins, dialog service, spinner overlay container) declare their provider in a module, not in providedIn
+            '@angular-eslint/use-injectable-provided-in': 'off', // TODO BP-1642: 6 injectables (date/time adapters, event plugins, spinner overlay container) are provided where they are used (component providers, provideEntryNativeTimeAdapter, NG_EVENT_PLUGINS), not by providedIn
             '@typescript-eslint/no-unnecessary-condition': 'error',
             // The root tsconfig maps `apps/*` so entry-codegen's workspace-absolute imports resolve
             // inside apps/demo-app/**/generated/. Libraries inherit that mapping through `extends`,
@@ -21,6 +20,12 @@ export default defineConfig([
                     message: 'Libraries must not import from apps/**. The `apps/*` tsconfig path exists only for generated demo-app code.'
                 }]
             }]
+        }
+    },
+    {
+        files: ['libs/entry-form/**/*.ts'],
+        rules: {
+            '@angular-eslint/prefer-standalone': 'off' // TODO BP-1647: 8 declarations in entry-form are still NgModule-declared; two of its modules still pull in Formly
         }
     },
     {

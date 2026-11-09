@@ -762,6 +762,65 @@ Three smaller traps, all measured:
 - Iterating a field tree inside a `computed()` registers no dependency on its **key set**: adding a
   key leaves the computed stale, while removing one invalidates it. Read the model signal first.
 
+### 14. Components, directives and pipes are standalone
+
+Every component, directive and pipe in `@enigmatry/entry-components` is now standalone. The modules
+are still there and export the same pieces, so `EntryComponentsModule` and the per-feature modules
+keep working unchanged. Nothing here needs action unless you want to drop the modules:
+
+```diff
+  @Component({
+-   imports: [MatButtonModule, EntryButtonModule, EntrySearchFilterModule, EntryDateTimePickerModule]
++   imports: [MatButton, EntryButtonDirective, EntrySearchFilterComponent, EntryDateTimePickerComponent]
+  })
+```
+
+| Module | Import instead |
+|-|-|
+| `EntryButtonModule` | `EntryButtonDirective` |
+| `EntryCommonModule` | `AutoDisableButtonDirective`, `ScrollToInvalidControlDirective` |
+| `EntryDateTimePickerModule` | `EntryDateTimePickerComponent` |
+| `EntryDialogModule` | `EntryDialogComponent`, in a custom dialog that renders `<entry-dialog>`; nothing to open a dialog |
+| `EntryFileInputModule` | `EntryFileInputComponent` |
+| `EntryPermissionModule` | `EntryPermissionDirective`, `EntryPermissionPipe` |
+| `EntrySearchFilterModule` | `EntrySearchFilterComponent` |
+| `EntrySpinnerModule` | `EntrySpinnerComponent` |
+| `EntryTableModule` | `EntryTableComponent` |
+| `EntryValidationModule` | `EntryFormErrorsComponent`, `EntryDisplayControlValidationDirective` |
+
+`EntryComponentsModule.forRoot()` and `EntryCommonModule.forRoot()` register providers, not
+declarations. Without them, list the providers in your application config: `NG_EVENT_PLUGINS`
+from `@enigmatry/entry-components/common` for the `.debounce` and `.throttle` event modifiers, and
+`{ provide: EntryPermissionService, useClass: … }` for the permission directive, pipe and guard.
+
+- **Drop `EntryButtonModule` without importing `EntryButtonDirective`, and nothing tells you.** The
+  directive is matched by the `entry-submit-button` and `entry-cancel-button` attributes alone, so a
+  template that lost it still compiles and renders a plain `mat-button`, without the configured type
+  and colour. Search your templates for both attributes before removing the module.
+- **`EntryDialogService` is provided in root.** A standalone component can inject it without
+  importing anything. `EntryDialogModule` still brings its own `EntryDialogService`, `MatDialog` and
+  CDK `Dialog`, so a lazy-loaded module that imports it keeps opening dialogs that read the
+  `ENTRY_DIALOG_CONFIG` provided there. Without the module, everything comes from root and reads the
+  root configuration. A standalone route that provides its own `provideEntryDialogConfig()` needs
+  `importProvidersFrom(EntryDialogModule)` in the same `providers`: adding just `EntryDialogService`
+  is not enough, because the dialog's content gets its injector from the CDK `Dialog`, which would
+  still be the root one, so only `disableClose` would follow the route's configuration.
+- **Do not import `EntryDialogModule` or `MatDialogModule` into a standalone dialog component.**
+  Both carry providers. A dialog component is created dynamically, and a standalone component that
+  imports a module with providers is then given an environment injector of its own, holding a second
+  instance of everything those modules provide. Material hands its dialog bookkeeping up to the root
+  `MatDialog`, so the dialogs still close together, but any other service such a module provides is
+  no longer the one the rest of the application holds. Import `EntryDialogComponent` and Material's
+  dialog directives (`MatDialogTitle`, `MatDialogContent`, `MatDialogActions`, `MatDialogClose`)
+  instead.
+- **`DEFAULT_PERCENTAGE_MULTIPLIER` defaults to `1`.** A standalone `EntryTableComponent` formats
+  `percent` columns without a provider. `EntryTableModule` still provides `1` itself, as before.
+- **`@enigmatry/eslint-config` 22.x reports `@angular-eslint/prefer-standalone` as an error** for
+  your own `standalone: false` declarations. `ng g @angular/core:standalone
+  --mode=convert-to-standalone --path=<folder>` converts them a folder at a time. When Prettier is
+  installed, the schematic reformats every file it touches; a temporary `.prettierignore` listing
+  those folders keeps the diff to the decorators and imports.
+
 ## License
 
 Apache-2 © Enigmatry

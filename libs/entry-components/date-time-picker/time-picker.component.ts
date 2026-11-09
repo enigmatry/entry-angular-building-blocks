@@ -1,5 +1,8 @@
+import { DecimalPipe } from '@angular/common';
 import { Component, computed, inject, input, linkedSignal, signal } from '@angular/core';
-import { DateAdapter } from '@angular/material/core';
+import { DateAdapter, MatOption } from '@angular/material/core';
+import { MatFormField } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
 import { EntryDateTimeAdapter } from '@enigmatry/entry-components/common';
 
 export type meridiem = 'am' | 'pm';
@@ -7,7 +10,7 @@ export type meridiem = 'am' | 'pm';
 @Component({
   selector: 'entry-time-picker',
   templateUrl: './time-picker.component.html',
-  standalone: false,
+  imports: [MatFormField, MatSelect, MatOption, DecimalPipe],
   host: {
     class: 'entry-time-picker'
   }

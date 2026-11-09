@@ -13,11 +13,13 @@ Enables configuring forms (Reactive or [Formly](https://formly.dev/)) so that se
 npm i @enigmatry/entry-components
 ```
 
-Import component package:
+Import the standalone pieces where your template uses them:
 
 ```ts
-import { EntryValidationModule } from '@enigmatry/entry-components/validation';
+import { EntryDisplayControlValidationDirective, EntryFormErrorsComponent } from '@enigmatry/entry-components/validation';
 ```
+
+`EntryValidationModule` still exists for `NgModule`-based code and exports both.
 
 Styles import:
 
