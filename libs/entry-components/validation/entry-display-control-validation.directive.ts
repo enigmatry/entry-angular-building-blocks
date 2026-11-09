@@ -16,8 +16,7 @@ import { ENTRY_VALIDATION_CONFIG } from './entry-validation-config.model';
  * ```
  */
 @Directive({
-    selector: '[entryDisplayControlValidation]',
-    standalone: false
+    selector: '[entryDisplayControlValidation]'
 })
 export class EntryDisplayControlValidationDirective {
   private readonly config = inject(ENTRY_VALIDATION_CONFIG);

@@ -11,18 +11,16 @@ import { EntryErrorDialogComponent } from './dialogs/error/entry-error-dialog.co
 import { EntryDialogService } from './entry-dialog.service';
 
 @NgModule({
-  declarations: [
-    EntryDialogComponent,
-    EntryAlertDialogComponent,
-    EntryConfirmDialogComponent,
-    EntryErrorDialogComponent
-  ],
   imports: [
     CommonModule,
     MatDialogModule,
     MatIconModule,
     MatButtonModule,
-    EntryButtonModule
+    EntryButtonModule,
+    EntryDialogComponent,
+    EntryAlertDialogComponent,
+    EntryConfirmDialogComponent,
+    EntryErrorDialogComponent
   ],
   exports: [
     EntryDialogComponent,

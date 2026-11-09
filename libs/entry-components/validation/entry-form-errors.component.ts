@@ -1,6 +1,7 @@
 import { Component, input, signal } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { AbstractControl } from '@angular/forms';
+import { MatError } from '@angular/material/form-field';
 import { EMPTY, switchMap } from 'rxjs';
 import { FORM_ERROR_KEY } from './entry-validation';
 
@@ -17,7 +18,7 @@ import { FORM_ERROR_KEY } from './entry-validation';
 @Component({
     selector: 'entry-form-errors',
     templateUrl: './entry-form-errors.component.html',
-    standalone: false
+    imports: [MatError]
 })
 export class EntryFormErrorsComponent {
   /** A form for which the validation errors are being displayed. */

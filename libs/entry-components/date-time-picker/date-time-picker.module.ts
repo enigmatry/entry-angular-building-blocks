@@ -22,9 +22,7 @@ import { EntryTimePickerComponent } from './time-picker.component';
         MatSelectModule,
         MatButtonModule,
         MatIconModule,
-        EntryValidationModule
-    ],
-    declarations: [
+        EntryValidationModule,
         EntryDateTimePickerComponent,
         EntryTimePickerComponent
     ],

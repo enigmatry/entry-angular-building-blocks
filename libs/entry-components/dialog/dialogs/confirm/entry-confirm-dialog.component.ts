@@ -1,13 +1,14 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ENTRY_DIALOG_CONFIG, EntryDialogConfig } from '../../entry-dialog-config.model';
 import { injectEntryDialog } from '../../inject-entry-dialog';
+import { EntryDialogComponent } from '../entry-dialog.component';
 import { EntryConfirmDialogData } from './entry-confirm-dialog-data.interface';
 
 @Component({
   selector: 'entry-confirm-dialog',
   templateUrl: './entry-confirm-dialog.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: false
+  imports: [EntryDialogComponent]
 })
 export class EntryConfirmDialogComponent {
   protected readonly config: EntryDialogConfig = inject(ENTRY_DIALOG_CONFIG);

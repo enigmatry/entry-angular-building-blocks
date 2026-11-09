@@ -6,6 +6,7 @@ import {
   TemplateRef, viewChild, ViewContainerRef
 } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { SpinnerOverlayContainer } from '../spinner-overlay-container';
 
 const DEFAULT_DIAMETER = 30;
@@ -21,7 +22,7 @@ const DEFAULT_DIAMETER = 30;
     }
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: false
+  imports: [MatProgressSpinner]
 })
 export class EntrySpinnerComponent {
   private readonly overlay = inject(Overlay);

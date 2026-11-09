@@ -70,9 +70,6 @@
               "base": "dist/enigmatry/apps/demo-app"
             },
             "index": "apps/demo-app/src/index.html",
-            "polyfills": [
-              "apps/demo-app/src/polyfills.ts"
-            ],
             "tsConfig": "apps/demo-app/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
