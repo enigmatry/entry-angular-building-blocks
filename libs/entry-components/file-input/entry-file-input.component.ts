@@ -1,23 +1,25 @@
 import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
 import {
-  afterNextRender, ChangeDetectionStrategy, Component, DestroyRef, effect, ElementRef, NgZone,
+  afterNextRender, ChangeDetectionStrategy, Component, DestroyRef, effect, ElementRef,
   Renderer2, computed, inject, input, model, output, viewChild
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import type { FormValueControl } from '@angular/forms/signals';
+import { MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { EntryButtonDirective } from '@enigmatry/entry-components/button';
 import { fromEvent } from 'rxjs';
 import { FileInputValue } from './file-input-value.type';
 import { warnOnValidatorDirectives } from './warn-on-validator-directives';
 
 @Component({
-  standalone: false,
+  imports: [MatButton, EntryButtonDirective, MatIcon],
   selector: 'entry-file-input',
   templateUrl: './entry-file-input.component.html',
   styleUrl: './entry-file-input.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EntryFileInputComponent implements FormValueControl<FileInputValue> {
-  private readonly ngZone: NgZone = inject(NgZone);
   private readonly renderer: Renderer2 = inject(Renderer2);
   private readonly destroyRef = inject(DestroyRef);
 
@@ -88,13 +90,11 @@ export class EntryFileInputComponent implements FormValueControl<FileInputValue>
 
     // Signal queries have no `static` option, so the button is only readable after the first render.
     afterNextRender(() => {
-      this.ngZone.runOutsideAngular(() => {
-        fromEvent(this.fileButton().nativeElement, 'click')
-          .pipe(takeUntilDestroyed(this.destroyRef))
-          .subscribe(() => {
-            this.fileInput()?.nativeElement.click();
-          });
-      });
+      fromEvent(this.fileButton().nativeElement, 'click')
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe(() => {
+          this.fileInput()?.nativeElement.click();
+        });
     });
   }
 

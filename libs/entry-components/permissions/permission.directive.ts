@@ -5,8 +5,7 @@ import { EntryPermissionService } from './permission.service';
 const ELEMENT_NODE = 1;
 
 @Directive({
-    selector: '[entryPermissionsOnly],[entryPermissionsExcept]',
-    standalone: false
+    selector: '[entryPermissionsOnly],[entryPermissionsExcept]'
 })
 export class EntryPermissionDirective<T extends PermissionType> {
   private readonly elementRef = inject(ElementRef);

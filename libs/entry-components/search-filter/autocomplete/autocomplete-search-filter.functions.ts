@@ -15,6 +15,13 @@ export interface PickedOption<T> {
   search: AutocompleteSearchFilter<T>['search'];
 }
 
+/** The picked option, while the filter still carries the callbacks it was picked under. */
+export const pickedUnder = <T>(
+  picked: PickedOption<T> | undefined,
+  { resolveLabel, search }: AutocompleteSearchFilter<T>
+): SelectOption<T> | undefined =>
+  picked !== undefined && picked.resolveLabel === resolveLabel && picked.search === search ? picked.option : undefined;
+
 /** Reports a failed lookup. Not called for an aborted one, which is a supersession rather than a fault. */
 export type ReportLookupFailure = (error: unknown, abortSignal: AbortSignal) => void;
 

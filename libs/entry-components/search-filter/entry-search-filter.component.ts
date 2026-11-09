@@ -1,10 +1,16 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, linkedSignal, output } from '@angular/core';
-import { Field, FieldTree, ValidationError, form } from '@angular/forms/signals';
+import { Field, FieldTree, ValidationError, form, FormField, FormRoot } from '@angular/forms/signals';
+import { MatButton } from '@angular/material/button';
+import { MatError } from '@angular/material/form-field';
+import { EntryButtonDirective } from '@enigmatry/entry-components/button';
+import { AutocompleteSearchFilterComponent } from './autocomplete/autocomplete-search-filter.component';
 import { AutocompleteSearchFilter } from './autocomplete/autocomplete-search-filter.model';
 import { ControlType } from './control-type';
+import { DateSearchFilterComponent } from './date/date-search-filter.component';
 import { DateSearchFilter } from './date/date-search-filter.model';
+import { DateTimeSearchFilterComponent } from './date-time/date-time-search-filter.component';
 import { DateTimeSearchFilter } from './date-time/date-time-search-filter.model';
-import { SearchFilterAction, SearchFilterServerError } from './search-filter-action.type';
+import { SearchFilterAction } from './search-filter-action.type';
 import { SearchFilterBase } from './search-filter-base.model';
 import { ENTRY_SEARCH_FILTER_CONFIG, EntrySearchFilterConfig } from './search-filter-config.model';
 import {
@@ -15,22 +21,12 @@ import {
 } from './search-filter-entries.functions';
 import { searchFilterSchema } from './search-filter-model.functions';
 import { SearchFilterParams } from './search-filter-params.type';
+import { changedKeys, isStale, toSubmissionError } from './search-filter-submission.functions';
 import { SearchFilterValues } from './search-filter-values.type';
+import { SelectSearchFilterComponent } from './select/select-search-filter.component';
 import { SelectSearchFilter } from './select/select-search-filter.model';
+import { TextSearchFilterComponent } from './text/text-search-filter.component';
 import { TextSearchFilter } from './text/text-search-filter.model';
-
-const toSubmissionError = (
-  field: FieldTree<SearchFilterValues>,
-  error: SearchFilterServerError
-): ValidationError.WithOptionalFieldTree => error.key === undefined
-  ? { kind: 'serverError', message: error.message }
-  : { kind: 'serverError', message: error.message, fieldTree: (field as Record<string, unknown>)[error.key] as FieldTree<unknown> };
-
-const changedKeys = (submitted: SearchFilterValues, current: SearchFilterValues): ReadonlySet<string> =>
-  new Set([...Object.keys(submitted), ...Object.keys(current)].filter(key => submitted[key] !== current[key]));
-
-const isStale = (error: SearchFilterServerError, changed: ReadonlySet<string>): boolean =>
-  error.key === undefined ? changed.size > 0 : changed.has(error.key);
 
 /**
  * Entry SearchFilter component.
@@ -39,7 +35,8 @@ const isStale = (error: SearchFilterServerError, changed: ReadonlySet<string>): 
     selector: 'entry-search-filter',
     templateUrl: './entry-search-filter.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [FormRoot, FormField, MatError, MatButton, EntryButtonDirective, TextSearchFilterComponent, SelectSearchFilterComponent,
+      AutocompleteSearchFilterComponent, DateSearchFilterComponent, DateTimeSearchFilterComponent]
 })
 export class EntrySearchFilterComponent {
   protected readonly config: EntrySearchFilterConfig = inject(ENTRY_SEARCH_FILTER_CONFIG);

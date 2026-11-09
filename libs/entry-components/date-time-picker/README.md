@@ -4,19 +4,19 @@
 
 ## Setup
 
-Import the [EntryDateTimePicker] in your NgModule:
+Import the standalone `EntryDateTimePickerComponent` where you use `<entry-date-time-picker>`:
 
 ```typescript
-import { EntryDateTimePickerModule } from "@enigmatry/entry-components/date-time-picker";
-@NgModule({
-    imports: [
-        EntryDateTimePickerModule
-        ,...
-    ],
+import { EntryDateTimePickerComponent } from '@enigmatry/entry-components/date-time-picker';
+
+@Component({
+    imports: [EntryDateTimePickerComponent, ...],
     ...
 })
-export class MyModule {}
+export class MyComponent {}
 ```
+
+`EntryDateTimePickerModule` still exists for `NgModule`-based code and exports the same component.
 
 ## Configuration
 

@@ -1,12 +1,14 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { Field } from '@angular/forms/signals';
+import { Field, FormField } from '@angular/forms/signals';
+import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
 import { TextSearchFilter } from './text-search-filter.model';
 
 @Component({
     selector: 'entry-text-search-filter',
     templateUrl: './text-search-filter.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [FormField, MatFormField, MatLabel, MatError, MatInput]
 })
 export class TextSearchFilterComponent {
   readonly searchFilter = input.required<TextSearchFilter>();

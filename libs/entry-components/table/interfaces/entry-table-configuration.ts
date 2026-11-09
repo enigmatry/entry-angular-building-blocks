@@ -45,5 +45,5 @@ export const ENTRY_TABLE_CONFIGURATION = createInjectionToken(new EntryTableConf
 export const provideEntryTableConfiguration = (config: Partial<EntryTableConfiguration>): Provider =>
   provideConfig(ENTRY_TABLE_CONFIGURATION, () => new EntryTableConfiguration(config));
 
-/** Default percentage multiplier injection token */
-export const DEFAULT_PERCENTAGE_MULTIPLIER: InjectionToken<number> = new InjectionToken<number>('');
+/** Multiplier a `percent` column applies to its value before formatting. Defaults to 1, so a standalone `EntryTableComponent` needs no provider. */
+export const DEFAULT_PERCENTAGE_MULTIPLIER: InjectionToken<number> = createInjectionToken(1);

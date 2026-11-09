@@ -1,5 +1,8 @@
 import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
-import { Field, ValidationError } from '@angular/forms/signals';
+import { Field, ValidationError, FormField } from '@angular/forms/signals';
+import { MatDatepicker, MatDatepickerInput, MatDatepickerToggle } from '@angular/material/datepicker';
+import { MatError, MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
 import { ENTRY_SEARCH_FILTER_CONFIG } from '../search-filter-config.model';
 import { DateSearchFilter } from './date-search-filter.model';
 
@@ -7,7 +10,7 @@ import { DateSearchFilter } from './date-search-filter.model';
     selector: 'entry-date-search-filter',
     templateUrl: './date-search-filter.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [FormField, MatFormField, MatLabel, MatError, MatSuffix, MatInput, MatDatepicker, MatDatepickerInput, MatDatepickerToggle]
 })
 export class DateSearchFilterComponent<D extends Date> {
   private readonly config = inject(ENTRY_SEARCH_FILTER_CONFIG);

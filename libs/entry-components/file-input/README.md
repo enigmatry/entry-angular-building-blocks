@@ -4,19 +4,19 @@
 
 ## Setup
 
-Import the [EntryFileInputModule] in your NgModule:
+Import the standalone `EntryFileInputComponent` where you use `<entry-file-input>`:
 
 ```typescript
-import { EntryFileInputModule } from '@enigmatry/entry-components/file-input';
-@NgModule({
-  imports: [
-    EntryFileInputModule,
-    ...
-  ],
+import { EntryFileInputComponent } from '@enigmatry/entry-components/file-input';
+
+@Component({
+  imports: [EntryFileInputComponent, ...],
   ...
 })
-export class MyModule {}
+export class MyComponent {}
 ```
+
+`EntryFileInputModule` still exists for `NgModule`-based code and exports the same component.
 
 ## Usage
 
