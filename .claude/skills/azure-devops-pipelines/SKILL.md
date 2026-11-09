@@ -34,17 +34,21 @@ The version is computed once and stored in the pipeline variable `theLatestVersi
   inputs:
     targetType: inline
     script: |
-      $version = dotnet minver -p preview -m 22.0
+      $angularRange = node -p "require('./package.json').dependencies['@angular/core']"
+      $angularMajor = [regex]::Match("$angularRange", '\d+').Value
+      if (-not $angularMajor) { throw "Could not read the Angular major from @angular/core '$angularRange' in package.json" }
+      $version = dotnet minver -p preview -m "$angularMajor.0"
       echo "##vso[task.setvariable variable=theLatestVersion]$version"
       echo "##vso[build.updatebuildnumber]$version"
 ```
 
-`-m 22.0` is MinVer's minimum major.minor. The newest reachable release tag on `master` is from the
-previous major, so without it `master` would publish the new major's code under an old version number
-such as `21.4.1-preview.9`. With it, untagged commits come out as `22.0.0-preview.<height>`. Once a
-`22.x` release tag exists the flag has no effect. **Bump it as part of every Angular major upgrade**,
-together with the Node pin. Release branches (`release/21`, ...) carry their own copy of this file
-and must not get the new major's `-m`.
+`-m` is MinVer's minimum major.minor. Right after an Angular major upgrade, the newest reachable
+release tag is from the previous major. Without `-m`, the new major's code would publish under an old
+version number such as `21.4.1-preview.9`. The package major follows the Angular major, so the step
+reads that major from the root `package.json` (`@angular/core: ^22.1.0` → `-m 22.0`). Untagged commits
+then come out as `22.0.0-preview.<height>` until the first `22.x` release is tagged, and after that
+`-m` has no effect. An Angular upgrade PR therefore produces the new major's previews without anyone
+editing the pipeline.
 
 **When adding a new library**, add a version-stamping step in the same block as the others — before the `npm ci` step:
 
@@ -233,4 +237,4 @@ Do not upgrade task versions without testing — especially `Npm@1` and `FileTra
 - **Using `npm install` instead of `npm ci`** — always use `ci` in pipelines to ensure reproducible installs from the lockfile.
 - **Hardcoding version strings** — always use `$(theLatestVersion)` from MinVer, never hardcode.
 - **A publish step without `npm_config_tag`** — a pre-release would take `latest`, or fail under npm 11.
-- **Forgetting MinVer's `-m` on a major upgrade** — `master` then publishes the new major's code under the previous major's version number.
+- **Hard-coding MinVer's `-m`** — it is derived from `@angular/core` in the root `package.json`, so it follows the Angular major on its own. A hard-coded value goes stale at the next major.
