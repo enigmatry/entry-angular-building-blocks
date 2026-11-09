@@ -40,7 +40,7 @@ All five packages are published under the same npm dist-tags:
 
 Previews never move `latest`, so a plain install always gets a release.
 
-To try a preview, pin the exact version (`npm i @enigmatry/entry-components@22.0.0-preview.12`) rather than depending on `@next`. `next` moves on every merge, and a pre-release version satisfies no ordinary range such as `^22.0.0`. Install the same preview version of every `@enigmatry/*` package you use; they are built together.
+To try a preview, pin the exact version with `--save-exact` (`npm i -E @enigmatry/entry-components@22.0.0-preview.12`) rather than depending on `@next`. `next` moves on every merge. Without `-E`, npm saves `^22.0.0-preview.12`, which also accepts later previews and every 22.x release, so a fresh install can quietly move you off the preview you tested. A pre-release version also satisfies no ordinary range such as `^22.0.0`. Install the same preview version of every `@enigmatry/*` package you use; they are built together.
 
 ## Migrate project to entry
 
