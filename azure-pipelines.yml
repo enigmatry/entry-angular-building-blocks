@@ -198,6 +198,16 @@ stages:
                 else
                   if [[ "$version" == *-* ]]; then tag=next; else tag=latest; fi
                 fi
+                # A build approved late at the npm gate must not move a tag backwards, e.g. 22.2.1
+                # after 22.3.0 is already `latest`. The explicit tag skips npm's own check for that.
+                current=$(npm view @enigmatry/entry-components "dist-tags.$tag")
+                if [[ -n "$current" && "$current" != "$version" ]]; then
+                  newest=$(printf '%s\n%s\n' "$current" "$version" | sort -V | tail -n 1)
+                  if [[ "$newest" != "$version" ]]; then
+                    echo "Refusing to move '$tag' back from $current to $version. This build is older than what is already published; cancel it."
+                    exit 1
+                  fi
+                fi
                 echo "Publishing $version under the npm dist-tag '$tag' (npm latest is $latest)"
                 echo "##vso[task.setvariable variable=npmDistTag]$tag"
               displayName: 'Choose the npm dist-tag'

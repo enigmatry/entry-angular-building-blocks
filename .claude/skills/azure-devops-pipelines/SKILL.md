@@ -148,7 +148,10 @@ the built `entry-components` `package.json` and compares its major with npm's cu
 
 A release branch cut from `master` inherits this file. Once a newer major is `latest`, its patches
 therefore go to `v<major>-lts` with no pipeline edit and can never move `latest` back. The step fails
-if it cannot parse the version or read `latest` from npm, rather than guessing. It sets `npmDistTag`,
+if it cannot parse the version or read `latest` from npm, rather than guessing. It also fails when the
+chosen tag already holds a newer version. That happens when an old build is approved late at the npm
+gate, e.g. `22.2.1` after `22.3.0` is `latest`. Because the tag is explicit, npm's own check for this
+does not run. Such a build should be cancelled, not approved. It sets `npmDistTag`,
 and every publish step passes it through the environment:
 
 ```yaml
