@@ -104,6 +104,11 @@ the `@angular/animations` peer dependency. The breaking changes are shared with
 `@enigmatry/entry-components` — see
 [Migrating to 22.x](https://github.com/enigmatry/entry-angular-building-blocks/blob/master/libs/entry-components/README.md#migrating-to-22x).
 
-## License
+## About Enigmatry
 
-Apache-2 © Enigmatry
+Entry is the open-source foundation Enigmatry builds client systems on. Enigmatry is a software company from Rotterdam, founded in 2006, with teams in Belgrade and Novi Sad.
+
+* How we use Entry for clients: https://www.enigmatry.com/en/entry/
+* How we build, with agents under checks: https://www.enigmatry.com/en/how-we-build/
+
+Apache-2.0 © Enigmatry
