@@ -34,9 +34,9 @@ The version is computed once and stored in the pipeline variable `theLatestVersi
   inputs:
     targetType: inline
     script: |
-      $angularRange = node -p "require('./package.json').dependencies['@angular/core']"
-      $angularMajor = [regex]::Match("$angularRange", '\d+').Value
-      if (-not $angularMajor) { throw "Could not read the Angular major from @angular/core '$angularRange' in package.json" }
+      $angularVersion = node -p "require('./package-lock.json').packages['node_modules/@angular/core']?.version"
+      if ("$angularVersion" -notmatch '^(\d+)\.\d+\.\d+') { throw "Could not read the locked @angular/core version from package-lock.json (got '$angularVersion')" }
+      $angularMajor = $Matches[1]
       $version = dotnet minver -p preview -m "$angularMajor.0"
       echo "##vso[task.setvariable variable=theLatestVersion]$version"
       echo "##vso[build.updatebuildnumber]$version"
@@ -45,7 +45,9 @@ The version is computed once and stored in the pipeline variable `theLatestVersi
 `-m` is MinVer's minimum major.minor. Right after an Angular major upgrade, the newest reachable
 release tag is from the previous major. Without `-m`, the new major's code would publish under an old
 version number such as `21.4.1-preview.9`. The package major follows the Angular major, so the step
-reads that major from the root `package.json` (`@angular/core: ^22.1.0` → `-m 22.0`). Untagged commits
+takes that major from the `@angular/core` version locked in `package-lock.json` (`22.1.0` → `-m 22.0`).
+That is the exact version `npm ci` installs. The range in `package.json` is not used: a valid range
+such as `>=22.0.0 <23.0.0` has no single "first number" to read. Untagged commits
 then come out as `22.0.0-preview.<height>` until the first `22.x` release is tagged, and after that
 `-m` has no effect. An Angular upgrade PR therefore produces the new major's previews without anyone
 editing the pipeline.
@@ -241,4 +243,4 @@ Do not upgrade task versions without testing — especially `Npm@1` and `FileTra
 - **Using `npm install` instead of `npm ci`** — always use `ci` in pipelines to ensure reproducible installs from the lockfile.
 - **Hardcoding version strings** — always use `$(theLatestVersion)` from MinVer, never hardcode.
 - **A publish step without `npm_config_tag`** — a pre-release would take `latest`, or fail under npm 11.
-- **Hard-coding MinVer's `-m`** — it is derived from `@angular/core` in the root `package.json`, so it follows the Angular major on its own. A hard-coded value goes stale at the next major.
+- **Hard-coding MinVer's `-m`** — it is derived from the `@angular/core` version locked in `package-lock.json`, so it follows the Angular major on its own. A hard-coded value goes stale at the next major.

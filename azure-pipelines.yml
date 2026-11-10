@@ -46,12 +46,13 @@ stages:
       inputs:
         targetType: inline
         script: |
-          # The package major follows the Angular major, so MinVer's minimum (-m) is read from the
-          # @angular/core range. Until the first release of a new major is tagged, builds come out as
-          # <major>.0.0-preview.N instead of a preview of the previous major. After that it has no effect.
-          $angularRange = node -p "require('./package.json').dependencies['@angular/core']"
-          $angularMajor = [regex]::Match("$angularRange", '\d+').Value
-          if (-not $angularMajor) { throw "Could not read the Angular major from @angular/core '$angularRange' in package.json" }
+          # The package major follows the Angular major, so MinVer's minimum (-m) is the major of the
+          # @angular/core version locked in package-lock.json, which npm ci installs. Until the first
+          # release of a new major is tagged, builds come out as <major>.0.0-preview.N instead of a
+          # preview of the previous major. After that it has no effect.
+          $angularVersion = node -p "require('./package-lock.json').packages['node_modules/@angular/core']?.version"
+          if ("$angularVersion" -notmatch '^(\d+)\.\d+\.\d+') { throw "Could not read the locked @angular/core version from package-lock.json (got '$angularVersion')" }
+          $angularMajor = $Matches[1]
           $version = dotnet minver -p preview -m "$angularMajor.0"
           echo "##vso[task.setvariable variable=theLatestVersion]$version"
           echo "##vso[build.updatebuildnumber]$version"
