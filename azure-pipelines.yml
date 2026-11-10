@@ -159,7 +159,10 @@ stages:
 
 - stage: publish_npm
   dependsOn: ci_build
-  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+  # Only master and release/<major> publish. A pull request (refs/pull/...) or a manual run on any other
+  # branch finishes green after ci_build instead of waiting at the npm approval gate, where approving
+  # would publish that branch.
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), startsWith(variables['Build.SourceBranch'], 'refs/heads/release/')))
   displayName: Publish to NPM
   jobs:
   - deployment: Deploy

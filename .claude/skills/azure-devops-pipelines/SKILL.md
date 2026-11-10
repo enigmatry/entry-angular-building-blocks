@@ -107,13 +107,13 @@ with no secrets and no side effects outside the build agent. Anything that publi
 
 ### `publish_npm` stage
 
-Runs as a **deployment job** targeting the `npm` environment (which has approval gates if configured).
-It is skipped for pull request builds:
+Runs as a **deployment job** targeting the `npm` environment, which has an approval gate. It runs only
+for `master` and `release/<major>`, never for a pull request:
 
 ```yaml
 - stage: publish_npm
   dependsOn: ci_build
-  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), startsWith(variables['Build.SourceBranch'], 'refs/heads/release/')))
   jobs:
   - deployment: Deploy
     environment: npm
@@ -202,8 +202,12 @@ pr:
 
 - PR builds of `azure-pipelines.yml` are the merge check for `master`. Branch protection on
   `master` requires them, so do not switch them back to `pr: none`.
-- The skip for PRs lives in `publish_npm`'s stage `condition`. Any new stage with side effects
-  needs the same condition.
+- `publish_npm`'s stage `condition` limits publishing to `master` and `release/<major>`. Every
+  release tag and every publish still in the build history came from one of those. Anything else
+  finishes green after `ci_build`: a pull request, or a manual run on a feature branch (someone
+  running the pipeline to get a check on their PR). It must not wait at the npm gate, because
+  approving there would publish that branch, and the required GitHub check stays pending until the
+  run ends. Any new stage with side effects needs the same condition.
 - `deploy-demo.yml` keeps `pr: none`: it deploys, and the PR build already compiles the demo.
 - Add path filters only if you have a strong reason to skip CI on certain paths.
 
