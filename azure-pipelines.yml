@@ -177,16 +177,28 @@ stages:
               displayName: 'Download build artifacts'
 
             # Same Node pin as the build. Its npm 11 also refuses to publish a pre-release without an
-            # explicit tag, so a wrong tag fails the publish instead of moving `latest`.
+            # explicit tag, so a publish step that loses its tag fails instead of moving `latest`.
             - template: pipeline-templates/install-node.yml
 
             # Without a tag npm moves `latest` - what a plain install resolves to - onto whatever was
-            # published last, previews included. Pre-releases go to `next`; only a real release moves
-            # `latest`. Every publish step below receives it as npm_config_tag.
+            # published last, previews included. The current major publishes pre-releases to `next`
+            # and releases to `latest`. An older major - a release/<major> branch cut from master
+            # inherits this file - goes to `v<major>-next` and `v<major>-lts` instead, so it can never
+            # move `latest` back. Every publish step below receives the tag as npm_config_tag.
             - bash: |
+                set -euo pipefail
                 version=$(node -p "require('./package.json').version")
-                if [[ "$version" == *-* ]]; then tag=next; else tag=latest; fi
-                echo "Publishing $version under the npm dist-tag '$tag'"
+                if [[ ! "$version" =~ ^([0-9]+)\.[0-9]+\.[0-9]+ ]]; then echo "Unexpected package version '$version'"; exit 1; fi
+                major=${BASH_REMATCH[1]}
+                latest=$(npm view @enigmatry/entry-components dist-tags.latest)
+                if [[ ! "$latest" =~ ^([0-9]+)\. ]]; then echo "Could not read the current latest version from npm (got '$latest')"; exit 1; fi
+                latestMajor=${BASH_REMATCH[1]}
+                if (( major < latestMajor )); then
+                  if [[ "$version" == *-* ]]; then tag="v${major}-next"; else tag="v${major}-lts"; fi
+                else
+                  if [[ "$version" == *-* ]]; then tag=next; else tag=latest; fi
+                fi
+                echo "Publishing $version under the npm dist-tag '$tag' (npm latest is $latest)"
                 echo "##vso[task.setvariable variable=npmDistTag]$tag"
               displayName: 'Choose the npm dist-tag'
               workingDirectory: '$(Pipeline.Workspace)/$(artifactName)-$(Build.BuildNumber)/enigmatry/entry-components'

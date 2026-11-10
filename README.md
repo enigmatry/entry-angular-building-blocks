@@ -36,7 +36,7 @@ All five packages are published under the same npm dist-tags:
 |-|-|-|
 | `latest` | `npm i @enigmatry/entry-components` | The newest release. A plain install, with no version, resolves to this. |
 | `next` | `npm i @enigmatry/entry-components@next` | A preview built from every merge to `master`, e.g. `22.0.0-preview.12`. Not a release, and it changes with every merge. |
-| `v<major>-lts` | `npm i @enigmatry/entry-components@v21-lts` | Patches for an older major, published from its `release/<major>` branch once a newer major is `latest`. |
+| `v<major>-lts` | `npm i @enigmatry/entry-components@v21-lts` | Patches for an older major, published from its `release/<major>` branch once a newer major is `latest`. That branch's previews go to `v<major>-next`. |
 
 Previews never move `latest`, so a plain install always gets a release.
 

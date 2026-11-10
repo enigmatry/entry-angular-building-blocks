@@ -139,9 +139,17 @@ workingDir: '$(Pipeline.Workspace)/$(artifactName)-$(Build.BuildNumber)/enigmatr
 Without a tag, `npm publish` moves `latest` (what a plain `npm install <pkg>` resolves to) onto
 whatever went out last, previews included. The job therefore pins Node with
 `pipeline-templates/install-node.yml`, and a `Choose the npm dist-tag` step reads the version from
-the built `entry-components` `package.json`. It sets `npmDistTag` to `next` for a pre-release (the
-version contains `-`) and to `latest` for a real release. Every publish step passes it through the
-environment:
+the built `entry-components` `package.json` and compares its major with npm's current `latest`:
+
+| Version being published | Pre-release (contains `-`) | Release |
+|---|---|---|
+| Same or newer major than npm `latest` (master) | `next` | `latest` |
+| Older major (a `release/<major>` branch) | `v<major>-next` | `v<major>-lts` |
+
+A release branch cut from `master` inherits this file. Once a newer major is `latest`, its patches
+therefore go to `v<major>-lts` with no pipeline edit and can never move `latest` back. The step fails
+if it cannot parse the version or read `latest` from npm, rather than guessing. It sets `npmDistTag`,
+and every publish step passes it through the environment:
 
 ```yaml
 - task: Npm@1
