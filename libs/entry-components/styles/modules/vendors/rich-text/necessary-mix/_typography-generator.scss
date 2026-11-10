@@ -1,0 +1,58 @@
+/* stylelint-disable selector-max-compound-selectors, scss/at-if-no-null */
+@use 'sass:map';
+@use '@angular/material' as mat;
+
+$body-typography: map.get(mat.define-typography-config(), 'body-1');
+$hero-typography: map.get(mat.define-typography-config(), 'headline-1');
+$title-typography: map.get(mat.define-typography-config(), 'subtitle-1');
+$caption-typography: map.get(mat.define-typography-config(), 'caption');
+
+@function get-typography($theme, $key, $default-config) {
+	$theming-fonts: map.get($theme, 'general', 'fonts');
+	$font-config: map.get($theming-fonts, $key);
+
+	@if $font-config != null and $font-config != '' {
+		@return $font-config;
+	}
+	@else {
+		@return $default-config;
+	}
+}
+
+@function get-font-property($config, $property, $default-value) {
+	$value: map.get($config, $property);
+
+	@if $value != null and $value != '' {
+		@return $value;
+	}
+	@else {
+		@return $default-value;
+	}
+}
+
+@mixin generate-from($theme) {
+	$body-config: get-typography($theme, 'body', $body-typography);
+	$hero-config: get-typography($theme, 'hero-titles', $hero-typography);
+	$title-config: get-typography($theme, 'titles', $title-typography);
+
+	.enigmatry-redactor-content {
+		.rx-editor, .rx-content, .rx-content p {
+			color: get-font-property($body-config, 'color', map.get($body-typography, 'color'));
+			font-family: get-font-property($body-config, 'family', map.get($body-typography, 'font-family'));
+			font-size: get-font-property($body-config, 'size', map.get($body-typography, 'font-size'));
+			letter-spacing: get-font-property($body-config, 'letter-spacing', map.get($body-typography, 'letter-spacing'));
+		}
+
+		.rx-editor, .rx-content, .rx-content {
+			h1, h2, h3, h4 {
+				font-family: get-font-property($hero-config, 'family', map.get($hero-typography, 'font-family'));
+				letter-spacing: get-font-property($hero-config, 'letter-spacing', map.get($hero-typography, 'letter-spacing'));
+			}
+	
+			h5, h6 {
+				font-family: get-font-property($title-config, 'family', map.get($title-typography, 'font-family'));
+				letter-spacing: get-font-property($title-config, 'letter-spacing', map.get($title-typography, 'letter-spacing'));
+			}
+		}
+	}
+}
