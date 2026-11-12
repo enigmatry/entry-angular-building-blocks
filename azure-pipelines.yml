@@ -212,7 +212,7 @@ stages:
                 if [[ -n "$current" ]]; then
                   order=$(node -e '
                     const parse = (v) => { const [core, pre] = v.split("+")[0].split(/-(.+)/); return { core: core.split(".").map(Number), pre: pre ? pre.split(".") : [] }; };
-                    const compareIds = (x, y) => { const nx = /^\d+$/.test(x), ny = /^\d+$/.test(y); if (nx && ny) { return Math.sign(Number(x) - Number(y)); } if (nx !== ny) { return nx ? -1 : 1; } return x < y ? -1 : x > y ? 1 : 0; };
+                    const compareIds = (x, y) => { const nx = /^\d+$/.test(x), ny = /^\d+$/.test(y); if (nx && ny) { const [bx, by] = [BigInt(x), BigInt(y)]; return bx < by ? -1 : bx > by ? 1 : 0; } if (nx !== ny) { return nx ? -1 : 1; } return x < y ? -1 : x > y ? 1 : 0; };
                     const compare = (a, b) => {
                       const [pa, pb] = [parse(a), parse(b)];
                       for (let i = 0; i < 3; i++) { if (pa.core[i] !== pb.core[i]) { return Math.sign(pa.core[i] - pb.core[i]); } }
