@@ -6,7 +6,7 @@ Create a standalone documentation component named after the new entry component 
 
 Use `app-documentation-content` shared component to define Overview/API/Examples tabs (e.g. `features/dialog/dialog-documentation.component.html`). Don't forget to provide `componentDefinition` input parameter!
 
-Update `features/route-segments.ts` with new route to the feature and add new entry to `features/component-definitions.ts`. Don't forget to add a `loadComponent` route to the new documentation component in `app-routing.module.ts`.
+Update `features/route-segments.ts` with new route to the feature and add new entry to `features/component-definitions.ts`. Don't forget to add a `loadComponent` route to the new documentation component in `app.routes.ts`.
 
 After angular structure is set, we can add content to the tabs (Overview/API/Examples).
 
