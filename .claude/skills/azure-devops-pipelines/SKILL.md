@@ -103,15 +103,20 @@ Each library is published with `command: publish` + `useExternalRegistry` pointi
 workingDir: '$(Pipeline.Workspace)/$(artifactName)-$(Build.BuildNumber)/enigmatry/<lib-name>'
 ```
 
-#### npm dist-tag (release/21)
+#### npm dist-tag
 
-`npm publish` without a tag moves `latest` onto whatever went out last. The publish job pins Node (npm 11 refuses a pre-release publish without a tag), and a `Choose the npm dist-tag` step sets `npmDistTag`:
+`npm publish` without a tag moves `latest` onto whatever went out last. The publish job pins Node (npm 11 refuses a pre-release publish without a tag), and a `Choose the npm dist-tag` step sets `npmDistTag`. The step is the same as on `master`:
 
-- a pre-release → `v21-next`
-- a release while 21 is still the newest major on npm → `latest`
-- a release once a newer major is `latest` → `v21-lts`
+| Branch | Pre-release (contains `-`) | Release |
+|---|---|---|
+| `master` | `next` | `latest` |
+| `release/<major>` (this branch) | `v<major>-next` | `latest` while `<major>` is still the newest major on npm, `v<major>-lts` once a newer one is `latest` |
 
-Every publish step passes it as `env: npm_config_tag: $(npmDistTag)`. `Npm@1`'s `publish` command has no tag input.
+The step fails, before anything is published, if it cannot parse the version or read `latest` from npm. It also fails when the chosen tag already holds a newer version (by SemVer precedence), e.g. an old build approved late at the npm gate. Such a build should be cancelled, not approved.
+
+`publish_npm` runs only for `master` and `release/*`. A manual run on any other branch, such as a backport branch, finishes after the build without waiting at the npm gate.
+
+Every publish step passes the tag as `env: npm_config_tag: $(npmDistTag)`. `Npm@1`'s `publish` command has no tag input.
 
 **When adding a new library to publish**, add a step that matches this pattern. The artifact sub-path depends on how ng-packagr places the output:
 - `@enigmatry/*` scoped packages → `enigmatry/<lib-name>` inside the artifact

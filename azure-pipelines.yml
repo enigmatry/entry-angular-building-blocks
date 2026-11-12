@@ -139,6 +139,10 @@ stages:
 
 - stage: publish_npm
   dependsOn: ci_build
+  # Only master and release/<major> publish. A pull request (refs/pull/...) or a manual run on any other
+  # branch finishes green after ci_build instead of waiting at the npm approval gate, where approving
+  # would publish that branch.
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), startsWith(variables['Build.SourceBranch'], 'refs/heads/release/')))
   displayName: Publish to NPM
   jobs:
   - deployment: Deploy
@@ -161,21 +165,49 @@ stages:
                 version: '^24.15.0'
 
             # Without a tag npm moves `latest` - what a plain install resolves to - onto whatever was
-            # published last. A release from this branch takes `latest` only while 21 is still the
-            # newest major on npm. Once a newer major is `latest` it goes to `v21-lts`, and a
-            # pre-release always goes to `v21-next`, so neither can move `latest` back to 21.
+            # published last, previews included. Pre-releases go to `next` from master and to
+            # `v<major>-next` from a release/<major> branch (cut from master, it inherits this file).
+            # A release goes to `latest` unless a newer major is already `latest`, in which case it
+            # goes to `v<major>-lts`, so it can never move `latest` back. Every publish step below
+            # receives the tag as npm_config_tag.
             - bash: |
                 set -euo pipefail
                 version=$(node -p "require('./package.json').version")
-                major=${version%%.*}
+                if [[ ! "$version" =~ ^([0-9]+)\.[0-9]+\.[0-9]+ ]]; then echo "Unexpected package version '$version'"; exit 1; fi
+                major=${BASH_REMATCH[1]}
+                latest=$(npm view @enigmatry/entry-components dist-tags.latest)
+                if [[ ! "$latest" =~ ^([0-9]+)\. ]]; then echo "Could not read the current latest version from npm (got '$latest')"; exit 1; fi
+                latestMajor=${BASH_REMATCH[1]}
                 if [[ "$version" == *-* ]]; then
-                  tag="v${major}-next"
+                  if [[ "$BUILD_SOURCEBRANCH" == refs/heads/master ]]; then tag=next; else tag="v${major}-next"; fi
+                elif (( major < latestMajor )); then
+                  tag="v${major}-lts"
                 else
-                  latest=$(npm view @enigmatry/entry-components dist-tags.latest)
-                  if [[ -z "$latest" ]]; then echo "Could not read the current latest version from npm"; exit 1; fi
-                  if (( ${latest%%.*} > major )); then tag="v${major}-lts"; else tag=latest; fi
+                  tag=latest
                 fi
-                echo "Publishing $version under the npm dist-tag '$tag'"
+                # A build approved late at the npm gate must not move a tag backwards, e.g. 22.2.1
+                # after 22.3.0 is already `latest`. The explicit tag skips npm's own check for that.
+                # Compared by SemVer precedence (semver.org, item 11), not sort -V, which disagrees on
+                # pre-release identifiers such as preview10 vs preview2.
+                current=$(npm view @enigmatry/entry-components "dist-tags.$tag")
+                if [[ -n "$current" ]]; then
+                  order=$(node -e '
+                    const parse = (v) => { const [core, pre] = v.split("+")[0].split(/-(.+)/); return { core: core.split(".").map(Number), pre: pre ? pre.split(".") : [] }; };
+                    const compareIds = (x, y) => { const nx = /^\d+$/.test(x), ny = /^\d+$/.test(y); if (nx && ny) { const [bx, by] = [BigInt(x), BigInt(y)]; return bx < by ? -1 : bx > by ? 1 : 0; } if (nx !== ny) { return nx ? -1 : 1; } return x < y ? -1 : x > y ? 1 : 0; };
+                    const compare = (a, b) => {
+                      const [pa, pb] = [parse(a), parse(b)];
+                      for (let i = 0; i < 3; i++) { if (pa.core[i] !== pb.core[i]) { return Math.sign(pa.core[i] - pb.core[i]); } }
+                      if (!pa.pre.length || !pb.pre.length) { return Math.sign(pb.pre.length - pa.pre.length); }
+                      for (let i = 0; i < Math.min(pa.pre.length, pb.pre.length); i++) { const c = compareIds(pa.pre[i], pb.pre[i]); if (c) { return c; } }
+                      return Math.sign(pa.pre.length - pb.pre.length);
+                    };
+                    console.log(compare(process.argv[1], process.argv[2]));' "$version" "$current")
+                  if (( order < 0 )); then
+                    echo "Refusing to move '$tag' back from $current to $version. This build is older than what is already published; cancel it."
+                    exit 1
+                  fi
+                fi
+                echo "Publishing $version under the npm dist-tag '$tag' (npm latest is $latest)"
                 echo "##vso[task.setvariable variable=npmDistTag]$tag"
               displayName: 'Choose the npm dist-tag'
               workingDirectory: '$(Pipeline.Workspace)/$(artifactName)-$(Build.BuildNumber)/enigmatry/entry-components'
