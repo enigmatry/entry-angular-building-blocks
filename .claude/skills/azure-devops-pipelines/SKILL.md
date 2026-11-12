@@ -109,8 +109,10 @@ workingDir: '$(Pipeline.Workspace)/$(artifactName)-$(Build.BuildNumber)/enigmatr
 
 | Branch | Pre-release (contains `-`) | Release |
 |---|---|---|
-| `master` | `next` | `latest` |
-| `release/<major>` (this branch) | `v<major>-next` | `latest` while `<major>` is still the newest major on npm, `v<major>-lts` once a newer one is `latest` |
+| `master` | `next` | `latest`, or `v<major>-lts` if a newer major is already `latest` |
+| `release/*` (this branch) | `v<major>-next` | `latest`, or `v<major>-lts` if a newer major is already `latest` |
+
+`<major>` is always the major of the built version, never parsed from the branch name. Releases follow the same rule on every branch: from here a 21.x release goes to `latest` while 21 is the newest major on npm, and to `v21-lts` once 22 is `latest`.
 
 The step fails, before anything is published, if it cannot parse the version or read `latest` from npm. It also fails when the chosen tag already holds a newer version (by SemVer precedence), e.g. an old build approved late at the npm gate. Such a build should be cancelled, not approved.
 
