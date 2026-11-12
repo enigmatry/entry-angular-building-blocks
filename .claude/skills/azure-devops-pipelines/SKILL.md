@@ -108,7 +108,8 @@ with no secrets and no side effects outside the build agent. Anything that publi
 ### `publish_npm` stage
 
 Runs as a **deployment job** targeting the `npm` environment, which has an approval gate. It runs only
-for `master` and `release/<major>`, never for a pull request:
+for `master` and `release/*` branches, never for a pull request. Release branches are named
+`release/<major>` by convention, but the condition accepts any `release/` prefix:
 
 ```yaml
 - stage: publish_npm
@@ -204,7 +205,7 @@ variables:
 
 ```yaml
 trigger:
-- master        # CI build + publish on every master merge
+- master        # CI build on every master merge; publish after approval at the npm gate
 
 pr:
   branches:
@@ -214,7 +215,8 @@ pr:
 
 - PR builds of `azure-pipelines.yml` are the merge check for `master`. Branch protection on
   `master` requires them, so do not switch them back to `pr: none`.
-- `publish_npm`'s stage `condition` limits publishing to `master` and `release/<major>`. Every
+- `publish_npm`'s stage `condition` limits publishing to `master` and `release/*` (any `release/`
+  prefix, not only the `release/<major>` naming convention). Every
   release tag and every publish still in the build history came from one of those. Anything else
   finishes green after `ci_build`: a pull request, or a manual run on a feature branch (someone
   running the pipeline to get a check on their PR). It must not wait at the npm gate, because

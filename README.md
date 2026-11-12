@@ -35,12 +35,12 @@ All five packages are published under the same npm dist-tags:
 | Dist-tag | Install with | What you get |
 |-|-|-|
 | `latest` | `npm i @enigmatry/entry-components` | The newest release. A plain install, with no version, resolves to this. |
-| `next` | `npm i @enigmatry/entry-components@next` | A preview built from every merge to `master`, e.g. `22.0.0-preview.12`. Not a release, and it changes with every merge. |
+| `next` | `npm i @enigmatry/entry-components@next` | The most recently published preview from `master`, e.g. `22.0.0-preview.12`. Not a release. Previews are built on every merge to `master` but only published once approved, so `next` moves whenever one is. |
 | `v<major>-lts` | `npm i @enigmatry/entry-components@v21-lts` | Patches for an older major, published from its `release/<major>` branch once a newer major is `latest`. That branch's previews go to `v<major>-next`. |
 
 Previews never move `latest`, so a plain install always gets a release.
 
-To try a preview, pin the exact version with `--save-exact` (`npm i -E @enigmatry/entry-components@22.0.0-preview.12`) rather than depending on `@next`. `next` moves on every merge. Without `-E`, npm saves `^22.0.0-preview.12`, which also accepts later previews and every 22.x release, so a fresh install can quietly move you off the preview you tested. A pre-release version also satisfies no ordinary range such as `^22.0.0`. Install the same preview version of every `@enigmatry/*` package you use; they are built together.
+To try a preview, pin the exact version with `--save-exact` (`npm i -E @enigmatry/entry-components@22.0.0-preview.12`) rather than depending on `@next`. `next` moves whenever a newer preview is published. Without `-E`, npm saves `^22.0.0-preview.12`, which also accepts later previews and every 22.x release, so a fresh install can quietly move you off the preview you tested. A pre-release version also satisfies no ordinary range such as `^22.0.0`. Install the same preview version of every `@enigmatry/*` package you use; they are built together.
 
 ## Migrate project to entry
 
