@@ -63,6 +63,11 @@ For example, to change the `at-rule-no-unknown` rule to use its `ignoreAtRules` 
 
 Quote the glob. On Linux agents npm runs scripts through `/bin/sh`, which expands an unquoted `src/**/*.scss` as `src/*/*.scss` and silently lints a fraction of the files — Windows `cmd.exe` does not, so this only shows up on CI.
 
-## License
+## About Enigmatry
 
-Apache-2 © Enigmatry
+Entry is the open-source foundation Enigmatry builds client systems on. Enigmatry is a software company from Rotterdam, founded in 2006, with teams in Belgrade and Novi Sad.
+
+* How we use Entry for clients: https://www.enigmatry.com/en/entry/
+* How we build, with agents under checks: https://www.enigmatry.com/en/how-we-build/
+
+Apache-2.0 © Enigmatry

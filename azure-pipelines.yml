@@ -1,8 +1,12 @@
 trigger:
 - master
 
-# no PR triggers
-pr: none
+# Pull requests into master run the ci_build stage as a validation build. publish_npm is skipped
+# for them by its stage condition.
+pr:
+  branches:
+    include:
+    - master
 
 variables:
   theLatestVersion: ''
@@ -42,7 +46,14 @@ stages:
       inputs:
         targetType: inline
         script: |
-          $version = dotnet minver -p preview
+          # The package major follows the Angular major, so MinVer's minimum (-m) is the major of the
+          # @angular/core version locked in package-lock.json, which npm ci installs. Until the first
+          # release of a new major is tagged, builds come out as <major>.0.0-preview.N instead of a
+          # preview of the previous major. After that it has no effect.
+          $angularVersion = node -p "require('./package-lock.json').packages['node_modules/@angular/core']?.version"
+          if ("$angularVersion" -notmatch '^(\d+)\.\d+\.\d+') { throw "Could not read the locked @angular/core version from package-lock.json (got '$angularVersion')" }
+          $angularMajor = $Matches[1]
+          $version = dotnet minver -p preview -m "$angularMajor.0"
           echo "##vso[task.setvariable variable=theLatestVersion]$version"
           echo "##vso[build.updatebuildnumber]$version"
           Write-Host "Setting MinVer to '$version'"
@@ -105,6 +116,20 @@ stages:
         command: 'custom'
         customCommand: 'run build @enigmatry/entry-form'
 
+    # deploy-demo.yml generates the API reference and deploys every master merge without approval,
+    # so a pull request that breaks typedoc has to fail here, before it reaches master.
+    - task: Npm@1
+      displayName: 'Generate API reference'
+      inputs:
+        command: 'custom'
+        customCommand: 'run typedoc'
+
+    - task: Npm@1
+      displayName: 'Build demo application'
+      inputs:
+        command: 'custom'
+        customCommand: 'run build @enigmatry/demo-app'
+
     - task: Npm@1
       displayName: 'Run unit tests'
       inputs:
@@ -134,6 +159,11 @@ stages:
 
 - stage: publish_npm
   dependsOn: ci_build
+  # Only master and release/* publish (release branches are named release/<major> by convention, but
+  # the condition accepts any release/ prefix). A pull request (refs/pull/...) or a manual run on any other
+  # branch finishes green after ci_build instead of waiting at the npm approval gate, where approving
+  # would publish that branch.
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), startsWith(variables['Build.SourceBranch'], 'refs/heads/release/')))
   displayName: Publish to NPM
   jobs:
   - deployment: Deploy
@@ -150,6 +180,58 @@ stages:
             - download: current
               displayName: 'Download build artifacts'
 
+            # Same Node pin as the build. Its npm 11 also refuses to publish a pre-release without an
+            # explicit tag, so a publish step that loses its tag fails instead of moving `latest`.
+            - template: pipeline-templates/install-node.yml
+
+            # Without a tag npm moves `latest` - what a plain install resolves to - onto whatever was
+            # published last, previews included. Pre-releases go to `next` from master and to
+            # `v<major>-next` from a release/<major> branch (cut from master, it inherits this file).
+            # A release goes to `latest` unless a newer major is already `latest`, in which case it
+            # goes to `v<major>-lts`, so it can never move `latest` back. Every publish step below
+            # receives the tag as npm_config_tag.
+            - bash: |
+                set -euo pipefail
+                version=$(node -p "require('./package.json').version")
+                if [[ ! "$version" =~ ^([0-9]+)\.[0-9]+\.[0-9]+ ]]; then echo "Unexpected package version '$version'"; exit 1; fi
+                major=${BASH_REMATCH[1]}
+                latest=$(npm view @enigmatry/entry-components dist-tags.latest)
+                if [[ ! "$latest" =~ ^([0-9]+)\. ]]; then echo "Could not read the current latest version from npm (got '$latest')"; exit 1; fi
+                latestMajor=${BASH_REMATCH[1]}
+                if [[ "$version" == *-* ]]; then
+                  if [[ "$BUILD_SOURCEBRANCH" == refs/heads/master ]]; then tag=next; else tag="v${major}-next"; fi
+                elif (( major < latestMajor )); then
+                  tag="v${major}-lts"
+                else
+                  tag=latest
+                fi
+                # A build approved late at the npm gate must not move a tag backwards, e.g. 22.2.1
+                # after 22.3.0 is already `latest`. The explicit tag skips npm's own check for that.
+                # Compared by SemVer precedence (semver.org, item 11), not sort -V, which disagrees on
+                # pre-release identifiers such as preview10 vs preview2.
+                current=$(npm view @enigmatry/entry-components "dist-tags.$tag")
+                if [[ -n "$current" ]]; then
+                  order=$(node -e '
+                    const parse = (v) => { const [core, pre] = v.split("+")[0].split(/-(.+)/); return { core: core.split(".").map(Number), pre: pre ? pre.split(".") : [] }; };
+                    const compareIds = (x, y) => { const nx = /^\d+$/.test(x), ny = /^\d+$/.test(y); if (nx && ny) { const [bx, by] = [BigInt(x), BigInt(y)]; return bx < by ? -1 : bx > by ? 1 : 0; } if (nx !== ny) { return nx ? -1 : 1; } return x < y ? -1 : x > y ? 1 : 0; };
+                    const compare = (a, b) => {
+                      const [pa, pb] = [parse(a), parse(b)];
+                      for (let i = 0; i < 3; i++) { if (pa.core[i] !== pb.core[i]) { return Math.sign(pa.core[i] - pb.core[i]); } }
+                      if (!pa.pre.length || !pb.pre.length) { return Math.sign(pb.pre.length - pa.pre.length); }
+                      for (let i = 0; i < Math.min(pa.pre.length, pb.pre.length); i++) { const c = compareIds(pa.pre[i], pb.pre[i]); if (c) { return c; } }
+                      return Math.sign(pa.pre.length - pb.pre.length);
+                    };
+                    console.log(compare(process.argv[1], process.argv[2]));' "$version" "$current")
+                  if (( order < 0 )); then
+                    echo "Refusing to move '$tag' back from $current to $version. This build is older than what is already published; cancel it."
+                    exit 1
+                  fi
+                fi
+                echo "Publishing $version under the npm dist-tag '$tag' (npm latest is $latest)"
+                echo "##vso[task.setvariable variable=npmDistTag]$tag"
+              displayName: 'Choose the npm dist-tag'
+              workingDirectory: '$(Pipeline.Workspace)/$(artifactName)-$(Build.BuildNumber)/enigmatry/entry-components'
+
             - task: Npm@1
               displayName: 'Publish entry components'
               inputs:
@@ -157,6 +239,8 @@ stages:
                 publishRegistry: useExternalRegistry
                 publishEndpoint: npm
                 workingDir: '$(Pipeline.Workspace)/$(artifactName)-$(Build.BuildNumber)/enigmatry/entry-components'
+              env:
+                npm_config_tag: $(npmDistTag)
 
             - task: Npm@1
               displayName: 'Publish entry form'
@@ -165,6 +249,8 @@ stages:
                 publishRegistry: useExternalRegistry
                 publishEndpoint: npm
                 workingDir: '$(Pipeline.Workspace)/$(artifactName)-$(Build.BuildNumber)/enigmatry/entry-form'
+              env:
+                npm_config_tag: $(npmDistTag)
 
             - task: Npm@1
               displayName: 'Publish the eslint recommended rules'
@@ -173,6 +259,8 @@ stages:
                 publishRegistry: useExternalRegistry
                 publishEndpoint: npm
                 workingDir: '$(Pipeline.Workspace)/$(artifactName)-$(Build.BuildNumber)/eslint-config'
+              env:
+                npm_config_tag: $(npmDistTag)
 
             - task: Npm@1
               displayName: 'Publish the stylelint recommended rules'
@@ -181,6 +269,8 @@ stages:
                 publishRegistry: useExternalRegistry
                 publishEndpoint: npm
                 workingDir: '$(Pipeline.Workspace)/$(artifactName)-$(Build.BuildNumber)/stylelint-config'
+              env:
+                npm_config_tag: $(npmDistTag)
 
             - task: Npm@1
               displayName: 'Publish the scss foundation'
@@ -189,3 +279,5 @@ stages:
                 publishRegistry: useExternalRegistry
                 publishEndpoint: npm
                 workingDir: '$(Pipeline.Workspace)/$(artifactName)-$(Build.BuildNumber)/scss-foundation'
+              env:
+                npm_config_tag: $(npmDistTag)
