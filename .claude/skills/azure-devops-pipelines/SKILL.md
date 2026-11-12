@@ -143,10 +143,12 @@ the built `entry-components` `package.json` and picks the tag from the branch an
 
 | Branch | Pre-release (contains `-`) | Release |
 |---|---|---|
-| `master` | `next` | `latest` |
-| `release/<major>` | `v<major>-next` | `latest` while `<major>` is still the newest major on npm, `v<major>-lts` once a newer one is `latest` |
+| `master` | `next` | `latest`, or `v<major>-lts` if a newer major is already `latest` |
+| `release/*` | `v<major>-next` | `latest`, or `v<major>-lts` if a newer major is already `latest` |
 
-Pre-releases go by branch, not by comparing majors. While the next major is still in preview, `next`
+`<major>` is always the major of the built version, never parsed from the branch name. Releases follow
+the same rule on every branch. On `master` the `v<major>-lts` case only happens for a stale build,
+e.g. a `21.4.2` approved late after `22.0.0` is `latest`. Pre-releases go by branch, not by comparing majors. While the next major is still in preview, `next`
 already holds it (e.g. `22.0.0-preview.N` while 21 is `latest`). Judged by `latest` alone, a
 `release/21` preview would also count as the current major and collide with that on `next`.
 
