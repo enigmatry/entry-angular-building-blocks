@@ -13,7 +13,8 @@ import {
   SelectOption,
   SelectSearchFilter,
   TextSearchFilter,
-  EntrySearchFilterComponent
+  EntrySearchFilterComponent,
+  provideEntrySearchFilterConfig
 } from '@enigmatry/entry-components/search-filter';
 import { catchError, firstValueFrom, map, of } from 'rxjs';
 import { EnumToStringPipe } from './enum-to-string.pipe';
@@ -32,7 +33,8 @@ const toServerErrors = (problem: IValidationProblemDetails): readonly SearchFilt
     selector: 'app-search-filter-example',
     templateUrl: './search-filter-example.component.html',
     styleUrl: './search-filter-example.component.scss',
-    imports: [EntrySearchFilterComponent, MatTableModule, DatePipe, EnumToStringPipe]
+    imports: [EntrySearchFilterComponent, MatTableModule, DatePipe, EnumToStringPipe],
+    providers: [provideEntrySearchFilterConfig({ applyButtonText: 'Filter' })]
 })
 export class SearchFilterExampleComponent {
   private readonly usersService: UsersService = inject(UsersService);

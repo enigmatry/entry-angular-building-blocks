@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
-import { ButtonExampleModule } from '../../examples/button/button-example.module';
-import { SharedModule } from '../../shared/shared.module';
+import { ButtonExampleComponent } from '../../examples/button/button-example/button-example.component';
+import { DocumentationContentComponent } from '../../shared/documentation-content/documentation-content.component';
+import { ExampleViewerComponent } from '../../shared/example-viewer/example-viewer.component';
 
 @Component({
     selector: 'app-button-documentation',
     templateUrl: './button-documentation.component.html',
     imports: [
-        SharedModule,
-        ButtonExampleModule
+        DocumentationContentComponent,
+        ExampleViewerComponent,
+        ButtonExampleComponent
     ]
 })
 export class ButtonDocumentationComponent { }

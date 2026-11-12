@@ -9,8 +9,14 @@ export default defineConfig([
     {
         files: ['src/**/*.ts'],
         rules: {
-            '@angular-eslint/use-injectable-provided-in': 'off', // TODO BP-1642: the example permission service is provided by its module, not by providedIn
             '@typescript-eslint/no-unnecessary-condition': 'error'
+        }
+    },
+    {
+        // The example implements the abstract EntryPermissionService and its component provides it against that token.
+        files: ['src/app/examples/permissions/permissions-example/permission.service.ts'],
+        rules: {
+            '@angular-eslint/use-injectable-provided-in': 'off'
         }
     },
     {

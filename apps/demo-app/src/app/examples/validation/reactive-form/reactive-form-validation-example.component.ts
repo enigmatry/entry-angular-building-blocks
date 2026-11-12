@@ -1,6 +1,6 @@
 import { JsonPipe } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
@@ -10,7 +10,8 @@ import {
   IValidationProblemDetails,
   setServerSideValidationErrors,
   EntryDisplayControlValidationDirective,
-  EntryFormErrorsComponent
+  EntryFormErrorsComponent,
+  provideEntryValidationConfig
 } from '@enigmatry/entry-components/validation';
 import { ValidationService } from '../validation.service';
 
@@ -30,6 +31,15 @@ import { ValidationService } from '../validation.service';
     MatButton,
     EntryButtonDirective,
     JsonPipe
+  ],
+  providers: [
+    provideEntryValidationConfig({
+      validationMessages: [
+        { name: 'required', message: 'This field is mandatory!' },
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        { name: 'minlength', message: (control: AbstractControl) => `Minimal length is ${control!.errors!['minlength'].requiredLength}!` }
+      ]
+    })
   ]
 })
 export class ReactiveFormExampleComponent {

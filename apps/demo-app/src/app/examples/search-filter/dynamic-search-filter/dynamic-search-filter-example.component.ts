@@ -9,7 +9,8 @@ import {
   SelectOption,
   SelectSearchFilter,
   TextSearchFilter,
-  EntrySearchFilterComponent
+  EntrySearchFilterComponent,
+  provideEntrySearchFilterConfig
 } from '@enigmatry/entry-components/search-filter';
 
 const dropLastItem = -1;
@@ -45,7 +46,8 @@ const baseFilters = (): SearchFilterBase<unknown>[] => [
 @Component({
   selector: 'app-dynamic-search-filter-example',
   templateUrl: './dynamic-search-filter-example.component.html',
-  imports: [MatButton, EntrySearchFilterComponent, JsonPipe]
+  imports: [MatButton, EntrySearchFilterComponent, JsonPipe],
+  providers: [provideEntrySearchFilterConfig({ applyButtonText: 'Filter' })]
 })
 export class DynamicSearchFilterExampleComponent {
   /** Held in a signal, so add and remove are ordinary writes rather than a rebind. */
