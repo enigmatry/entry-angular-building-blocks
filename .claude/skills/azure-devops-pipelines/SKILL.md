@@ -139,19 +139,28 @@ workingDir: '$(Pipeline.Workspace)/$(artifactName)-$(Build.BuildNumber)/enigmatr
 Without a tag, `npm publish` moves `latest` (what a plain `npm install <pkg>` resolves to) onto
 whatever went out last, previews included. The job therefore pins Node with
 `pipeline-templates/install-node.yml`, and a `Choose the npm dist-tag` step reads the version from
-the built `entry-components` `package.json` and compares its major with npm's current `latest`:
+the built `entry-components` `package.json` and picks the tag from the branch and npm's current `latest`:
 
-| Version being published | Pre-release (contains `-`) | Release |
+| Branch | Pre-release (contains `-`) | Release |
 |---|---|---|
-| Same or newer major than npm `latest` (master) | `next` | `latest` |
-| Older major (a `release/<major>` branch) | `v<major>-next` | `v<major>-lts` |
+| `master` | `next` | `latest` |
+| `release/<major>` | `v<major>-next` | `latest` while `<major>` is still the newest major on npm, `v<major>-lts` once a newer one is `latest` |
+
+Pre-releases go by branch, not by comparing majors. While the next major is still in preview, `next`
+already holds it (e.g. `22.0.0-preview.N` while 21 is `latest`). Judged by `latest` alone, a
+`release/21` preview would also count as the current major and collide with that on `next`.
 
 A release branch cut from `master` inherits this file. Once a newer major is `latest`, its patches
 therefore go to `v<major>-lts` with no pipeline edit and can never move `latest` back. The step fails
-if it cannot parse the version or read `latest` from npm, rather than guessing. It also fails when the
-chosen tag already holds a newer version. That happens when an old build is approved late at the npm
-gate, e.g. `22.2.1` after `22.3.0` is `latest`. Because the tag is explicit, npm's own check for this
-does not run. Such a build should be cancelled, not approved. It sets `npmDistTag`,
+if it cannot parse the version or read `latest` from npm, rather than guessing. `@enigmatry/entry-components`
+has had a `latest` since its first release, so a missing one means npm could not be read, not that
+the package is new. It also fails when the chosen tag already holds a newer version. That happens
+when an old build is approved late at the npm gate, e.g. `22.2.1` after `22.3.0` is `latest`.
+Because the tag is explicit, npm's own check for this does not run. Such a build should be cancelled,
+not approved. The comparison follows SemVer precedence (semver.org, item 11) in a short inline Node
+function; `sort -V` is not SemVer and orders identifiers such as `preview10` and `preview2` the other
+way. The publish job has no `node_modules`, so npm's `semver` package is not available there. The
+step sets `npmDistTag`,
 and every publish step passes it through the environment:
 
 ```yaml
