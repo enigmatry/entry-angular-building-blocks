@@ -103,6 +103,23 @@ Each library is published with `command: publish` + `useExternalRegistry` pointi
 workingDir: '$(Pipeline.Workspace)/$(artifactName)-$(Build.BuildNumber)/enigmatry/<lib-name>'
 ```
 
+#### npm dist-tag
+
+`npm publish` without a tag moves `latest` onto whatever went out last. The publish job pins Node (npm 11 refuses a pre-release publish without a tag), and a `Choose the npm dist-tag` step sets `npmDistTag`. The step is the same as on `master`:
+
+| Branch | Pre-release (contains `-`) | Release |
+|---|---|---|
+| `master` | `next` | `latest`, or `v<major>-lts` if a newer major is already `latest` |
+| `release/*` (this branch) | `v<major>-next` | `latest`, or `v<major>-lts` if a newer major is already `latest` |
+
+`<major>` is always the major of the built version, never parsed from the branch name. Releases follow the same rule on every branch: from here a 21.x release goes to `latest` while 21 is the newest major on npm, and to `v21-lts` once 22 is `latest`.
+
+The step fails, before anything is published, if it cannot parse the version or read `latest` from npm. It also fails when the chosen tag already holds a newer version (by SemVer precedence), e.g. an old build approved late at the npm gate. Such a build should be cancelled, not approved.
+
+`publish_npm` runs only for `master` and `release/*`. A manual run on any other branch, such as a backport branch, finishes after the build without waiting at the npm gate.
+
+Every publish step passes the tag as `env: npm_config_tag: $(npmDistTag)`. `Npm@1`'s `publish` command has no tag input.
+
 **When adding a new library to publish**, add a step that matches this pattern. The artifact sub-path depends on how ng-packagr places the output:
 - `@enigmatry/*` scoped packages → `enigmatry/<lib-name>` inside the artifact
 - Unscoped packages (`eslint-config`, `stylelint-config`, `scss-foundation`) → `<lib-name>` directly
