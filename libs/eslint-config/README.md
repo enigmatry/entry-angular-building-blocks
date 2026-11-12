@@ -74,6 +74,11 @@ export default defineConfig([
 ]);
 ```
 
-## License
+## About Enigmatry
 
-Apache-2 © Enigmatry
+Entry is the open-source foundation Enigmatry builds client systems on. Enigmatry is a software company from Rotterdam, founded in 2006, with teams in Belgrade and Novi Sad.
+
+* How we use Entry for clients: https://www.enigmatry.com/en/entry/
+* How we build, with agents under checks: https://www.enigmatry.com/en/how-we-build/
+
+Apache-2.0 © Enigmatry

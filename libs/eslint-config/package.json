@@ -5,7 +5,7 @@
   "type": "module",
   "author": "Enigmatry",
   "description": "ESLint shareable config for the Enigmatry style.",
-  "homepage": "https://github.com/enigmatry/entry-angular-building-blocks/tree/master/libs/eslint-config#readme",
+  "homepage": "https://www.enigmatry.com/en/entry/",
   "repository": {
     "type": "git",
     "url": "https://github.com/enigmatry/entry-angular-building-blocks.git"
