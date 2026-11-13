@@ -82,7 +82,10 @@ export class EntryFieldFormatter {
   private readonly currencyDisplay = (definition: EntryFieldFormatDefinition): string | boolean =>
     typeof definition.display === 'boolean' ? definition.display : setting(definition.display) ?? 'symbol';
 
-  private readonly multiplier = (definition: EntryFieldFormatDefinition): number => toNumber(definition.multiplier) || 1;
+  private readonly multiplier = (definition: EntryFieldFormatDefinition): number => {
+    const multiplier = toNumber(definition.multiplier);
+    return Number.isNaN(multiplier) ? 1 : multiplier;
+  };
 
   private readonly displayNumber = (value: number, definition: EntryFieldFormatDefinition): string => {
     const locale = this.locale(definition);

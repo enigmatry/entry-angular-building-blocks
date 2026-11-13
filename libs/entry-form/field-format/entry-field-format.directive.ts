@@ -8,19 +8,16 @@ import { EntryFieldInputKind, inputKindOf } from './entry-field-input-kind';
 const isAndroid = (): boolean => typeof navigator !== 'undefined' && /android (\d+)/iu.test(navigator.userAgent);
 
 /**
- * Formats the value of an `<input matInput>` or `<textarea matInput>` according to an entry-code-generation
- * formatter definition, and parses what the user types back into the model value.
+ * Formats an `<input matInput>` or `<textarea matInput>` per an entry-code-generation definition and parses input back.
  *
- * - `number`, `currency` and `percent` show the formatted value while the field is not focused and a plain,
- *   locale-aware number while it is, and parse typed text back to a number. Text that is not a valid number
- *   in the locale sets the `entryFieldFormat` validation error and a `null` model value.
- * - `date`, `boolean` and custom definitions format the displayed value only; typed text is written to the
- *   model unchanged.
+ * - `number`, `currency` and `percent` show the formatted value while not focused and a plain locale-aware number
+ *   while focused; invalid text sets a `null` value and the `entryFieldFormat` validation error.
+ * - `date`, `boolean` and custom definitions format the displayed value only; typed text is written unchanged.
  * - Only text-like inputs are formatted. `number` and `range` inputs show and parse a plain number, other native
  *   types keep their raw value, and checkbox, radio and file inputs keep Angular's own value accessors.
  *
- * Temporary: a reactive-forms `ControlValueAccessor` for generated forms. When generated forms migrate to
- * signal forms it will be replaced by a `FormValueControl` built on `transformedValue`.
+ * Temporary: a reactive-forms `ControlValueAccessor` for generated forms, to be replaced by a `FormValueControl`
+ * built on `transformedValue` when generated forms migrate to signal forms.
  */
 @Directive({
   selector: 'input[entryFieldFormat]:not([type=checkbox]):not([type=radio]):not([type=file]), textarea[entryFieldFormat]',
@@ -130,7 +127,11 @@ export class EntryFieldFormatDirective implements ControlValueAccessor, Validato
       return;
     }
     this.onInput();
+    if (!this.focused) {
+      this.onTouched();
+    }
     this.onValidatorChange();
+    this.render();
   };
 
   private readonly render = (): void => {

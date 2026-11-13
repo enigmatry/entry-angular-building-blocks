@@ -121,7 +121,7 @@ It is a `ControlValueAccessor` for reactive forms:
 - Formatting changes the display only: the model keeps the precision that was typed (`2.499` displays as `€2.50` with `digitsInfo: '1.2-2'`).
 - A `locale` in the definition must be registered with `registerLocaleData`, as for Angular's pipes.
 
-Definition properties mirror the table's `ColumnTypeParameter`: `date` takes `format`, `timezone`, `locale`; `currency` takes `currencyCode`, `display`, `digitsInfo`, `locale`; `number` takes `digitsInfo`, `locale`; `percent` takes `digitsInfo`, `locale`, `multiplier`. Empty strings are treated as not set. The definition type accepts extra properties for custom formatters.
+Definition properties mirror the table's `ColumnTypeParameter`: `date` takes `format`, `timezone`, `locale`; `currency` takes `currencyCode`, `display`, `digitsInfo`, `locale`; `number` takes `digitsInfo`, `locale`; `percent` takes `digitsInfo`, `locale`, `multiplier`. Empty strings are treated as not set. The definition type accepts extra properties for custom formatters. A custom currency `display` label should not contain digits: in the formatted value they cannot be told apart from the amount, so pasting that text back reads them as part of the number (typing a plain number is unaffected). A `multiplier` is applied as given, so `0` shows every value as `0%` and rejects typed values.
 
 ## Compatibility with Angular versions
 
