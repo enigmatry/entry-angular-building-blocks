@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
-import { TableExampleModule } from '../../examples/table/table-example.module';
-import { SharedModule } from '../../shared/shared.module';
+import { TableExampleComponent } from '../../examples/table/table-example/table-example.component';
+import { DocumentationContentComponent } from '../../shared/documentation-content/documentation-content.component';
+import { ExampleViewerComponent } from '../../shared/example-viewer/example-viewer.component';
 
 @Component({
     selector: 'app-table-documentation',
     templateUrl: './table-documentation.component.html',
     imports: [
-        SharedModule,
-        TableExampleModule
+        DocumentationContentComponent,
+        ExampleViewerComponent,
+        TableExampleComponent
     ]
 })
 export class TableDocumentationComponent { }

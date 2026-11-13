@@ -1,8 +1,15 @@
 import { Component, DestroyRef, inject, input, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatButton } from '@angular/material/button';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { MatDivider } from '@angular/material/divider';
+import { MatTabGroup, MatTab } from '@angular/material/tabs';
+import { MatToolbarRow } from '@angular/material/toolbar';
 import { Observable, forkJoin, of, catchError, map } from 'rxjs';
+import { MarkdownViewerComponent } from '../markdown-viewer/markdown-viewer.component';
 import { FileExtension } from '../models/file-extension.type';
 import { FileLoadService } from '../services/file-load.service';
+import { CodeViewComponent } from './code-view/code-view.component';
 
 interface IExtraFile {
   name: string;
@@ -15,7 +22,7 @@ interface IExtraFile {
   selector: 'app-example-viewer',
   templateUrl: './example-viewer.component.html',
   styleUrl: './example-viewer.component.scss',
-  standalone: false
+  imports: [MatCard, MatToolbarRow, MatButton, MatTabGroup, MatTab, CodeViewComponent, MarkdownViewerComponent, MatDivider, MatCardContent]
 })
 export class ExampleViewerComponent {
   private readonly fileLoad: FileLoadService = inject(FileLoadService);

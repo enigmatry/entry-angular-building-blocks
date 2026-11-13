@@ -2,11 +2,11 @@
 
 ## Create Angular structure
 
-Create new feature module (with routing) and root component named as new entry component (e.g. `features/dialog`).
+Create a standalone documentation component named after the new entry component (e.g. `features/dialog/dialog-documentation.component.ts`). It imports `DocumentationContentComponent`, `ExampleViewerComponent` and the example components it shows; there is no feature module.
 
-Use `app-documentation-content` shared component to define Overview/API/Examples tabs (e.g. `features/dialog/dialog.component.html`). Don't forget to provide `componentDefinition` input parameter!
+Use `app-documentation-content` shared component to define Overview/API/Examples tabs (e.g. `features/dialog/dialog-documentation.component.html`). Don't forget to provide `componentDefinition` input parameter!
 
-Update `shared/models/route-segments.ts` with new route to the feature and add new entry to `shared/models/component-definitions.ts`. Don't forget to update `app-routing.module.ts` with routing to the new feature.
+Update `features/route-segments.ts` with new route to the feature and add new entry to `features/component-definitions.ts`. Don't forget to add a `loadComponent` route to the new documentation component in `app.routes.ts`.
 
 After angular structure is set, we can add content to the tabs (Overview/API/Examples).
 
@@ -24,24 +24,24 @@ Regarding the content of component's `README.md` file, it should be short as pos
 
 Examples are documented with `example-viewer` shared component. We use it to present entry component logic and the code behind it.
 
-All of the components containing working entry components examples should be placed in `Examples` module (`examples/`). This way, it will be possible for `example-viewer` to load their code in layout. Convention is that the example components name ends with `-example` suffix.
+All of the components containing working entry components examples should be placed in the `examples/` folder. This way, it will be possible for `example-viewer` to load their code in layout. Each example is a standalone component that imports what its template uses and provides its own configuration (e.g. `provideEntryButtonConfig`), so its code tab shows how to set it up. When several examples share their configuration, put it in an `*.providers.ts` file next to them, provide it from the documentation component and list it in `extraFiles` (e.g. `examples/date-time-picker/date-time-picker-example.providers.ts`). Convention is that the example components name ends with `-example` suffix.
 
 Use example components in `example-viewer` like this:
 
 ```html
 <app-example-viewer
     title="Alert dialog example"
-    path="dialog\alert\alert-example.component">
-    <app-alert-example></app-alert-example>
+    component="dialog\alert\alert-example.component">
+    <app-alert-example />
 </app-example-viewer>
 
 ```
 
-`title` represent the example caption. `path` represents path to the example component relative to the `Examples` module. `example-viewer` content should be working example component.
+`title` represent the example caption. `component` represents path to the example component relative to the `examples/` folder. `example-viewer` content should be working example component.
 
 ### Extra files
 
-By default, `example-viewer` displays 3 files (`.ts`, `.scss` and `.html`) of examples component. We can add extra files using `extraFileDefinitions` input parameter (e.g. `features/dialog/dialog.component.html`).
+By default, `example-viewer` displays the `.ts` and `.html` files of the example component; `showScss` adds the `.scss` one. We can add extra files using the `extraFiles` input parameter, with paths relative to the `examples/` folder (see `features/dialog/dialog-documentation.component.html`).
 
 ## API tab
 

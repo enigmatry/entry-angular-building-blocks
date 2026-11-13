@@ -1,3 +1,4 @@
+import { DATE_PIPE_DEFAULT_OPTIONS } from '@angular/common';
 import { Component, computed, inject, resource } from '@angular/core';
 import { ColumnDefinition, ContextMenuItem, EntryTableComponent } from '@enigmatry/entry-components/table';
 import { lastValueFrom } from 'rxjs';
@@ -7,6 +8,7 @@ import { UsersService } from '../../search-filter/search-filter/users.service';
 @Component({
   selector: 'app-table-example',
   imports: [EntryTableComponent],
+  providers: [{ provide: DATE_PIPE_DEFAULT_OPTIONS, useValue: { dateFormat: 'dd-MM-yyyy HH:mm' } }],
   templateUrl: './table-example.component.html',
   styleUrl: './table-example.component.scss'
 })

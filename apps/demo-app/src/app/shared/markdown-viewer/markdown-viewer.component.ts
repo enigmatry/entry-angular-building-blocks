@@ -10,7 +10,6 @@ import { FileLoadService } from '../services/file-load.service';
   selector: 'app-markdown-viewer',
   templateUrl: './markdown-viewer.component.html',
   styleUrl: './markdown-viewer.component.scss',
-  standalone: false,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MarkdownViewerComponent {
