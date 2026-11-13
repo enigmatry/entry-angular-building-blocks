@@ -83,6 +83,46 @@ Run
 entry-codegen --source-assembly ../MyProject.CodeGeneration.Setup/bin/Debug/net7.0/MyProject.CodeGeneration.Setup.dll --destination-directory ./src/app/features
 ```
 
+## Async validators and field formatting in generated forms
+
+Generated forms that do not use Formly import two symbols from `@enigmatry/entry-form`. Both are **temporary**: generated forms currently use reactive forms, and both symbols will be replaced when generated forms migrate to signal forms (async validation through `validateAsync` / `validateHttp`, formatting through a `FormValueControl` built on `transformedValue`).
+
+### `ENTRY_ASYNC_VALIDATOR_RESOLVER`
+
+Named validators configured with `.WithValidators("UniqueName")` are resolved by name (camelized, e.g. `uniqueName`) into reactive-forms async validators. Provide the resolver in your app or at component level:
+
+```typescript
+import { AsyncValidatorFn } from '@angular/forms';
+import { ENTRY_ASYNC_VALIDATOR_RESOLVER, EntryAsyncValidatorResolver } from '@enigmatry/entry-form';
+
+const myAsyncValidators: Record<string, AsyncValidatorFn> = { uniqueName: myUniqueNameValidator };
+const resolver: EntryAsyncValidatorResolver = name => myAsyncValidators[name];
+
+providers: [{ provide: ENTRY_ASYNC_VALIDATOR_RESOLVER, useValue: resolver }]
+```
+
+The token has no default. Generated forms inject it optionally, and when nothing is provided named validators are skipped.
+
+### `EntryFieldFormatDirective`
+
+`.WithFormat(...)` renders the standalone `entryFieldFormat` directive on an `<input matInput>` or `<textarea matInput>`:
+
+```html
+<input matInput formControlName="price" type="text" inputmode="decimal"
+  entryFieldFormat [entryFieldFormatDefinition]="{ name: 'currency', currencyCode: 'EUR' }">
+```
+
+It is a `ControlValueAccessor` for reactive forms:
+
+- `number`, `currency` and `percent` show the formatted value (through Angular's `DecimalPipe`, `CurrencyPipe` and `PercentPipe`) while the field is not focused, and a plain number with the locale's decimal separator while it is. `percent` edits the percentage (`12.5` for `0.125`) and honours `multiplier`.
+- Typed text must be a valid number in the locale: an optional minus sign, the currency symbol or percent sign the field displays, the locale's decimal separator, and group separators only at the locale's group positions (`1,234.5` or `1234.5` in `en`, `1.234,5` in `nl`, `12,34,567` in `en-IN`). Anything else (`1,5` in `en`, letters, exponents, non-Latin digits) sets a `null` value and the `entryFieldFormat` validation error, so a mistyped amount is never saved as a different number.
+- `date`, `boolean` and custom definitions format the displayed value only. Typed text is written to the model exactly as typed.
+- Only text-like inputs (`text`, `search`, `tel`, `url`, `email`, textarea) are formatted. A `type="number"` or `type="range"` input cannot display formatted text, so it shows and parses a plain number; use `type="text" inputmode="decimal"` to get formatting. Other native types such as `date` keep their raw value. Checkbox, radio and file inputs are not matched by the directive, so they keep Angular's own value accessors.
+- Formatting changes the display only: the model keeps the precision that was typed (`2.499` displays as `€2.50` with `digitsInfo: '1.2-2'`).
+- A `locale` in the definition must be registered with `registerLocaleData`, as for Angular's pipes.
+
+Definition properties mirror the table's `ColumnTypeParameter`: `date` takes `format`, `timezone`, `locale`; `currency` takes `currencyCode`, `display`, `digitsInfo`, `locale`; `number` takes `digitsInfo`, `locale`; `percent` takes `digitsInfo`, `locale`, `multiplier`. Empty strings are treated as not set. The definition type accepts extra properties for custom formatters. A custom currency `display` label should not contain digits, a minus sign (`-`, or the locale's own minus such as `−`) or the locale's decimal separator: depending on the locale, the label's position and `digitsInfo`, it can be mistaken for part of the amount when the formatted text is pasted back. In `en`, `23` formats as `123.00` with `display: '1'` and parses as 123, as `-23.00` with `display: '-'` and parses as −23, and as `.23` with `display: '.'` and `digitsInfo: '1.0-0'` and parses as 0.23. Typing a plain number is unaffected. A `multiplier` is applied as given, so `0` shows every value as `0%` and rejects typed values.
+
 ## Compatibility with Angular versions
 
 | @enigmatry/entry-form | Angular version
