@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
-import { PermissionsExampleModule } from '../../examples/permissions/permissions-example.module';
-import { SharedModule } from '../../shared/shared.module';
+import { PermissionsExampleComponent } from '../../examples/permissions/permissions-example/permissions-example.component';
+import { DocumentationContentComponent } from '../../shared/documentation-content/documentation-content.component';
+import { ExampleViewerComponent } from '../../shared/example-viewer/example-viewer.component';
 
 @Component({
     selector: 'app-permissions-documentation',
     templateUrl: './permissions-documentation.component.html',
     imports: [
-        SharedModule,
-        PermissionsExampleModule
+        DocumentationContentComponent,
+        ExampleViewerComponent,
+        PermissionsExampleComponent
     ]
 })
 export class PermissionsDocumentationComponent { }

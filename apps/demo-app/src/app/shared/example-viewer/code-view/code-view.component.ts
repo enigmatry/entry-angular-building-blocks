@@ -1,6 +1,9 @@
 import { Clipboard } from '@angular/cdk/clipboard';
 import { ChangeDetectionStrategy, Component, computed, inject, input, SecurityContext } from '@angular/core';
+import { MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatTooltip } from '@angular/material/tooltip';
 import { DomSanitizer } from '@angular/platform-browser';
 import hljs from 'highlight.js';
 import { FileExtension } from '../../models/file-extension.type';
@@ -10,7 +13,7 @@ import { FileExtension } from '../../models/file-extension.type';
   templateUrl: './code-view.component.html',
   styleUrl: './code-view.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: false
+  imports: [MatIconButton, MatTooltip, MatIcon]
 })
 export class CodeViewComponent {
   private readonly clipboard: Clipboard = inject(Clipboard);

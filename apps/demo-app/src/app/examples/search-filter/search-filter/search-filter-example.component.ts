@@ -1,6 +1,8 @@
+import { DatePipe } from '@angular/common';
 import { Component, ErrorHandler, LOCALE_ID, inject, linkedSignal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatTableModule } from '@angular/material/table';
 import { IValidationProblemDetails } from '@enigmatry/entry-components';
 import {
   AutocompleteSearchFilter,
@@ -10,9 +12,12 @@ import {
   SearchFilterServerError,
   SelectOption,
   SelectSearchFilter,
-  TextSearchFilter
+  TextSearchFilter,
+  EntrySearchFilterComponent,
+  provideEntrySearchFilterConfig
 } from '@enigmatry/entry-components/search-filter';
 import { catchError, firstValueFrom, map, of } from 'rxjs';
+import { EnumToStringPipe } from './enum-to-string.pipe';
 import { countryContinent, maskDecimalScore } from './search-filter-example.functions';
 import { Country, Occupation, User } from './users';
 import { UsersService } from './users.service';
@@ -28,7 +33,8 @@ const toServerErrors = (problem: IValidationProblemDetails): readonly SearchFilt
     selector: 'app-search-filter-example',
     templateUrl: './search-filter-example.component.html',
     styleUrl: './search-filter-example.component.scss',
-    standalone: false
+    imports: [EntrySearchFilterComponent, MatTableModule, DatePipe, EnumToStringPipe],
+    providers: [provideEntrySearchFilterConfig({ applyButtonText: 'Filter' })]
 })
 export class SearchFilterExampleComponent {
   private readonly usersService: UsersService = inject(UsersService);

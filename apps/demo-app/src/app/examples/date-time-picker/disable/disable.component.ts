@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { EntryDateTimePickerComponent } from '@enigmatry/entry-components/date-time-picker';
 
 @Component({
     selector: 'app-date-picker-disable',
     templateUrl: './disable.component.html',
-    standalone: false
+    imports: [MatCheckbox, FormsModule, EntryDateTimePickerComponent, ReactiveFormsModule]
 })
 export class DisableComponent {
   disabled: boolean;

@@ -1,10 +1,12 @@
 import { Component, inject } from '@angular/core';
+import { MatButton } from '@angular/material/button';
+import { EntryButtonDirective } from '@enigmatry/entry-components/button';
 import { EntryDialogService } from '@enigmatry/entry-components/dialog';
 
 @Component({
     selector: 'app-alert-example',
     templateUrl: './alert-example.component.html',
-    standalone: false
+    imports: [MatButton, EntryButtonDirective]
 })
 export class AlertExampleComponent {
   private readonly entryDialog: EntryDialogService = inject(EntryDialogService);

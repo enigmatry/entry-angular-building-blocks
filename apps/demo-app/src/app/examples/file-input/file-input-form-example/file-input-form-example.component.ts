@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { FileInputValue } from '@enigmatry/entry-components/file-input';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ScrollToInvalidControlDirective } from '@enigmatry/entry-components/common';
+import { FileInputValue, EntryFileInputComponent } from '@enigmatry/entry-components/file-input';
 
 @Component({
     selector: 'app-file-input-form-example',
     templateUrl: './file-input-form-example.component.html',
     styleUrl: './file-input-form-example.component.scss',
-    standalone: false
+    imports: [EntryFileInputComponent, FormsModule, ReactiveFormsModule, ScrollToInvalidControlDirective]
 })
 export class FileInputFormExampleComponent {
   protected selectedFile: FileInputValue = null;

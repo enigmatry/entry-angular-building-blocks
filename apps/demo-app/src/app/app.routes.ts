@@ -1,10 +1,9 @@
 
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 import { RouteSegments } from './features/route-segments';
 import { LandingComponent } from './shared/landing/landing.component';
 
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: '',
     component: LandingComponent
@@ -55,12 +54,3 @@ const routes: Routes = [
       .then(m => m.DateTimePickerDocumentationComponent)
   }
 ];
-
-@NgModule({
-  // Angular 22 changed the default to 'always'. Pinned to 'emptyOnly' so a child route
-  // without its own data does not inherit the parent's - entryPermissionGuard reads
-  // route.data['permissions'] and would otherwise silently inherit instead of denying.
-  imports: [RouterModule.forRoot(routes, { paramsInheritanceStrategy: 'emptyOnly' })],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }

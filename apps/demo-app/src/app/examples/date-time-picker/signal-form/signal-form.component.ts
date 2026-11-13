@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { FormField, FormRoot, form, required, submit } from '@angular/forms/signals';
-import { EntryDateTimePickerModule } from '@enigmatry/entry-components/date-time-picker';
+import { MatButton } from '@angular/material/button';
+import { EntryDateTimePickerComponent } from '@enigmatry/entry-components/date-time-picker';
 
 /**
  * The picker under a signal form. Worth its own example because every other one drives it with
@@ -10,7 +11,7 @@ import { EntryDateTimePickerModule } from '@enigmatry/entry-components/date-time
  */
 @Component({
   selector: 'app-date-time-picker-signal-form',
-  imports: [EntryDateTimePickerModule, FormField, FormRoot],
+  imports: [EntryDateTimePickerComponent, FormField, FormRoot, MatButton],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './signal-form.component.html'
 })

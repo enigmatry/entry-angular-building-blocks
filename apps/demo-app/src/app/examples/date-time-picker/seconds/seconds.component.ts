@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { provideEntryNativeTimeAdapter } from '@enigmatry/entry-components/common';
+import { EntryDateTimePickerComponent } from '@enigmatry/entry-components/date-time-picker';
 
 @Component({
     selector: 'app-date-picker-seconds',
@@ -18,7 +19,7 @@ import { provideEntryNativeTimeAdapter } from '@enigmatry/entry-components/commo
             }
         })
     ],
-    standalone: false
+    imports: [EntryDateTimePickerComponent, ReactiveFormsModule]
 })
 export class SecondsComponent {
   dateTime = new FormControl(new Date());

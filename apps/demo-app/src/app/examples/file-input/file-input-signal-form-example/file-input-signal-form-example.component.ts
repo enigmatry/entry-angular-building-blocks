@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { FormField, FormRoot, form, required } from '@angular/forms/signals';
-import { MatButtonModule } from '@angular/material/button';
-import { EntryFileInputModule, FileInputValue, maxFileCount, maxFileSize } from '@enigmatry/entry-components/file-input';
+import { MatButton } from '@angular/material/button';
+import { EntryFileInputComponent, FileInputValue, maxFileCount, maxFileSize } from '@enigmatry/entry-components/file-input';
 
 const sizeLimitInKb = 100;
 const fileCountLimit = 2;
@@ -14,7 +14,7 @@ const fileCountLimit = 2;
   selector: 'app-file-input-signal-form-example',
   templateUrl: './file-input-signal-form-example.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [EntryFileInputModule, FormField, FormRoot, MatButtonModule]
+  imports: [EntryFileInputComponent, FormField, FormRoot, MatButton]
 })
 export class FileInputSignalFormExampleComponent {
   private readonly uploadModel = signal<{ attachments: FileInputValue }>({ attachments: null });
