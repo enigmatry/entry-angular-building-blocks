@@ -59,7 +59,7 @@ export class EntryTableComponent<T> {
   readonly pageDisabled = input<boolean>(this.configuration.showFirstLastButtons);
   readonly showFirstLastButtons = input<boolean>(false);
   readonly pageIndex = linkedSignal<number>(() => 0);
-  readonly pageSize = linkedSignal<number>(() => 0);
+  readonly pageSize = linkedSignal<number>(() => this.configuration.pageSize);
   readonly pageSizeOptions = input<number[]>(this.configuration.pageSizeOptions);
   readonly hidePageSize = input<boolean>(this.configuration.hidePageSize);
   readonly paginationTemplate = input<TemplateRef<unknown>>();
@@ -120,7 +120,7 @@ export class EntryTableComponent<T> {
         } else {
           const page = this.data() as PagedData<T>;
           this.total.set(page.totalCount ?? 0);
-          this.pageSize.set(page.pageSize ?? this.pageSize() ?? this.configuration.pageSize);
+          this.pageSize.set(page.pageSize ?? this.pageSize());
           this.pageIndex.set(page.pageNumber ? page.pageNumber - 1 : this.pageIndex());
           trueData = (this.data() as PagedData<T>)?.items ?? [];
         }
