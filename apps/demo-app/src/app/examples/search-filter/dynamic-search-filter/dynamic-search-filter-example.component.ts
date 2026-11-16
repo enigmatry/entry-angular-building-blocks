@@ -1,5 +1,5 @@
 import { JsonPipe } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import {
   AutocompleteSearchFilter,
@@ -12,6 +12,17 @@ import {
   EntrySearchFilterComponent,
   provideEntrySearchFilterConfig
 } from '@enigmatry/entry-components/search-filter';
+
+/** Stands in for an owners API. The key is an id the URL carries; the label is the name the user searches for. */
+const owners: readonly SelectOption<string>[] = [
+  new SelectOption('ada', 'Ada Lovelace'),
+  new SelectOption('alan', 'Alan Turing'),
+  new SelectOption('grace', 'Grace Hopper'),
+  new SelectOption('edsger', 'Edsger Dijkstra')
+];
+
+/** The owner the server turns down, so its message can be watched landing on the autocomplete. */
+const formerOwner = 'edsger';
 
 const dropLastItem = -1;
 const baseFilters = (): SearchFilterBase<unknown>[] => [
@@ -31,17 +42,20 @@ const baseFilters = (): SearchFilterBase<unknown>[] => [
   }),
   new AutocompleteSearchFilter<string>({
     key: 'owner',
-    label: 'Owner',
-    search: input => Promise.resolve(['Ada', 'Alan', 'Grace', 'Edsger']
-      .filter(name => name.toLocaleLowerCase().includes(input.toLocaleLowerCase()))
-      .map(name => new SelectOption(name, name)))
+    label: 'Owner (required)',
+    placeholder: 'Search by name',
+    required: true,
+    search: input => Promise.resolve(owners.filter(owner => owner.label.toLocaleLowerCase().includes(input.toLocaleLowerCase()))),
+    // A key restored from params has no option behind it yet; this turns it back into the name to show.
+    resolveLabel: key => Promise.resolve(owners.find(owner => owner.key === key)?.label)
   })
 ];
 
 /**
- * Exercises the behaviour no other example reaches: a filter set that changes after first render.
- * Nothing in a real application does this today, so without this page the migration would ship
- * having verified only the fixed-array case.
+ * Exercises the behaviour no other example reaches: a filter set that changes after first render,
+ * server messages placed on their filters, and a required autocomplete whose key is not its label.
+ * Nothing in a real application changes its filter set today, so without this page the migration
+ * would ship having verified only the fixed-array case.
  */
 @Component({
   selector: 'app-dynamic-search-filter-example',
@@ -57,15 +71,21 @@ export class DynamicSearchFilterExampleComponent {
   protected readonly navigatedParams = signal<SearchFilterParams | undefined>(undefined);
   protected readonly rejectRegion = signal(true);
 
+  private readonly searchFilter = viewChild.required(EntrySearchFilterComponent);
+
   private extraCount = 0;
 
-  /** Rejects `region` on demand, so a stale server error can be watched across searches. */
+  /** Rejects `region` on demand, so a stale server error can be watched across searches, and always rejects one owner. */
   protected readonly search = (searchParams: SearchFilterParams): Promise<readonly SearchFilterServerError[] | void> => {
     this.lastParams.set(searchParams);
-    const regionRejected = this.rejectRegion() && Boolean(searchParams['region']);
-    return Promise.resolve(regionRejected
-      ? [{ key: 'region', message: 'The server does not like this region.' }]
-      : undefined);
+    const errors: SearchFilterServerError[] = [];
+    if (this.rejectRegion() && searchParams['region']) {
+      errors.push({ key: 'region', message: 'The server does not like this region.' });
+    }
+    if (searchParams['owner'] === formerOwner) {
+      errors.push({ key: 'owner', message: 'Edsger Dijkstra no longer owns any items.' });
+    }
+    return Promise.resolve(errors.length ? errors : undefined);
   };
 
   /** Proof that the output still fires for a caller that would navigate instead of fetching. */
@@ -89,5 +109,13 @@ export class DynamicSearchFilterExampleComponent {
       ? new TextSearchFilter({ key: 'term', label: 'Term', value: 'restored' })
       : searchFilter));
   };
-}
 
+  /**
+   * Applies params to filters already on screen, as when the user navigates back to `?owner=grace`. Every key the
+   * params leave out returns to what its filter declares. Unlike handing the filters over again, this works on
+   * every press, since it does not depend on a declared value changing.
+   */
+  protected readonly restoreOwnerFromParams = (): void => {
+    this.searchFilter().reset({ owner: 'grace' });
+  };
+}

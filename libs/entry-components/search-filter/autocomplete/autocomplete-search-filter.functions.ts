@@ -1,3 +1,4 @@
+import { MatInput } from '@angular/material/input';
 import { SelectOption } from '../select-option.model';
 import { AutocompleteSearchFilter } from './autocomplete-search-filter.model';
 
@@ -31,6 +32,18 @@ export type ReportLookupFailure = (error: unknown, abortSignal: AbortSignal) => 
 export const delay = (milliseconds: number): Promise<void> => new Promise(resolve => {
   setTimeout(resolve, milliseconds);
 });
+
+/**
+ * Puts the text into the box when the box holds something else, through `MatInput` so the form field's label follows.
+ *
+ * @remarks A `[value]` binding writes only when its value differs from the one it last wrote, never comparing with the
+ * box. Text typed and then reset before any render never reached the binding, so the reset leaves the bound value
+ * as it was and nothing clears the box.
+ */
+export const showText = (input: MatInput, text: string): void => {
+  // The setter compares with what the box holds and tells the form field when it writes.
+  input.value = text;
+};
 
 /** The options matching what the user typed, or none when the lookup failed. */
 export const searchOptions = async<T>(
