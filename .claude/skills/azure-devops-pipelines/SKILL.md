@@ -85,14 +85,16 @@ Runs all verification before any artifacts are produced. Order of steps is signi
 4. Stamp version into each library `package.json`
 5. `npm ci` — install from lockfile
 6. `npm run lint` — lint all libraries
-7. `npm run build @enigmatry/entry-components` — build libs in dependency order
-8. `npm run build @enigmatry/entry-form`
-9. `npm run typedoc` — generates the demo's API reference, as `deploy-demo.yml` does before its build
-10. `npm run build @enigmatry/demo-app` — `deploy-demo.yml` ships every `master` merge without approval, so typedoc and the demo must both pass before merge
-11. `npm run automated-tests` — SCSS theme compilation + scss-foundation tests
-12. `FileTransform@2` — substitute pipeline variables into `dist/**/package.json` (used to inject peer dependency versions)
-13. `PublishBuildArtifacts@1` — publish `dist/` as artifact
-14. `PublishBuildArtifacts@1` — publish `libs/` as artifact
+7. `UseDotNet@2` with `useGlobalJson` — installs the .NET SDK pinned in `apps/demo-app/codegen/global.json`; `dnx`, which runs the code generator, comes with it
+8. Gate: generated demo example is up to date — runs `npm run demo-app:codegen` and fails if `apps/demo-app/src/app/examples/form/form-example/products/generated/` differs from what is committed (`git add -N` so uncommitted new files count, then `git diff --exit-code HEAD`, against `HEAD` so files the generator no longer emits count too). The files are entry-codegen output committed as emitted; see `apps/demo-app/codegen/README.md`
+9. `npm run build @enigmatry/entry-components` — build libs in dependency order
+10. `npm run build @enigmatry/entry-form`
+11. `npm run typedoc` — generates the demo's API reference, as `deploy-demo.yml` does before its build
+12. `npm run build @enigmatry/demo-app` — `deploy-demo.yml` ships every `master` merge without approval, so typedoc and the demo must both pass before merge
+13. `npm run automated-tests` — SCSS theme compilation + scss-foundation tests
+14. `FileTransform@2` — substitute pipeline variables into `dist/**/package.json` (used to inject peer dependency versions)
+15. `PublishBuildArtifacts@1` — publish `dist/` as artifact
+16. `PublishBuildArtifacts@1` — publish `libs/` as artifact
 
 When `deploy-demo.yml` gains a step that can fail on code changes, add the same step here, so a
 pull request catches the failure instead of the unapproved demo deployment.
@@ -245,8 +247,9 @@ Always use `ubuntu-latest` for both stages. Do not pin to a specific Ubuntu vers
 |---|---|---|
 | `UseNode@1` | v1 | Pins the Node version — must satisfy the Angular major's engine range. Lives in `pipeline-templates/install-node.yml`. Its input is `version` (semver range), not `versionSpec`. Do not use the older `NodeTool@0`. |
 | `DotNetCoreCLI@2` | v2 | For MinVer installation |
+| `UseDotNet@2` | v2 | Installs the .NET SDK pinned in `apps/demo-app/codegen/global.json` (`useGlobalJson`) for `dnx`, which the generated-demo-example gate runs |
 | `Npm@1` | v1 | All npm operations |
-| `PowerShell@2` | v2 | MinVer version extraction |
+| `PowerShell@2` | v2 | MinVer version extraction, the generated-demo-example gate |
 | `FileTransform@2` | v2 | JSON variable substitution |
 | `PublishBuildArtifacts@1` | v1 | Artifact publishing |
 

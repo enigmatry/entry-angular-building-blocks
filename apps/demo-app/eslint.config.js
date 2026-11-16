@@ -4,7 +4,10 @@ import { defineConfig } from "eslint/config";
 export default defineConfig([
     ...defaultEnigmatryConfiguration,
     {
-        ignores: ['src/assets/**']
+        // **/generated/** is entry-codegen output, committed exactly as emitted (see codegen/README.md).
+        // Its templates use *ngIf, which prefer-control-flow rejects, it declares NgModules until the generator
+        // emits standalone components (BP-1664), and it is never edited by hand.
+        ignores: ['src/assets/**', 'src/**/generated/**']
     },
     {
         files: ['src/**/*.ts'],
@@ -21,7 +24,6 @@ export default defineConfig([
     },
     {
         // TODO BP-1646: the Formly examples and the Form page stay NgModule-declared until Formly is removed.
-        // form/form-example/generated/ is entry-codegen output and stays that way until the generator emits standalone components (BP-1664).
         files: ['src/app/examples/form/**/*.ts', 'src/app/examples/validation/formly/**/*.ts'],
         rules: {
             '@angular-eslint/prefer-standalone': 'off'
