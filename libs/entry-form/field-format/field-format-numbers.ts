@@ -1,7 +1,9 @@
+import { decimalText } from './number-conversion';
 import { NumberSamples } from './number-samples';
 import { NumberSyntax } from './number-syntax';
 
 const bidirectionalMarks = /[\u200e\u200f\u061c]/gu;
+const spaceSeparators = /[\u00a0\u2007\u2009\u202f]/gu;
 const digitsOnly = /^\d*$/u;
 const typographicApostrophe = '\u2019';
 
@@ -10,7 +12,7 @@ export const negativeSample = -1;
 
 const normalize = (text: string): string => text
   .replace(bidirectionalMarks, '')
-  .replace(/\s+/gu, ' ')
+  .replace(spaceSeparators, ' ')
   .trim();
 
 const split = (sample: string, knownCore?: string): { prefix: string; core: string; suffix: string } => {
@@ -96,20 +98,17 @@ const isValidGrouping = (integerPart: string, syntax: NumberSyntax): boolean => 
     && others.every(middle => middle.length === syntax.secondaryGroupSize);
 };
 
-const parseCore = ({ text, negative }: { text: string; negative: boolean }, syntax: NumberSyntax): number => {
-  const [integerPart, fraction = '', ...rest] = text.split(syntax.decimal);
-  if (rest.length > 0 || !digitsOnly.test(fraction) || !isValidGrouping(integerPart, syntax) || !/\d/u.test(text)) {
-    return NaN;
+const parseCore = ({ text, negative }: { text: string; negative: boolean }, syntax: NumberSyntax): string | undefined => {
+  const amount = syntax.group === typographicApostrophe ? text.replaceAll('\'', typographicApostrophe) : text;
+  const [integerPart, fraction = '', ...rest] = amount.split(syntax.decimal);
+  if (rest.length > 0 || !digitsOnly.test(fraction) || !isValidGrouping(integerPart, syntax) || !/\d/u.test(amount)) {
+    return undefined;
   }
   const digits = syntax.group ? integerPart.split(syntax.group).join('') : integerPart;
-  const parsed = Number(`${digits || '0'}.${fraction || '0'}`);
-  return negative ? -parsed : parsed;
+  return decimalText(negative, digits, fraction);
 };
 
-export const parseLocalizedNumber = (text: string, syntax: NumberSyntax): number => {
-  const typed = syntax.group === typographicApostrophe ? text.replaceAll('\'', typographicApostrophe) : text;
-  const normalized = normalize(typed);
-  const plain = parseCore(stripSign(normalized, syntax), syntax);
-  const parsed = Number.isFinite(plain) ? plain : parseCore(stripAffixes(normalized, syntax), syntax);
-  return Number.isFinite(parsed) ? parsed : NaN;
+export const parseLocalizedDecimal = (text: string, syntax: NumberSyntax): string | undefined => {
+  const normalized = normalize(text);
+  return parseCore(stripSign(normalized, syntax), syntax) ?? parseCore(stripAffixes(normalized, syntax), syntax);
 };

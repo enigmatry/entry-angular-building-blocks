@@ -1,3 +1,5 @@
+const maximumExponent = 400;
+
 export const toNumber = (value: unknown): number => {
   if (typeof value === 'number') {
     return Number.isFinite(value) ? value : NaN;
@@ -31,4 +33,34 @@ export const plainNumber = (value: number): string => {
 export const shiftDecimalPoint = (value: number, places: number): number => {
   const [mantissa, exponent = '0'] = String(value).split('e');
   return Number(`${mantissa}e${Number(exponent) + places}`);
+};
+
+export const decimalText = (negative: boolean, integerDigits: string, fractionDigits: string): string => {
+  const integer = integerDigits.replace(/^0+(?=\d)/u, '') || '0';
+  const fraction = fractionDigits.replace(/0+$/u, '');
+  const unsigned = fraction ? `${integer}.${fraction}` : integer;
+  return negative && unsigned !== '0' ? `-${unsigned}` : unsigned;
+};
+
+export const shiftDecimalText = (text: string, places: number): string => {
+  const negative = text.startsWith('-');
+  const [integerDigits, fractionDigits = ''] = (negative ? text.slice(1) : text).split('.');
+  const point = integerDigits.length + places;
+  const digits = integerDigits + fractionDigits;
+  const padded = point < 0 ? '0'.repeat(-point) + digits : digits.padEnd(point, '0');
+  const position = Math.max(point, 0);
+  return decimalText(negative, padded.slice(0, position), padded.slice(position));
+};
+
+export const numberInputDecimal = (text: string): string | undefined => {
+  const match = /^([+-]?)(\d*)(?:\.(\d*))?(?:[eE]([+-]?\d+))?$/u.exec(text.trim());
+  if (!match) {
+    return undefined;
+  }
+  const [, sign, integerDigits, fractionDigits = '', exponentText = '0'] = match;
+  const exponent = Number(exponentText);
+  if (!/\d/u.test(integerDigits + fractionDigits) || Math.abs(exponent) > maximumExponent) {
+    return undefined;
+  }
+  return shiftDecimalText(decimalText(sign === '-', integerDigits, fractionDigits), exponent);
 };

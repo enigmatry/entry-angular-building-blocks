@@ -2,10 +2,10 @@ import { CurrencyPipe, DatePipe, DecimalPipe, PercentPipe, formatNumber } from '
 import { Injectable, LOCALE_ID, inject } from '@angular/core';
 import { EntryFieldFormatDefinition } from './entry-field-format-definition';
 import { EntryFieldInputKind } from './entry-field-input-kind';
-import { groupingSample, negativeSample, numberSyntax, parseLocalizedNumber } from './field-format-numbers';
-import { plainNumber, toNumber } from './number-conversion';
+import { groupingSample, negativeSample, numberSyntax, parseLocalizedDecimal } from './field-format-numbers';
+import { numberInputDecimal, plainNumber, toNumber } from './number-conversion';
 import { NumberSyntax } from './number-syntax';
-import { fromPercent, toPercent } from './percent-scale';
+import { percentDisplayValue, percentEditText, percentModel, percentModelText } from './percent-scale';
 
 export type EntryFieldParseResult = { value: unknown } | { error: true };
 
@@ -40,7 +40,9 @@ export class EntryFieldFormatter {
     if (!this.isNumeric(definition) || !Number.isFinite(numeric)) {
       return String(value);
     }
-    return this.displayNumber(numeric, definition);
+    const shown = this.displayNumber(numeric, definition);
+    const decimal = parseLocalizedDecimal(shown, this.syntax(definition));
+    return decimal && this.isExact(decimal, definition) ? shown : this.edit(numeric, definition, 'text');
   };
 
   readonly edit = (value: unknown, definition: EntryFieldFormatDefinition, kind: EntryFieldInputKind): string => {
@@ -51,7 +53,7 @@ export class EntryFieldFormatter {
     if (!Number.isFinite(numeric)) {
       return String(value);
     }
-    const plain = plainNumber(this.isNumeric(definition) ? this.toEditNumber(numeric, definition) : numeric);
+    const plain = definition.name === 'percent' ? percentEditText(numeric, this.multiplier(definition)) : plainNumber(numeric);
     if (kind === 'number') {
       return plain;
     }
@@ -69,9 +71,17 @@ export class EntryFieldFormatter {
     if (!text.trim()) {
       return { value: null };
     }
-    const parsed = kind === 'number' ? toNumber(text) : parseLocalizedNumber(text, this.syntax(definition));
-    const value = this.isNumeric(definition) ? this.fromEditNumber(parsed, definition) : parsed;
-    return Number.isFinite(value) ? { value } : { error: true };
+    const decimal = kind === 'number' ? numberInputDecimal(text) : parseLocalizedDecimal(text, this.syntax(definition));
+    if (!decimal) {
+      return { error: true };
+    }
+    const value = definition.name === 'percent' ? percentModel(decimal, this.multiplier(definition)) : Number(decimal);
+    return Number.isFinite(value) && this.isExact(decimal, definition) ? { value } : { error: true };
+  };
+
+  private readonly isExact = (decimal: string, definition: EntryFieldFormatDefinition): boolean => {
+    const exactText = definition.name === 'percent' ? percentModelText(decimal, this.multiplier(definition)) ?? decimal : decimal;
+    return plainNumber(Number(exactText)) === exactText;
   };
 
   private readonly isNumeric = (definition: EntryFieldFormatDefinition): boolean =>
@@ -94,17 +104,11 @@ export class EntryFieldFormatter {
       case 'currency':
         return this.currencyPipe.transform(value, setting(definition.currencyCode), this.currencyDisplay(definition), digits, locale) ?? '';
       case 'percent':
-        return this.percentPipe.transform(value * this.multiplier(definition), digits, locale) ?? '';
+        return this.percentPipe.transform(percentDisplayValue(value, this.multiplier(definition)), digits, locale) ?? '';
       default:
         return this.decimalPipe.transform(value, digits, locale) ?? '';
     }
   };
-
-  private readonly toEditNumber = (value: number, definition: EntryFieldFormatDefinition): number =>
-    definition.name === 'percent' ? toPercent(value, this.multiplier(definition)) : value;
-
-  private readonly fromEditNumber = (value: number, definition: EntryFieldFormatDefinition): number =>
-    definition.name === 'percent' ? fromPercent(value, this.multiplier(definition)) : value;
 
   private readonly syntax = (definition: EntryFieldFormatDefinition): NumberSyntax => {
     const locale = this.locale(definition);

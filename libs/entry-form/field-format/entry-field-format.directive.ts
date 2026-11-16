@@ -1,23 +1,15 @@
 import { CurrencyPipe, DatePipe, DecimalPipe, PercentPipe } from '@angular/common';
 import { Directive, ElementRef, Renderer2, effect, inject, input, untracked } from '@angular/core';
-import { COMPOSITION_BUFFER_MODE, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
+import { ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
+import { compositionBufferMode } from './composition-buffer-mode';
 import { EntryFieldFormatDefinition } from './entry-field-format-definition';
 import { EntryFieldFormatter } from './entry-field-formatter';
-import { EntryFieldInputKind, inputKindOf } from './entry-field-input-kind';
-
-const isAndroid = (): boolean => typeof navigator !== 'undefined' && /android (\d+)/iu.test(navigator.userAgent);
+import { inputKindOf } from './entry-field-input-kind';
 
 /**
- * Formats an `<input matInput>` or `<textarea matInput>` per an entry-code-generation definition and parses input back.
- *
- * - `number`, `currency` and `percent` show the formatted value while not focused and a plain locale-aware number
- *   while focused; invalid text sets a `null` value and the `entryFieldFormat` validation error.
- * - `date`, `boolean` and custom definitions format the displayed value only; typed text is written unchanged.
- * - Only text-like inputs are formatted. `number` and `range` inputs show and parse a plain number, other native
- *   types keep their raw value, and checkbox, radio and file inputs keep Angular's own value accessors.
- *
- * Temporary: a reactive-forms `ControlValueAccessor` for generated forms, to be replaced by a `FormValueControl`
- * built on `transformedValue` when generated forms migrate to signal forms.
+ * Shows an `<input>` or `<textarea>` value formatted by an entry-code-generation definition and parses typed text back;
+ * invalid text sets `null` and the `entryFieldFormat` error. The entry-form README has the rules per definition.
+ * Temporary: a reactive-forms `ControlValueAccessor`, to be replaced by a signal-forms `FormValueControl`.
  */
 @Directive({
   selector: 'input[entryFieldFormat]:not([type=checkbox]):not([type=radio]):not([type=file]), textarea[entryFieldFormat]',
@@ -42,13 +34,14 @@ export class EntryFieldFormatDirective implements ControlValueAccessor, Validato
   private readonly element = inject<ElementRef<HTMLInputElement | HTMLTextAreaElement>>(ElementRef).nativeElement;
   private readonly renderer = inject(Renderer2);
   private readonly formatter = inject(EntryFieldFormatter);
-  private readonly compositionBuffered = inject(COMPOSITION_BUFFER_MODE, { optional: true }) ?? !isAndroid();
+  private readonly compositionBuffered = compositionBufferMode();
 
   readonly entryFieldFormatDefinition = input.required<EntryFieldFormatDefinition>();
 
   private value: unknown = null;
   private focused = false;
   private composing = false;
+  private refreshAfterComposition = false;
   private parseError: { text: string } | null = null;
   private onChange: (value: unknown) => void = () => undefined;
   private onTouched: () => void = () => undefined;
@@ -90,7 +83,7 @@ export class EntryFieldFormatDirective implements ControlValueAccessor, Validato
       return;
     }
     const text = this.element.value;
-    const kind = this.inputKind();
+    const kind = inputKindOf(this.element);
     const result = kind === 'number' && this.element.validity.badInput
       ? { error: true as const }
       : this.formatter.parse(text, this.entryFieldFormatDefinition(), kind);
@@ -116,12 +109,20 @@ export class EntryFieldFormatDirective implements ControlValueAccessor, Validato
 
   protected readonly onCompositionEnd = (): void => {
     this.composing = false;
-    if (this.compositionBuffered) {
+    if (this.compositionBuffered || this.refreshAfterComposition) {
       this.onInput();
+    }
+    if (this.refreshAfterComposition) {
+      this.refreshAfterComposition = false;
+      this.refresh();
     }
   };
 
   private readonly refresh = (): void => {
+    if (this.composing) {
+      this.refreshAfterComposition = true;
+      return;
+    }
     if (!this.parseError) {
       this.render();
       return;
@@ -139,12 +140,10 @@ export class EntryFieldFormatDirective implements ControlValueAccessor, Validato
       return;
     }
     const definition = this.entryFieldFormatDefinition();
-    const kind = this.inputKind();
+    const kind = inputKindOf(this.element);
     const text = this.focused || kind !== 'text'
       ? this.formatter.edit(this.value, definition, kind)
       : this.formatter.display(this.value, definition);
     this.renderer.setProperty(this.element, 'value', text);
   };
-
-  private readonly inputKind = (): EntryFieldInputKind => inputKindOf(this.element);
 }
