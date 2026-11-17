@@ -213,7 +213,7 @@ Use `setServerSideValidationErrors(problemDetails, form)` from `@enigmatry/entry
 
 ### Permissions abstraction
 
-`EntryPermissionService` is an abstract class. Consumers extend it and pass their implementation via `EntryComponentsModule.forRoot({ permissionService: MyPermissionService })`. Use the `*hasPermission` directive or `hasPermission` pipe in templates. It is never instantiated directly, and never provided with `useValue`.
+`EntryPermissionService` is an abstract class. Consumers extend it and pass their implementation via `EntryComponentsModule.forRoot({ permissionService: MyPermissionService })`. In templates, use `EntryPermissionDirective` as an attribute binding on an element (`[entryPermissionsOnly]="[...]"` or `[entryPermissionsExcept]="[...]"`, not the `*` structural form) or the `entryHasPermissions` pipe. The service is never instantiated directly, and never provided with `useValue`.
 
 ### Event plugins (debounce / throttle)
 
@@ -320,7 +320,7 @@ Always `await` async calls — never `void somePromise()`. Catch only where the 
 ### Naming and files
 - kebab-case filenames (`user-session.ts`); PascalCase for classes/interfaces/enums/type aliases, UPPER_SNAKE_CASE for injection tokens, camelCase for everything else.
 - No `I` prefix on interfaces.
-- **One class or interface per file** — never declare them inline in another file.
+- **One class or enum per file**; a file may also declare that class's own input and result types until a second file imports them (`entry-blueprint:typescript` → *Files and declarations*).
 - Always use braces for control-flow clauses, even single-line bodies.
 - Avoid `any` — prefer `unknown` plus narrowing.
 

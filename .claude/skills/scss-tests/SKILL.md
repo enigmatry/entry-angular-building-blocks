@@ -129,7 +129,7 @@ Use when the mixin emits error comments, or when the output also contains unrela
 
 ## Testing error/guard behavior
 
-Sass errors emitted via `@error` appear as CSS comments in the compiled output. Assert them with `contains`:
+A native Sass `@error` aborts compilation, so sass-true cannot assert it. Guarded mixins in this library raise errors through sass-true's `throw.error(..., $catch: vars.$testing)` (`@use 'sass-true/sass/throw'`): with `vars.$testing` set, the error is emitted as a CSS comment instead. Assert that comment with `contains`:
 
 ```scss
 @include true.it('should throw if only one property is defined') {
