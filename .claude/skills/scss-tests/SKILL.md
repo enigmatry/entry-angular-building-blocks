@@ -1,11 +1,13 @@
 ---
 name: scss-tests
-description: Writing SCSS unit tests for libs/scss-foundation using sass-true and Jest. Use this when adding or reviewing SCSS mixins, functions, or utilities in libs/scss-foundation/src/modules.
+description: Writing SCSS unit tests for libs/scss-foundation using sass-true and Jest. Use this INSTEAD of the scss-unit-tests reference of entry-blueprint:frontend-styling when adding or reviewing SCSS mixins, functions, or utilities in libs/scss-foundation/src/modules; frontend-styling still applies to the SCSS itself.
 ---
 
 # SCSS Tests — scss-foundation
 
 You are writing SCSS unit tests for the `@enigmatry/scss-foundation` library. Tests use [sass-true](https://www.oddbird.net/true/) with Jest as the test runner.
+
+This skill replaces `entry-blueprint:frontend-styling` → `references/scss-unit-tests.md` for this library; the rest of `frontend-styling` still governs the SCSS under test. The suite still runs on Jest; the plugin names Vitest as the standard runner, and the migration is a change of its own.
 
 ---
 

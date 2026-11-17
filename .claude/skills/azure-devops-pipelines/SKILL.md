@@ -1,11 +1,13 @@
 ---
 name: azure-devops-pipelines
-description: Azure DevOps pipeline structure and conventions for the entry-angular-building-blocks workspace. Use this when creating, editing, or reviewing azure-pipelines.yml or deploy-demo.yml.
+description: Azure DevOps pipeline structure and conventions for the entry-angular-building-blocks workspace — MinVer versioning, stage structure, npm dist-tags, artifact naming, the Node pin. Use this INSTEAD of entry-blueprint:azure-devops-pipelines when creating, editing, or reviewing azure-pipelines.yml, deploy-demo.yml or pipeline-templates/.
 ---
 
 # Azure DevOps Pipelines — Entry Angular Building Blocks
 
 You are working on the CI/CD pipelines for this multi-library Angular workspace. Follow the conventions established in `azure-pipelines.yml` (publish pipeline) and `deploy-demo.yml` (demo app deployment pipeline).
+
+This skill replaces `entry-blueprint:azure-devops-pipelines`, which describes the Entry Blueprint layout (a `Pipelines/` folder, the shared templates repository, EF Core `DbContext` lists) that this repository does not have.
 
 ---
 
