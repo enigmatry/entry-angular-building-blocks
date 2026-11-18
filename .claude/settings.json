@@ -1,0 +1,17 @@
+{
+  "env": {
+    "ENIGMATRY_ENABLED_HOOKS": "none"
+  },
+  "enabledPlugins": {
+    "entry-blueprint@enigmatry": true
+  },
+  "extraKnownMarketplaces": {
+    "enigmatry": {
+      "source": {
+        "source": "github",
+        "repo": "enigmatry/claude-plugins"
+      },
+      "autoUpdate": true
+    }
+  }
+}

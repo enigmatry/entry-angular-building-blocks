@@ -119,6 +119,10 @@ export const provideEntryDialogConfig = (config: Partial<EntryDialogConfig>): Pr
 
 `createInjectionToken` creates a root-scoped `InjectionToken` with a factory. `provideConfig` produces a `useFactory` provider.
 
+A **new** configuration family spells the word out, as the table's already does: `EntryXxxConfiguration`, `ENTRY_XXX_CONFIGURATION`, `provideEntryXxxConfiguration` (`entry-blueprint:frontend-foundations` forbids abbreviations). The existing `Config` names are published API and are never renamed.
+
+User-facing text in a library component is a default in its configuration class, which consumers translate or replace through the provider function; the libraries do not use `$localize`, and the demo app is English only.
+
 ### Signals API
 
 Newer components (starting with `EntryTableComponent`) use the Angular signals API. Prefer this for new work:
@@ -160,23 +164,44 @@ new DateSearchFilter({ key: 'date', label: 'Date' })
 new DateTimeSearchFilter({ key: 'createdAt', label: 'Created' })
 ```
 
-Pass the array to `<entry-search-filter [searchFilters]="filters" (searchFilterChange)="onSearch($event)">`.
+Pass the array to `<entry-search-filter [searchFilters]="filters" [searchAction]="search">`. The required `searchAction` runs the search and returns the server's messages, which the component places on their filters; `(searchFilterChange)` is only for a caller that navigates instead of fetching there.
+
+- The filter models are configuration only: `formControl`, `setValue` and `toFormControl` are gone. To change a value, pass new filter instances.
+- `SelectSearchFilter.options` takes a fixed array or a `Signal`; `options$` is gone, so wrap an `Observable` with `toSignal(source$)`.
 
 ---
 
 ## Skills
 
-Detailed guidance lives in `.claude/skills/`. Load the matching skill when the work calls for it:
+The Enigmatry front-end rules come from the shared Claude Code plugin `entry-blueprint` ([enigmatry/claude-plugins](https://github.com/enigmatry/claude-plugins)), which `.claude/settings.json` enables; install it once, see `README.md`. This file holds the facts about this repository that the plugin's skills ask for, and `.claude/skills/` holds the two skills the plugin has no counterpart for:
 
 | Skill | Load when | Covers |
 |---|---|---|
-| `angular-typescript` | Writing non-trivial TypeScript, or unsure whether a pattern is allowed | Full Angular 22 / TS 6 standards: async handling, DI, standalone migration, type system, error handling, security, performance, docs |
-| `entry-code-review` | Reviewing any change in `libs/` or `apps/demo-app` | Config pattern, entry-point boundaries, public API surface, signals API, search filter models, severity tiers, comment format |
-| `scss-tests` | Adding or reviewing SCSS mixins/functions in `libs/scss-foundation` | Writing sass-true tests: file conventions, assertions, error paths, coverage checklist |
-| `a11y` | Building or reviewing templates, forms, navigation, or SCSS | WCAG 2.2 Level AA: semantics, keyboard/focus, contrast, forced colors, reflow, labels |
-| `azure-devops-pipelines` | Editing `azure-pipelines.yml` or `deploy-demo.yml` | MinVer versioning, stage structure, artifact naming, FileTransform variables, add-a-library checklist |
+| `scss-tests` | Adding or reviewing SCSS mixins/functions in `libs/scss-foundation` | Writing sass-true tests: file conventions, assertions, error paths, coverage checklist. Used instead of `entry-blueprint:frontend-styling` → `references/scss-unit-tests.md` |
+| `azure-devops-pipelines` | Editing `azure-pipelines.yml`, `deploy-demo.yml` or `pipeline-templates/` | MinVer versioning, stage structure, artifact naming, FileTransform variables, add-a-library checklist. Used instead of `entry-blueprint:azure-devops-pipelines`, which describes the Entry Blueprint layout |
 
-`entry-code-review` is the project-specific review — prefer it over the generic built-in review for changes in this repo.
+### Shared Enigmatry plugin (`entry-blueprint`)
+
+- **The plugin's skills that apply as they are**: `frontend-foundations`, `typescript`, `angular`, `frontend-styling` and `a11y` when writing code, and `frontend-code-review` when reviewing; it reads this file for the patterns specific to this repository. `baseline-security-audit` only when someone explicitly asks for a Baseline Security audit.
+- **The plugin's skills that do not apply here**: `angular-testing` (no Angular unit test suite), `generating-e2e-tests` (no Playwright suite), `code-review-blueprint`, `aspnet-rest-apis` and `csharp-unit-tests` (no .NET code), and `pull-request` and `jira-branch` (this repository is on GitHub, not Azure DevOps Repos; see *Workflow* below).
+- **Hooks**: all off (`ENIGMATRY_ENABLED_HOOKS` is `none`). `require-test-skill`, `format-on-edit` and `dotnet-format-gate` act only on `.cs` files, and `code-review-gate` demands the .NET-oriented `code-review-blueprint`. A hook added in a later plugin version stays off until it is listed.
+- **MCP servers**: the plugin supplies the Azure DevOps server; `.mcp.json` adds Jira (`atlassian`, Atlassian's v2 endpoint; sign in once with `/mcp`) and the rest.
+
+#### Facts about this repository that the plugin relies on
+
+- **Published packages.** Everything under `libs/` is published to npm. Every member of a class that an entry point's `public-api.ts` re-exports is published API, so narrowing its visibility is a breaking change made deliberately and recorded in `libs/entry-components/README.md`'s migration notes (*Member visibility* below).
+- **API reference from JSDoc.** TypeDoc generates the demo app's API tab from doc comments, so `entry-blueprint:frontend-foundations`' exception for generated reference docs applies: every exported symbol needs one.
+- **Library text.** Libraries expose user-facing text as configuration defaults, not `$localize` (*Configuration pattern* above); the demo app is English only, so `entry-blueprint:angular` → *i18n* does not apply.
+- **Failure reporting.** The libraries have no notification service or global error interceptor of their own; a failure they cannot handle propagates to the consuming application.
+- **No Angular unit test suite.** A TypeScript change without a spec is not a review finding, and no Vitest setup or `*.spec.ts` file is added as a side effect of other work. The sass-true suite in `libs/scss-foundation` still runs on Jest, a legacy runner by `entry-blueprint:angular-testing`'s standard; its migration to Vitest is a change of its own.
+- **Lint.** `npm run lint` (ESLint + Stylelint, report only) is the CI gate.
+- **Workflow.** Branches are `BP-<number>/<slug>`, commits `BP-<number> - <Description>`, and pull requests are opened on GitHub against `master` with a body that starts with the line `PR description`. Do not assign or transition Jira tickets unless asked.
+
+#### Project decisions that override entry-blueprint
+
+Where a plugin skill and this file differ, this file wins:
+
+- **A class that `extends` a base class keeps prototype methods throughout**, including methods the base does not declare (*Method declarations* below). `entry-blueprint:typescript` keeps method syntax only for members that rely on `super`; here the whole class stays in one form, so it is clear which members are constrained.
 
 ---
 
@@ -184,11 +209,11 @@ Detailed guidance lives in `.claude/skills/`. Load the matching skill when the w
 
 ### Server-side validation
 
-Use `setServerSideValidationErrors(problemDetails, form)` from `@enigmatry/entry-components/validation` to map `IValidationProblemDetails` (RFC 7807) error responses onto a reactive form. Field-level errors land on the matching `FormControl` under the key `fromServer`; unmatched errors land on the form under `general`. Display form-level errors with `<entry-form-errors [form]="myForm">`.
+Use `setServerSideValidationErrors(problemDetails, form)` from `@enigmatry/entry-components/validation` to map `IValidationProblemDetails` (RFC 7807) error responses onto a reactive form. Field-level errors land on the matching `FormControl` under the key `fromServer`; unmatched errors land on the form under `general`. Display form-level errors with `<entry-form-errors [form]="myForm">`. Not for `<entry-search-filter>`: it runs on signal forms and has no reactive form, so its server errors come back through `searchAction` (above).
 
 ### Permissions abstraction
 
-`EntryPermissionService` is an abstract class. Consumers extend it and pass their implementation via `EntryComponentsModule.forRoot({ permissionService: MyPermissionService })`. Use the `*hasPermission` directive or `hasPermission` pipe in templates.
+`EntryPermissionService` is an abstract class. Consumers extend it and pass their implementation via `EntryComponentsModule.forRoot({ permissionService: MyPermissionService })`. In templates, use `EntryPermissionDirective` as an attribute binding on an element (`[entryPermissionsOnly]="[...]"` or `[entryPermissionsExcept]="[...]"`, not the `*` structural form) or the `entryHasPermissions` pipe. The service is never instantiated directly, and never provided with `useValue`.
 
 ### Event plugins (debounce / throttle)
 
@@ -202,7 +227,7 @@ Available globally via `NG_EVENT_PLUGINS` (registered in `EntryComponentsModule.
 
 ### entry-form and code generation
 
-`@enigmatry/entry-form` provides form wrappers (`EntryFormModule`) consumed by Angular components generated by the `entry-codegen` .NET CLI tool. The generated components live under `apps/demo-app/src/app/examples/form/form-example/generated/` and serve as reference examples of what generated code looks like.
+`@enigmatry/entry-form` provides form wrappers (`EntryFormModule`) consumed by Angular components generated by the `entry-codegen` .NET CLI tool. The generated components live under `apps/demo-app/src/app/examples/form/form-example/generated/` and serve as reference examples of what generated code looks like. `UntypedFormGroup` / `UntypedFormControl` in generated or Formly code is expected there.
 
 ---
 
@@ -290,12 +315,12 @@ this.http.get<MyType>('/api/data').subscribe(d => this.data = d);       // ❌
 this.router.events.subscribe(e => { ... });                             // ✅ true stream
 ```
 
-Always `await` async calls — never `void somePromise()`. Wrap awaits in `try/catch`; **never leave a catch block empty**. Log background failures with `console.error`; surface user-facing errors via snackbar or dialog.
+Always `await` async calls — never `void somePromise()`. Catch only where the code can recover or tell the user (`entry-blueprint:frontend-foundations` → *Failure handling*); let everything else propagate — in a library, to the consumer, as `EntryDialog.submit` does with `try/finally`. **Never leave a catch block empty.** Log background failures with `console.error`; surface user-facing errors via snackbar or dialog.
 
 ### Naming and files
-- kebab-case filenames (`user-session.ts`); PascalCase for classes/interfaces/enums/type aliases, camelCase for everything else.
+- kebab-case filenames (`user-session.ts`); PascalCase for classes/interfaces/enums/type aliases, UPPER_SNAKE_CASE for injection tokens, camelCase for everything else.
 - No `I` prefix on interfaces.
-- **One class or interface per file** — never declare them inline in another file.
+- **One class or enum per file**; a file may also declare that class's own input and result types until a second file imports them (`entry-blueprint:typescript` → *Files and declarations*).
 - Always use braces for control-flow clauses, even single-line bodies.
 - Avoid `any` — prefer `unknown` plus narrowing.
 

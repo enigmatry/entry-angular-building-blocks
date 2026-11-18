@@ -1,21 +1,8 @@
 {
   "mcpServers": {
-    "Enigma-Jira": {
-      "type": "stdio",
-      "command": "npx",
-      "args": ["-y", "mcp-remote", "https://mcp.atlassian.com/v1/mcp"]
-    },
-    "AzureDevOps": {
-      "type": "stdio",
-      "command": "npx",
-      "args": ["-y", "@azure-devops/mcp", "enigmatry", "-d", "core", "repositories", "pipelines"]
-    },
-    "Context7": {
+    "atlassian": {
       "type": "http",
-      "url": "https://mcp.context7.com/mcp",
-      "headers": {
-        "CONTEXT7_API_KEY": "${CONTEXT7_API_KEY}"
-      }
+      "url": "https://mcp.atlassian.com/v2/mcp"
     },
     "memory": {
       "type": "stdio",

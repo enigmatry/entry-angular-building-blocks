@@ -46,6 +46,18 @@ To try a preview, pin the exact version with `--save-exact` (`npm i -E @enigmatr
 
 [How to migrate project to entry](https://github.com/enigmatry/entry-angular-building-blocks/wiki/Migrate-project-to-Entry)
 
+## Working on this repository with Claude Code
+
+The repository loads Enigmatry's shared Claude Code plugin, `entry-blueprint`, from the [enigmatry/claude-plugins](https://github.com/enigmatry/claude-plugins) marketplace; `.claude/settings.json` registers the marketplace and enables the plugin. Enabling it there is not enough on its own: Claude Code records a project-scope install per folder, so run this once in each clone or git worktree, from its root:
+
+```bash
+claude plugin install entry-blueprint@enigmatry --scope project
+```
+
+`CLAUDE.md` lists which of the plugin's skills apply here, the facts about this repository they rely on, and where this repository overrides the plugin.
+
+`.mcp.json` connects Jira through Atlassian's v2 MCP endpoint. The first time, run `/mcp` in a Claude Code session and sign in to `atlassian`; a sign-in to the old v1 server does not carry over.
+
 ## About Enigmatry
 
 Entry is the open-source foundation Enigmatry builds client systems on. Enigmatry is a software company from Rotterdam, founded in 2006, with teams in Belgrade and Novi Sad.
