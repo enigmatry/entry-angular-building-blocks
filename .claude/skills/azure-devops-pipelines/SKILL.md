@@ -1,11 +1,13 @@
 ---
 name: azure-devops-pipelines
-description: Azure DevOps pipeline structure and conventions for the entry-angular-building-blocks workspace. Use this when creating, editing, or reviewing azure-pipelines.yml or deploy-demo.yml.
+description: Azure DevOps pipeline structure and conventions for the entry-angular-building-blocks workspace — MinVer versioning, stage structure, npm dist-tags, artifact naming, the Node pin. Use this INSTEAD of entry-blueprint:azure-devops-pipelines when creating, editing, or reviewing azure-pipelines.yml, deploy-demo.yml or pipeline-templates/.
 ---
 
 # Azure DevOps Pipelines — Entry Angular Building Blocks
 
 You are working on the CI/CD pipelines for this multi-library Angular workspace. Follow the conventions established in `azure-pipelines.yml` (publish pipeline) and `deploy-demo.yml` (demo app deployment pipeline).
+
+This skill replaces `entry-blueprint:azure-devops-pipelines`, which describes the Entry Blueprint layout (a `Pipelines/` folder, the shared templates repository, EF Core `DbContext` lists) that this repository does not have.
 
 ---
 
@@ -183,9 +185,9 @@ Do not switch to `command: custom` with `publish --tag ...`, because that change
 connection's credentials are applied. With the pinned Node, npm 11 refuses to publish a pre-release
 without a tag. A step that loses its `env` therefore fails instead of moving `latest`.
 
-**When adding a new library to publish**, add a step that matches this pattern. The artifact sub-path depends on how ng-packagr places the output:
-- `@enigmatry/*` scoped packages → `enigmatry/<lib-name>` inside the artifact
-- Unscoped packages (`eslint-config`, `stylelint-config`, `scss-foundation`) → `<lib-name>` directly
+**When adding a new library to publish**, add a step that matches this pattern. All five packages are `@enigmatry/*` scoped; the artifact sub-path depends on how the library is built, not on its scope:
+- Built by ng-packagr (`entry-components`, `entry-form`): `ng-package.json`'s `dest` puts the output in `dist/enigmatry/<lib-name>`, which the *Publish artifacts* step ships, so the path is `enigmatry/<lib-name>` inside the artifact
+- Published from its source folder (`eslint-config`, `stylelint-config`, `scss-foundation`): the *Publish libs* step ships `libs/`, so the path is `<lib-name>` directly
 
 ---
 

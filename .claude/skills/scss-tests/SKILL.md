@@ -1,11 +1,13 @@
 ---
 name: scss-tests
-description: Writing SCSS unit tests for libs/scss-foundation using sass-true and Jest. Use this when adding or reviewing SCSS mixins, functions, or utilities in libs/scss-foundation/src/modules.
+description: Writing SCSS unit tests for libs/scss-foundation using sass-true and Jest. Use this INSTEAD of the scss-unit-tests reference of entry-blueprint:frontend-styling when adding or reviewing SCSS mixins, functions, or utilities in libs/scss-foundation/src/modules; frontend-styling still applies to the SCSS itself.
 ---
 
 # SCSS Tests — scss-foundation
 
 You are writing SCSS unit tests for the `@enigmatry/scss-foundation` library. Tests use [sass-true](https://www.oddbird.net/true/) with Jest as the test runner.
+
+This skill replaces `entry-blueprint:frontend-styling` → `references/scss-unit-tests.md` for this library; the rest of `frontend-styling` still governs the SCSS under test. The suite still runs on Jest; the plugin names Vitest as the standard runner, and the migration is a change of its own.
 
 ---
 
@@ -127,7 +129,7 @@ Use when the mixin emits error comments, or when the output also contains unrela
 
 ## Testing error/guard behavior
 
-Sass errors emitted via `@error` appear as CSS comments in the compiled output. Assert them with `contains`:
+A native Sass `@error` aborts compilation, so sass-true cannot assert it. Guarded mixins in this library raise errors through sass-true's `throw.error(..., $catch: vars.$testing)` (`@use 'sass-true/sass/throw'`): with `vars.$testing` set, the error is emitted as a CSS comment instead. Assert that comment with `contains`:
 
 ```scss
 @include true.it('should throw if only one property is defined') {
