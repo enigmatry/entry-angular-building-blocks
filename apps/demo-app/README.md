@@ -54,9 +54,9 @@ npm run demo-app:codegen
 The command builds that project and runs the generator (`dnx enigmatry.entry.codegeneration.tools`, which needs a .NET 10 SDK; `codegen/global.json` pins it) into `examples/form/form-example/products/generated/`. Running it twice changes nothing. The pull request build runs it too and fails if the committed files differ from its output.
 
 * **The files in `generated/` are committed exactly as the generator emits them.** Never edit them by hand and never post-process them. If they do not build, fix what surrounds them (`src/app/api/api-reference.ts` stands in for the API client they import their model from; the root `tsconfig.json` maps `src/*` for their app-absolute imports) or fix the generator.
-* The generator version, currently 21.2.0, is pinned once: `EntryCodeGenerationVersion` in `codegen/Enigmatry.Entry.DemoApp.CodeGeneration.Setup.csproj`. When a new generator ships (e.g. 22.x), change that one line, run `npm run demo-app:codegen`, and commit the output unchanged.
+* The generator version is pinned once: `EntryCodeGenerationVersion` in `codegen/Enigmatry.Entry.DemoApp.CodeGeneration.Setup.csproj`. When a new generator ships (e.g. 22.x), change that one line, run `npm run demo-app:codegen`, and commit the output unchanged.
 
-See `apps/demo-app/codegen/README.md` for details.
+See `apps/demo-app/codegen/README.md` for details, including why the generated code uses an NgModule and `*ngIf` and what replaces them.
 
 ## API tab
 

@@ -22,11 +22,22 @@ The pull request build (`azure-pipelines.yml`, "Gate: generated demo example is 
 - The demo uses the generator's default Formly lane, without `--signals`, `--standalone-components` or `--enable-i18n`.
 - `apps/demo-app/eslint.config.js` ignores `src/**/generated/**`, because the generated templates use `*ngIf`.
 
+## Known limits of the 21.x output
+
+The generated example does not follow the rules the rest of the demo app follows, and is not meant to: it shows what the pinned generator emits.
+
+- **NgModule, `standalone: false`, decorator inputs, constructor injection.** The generator's Formly lane only emits module-declared components (`--standalone-components` merely adds a `StandaloneModule` import to the module). This works in the standalone, zoneless demo app: the Form page's Formly code stays module-based anyway (`examples/form/**` is exempt from `prefer-standalone`), and the form behaves the same as the hand-maintained copy it replaced.
+- **`*ngIf` and `[ngIf]` in the template.** Deprecated since Angular 20, still shipped in Angular 22, so the output builds and runs; it would break only once Angular removes `NgIf`.
+- **`// @ts-nocheck` and `/* eslint-disable */` at the top of every `.ts` file.** The generator writes them; type checking of the component class is therefore off, and the folder is excluded from ESLint.
+- **Fixed import paths** (`src/app/shared/shared.module`, `src/app/api/api-reference`). Resolved by the root `tsconfig.json` `src/*` path and the stand-in in `src/app/api/`. A command-line option for the API model path is BP-1728.
+
+These go away with the generator, not with edits here: the generator's signals lane emits standalone components with `@if` and no module, and BP-1664 makes it the default and deletes the Formly lane. When the demo moves to a generator with that change, the example is regenerated from this same configuration.
+
 ## Pinned version
 
-The generator version is set once, by `EntryCodeGenerationVersion` in `Enigmatry.Entry.DemoApp.CodeGeneration.Setup.csproj`. It pins both the `Enigmatry.Entry.CodeGeneration.Configuration` package this project references and the `enigmatry.entry.codegeneration.tools` package the `Generate` target runs, because the two are always released together. The current version is 21.2.0.
+The generator version is set once, by `EntryCodeGenerationVersion` in `Enigmatry.Entry.DemoApp.CodeGeneration.Setup.csproj`. It pins both the `Enigmatry.Entry.CodeGeneration.Configuration` package this project references and the `enigmatry.entry.codegeneration.tools` package the `Generate` target runs, because the two are always released together. The version is written only there; the documentation does not repeat it, so it cannot go stale at a bump.
 
-The .NET SDK is pinned separately, by `global.json` in this folder (10.0.x, the runtime the 21.x generator targets). The npm script runs from this folder so that the pin applies, and the PR build's `UseDotNet@2` step reads the same file.
+The .NET SDK is pinned separately, by `global.json` in this folder (10.0.x, the runtime the pinned generator targets). The npm script runs from this folder so that the pin applies, and the PR build's `UseDotNet@2` step reads the same file.
 
 ### When a new generator ships (e.g. 22.x)
 
