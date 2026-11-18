@@ -31,7 +31,7 @@ The generated example does not follow the rules the rest of the demo app follows
 - **`// @ts-nocheck` and `/* eslint-disable */` at the top of every `.ts` file.** The generator writes them; type checking of the component class is therefore off, and the folder is excluded from ESLint.
 - **Fixed import paths** (`src/app/shared/shared.module`, `src/app/api/api-reference`). Resolved by the root `tsconfig.json` `src/*` path and the stand-in in `src/app/api/`. A command-line option for the API model path is BP-1728.
 
-These go away with the generator, not with edits here: the generator's signals lane emits standalone components with `@if` and no module, and BP-1664 makes it the default and deletes the Formly lane. When the demo moves to a generator with that change, the example is regenerated from this same configuration.
+Each changes with the generator, not with edits here. The generator's signals lane emits standalone components with `@if` and no NgModule, and BP-1664 makes it the default and deletes the Formly lane; once the demo adopts a generator release containing that change, the example is regenerated from this same configuration. That release does not remove the rest: the signals output still starts with the same `@ts-nocheck` and `eslint-disable` lines and still imports its model from `src/app/api/api-reference`, so keep the stand-in and the `src/*` path until BP-1728 makes that path configurable.
 
 ## Pinned version
 
