@@ -4,7 +4,7 @@ import { AsyncValidatorFn, FormControl, FormGroup, ReactiveFormsModule } from '@
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { map, timer } from 'rxjs';
-import { ENTRY_ASYNC_VALIDATOR_RESOLVER, EntryAsyncValidatorResolver, EntryFieldFormatDirective } from '@enigmatry/entry-form';
+import { ENTRY_ASYNC_VALIDATOR_RESOLVER, EntryFieldFormatDirective, provideEntryAsyncValidators } from '@enigmatry/entry-form';
 
 const takenNames = ['admin', 'root'];
 const validationDelayMs = 500;
@@ -16,15 +16,11 @@ const uniqueName: AsyncValidatorFn = control => timer(validationDelayMs).pipe(
   map(() => takenNames.includes(String(control.value).toLowerCase()) ? { uniqueName: true } : null)
 );
 
-const asyncValidators: Record<string, AsyncValidatorFn> = { uniqueName };
-
-const resolveAsyncValidator: EntryAsyncValidatorResolver = name => asyncValidators[name];
-
 @Component({
   selector: 'app-field-format-example',
   templateUrl: './field-format-example.component.html',
   imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, JsonPipe, EntryFieldFormatDirective],
-  providers: [{ provide: ENTRY_ASYNC_VALIDATOR_RESOLVER, useValue: resolveAsyncValidator }],
+  providers: [provideEntryAsyncValidators({ uniqueName })],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FieldFormatExampleComponent {

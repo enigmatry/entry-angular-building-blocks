@@ -76,7 +76,8 @@ export class EntryFieldFormatter {
       return { error: true };
     }
     const value = definition.name === 'percent' ? percentModel(decimal, this.multiplier(definition)) : Number(decimal);
-    return Number.isFinite(value) && this.isExact(decimal, definition) ? { value } : { error: true };
+    const keepsAmount = Number.isFinite(value) && (value !== 0 || decimal === '0');
+    return keepsAmount && this.isExact(decimal, definition) ? { value } : { error: true };
   };
 
   private readonly isExact = (decimal: string, definition: EntryFieldFormatDefinition): boolean => {

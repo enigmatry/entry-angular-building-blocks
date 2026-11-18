@@ -91,7 +91,7 @@ Runs all verification before any artifacts are produced. Order of steps is signi
 8. `npm run build @enigmatry/entry-form`
 9. `npm run typedoc` — generates the demo's API reference, as `deploy-demo.yml` does before its build
 10. `npm run build @enigmatry/demo-app` — `deploy-demo.yml` ships every `master` merge without approval, so typedoc and the demo must both pass before merge
-11. `npm run automated-tests` — SCSS theme compilation + scss-foundation tests
+11. `npm run automated-tests` — SCSS theme compilation + scss-foundation tests + entry-form Vitest specs
 12. `FileTransform@2` — substitute pipeline variables into `dist/**/package.json` (used to inject peer dependency versions)
 13. `PublishBuildArtifacts@1` — publish `dist/` as artifact
 14. `PublishBuildArtifacts@1` — publish `libs/` as artifact

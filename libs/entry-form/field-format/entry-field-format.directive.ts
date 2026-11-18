@@ -1,16 +1,14 @@
 import { CurrencyPipe, DatePipe, DecimalPipe, PercentPipe } from '@angular/common';
-import { Directive, ElementRef, Renderer2, effect, inject, input, untracked } from '@angular/core';
-import { ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
-import { compositionBufferMode } from './composition-buffer-mode';
+import { Directive, ElementRef, Injector, Renderer2, effect, inject, input, untracked } from '@angular/core';
+import { ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, NgControl, ValidationErrors, Validator } from '@angular/forms';
+import { EntryFieldComposition } from './entry-field-composition';
 import { EntryFieldFormatDefinition } from './entry-field-format-definition';
 import { EntryFieldFormatter } from './entry-field-formatter';
 import { inputKindOf } from './entry-field-input-kind';
+import { observeAttribute } from './observe-attribute';
 
-/**
- * Shows an `<input>` or `<textarea>` value formatted by an entry-code-generation definition and parses typed text back;
- * invalid text sets `null` and the `entryFieldFormat` error. The entry-form README has the rules per definition.
- * Temporary: a reactive-forms `ControlValueAccessor`, to be replaced by a signal-forms `FormValueControl`.
- */
+/** Formats an `<input>` or `<textarea>` by an entry-code-generation definition and parses typed text back (see the README).
+ * Temporary: a reactive-forms `ControlValueAccessor`, to be replaced by a signal-forms `FormValueControl`. */
 @Directive({
   selector: 'input[entryFieldFormat]:not([type=checkbox]):not([type=radio]):not([type=file]), textarea[entryFieldFormat]',
   providers: [
@@ -26,22 +24,19 @@ import { inputKindOf } from './entry-field-input-kind';
     '(input)': 'onInput()',
     '(focus)': 'onFocus()',
     '(blur)': 'onBlur()',
-    '(compositionstart)': 'onCompositionStart()',
+    '(compositionstart)': 'composition.start()',
     '(compositionend)': 'onCompositionEnd()'
   }
 })
 export class EntryFieldFormatDirective implements ControlValueAccessor, Validator {
   private readonly element = inject<ElementRef<HTMLInputElement | HTMLTextAreaElement>>(ElementRef).nativeElement;
   private readonly renderer = inject(Renderer2);
+  private readonly injector = inject(Injector);
   private readonly formatter = inject(EntryFieldFormatter);
-  private readonly compositionBuffered = compositionBufferMode();
-
+  protected readonly composition = new EntryFieldComposition();
   readonly entryFieldFormatDefinition = input.required<EntryFieldFormatDefinition>();
-
   private value: unknown = null;
   private focused = false;
-  private composing = false;
-  private refreshAfterComposition = false;
   private parseError: { text: string } | null = null;
   private onChange: (value: unknown) => void = () => undefined;
   private onTouched: () => void = () => undefined;
@@ -50,13 +45,15 @@ export class EntryFieldFormatDirective implements ControlValueAccessor, Validato
   constructor() {
     effect(() => {
       this.entryFieldFormatDefinition();
-      untracked(() => this.refresh());
+      untracked(() => this.composition.deferRefresh() || this.refresh());
     });
+    observeAttribute(this.element, 'readonly', () => this.composition.deferRender() || this.render());
   }
 
   readonly writeValue = (value: unknown): void => {
     this.value = value;
     this.parseError = null;
+    this.composition.supersede();
     this.render();
   };
 
@@ -79,9 +76,10 @@ export class EntryFieldFormatDirective implements ControlValueAccessor, Validato
   };
 
   protected readonly onInput = (): void => {
-    if (this.compositionBuffered && this.composing) {
+    if (this.composition.buffered && this.composition.isActive()) {
       return;
     }
+    this.composition.inputParsed();
     const text = this.element.value;
     const kind = inputKindOf(this.element);
     const result = kind === 'number' && this.element.validity.badInput
@@ -94,44 +92,47 @@ export class EntryFieldFormatDirective implements ControlValueAccessor, Validato
 
   protected readonly onFocus = (): void => {
     this.focused = true;
-    this.render();
+    if (!this.composition.deferRender()) {
+      this.render();
+    }
   };
 
   protected readonly onBlur = (): void => {
     this.focused = false;
-    this.onTouched();
-    this.render();
-  };
-
-  protected readonly onCompositionStart = (): void => {
-    this.composing = true;
+    if (!this.composition.deferBlur()) {
+      this.onTouched();
+      this.render();
+    }
   };
 
   protected readonly onCompositionEnd = (): void => {
-    this.composing = false;
-    if (this.compositionBuffered || this.refreshAfterComposition) {
+    const pending = this.composition.end();
+    if (pending.refresh && !pending.superseded) {
+      this.reparse(pending.blur);
+    } else if (this.composition.buffered && !pending.superseded) {
       this.onInput();
     }
-    if (this.refreshAfterComposition) {
-      this.refreshAfterComposition = false;
-      this.refresh();
+    if (pending.blur) {
+      this.onTouched();
+    }
+    if (pending.blur || pending.render || pending.superseded) {
+      this.render();
     }
   };
 
-  private readonly refresh = (): void => {
-    if (this.composing) {
-      this.refreshAfterComposition = true;
-      return;
-    }
-    if (!this.parseError) {
-      this.render();
-      return;
-    }
+  private readonly refresh = (): void => this.parseError ? this.reparse() : this.render();
+
+  private readonly reparse = (blurPending = false): void => {
+    const previousErrorText = this.parseError?.text;
     this.onInput();
     if (!this.focused) {
       this.onTouched();
     }
-    this.onValidatorChange();
+    const updateOn = this.injector.get(NgControl, null, { self: true })?.control?.updateOn;
+    const valuePending = updateOn === 'submit' || updateOn === 'blur' && this.focused && !blurPending;
+    if (valuePending && previousErrorText !== this.parseError?.text) {
+      this.onValidatorChange();
+    }
     this.render();
   };
 
@@ -141,9 +142,8 @@ export class EntryFieldFormatDirective implements ControlValueAccessor, Validato
     }
     const definition = this.entryFieldFormatDefinition();
     const kind = inputKindOf(this.element);
-    const text = this.focused || kind !== 'text'
-      ? this.formatter.edit(this.value, definition, kind)
-      : this.formatter.display(this.value, definition);
+    const editing = this.focused && !this.element.readOnly;
+    const text = editing || kind !== 'text' ? this.formatter.edit(this.value, definition, kind) : this.formatter.display(this.value, definition);
     this.renderer.setProperty(this.element, 'value', text);
   };
 }

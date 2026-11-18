@@ -1,4 +1,4 @@
-Generated forms resolve named validators (`.WithValidators("UniqueName")`) through `ENTRY_ASYNC_VALIDATOR_RESOLVER`, and render `.WithFormat(...)` as the `entryFieldFormat` directive. This example provides the resolver at component level; the name `admin` is taken.
+Generated forms resolve named validators (`.WithValidators("UniqueName")`) through `ENTRY_ASYNC_VALIDATOR_RESOLVER`, and render `.WithFormat(...)` as the `entryFieldFormat` directive. This example registers its validators with `provideEntryAsyncValidators` at component level; the name `admin` is taken.
 
 ```csharp
 builder.InputFormControl(x => x.Name)

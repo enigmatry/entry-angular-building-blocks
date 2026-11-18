@@ -58,9 +58,15 @@ export const numberInputDecimal = (text: string): string | undefined => {
     return undefined;
   }
   const [, sign, integerDigits, fractionDigits = '', exponentText = '0'] = match;
-  const exponent = Number(exponentText);
-  if (!/\d/u.test(integerDigits + fractionDigits) || Math.abs(exponent) > maximumExponent) {
+  if (!/\d/u.test(integerDigits + fractionDigits)) {
     return undefined;
   }
-  return shiftDecimalText(decimalText(sign === '-', integerDigits, fractionDigits), exponent);
+  const mantissa = decimalText(sign === '-', integerDigits, fractionDigits);
+  if (mantissa === '0') {
+    return mantissa;
+  }
+  const [wholeDigits, decimals = ''] = mantissa.replace('-', '').split('.');
+  const magnitude = wholeDigits === '0' ? -decimals.search(/[1-9]/u) : wholeDigits.length;
+  const exponent = Number(exponentText);
+  return Math.abs(magnitude + exponent) > maximumExponent ? undefined : shiftDecimalText(mantissa, exponent);
 };
