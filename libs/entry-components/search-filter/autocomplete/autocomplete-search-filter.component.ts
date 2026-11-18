@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, ElementRef, ErrorHandler, computed, debounced, inject, input, linkedSignal,
-  model, output, resource, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ErrorHandler, Injector, afterNextRender, computed, debounced, inject, input,
+  linkedSignal, model, output, resource, signal, viewChild } from '@angular/core';
 import { FORM_FIELD, FormValueControl } from '@angular/forms/signals';
 import { MatAutocompleteSelectedEvent, MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatOptgroup, MatOption } from '@angular/material/core';
@@ -9,7 +9,7 @@ import { FieldErrorStateDirective } from '../field-error-state.directive';
 import { GroupSelectOptionsPipe } from '../group-select-options.pipe';
 import { SelectOption } from '../select-option.model';
 import { AutocompleteSearchFilter } from './autocomplete-search-filter.model';
-import { PickedOption, delay, lookupLabel, pickedUnder, searchOptions } from './autocomplete-search-filter.functions';
+import { PickedOption, delay, lookupLabel, pickedUnder, searchOptions, showText } from './autocomplete-search-filter.functions';
 
 @Component({
   selector: 'entry-autocomplete-search-filter',
@@ -20,6 +20,7 @@ import { PickedOption, delay, lookupLabel, pickedUnder, searchOptions } from './
 })
 export class AutocompleteSearchFilterComponent<T> implements FormValueControl<T | null> {
   private readonly errorHandler = inject(ErrorHandler);
+  private readonly injector = inject(Injector);
   /** The `[formField]` on this host, whose field state the inner input shows as its error state. */
   protected readonly formField = inject(FORM_FIELD, { self: true });
 
@@ -29,7 +30,7 @@ export class AutocompleteSearchFilterComponent<T> implements FormValueControl<T 
   readonly required = input(false);
   readonly touch = output<void>();
 
-  private readonly searchInput = viewChild.required<ElementRef<HTMLInputElement>>('searchInput');
+  private readonly matInput = viewChild.required(MatInput);
 
   /** The key the filter holds, or `undefined` when it holds nothing. */
   private readonly valueKey = computed(() => {
@@ -109,7 +110,7 @@ export class AutocompleteSearchFilterComponent<T> implements FormValueControl<T 
   protected readonly displayOption = (option: SelectOption<T> | null): string => option?.label ?? '';
 
   /** Called by the form when it focuses this field, e.g. the first invalid one on submit. */
-  readonly focus = (options?: FocusOptions): void => this.searchInput().nativeElement.focus(options);
+  readonly focus = (options?: FocusOptions): void => this.matInput().focus(options);
 
   /**
    * Called by the form on reset - Clear, or the host's `reset(values)`: a typed but unpicked query must go too.
@@ -118,6 +119,8 @@ export class AutocompleteSearchFilterComponent<T> implements FormValueControl<T 
   readonly reset = (): void => {
     this.typedText.set(undefined);
     this.options.set([]);
+    // The form hands this control its reset value only when it next renders, so the box is corrected after that.
+    afterNextRender({ write: () => showText(this.matInput(), this.displayText()) }, { injector: this.injector });
   };
 
   protected readonly onTyped = (text: string): void => {

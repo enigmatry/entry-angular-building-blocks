@@ -1,7 +1,19 @@
+<p>
+    Owner is a required autocomplete. It holds the key of the option picked (<code>grace</code>), not its label
+    (Grace Hopper), and that key is what the action receives. Things to try:
+</p>
+<ul>
+    <li>Type three letters of a name into Owner without picking it, then press Clear: the box empties and no options come back.</li>
+    <li>Fill in Reference and Archived, leave Owner empty and press Filter: the search does not run, and focus moves to Owner.</li>
+    <li>Pick Edsger Dijkstra and press Filter: the server's message appears on Owner, and goes as soon as you edit it.</li>
+    <li>Press "Restore Owner from params": the key <code>grace</code> comes back and shows as Grace Hopper.</li>
+</ul>
+
 <div class="dynamic-search-filter-actions">
     <button mat-stroked-button type="button" (click)="addFilter()">Add a filter</button>
     <button mat-stroked-button type="button" (click)="removeLastFilter()">Remove the last filter</button>
     <button mat-stroked-button type="button" (click)="restoreFromParams()">Restore Term from params</button>
+    <button mat-stroked-button type="button" (click)="restoreOwnerFromParams()">Restore Owner from params</button>
     <button mat-stroked-button type="button" (click)="rejectRegion.set(!rejectRegion())">
         Server rejects Region: {{rejectRegion() ? 'yes' : 'no'}}
     </button>
