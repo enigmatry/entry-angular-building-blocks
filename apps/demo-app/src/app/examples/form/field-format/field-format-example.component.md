@@ -8,4 +8,4 @@ builder.InputFormControl(x => x.Price)
   .WithFormat(new CurrencyPropertyFormatter().WithCurrencyCode("EUR"));
 ```
 
-Formatted fields show the formatted value when they are not focused and a plain number while editing; the form value stays a number. Both are reactive-forms bridges for generated forms and will be replaced when generated forms migrate to signal forms.
+Number, currency and percent fields show the formatted value when they are not focused and a plain number while editing; the form value stays a number. A date field formats the displayed value only. Both are reactive-forms bridges for generated forms and will be replaced when generated forms migrate to signal forms.

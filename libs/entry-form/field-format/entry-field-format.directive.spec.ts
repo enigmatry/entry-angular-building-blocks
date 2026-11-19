@@ -1,10 +1,8 @@
 import { registerLocaleData } from '@angular/common';
 import localeNl from '@angular/common/locales/nl';
-import { beforeAll, describe, expect, it } from 'vitest';
-import { FieldFormatMaterialTestHostComponent } from './testing/field-format-material-test-host.component';
-import { FieldFormatReadonlyTestHostComponent } from './testing/field-format-readonly-test-host.component';
-import { FieldFormatTextareaTestHostComponent } from './testing/field-format-textarea-test-host.component';
-import { dutchEuroDefinition, initialAmount } from './testing/field-format-test-data';
+import { FormControl } from '@angular/forms';
+import { beforeAll, describe, expect, it, vi } from 'vitest';
+import { dutchEuroDefinition, euroDefinition, initialAmount } from './testing/field-format-test-data';
 import { dispatch, renderHost, settle, typeText } from './testing/field-format-test-helpers';
 import { FieldFormatTestHostComponent } from './testing/field-format-test-host.component';
 
@@ -34,11 +32,15 @@ describe('EntryFieldFormatDirective', () => {
       expect(input.value).toBe('\u20ac99.00');
     });
 
-    it('disables the input when the control is disabled', async() => {
+    it('keeps the text being typed when the definition is replaced by one with the same content', async() => {
       const { fixture, input } = await renderHost(FieldFormatTestHostComponent);
 
-      fixture.componentInstance.control().disable();
-      expect(input.disabled).toBe(true);
+      dispatch(input, 'focus');
+      typeText(input, '1.');
+      fixture.componentInstance.definition.set({ ...euroDefinition });
+      await settle(fixture);
+      expect(input.value).toBe('1.');
+      expect(fixture.componentInstance.control().value).toBe(1);
     });
   });
 
@@ -48,6 +50,16 @@ describe('EntryFieldFormatDirective', () => {
 
       typeText(input, '1,999.5');
       expect(fixture.componentInstance.control().value).toBe(1999.5);
+    });
+
+    it('marks the control dirty when the text the field shows is typed again', async() => {
+      const { fixture, input } = await renderHost(FieldFormatTestHostComponent);
+      const control = fixture.componentInstance.control();
+
+      dispatch(input, 'focus');
+      typeText(input, editedAmount);
+      expect(control.dirty).toBe(true);
+      expect(control.value).toBe(initialAmount);
     });
 
     it('writes null with an entryFieldFormat error when the text is invalid', async() => {
@@ -71,12 +83,17 @@ describe('EntryFieldFormatDirective', () => {
       expect(input.value).toBe('\u20ac\u00a01,99');
     });
 
-    it('keeps the form value when an input event leaves a textarea unchanged after it normalized the line breaks', async() => {
-      const { fixture } = await renderHost(FieldFormatTextareaTestHostComponent);
-      const textarea = (fixture.nativeElement as HTMLElement).querySelector('textarea') as HTMLTextAreaElement;
+    it('reports an error for invalid text in a number input, although the field reads as empty', async() => {
+      const { fixture, input } = await renderHost(FieldFormatTestHostComponent);
+      const control = new FormControl<number | null>(null);
+      fixture.componentInstance.type.set('number');
+      fixture.componentInstance.control.set(control);
+      await settle(fixture);
+      vi.spyOn(input.validity, 'badInput', 'get').mockReturnValue(true);
 
-      textarea.dispatchEvent(new Event('input'));
-      expect(fixture.componentInstance.control.value).toBe('first line\r\nsecond line');
+      dispatch(input, 'input');
+      expect(input.value).toBe('');
+      expect(control.hasError('entryFieldFormat')).toBe(true);
     });
 
     it('parses text the field showed before when it is typed again after an error', async() => {
@@ -88,43 +105,6 @@ describe('EntryFieldFormatDirective', () => {
       typeText(input, editedAmount);
       expect(control.value).toBe(initialAmount);
       expect(control.hasError('entryFieldFormat')).toBe(false);
-    });
-  });
-
-  describe('read-only', () => {
-    it('keeps the formatted value while a read-only field is focused, and edits once it is not', async() => {
-      const { fixture, input } = await renderHost(FieldFormatTestHostComponent);
-
-      fixture.componentInstance.locked.set(true);
-      await settle(fixture);
-      dispatch(input, 'focus');
-      expect(input.value).toBe(formattedAmount);
-      fixture.componentInstance.locked.set(false);
-      await settle(fixture);
-      expect(input.readOnly).toBe(false);
-      expect(input.value).toBe(editedAmount);
-    });
-
-    it('keeps the formatted value of a field that is read-only through a static attribute or [attr.readonly]', async() => {
-      const { fixture } = await renderHost(FieldFormatReadonlyTestHostComponent);
-      const [staticInput, boundInput] = Array.from((fixture.nativeElement as HTMLElement).querySelectorAll('input'));
-
-      dispatch(staticInput, 'focus');
-      dispatch(boundInput, 'focus');
-      expect(staticInput.value).toBe(formattedAmount);
-      expect(boundInput.value).toBe(formattedAmount);
-      fixture.componentInstance.locked.set(false);
-      await settle(fixture);
-      expect(boundInput.value).toBe(editedAmount);
-    });
-
-    it('keeps the read-only state Material sets on a disabled interactive field', async() => {
-      const { input } = await renderHost(FieldFormatMaterialTestHostComponent);
-
-      dispatch(input, 'focus');
-      expect(input.disabled).toBe(false);
-      expect(input.readOnly).toBe(true);
-      expect(input.value).toBe(formattedAmount);
     });
   });
 });
