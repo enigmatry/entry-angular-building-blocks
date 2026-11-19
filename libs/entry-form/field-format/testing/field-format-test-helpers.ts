@@ -19,7 +19,7 @@ export const renderHost = async <T>(host: Type<T>, providers: Provider[] = []): 
   return { fixture, input: (fixture.nativeElement as HTMLElement).querySelector('input') as HTMLInputElement };
 };
 
-export const dispatch = (input: HTMLInputElement, event: 'focus' | 'blur' | 'compositionstart' | 'compositionend'): void => {
+export const dispatch = (input: HTMLInputElement, event: 'focus' | 'blur' | 'input' | 'compositionstart' | 'compositionend'): void => {
   input.dispatchEvent(new Event(event));
 };
 

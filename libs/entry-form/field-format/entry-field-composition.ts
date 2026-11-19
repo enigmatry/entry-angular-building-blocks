@@ -3,12 +3,16 @@ import { COMPOSITION_BUFFER_MODE } from '@angular/forms';
 
 const isAndroid = (): boolean => typeof navigator !== 'undefined' && /android (\d+)/iu.test(navigator.userAgent);
 
-export interface EntryFieldPendingActions {
-  refresh: boolean;
-  blur: boolean;
-  render: boolean;
-  /** The form wrote a value during the composition, which replaces the composed text. */
-  superseded: boolean;
+/** What an `EntryFieldFormatDirective` does for the actions it deferred, once the composition ends. */
+export interface EntryFieldCompositionHandlers {
+  /** Parses the text again with a definition that changed during the composition. */
+  reparse: (blurPending: boolean) => void;
+  /** Parses the text composed in buffered mode. */
+  parse: () => void;
+  /** Republishes the parse error when input during the composition already parsed the text with a new definition. */
+  publishParseError: (blurPending: boolean) => void;
+  touch: () => void;
+  render: () => void;
 }
 
 /**
@@ -21,8 +25,10 @@ export class EntryFieldComposition {
 
   private active = false;
   private refreshPending = false;
+  private refreshParsed = false;
   private blurPending = false;
   private renderPending = false;
+  /** The form wrote a value during the composition, which replaces the composed text. */
   private superseded = false;
 
   readonly start = (): void => {
@@ -32,7 +38,10 @@ export class EntryFieldComposition {
   readonly isActive = (): boolean => this.active;
 
   readonly deferRefresh = (): boolean => {
-    this.refreshPending ||= this.active;
+    if (this.active) {
+      this.refreshPending = true;
+      this.refreshParsed = false;
+    }
     return this.active;
   };
 
@@ -50,18 +59,37 @@ export class EntryFieldComposition {
     this.superseded ||= this.active;
   };
 
-  /** The latest text was parsed with the current definition, so a refresh deferred before it is no longer needed. */
+  /** The latest text was parsed with the current definition, so a refresh deferred before it needs no second parse. */
   readonly inputParsed = (): void => {
-    this.refreshPending = false;
+    this.refreshParsed = this.refreshPending;
   };
 
-  readonly end = (): EntryFieldPendingActions => {
-    const pending = { refresh: this.refreshPending, blur: this.blurPending, render: this.renderPending, superseded: this.superseded };
+  /** Ends the composition: parses the composed text, then delivers the blur and render deferred during it. */
+  readonly end = (handlers: EntryFieldCompositionHandlers): void => {
+    const blur = this.blurPending;
+    const render = blur || this.renderPending || this.superseded;
+    const reparse = !this.superseded && this.refreshPending && !this.refreshParsed;
+    const parse = !this.superseded && !reparse && this.buffered;
+    const publish = !this.superseded && this.refreshParsed;
     this.active = false;
     this.refreshPending = false;
+    this.refreshParsed = false;
     this.blurPending = false;
     this.renderPending = false;
     this.superseded = false;
-    return pending;
+    if (reparse) {
+      handlers.reparse(blur);
+    } else if (parse) {
+      handlers.parse();
+    }
+    if (publish) {
+      handlers.publishParseError(blur);
+    }
+    if (blur) {
+      handlers.touch();
+    }
+    if (render) {
+      handlers.render();
+    }
   };
 }

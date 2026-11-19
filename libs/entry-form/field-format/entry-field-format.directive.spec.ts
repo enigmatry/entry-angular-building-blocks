@@ -2,6 +2,8 @@ import { registerLocaleData } from '@angular/common';
 import localeNl from '@angular/common/locales/nl';
 import { beforeAll, describe, expect, it } from 'vitest';
 import { FieldFormatMaterialTestHostComponent } from './testing/field-format-material-test-host.component';
+import { FieldFormatReadonlyTestHostComponent } from './testing/field-format-readonly-test-host.component';
+import { FieldFormatTextareaTestHostComponent } from './testing/field-format-textarea-test-host.component';
 import { dutchEuroDefinition, initialAmount } from './testing/field-format-test-data';
 import { dispatch, renderHost, settle, typeText } from './testing/field-format-test-helpers';
 import { FieldFormatTestHostComponent } from './testing/field-format-test-host.component';
@@ -68,6 +70,25 @@ describe('EntryFieldFormatDirective', () => {
       expect(control.hasError('entryFieldFormat')).toBe(false);
       expect(input.value).toBe('\u20ac\u00a01,99');
     });
+
+    it('keeps the form value when an input event leaves a textarea unchanged after it normalized the line breaks', async() => {
+      const { fixture } = await renderHost(FieldFormatTextareaTestHostComponent);
+      const textarea = (fixture.nativeElement as HTMLElement).querySelector('textarea') as HTMLTextAreaElement;
+
+      textarea.dispatchEvent(new Event('input'));
+      expect(fixture.componentInstance.control.value).toBe('first line\r\nsecond line');
+    });
+
+    it('parses text the field showed before when it is typed again after an error', async() => {
+      const { fixture, input } = await renderHost(FieldFormatTestHostComponent);
+      const control = fixture.componentInstance.control();
+
+      dispatch(input, 'focus');
+      typeText(input, 'abc');
+      typeText(input, editedAmount);
+      expect(control.value).toBe(initialAmount);
+      expect(control.hasError('entryFieldFormat')).toBe(false);
+    });
   });
 
   describe('read-only', () => {
@@ -84,10 +105,24 @@ describe('EntryFieldFormatDirective', () => {
       expect(input.value).toBe(editedAmount);
     });
 
+    it('keeps the formatted value of a field that is read-only through a static attribute or [attr.readonly]', async() => {
+      const { fixture } = await renderHost(FieldFormatReadonlyTestHostComponent);
+      const [staticInput, boundInput] = Array.from((fixture.nativeElement as HTMLElement).querySelectorAll('input'));
+
+      dispatch(staticInput, 'focus');
+      dispatch(boundInput, 'focus');
+      expect(staticInput.value).toBe(formattedAmount);
+      expect(boundInput.value).toBe(formattedAmount);
+      fixture.componentInstance.locked.set(false);
+      await settle(fixture);
+      expect(boundInput.value).toBe(editedAmount);
+    });
+
     it('keeps the read-only state Material sets on a disabled interactive field', async() => {
       const { input } = await renderHost(FieldFormatMaterialTestHostComponent);
 
       dispatch(input, 'focus');
+      expect(input.disabled).toBe(false);
       expect(input.readOnly).toBe(true);
       expect(input.value).toBe(formattedAmount);
     });

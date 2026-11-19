@@ -1,5 +1,5 @@
 import { CurrencyPipe, DatePipe, DecimalPipe, PercentPipe, formatNumber } from '@angular/common';
-import { Injectable, LOCALE_ID, inject } from '@angular/core';
+import { Injectable, LOCALE_ID, Provider, inject } from '@angular/core';
 import { EntryFieldFormatDefinition } from './entry-field-format-definition';
 import { EntryFieldInputKind } from './entry-field-input-kind';
 import { groupingSample, negativeSample, numberSyntax, parseLocalizedDecimal } from './field-format-numbers';
@@ -143,3 +143,6 @@ export class EntryFieldFormatter {
     }
   };
 }
+
+/** The formatter with the Angular pipes it formats through, provided per directive. */
+export const entryFieldFormatterProviders: Provider[] = [EntryFieldFormatter, CurrencyPipe, DatePipe, DecimalPipe, PercentPipe];

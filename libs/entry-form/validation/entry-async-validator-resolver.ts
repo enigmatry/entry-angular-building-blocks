@@ -14,6 +14,7 @@ export type EntryAsyncValidatorResolver = (name: string) => AsyncValidatorFn;
 
 /**
  * Injected optionally by generated forms. It deliberately has no root default, so when nothing is provided
- * the optional injection yields `null` and named validators are skipped.
+ * the optional injection yields `null` and named validators are skipped. A resolver provided here must return a
+ * validator for every name; {@link provideEntryAsyncValidators} provides one that skips unknown names.
  */
 export const ENTRY_ASYNC_VALIDATOR_RESOLVER = new InjectionToken<EntryAsyncValidatorResolver>('ENTRY_ASYNC_VALIDATOR_RESOLVER');
