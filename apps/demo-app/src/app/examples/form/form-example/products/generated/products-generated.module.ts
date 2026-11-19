@@ -7,8 +7,12 @@
 // </auto-generated>
 // ------------------------------------------------------------------------------;
 /* eslint-disable */
+// @ts-nocheck
+// @ts-ignore
+// @ts-expect-error
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { SharedModule } from 'src/app/shared/shared.module';
 import { EntryTableModule } from '@enigmatry/entry-components/table';
     import { FormlyModule, FORMLY_CONFIG } from '@ngx-formly/core';
     import { FormlyMaterialModule } from '@ngx-formly/material';
@@ -16,7 +20,6 @@ import { EntryTableModule } from '@enigmatry/entry-components/table';
     import { FormlyMatDatepickerModule } from '@ngx-formly/material/datepicker';
 
 import { ProductEditGeneratedComponent } from './product-edit/product-edit-generated.component';
-import { SharedModule } from 'apps/demo-app/src/app/shared/shared.module';
 
 
 

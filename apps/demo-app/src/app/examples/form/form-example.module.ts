@@ -13,7 +13,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { CheckboxExampleComponent } from './checkbox/checkbox-example.component';
 import { DateTimePickerExampleComponent } from './date-time-picker/date-time-picker-example.component';
 import { FormExampleComponent } from './form-example/form-example.component';
-import { ProductsGeneratedModule } from './form-example/generated/products-generated.module';
+import { ProductsGeneratedModule } from './form-example/products/generated/products-generated.module';
 import { InputExampleComponent } from './input/input-example.component';
 import { RadioExampleComponent } from './radio/radio-example.component';
 import { RichTextExampleComponent } from './rich-text/rich-text-example.component';
