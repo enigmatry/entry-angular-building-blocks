@@ -7,80 +7,83 @@
 // </auto-generated>
 // ------------------------------------------------------------------------------;
 /* eslint-disable */
+// @ts-nocheck
+// @ts-ignore
+// @ts-expect-error
 import { Component, EventEmitter, Inject, Input, LOCALE_ID, OnInit, OnDestroy, Optional, Output, TemplateRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
+import { IGetProductDetailsResponse } from 'src/app/api/api-reference';
 import { IFieldExpressionDictionary, IFieldPropertyExpressionDictionary, SelectConfiguration, ENTRY_FIELD_TYPE_RESOLVER, FieldTypeResolver, sortOptions } from '@enigmatry/entry-form';
 import { BehaviorSubject, of, Subject, Subscription } from 'rxjs';
 import { map, throttleTime } from 'rxjs/operators';
 
-type IGetProductDetailsResponse = {};
 
-@Component({
+    @Component({
+    standalone: false,
     selector: 'app-g-product-edit',
-    templateUrl: './product-edit-generated.component.html',
-    standalone: false
-})
-export class ProductEditGeneratedComponent implements OnInit, OnDestroy {
+    templateUrl: './product-edit-generated.component.html'
+    })
+    export class ProductEditGeneratedComponent implements OnInit, OnDestroy {
 
-  @Input() model: IGetProductDetailsResponse = {} as IGetProductDetailsResponse;
-  @Input() set isReadonly(value: boolean) {
+    @Input() model: IGetProductDetailsResponse = {} as IGetProductDetailsResponse;
+    @Input() set isReadonly(value: boolean) {
     this._isReadonly = value;
     this.fields = this.initializeFields();
-  }
-  get isReadonly() {
+    }
+    get isReadonly() {
     return this._isReadonly;
-  }
+    }
 
-  @Input() saveButtonText: string = 'Save';
-  @Input() cancelButtonText: string = 'Cancel';
-  @Input() saveButtonDisabled: boolean = false;
-  @Input() formButtonsTemplate: TemplateRef<any> | null | undefined;
+    @Input() saveButtonText: string = 'Save';
+    @Input() cancelButtonText: string = 'Cancel';
+    @Input() saveButtonDisabled: boolean = false;
+    @Input() formButtonsTemplate: TemplateRef<any> | null | undefined;
 
-  @Input() fieldsHideExpressions: IFieldExpressionDictionary<IGetProductDetailsResponse> | undefined = undefined;
-  @Input() fieldsDisableExpressions: IFieldExpressionDictionary<IGetProductDetailsResponse> | undefined = undefined;
-  @Input() fieldsRequiredExpressions: IFieldExpressionDictionary<IGetProductDetailsResponse> | undefined = undefined;
-  @Input() fieldsPropertyExpressions: IFieldPropertyExpressionDictionary<IGetProductDetailsResponse> | undefined = undefined;
-  @Input() fieldsLabelExpressions: IFieldPropertyExpressionDictionary<IGetProductDetailsResponse> | undefined = undefined;
+    @Input() fieldsHideExpressions: IFieldExpressionDictionary<IGetProductDetailsResponse> | undefined = undefined;
+    @Input() fieldsDisableExpressions: IFieldExpressionDictionary<IGetProductDetailsResponse> | undefined = undefined;
+    @Input() fieldsRequiredExpressions: IFieldExpressionDictionary<IGetProductDetailsResponse> | undefined = undefined;
+    @Input() fieldsPropertyExpressions: IFieldPropertyExpressionDictionary<IGetProductDetailsResponse> | undefined = undefined;
+    @Input() fieldsLabelExpressions: IFieldPropertyExpressionDictionary<IGetProductDetailsResponse> | undefined = undefined;
 
-  @Output() save = new EventEmitter<IGetProductDetailsResponse>();
-  @Output() cancel = new EventEmitter<void>();
-  @Output() buttonClick = new EventEmitter<string>();
+    @Output() save = new EventEmitter<IGetProductDetailsResponse>();
+    @Output() cancel = new EventEmitter<void>();
+    @Output() buttonClick = new EventEmitter<string>();
 
             @Input() typeOptions: any[] = [{ value: 0, displayName: `Food` }, { value: 1, displayName: `Drink` }, { value: 2, displayName: `Book` }, { value: 3, displayName: `Car` }];
             @Input() typeOptionsConfiguration: SelectConfiguration = { valueProperty: 'value', labelProperty: 'displayName', sortProperty: 'displayName' };
 
-  _isReadonly: boolean;
-  form = new FormGroup({});
-  fields: FormlyFieldConfig[] = [];
-  private _submitClicks = new Subject<void>();
-  private _submitClicksSubscription: Subscription;
+    _isReadonly: boolean;
+    form = new FormGroup({});
+    fields: FormlyFieldConfig[] = [];
+    private _submitClicks = new Subject<void>();
+    private _submitClicksSubscription: Subscription;
 
-  constructor(
+    constructor(
     @Inject(LOCALE_ID) private _localeId: string,
     @Optional() @Inject(ENTRY_FIELD_TYPE_RESOLVER) private _fieldTypeResolver: FieldTypeResolver) { }
 
-  ngOnInit(): void {
+    ngOnInit(): void {
     this.fields = this.initializeFields();
     this._submitClicksSubscription = this._submitClicks
-        .pipe(throttleTime(500))
-        .subscribe(() => this.save.emit(this.model));
-  }
-
-  ngOnDestroy(): void {
-      this._submitClicksSubscription.unsubscribe();
-  }
-
-  onSubmit() {
-    if (this.form.valid) {
-      this._submitClicks.next();
+    .pipe(throttleTime(500))
+    .subscribe(() => this.save.emit(this.model));
     }
-  }
 
-  resolveFieldType = (type: string, isControlReadonly: boolean): string =>
+    ngOnDestroy(): void {
+    this._submitClicksSubscription.unsubscribe();
+    }
+
+    onSubmit() {
+    if (this.form.valid) {
+    this._submitClicks.next();
+    }
+    }
+
+    resolveFieldType = (type: string, isControlReadonly: boolean): string =>
     this._fieldTypeResolver ? this._fieldTypeResolver(type, this.isReadonly || isControlReadonly) : type;
 
-  initializeFields(): FormlyFieldConfig[] {
+    initializeFields(): FormlyFieldConfig[] {
     return [
         {
         key: 'name',
@@ -99,7 +102,7 @@ className: `entry-name-field entry-input`,
         placeholder: `Name`,
         description: ``,
             attributes: {  },
-            hidden: !true,
+        hidden: !true,
             typeFormatDef: undefined
         },
         },
@@ -123,7 +126,7 @@ className: `entry-type-field entry-autocomplete`,
             valueProp: this.typeOptionsConfiguration.valueProperty,
             labelProp: this.typeOptionsConfiguration.labelProperty,
             attributes: {  },
-            hidden: !true,
+        hidden: !true,
             typeFormatDef: undefined
         },
         },
@@ -149,7 +152,7 @@ className: `entry-description-field entry-textarea`,
             autosizeMinRows: 0,
             autosizeMaxRows: 0,
             attributes: {  },
-            hidden: !true,
+        hidden: !true,
             typeFormatDef: undefined
         },
         },
@@ -170,7 +173,7 @@ className: `entry-amount-field entry-input`,
         placeholder: `Units`,
         description: ``,
             attributes: {  },
-            hidden: !true,
+        hidden: !true,
             typeFormatDef: undefined
         },
         },
@@ -191,7 +194,7 @@ className: `entry-expires-on-field entry-datepicker`,
         placeholder: `Expires on`,
         description: ``,
             attributes: {  },
-            hidden: !true,
+        hidden: !true,
             typeFormatDef: { name: 'date' }
         },
 modelOptions: { updateOn: 'blur' },
@@ -214,13 +217,16 @@ defaultValue: true,
         placeholder: `Free shipping`,
         description: ``,
             attributes: {  },
-            hidden: !true,
+        hidden: !true,
             typeFormatDef: { name: 'boolean' }
         },
         },
             { key: 'id' },
-
     ];
-}
+    }
 
-}
+    private applyOptionally<T>(value: T, apply: boolean): T | undefined {
+    return apply ? value : undefined;
+    }
+
+    }

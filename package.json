@@ -13,6 +13,7 @@
     "lint:fix": "npm run lint:ts -- --fix && npm run demo-app:eslint -- --fix && npm run entry-components:stylelint:fix && npm run scss-foundation:stylelint:fix && npm run demo-app:stylelint:fix",
     "lint:ts": "eslint",
     "typedoc": "typedoc",
+    "demo-app:codegen": "cd apps/demo-app/codegen && dotnet build Enigmatry.Entry.DemoApp.CodeGeneration.Setup.csproj -t:Generate -nologo",
     "demo-app:eslint": "cd apps/demo-app && eslint",
     "demo-app:stylelint": "cd apps/demo-app && stylelint \"src/**/*.scss\" --config ../../.stylelintrc.json",
     "demo-app:stylelint:fix": "cd apps/demo-app && stylelint --fix \"src/**/*.scss\" --config ../../.stylelintrc.json",
