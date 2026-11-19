@@ -4,9 +4,6 @@ import { defineConfig } from "eslint/config";
 export default defineConfig([
     ...defaultEnigmatryConfiguration,
     {
-        // **/generated/** is entry-codegen output, committed exactly as emitted (see codegen/README.md).
-        // Its templates use *ngIf, which prefer-control-flow rejects, it declares NgModules until the generator
-        // emits standalone components (BP-1664), and it is never edited by hand.
         ignores: ['src/assets/**', 'src/**/generated/**']
     },
     {

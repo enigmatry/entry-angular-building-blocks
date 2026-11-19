@@ -1,17 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <!--
-    Source of truth for the demo app's generated form example
-    (apps/demo-app/src/app/examples/form/form-example/products/generated/).
-    Run `npm run demo-app:codegen` from the repository root; see README.md next to this file.
-  -->
-
   <PropertyGroup>
-    <!--
-      The one place the generator version is pinned. It is the version of both the configuration package
-      referenced below and the enigmatry.entry.codegeneration.tools package the Generate target runs,
-      which are always released together.
-    -->
     <EntryCodeGenerationVersion>21.2.0</EntryCodeGenerationVersion>
 
     <TargetFramework>net10.0</TargetFramework>
@@ -26,26 +15,15 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <!-- The generator writes to <destination>/<feature>/generated/; the feature configured here is Products. -->
     <DemoAppGeneratedExampleDirectory>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)', '..', 'src', 'app', 'examples', 'form', 'form-example'))</DemoAppGeneratedExampleDirectory>
-    <DemoAppGeneratedOutputDirectory>$([MSBuild]::NormalizeDirectory('$(DemoAppGeneratedExampleDirectory)', 'products', 'generated'))</DemoAppGeneratedOutputDirectory>
   </PropertyGroup>
 
-  <!--
-    Builds this assembly and runs the generator on it. The output is committed as it is emitted:
-    no hand edits, no post-processing.
-  -->
   <Target Name="Generate" DependsOnTargets="Build">
-    <!--
-      The generator overwrites files but never deletes any, so clear its output first: otherwise a file it no
-      longer emits would survive regeneration and the PR build's gate could not notice it.
-    -->
-    <RemoveDir Directories="$(DemoAppGeneratedOutputDirectory)" />
-    <!--
-      The destination is passed without its trailing separator: on Windows a trailing backslash would escape
-      the closing quote of the argument.
-    -->
-    <Exec Command="dnx enigmatry.entry.codegeneration.tools@$(EntryCodeGenerationVersion) --yes -- --source-assembly &quot;$(TargetPath)&quot; --destination-directory &quot;$(DemoAppGeneratedExampleDirectory.TrimEnd('\/'))&quot;" />
+    <ItemGroup>
+      <PreviouslyGeneratedFile Include="$(DemoAppGeneratedExampleDirectory)*\generated\**" />
+    </ItemGroup>
+    <Delete Files="@(PreviouslyGeneratedFile)" />
+    <Exec Command="dotnet dnx enigmatry.entry.codegeneration.tools@$(EntryCodeGenerationVersion) --yes -- --source-assembly &quot;$(TargetPath)&quot; --destination-directory &quot;$(DemoAppGeneratedExampleDirectory.TrimEnd('\/'))&quot;" />
   </Target>
 
 </Project>

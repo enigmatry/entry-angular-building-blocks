@@ -17,7 +17,7 @@ The package major version tracks the supported Angular version (e.g., `22.x` = A
 
 ## Hard rules
 
-- **Never edit generated code**: `apps/demo-app/src/app/examples/form/form-example/products/generated/**` (files named `*-generated.*`) and any `*.generated.*` file. They are produced by the `entry-codegen` .NET CLI. To change the demo's generated form, change its configuration in `apps/demo-app/codegen/` and regenerate (*entry-form and code generation* below); to change what the generator emits, change the generator.
+- **Never edit generated code**: `apps/demo-app/src/app/examples/form/form-example/*/generated/**` (files named `*-generated.*`) and any `*.generated.*` file. They are produced by the `entry-codegen` .NET CLI. To change the demo's generated form, change its configuration in `apps/demo-app/codegen/` and regenerate (*entry-form and code generation* below); to change what the generator emits, change the generator.
 - **Never import across secondary entry points with a relative path.** Use the scoped package name — `@enigmatry/entry-components/common`, not `../common/utils/provide-config`.
 - **These are published npm packages.** Removing or renaming an export from any `public-api.ts` is a breaking change for consumers — call it out rather than doing it silently.
 - **Never use `new InjectionToken(...)` or `useValue` for component config.** Use the configuration pattern below.

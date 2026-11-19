@@ -104,10 +104,6 @@ stages:
         command: 'custom'
         customCommand: 'run lint'
 
-    # The demo's generated form example (apps/demo-app/codegen/README.md) is committed as entry-codegen
-    # emits it. Regenerate it and fail if the committed files differ, so a configuration or generator-version
-    # change cannot be merged without its output, and a hand edit of the output cannot be merged at all.
-    # dnx, which runs the generator, comes with the .NET SDK pinned in apps/demo-app/codegen/global.json.
     - task: UseDotNet@2
       displayName: 'Use the .NET SDK for entry-codegen'
       inputs:
@@ -120,16 +116,14 @@ stages:
       inputs:
         targetType: inline
         script: |
-          $generated = 'apps/demo-app/src/app/examples/form/form-example/products/generated'
+          $generated = ':(glob)apps/demo-app/src/app/examples/form/form-example/*/generated/**'
           npm run demo-app:codegen
           if ($LASTEXITCODE -ne 0) { throw "npm run demo-app:codegen failed" }
-          # -N makes files the generator added but nobody committed show up in the diff. Diffing against HEAD,
-          # not the index, keeps committed files the generator no longer emits in it too: git add stages their removal.
-          git add -N -- $generated
+          git add -N -f -- $generated
           if ($LASTEXITCODE -ne 0) { throw "git add -N failed" }
           git diff --exit-code HEAD -- $generated
           if ($LASTEXITCODE -ne 0) {
-            Write-Host "##vso[task.logissue type=error]The generated demo example is out of date or was edited by hand. Run 'npm run demo-app:codegen' and commit $generated as it comes out."
+            Write-Host "##vso[task.logissue type=error]The generated demo example is out of date or was edited by hand. Run 'npm run demo-app:codegen' and commit its output as it comes out."
             exit 1
           }
 

@@ -11,9 +11,6 @@ export default defineConfig([
         rules: {
             '@angular-eslint/use-injectable-provided-in': 'off', // TODO BP-1642: 6 injectables (date/time adapters, event plugins, spinner overlay container) are provided where they are used (component providers, provideEntryNativeTimeAdapter, NG_EVENT_PLUGINS), not by providedIn
             '@typescript-eslint/no-unnecessary-condition': 'error',
-            // The root tsconfig maps `src/*` to apps/demo-app/src/* so entry-codegen's app-absolute imports
-            // ('src/app/shared/shared.module', 'src/app/api/api-reference') resolve inside apps/demo-app/**/generated/.
-            // Libraries inherit that mapping through `extends`, so guard the lib -> app boundary here.
             'no-restricted-imports': ['error', {
                 patterns: [{
                     group: ['src/**'],

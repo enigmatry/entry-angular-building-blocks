@@ -4,17 +4,17 @@ The Form page's "Form example with configuration" shows a product-edit form. Tha
 
 ## Regenerate
 
-From the repository root (needs a .NET 10 SDK, which provides `dnx`; `global.json` in this folder pins it to 10.0.x):
+From the repository root (needs a .NET 10 SDK; `global.json` in this folder pins it to 10.0.x):
 
 ```bash
 npm run demo-app:codegen
 ```
 
-It builds this project, deletes the previous output, and runs `dnx enigmatry.entry.codegeneration.tools@<version>` against the built assembly. The generator never deletes files itself, so clearing its output first is what keeps a file it no longer emits from surviving. The output lands in `apps/demo-app/src/app/examples/form/form-example/products/generated/` (the generator always writes to `<destination>/<feature>/generated/`, and the feature is `Products`).
+It builds this project, deletes all files under `form-example/*/generated/`, and runs `dotnet dnx enigmatry.entry.codegeneration.tools@<version>` against the built assembly. The generator never deletes files itself, so clearing its output first is what keeps a file it no longer emits from surviving. The output lands in `apps/demo-app/src/app/examples/form/form-example/products/generated/` (the generator always writes to `<destination>/<feature>/generated/`, and the feature is `Products`).
 
 Running it twice changes nothing: the output depends only on this configuration and the pinned generator version.
 
-The pull request build (`azure-pipelines.yml`, "Gate: generated demo example is up to date") runs the same command and fails when the committed files differ from what it generates: a configuration or version change without its regenerated output, or a hand edit of the output.
+The pull request build (`azure-pipelines.yml`, "Gate: generated demo example is up to date") runs the same command and fails when the committed files in any `form-example/*/generated/` folder differ from what it generates: a configuration or version change without its regenerated output, a new feature whose output was not committed, or a hand edit of the output.
 
 ## Rules
 
@@ -37,7 +37,7 @@ Each changes with the generator, not with edits here. The generator's signals la
 
 The generator version is set once, by `EntryCodeGenerationVersion` in `Enigmatry.Entry.DemoApp.CodeGeneration.Setup.csproj`. It pins both the `Enigmatry.Entry.CodeGeneration.Configuration` package this project references and the `enigmatry.entry.codegeneration.tools` package the `Generate` target runs, because the two are always released together. The version is written only there; the documentation does not repeat it, so it cannot go stale at a bump.
 
-The .NET SDK is pinned separately, by `global.json` in this folder (10.0.x, the runtime the pinned generator targets). The npm script runs from this folder so that the pin applies, and the PR build's `UseDotNet@2` step reads the same file.
+The .NET SDK is pinned separately, by `global.json` in this folder (10.0.x, the runtime the pinned generator targets). The npm script runs from this folder so that the pin applies, and the PR build's `UseDotNet@2` step reads the same file. The `Generate` target calls `dotnet dnx` so that `global.json` selects the SDK; the `dnx` script in newer SDKs runs the newest installed SDK instead.
 
 ### When a new generator ships (e.g. 22.x)
 

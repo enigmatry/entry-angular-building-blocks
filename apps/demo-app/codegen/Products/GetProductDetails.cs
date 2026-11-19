@@ -1,9 +1,5 @@
 namespace Enigmatry.Entry.DemoApp.CodeGeneration.Setup.Products;
 
-/// <summary>
-/// Stand-in for an API query. The generator names the TypeScript model after the declaring types,
-/// so <see cref="Response"/> becomes <c>IGetProductDetailsResponse</c>.
-/// </summary>
 public static class GetProductDetails
 {
     public class Response
