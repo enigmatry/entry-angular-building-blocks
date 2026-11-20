@@ -9,7 +9,7 @@ export default defineConfig([
     {
         files: ['libs/**/*.ts'],
         rules: {
-            '@angular-eslint/use-injectable-provided-in': 'off', // TODO BP-1753: 6 injectables (date/time adapters, event plugins, spinner overlay container) are provided where they are used (component providers, provideEntryNativeTimeAdapter, NG_EVENT_PLUGINS), not by providedIn
+            '@angular-eslint/use-injectable-provided-in': 'off', // TODO BP-1753: 6 injectables (date/time adapters, event plugins, spinner overlay) are provided where used
             '@typescript-eslint/no-explicit-any': 'error',
             '@typescript-eslint/no-unnecessary-condition': 'error',
             'no-restricted-imports': ['error', {

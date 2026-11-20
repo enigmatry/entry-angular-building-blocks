@@ -13,18 +13,14 @@ import { EntryEventManagerPlugin } from './entry-event-manager.plugin';
 export class ThrottleEventPlugin extends EntryEventManagerPlugin {
   modifier = '.throttle';
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type -- the signature of Angular's EventManagerPlugin
   addEventListener(element: HTMLElement, eventName: string, originalHandler: Function): Function {
-    // e.g. (keyup.throttle.500)
     const [_modifier, milliseconds = 500] = this.unwrapParams(eventName);
 
-    // run original handler inside ngZone in which the event occurred
     const innerHandler = (event: Event) => this.manager.getZone().runGuarded(() => originalHandler(event));
 
-    // create throttled handler
-    const throttledHandler = throttle(innerHandler, milliseconds as number);
+    const throttledHandler = throttle(innerHandler, Number(milliseconds));
 
-    // register event with throttled handler
     return this.manager.addEventListener(element, this.unwrapEventName(eventName), throttledHandler);
   }
 }

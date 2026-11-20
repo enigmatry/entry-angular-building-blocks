@@ -202,6 +202,7 @@ The Enigmatry front-end rules come from the shared Claude Code plugin `entry-blu
 Where a plugin skill and this file differ, this file wins:
 
 - **A class that `extends` a base class keeps prototype methods throughout**, including methods the base does not declare (*Method declarations* below). `entry-blueprint:typescript` keeps method syntax only for members that rely on `super`; here the whole class stays in one form, so it is clear which members are constrained.
+- **`EntrySearchFilterComponent` hands its values to the action with `as unknown as TParams`.** `entry-blueprint:typescript` allows that cast only at a third-party boundary; here the target is the parameter type the consumer declares on its action, which the component cannot see and therefore cannot narrow to. The README tells consumers to keep that type in step with their filters.
 
 ---
 

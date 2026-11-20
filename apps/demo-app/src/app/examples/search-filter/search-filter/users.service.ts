@@ -17,7 +17,7 @@ export class UsersService {
     this.data = LIST_OF_USERS;
   }
 
-  getUsernames = (): Observable<string[]> => of(this.data.map(x => x.userName));
+  readonly getUsernames = (): Observable<string[]> => of(this.data.map(x => x.userName));
 
   readonly getUsers = (searchParams: Partial<UserSearchParams> = {}): Observable<Array<User>> => {
     const validationError = this.validateSearchParams(searchParams);
