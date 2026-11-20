@@ -33,7 +33,8 @@ const appendFormError = (formErrors: ValidationErrors, messages: string[]): void
  * @param form Form to apply validation errors to. Typed as `AbstractControl` so that any form shape
  * is accepted - a `FormGroup` with known keys, a `FormRecord` with dynamic ones, or a nested mix.
  */
-const setServerSideValidationErrors = (error: IValidationProblemDetails, form: AbstractControl) => {
+const setServerSideValidationErrors = <T extends Pick<IValidationProblemDetails, 'errors'> | IValidationProblemDetails>(
+    error: T, form: AbstractControl): void => {
     form.setErrors(null);
     const validationErrors = error.errors;
     const formErrors: ValidationErrors = {};

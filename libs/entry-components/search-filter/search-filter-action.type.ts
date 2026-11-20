@@ -14,6 +14,7 @@ export interface SearchFilterServerError {
  * @remarks Returned messages are submission errors: Angular routes each to its field and clears it
  * as soon as the user edits that filter. A message for a filter edited while the action ran is
  * dropped, and so is a message for no filter once any filter was edited.
+ * `TParams` is the action's own parameter type; nothing checks that the filters produce that shape.
  */
-export type SearchFilterAction =
-  (values: SearchFilterParams) => Promise<readonly SearchFilterServerError[] | void>;
+export type SearchFilterAction<TParams extends object = SearchFilterParams> =
+  (values: TParams) => Promise<readonly SearchFilterServerError[] | void>;

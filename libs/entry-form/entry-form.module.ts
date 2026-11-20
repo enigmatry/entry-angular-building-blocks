@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormlyAutocompleteModule } from './autocomplete/formly-autocomplete.module';
+import { FormlyAutocompleteModule } from '@enigmatry/entry-form/autocomplete';
 import { ENTRY_FIELD_TYPE_RESOLVER, fieldTypeResolverFactory, FieldTypeResolverService } from './services';
 
 @NgModule({

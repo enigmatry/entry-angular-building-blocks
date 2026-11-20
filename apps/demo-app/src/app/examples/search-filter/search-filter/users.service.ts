@@ -1,7 +1,7 @@
 import { Service } from '@angular/core';
-import { SearchFilterParams } from '@enigmatry/entry-components/search-filter';
 import { IValidationProblemDetails } from '@enigmatry/entry-components/validation';
 import { Observable, of, throwError } from 'rxjs';
+import { UserSearchParams } from './user-search-params';
 import { User, LIST_OF_USERS } from './users';
 
 /**
@@ -17,52 +17,40 @@ export class UsersService {
     this.data = LIST_OF_USERS;
   }
 
-  getUsernames = (): Observable<string[]> => of(this.data.map(x => x.userName));
+  readonly getUsernames = (): Observable<string[]> => of(this.data.map(x => x.userName));
 
-  getUsers(searchParams: SearchFilterParams): Observable<Array<User>> {
+  readonly getUsers = (searchParams: Partial<UserSearchParams> = {}): Observable<Array<User>> => {
     const validationError = this.validateSearchParams(searchParams);
     if (validationError) {
       return validationError;
     }
 
+    const { name, occupation = [], username, country, dateOfBirth, score } = searchParams;
     let users = this.data;
-
-    if (!this.noFilterParam(searchParams, 'name')) {
-      users = users.filter(x => x.firstName.toLowerCase().includes(searchParams['name'].toLowerCase())
-        || x.lastName.toLowerCase().includes(searchParams['name'].toLowerCase()));
+    if (name) {
+      const lowerName = name.toLowerCase();
+      users = users.filter(x => x.firstName.toLowerCase().includes(lowerName) || x.lastName.toLowerCase().includes(lowerName));
     }
-    if (!this.noFilterParam(searchParams, 'occupation')) {
-      users = users.filter(x => searchParams['occupation'] instanceof Array
-        ? searchParams['occupation'].includes(x.occupation)
-        : searchParams['occupation'] === x.occupation);
+    if (occupation.length) {
+      users = users.filter(x => occupation.includes(x.occupation));
     }
-    if (!this.noFilterParam(searchParams, 'username')) {
-      users = users.filter(x => searchParams['username'] instanceof Array
-        ? searchParams['username'].includes(x.userName)
-        : searchParams['username'] === x.userName);
+    if (username) {
+      users = users.filter(x => x.userName === username);
     }
-
-    if (!this.noFilterParam(searchParams, 'country')) {
-      users = users.filter(x => x.country === searchParams['country']);
+    if (country) {
+      users = users.filter(x => x.country === country);
     }
-
-    if (!this.noFilterParam(searchParams, 'dateOfBirth')) {
-      users = users.filter(x => x.dateOfBirth >= searchParams['dateOfBirth']);
+    if (dateOfBirth) {
+      users = users.filter(x => x.dateOfBirth >= dateOfBirth);
     }
-
-    if (!this.noFilterParam(searchParams, 'score')) {
-      users = users.filter(x => x.score === searchParams['score']);
+    if (score) {
+      users = users.filter(x => x.score === score);
     }
-
     return of(users);
-  }
+  };
 
-  noFilterParam = (searchParams: SearchFilterParams, paramName: string): boolean => searchParams[paramName] === undefined
-      || searchParams[paramName] === null
-      || searchParams[paramName]?.length === 0;
-
-  validateSearchParams = (searchParams: SearchFilterParams): Observable<never> | null => {
-    if (searchParams['dateOfBirth'] && new Date(searchParams['dateOfBirth']) > new Date()) {
+  private readonly validateSearchParams = (searchParams: Partial<UserSearchParams>): Observable<never> | null => {
+    if (searchParams.dateOfBirth && searchParams.dateOfBirth > new Date()) {
       const validationProblemDetails: IValidationProblemDetails = {
         title: 'Validation Error',
         status: 400,

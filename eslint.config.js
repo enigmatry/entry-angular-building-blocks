@@ -9,7 +9,8 @@ export default defineConfig([
     {
         files: ['libs/**/*.ts'],
         rules: {
-            '@angular-eslint/use-injectable-provided-in': 'off', // TODO BP-1642: 6 injectables (date/time adapters, event plugins, spinner overlay container) are provided where they are used (component providers, provideEntryNativeTimeAdapter, NG_EVENT_PLUGINS), not by providedIn
+            '@angular-eslint/use-injectable-provided-in': 'off', // TODO BP-1753: 6 injectables (date/time adapters, event plugins, spinner overlay) are provided where used
+            '@typescript-eslint/no-explicit-any': 'error',
             '@typescript-eslint/no-unnecessary-condition': 'error',
             'no-restricted-imports': ['error', {
                 patterns: [{
@@ -28,8 +29,8 @@ export default defineConfig([
     {
         files: ['libs/**/*.html'],
         rules: {
-            '@angular-eslint/template/cyclomatic-complexity': 'off', // TODO BP-1642: 12 sites in 4 templates (entry-table x7) need the templates split up
-            '@angular-eslint/template/no-non-null-assertion': 'off' // TODO BP-1642: 15 `!` assertions in 9 templates (entry-table x7)
+            '@angular-eslint/template/cyclomatic-complexity': 'off', // TODO BP-1753: 12 sites in 4 templates (entry-table x7) need the templates split up
+            '@angular-eslint/template/no-non-null-assertion': 'off' // TODO BP-1753: 15 `!` assertions in 9 templates (entry-table x7)
         }
     }
 ]);

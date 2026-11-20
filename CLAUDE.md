@@ -202,6 +202,7 @@ The Enigmatry front-end rules come from the shared Claude Code plugin `entry-blu
 Where a plugin skill and this file differ, this file wins:
 
 - **A class that `extends` a base class keeps prototype methods throughout**, including methods the base does not declare (*Method declarations* below). `entry-blueprint:typescript` keeps method syntax only for members that rely on `super`; here the whole class stays in one form, so it is clear which members are constrained.
+- **`EntrySearchFilterComponent` hands its values to the action with `as unknown as TParams`.** `entry-blueprint:typescript` allows that cast only at a third-party boundary; here the target is the parameter type the consumer declares on its action, which the component cannot see and therefore cannot narrow to. The README tells consumers to keep that type in step with their filters.
 
 ---
 
@@ -322,7 +323,7 @@ Always `await` async calls — never `void somePromise()`. Catch only where the 
 - No `I` prefix on interfaces.
 - **One class or enum per file**; a file may also declare that class's own input and result types until a second file imports them (`entry-blueprint:typescript` → *Files and declarations*).
 - Always use braces for control-flow clauses, even single-line bodies.
-- Avoid `any` — prefer `unknown` plus narrowing.
+- No `any`: `@typescript-eslint/no-explicit-any` is an error in `libs/` and the demo app. Use the concrete type when one exists; where the caller owns the type, a type parameter the compiler infers (defaulting to `unknown`); `unknown` plus narrowing only at an untyped boundary.
 
 ### Component/directive prefix
 All selectors use the `entry` prefix (e.g., `entry-spinner`, `[entry-submit-button]`). Demo app uses `app`.

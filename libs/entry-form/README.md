@@ -100,9 +100,27 @@ entry-codegen --source-assembly ../MyProject.CodeGeneration.Setup/bin/Debug/net7
 ## Migrating to 22.x
 
 `22.x` requires Angular 22, TypeScript ~6.0 and Node `^22.22.3 || ^24.15.0 || >=26.0.0`, and drops
-the `@angular/animations` peer dependency. The breaking changes are shared with
+the `@angular/animations` peer dependency. Most breaking changes are shared with
 `@enigmatry/entry-components` — see
 [Migrating to 22.x](https://github.com/enigmatry/entry-angular-building-blocks/blob/master/libs/entry-components/README.md#migrating-to-22x).
+
+### No more `any` in the public types
+
+Beyond the changes shared with `@enigmatry/entry-components`, this package's own types lost their
+`any`. Generated forms are unaffected.
+
+| Symbol | 21.4.0 | 22.0.0 | What to do |
+|---|---|---|---|
+| `SelectOption` | `value?: any` | `SelectOption<T = unknown>`, `value?: T`; also exported from `@enigmatry/entry-form` | write `SelectOption<YourType>`, or narrow `option.value` before use |
+| `SelectConfiguration` | not generic | `SelectConfiguration<T = unknown, TKey extends string = string>`: `emptyOption` and `disable` see `SelectOption<T>`; the property names are `TKey` | a `disable` that reads `option.value` narrows it, or declares the configuration as `SelectConfiguration<YourType>` |
+| `findOptionByValue`, `findOptionByLabel` | return `SelectOption` | generic, return the option type you pass in; `findOptionByValue` takes a value of that option's value type | declare an inline or empty list as `SelectOption<YourType>[]`, so the result keeps every `SelectOption` member |
+| `sortOptions` | `(options: SelectOption[] \| any[], …): SelectOption[] \| any[]` | `<T extends object>(options: readonly T[], valueProperty?: keyof T & string, …): T[]` | see below |
+| `IFieldPropertyExpressionDictionary<T>` | `(model: T) => any` | `IFieldPropertyExpressionDictionary<T, TResult = unknown>` | give `TResult` (e.g. `string` for labels) to read the results typed |
+
+`sortOptions` returns the type you pass in, and its property names must be keys of that type, so
+with typed options a misspelled name no longer compiles. With typed options, a property name held in a plain `string`
+does not compile either: pass a literal, or take it from a `SelectConfiguration<TValue, keyof MyOption & string>`,
+whose property names are then keys of `MyOption`. An array of strings or numbers is rejected: the function sorts objects by a property.
 
 ## About Enigmatry
 

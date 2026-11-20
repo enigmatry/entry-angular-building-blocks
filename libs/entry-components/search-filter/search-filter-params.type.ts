@@ -1,7 +1,4 @@
-/**
- * SearchFilterParams are the same type as @angular/router type Params,
- * containing a collection of query URL parameters for easy integration.
- */
+/** The values an action receives when it declares no type of its own (see `SearchFilterAction`). */
 export interface SearchFilterParams {
-  [key: string]: any;
+  [key: string]: unknown;
 }

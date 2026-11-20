@@ -7,5 +7,6 @@ import { SelectOption } from './select-option.model';
     standalone: false
 })
 export class DisplayWithAutocompletePipe implements PipeTransform {
-  transform = (options: SelectOption[]): (value: any) => string => (value: any) => findOptionByValue(options, value)?.label ?? '';
+  readonly transform = <TOption extends SelectOption>(options: TOption[]): (value: TOption['value']) => string =>
+    value => findOptionByValue(options, value)?.label ?? '';
 }

@@ -1,6 +1,5 @@
 import { ControlType } from './control-type';
 import { SearchFilterBase } from './search-filter-base.model';
-import { SearchFilterParams } from './search-filter-params.type';
 import { SearchFilterValue, SearchFilterValues } from './search-filter-values.type';
 import { SelectSearchFilter } from './select/select-search-filter.model';
 
@@ -78,9 +77,9 @@ export const carriedSearchFilterEntry = (
 /** The entry a filter takes on `reset(values)`: the value given for its key, else the value it declares. */
 export const restoredSearchFilterEntry = (
   searchFilter: SearchFilterBase<unknown>,
-  values: SearchFilterParams
+  values: object
 ): [string, SearchFilterValue] => {
-  const given = Object.hasOwn(values, searchFilter.key) ? values[searchFilter.key] as SearchFilterValue | undefined : undefined;
+  const given: SearchFilterValue | undefined = Object.hasOwn(values, searchFilter.key) ? Reflect.get(values, searchFilter.key) : undefined;
   if (given === undefined) {
     return searchFilterEntry(searchFilter);
   }

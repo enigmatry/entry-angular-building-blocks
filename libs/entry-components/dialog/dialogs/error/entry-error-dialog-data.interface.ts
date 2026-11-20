@@ -8,5 +8,5 @@ export interface EntryErrorDialogData extends Omit<EntryAlertDialogData, 'messag
   /** Dialog content message, shown above the errors */
   message?: string;
   /** Errors to display */
-  errors: string[] | IValidationProblemDetails;
+  errors: string[] | Pick<IValidationProblemDetails, 'errors'> | IValidationProblemDetails;
 }

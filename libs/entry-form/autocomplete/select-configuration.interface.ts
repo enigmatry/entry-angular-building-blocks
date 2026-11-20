@@ -1,37 +1,37 @@
 import { SelectOption } from './select-option.model';
 
-export const findOptionByValue = (options: SelectOption[], value: any): SelectOption | undefined =>
+export const findOptionByValue = <TOption extends SelectOption>(options: readonly TOption[], value: TOption['value']): TOption | undefined =>
   options.find(option => option.value === value);
 
-export const findOptionByLabel = (options: SelectOption[], label: string): SelectOption | undefined => {
+export const findOptionByLabel = <TOption extends SelectOption>(options: readonly TOption[], label: string): TOption | undefined => {
   const lowerLabel = label.toLowerCase();
   return options.find(option => option.label.toLowerCase() === lowerLabel);
 };
 
-export interface SelectConfiguration {
-  valueProperty?: string;
-  labelProperty?: string;
-  groupProperty?: string;
-  emptyOption?: SelectOption;
-  sortProperty?: string;
-  disable?: (option: SelectOption) => boolean;
+export interface SelectConfiguration<T = unknown, TKey extends string = string> {
+  valueProperty?: TKey;
+  labelProperty?: TKey;
+  groupProperty?: TKey;
+  emptyOption?: SelectOption<T>;
+  sortProperty?: TKey;
+  // As a property, a typed SelectConfiguration would no longer bind to generated inputs typed bare SelectConfiguration.
+  disable?(option: SelectOption<T>): boolean;
 }
 
-const sortOptionsBy = (options: SelectOption[] | any[], sortProperty?: string, locale?: string): SelectOption[] | any[] =>
+const sortOptionsBy = <T extends object>(options: T[], sortProperty?: keyof T & string, locale?: string): T[] =>
   sortProperty ?
     options.sort((a, b) =>
-      (a[sortProperty]?.toString() ?? '').localeCompare(b[sortProperty]?.toString() ?? '', locale || 'en-US', { sensitivity: 'base' })) :
+      String(a[sortProperty] ?? '')
+        .localeCompare(String(b[sortProperty] ?? ''), locale || 'en-US', { sensitivity: 'base' })) :
         options;
 
-// Groups options by their first appearance in `options` (matching Formly's own grouping order),
-// then sorts each group's contents by sortProperty. Group order therefore follows the source data,
-// not the group label.
+// Groups keep their first-appearance order, as Formly's own grouping does; only options within a group are sorted.
 const groupAndSortOptions =
-  (options: SelectOption[] | any[], groupProperty: string, sortProperty?: string, locale?: string): SelectOption[] | any[] => {
+  <T extends object>(options: T[], groupProperty: keyof T & string, sortProperty?: keyof T & string, locale?: string): T[] => {
     const groupOrder: string[] = [];
-    const groups = new Map<string, SelectOption[] | any[]>();
+    const groups = new Map<string, T[]>();
     options.forEach(option => {
-      const key = (option[groupProperty] ?? '').toString();
+      const key = String(option[groupProperty] ?? '');
       const group = groups.get(key);
       if (group) {
         group.push(option);
@@ -43,9 +43,10 @@ const groupAndSortOptions =
     return groupOrder.flatMap(key => sortOptionsBy(groups.get(key) ?? [], sortProperty, locale));
   };
 
+/** A sorted copy: options whose `valueProperty` is `null` first, then by `sortProperty`, grouped by `groupProperty`. */
 export const sortOptions =
-  (options: SelectOption[] | any[], valueProperty?: string, sortProperty?: string, locale?: string,
-   groupProperty?: string): SelectOption[] | any[] => {
+  <T extends object>(options: readonly T[], valueProperty?: keyof T & string, sortProperty?: keyof T & string, locale?: string,
+   groupProperty?: keyof T & string): T[] => {
     const optionsCopy = [...options];
     const emptyOptions = valueProperty ? optionsCopy.filter(opt => opt[valueProperty] === null) : [];
     const restOptions = valueProperty ? optionsCopy.filter(opt => opt[valueProperty] !== null) : optionsCopy;

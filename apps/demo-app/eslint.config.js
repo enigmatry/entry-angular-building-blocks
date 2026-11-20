@@ -9,6 +9,7 @@ export default defineConfig([
     {
         files: ['src/**/*.ts'],
         rules: {
+            '@typescript-eslint/no-explicit-any': 'error',
             '@typescript-eslint/no-unnecessary-condition': 'error'
         }
     },
@@ -29,7 +30,7 @@ export default defineConfig([
     {
         files: ['src/**/*.html'],
         rules: {
-            '@angular-eslint/template/cyclomatic-complexity': 'off' // TODO BP-1642: 1 site, the example viewer template, needs splitting up
+            '@angular-eslint/template/cyclomatic-complexity': 'off' // TODO BP-1753: 1 site, the example viewer template, needs splitting up
         }
     }
 ]);
