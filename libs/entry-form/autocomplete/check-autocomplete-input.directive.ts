@@ -12,7 +12,7 @@ import { SelectOption } from './select-option.model';
 export class CheckAutocompleteInputDirective {
   private readonly matAutocomplete = inject(MatAutocompleteTrigger, { host: true, self: true });
   private readonly ngControl = inject(NgControl);
-  private readonly elemRef = inject(ElementRef);
+  private readonly elemRef = inject<ElementRef<HTMLInputElement>>(ElementRef);
   private readonly destroyRef = inject(DestroyRef);
 
   readonly options = input<SelectOption[]>([]);
@@ -58,8 +58,7 @@ export class CheckAutocompleteInputDirective {
     }
   };
 
-  private readonly applySelectedValue = (value: any): void => {
-    const inputElement = this.elemRef.nativeElement as HTMLInputElement;
-    inputElement.value = findOptionByValue(this.options(), value)?.label ?? '';
+  private readonly applySelectedValue = (value: unknown): void => {
+    this.elemRef.nativeElement.value = findOptionByValue(this.options(), value)?.label ?? '';
   };
 }

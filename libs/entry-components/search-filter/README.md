@@ -32,12 +32,18 @@ configuration only — they hold no form state, and the component never writes b
 import {
   AutocompleteSearchFilter,
   DateTimeSearchFilter,
-  SearchFilterParams,
   SearchFilterServerError,
   SelectOption,
   SelectSearchFilter,
   TextSearchFilter
 } from '@enigmatry/entry-components/search-filter';
+
+interface ExampleSearchParams {
+  name: string;
+  username: string | null;
+  country: Country | null;
+  createdAt: Date | null;
+}
 
 @Component({...})
 export class ExampleComponent {
@@ -74,7 +80,7 @@ export class ExampleComponent {
   ];
 
   /** Return the server's messages to place them on their filters; return nothing on success. */
-  readonly search = async(params: SearchFilterParams): Promise<readonly SearchFilterServerError[] | void> => {
+  readonly search = async(params: ExampleSearchParams): Promise<readonly SearchFilterServerError[] | void> => {
     try {
       this.rows.set(await this.service.search(params));
       return undefined;
@@ -93,6 +99,13 @@ export class ExampleComponent {
 ```html
 <entry-search-filter [searchFilters]="filters" [searchAction]="search"></entry-search-filter>
 ```
+
+The component takes the type of the values from the action you bind: annotated with `ExampleSearchParams`, the
+action and `(searchFilterChange)` both receive that type. Nothing checks that the filters produce it, so keep its keys
+equal to the filters' `key`s and its value types to what each filter holds, empty included: `''` for a text filter, `[]`
+for a multi-select, `null` for the rest. To keep the default instead, declare the action as
+`readonly search: SearchFilterAction = async params => ...`: `params` is then `SearchFilterParams`, whose values are
+`unknown` and need narrowing before use.
 
 Angular routes each returned message to its filter and clears it as soon as that filter is edited.
 While a message stands its filter is invalid, so the next search is blocked until the user changes

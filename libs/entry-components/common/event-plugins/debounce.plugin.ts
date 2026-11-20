@@ -19,7 +19,7 @@ export class DebounceEventPlugin extends EntryEventManagerPlugin {
     const [_modifier, milliseconds = 500, option = 'leading'] = this.unwrapParams(eventName);
 
     // run original handler inside ngZone in which the event occurred
-    const innerHandler = (event: any) => this.manager.getZone().runGuarded(() => originalHandler(event));
+    const innerHandler = (event: Event) => this.manager.getZone().runGuarded(() => originalHandler(event));
 
     // create debounced handler
     const debouncedHandler = debounce(innerHandler, milliseconds as number,

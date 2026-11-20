@@ -38,17 +38,17 @@ import { TextSearchFilter } from './text/text-search-filter.model';
     imports: [FormRoot, FormField, MatError, MatButton, EntryButtonDirective, TextSearchFilterComponent, SelectSearchFilterComponent,
       AutocompleteSearchFilterComponent, DateSearchFilterComponent, DateTimeSearchFilterComponent]
 })
-export class EntrySearchFilterComponent {
+export class EntrySearchFilterComponent<TParams extends object = SearchFilterParams> {
   protected readonly config: EntrySearchFilterConfig = inject(ENTRY_SEARCH_FILTER_CONFIG);
 
   /** Configuration of the search filters inputs that will be displayed in the search-filter component. */
   readonly searchFilters = input<SearchFilterBase<unknown>[]>([]);
 
   /** Runs the search. Return the server's messages to place them on their filters. */
-  readonly searchAction = input.required<SearchFilterAction>();
+  readonly searchAction = input.required<SearchFilterAction<TParams>>();
 
   /** Emitted on every accepted search, for a caller that navigates rather than fetching here. */
-  readonly searchFilterChange = output<SearchFilterParams>();
+  readonly searchFilterChange = output<TParams>();
 
   protected readonly controlType = ControlType;
 
@@ -66,13 +66,15 @@ export class EntrySearchFilterComponent {
   ): Promise<readonly ValidationError.WithOptionalFieldTree[]> => {
     const values = this.model();
     // Copies, not the model: a consumer reshaping its params for the router would otherwise rewrite form state.
-    this.searchFilterChange.emit({ ...values });
-    const errors = await this.searchAction()({ ...values }) ?? [];
+    this.searchFilterChange.emit(this.toParams(values));
+    const errors = await this.searchAction()(this.toParams(values)) ?? [];
     const changed = changedKeys(values, this.model());
     return errors
       .filter(error => !isStale(error, changed))
       .map(error => toSubmissionError(field, error));
   };
+
+  private readonly toParams = (values: SearchFilterValues): TParams => ({ ...values }) as unknown as TParams;
 
   private readonly focusFirstInvalidFilter = (): void => {
     const summary = this.filterForm().errorSummary();
@@ -112,7 +114,7 @@ export class EntrySearchFilterComponent {
    * must have the shape its filter holds - an array for a multi-select. A server message stays on a filter whose
    * value the reset leaves unchanged.
    */
-  readonly reset = (values: SearchFilterParams = {}): void => {
+  readonly reset = (values: Partial<TParams> | SearchFilterParams = {}): void => {
     this.filterForm().reset(Object.fromEntries(
       this.searchFilters().map(searchFilter => restoredSearchFilterEntry(searchFilter, values))
     ));

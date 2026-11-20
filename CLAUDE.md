@@ -322,7 +322,7 @@ Always `await` async calls — never `void somePromise()`. Catch only where the 
 - No `I` prefix on interfaces.
 - **One class or enum per file**; a file may also declare that class's own input and result types until a second file imports them (`entry-blueprint:typescript` → *Files and declarations*).
 - Always use braces for control-flow clauses, even single-line bodies.
-- Avoid `any` — prefer `unknown` plus narrowing.
+- No `any`: `@typescript-eslint/no-explicit-any` is an error in `libs/` and the demo app. Use the concrete type when one exists; where the caller owns the type, a type parameter the compiler infers (defaulting to `unknown`); `unknown` plus narrowing only at an untyped boundary.
 
 ### Component/directive prefix
 All selectors use the `entry` prefix (e.g., `entry-spinner`, `[entry-submit-button]`). Demo app uses `app`.
