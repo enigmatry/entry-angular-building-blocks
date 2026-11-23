@@ -203,6 +203,9 @@ The Enigmatry front-end rules come from the shared Claude Code plugin `entry-blu
 Where a plugin skill and this file differ, this file wins:
 
 - **A class that `extends` a base class keeps prototype methods throughout**, including methods the base does not declare (*Method declarations* below). `entry-blueprint:typescript` keeps method syntax only for members that rely on `super`; here the whole class stays in one form, so it is clear which members are constrained.
+- **A subject whose specs do not fit one file is split by behaviour group**, into `<subject>-<group>.spec.ts` files beside the source (`entry-field-format-disabled.spec.ts` next to `entry-field-format.directive.spec.ts`). `entry-blueprint:angular-testing` asks for one spec per source file; the 150-line file limit applies to specs too, so a subject with many behaviours cannot keep to that.
+- **A spec that renders a test host configures `TestBed` through a render helper**, `renderHost` in `libs/entry-form/field-format/testing/`, which each test calls with the host and the providers it needs. `entry-blueprint:angular-testing` asks for `TestBed.configureTestingModule` in `beforeEach`; here the host and its providers differ from test to test, and the helper is the one place that configures them. Specs without a host keep to `beforeEach`.
+- **Three lint rules are relaxed for specs** in the root `eslint.config.js`: `@typescript-eslint/no-magic-numbers` is off, `max-lines-per-function` is 140 and `max-nested-callbacks` is 7. `entry-blueprint:angular-testing` holds specs to the lint gates of production code, with an inline disable for an incidental literal; spec tables are literal test data, and `describe` and `it.each` callbacks nest and grow by design, so the disables would sit on most lines.
 
 ---
 
