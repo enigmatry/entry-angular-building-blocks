@@ -1,10 +1,6 @@
 import { DestroyRef, inject } from '@angular/core';
 
-/**
- * Calls `onChange` after `attribute` of `element` changes, however it was set (a static attribute, a `[readonly]`
- * property binding, another directive's host binding), until the injection context is destroyed. Does nothing where
- * `MutationObserver` is unavailable, as during server-side rendering. Called in an injection context.
- */
+/** Must be called in an injection context. Does nothing where `MutationObserver` does not exist, as on a server. */
 export const observeAttribute = (element: Element, attribute: string, onChange: () => void): void => {
   if (typeof MutationObserver === 'undefined') {
     return;

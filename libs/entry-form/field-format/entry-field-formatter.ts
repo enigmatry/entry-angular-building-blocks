@@ -3,13 +3,16 @@ import { Injectable, LOCALE_ID, Provider, inject } from '@angular/core';
 import { EntryFieldFormatDefinition } from './entry-field-format-definition';
 import { EntryFieldInputKind } from './entry-field-input-kind';
 import { groupingSample, negativeSample, numberSyntax, parseLocalizedDecimal } from './field-format-numbers';
-import { numberInputDecimal, plainNumber, toNumber } from './number-conversion';
+import { formattableDate } from './formattable-date';
+import { nearestNumber, numberInputDecimal, plainNumber, toNumber } from './number-conversion';
 import { NumberSyntax } from './number-syntax';
 import { percentDisplayValue, percentEditText, percentModel, percentModelText } from './percent-scale';
 
 export type EntryFieldParseResult = { value: unknown } | { error: true };
 
 const sampleDigits = '1.1-1';
+const minusSampleDigits = '1.0-0';
+const checkMark = '\u2713';
 
 const isEmptyValue = (value: unknown): boolean => {
   const normalized = value ?? '';
@@ -33,8 +36,8 @@ export class EntryFieldFormatter {
     if (definition.name === 'date') {
       return this.displayDate(value, definition);
     }
-    if (definition.name === 'boolean') {
-      return value === true ? '\u2713' : '';
+    if (definition.name === 'boolean' && typeof value === 'boolean') {
+      return value ? checkMark : '';
     }
     const numeric = toNumber(value);
     if (!this.isNumeric(definition) || !Number.isFinite(numeric)) {
@@ -51,7 +54,8 @@ export class EntryFieldFormatter {
     }
     const numeric = kind !== 'native' && (kind === 'number' || this.isNumeric(definition)) ? toNumber(value) : NaN;
     if (!Number.isFinite(numeric)) {
-      return String(value);
+      // Not String(value) for every value: a Date would be shown as "Fri Nov 06 2026 00:00:00 GMT+0100".
+      return kind === 'text' && typeof value !== 'string' ? this.display(value, definition) : String(value);
     }
     const plain = definition.name === 'percent' ? percentEditText(numeric, this.multiplier(definition)) : plainNumber(numeric);
     if (kind === 'number') {
@@ -61,11 +65,11 @@ export class EntryFieldFormatter {
     return plain.replace('-', syntax.minus).replace('.', syntax.decimal);
   };
 
-  readonly parse = (text: string, definition: EntryFieldFormatDefinition, kind: EntryFieldInputKind): EntryFieldParseResult => {
-    if (kind === 'native') {
-      return { value: text };
+  readonly parse = (text: string, definition: EntryFieldFormatDefinition, kind: EntryFieldInputKind, unreadable = false): EntryFieldParseResult => {
+    if (unreadable) {
+      return { error: true };
     }
-    if (kind === 'text' && !this.isNumeric(definition)) {
+    if (kind === 'native' || kind === 'text' && !this.isNumeric(definition)) {
       return { value: text };
     }
     if (!text.trim()) {
@@ -94,8 +98,10 @@ export class EntryFieldFormatter {
     typeof definition.display === 'boolean' ? definition.display : setting(definition.display) ?? 'symbol';
 
   private readonly multiplier = (definition: EntryFieldFormatDefinition): number => {
-    const multiplier = toNumber(definition.multiplier);
-    return Number.isNaN(multiplier) ? 1 : multiplier;
+    const { multiplier } = definition;
+    // Not toNumber for a string: entry-code-generation writes a C# decimal, which can have more digits than a number keeps.
+    const factor = typeof multiplier === 'string' ? nearestNumber(multiplier) : toNumber(multiplier);
+    return Number.isFinite(factor) ? factor : 1;
   };
 
   private readonly displayNumber = (value: number, definition: EntryFieldFormatDefinition): string => {
@@ -129,20 +135,15 @@ export class EntryFieldFormatter {
       negative: sample(-groupingSample, display),
       unlabelledPositive: sample(groupingSample, ''),
       unlabelledNegative: sample(-groupingSample, '')
-    }, formatNumber(negativeSample, locale, '1.0-0'));
+    }, formatNumber(negativeSample, locale, minusSampleDigits));
   };
 
   private readonly displayDate = (value: unknown, definition: EntryFieldFormatDefinition): string => {
-    if (!(value instanceof Date) && typeof value !== 'string' && typeof value !== 'number') {
-      return String(value);
-    }
-    try {
-      return this.datePipe.transform(value, setting(definition.format), setting(definition.timezone), this.locale(definition)) ?? '';
-    } catch {
-      return String(value);
-    }
+    const date = formattableDate(value);
+    return date === undefined
+      ? String(value)
+      : this.datePipe.transform(date, setting(definition.format), setting(definition.timezone), this.locale(definition)) ?? '';
   };
 }
 
-/** The formatter with the Angular pipes it formats through, provided per directive. */
 export const entryFieldFormatterProviders: Provider[] = [EntryFieldFormatter, CurrencyPipe, DatePipe, DecimalPipe, PercentPipe];

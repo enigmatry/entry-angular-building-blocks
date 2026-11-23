@@ -1,33 +1,114 @@
-import { describe, expect, it } from 'vitest';
-import { hasSameContent } from './observe-definition';
+import { Signal, WritableSignal, signal } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
+import { Mock, describe, expect, it, vi } from 'vitest';
+import { EntryFieldFormatDefinition } from './entry-field-format-definition';
+import { observeDefinition } from './observe-definition';
+import { euroDefinition } from './testing/field-format-test-data';
 
-const today = new Date(0);
+interface Observed {
+  definition: WritableSignal<EntryFieldFormatDefinition>;
+  settings: Signal<EntryFieldFormatDefinition>;
+  onChange: Mock<() => void>;
+}
 
-const cyclic = (): Record<string, unknown> => {
-  const options: Record<string, unknown> = { unit: 'kg' };
-  options['self'] = options;
-  return { name: 'custom', options };
+const observed = (): Observed => {
+  const definition = signal<EntryFieldFormatDefinition>({ ...euroDefinition });
+  const onChange = vi.fn<() => void>();
+  const settings = TestBed.runInInjectionContext(() => observeDefinition(definition, onChange));
+  TestBed.tick();
+  return { definition, settings, onChange };
 };
 
-describe('hasSameContent', () => {
-  it.each<[string, unknown, unknown]>([
-    ['the same properties in another order', { name: 'currency', currencyCode: 'EUR' }, { currencyCode: 'EUR', name: 'currency' }],
-    ['equal nested objects', { name: 'custom', options: { unit: 'kg' } }, { name: 'custom', options: { unit: 'kg' } }],
-    ['equal nested arrays', { name: 'custom', units: ['kg', 'g'] }, { name: 'custom', units: ['kg', 'g'] }],
-    ['the same instance of a class', { name: 'custom', since: today }, { name: 'custom', since: today }]
-  ])('is true for %s', (_case, first, second) => {
-    expect(hasSameContent(first, second)).toBe(true);
+const bind = ({ definition }: Observed, next: EntryFieldFormatDefinition): void => {
+  definition.set(next);
+  TestBed.tick();
+};
+
+describe('observeDefinition', () => {
+  it('returns the settings of the first definition and calls back for it', () => {
+    const { settings, onChange } = observed();
+
+    expect(settings()).toMatchObject(euroDefinition);
+    expect(onChange).toHaveBeenCalledTimes(1);
   });
 
-  it.each<[string, unknown, unknown]>([
-    ['a different value', { name: 'currency', currencyCode: 'EUR' }, { name: 'currency', currencyCode: 'USD' }],
-    ['an undefined property against a missing one', { name: 'currency', digitsInfo: undefined }, { name: 'currency', currencyCode: 'EUR' }],
-    ['an extra property', { name: 'number' }, { name: 'number', locale: 'nl' }],
-    ['different nested objects', { name: 'custom', options: { unit: 'kg' } }, { name: 'custom', options: { unit: 'g' } }],
-    ['an array and an object with the same keys', { name: 'custom', units: ['kg'] }, { name: 'custom', units: { 0: 'kg' } }],
-    ['two instances of a class', { name: 'custom', since: new Date(0) }, { name: 'custom', since: new Date(0) }],
-    ['separate objects that contain themselves', cyclic(), cyclic()]
-  ])('is false for %s', (_case, first, second) => {
-    expect(hasSameContent(first, second)).toBe(false);
+  it.each<[string, EntryFieldFormatDefinition]>([
+    ['name', { ...euroDefinition, name: 'number' }],
+    ['format', { ...euroDefinition, format: 'dd-MM-yyyy' }],
+    ['time zone', { ...euroDefinition, timezone: '+0200' }],
+    ['locale', { ...euroDefinition, locale: 'nl' }],
+    ['currency code', { ...euroDefinition, currencyCode: 'USD' }],
+    ['display', { ...euroDefinition, display: 'code' }],
+    ['digits', { ...euroDefinition, digitsInfo: '1.0-0' }],
+    ['multiplier', { ...euroDefinition, multiplier: 100 }]
+  ])('returns the new settings and calls back when a definition with another %s is bound', (_setting, next) => {
+    const host = observed();
+
+    bind(host, next);
+
+    expect(host.settings()).toMatchObject(next);
+    expect(host.onChange).toHaveBeenCalledTimes(2);
+  });
+
+  it.each<[string, EntryFieldFormatDefinition]>([
+    ['has the same settings', { ...euroDefinition }],
+    ['differs in a property that is not a setting', { ...euroDefinition, mask: '000' }]
+  ])('keeps the settings and does not call back when another object is bound that %s', (_kind, next) => {
+    const host = observed();
+    const settings = host.settings();
+
+    bind(host, next);
+
+    expect(host.settings()).toBe(settings);
+    expect(host.onChange).toHaveBeenCalledTimes(1);
+  });
+
+  it('keeps the settings and does not call back when the bound object is changed in place', () => {
+    const { definition, settings, onChange } = observed();
+
+    definition().locale = 'nl';
+    TestBed.tick();
+
+    expect(settings().locale).toBe(euroDefinition.locale);
+    expect(onChange).toHaveBeenCalledTimes(1);
+  });
+
+  it('keeps the settings and does not call back when a signal changes that a getter of the bound object reads', () => {
+    const locale = signal('de');
+    const host = observed();
+    const next: EntryFieldFormatDefinition = {
+      name: 'number',
+      get locale() {
+        return locale();
+      }
+    };
+    bind(host, next);
+
+    locale.set('nl');
+    TestBed.tick();
+
+    expect(host.settings().locale).toBe('de');
+    expect(host.onChange).toHaveBeenCalledTimes(2);
+  });
+
+  it('returns the settings of a copy of an object that was changed after it was bound, and calls back', () => {
+    const host = observed();
+    const bound = host.definition();
+
+    bound.locale = 'nl';
+    bind(host, { ...bound });
+
+    expect(host.settings().locale).toBe('nl');
+    expect(host.onChange).toHaveBeenCalledTimes(2);
+  });
+
+  it('keeps the settings when the changed object is followed by an object with the settings that were bound first', () => {
+    const host = observed();
+
+    host.definition().locale = 'nl';
+    bind(host, { ...euroDefinition });
+
+    expect(host.settings().locale).toBe(euroDefinition.locale);
+    expect(host.onChange).toHaveBeenCalledTimes(1);
   });
 });

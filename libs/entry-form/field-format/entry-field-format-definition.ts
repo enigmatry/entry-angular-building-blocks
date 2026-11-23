@@ -1,17 +1,6 @@
-/**
- * Formatter definition rendered by entry-code-generation as `[entryFieldFormatDefinition]`.
- *
- * Built-in names and the properties they read:
- * - `date`: `format`, `timezone`, `locale`
- * - `currency`: `currencyCode`, `display`, `digitsInfo`, `locale`
- * - `number`: `digitsInfo`, `locale`
- * - `percent`: `digitsInfo`, `locale`, `multiplier`
- * - `boolean`: none
- *
- * Empty strings are treated as "not set". Custom formatters may add their own properties.
- */
+/** The format of a field, as entry-code-generation renders it for `[entryFieldFormatDefinition]`. */
 export interface EntryFieldFormatDefinition {
-  /** `date`, `currency`, `number`, `percent`, `boolean`, or the name of a custom formatter. */
+  /** `date`, `currency`, `number`, `percent` or `boolean`; a value with any other name is shown unformatted. */
   name: string;
   /** Date format, as for Angular's `DatePipe`. */
   format?: string;
@@ -21,12 +10,12 @@ export interface EntryFieldFormatDefinition {
   locale?: string;
   /** ISO 4217 currency code, as for Angular's `CurrencyPipe`. */
   currencyCode?: string;
-  /** How the currency is shown, as for Angular's `CurrencyPipe`: `symbol` (the default), `code`, `symbol-narrow` or a custom label. */
+  /** How `CurrencyPipe` shows the currency: `symbol` (the default), `code`, `symbol-narrow`, a label or a boolean. */
   display?: string | boolean;
   /** Digits to show, as for Angular's number pipes (`1.2-2`). */
   digitsInfo?: string;
   /** Factor applied to the model value before it is shown as a percentage; 1 when not set. */
   multiplier?: string | number;
-  /** Properties of custom formatters. */
+  /** Other properties, which a generator may emit for its own formatters; the directive does not read them. */
   [key: string]: unknown;
 }

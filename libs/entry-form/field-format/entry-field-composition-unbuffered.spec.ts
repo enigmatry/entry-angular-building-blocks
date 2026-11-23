@@ -1,18 +1,30 @@
-import { COMPOSITION_BUFFER_MODE, FormControl } from '@angular/forms';
-import { describe, expect, it } from 'vitest';
-import { dispatch, dispatchImeInput, renderHost, settle, typeText } from './testing/field-format-test-helpers';
+import { FormControl } from '@angular/forms';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import { dispatch, dispatchInput, renderHost, settle, typeText, unbuffered } from './testing/field-format-test-helpers';
 import { FieldFormatTestHostComponent } from './testing/field-format-test-host.component';
 
-const unbuffered = [{ provide: COMPOSITION_BUFFER_MODE, useValue: false }];
-
 describe('EntryFieldComposition', () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   describe('unbuffered, with EntryFieldFormatDirective', () => {
+    it('parses input during a composition at once on Android when no buffer mode is provided, as Angular does', async() => {
+      vi.spyOn(navigator, 'userAgent', 'get').mockReturnValue('Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36');
+      const { fixture, input } = await renderHost(FieldFormatTestHostComponent);
+
+      dispatch(input, 'focus');
+      dispatch(input, 'compositionstart');
+      typeText(input, '12');
+      expect(fixture.componentInstance.control().value).toBe(12);
+    });
+
     it('parses IME input that repeats the text the field shows, so the control becomes dirty', async() => {
       const { fixture, input } = await renderHost(FieldFormatTestHostComponent, unbuffered);
 
       dispatch(input, 'focus');
       dispatch(input, 'compositionstart');
-      dispatchImeInput(input, 'insertCompositionText');
+      dispatchInput(input, 'insertCompositionText');
       dispatch(input, 'compositionend');
       expect(fixture.componentInstance.control().dirty).toBe(true);
     });
@@ -25,7 +37,7 @@ describe('EntryFieldComposition', () => {
       typeText(input, '1');
       input.value = '12';
       dispatch(input, 'compositionend');
-      dispatchImeInput(input);
+      dispatchInput(input, 'insertFromComposition');
       expect(fixture.componentInstance.control().value).toBe(12);
     });
 
@@ -41,7 +53,7 @@ describe('EntryFieldComposition', () => {
       input.value = '12';
       dispatch(input, 'blur');
       dispatch(input, 'compositionend');
-      dispatchImeInput(input);
+      dispatchInput(input, 'insertFromComposition');
       expect(control.value).toBe(12);
       expect(input.value).toBe('\u20ac12.00');
     });
@@ -56,7 +68,7 @@ describe('EntryFieldComposition', () => {
       dispatch(input, 'compositionend');
       dispatch(input, 'compositionstart');
       control.setValue(5);
-      dispatchImeInput(input);
+      dispatchInput(input, 'insertFromComposition');
       dispatch(input, 'compositionend');
       expect(control.value).toBe(12);
     });

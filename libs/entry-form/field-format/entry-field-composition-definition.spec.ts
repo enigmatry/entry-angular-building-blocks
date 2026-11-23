@@ -1,12 +1,10 @@
 import { registerLocaleData } from '@angular/common';
 import localeNl from '@angular/common/locales/nl';
-import { COMPOSITION_BUFFER_MODE, FormControl } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { beforeAll, describe, expect, it, vi } from 'vitest';
 import { dutchEuroDefinition, euroDefinition, initialAmount, numberDefinition } from './testing/field-format-test-data';
-import { dispatch, renderHost, settle, typeText } from './testing/field-format-test-helpers';
+import { dispatch, renderHost, settle, typeText, unbuffered } from './testing/field-format-test-helpers';
 import { FieldFormatTestHostComponent } from './testing/field-format-test-host.component';
-
-const unbuffered = [{ provide: COMPOSITION_BUFFER_MODE, useValue: false }];
 
 describe('EntryFieldComposition', () => {
   beforeAll(() => {

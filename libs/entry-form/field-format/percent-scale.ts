@@ -1,11 +1,15 @@
 import { plainNumber, shiftDecimalPoint, shiftDecimalText } from './number-conversion';
 
 const percentDecimalPlaces = 2;
-const decimalBase = 10;
+const fractionPrefix = '0.';
 
+// Read from the decimal text: 10 ** n is not exact for every n (10 ** 23 is 1.0000000000000001e23).
 const powerOfTenExponent = (multiplier: number): number => {
-  const exponent = Math.log10(multiplier);
-  return Number.isInteger(exponent) && decimalBase ** exponent === multiplier ? exponent : NaN;
+  const text = plainNumber(multiplier);
+  if (/^10*$/u.test(text)) {
+    return text.length - 1;
+  }
+  return /^0\.0*1$/u.test(text) ? fractionPrefix.length - text.length : NaN;
 };
 
 export const percentDisplayValue = (value: number, multiplier: number): number => {

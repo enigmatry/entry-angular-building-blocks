@@ -1,16 +1,5 @@
 const maximumExponent = 400;
 
-export const toNumber = (value: unknown): number => {
-  if (typeof value === 'number') {
-    return Number.isFinite(value) ? value : NaN;
-  }
-  if (typeof value === 'string' && value.trim()) {
-    const parsed = Number(value);
-    return Number.isFinite(parsed) ? parsed : NaN;
-  }
-  return NaN;
-};
-
 export const plainNumber = (value: number): string => {
   const sign = value < 0 ? '-' : '';
   const absolute = String(Math.abs(value));
@@ -35,9 +24,17 @@ export const shiftDecimalPoint = (value: number, places: number): number => {
   return Number(`${mantissa}e${Number(exponent) + places}`);
 };
 
+const withoutTrailingZeros = (digits: string): string => {
+  let end = digits.length;
+  while (end > 0 && digits[end - 1] === '0') {
+    end -= 1;
+  }
+  return digits.slice(0, end);
+};
+
 export const decimalText = (negative: boolean, integerDigits: string, fractionDigits: string): string => {
   const integer = integerDigits.replace(/^0+(?=\d)/u, '') || '0';
-  const fraction = fractionDigits.replace(/0+$/u, '');
+  const fraction = withoutTrailingZeros(fractionDigits);
   const unsigned = fraction ? `${integer}.${fraction}` : integer;
   return negative && unsigned !== '0' ? `-${unsigned}` : unsigned;
 };
@@ -52,15 +49,22 @@ export const shiftDecimalText = (text: string, places: number): string => {
   return decimalText(negative, padded.slice(0, position), padded.slice(position));
 };
 
+const numberInputSyntax = /^([+-]?)(\d*)(?:\.(\d*))?(?:[eE]([+-]?\d+))?$/u;
+
+const numberInputParts = (text: string): string[] | undefined => {
+  const [, sign, integerDigits, fractionDigits = '', exponentText = '0'] = numberInputSyntax.exec(text.trim()) ?? [];
+  return /\d/u.test(`${integerDigits}${fractionDigits}`) ? [sign, integerDigits, fractionDigits, exponentText] : undefined;
+};
+
+/** The number nearest to text in decimal or exponent notation; NaN for other text. */
+export const nearestNumber = (text: string): number => numberInputParts(text) ? Number(text) : NaN;
+
 export const numberInputDecimal = (text: string): string | undefined => {
-  const match = /^([+-]?)(\d*)(?:\.(\d*))?(?:[eE]([+-]?\d+))?$/u.exec(text.trim());
-  if (!match) {
+  const parts = numberInputParts(text);
+  if (!parts) {
     return undefined;
   }
-  const [, sign, integerDigits, fractionDigits = '', exponentText = '0'] = match;
-  if (!/\d/u.test(integerDigits + fractionDigits)) {
-    return undefined;
-  }
+  const [sign, integerDigits, fractionDigits, exponentText] = parts;
   const mantissa = decimalText(sign === '-', integerDigits, fractionDigits);
   if (mantissa === '0') {
     return mantissa;
@@ -69,4 +73,13 @@ export const numberInputDecimal = (text: string): string | undefined => {
   const magnitude = wholeDigits === '0' ? -decimals.search(/[1-9]/u) : wholeDigits.length;
   const exponent = Number(exponentText);
   return Math.abs(magnitude + exponent) > maximumExponent ? undefined : shiftDecimalText(mantissa, exponent);
+};
+
+/** NaN for anything but a finite number or a numeric string that reads back as the same number. */
+export const toNumber = (value: unknown): number => {
+  if (typeof value === 'number') {
+    return Number.isFinite(value) ? value : NaN;
+  }
+  const decimal = typeof value === 'string' ? numberInputDecimal(value) : undefined;
+  return decimal !== undefined && plainNumber(Number(decimal)) === decimal ? Number(decimal) : NaN;
 };

@@ -3,7 +3,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { EntryFieldFormatDirective } from '../entry-field-format.directive';
 import { EntryFieldFormatDefinition } from '../entry-field-format-definition';
 
-/** A textarea with a custom definition, whose value has a Windows line break that the textarea reads back as `\n`. */
+// A textarea reads a Windows line break in its value back as a line feed.
 @Component({
   selector: 'entry-field-format-textarea-test-host',
   template: `<textarea entryFieldFormat [formControl]="control" [entryFieldFormatDefinition]="definition"></textarea>`,

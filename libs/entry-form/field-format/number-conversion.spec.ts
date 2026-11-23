@@ -6,12 +6,23 @@ describe('toNumber', () => {
     [12.5, 12.5],
     ['12.5', 12.5],
     [' 7 ', 7],
-    ['1e3', 1000]
+    ['1e3', 1000],
+    ['12.50', 12.5],
+    ['-0', 0]
   ])('reads %j as %j', (value, expected) => {
     expect(toNumber(value)).toBe(expected);
   });
 
   it.each<[unknown]>([[''], ['  '], ['abc'], [Infinity], [-Infinity], [NaN], [null], [undefined], [true], [{}]])('reads %j as NaN', value => {
+    expect(toNumber(value)).toBeNaN();
+  });
+
+  it.each<[string]>([
+    ['9007199254740993'],
+    ['0.1234567890123456789'],
+    ['1e400'],
+    ['0x10']
+  ])('reads the string %s as NaN, because it would not read back as written', value => {
     expect(toNumber(value)).toBeNaN();
   });
 });
@@ -53,6 +64,12 @@ describe('decimalText', () => {
   ])('writes negative=%s, %j and %j as %s', (negative, integerDigits, fractionDigits, expected) => {
     expect(decimalText(negative, integerDigits, fractionDigits)).toBe(expected);
   });
+
+  it('trims a long run of fraction zeros that another digit follows without retrying at every zero', () => {
+    const zeros = '0'.repeat(400000);
+
+    expect(decimalText(false, '1', `${zeros}1${zeros}`)).toBe(`1.${zeros}1`);
+  });
 });
 
 describe('shiftDecimalText', () => {
@@ -82,9 +99,11 @@ describe('numberInputDecimal', () => {
     expect(numberInputDecimal(text)).toBe(expected);
   });
 
-  it('expands an exponent up to the magnitude cap in both directions', () => {
-    expect(numberInputDecimal('1e399')).toBe(`1${'0'.repeat(399)}`);
-    expect(numberInputDecimal('0.001e-398')).toBe(`0.${'0'.repeat(400)}1`);
+  it.each<[string, string]>([
+    ['1e399', `1${'0'.repeat(399)}`],
+    ['0.001e-398', `0.${'0'.repeat(400)}1`]
+  ])('expands the exponent of %j, which is at the magnitude cap', (text, expected) => {
+    expect(numberInputDecimal(text)).toBe(expected);
   });
 
   it.each<[string]>([[''], ['-'], ['.'], ['e3'], ['1,5'], ['1e'], ['0x10'], ['Infinity'], ['1e400'], ['0.001e-399']])('rejects %j', text => {

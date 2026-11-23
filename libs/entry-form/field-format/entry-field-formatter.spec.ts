@@ -1,4 +1,4 @@
-import { CurrencyPipe, DatePipe, DecimalPipe, PercentPipe, registerLocaleData } from '@angular/common';
+import { registerLocaleData } from '@angular/common';
 import localeAr from '@angular/common/locales/ar';
 import localeDe from '@angular/common/locales/de';
 import localeDeCh from '@angular/common/locales/de-CH';
@@ -8,13 +8,13 @@ import localeFr from '@angular/common/locales/fr';
 import localeHe from '@angular/common/locales/he';
 import localeNl from '@angular/common/locales/nl';
 import localeSv from '@angular/common/locales/sv';
-import { LOCALE_ID } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { EntryFieldFormatDefinition } from './entry-field-format-definition';
-import { EntryFieldFormatter } from './entry-field-formatter';
+import { EntryFieldFormatter, EntryFieldParseResult } from './entry-field-formatter';
 import { EntryFieldInputKind } from './entry-field-input-kind';
 import { currencyDefinition, dateDefinition, numberDefinition, percentDefinition } from './testing/field-format-test-data';
+import { formatterProviders } from './testing/field-format-test-helpers';
 
 describe('EntryFieldFormatter', () => {
   let formatter: EntryFieldFormatter;
@@ -24,9 +24,7 @@ describe('EntryFieldFormatter', () => {
   });
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [EntryFieldFormatter, CurrencyPipe, DatePipe, DecimalPipe, PercentPipe, { provide: LOCALE_ID, useValue: 'en-US' }]
-    });
+    TestBed.configureTestingModule({ providers: formatterProviders() });
     formatter = TestBed.inject(EntryFieldFormatter);
   });
 
@@ -83,21 +81,25 @@ describe('EntryFieldFormatter', () => {
       expect(formatter.parse(text, definition, 'text')).toStrictEqual({ error: true });
     });
 
-    it('reads an empty field as null', () => {
-      expect(formatter.parse('', numberDefinition(), 'text')).toStrictEqual({ value: null });
-      expect(formatter.parse('   ', percentDefinition(), 'text')).toStrictEqual({ value: null });
+    it.each<[string]>([[''], ['   ']])('reads the empty field %j as null', text => {
+      expect(formatter.parse(text, percentDefinition(), 'text')).toStrictEqual({ value: null });
     });
 
-    it('reads a native number input in the browser syntax, rejecting an amount it cannot keep', () => {
-      expect(formatter.parse('1e3', numberDefinition(), 'number')).toStrictEqual({ value: 1000 });
-      expect(formatter.parse('12.5', percentDefinition(), 'number')).toStrictEqual({ value: 0.125 });
-      expect(formatter.parse('1e400', numberDefinition(), 'number')).toStrictEqual({ error: true });
-      expect(formatter.parse('5e-324', percentDefinition('en-US', 3), 'number')).toStrictEqual({ error: true });
+    it.each<[string, EntryFieldFormatDefinition, EntryFieldParseResult]>([
+      ['1e3', numberDefinition(), { value: 1000 }],
+      ['12.5', percentDefinition(), { value: 0.125 }],
+      ['1e400', numberDefinition(), { error: true }],
+      ['5e-324', percentDefinition('en-US', 3), { error: true }]
+    ])('reads %j in a native number input in the browser syntax, rejecting an amount it cannot keep', (text, definition, expected) => {
+      expect(formatter.parse(text, definition, 'number')).toStrictEqual(expected);
     });
 
-    it('keeps the text as typed when the input is native or the definition is not numeric', () => {
-      expect(formatter.parse('2026-11-18', dateDefinition, 'native')).toStrictEqual({ value: '2026-11-18' });
-      expect(formatter.parse(' 18-11-2026 ', dateDefinition, 'text')).toStrictEqual({ value: ' 18-11-2026 ' });
+    it.each<[string, EntryFieldInputKind]>([['2026-11-18', 'native'], [' 18-11-2026 ', 'text']])('keeps %j as typed in a %s input', (text, kind) => {
+      expect(formatter.parse(text, dateDefinition, kind)).toStrictEqual({ value: text });
+    });
+
+    it('reports an error for text that the browser could not read, whatever the field reads as', () => {
+      expect(formatter.parse('', numberDefinition(), 'number', true)).toStrictEqual({ error: true });
     });
   });
 
@@ -112,6 +114,8 @@ describe('EntryFieldFormatter', () => {
       [-1234.5, numberDefinition('sv'), '\u22121\u00a0234,5'],
       [true, { name: 'boolean' }, '\u2713'],
       [false, { name: 'boolean' }, ''],
+      ['true', { name: 'boolean' }, 'true'],
+      ['9007199254740993', numberDefinition(), '9007199254740993'],
       [null, numberDefinition(), ''],
       ['', currencyDefinition('en-US', 'EUR'), ''],
       ['abc', numberDefinition(), 'abc']

@@ -7,12 +7,12 @@ import { map, timer } from 'rxjs';
 import { ENTRY_ASYNC_VALIDATOR_RESOLVER, EntryFieldFormatDirective, provideEntryAsyncValidators } from '@enigmatry/entry-form';
 
 const takenNames = ['admin', 'root'];
-const validationDelayMs = 500;
+const validationDelayInMilliseconds = 500;
 const initialPrice = 1234.5;
 const initialQuantity = 1500;
 const initialDiscount = 0.125;
 
-const uniqueName: AsyncValidatorFn = control => timer(validationDelayMs).pipe(
+const uniqueName: AsyncValidatorFn = control => timer(validationDelayInMilliseconds).pipe(
   map(() => takenNames.includes(String(control.value).toLowerCase()) ? { uniqueName: true } : null)
 );
 

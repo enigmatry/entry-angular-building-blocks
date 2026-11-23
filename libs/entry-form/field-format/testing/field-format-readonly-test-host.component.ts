@@ -3,7 +3,6 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { EntryFieldFormatDirective } from '../entry-field-format.directive';
 import { euroDefinition, initialAmount } from './field-format-test-data';
 
-/** A field with a static `readonly` attribute, followed by one whose `readonly` comes from an `[attr.readonly]` binding. */
 @Component({
   selector: 'entry-field-format-readonly-test-host',
   template: `<input entryFieldFormat readonly [formControl]="staticControl" [entryFieldFormatDefinition]="definition">

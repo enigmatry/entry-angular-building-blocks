@@ -10,7 +10,7 @@ export default defineConfig([
     {
         files: ['libs/**/*.ts'],
         rules: {
-            '@angular-eslint/use-injectable-provided-in': 'off', // TODO BP-1642: 6 injectables (date/time adapters, event plugins, spinner overlay container) are provided where they are used (component providers, provideEntryNativeTimeAdapter, NG_EVENT_PLUGINS), not by providedIn
+            '@angular-eslint/use-injectable-provided-in': 'off', // TODO BP-1642: 7 injectables (date/time adapters, event plugins, spinner overlay container, field formatter) are provided where they are used (component and directive providers, provideEntryNativeTimeAdapter, NG_EVENT_PLUGINS), not by providedIn
             '@typescript-eslint/no-unnecessary-condition': 'error',
             'no-restricted-imports': ['error', {
                 patterns: [{
@@ -27,8 +27,6 @@ export default defineConfig([
         }
     },
     {
-        // Vitest specs (`ng test`), with the rules EBO's applications use. Specs import `describe`, `it` and `expect`
-        // from 'vitest' rather than relying on globals, so test types stay out of the library sources.
         files: ['libs/**/*.spec.ts'],
         plugins: { vitest },
         rules: {

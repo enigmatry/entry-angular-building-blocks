@@ -1,14 +1,12 @@
+import { FormControl } from '@angular/forms';
 import { describe, expect, it, vi } from 'vitest';
-import { dispatch, dispatchImeInput, renderHost, typeText } from './testing/field-format-test-helpers';
+import { dispatch, dispatchInput, renderHost, settle, typeText, unchangedInputs } from './testing/field-format-test-helpers';
 import { FieldFormatTestHostComponent } from './testing/field-format-test-host.component';
 import { FieldFormatTextareaTestHostComponent } from './testing/field-format-textarea-test-host.component';
 
 describe('EntryFieldComposition', () => {
-  describe('IME input after a composition ended, with EntryFieldFormatDirective', () => {
-    it.each<[string]>([
-      ['insertFromComposition'],
-      ['insertCompositionText']
-    ])('keeps the typed amount when the IME sends an %s input event after a composition that was blurred', async inputType => {
+  describe('input after a composition ended, with EntryFieldFormatDirective', () => {
+    it.each(unchangedInputs)('keeps the typed amount when %s input event follows a composition that was blurred', async(_kind, inputType) => {
       const { fixture, input } = await renderHost(FieldFormatTestHostComponent);
       const control = fixture.componentInstance.control();
 
@@ -17,12 +15,12 @@ describe('EntryFieldComposition', () => {
       typeText(input, '2.499');
       dispatch(input, 'blur');
       dispatch(input, 'compositionend');
-      dispatchImeInput(input, inputType);
+      dispatchInput(input, inputType);
       expect(control.value).toBe(2.499);
       expect(input.value).toBe('\u20ac2.50');
     });
 
-    it('commits a composition once when the IME repeats the composed text after it ends', async() => {
+    it.each(unchangedInputs)('commits a composition once when %s input event repeats the composed text after it ends', async(_kind, inputType) => {
       const { fixture, input } = await renderHost(FieldFormatTestHostComponent);
       const control = fixture.componentInstance.control();
       const commit = vi.spyOn(control, 'setValue');
@@ -30,11 +28,11 @@ describe('EntryFieldComposition', () => {
       dispatch(input, 'focus');
       dispatch(input, 'compositionstart');
       input.value = '12';
-      dispatchImeInput(input, 'insertCompositionText');
+      dispatchInput(input, 'insertCompositionText');
       expect(commit).not.toHaveBeenCalled();
       dispatch(input, 'compositionend');
       expect(commit).toHaveBeenCalledTimes(1);
-      dispatchImeInput(input, 'insertCompositionText');
+      dispatchInput(input, inputType);
       expect(commit).toHaveBeenCalledTimes(1);
       expect(control.value).toBe(12);
     });
@@ -52,7 +50,7 @@ describe('EntryFieldComposition', () => {
       expect(control.value).toBe(12);
     });
 
-    it('parses the IME input after a composition when it changes the text', async() => {
+    it('parses the input event after a composition when it changes the text', async() => {
       const { fixture, input } = await renderHost(FieldFormatTestHostComponent);
 
       dispatch(input, 'focus');
@@ -60,13 +58,31 @@ describe('EntryFieldComposition', () => {
       typeText(input, '12');
       dispatch(input, 'compositionend');
       input.value = '123';
-      dispatchImeInput(input);
+      dispatchInput(input, 'insertFromComposition');
       expect(fixture.componentInstance.control().value).toBe(123);
       typeText(input, '12');
       expect(fixture.componentInstance.control().value).toBe(12);
     });
 
-    it('keeps a form value with Windows line breaks when the IME sends an input event after the composition in a textarea', async() => {
+    it('commits and formats text that an input event brings after a blurred composition, when the control updates on blur', async() => {
+      const { fixture, input } = await renderHost(FieldFormatTestHostComponent);
+      const control = new FormControl<number | null>(null, { updateOn: 'blur' });
+      fixture.componentInstance.control.set(control);
+      await settle(fixture);
+
+      dispatch(input, 'focus');
+      dispatch(input, 'compositionstart');
+      typeText(input, '1');
+      dispatch(input, 'blur');
+      dispatch(input, 'compositionend');
+      expect(control.value).toBe(1);
+      input.value = '12';
+      dispatchInput(input, 'insertFromComposition');
+      expect(control.value).toBe(12);
+      expect(input.value).toBe('\u20ac12.00');
+    });
+
+    it('keeps a form value with Windows line breaks when an input event follows the composition in a textarea', async() => {
       const host = FieldFormatTextareaTestHostComponent;
       const { fixture, input } = await renderHost<FieldFormatTextareaTestHostComponent, HTMLTextAreaElement>(host, [], 'textarea');
       const writtenText = 'third line\r\nfourth line';
@@ -76,12 +92,12 @@ describe('EntryFieldComposition', () => {
       typeText(input, 'draft');
       fixture.componentInstance.control.setValue(writtenText);
       dispatch(input, 'compositionend');
-      dispatchImeInput(input);
+      dispatchInput(input);
       expect(input.value).toBe('third line\nfourth line');
       expect(fixture.componentInstance.control.value).toBe(writtenText);
     });
 
-    it('keeps the typed amount when the field is blurred between the end of a composition and the IME input after it', async() => {
+    it('keeps the typed amount when the field is blurred between the end of a composition and the input event after it', async() => {
       const { fixture, input } = await renderHost(FieldFormatTestHostComponent);
 
       dispatch(input, 'focus');
@@ -89,7 +105,7 @@ describe('EntryFieldComposition', () => {
       typeText(input, '2.499');
       dispatch(input, 'compositionend');
       dispatch(input, 'blur');
-      dispatchImeInput(input);
+      dispatchInput(input);
       expect(fixture.componentInstance.control().value).toBe(2.499);
       expect(input.value).toBe('\u20ac2.50');
     });
@@ -106,7 +122,7 @@ describe('EntryFieldComposition', () => {
       expect(input.value).toBe('\u20ac2.50');
     });
 
-    it('commits the composed text once when the IME sends its only input event after the composition ended', async() => {
+    it('commits the composed text once when its only input event arrives after the composition ended', async() => {
       const { fixture, input } = await renderHost(FieldFormatTestHostComponent);
       const control = fixture.componentInstance.control();
       const commit = vi.spyOn(control, 'setValue');
@@ -115,7 +131,7 @@ describe('EntryFieldComposition', () => {
       dispatch(input, 'compositionstart');
       input.value = '12';
       dispatch(input, 'compositionend');
-      dispatchImeInput(input);
+      dispatchInput(input);
       expect(control.value).toBe(12);
       expect(commit).toHaveBeenCalledTimes(1);
     });
