@@ -8,7 +8,6 @@ import {
   AutocompleteSearchFilter,
   DateTimeSearchFilter,
   SearchFilterBase,
-  SearchFilterParams,
   SearchFilterServerError,
   SelectOption,
   SelectSearchFilter,
@@ -20,6 +19,7 @@ import { catchError, firstValueFrom, map, of } from 'rxjs';
 import { EnumToStringPipe } from './enum-to-string.pipe';
 import { countryContinent, maskDecimalScore } from './search-filter-example.functions';
 import { Country, Occupation, User } from './users';
+import { UserSearchParams } from './user-search-params';
 import { UsersService } from './users.service';
 
 const isValidationProblem = (error: unknown): error is IValidationProblemDetails =>
@@ -75,7 +75,7 @@ export class SearchFilterExampleComponent {
    * Runs the search and hands back whatever the server rejected. Angular puts each message on its
    * filter and clears it when that filter is edited, so nothing here touches a form control.
    */
-  protected readonly search = async(searchParams: SearchFilterParams): Promise<readonly SearchFilterServerError[] | void> => {
+  protected readonly search = async(searchParams: UserSearchParams): Promise<readonly SearchFilterServerError[] | void> => {
     try {
       this.users.set(await firstValueFrom(this.usersService.getUsers(searchParams)));
       return undefined;

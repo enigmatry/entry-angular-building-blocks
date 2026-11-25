@@ -1,5 +1,5 @@
-export interface SelectOption {
-  value?: any;
+export interface SelectOption<T = unknown> {
+  value?: T;
   label: string;
   disabled?: boolean;
   groupName?: string;

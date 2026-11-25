@@ -26,10 +26,11 @@ export class FormlyCkeditorComponent extends FieldType<FormlyFieldConfig> {
     return this.formControl as FormControl;
   }
 
-  public onReady(editor: any) {
+  protected onReady(editor: CKEditor5.Editor): void {
     // https://ckeditor.com/docs/ckeditor5/latest/features/read-only.html#hiding-toolbar-in-read-only-mode
-
-    const toolbarElement = editor.ui.view.toolbar.element;
-    toolbarElement.style.display = this.formControl.disabled ? 'none' : 'flex';
+    const toolbarElement: unknown = editor['ui']?.view?.toolbar?.element;
+    if (toolbarElement instanceof HTMLElement) {
+      toolbarElement.style.display = this.formControl.disabled ? 'none' : 'flex';
+    }
   }
 }

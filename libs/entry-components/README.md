@@ -151,7 +151,7 @@ in a constructor, an `afterNextRender` callback or a `linkedSignal`.
 | `EntryFileInputComponent.value` | `File \| FileList \| undefined` | `ModelSignal<FileInputValue>` — see [section 8](#8-the-file-input-is-a-real-form-control) |
 | `EntryFileInputComponent.fileNames` | getter | `protected` — see [section 8](#8-the-file-input-is-a-real-form-control) |
 | `EntryFileInputComponent.selectedFile` | `EventEmitter<File \| FileList>` | `OutputEmitterRef<File \| FileList>` |
-| `EntrySearchFilterComponent.searchFilterChange` | `EventEmitter<SearchFilterParams>` | `OutputEmitterRef<SearchFilterParams>` |
+| `EntrySearchFilterComponent.searchFilterChange` | `EventEmitter<SearchFilterParams>` | `OutputEmitterRef<TParams>` — see [section 15](#15-no-more-any-in-the-public-types) |
 | `SearchFilterBase.formatValue` | `(value: T) => T` | `(value: unknown) => unknown` |
 | `EntryTimePickerComponent.hours` / `.minutes` / `.seconds` / `.meridiem` | plain fields | signals — only reachable through a template ref, the class is not exported |
 
@@ -586,7 +586,7 @@ never writes back onto them.
 | Symbol | 21.4.0 | 22.0.0 |
 |---|---|---|
 | `EntrySearchFilterComponent.searchAction` | — | **new, required**: `(values) => Promise<SearchFilterServerError[] \| void>` |
-| `EntrySearchFilterComponent.searchFilterChange` | `EventEmitter<SearchFilterParams>` | `OutputEmitterRef<SearchFilterParams>`, still emitted on every accepted search |
+| `EntrySearchFilterComponent.searchFilterChange` | `EventEmitter<SearchFilterParams>` | `OutputEmitterRef<TParams>` (section 15), still emitted on every accepted search |
 | `EntrySearchFilterComponent.reset(values?)` | — | **new**: puts each filter back to the value given for its key, else to the one it declares |
 | `EntrySearchFilterComponent.searchFilterForm` | `UntypedFormGroup` | **gone** — there is no reactive form |
 | `EntrySearchFilterComponent.renderedSearchFilters` | — | **gone** — `protected` now, and it only ever existed on unreleased `master` |
@@ -824,6 +824,59 @@ from `@enigmatry/entry-components/common` for the `.debounce` and `.throttle` ev
   --mode=convert-to-standalone --path=<folder>` converts them a folder at a time. When Prettier is
   installed, the schematic reformats every file it touches; a temporary `.prettierignore` listing
   those folders keeps the diff to the decorators and imports.
+
+### 15. No more `any` in the public types
+
+The libraries' source no longer declares `any`. Where a type comes from your code, it is now a
+type parameter that the compiler fills in from what you pass or bind; where no real type exists,
+it is `unknown`. Every change below that needs action shows up as a compile error, not as
+different behaviour.
+
+| Symbol | 21.4.0 | 22.0.0 | What to do |
+|---|---|---|---|
+| `SearchFilterParams` | `{ [key: string]: any }` | `{ [key: string]: unknown }` | annotate your search action (below), or narrow each value before use |
+| `SearchFilterAction`, `EntrySearchFilterComponent` | not generic | generic in `TParams`, taken from the bound `searchAction` | nothing for a template binding; annotate the action to get typed values. A class-token query infers `object`: give it the type, `viewChild.required(EntrySearchFilterComponent<UserSearchParams>)` or `EntrySearchFilterComponent<SearchFilterParams>` |
+| `EntrySearchFilterComponent.reset(values)` | — | takes `Partial<TParams>` or `SearchFilterParams` | nothing |
+| `setServerSideValidationErrors(error, form)` | `error: IValidationProblemDetails` | generic: any `error` with a compatible `errors` member, or any problem details | a type with neither `errors` nor an index signature no longer compiles |
+| `IValidationProblemDetails` | `[key: string]: any` and `errors` | `type`, `title`, `detail`, `instance` as `string \| null`, `status` as `number \| null`, `errors`, and `[key: string]: unknown` | check a standard member for `null` before use (`problem.title?.length`), and narrow an extension member such as `problem['traceId']` |
+| `EntryErrorDialogData.errors` (`IEntryErrorDialogData` in 21.4.0) | `string[] \| IValidationProblemDetails` | also accepts any type with a compatible `errors` member | a type with neither `errors` nor an index signature no longer compiles: pass a copy (`{ ...summary }`); reading another member of a response checks it first (`'title' in errors`) |
+| `EntryComponentsModule.forRoot({ permissionService })` | `Type<any>` | `Type<EntryPermissionService<T>>`, `T` taken from your class | make the class extend or implement `EntryPermissionService` |
+| `EntryComponentsModule.forRoot` | static property | `static readonly` | assigning a replacement no longer compiles; override the providers instead |
+| `PermissionType` | internal | exported from `@enigmatry/entry-components/permissions` | — |
+| `EntryDateTimeAdapter` `parse`, `format`, `isDateInstance`, `is12HoursClock` | `any` parameters | `unknown` parameters | nothing |
+| `EntryDateTimeAdapter.parse` | returns `D` | returns `D \| null`, as Material's `DateAdapter` does | handle `null` (empty or unparsable input) |
+
+Give the search action an interface of your own and both the action and `(searchFilterChange)`
+receive it, with nothing to narrow:
+
+```diff
++ interface UserSearchParams {
++   name: string;
++   occupation: readonly Occupation[];
++   country: Country | null;
++ }
++
+- readonly search = async(params: SearchFilterParams) => {
+-   const name = typeof params['name'] === 'string' ? params['name'] : '';
++ readonly search = async(params: UserSearchParams) => {
++   const name = params.name;
+```
+
+- **The interface is your promise, not a checked type.** The component cannot know which shape its
+  filters produce, so keep the interface's keys equal to the filters' `key`s and its value types to
+  what each filter holds; an empty one holds `''` (text), `[]` (multi-select) or `null` (the rest,
+  section 13).
+- **An action typed `SearchFilterParams` receives `unknown` values**, as does one declared as a
+  bare `SearchFilterAction` (`readonly search: SearchFilterAction = async params => …`): a select's
+  key can be any type, so no narrower type holds for every filter. Code that handed them straight
+  to `new HttpParams({ fromObject })` or to a typed API client no longer compiles: annotate the
+  action with your interface, then map the values your API expects.
+- **A value typed by an interface of yours no longer assigns to `SearchFilterParams`**, because an
+  interface has no index signature. Annotate the action with that interface instead, and to call
+  `reset(values)` with it, query the component as `EntrySearchFilterComponent<UserSearchParams>`.
+- **NSwag-generated validation models pass unchanged.** `setServerSideValidationErrors` and the error
+  dialog read `errors` only, so a hand-written interface with a compatible `errors` passes too,
+  even without an index signature; assigning it to `IValidationProblemDetails` itself still needs one.
 
 ## About Enigmatry
 

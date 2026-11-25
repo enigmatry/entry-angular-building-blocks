@@ -68,11 +68,11 @@ export class EntryDateTimeAdapter<D, L> extends DateAdapter<D, L> implements Ent
 		return this.dateAdapter.today();
 	}
 
-	parse(value: any, parseFormat: any): D {
-		return this.dateAdapter.parse(value, parseFormat) as D;
+	parse(value: unknown, parseFormat: unknown): D | null {
+		return this.dateAdapter.parse(value, parseFormat);
 	}
 
-	format(date: D, displayFormat: any): string {
+	format(date: D, displayFormat: unknown): string {
 		return this.dateAdapter.format(date, displayFormat);
 	}
 
@@ -92,7 +92,7 @@ export class EntryDateTimeAdapter<D, L> extends DateAdapter<D, L> implements Ent
 		return this.dateAdapter.toIso8601(date);
 	}
 
-	isDateInstance(obj: any): boolean {
+	isDateInstance(obj: unknown): boolean {
 		return this.dateAdapter.isDateInstance(obj);
 	}
 
@@ -120,7 +120,7 @@ export class EntryDateTimeAdapter<D, L> extends DateAdapter<D, L> implements Ent
 		return this.timeAdapter.setTime(date, hours, minutes, seconds);
 	}
 
-	is12HoursClock(displayFormat: any): boolean {
+	is12HoursClock(displayFormat: unknown): boolean {
 		const now = this.format(this.today(), displayFormat).toLowerCase();
 		return now.includes('a') || now.includes('p');
 	}

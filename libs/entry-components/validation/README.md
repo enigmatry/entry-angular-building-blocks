@@ -117,4 +117,4 @@ public async Task<ActionResult<Response>> Post([FromBody] Command command)
 
 When set like this, generated ([NSwag](https://github.com/RicoSuter/NSwag)) client side models for _Bad Request_ responses can be used as input parameter of `setServerSideValidationErrors(error, form)` method.
 
-This is because `IValidationProblemDetails` interface is based on [ValidationProblemDetails](https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.validationproblemdetails?view=aspnetcore-7.0) class.
+This is because `IValidationProblemDetails` interface is based on [ValidationProblemDetails](https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.validationproblemdetails?view=aspnetcore-7.0) class. `setServerSideValidationErrors` reads only `errors`, so it accepts any type with a compatible `errors` member: NSwag's generated classes, an interface of your own, or `IValidationProblemDetails` itself.
