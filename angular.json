@@ -6,7 +6,7 @@
     "@enigmatry/entry-form": {
       "projectType": "library",
       "root": "libs/entry-form",
-      "sourceRoot": "libs/entry-form/src",
+      "sourceRoot": "libs/entry-form",
       "prefix": "entry",
       "architect": {
         "build": {
@@ -23,6 +23,16 @@
             }
           },
           "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "libs/entry-form/tsconfig.spec.json",
+            "runner": "vitest",
+            "include": [
+              "**/*.spec.ts"
+            ]
+          }
         }
       }
     },

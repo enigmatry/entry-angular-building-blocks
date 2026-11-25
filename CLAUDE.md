@@ -42,16 +42,17 @@ npm run lint                            # TypeScript ESLint + stylelint (reports
 npm run lint:fix                        # the same chain with --fix, for local use
 npm run lint:ts                         # TypeScript only
 
-# Tests (SCSS only — no Angular unit test suite exists)
-npm run automated-tests                 # compiles themes + runs scss-foundation tests
+# Tests
+npm run automated-tests                 # compiles themes + runs the scss-foundation and entry-form tests
+npm run entry-form:test                 # entry-form Vitest specs (ng test) in isolation
 cd libs/scss-foundation && npm run test # run SCSS tests in isolation
 ```
 
 ### Before reporting a change complete
 
-Run `npm run lint` always; add `npm run entry-components:build` if you touched `libs/entry-components`, and `npm run automated-tests` if you touched `libs/scss-foundation`.
+Run `npm run lint` always; add `npm run entry-components:build` if you touched `libs/entry-components`, `npm run entry-form:test` if you touched `libs/entry-form`, and `npm run automated-tests` if you touched `libs/scss-foundation`.
 
-**There is no Angular unit test suite.** `npm run automated-tests` covers SCSS theme compilation and sass-true tests only. Never describe a TypeScript change as "tested" — it is lint-checked and build-checked. Say which of those actually ran.
+**Only `libs/entry-form` (`field-format` and `validation`) has Angular unit tests.** `npm run entry-form:test` runs its Vitest specs; nothing else in `entry-components`, `entry-form` or the demo app has specs. Describe a TypeScript change as "tested" only when those specs cover it; otherwise it is lint-checked and build-checked. Say which of those actually ran.
 
 ---
 
@@ -182,8 +183,8 @@ The Enigmatry front-end rules come from the shared Claude Code plugin `entry-blu
 
 ### Shared Enigmatry plugin (`entry-blueprint`)
 
-- **The plugin's skills that apply as they are**: `frontend-foundations`, `typescript`, `angular`, `frontend-styling` and `a11y` when writing code, and `frontend-code-review` when reviewing; it reads this file for the patterns specific to this repository. `baseline-security-audit` only when someone explicitly asks for a Baseline Security audit.
-- **The plugin's skills that do not apply here**: `angular-testing` (no Angular unit test suite), `generating-e2e-tests` (no Playwright suite), `code-review-blueprint`, `aspnet-rest-apis` and `csharp-unit-tests` (the only .NET code is the demo's code-generation setup project in `apps/demo-app/codegen/`: a model and a form configuration, with no API, no logic and no tests), and `pull-request` and `jira-branch` (this repository is on GitHub, not Azure DevOps Repos; see *Workflow* below).
+- **The plugin's skills that apply as they are**: `frontend-foundations`, `typescript`, `angular`, `frontend-styling` and `a11y` when writing code, `angular-testing` when writing `libs/entry-form` specs, and `frontend-code-review` when reviewing; it reads this file for the patterns specific to this repository. `baseline-security-audit` only when someone explicitly asks for a Baseline Security audit.
+- **The plugin's skills that do not apply here**: `generating-e2e-tests` (no Playwright suite), `code-review-blueprint`, `aspnet-rest-apis` and `csharp-unit-tests` (the only .NET code is the demo's code-generation setup project in `apps/demo-app/codegen/`: a model and a form configuration, with no API, no logic and no tests), and `pull-request` and `jira-branch` (this repository is on GitHub, not Azure DevOps Repos; see *Workflow* below).
 - **Hooks**: all off (`ENIGMATRY_ENABLED_HOOKS` is `none`). `require-test-skill`, `format-on-edit` and `dotnet-format-gate` act only on `.cs` files, and `code-review-gate` demands the .NET-oriented `code-review-blueprint`. A hook added in a later plugin version stays off until it is listed.
 - **MCP servers**: the plugin supplies the Azure DevOps server; `.mcp.json` adds Jira (`atlassian`, Atlassian's v2 endpoint; sign in once with `/mcp`) and the rest.
 
@@ -193,7 +194,7 @@ The Enigmatry front-end rules come from the shared Claude Code plugin `entry-blu
 - **API reference from JSDoc.** TypeDoc generates the demo app's API tab from doc comments, so `entry-blueprint:frontend-foundations`' exception for generated reference docs applies: every exported symbol needs one.
 - **Library text.** Libraries expose user-facing text as configuration defaults, not `$localize` (*Configuration pattern* above); the demo app is English only, so `entry-blueprint:angular` → *i18n* does not apply.
 - **Failure reporting.** The libraries have no notification service or global error interceptor of their own; a failure they cannot handle propagates to the consuming application.
-- **No Angular unit test suite.** A TypeScript change without a spec is not a review finding, and no Vitest setup or `*.spec.ts` file is added as a side effect of other work. The sass-true suite in `libs/scss-foundation` still runs on Jest, a legacy runner by `entry-blueprint:angular-testing`'s standard; its migration to Vitest is a change of its own.
+- **Angular unit tests in `libs/entry-form` only.** `@enigmatry/entry-form` runs Vitest specs through `ng test` (Angular's `@angular/build:unit-test` builder in jsdom, as EBO's applications do), currently for `field-format` and `validation`, written to `entry-blueprint:angular-testing`. Specs import `describe`, `it` and `expect` from `vitest` rather than using globals, and their ESLint rules sit in the root `eslint.config.js`. Shared test hosts, builders and helpers live in a `testing/` folder beside the specs, which `tsconfig.lib.json` excludes from the library build. Coverage is not collected. A change to code those specs cover updates them; elsewhere a TypeScript change without a spec is not a review finding, and no `*.spec.ts` file is added as a side effect of other work. The sass-true suite in `libs/scss-foundation` still runs on Jest, a legacy runner by `entry-blueprint:angular-testing`'s standard; its migration to Vitest is a change of its own.
 - **Lint.** `npm run lint` (ESLint + Stylelint, report only) is the CI gate.
 - **Workflow.** Branches are `BP-<number>/<slug>`, commits `BP-<number> - <Description>`, and pull requests are opened on GitHub against `master` with a body that starts with the line `PR description`. Do not assign or transition Jira tickets unless asked.
 
@@ -202,6 +203,9 @@ The Enigmatry front-end rules come from the shared Claude Code plugin `entry-blu
 Where a plugin skill and this file differ, this file wins:
 
 - **A class that `extends` a base class keeps prototype methods throughout**, including methods the base does not declare (*Method declarations* below). `entry-blueprint:typescript` keeps method syntax only for members that rely on `super`; here the whole class stays in one form, so it is clear which members are constrained.
+- **A subject whose specs do not fit one file is split by behaviour group**, into `<subject>-<group>.spec.ts` files beside the source (`entry-field-format-disabled.spec.ts` next to `entry-field-format.directive.spec.ts`). `entry-blueprint:angular-testing` asks for one spec per source file; the 150-line file limit applies to specs too, so a subject with many behaviours cannot keep to that.
+- **A spec that renders a test host configures `TestBed` through a render helper**, `renderHost` in `libs/entry-form/field-format/testing/`, which each test calls with the host and the providers it needs. `entry-blueprint:angular-testing` asks for `TestBed.configureTestingModule` in `beforeEach`; here the host and its providers differ from test to test, and the helper is the one place that configures them. Specs without a host keep to `beforeEach`.
+- **Three lint rules are relaxed for specs** in the root `eslint.config.js`: `@typescript-eslint/no-magic-numbers` is off, `max-lines-per-function` is 140 and `max-nested-callbacks` is 7. `entry-blueprint:angular-testing` holds specs to the lint gates of production code, with an inline disable for an incidental literal; spec tables are literal test data, and `describe` and `it.each` callbacks nest and grow by design, so the disables would sit on most lines.
 
 ---
 
