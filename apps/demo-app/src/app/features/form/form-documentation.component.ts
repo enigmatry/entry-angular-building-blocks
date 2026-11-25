@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FieldFormatExampleComponent } from '../../examples/form/field-format/field-format-example.component';
 import { FormExampleModule } from '../../examples/form/form-example.module';
 import { SharedModule } from '../../shared/shared.module';
 
@@ -7,7 +8,8 @@ import { SharedModule } from '../../shared/shared.module';
     templateUrl: './form-documentation.component.html',
     imports: [
         SharedModule,
-        FormExampleModule
+        FormExampleModule,
+        FieldFormatExampleComponent
     ]
 })
 export class FormDocumentationComponent { }
