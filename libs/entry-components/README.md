@@ -835,10 +835,10 @@ different behaviour.
 | Symbol | 21.4.0 | 22.0.0 | What to do |
 |---|---|---|---|
 | `SearchFilterParams` | `{ [key: string]: any }` | `{ [key: string]: unknown }` | annotate your search action (below), or narrow each value before use |
-| `SearchFilterAction`, `EntrySearchFilterComponent` | not generic | generic in `TParams`, taken from the bound `searchAction` | nothing; annotate the action to get typed values; type a class-token query as `viewChild.required(EntrySearchFilterComponent<UserSearchParams>)` |
+| `SearchFilterAction`, `EntrySearchFilterComponent` | not generic | generic in `TParams`, taken from the bound `searchAction` | nothing for a template binding; annotate the action to get typed values. A class-token query infers `object`: give it the type, `viewChild.required(EntrySearchFilterComponent<UserSearchParams>)` or `EntrySearchFilterComponent<SearchFilterParams>` |
 | `EntrySearchFilterComponent.reset(values)` | — | takes `Partial<TParams>` or `SearchFilterParams` | nothing |
 | `setServerSideValidationErrors(error, form)` | `error: IValidationProblemDetails` | generic: any `error` with a compatible `errors` member, or any problem details | a type with neither `errors` nor an index signature no longer compiles |
-| `IValidationProblemDetails` | `[key: string]: any` and `errors` | `type`, `title`, `detail`, `instance` as `string \| null`, `status` as `number \| null`, `errors`, and `[key: string]: unknown` | narrow an extension member such as `problem['traceId']` before use |
+| `IValidationProblemDetails` | `[key: string]: any` and `errors` | `type`, `title`, `detail`, `instance` as `string \| null`, `status` as `number \| null`, `errors`, and `[key: string]: unknown` | check a standard member for `null` before use (`problem.title?.length`), and narrow an extension member such as `problem['traceId']` |
 | `EntryErrorDialogData.errors` (`IEntryErrorDialogData` in 21.4.0) | `string[] \| IValidationProblemDetails` | also accepts any type with a compatible `errors` member | a type with neither `errors` nor an index signature no longer compiles: pass a copy (`{ ...summary }`); reading another member of a response checks it first (`'title' in errors`) |
 | `EntryComponentsModule.forRoot({ permissionService })` | `Type<any>` | `Type<EntryPermissionService<T>>`, `T` taken from your class | make the class extend or implement `EntryPermissionService` |
 | `EntryComponentsModule.forRoot` | static property | `static readonly` | assigning a replacement no longer compiles; override the providers instead |
